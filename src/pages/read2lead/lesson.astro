@@ -313,8 +313,10 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
         <section id="completion-card" class="hidden rounded-md border border-gold/40 bg-gold/10 p-6 text-center">
           <p class="font-display text-2xl font-bold text-gold">Nhiệm vụ xong!</p>
           <p id="completion-copy" class="mt-2 text-cream/80"></p>
+          <p id="completion-gift-goal" class="mt-4 hidden text-left"></p>
           <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
             <a id="completion-new-pack" href="/read2lead#form" class="r2l-primary inline-flex items-center justify-center">Tạo bài mới</a>
+            <a id="completion-gift-shop" href="/read2lead/gifts" class="r2l-secondary inline-flex items-center justify-center">🎁 Quà thật</a>
             <a href="/read2lead/leaderboard" class="r2l-secondary inline-flex items-center justify-center">Bảng xếp hạng</a>
             <a href="/read2lead" class="r2l-secondary inline-flex items-center justify-center">Trang chính</a>
           </div>
@@ -4156,6 +4158,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     pendingLevelUp: null,
     pendingRankUp: null,
     pendingRankLadder: null,
+    pendingState: null,
   };
 
   function _r2lMaybeRevealTriviaSecret(scorePercent) {
@@ -4201,6 +4204,26 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     qs('#completion-card').classList.remove('hidden');
     if (state.accessCode) {
       qs('#completion-new-pack').href = `/read2lead?code=${encodeURIComponent(state.accessCode)}#form`;
+      qs('#completion-gift-shop').href = `/read2lead/gifts?code=${encodeURIComponent(state.accessCode)}`;
+    }
+    // Celebrate the reading FIRST (completion-copy above already shows the
+    // 🪙 xu just earned) — THEN, regardless of whether this particular
+    // submission earned a reward, gently surface the diamond goal so the
+    // reading never reads as pointless just because it earned zero 💎
+    // (diamonds only ever come from live class / SpeakUp). Rendering is
+    // handled by a real ES module (see the plain <script> block near the
+    // end of this file) so it can import the shared GiftGoalCard component
+    // instead of re-deriving its markup inline here.
+    const goalState = _r2lTriviaState.pendingState || data.read2lead_state || null;
+    if (state.accessCode) {
+      document.dispatchEvent(new CustomEvent('r2l:gift-goal', {
+        detail: {
+          diamonds: goalState?.diamonds || 0,
+          giftGoal: goalState?.gift_goal || null,
+          redemptions: Array.isArray(goalState?.redemptions) ? goalState.redemptions : [],
+          code: state.accessCode,
+        },
+      }));
     }
     if (completedWithoutReward) return;
     window.__r2lJuice?.playSynthTone?.('coin', _r2lSfxState.muted);
@@ -4221,6 +4244,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     _r2lTriviaState.pendingLevelUp = null;
     _r2lTriviaState.pendingRankUp = null;
     _r2lTriviaState.pendingRankLadder = null;
+    _r2lTriviaState.pendingState = null;
   }
 
   qs('#trivia-reveal-continue')?.addEventListener('click', () => {
@@ -8282,6 +8306,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
       _r2lTriviaState.pendingLevelUp = data.level_up || null;
       _r2lTriviaState.pendingRankUp = data.rank_up || null;
       _r2lTriviaState.pendingRankLadder = data.read2lead_state?.rank_ladder || null;
+      _r2lTriviaState.pendingState = data.read2lead_state || null;
       void window.__r2lJuice?.openChest?.(data.pending_chest);
       if (isBookLesson()) qs('#book-reader-save-status').textContent = 'Đã lưu kết quả và phần thưởng.';
       if (data.read2lead_state?.rank_ladder?.stars_to_next === 1) window.__r2lJuice?.showNearMissBanner?.(`Còn 1 sao nữa là lên ${data.read2lead_state.rank_ladder.next_label_vi}!`);
@@ -8358,6 +8383,13 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     header.querySelector('[data-r2l-xp-label]').textContent = `⭐ ${read2LeadState.xp_in_level ?? 0}/${read2LeadState.xp_to_next_level ?? 60} XP`;
     header.querySelector('[data-r2l-xp-fill]').style.width = `${read2LeadState.xp_percent ?? 0}%`;
     header.querySelector('[data-r2l-coins]').textContent = `🪙 ${read2LeadState.coins || 0} xu`;
+    // Bug fix: this function only ever set [data-r2l-coins], never
+    // [data-r2l-diamonds] — the header badge (see Header.astro) exists and
+    // is populated correctly on first page load, but stayed frozen at
+    // "💎 0" for the rest of the lesson because a live post-submit refresh
+    // never touched it. Format matches Header.astro's own live-set version
+    // (no trailing unit word — the badge is too narrow for one).
+    header.querySelector('[data-r2l-diamonds]').textContent = `💎 ${read2LeadState.diamonds || 0}`;
     header.querySelector('[data-r2l-streak]').textContent = `${read2LeadState.streak_days || 0} ngày`;
   }
 
@@ -8386,8 +8418,52 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   import { claimDailyChest, fireLessonPassConfetti, fireStreakConfetti, isMuted, openChest, playKenney, playSynthTone, setMuted, showComboBadge, showNearMissBanner, showXpTicker } from '../../lib/lesson-juice';
   import { bindRankUpModalClose, showRankUpModal } from '../../lib/rank-up-celebration';
   import type { RankLadderView } from '../../lib/rank-ladder-ui';
+  import { renderGiftGoalCard, type GiftGoalItem, type GiftGoalRedemption } from '../../lib/gift-goal-card';
 
   bindRankUpModalClose();
+
+  // §4 GiftGoalCard on the end-of-lesson card. The classic <script
+  // is:inline> block above (protected lesson-completion logic) dispatches
+  // 'r2l:gift-goal' from _r2lShowCompletionAfterTrivia with the diamond
+  // balance / goal id / redemptions it already has in scope, rather than
+  // this module reaching into that block's internals — this module then
+  // owns fetching the gift catalogue (read2lead_state only carries the
+  // goal's id, not its name/photo/price) and rendering the shared
+  // component. Never blocks or alters the reward copy above it: failures
+  // here just leave the slot hidden.
+  document.addEventListener('r2l:gift-goal', (event) => {
+    const detail = (event as CustomEvent).detail as {
+      diamonds: number;
+      giftGoal: string | null;
+      redemptions: GiftGoalRedemption[];
+      code: string;
+    };
+    const slot = document.querySelector('#completion-gift-goal');
+    if (!slot || !detail?.code) return;
+
+    if (!detail.giftGoal) {
+      slot.innerHTML = renderGiftGoalCard(null, detail.diamonds, [], { variant: 'wide', code: detail.code });
+      slot.classList.remove('hidden');
+      return;
+    }
+
+    fetch('/api/read2lead-gifts-list', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: detail.code }),
+    })
+      .then((res) => res.json())
+      .then((payload: { ok?: boolean; items?: GiftGoalItem[] }) => {
+        if (!payload?.ok) return;
+        const item = (payload.items || []).find((entry) => entry.id === detail.giftGoal) || null;
+        slot.innerHTML = renderGiftGoalCard(item, detail.diamonds, detail.redemptions, { variant: 'wide', code: detail.code });
+        slot.classList.remove('hidden');
+      })
+      .catch(() => {
+        // Supplementary widget — a failed catalogue fetch just leaves the
+        // slot hidden, it must never block or blank the reward copy above.
+      });
+  });
 
   window.__r2lLessonScoring = { calculateLessonScore: calcLessonScore, questionPoints };
   window.R2LFeedbackVisual = R2LFeedbackVisual;

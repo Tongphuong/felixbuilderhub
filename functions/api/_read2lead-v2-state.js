@@ -587,6 +587,36 @@ export function awardRankPoints(state, { scorePercent, dateKey, nowIso = new Dat
   };
 }
 
+const REDEMPTION_STATUSES = ['requested', 'preparing', 'delivered', 'rejected'];
+
+function normalizeGiftGoal(raw) {
+  const id = String(raw || '').trim();
+  return id ? id : null;
+}
+
+function normalizeRedemptions(raw) {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .filter((entry) => entry && typeof entry === 'object' && entry.id && entry.gift_id)
+    .map((entry) => ({
+      id: String(entry.id),
+      gift_id: String(entry.gift_id),
+      name_vi: entry.name_vi || '',
+      price_diamonds: numberOrZero(entry.price_diamonds),
+      status: REDEMPTION_STATUSES.includes(entry.status) ? entry.status : 'requested',
+      ts: entry.ts || null,
+      ...(entry.updated_at ? { updated_at: entry.updated_at } : {}),
+      // Fix (Buffet MEDIUM, functions/api/admin/gifts/redemptions/[id].js):
+      // marks that a 'rejected' redemption's budget-cap slot has already
+      // been restored, independent of the KV queue index. This field is an
+      // explicit allow-list, so a new redemption field silently vanishes on
+      // the next load unless it's added here too — this one already caused
+      // a data-loss bug once; do not repeat it.
+      ...(entry.cap_restored ? { cap_restored: true } : {}),
+    }))
+    .slice(-50);
+}
+
 function normalizeMedals(raw) {
   if (!Array.isArray(raw)) return [];
   return raw
@@ -1175,6 +1205,13 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     learning_metrics: normalizeLearningMetrics(raw?.learning_metrics, nowIso),
     combo_lifetime_xu: numberOrZero(raw?.combo_lifetime_xu),
     unlocked_parts: unlockedParts,
+    // Real-gift shop. These MUST stay on the whitelist: every endpoint that
+    // loads, mutates and saves state would otherwise write the object back
+    // without them, wiping a child's redemption ledger — and with it the
+    // refund path, since a rejected gift is refunded by looking the
+    // redemption up in this array.
+    gift_goal: normalizeGiftGoal(raw?.gift_goal),
+    redemptions: normalizeRedemptions(raw?.redemptions),
     avatar_stage: avatarStage,
     pending_ceremony: normalizePendingCeremony(raw?.pending_ceremony),
     avatar: {
@@ -1782,6 +1819,8 @@ export function publicProgressState(state) {
     avatar: state.avatar,
     monster_parts: publicMonsterManifest(),
     unlocked_parts: Array.isArray(state.unlocked_parts) ? state.unlocked_parts : [],
+    gift_goal: normalizeGiftGoal(state.gift_goal),
+    redemptions: normalizeRedemptions(state.redemptions),
     inventory: normalizeInventory(state.inventory),
     equipped: normalizeEquipped(state.equipped),
     equipped_display: equippedDisplay(state),

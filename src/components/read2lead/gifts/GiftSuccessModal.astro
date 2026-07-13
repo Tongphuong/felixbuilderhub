@@ -1,0 +1,129 @@
+---
+// §3 (HANDOFF): the celebration modal must set the "arrives in class after a
+// short wait" expectation — the teacher has to go and buy it — or the child
+// reads the debit as the app stealing their diamonds. Static placeholder
+// markup; src/lib/gift-ux.ts fills in the real gift + new balance right
+// before showModal().
+---
+
+<dialog class="qt-success-modal" aria-labelledby="qt-success-title">
+  <div class="qt-success-card">
+    <div class="qt-success-orb">
+      <span class="qt-success-emoji qt-float" aria-hidden="true">🎁</span>
+    </div>
+    <h3 id="qt-success-title">Tuyệt vời! 🎉</h3>
+    <p class="qt-success-message">
+      Coach Felix sẽ chuẩn bị và trao <strong class="qt-success-name"></strong> cho con ở lớp nhé
+      <span class="qt-success-emoji-inline" aria-hidden="true"></span>
+    </p>
+    <div class="qt-success-note">
+      <span aria-hidden="true">💛</span>
+      <p>Coach Felix cần một chút thời gian đi mua quà. Con để ý thẻ quà chuyển sang <strong style="color:var(--gold-light);">"Coach Felix đang chuẩn bị"</strong> nha!</p>
+    </div>
+    <p class="qt-success-balance">Số dư mới: <strong class="qt-success-balance-value">💎 0</strong></p>
+    <div class="qt-success-actions">
+      <button type="button" class="fx-btn fx-btn--primary fx-btn--block qt-success-view">Xem quà của con</button>
+      <button type="button" class="fx-btn fx-btn--ghost qt-success-close">Về cửa hàng</button>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .qt-success-modal {
+    border: none;
+    padding: 0;
+    background: transparent;
+    margin: auto;
+    max-width: 26rem;
+    width: calc(100% - 2rem);
+  }
+  .qt-success-modal::backdrop {
+    background: rgba(4, 10, 16, 0.72);
+  }
+
+  .qt-success-card {
+    border-radius: 22px;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--gold) 18%, var(--navy-900)), var(--navy-900) 55%);
+    border: 1px solid var(--accent-border);
+    box-shadow: var(--shadow-2xl);
+    text-align: center;
+    padding: 30px 24px 26px;
+  }
+
+  .qt-success-orb {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: radial-gradient(circle at 40% 30%, #fff3c8, var(--gold-light) 55%, var(--gold));
+    box-shadow: 0 0 40px color-mix(in srgb, var(--gold) 55%, transparent);
+  }
+  .qt-success-emoji { font-size: 52px; }
+
+  .qt-success-card h3 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 24px;
+    color: var(--cream);
+    margin: 18px 0 0;
+  }
+
+  .qt-success-message {
+    margin: 12px 0 0;
+    color: var(--cream-muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .qt-success-note {
+    margin: 18px 0 0;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--cream) 5%, transparent);
+    border: 1px solid var(--border-subtle);
+    text-align: left;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .qt-success-note p {
+    margin: 0;
+    color: var(--cream-muted);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .qt-success-balance {
+    margin: 16px 0 0;
+    color: var(--cream-dim);
+    font-size: 12.5px;
+  }
+  .qt-success-balance-value {
+    color: var(--gold-light);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .qt-success-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .qt-success-view {
+    min-height: 56px;
+    font-weight: 800;
+  }
+  .qt-success-close {
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .qt-success-view,
+    .qt-success-close {
+      transition: none;
+    }
+  }
+</style>

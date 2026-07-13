@@ -1,0 +1,276 @@
+/* "Quà thật" (Real Gifts) — genuinely-new styles only, per
+   Read2Lead Real Gifts Shop/HANDOFF.md §1. Everything else (buttons, cards,
+   badges, progress bars, eyebrows) reuses the existing .fx-* primitives from
+   design-system.css — do not re-style raw HTML to imitate them here.
+
+   Contents: GiftPhotoWell, GiftCard (+ band grid), band headers, the
+   GiftGoalCard used on the shop page, the empty state, and the three
+   qt-pulse / qt-shimmer / qt-float keyframes — all gated by
+   prefers-reduced-motion. */
+
+/* ============================ GiftPhotoWell (HANDOFF §2) ============================ */
+.qt-photo-well {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(120% 120% at 50% 22%, #274563 0%, #14304600 62%),
+    linear-gradient(180deg, #1d3f58, #11283b);
+  box-shadow:
+    inset 0 0 0 1px rgba(245, 230, 200, 0.10),
+    inset 0 -46px 54px -34px rgba(0, 0, 0, 0.72);
+}
+.qt-photo-well--banner { aspect-ratio: 16 / 9; }
+
+.qt-photo-well__emoji {
+  font-size: 56px;
+  line-height: 1;
+}
+.qt-photo-well--lg .qt-photo-well__emoji { font-size: 66px; }
+.qt-photo-well--sm .qt-photo-well__emoji { font-size: 44px; }
+
+/* Real photo (Shopee/Lazada white cut-out): contain + padding so the white
+   edge doesn't glare against navy. <img onerror> removes itself, revealing
+   the emoji fallback already sitting underneath. */
+.qt-photo-well__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 12%;
+  box-sizing: border-box;
+}
+
+.qt-photo-well__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.qt-photo-well__badge--corner {
+  top: 10px;
+  left: auto;
+  right: 10px;
+  font-size: 18px;
+}
+
+/* Near-miss: warmer glow behind the well. */
+.qt-photo-well--warm {
+  background:
+    radial-gradient(120% 120% at 50% 22%, #3a5170 0%, #16304600 62%),
+    linear-gradient(180deg, #22405b, #12293b);
+  box-shadow:
+    inset 0 0 0 1px rgba(242, 204, 126, 0.22),
+    inset 0 -46px 54px -34px rgba(0, 0, 0, 0.72);
+}
+
+/* Pending ("Đang chờ Coach Felix duyệt"): dimmer, waiting-room tone. */
+.qt-photo-well--pending {
+  background: radial-gradient(120% 120% at 50% 22%, #223d55, #122a3c);
+}
+.qt-photo-well--pending .qt-photo-well__emoji { opacity: 0.85; }
+
+/* Unavailable ("Tạm thời chưa mở" — toggled off, or its budget cap is
+   exhausted; never "hết hàng"/sold-out framing, this is a pause). Same
+   dimmer, quiet tone as pending but a distinct modifier: this is not a
+   review queue, it's a gift the founder has paused. */
+.qt-photo-well--unavailable {
+  background: radial-gradient(120% 120% at 50% 22%, #223d55, #122a3c);
+}
+.qt-photo-well--unavailable .qt-photo-well__emoji { opacity: 0.85; }
+
+/* Delivered: success-tinted hairline. */
+.qt-photo-well--delivered {
+  background: radial-gradient(120% 120% at 50% 22%, #2b4a63, #143046);
+  box-shadow:
+    inset 0 0 0 1px rgba(111, 207, 151, 0.20),
+    inset 0 -46px 54px -34px rgba(0, 0, 0, 0.72);
+}
+
+/* Preparing: the well itself becomes the moving gold shimmer (no photo —
+   deliberately a wrapped-gift 🎁, not the product shot, during this state). */
+.qt-photo-well--shimmer {
+  background: linear-gradient(
+    100deg,
+    color-mix(in srgb, var(--gold) 8%, transparent) 20%,
+    color-mix(in srgb, var(--gold) 26%, transparent) 50%,
+    color-mix(in srgb, var(--gold) 8%, transparent) 80%
+  );
+  background-size: 200% 100%;
+  box-shadow: inset 0 0 0 1px rgba(242, 204, 126, 0.20);
+}
+
+/* ============================ GiftCard ============================ */
+.qt-gift-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  transition: border-color var(--duration-base) var(--ease-standard);
+}
+.qt-gift-card__body { padding: 14px 15px 16px; }
+.qt-gift-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+.qt-gift-card__name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--cream);
+}
+.qt-gift-card__price {
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--gold-light);
+  font-variant-numeric: tabular-nums;
+}
+
+.qt-gift-card[data-state='affordable'] {
+  border-color: color-mix(in srgb, var(--success) 40%, transparent);
+}
+.qt-gift-card[data-state='nearmiss'] {
+  border: 1.5px solid var(--gold-light);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--gold) 20%, transparent), var(--surface-card) 55%);
+}
+.qt-gift-card[data-state='delivered'] {
+  border-color: color-mix(in srgb, var(--success) 40%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--success) 10%, transparent), var(--surface-card) 55%);
+}
+.qt-gift-card[data-state='preparing'] {
+  border-color: var(--accent-border);
+}
+.qt-gift-card[data-state='unavailable'] {
+  border-color: var(--border-subtle);
+}
+
+/* Card grid inside a band: 1 column on mobile, 3 on wider screens. */
+.qt-band-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 720px) {
+  .qt-band-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ============================ Band headers ============================ */
+.qt-band { margin-top: 8px; }
+.qt-band-header { margin: 26px 0 12px; }
+.qt-band-header--now { color: var(--success); }
+.qt-band-header--soon { color: var(--gold-light); }
+.qt-band-header--building { color: var(--cream-muted); }
+.qt-band-header--unavailable { color: var(--cream-dim); }
+
+/* ============================ GiftGoalCard (pinned goal on the shop page) ============================
+   NOT a separate component — it's a .qt-gift-card rendered through the exact
+   same per-state branches (see renderGiftCard's variant param in
+   src/lib/gift-ux.ts), so a goal that happens to be a near-miss or already
+   affordable gets that state's full treatment (pulse/badge/CTA), not a
+   generic "still saving" card. These rules only add the goal-specific
+   cosmetics: a bit of breathing room under the eyebrow, an accent border for
+   the plain "still saving" case (the reference's mobile pinned-goal card is
+   accent-bordered even with no special state), and a photo+body row layout
+   on wider screens. */
+.qt-goal-eyebrow { margin: 0 0 6px; }
+
+.qt-gift-card--goal[data-state='saving'] {
+  border-color: var(--accent-border);
+}
+
+@media (min-width: 640px) {
+  .qt-gift-card--goal {
+    display: flex;
+    align-items: stretch;
+  }
+  .qt-gift-card--goal .qt-photo-well {
+    width: 220px;
+    flex-shrink: 0;
+    border-radius: 0;
+  }
+  .qt-gift-card--goal .qt-gift-card__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+/* ============================ Empty state ============================ */
+.qt-empty-state {
+  border-radius: 16px;
+  border: 1px dashed var(--border-strong);
+  background: color-mix(in srgb, var(--cream) 3%, transparent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 34px 22px;
+  gap: 10px;
+}
+
+/* ============================ Trophy row ("🏆 Con đã nhận") ============================
+   Deliberately NOT a shop card — a horizontal keepsake strip (photo/emoji +
+   name + received date only, no price/CTA/progress bar) so it reads as a
+   memory, not a listing. Reuses .qt-photo-well at a small fixed width. */
+.qt-trophy-group { margin-top: 8px; }
+.qt-trophy-row {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+.qt-trophy-item {
+  flex: 0 0 108px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+.qt-trophy-item .qt-photo-well {
+  width: 96px;
+}
+.qt-trophy-item__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--cream);
+}
+.qt-trophy-item__date {
+  font-size: 11px;
+  color: var(--success);
+  font-weight: 700;
+}
+
+/* ============================ Keyframes (gated by reduced-motion) ============================ */
+@keyframes qt-shimmer {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+@keyframes qt-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--gold) 55%, transparent); }
+  50% { box-shadow: 0 0 22px 4px color-mix(in srgb, var(--gold) 45%, transparent); }
+}
+@keyframes qt-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.qt-pulse { animation: qt-pulse 2.2s ease-in-out infinite; }
+.qt-shimmer { animation: qt-shimmer 2.4s linear infinite; }
+.qt-float { animation: qt-float 2.6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .qt-pulse,
+  .qt-shimmer,
+  .qt-float {
+    animation: none !important;
+  }
+}

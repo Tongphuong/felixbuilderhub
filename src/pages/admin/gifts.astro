@@ -1,0 +1,430 @@
+---
+// "Quà thật" (Real Gifts) — R2L-REAL-GIFTS §6 (gift manager) + §7 (redemption
+// queue). Both live on this one page per HANDOFF's admin split. Founder-only
+// (Coach Felix, non-technical): the gift manager reuses the editable-rows
+// pattern from admin/classes.astro (one Save button commits the whole
+// table); the queue is designed as the thing he opens on his phone on the
+// way to the shop. Auth is free — functions/_middleware.js Basic-Auths all
+// of /admin/*, so this page just fetch()s.
+//
+// Not wired into AdminLayout's nav tabs here on purpose — a concurrent
+// session owns AdminLayout.astro right now (logo rebrand); Elon adds the tab
+// after that merges. The dashboard nav CARD (admin/index.astro) is added
+// separately in this same packet.
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout
+  title="Quà thật | Felix Admin"
+  description="Quản lý danh sách quà thật và hàng chờ đổi quà — chỉ Felix thấy."
+>
+  <section class="mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-10">
+    <div>
+      <h1 class="admin-page-title font-display text-3xl font-bold text-cream">Quà thật</h1>
+      <p class="mt-2 max-w-2xl text-cream-muted">
+        Thêm quà, sửa giá, và duyệt yêu cầu đổi quà của các con. Ảnh hỗ trợ
+        <strong class="text-cream">cả dán link lẫn tải file</strong> — xem trước ngay khi nhập.
+        Cột <em>Giá thật</em> và <em>₫/💎</em> chỉ Felix thấy, không con nào nhìn thấy được.
+      </p>
+    </div>
+
+    <!-- ======================= §6 GIFT MANAGER ======================= -->
+    <div class="ag-card mt-7">
+      <div class="ag-toolbar">
+        <div class="ag-toolbar__title">
+          <p class="fx-eyebrow" style="margin:0; color:var(--gold-light);">Trang quản trị · chỉ Felix thấy 🔒</p>
+          <p id="gifts-mgr-count" class="ag-toolbar__heading">Quà thật</p>
+        </div>
+        <button type="button" id="gifts-mgr-add" class="fx-btn fx-btn--secondary">+ Thêm quà</button>
+        <button type="button" id="gifts-mgr-save" class="fx-btn fx-btn--primary">✓ Đã lưu</button>
+      </div>
+
+      <div id="gifts-mgr-error" class="ag-error hidden"></div>
+
+      <div class="ag-table-scroll">
+        <div class="ag-table">
+          <div class="ag-columns" aria-hidden="true">
+            <span>Ảnh</span><span>Tên quà</span><span>Giá 💎</span><span>Giới hạn</span><span>Bật</span>
+            <span class="ag-columns__locked">Giá thật ₫ 🔒</span><span class="ag-columns__locked">₫/💎 🔒</span>
+          </div>
+          <div id="gifts-mgr-rows">
+            <p class="ag-loading">Đang tải danh sách quà…</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="ag-footnote">
+        Để trống <strong class="text-cream-muted">"Giới hạn"</strong> ở hầu hết các quà — Coach Felix mua theo yêu cầu
+        của con nên quà nào cũng sẵn sàng, <strong class="text-cream-muted">"Giới hạn" không phải là số lượng còn lại</strong>,
+        mà là chốt ngân sách. Chỉ điền số cho quà đắt (ví dụ Lego: 2) để tránh nhiều con cùng đổi trong một tuần làm khó dòng tiền.
+      </p>
+    </div>
+
+    <!-- ======================= §7 REDEMPTION QUEUE ======================= -->
+    <div class="ag-card ag-card--queue mt-8">
+      <div id="gifts-queue-error" class="ag-error hidden"></div>
+      <div id="gifts-queue">
+        <p class="ag-loading">Đang tải hàng chờ…</p>
+      </div>
+    </div>
+  </section>
+</AdminLayout>
+
+<script>
+  import { initGiftManager, initRedemptionQueue } from '../../lib/admin-gifts';
+
+  function showError(hostId: string) {
+    return (message: string) => {
+      const el = document.getElementById(hostId);
+      if (!el) return;
+      el.textContent = message;
+      el.classList.remove('hidden');
+    };
+  }
+
+  initGiftManager({ onError: showError('gifts-mgr-error') });
+  initRedemptionQueue({ onError: showError('gifts-queue-error') });
+</script>
+
+<style>
+  .ag-card {
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    background: var(--navy-950);
+    box-shadow: var(--shadow-card);
+  }
+
+  .ag-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 18px 22px;
+    background: color-mix(in srgb, var(--navy-900) 80%, transparent);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .ag-toolbar__title { flex: 1; min-width: 200px; }
+  .ag-toolbar__heading {
+    margin: 3px 0 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--cream);
+  }
+  .ag-toolbar button { min-height: 44px; }
+
+  .ag-error {
+    margin: 0 22px;
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(248, 113, 113, 0.4);
+    background: rgba(248, 113, 113, 0.1);
+    color: #fecaca;
+    font-size: 13px;
+  }
+  .ag-loading { padding: 22px; color: var(--cream-dim); font-size: 13px; }
+
+  .ag-table-scroll { overflow-x: auto; }
+  .ag-table { min-width: 760px; }
+
+  .ag-columns {
+    display: grid;
+    grid-template-columns: 64px 1.3fr 100px 120px 56px 116px 92px;
+    gap: 10px;
+    padding: 10px 22px;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: var(--cream-dim);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .ag-columns__locked { color: var(--gold-light); }
+
+  :global(.ag-row) {
+    padding: 12px 22px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  :global(.ag-row:last-child) { border-bottom: none; }
+
+  :global(.ag-row__grid) {
+    display: grid;
+    grid-template-columns: 64px 1.3fr 100px 120px 56px 116px 92px;
+    gap: 10px;
+    align-items: center;
+  }
+
+  :global(.ag-thumb-btn) {
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  :global(.ag-thumb) {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: radial-gradient(120% 120% at 50% 22%, #274563, #143046);
+    box-shadow: inset 0 0 0 1px rgba(245, 230, 200, 0.08);
+  }
+  /* Reused for §7 queue rows (Ryan/9-days style urgency) — same well, warmer hairline. */
+  :global(.ag-thumb--urgent) { box-shadow: inset 0 0 0 1px rgba(248, 113, 113, 0.3); }
+  :global(.ag-thumb__emoji) { font-size: 24px; line-height: 1; }
+  :global(.ag-thumb__img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10%;
+    box-sizing: border-box;
+  }
+
+  :global(.ag-input) { min-height: 44px; font-size: 14px; }
+  :global(.ag-input--num) { text-align: right; font-variant-numeric: tabular-nums; }
+  :global(.ag-input--locked) { border-color: var(--accent-border); }
+
+  :global(.ag-limit-cell) { display: flex; flex-direction: column; gap: 3px; }
+  :global(.ag-limit-used) { font-size: 10px; color: var(--cream-dim); text-align: center; }
+
+  :global(.ag-switch) {
+    justify-self: center;
+    width: 46px;
+    height: 26px;
+    min-height: 44px;
+    padding: 9px 0;
+    box-sizing: content-box;
+    border: none;
+    background: none;
+    cursor: pointer;
+    position: relative;
+    display: block;
+  }
+  :global(.ag-switch)::before {
+    content: '';
+    position: absolute;
+    top: 9px;
+    left: 0;
+    width: 46px;
+    height: 26px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--cream) 16%, transparent);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+    transition: background-color var(--duration-base) var(--ease-standard);
+  }
+  :global(.ag-switch--on)::before { background: var(--gold); }
+  :global(.ag-switch__knob) {
+    position: absolute;
+    top: 12px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    background: var(--cream-dim);
+    transition: transform var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard);
+  }
+  :global(.ag-switch--on .ag-switch__knob) { transform: translateX(20px); background: var(--navy-950); }
+
+  :global(.ag-cpd) {
+    text-align: right;
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--cream-muted);
+    font-variant-numeric: tabular-nums;
+    font-size: 14px;
+  }
+  :global(.ag-cpd--notable) { color: var(--gold-light); }
+
+  :global(.ag-photo-details) { margin-top: 14px; }
+  :global(.ag-photo-summary) {
+    cursor: pointer;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--gold-light);
+    list-style: none;
+  }
+  :global(.ag-photo-summary::-webkit-details-marker) { display: none; }
+  :global(.ag-photo-summary::before) { content: '▸ '; }
+  :global([open] > .ag-photo-summary::before) { content: '▾ '; }
+
+  :global(.ag-photo-grid) {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  @media (min-width: 640px) {
+    :global(.ag-photo-grid) { grid-template-columns: 1fr 1fr; }
+  }
+  :global(.ag-photo-path) {
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border-default);
+    background: color-mix(in srgb, var(--cream) 3%, transparent);
+  }
+  :global(.ag-photo-path--active) {
+    border: 1.5px solid var(--accent);
+    background: color-mix(in srgb, var(--gold) 10%, transparent);
+  }
+  :global(.ag-photo-path__head) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  :global(.ag-photo-badge[hidden]) { display: none; }
+
+  :global(.ag-upload) {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0 12px;
+    border-radius: 8px;
+    border: 1px dashed var(--border-strong);
+    color: var(--cream-dim);
+    font-size: 13px;
+    cursor: pointer;
+  }
+  :global(.ag-upload:hover) { border-color: var(--accent); color: var(--cream); }
+  :global(.ag-upload__status) { margin-left: auto; color: var(--cream-dim); }
+
+  :global(.ag-photo-preview) { margin-top: 14px; }
+  :global(.ag-photo-actions) { margin-top: 12px; display: flex; justify-content: flex-end; }
+
+  .ag-footnote {
+    margin: 14px 22px 18px;
+    color: var(--cream-dim);
+    font-size: 12.5px;
+    max-width: 70ch;
+    line-height: 1.55;
+  }
+
+  :global(.ag-empty) {
+    padding: 26px 22px;
+    color: var(--cream-dim);
+    font-size: 13.5px;
+    text-align: center;
+  }
+
+  /* ============================ §7 queue (injected via renderQueue) ============================ */
+  :global(.ag-q-header) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 18px 22px;
+    background: color-mix(in srgb, var(--navy-900) 80%, transparent);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  :global(.ag-q-title) {
+    margin: 3px 0 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--cream);
+  }
+  :global(.ag-q-total) { margin-left: auto; text-align: right; }
+  :global(.ag-q-total__label) {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    font-weight: 800;
+  }
+  :global(.ag-q-total__value) {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--gold-light);
+    font-variant-numeric: tabular-nums;
+  }
+
+  :global(.ag-q-lane) { padding: 16px 22px 6px; }
+  :global(.ag-q-lane__head) { display: flex; align-items: center; gap: 8px; }
+  :global(.ag-q-dot) { width: 9px; height: 9px; border-radius: 999px; flex-shrink: 0; }
+  :global(.ag-q-dot--new) { background: var(--gold-light); box-shadow: 0 0 8px var(--gold-light); }
+  :global(.ag-q-dot--prep) { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+  :global(.ag-q-dot--done) { background: var(--success); box-shadow: 0 0 8px var(--success); }
+  :global(.ag-q-lane-empty) { margin: 10px 0 0; color: var(--cream-dim); font-size: 12.5px; }
+
+  :global(.ag-q-row) {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 22px;
+    margin-top: 10px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  :global(.ag-q-row--history) { opacity: 0.82; }
+  :global(.ag-q-row--urgent) { background: color-mix(in srgb, var(--danger) 9%, transparent); }
+  :global(.ag-q-row--phantom) { background: color-mix(in srgb, var(--danger) 14%, transparent); border-top-color: color-mix(in srgb, var(--danger) 45%, transparent); }
+
+
+  :global(.ag-q-row__body) { flex: 1; min-width: 0; }
+  :global(.ag-q-name-line) { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+  :global(.ag-q-name) { font-family: var(--font-display); color: var(--cream); font-size: 15px; }
+  :global(.ag-q-meta) { margin: 2px 0 0; color: var(--cream-muted); font-size: 12.5px; }
+  :global(.ag-q-price) { color: var(--gold-light); }
+  :global(.ag-q-urgent-text) { color: var(--danger); font-weight: 700; }
+  :global(.ag-q-wait) { color: var(--cream-dim); }
+  :global(.ag-q-urgent-badge) {
+    background: var(--danger-soft);
+    border: 1px solid color-mix(in srgb, var(--danger) 45%, transparent);
+    color: var(--danger);
+    font-size: 11px;
+    padding: 0.1rem 0.5rem;
+  }
+  :global(.ag-q-phantom) {
+    margin: 0 0 4px;
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--danger);
+  }
+
+  :global(.ag-q-actions) { display: flex; gap: 8px; flex-shrink: 0; flex-wrap: wrap; }
+  :global(.ag-q-btn) { min-height: 44px; font-size: 13px; }
+  :global(.ag-q-btn[disabled]) { opacity: 0.45; }
+
+  :global(.ag-q-reassure) {
+    margin: 14px 22px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid color-mix(in srgb, var(--success) 35%, transparent);
+    background: var(--success-soft);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  :global(.ag-q-reassure p) { margin: 0; color: var(--cream-muted); font-size: 12.5px; line-height: 1.55; }
+
+  :global(.ag-q-done) { color: var(--success); font-size: 12.5px; font-weight: 700; flex-shrink: 0; }
+  :global(.ag-q-cost) {
+    color: var(--cream-dim);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    width: 76px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.ag-switch)::before,
+    :global(.ag-switch__knob) {
+      transition: none !important;
+    }
+  }
+</style>

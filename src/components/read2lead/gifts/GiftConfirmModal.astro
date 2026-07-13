@@ -1,0 +1,138 @@
+---
+// §2 (HANDOFF): "Con muốn đổi 10.000 💎 lấy Trà sữa?" — a single tap is an
+// irreversible commitment (diamonds debit immediately), so confirmation must
+// carry weight while "Để con nghĩ thêm" stays just as easy. Content here is
+// static placeholder markup; src/lib/gift-ux.ts fills in the real gift,
+// photo, and before/after balance at redemption time (same pattern as
+// InsufficientCoinsModal.astro / UnlockCelebration.astro).
+---
+
+<dialog class="qt-confirm-modal" aria-labelledby="qt-confirm-title">
+  <div class="qt-confirm-card">
+    <div class="qt-confirm-photo"></div>
+    <div class="qt-confirm-body">
+      <p class="fx-eyebrow" style="color:var(--gold-light);">Xác nhận đổi quà</p>
+      <h3 id="qt-confirm-title" class="qt-confirm-heading">
+        Con muốn đổi <span class="qt-confirm-price">0 💎</span><br />
+        lấy <span class="qt-confirm-name" style="color:var(--gold-light);"></span>?
+      </h3>
+      <p class="qt-confirm-sub">Kim cương sẽ bị trừ ngay.</p>
+
+      <div class="qt-balance-chip">
+        <div class="qt-balance-chip__col">
+          <span class="qt-balance-chip__label">Hiện có</span>
+          <strong class="qt-confirm-before">💎 0</strong>
+        </div>
+        <span class="qt-balance-chip__arrow" aria-hidden="true">→</span>
+        <div class="qt-balance-chip__col">
+          <span class="qt-balance-chip__label">Còn lại</span>
+          <strong class="qt-confirm-after">💎 0</strong>
+        </div>
+      </div>
+
+      <div class="qt-confirm-actions">
+        <button type="button" class="fx-btn fx-btn--primary fx-btn--block qt-confirm-yes">Đúng rồi, đổi quà! 💎</button>
+        <button type="button" class="fx-btn fx-btn--secondary fx-btn--block qt-confirm-no">Để con nghĩ thêm</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .qt-confirm-modal {
+    border: none;
+    padding: 0;
+    background: transparent;
+    margin: auto;
+    max-width: 26rem;
+    width: calc(100% - 2rem);
+  }
+  .qt-confirm-modal::backdrop {
+    background: rgba(4, 10, 16, 0.72);
+  }
+
+  .qt-confirm-card {
+    border-radius: 22px;
+    overflow: hidden;
+    background: var(--navy-900);
+    border: 1px solid var(--accent-border);
+    box-shadow: var(--shadow-2xl);
+  }
+
+  /* The injected .qt-photo-well already carries its own 12px radius; this
+     card clips its top corners itself, so flatten the child's radius. */
+  .qt-confirm-photo :global(.qt-photo-well) {
+    border-radius: 0;
+  }
+
+  .qt-confirm-body {
+    padding: 22px 22px 24px;
+    text-align: center;
+  }
+
+  .qt-confirm-heading {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--cream);
+    margin: 10px 0 0;
+    line-height: 1.35;
+  }
+
+  .qt-confirm-sub {
+    margin: 10px 0 0;
+    color: var(--cream-muted);
+    font-size: 13.5px;
+  }
+
+  .qt-balance-chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 18px 0 0;
+    padding: 14px;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--cream) 5%, transparent);
+    border: 1px solid var(--border-subtle);
+  }
+  .qt-balance-chip__col { text-align: center; }
+  .qt-balance-chip__label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    font-weight: 800;
+  }
+  .qt-balance-chip strong {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-variant-numeric: tabular-nums;
+  }
+  .qt-confirm-before { color: var(--cream); }
+  .qt-confirm-after { color: var(--gold-light); }
+  .qt-balance-chip__arrow { font-size: 20px; color: var(--gold-light); }
+
+  .qt-confirm-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .qt-confirm-yes {
+    min-height: 64px;
+    font-size: 17px;
+    font-weight: 800;
+  }
+  .qt-confirm-no {
+    min-height: 52px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .qt-confirm-yes,
+    .qt-confirm-no {
+      transition: none;
+    }
+  }
+</style>
