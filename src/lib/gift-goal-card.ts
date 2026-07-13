@@ -33,6 +33,7 @@
 // theatrical.
 
 import { deriveGiftCardState, type GiftCardState } from './gift-ux';
+import { giftPhotoSrc } from './gift-photo';
 
 /** Structural subset of gift-ux.ts's GiftItem. Any real GiftItem satisfies
  * this shape as-is; `deriveGiftCardState` is deliberately typed to accept
@@ -101,13 +102,11 @@ function formatDateVi(iso: string | undefined): string {
   return new Intl.DateTimeFormat('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(date);
 }
 
-/** Image src precedence per HANDOFF §2: uploaded photo -> pasted URL -> none
- * (emoji-only fallback). Mirrors gift-ux.ts's private photoSrc(). */
-function photoSrc(item: GiftGoalItem): string | null {
-  if (item.image_key) return `/api/read2lead-gift-image?id=${encodeURIComponent(item.id)}`;
-  if (item.image_url) return item.image_url;
-  return null;
-}
+// photoSrc() used to be copied here, "mirroring" gift-ux.ts. It stopped mirroring
+// the moment gift-ux.ts was fixed and this was not — leaving the year-long photo
+// cache bug alive on the three surfaces THIS file feeds: the child's profile, the
+// end-of-lesson card, and the parent's weekly report. Now imported, not mirrored.
+const photoSrc = giftPhotoSrc;
 
 function newestRedemptionFor(giftId: string, redemptions: GiftGoalRedemption[]): GiftGoalRedemption | undefined {
   const matching = (Array.isArray(redemptions) ? redemptions : []).filter((entry) => entry?.gift_id === giftId);

@@ -4,6 +4,8 @@
 // currency: diamonds (💎) only, and no can_afford=false locked/greyed state
 // (unaffordable = a progress bar, per HANDOFF §0 rule 6).
 
+import { giftPhotoSrc } from './gift-photo';
+
 export type GiftItem = {
   id: string;
   name_vi: string;
@@ -151,27 +153,11 @@ function daysAgoVi(iso: string | undefined): string {
   return `${days} ngày trước`;
 }
 
-/**
- * Image src precedence per HANDOFF §2: uploaded photo → pasted URL → none (emoji only).
- *
- * The `v` param is the whole reason a replaced photo ever reaches a child.
- * read2lead-gift-image.js serves with `max-age=31536000, immutable`, and this URL
- * used to be just `?id=<id>` — identical before and after an upload. So a browser
- * (and the CDN edge) that had cached the OLD photo kept serving it for a year:
- * Coach Felix would swap a wrong photo for a right one, reload, still see the
- * wrong one, and reasonably conclude the upload was broken. He reported exactly
- * that once. `image_key` now carries an upload timestamp, so it changes on every
- * upload — which makes this URL change, which makes `immutable` finally honest.
- * The server ignores `v`; it exists only to be different.
- */
-function photoSrc(item: GiftItem): string | null {
-  if (item.image_key) {
-    return `/api/read2lead-gift-image?id=${encodeURIComponent(item.id)}`
-      + `&v=${encodeURIComponent(item.image_key)}`;
-  }
-  if (item.image_url) return item.image_url;
-  return null;
-}
+// Single source of truth — see src/lib/gift-photo.ts. This was a local copy, and
+// so were the ones in admin-gifts.ts and gift-goal-card.ts; when the photo-cache
+// bug was fixed, one of the three was missed. Three copies of a URL is three
+// chances to fix two of them.
+const photoSrc = giftPhotoSrc;
 
 // ---------------------------------------------------------------------------
 // Rendering (HTML strings, mirroring shop-ux.ts's renderShopItem pattern)

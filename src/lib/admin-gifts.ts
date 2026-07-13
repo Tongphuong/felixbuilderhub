@@ -10,6 +10,8 @@
 // history / HANDOFF) — this file does NOT import it and defines its own,
 // same as gift-ux.ts does.
 
+import { giftPhotoSrc } from './gift-photo';
+
 export type AdminGift = {
   id: string;
   name_vi: string;
@@ -107,22 +109,15 @@ export function activePhotoSource(gift: Pick<AdminGift, 'image_key' | 'image_url
 }
 
 /**
- * Must stay in lockstep with photoSrc() in src/lib/gift-ux.ts — the `v` param is
- * what makes a REPLACED photo actually appear. The image endpoint serves
- * `immutable, max-age=31536000`, so without a URL that changes, Coach Felix would
- * upload a new photo, still see the old one, and conclude the upload was broken.
- * It matters twice over here: the admin preview is where he decides whether a
- * photo is any good, so a stale preview would lie to him about the exact thing he
- * opened it to check.
+ * Delegates to the single source of truth (src/lib/gift-photo.ts). "Must stay in
+ * lockstep with gift-ux.ts" was the old comment here, and lockstep is exactly what
+ * a hand-copied function does not do: when the photo-cache bug was fixed, one of
+ * the three copies was missed. It matters twice over on this surface — the admin
+ * preview is where Coach Felix decides whether a photo is any good, so a stale one
+ * would lie to him about the exact thing he opened it to check.
  */
-export function adminPhotoSrc(gift: Pick<AdminGift, 'id' | 'image_key' | 'image_url'>): string | null {
-  if (gift.image_key) {
-    return `/api/read2lead-gift-image?id=${encodeURIComponent(gift.id)}`
-      + `&v=${encodeURIComponent(gift.image_key)}`;
-  }
-  if (gift.image_url) return gift.image_url;
-  return null;
-}
+export const adminPhotoSrc = (gift: Pick<AdminGift, 'id' | 'image_key' | 'image_url'>): string | null =>
+  giftPhotoSrc(gift);
 
 /**
  * A child waiting this many days for a "preparing" gift is a promise about

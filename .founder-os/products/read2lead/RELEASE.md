@@ -8,7 +8,7 @@
 - Relevant full tests passed: yes
 - Core browser flow passed: yes
 - Mobile check passed: yes
-- Tablet check passed: no
+- Tablet check passed: yes
 - Desktop check passed: yes
 - Console and API errors checked: yes
 - Privacy and cost checked: yes
@@ -24,6 +24,39 @@
 - **Preview verified against real production data**: `can_afford: false` on the free gift, banded under "Tạm thời chưa mở", `cost_vnd` absent from the kid API, 0 console errors, screenshots at 390px and 1280px.
 - **Review**: Buffet BLOCKED the first round on 3 findings (a save race that silently resurrected the deleted free gift under a button reading "✓ Đã lưu"; a full gold progress bar on an unobtainable gift across 3 kid/parent surfaces; gift-id reuse after delete). All fixed, re-reviewed, SHIP. He then re-reviewed defect 9 and named two more grep-only tests, now rendered.
 - **1550 tests** (was 1520). `astro check` clean on every changed file. `astro build` clean.
+
+## Responsive check — measured on the deployed preview, all four widths (2026-07-13)
+
+Not eyeballed: read out of the live DOM with `getBoundingClientRect()`.
+
+| Width | Columns | Smallest button | Names clipped | H-overflow |
+|---|---|---|---|---|
+| 390px (phone) | **2** | 44px | none | no |
+| 768px (iPad portrait) | **4** | 44px | none | no |
+| 1024px (iPad landscape) | **5** | 44px | none | no |
+| 1280px (laptop) | **5** | 44px | none | no |
+
+Before: **1 column below 720px, 3 above it.** One enormous card per row on a phone,
+three cramped ones on an iPad, and nothing in between — and it had passed a "mobile
+check" and a "desktop check", because those were the two widths the CSS was written
+for. This is why the Tablet check now exists in the gate.
+
+## Photos — all nine gifts, verified on the live shop
+
+Eight CC0/public-domain photos uploaded to R2 and rendering (Sticker, Bút, Hộp bút,
+Trà sữa, Bộ Lego, Sách, Quả bóng đá, Quả bóng rổ). **Mô hình Gundam has NO photo and
+keeps its 🤖 emoji** — every CC0 result for "gundam"/"gunpla" was a blue 3D-printed
+barrel, because the kits are trademarked. A clean emoji beats a bad photo.
+
+**Defect 10, caught here and nowhere else:** the eight photos uploaded fine and the
+server served them (curl: 1000×750 WebP, correct etag) — and the browser showed the
+year-old Shopee voucher badge anyway. `read2lead-gift-image.js` answers
+`max-age=31536000, immutable` from a URL of just `?id=<id>`, and the R2 key was stable
+(`gifts/<id>.<ext>`), so a replaced photo was invisible to any browser or CDN edge that
+had already cached the old one. **For a year.** That is the founder's original
+complaint, primed to recur on every future photo change. Fixed: unique key per upload +
+a `v` param on the URL, so `immutable` is finally true rather than a lie. Verified on
+the live shop: Sticker and Bút now report 1000×750, not the old 1200×1200 overlay.
 
 ## Known state at ship (founder action required, not blockers)
 

@@ -43,6 +43,46 @@ async function loadGoalCard() {
 // Note this test RENDERS the card and reads the bar out of the markup. The
 // pre-existing goal-card tests only grep the source text, which is exactly
 // why none of them caught it. A test that cannot see the bar cannot defend it.
+// Buffet, HIGH: the year-long photo-cache fix landed in gift-ux.ts and
+// admin-gifts.ts but NOT in gift-goal-card.ts — a third hand-copied photoSrc().
+// That copy feeds the child's profile, the end-of-lesson card and the PARENT'S
+// WEEKLY REPORT: the screens Coach Felix looks at first. So a replaced photo would
+// have stayed stale for a year on exactly those, while looking fixed in the shop.
+//
+// Patching the third copy would have left a fourth waiting. There is now ONE
+// builder (src/lib/gift-photo.ts) and these render each surface to prove it.
+test('gift goal card: the photo URL is versioned — the parent report cannot serve a year-old photo', async () => {
+  const { renderGiftGoalCard } = await loadGoalCard();
+  const gift = {
+    id: 'sticker', name_vi: 'Sticker', emoji: '🌟',
+    image_key: 'gifts/sticker-abc123.webp', image_url: null,
+    price_diamonds: 1000, can_afford: true, available: true, progress_percent: 100,
+  };
+  for (const audience of ['kid', 'parent']) {
+    const html = renderGiftGoalCard(gift, 1000, [], { variant: 'wide', code: 'R2L-TEST', audience });
+    assert.match(html, /v=gifts%2Fsticker-abc123\.webp/, `${audience}: photo URL must carry the version`);
+  }
+});
+
+test('every gift photo URL in the codebase comes from ONE builder', () => {
+  // A fourth copy is the failure mode this guards. If you are adding a new surface
+  // that shows a gift photo, import giftPhotoSrc from src/lib/gift-photo.ts.
+  const files = [
+    'src/lib/gift-ux.ts',
+    'src/lib/gift-goal-card.ts',
+    'src/lib/admin-gifts.ts',
+  ];
+  for (const f of files) {
+    const src = readFileSync(f, 'utf8');
+    assert.doesNotMatch(
+      src,
+      /read2lead-gift-image\?id=\$\{/,
+      `${f} hand-builds the gift photo URL — import giftPhotoSrc from './gift-photo' instead`,
+    );
+    assert.match(src, /giftPhotoSrc/, `${f} must use the shared builder`);
+  }
+});
+
 // Rendered, not grepped. `read2lead-gift-goal.js` gates on isGiftAvailable()
 // and answers 400 `gift_unavailable` for an unavailable gift — verified against
 // the live deployed endpoint — so offering "Đặt làm mục tiêu ★" on that card is
