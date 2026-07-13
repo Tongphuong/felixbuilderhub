@@ -89,9 +89,69 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: blocked
+- Blocked on: TWO founder actions (R2 PRODUCTION binding + merge ack) — code is COMPLETE, reviewed, and preview-verified; see BLOCKED ON FOUNDER below
 - Started: 2026-07-13
 - Task ID: speakup-adaptive-homework-types
+- Verified commit: 1d671e6 (origin/claude/speakup-homework-types); preview
+  `claude-speakup-homework-type.felixbuilderhub.pages.dev` (Cloudflare truncates
+  the branch alias to 28 chars — the obvious `...-types` URL 404s)
+- Result: 1375/1375 node --test (baseline 1239, +136, none dropped); astro build
+  clean (25 pages); founder build gate PASS. Buffet verdict: REQUEST CHANGES →
+  both findings fixed → see below.
+- Rule-20 verification (DEPLOYED PREVIEW, routed harness — real deployed bundle,
+  synthetic homework, zero real codes/sessions/spend):
+  * story step: must-use chips render ("because together kind special"), VN +
+    EN prompt, ~105s target, Minny red-robot — `_ops/hwv3-story-390.png`
+  * build step: Phương's real Stage-4 lesson as 4 chip columns; one tap per
+    column assembles **"We play football at school, we feel happy because it is
+    fun."**, mic arms ONLY when all columns are picked — `_ops/hwv3-build-390.png`,
+    `_ops/hwv3-build-armed-390.png`, `_ops/hwv3-build-1280.png`
+  * zero page errors; picture answer-key absent from the DOM
+- Full-pipeline probe (real OpenRouter model + REAL validators + real compiler,
+  Phương's actual `friend_detective` lesson): 3/3 drafted tasks survive
+  validation → 7 kid steps, ids unique, "Yes/No" + "He/She" preserved, VN
+  register "con". Adversarial: empty lesson → zero tasks (no invention);
+  injection payload in the paste → ignored.
+- Bugs caught in review that never reached a kid:
+  1. (Elon) duplicate step ids across same-type tasks — the kid client keys
+     progress/scoring/fix-it off step.id. Deduped ON COLLISION ONLY so legacy
+     ids stay byte-identical.
+  2. (Elon) the assembled build sentence — which the child READS ALOUD and is
+     SCORED on — was the run-on "We play football At school We feel happy
+     Because it is fun."
+  3. (Elon) task-list vs old-textbox precedence silently discarded typed text
+     (same silent-data-loss class as the photo bug) → now confirms.
+  4. (Buffet) the blank marker is a placeholder POSITION, not a suffix:
+     "Do you like...?" + pizza → was "Do you like...? pizza", now "Do you like
+     pizza?".
+  5. (Buffet) the URL fence's 9-TLD allowlist let `evil.app` reach a kid's
+     screen and TTS → now matches domain SHAPE (verified it still accepts
+     "7 a.m.", "e.g.", "3.14", "He/She", "Yes/No").
+  6. (Elon, pre-code) the extractor prompt addressed the child as "bạn" not the
+     house register "con"; and the charset had no `/`, which would have silently
+     rejected "He/She"/"Yes/No" — the two commonest patterns in the founder's
+     lessons.
+- BLOCKED ON FOUNDER (2 items):
+  1. **Add the R2 binding to Cloudflare Pages → Settings → Bindings →
+     PRODUCTION**: name `R2L_MEDIA`, bucket `felixbuilderhub-read2lead`, then
+     redeploy. Proven side-by-side on the SAME commit: preview (binding present)
+     → 404 `code_not_found`; production (binding missing) → 500 `config_error`.
+     Until this is done, picture homework, the vision autofill, parent portfolio
+     video upload AND the concurrent R2L gift-shop photo upload are all dead on
+     production.
+  2. **Merge ack** for `claude/speakup-homework-types` → main (founder gates
+     main; pilot is live).
+- Known follow-ups (bounded, NOT blockers):
+  * `buildFeedbackContext`'s `taskType` param is plumbed + tested but nothing
+    passes it — the only caller is the frozen `read2lead-speaking-check.js`. So
+    the coach note's `exercise_type` still derives from `check_mode` for the new
+    types. `target_words` DOES flow. Additive fix, own packet.
+  * Admin modal (paste-lesson → task list) is covered by 20 UI tests + the
+    full-pipeline probe, but NOT live-driven on the deployed preview: `/admin/*`
+    is Basic-Auth'd and I did not seek the password. Founder to eyeball it once.
+  * Buffet copy nits: validator errors say "Nhiệm vụ N" but task cards show no
+    numbers; invisible-char errors render as `có ký tự chưa hỗ trợ: ""`.
 - Owner: Elon plans, reviews every diff line by line, integrates, commits.
   Mark (bg worker) — backend: `functions/api/_homework.js` (schema v3),
   `functions/api/minny-speaking-context.js` (task compiler),
