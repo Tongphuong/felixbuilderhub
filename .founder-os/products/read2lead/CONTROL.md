@@ -22,8 +22,9 @@ stale until 2026-07-05.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Started: 2026-07-13
+- Completed: 2026-07-13
 - Task ID: R2L-HOME-HUB
 - Owner: Claude Lead (Elon) — shared extraction, start.astro, r2l-start.client.ts, tests; Buffet reviews the diff (author ≠ reviewer).
 - Lane: product (student-facing home page; zero backend change)
@@ -42,7 +43,7 @@ stale until 2026-07-05.
 - Two artwork-derived hex values kept literal (`--minny-red #e0533f`, `--book-cover-lit #2f6285`) as named locals in the page's scoped style, and pinned by a test that allows exactly those two and no others. They are sampled from Minny's PNG and the book-cover art; mapping them onto the nearest navy token would visibly change the approved design. Everything else is a design-system token — stated honestly rather than claiming "zero hex".
 - Review record: Buffet SHIP, no blocking findings. He independently proved the four extracted helpers are BYTE-IDENTICAL to the originals on origin/main (so ho-so cannot have drifted), that the two edited ho-so tests had their assertions FOLLOW the moved code rather than be weakened, that no ho-so dashboard code leaked into the start page bundle (checked dist/), that renderMonster() cannot strip the animated wrapper, and — the risk that mattered most — he could NOT construct a path where a child ends up with no primary button (every exit of resolveToken() lands on a CTA, including junk/failed progress data; he cross-checked against Ong's real record, whose `web_lesson_steps` is null and is correctly guarded). Two non-blocking notes: (a) the mid-poll copy dropped "Minny" — INTENTIONAL and consistent with the design's own copy ruling that Minny must not be credited with preparing the reading (the books are human-written), but it was not called out in the commit, which was a fair catch; (b) see follow-up below.
 - KNOWN GAP (follow-up, accepted for this ship): if a child opens their magic link while a pack started elsewhere is still `generation_in_progress`, the home page shows an honest disabled "Đang chuẩn bị bài đọc cho con…" create card but does NOT auto-refresh when generation finishes — they must reload. ho-so's equivalent screen does poll. Not a dead screen (SpeakUp, the three tiles and the profile all remain usable) and the window is short, but it is a real UX gap. Deliberately NOT fixed minutes before merge: adding a new polling path would introduce unreviewed behaviour into a diff that is currently verified end-to-end.
-- Founder handoff: pending Phương's merge GO. Preview: https://claude-r2l-home-hub.felixbuilderhub.pages.dev/r2l/start?t=<student token>. 1283/1283 tests; astro build clean; ho-so provably unbroken.
+- Founder handoff: DONE — Phương gave the merge GO after walking the preview. Merged to main (a39cdb0) and LIVE ON PRODUCTION, rule-20 verified on the real site with a real student magic link: felixbuilderhub.com/r2l/start renders the continue variant for Ong with her REAL customised monster, medal rank-l2-silver (tier_index 1), Hạng Bạc III, Cấp L2, 🔥 3 ngày, 🪙 1400 xu, her open book "The Big, Big Matchbox" at 33%, #continue-link → /read2lead/lesson?code=R2L-ONG-U5M6&pack_id=ee37d645…, SpeakUp/Hồ sơ/Cửa hàng all carrying her code, topic picker gone, magic-link token NOT leaked. Screenshot _ops/hub-PROD-390.png. 1403/1403 tests on the merged tree; astro build clean; founder build gate PASS.
 
 ## Previous task — R2L-TEST-CODE-UNLIMITED
 
