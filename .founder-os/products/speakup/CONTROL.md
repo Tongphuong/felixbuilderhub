@@ -90,6 +90,195 @@ assigns, commits, merges, deploys, or spends.
 ## Current task
 
 - Status: complete
+- Shipped: 2026-07-13 — merged to main (4ce4f21) and LIVE ON PRODUCTION.
+- FOUNDER ACTIONS DONE: (1) R2 binding `R2L_MEDIA` added to Cloudflare Pages
+  PRODUCTION + redeployed — production probe flipped 500 `config_error` → 404
+  `code_not_found`, i.e. THE REPORTED BUG IS FIXED, and the vision autofill,
+  parent portfolio video upload and the concurrent R2L gift-shop photo upload
+  are un-broken by the same change. (2) Merge ack given.
+- Merge: merged origin/main (R2L test-code credit fix, 2 commits) into the
+  branch first → 1390/1390 on the combined tree → fast-forward to main.
+- Rule 20 on PRODUCTION (not just preview — the whole point of this session's
+  lesson): the founder's real Stage-4 lesson renders as 4 chip columns and
+  assembles into "We play football at school, we feel happy because it is fun.";
+  mic arms ONLY when every column is picked; zero page errors; picture
+  answer-key absent from the DOM. `_ops/hwv3-PROD-build-armed-390.png`,
+  `_ops/hwv3-PROD-build-1280.png`.
+- FALSE ALARM (recorded so it is not repeated): the first production screenshot
+  rendered completely unstyled and I nearly reported a ship-blocker. Cause: I
+  probed 60s after push by grepping the HTML for a markup marker; the HTML had
+  propagated but the hashed `/_astro/*.css` had not — and because `.hidden` is a
+  CSS class, the missing stylesheet also un-hid every hidden element. Re-running
+  once the CSS returned 200 was pixel-correct. Second deploy-probe misfire in two
+  days → EVOLUTION_LOG proposal (5): a shared `wait-for-deploy.sh` that asserts
+  every referenced /_astro asset is 200 before any rule-20 screenshot.
+- Started: 2026-07-13
+- Task ID: speakup-adaptive-homework-types
+- Verified commit: 1d671e6 (origin/claude/speakup-homework-types); preview
+  `claude-speakup-homework-type.felixbuilderhub.pages.dev` (Cloudflare truncates
+  the branch alias to 28 chars — the obvious `...-types` URL 404s)
+- Result: 1375/1375 node --test (baseline 1239, +136, none dropped); astro build
+  clean (25 pages); founder build gate PASS. Buffet verdict: REQUEST CHANGES →
+  both findings fixed → see below.
+- Rule-20 verification (DEPLOYED PREVIEW, routed harness — real deployed bundle,
+  synthetic homework, zero real codes/sessions/spend):
+  * story step: must-use chips render ("because together kind special"), VN +
+    EN prompt, ~105s target, Minny red-robot — `_ops/hwv3-story-390.png`
+  * build step: Phương's real Stage-4 lesson as 4 chip columns; one tap per
+    column assembles **"We play football at school, we feel happy because it is
+    fun."**, mic arms ONLY when all columns are picked — `_ops/hwv3-build-390.png`,
+    `_ops/hwv3-build-armed-390.png`, `_ops/hwv3-build-1280.png`
+  * zero page errors; picture answer-key absent from the DOM
+- Full-pipeline probe (real OpenRouter model + REAL validators + real compiler,
+  Phương's actual `friend_detective` lesson): 3/3 drafted tasks survive
+  validation → 7 kid steps, ids unique, "Yes/No" + "He/She" preserved, VN
+  register "con". Adversarial: empty lesson → zero tasks (no invention);
+  injection payload in the paste → ignored.
+- Bugs caught in review that never reached a kid:
+  1. (Elon) duplicate step ids across same-type tasks — the kid client keys
+     progress/scoring/fix-it off step.id. Deduped ON COLLISION ONLY so legacy
+     ids stay byte-identical.
+  2. (Elon) the assembled build sentence — which the child READS ALOUD and is
+     SCORED on — was the run-on "We play football At school We feel happy
+     Because it is fun."
+  3. (Elon) task-list vs old-textbox precedence silently discarded typed text
+     (same silent-data-loss class as the photo bug) → now confirms.
+  4. (Buffet) the blank marker is a placeholder POSITION, not a suffix:
+     "Do you like...?" + pizza → was "Do you like...? pizza", now "Do you like
+     pizza?".
+  5. (Buffet) the URL fence's 9-TLD allowlist let `evil.app` reach a kid's
+     screen and TTS → now matches domain SHAPE (verified it still accepts
+     "7 a.m.", "e.g.", "3.14", "He/She", "Yes/No").
+  6. (Elon, pre-code) the extractor prompt addressed the child as "bạn" not the
+     house register "con"; and the charset had no `/`, which would have silently
+     rejected "He/She"/"Yes/No" — the two commonest patterns in the founder's
+     lessons.
+- BLOCKED ON FOUNDER (2 items):
+  1. **Add the R2 binding to Cloudflare Pages → Settings → Bindings →
+     PRODUCTION**: name `R2L_MEDIA`, bucket `felixbuilderhub-read2lead`, then
+     redeploy. Proven side-by-side on the SAME commit: preview (binding present)
+     → 404 `code_not_found`; production (binding missing) → 500 `config_error`.
+     Until this is done, picture homework, the vision autofill, parent portfolio
+     video upload AND the concurrent R2L gift-shop photo upload are all dead on
+     production.
+  2. **Merge ack** for `claude/speakup-homework-types` → main (founder gates
+     main; pilot is live).
+- Known follow-ups (bounded, NOT blockers):
+  * `buildFeedbackContext`'s `taskType` param is plumbed + tested but nothing
+    passes it — the only caller is the frozen `read2lead-speaking-check.js`. So
+    the coach note's `exercise_type` still derives from `check_mode` for the new
+    types. `target_words` DOES flow. Additive fix, own packet.
+  * Admin modal (paste-lesson → task list) is covered by 20 UI tests + the
+    full-pipeline probe, but NOT live-driven on the deployed preview: `/admin/*`
+    is Basic-Auth'd and I did not seek the password. Founder to eyeball it once.
+  * Buffet copy nits: validator errors say "Nhiệm vụ N" but task cards show no
+    numbers; invisible-char errors render as `có ký tự chưa hỗ trợ: ""`.
+- Owner: Elon plans, reviews every diff line by line, integrates, commits.
+  Mark (bg worker) — backend: `functions/api/_homework.js` (schema v3),
+  `functions/api/minny-speaking-context.js` (task compiler),
+  `functions/api/admin/classes/[id]/homework.js`, NEW
+  `functions/api/admin/classes/[id]/homework-extract.js`,
+  `functions/api/_homework-feedback.js` (exercise_type), + their tests.
+  Steve (bg worker) — UI: `src/components/admin/HomeworkModal.astro`,
+  `src/pages/admin/classes.astro`, `src/pages/speak-up.astro`,
+  `src/styles/speakup-app.css` + UI tests. Buffet reviews the combined
+  diff and red-teams the v2→v3 read path.
+- Lane: `claude/speakup-homework-types` (own worktree
+  `hub-speakup-homework`, off `main` @ 4d63702) → `main`. **Concurrent
+  session active** on `claude/r2l-real-gifts` (R2L-REAL-GIFTS) in the
+  primary tree — file sets are disjoint except read-only imports from
+  `functions/api/admin/_classes.js` (they own its `clampDelta` fix) and
+  `docs/ENV.md` (both touch it; different hunks — reconcile at merge).
+- Problem: (1) BUG — teacher cannot attach a picture to homework:
+  `Lỗi tải ảnh: Hệ thống ảnh chưa được cấu hình.` (2) PRODUCT — homework
+  has no type concept (V0 D8b: "exactly two kinds, no upfront taxonomy"),
+  so the founder's real storytelling / sentence-building / picture /
+  question-card homework cannot be expressed.
+- Root cause (bug, PROVEN live via read-only prod probe on
+  `/api/speakup-homework-photo`, 500 `config_error` before any auth):
+  the R2 bucket binding `R2L_MEDIA` exists in the Cloudflare Pages
+  **Preview** environment but was never added to **Production**. Pages
+  binds R2 per-environment; V0 merged to prod 2026-07-12 without it.
+  `_ops/AGENT_LOG.md:125` recorded "production has it" as an unverified
+  assumption. Systemic cause: `docs/ENV.md`'s setup checklist (:56-72)
+  lists KV + secrets but never mentions binding the R2 bucket.
+  Blast radius beyond homework: the vision autofill and the parent
+  portfolio video upload gate on the same binding — **and so will the
+  concurrent R2L gift-shop photo upload** (flagged to that session).
+- FOUNDER ACTION (Step 0, blocks picture-describe; not code): Cloudflare
+  → Pages → Settings → Bindings → **Production** → add R2 bucket
+  `R2L_MEDIA` → bucket `felixbuilderhub-read2lead` → redeploy.
+- Founder decisions (2026-07-13, AskUserQuestion): authoring = paste the
+  lesson → Minny drafts tasks → teacher confirms (manual edit always
+  available); types to build = sentence-building, storytelling,
+  picture-describe (question-cards kept in the model at zero code cost —
+  flagged for veto); design = reuse the existing homework step layout, no
+  new mock round; rollout = build it all, ship as ONE release.
+- Approach: homework gains an ordered typed `tasks[]` (schema v3).
+  `normalizeHomeworkRecord()` — already the single tolerant-read
+  chokepoint — **upgrades v1/v2 → tasks[] in memory**, so the 20 live
+  pilot kids' records are NEVER rewritten and every downstream consumer
+  sees one shape. `buildHomeworkSteps()` becomes a generic tasks→steps
+  compiler in which every type lands on an EXISTING scorer: story and
+  picture compile to `check_mode:'frame'` with a synthetic stem
+  (`scoreSpeechFrame` = "used 4/6 target words" / "found 7/10 things");
+  sentence-building compiles to `check_mode:'read'` against the sentence
+  the kid assembles by tapping chips. **Zero new grading code, zero new
+  AI on the kid path.**
+- Reuse survey: ADOPTED — `scoreSpeechFrame` (all coverage scoring),
+  `scoreTranscript` + Azure scripted PA, the `modes[]→steps[]` contract +
+  generic client step renderer, Free Talk's shipped chip
+  tap-reveal-then-speak pattern (V1.2 p1), the `homework-photo-extract`
+  draft→teacher-confirm UX convention, the OpenRouter-JSON +
+  Workers-AI-fallback call pattern (`_homework-feedback.js`),
+  `normalizeHomeworkRecord` as the tolerant-read chokepoint, R2
+  `R2L_MEDIA`, fix-it round, word chips + tap-to-hear.
+  REJECTED — a new scorer for sentence-building (chip-tap assembles a
+  concrete sentence → plain `read` already covers it); a D1 table for
+  homework (KV works, no migration needed); Cloudflare Images / Cloudinary
+  (already rejected in V0 — R2 is bound); any LLM on the kid path (V0 D1
+  stands; V1.3 feedback remains the single fenced relaxation).
+- Spec reconciliation (flagged for Phương): this **absorbs most of V1-D6 /
+  phase V1.3b** ("homework brief") — typed tasks carrying target words
+  already give `_homework-feedback.js` the grounding context the `brief`
+  was invented to supply. Reconcile the spec rather than build it twice.
+  Also note V1-D3 placed story/debate in Free Talk as games; the founder
+  has now additionally asked for storytelling as GRADED HOMEWORK — that
+  is a founder scope decision, not a code question, and does not weaken
+  the "no homework content in Free Talk" rule (this is the reverse
+  direction).
+- Cost ceiling: Claude team (Max plan, not metered); runtime ≈
+  $0.001–0.002 per assignment (one teacher-side LLM call at assign time),
+  $0 marginal on the kid path.
+- Acceptance criteria:
+  1. Prod probe of `/api/speakup-homework-photo` returns 404
+     `photo_not_found`, NOT 500 `config_error` (post Step 0).
+  2. **v2→v3 regression is the hard gate**: an existing pilot kid's stored
+     homework produces byte-identical steps before and after the change
+     (deep-equal test on real v1/v2 fixtures); no KV record is rewritten.
+  3. Teacher pastes a real lesson → Minny drafts a task list → teacher
+     edits/confirms → saves; malformed model output → `draft: null`, never
+     a teacher-facing error, saving never blocked.
+  4. A failed photo upload no longer silently drops the picture — the
+     teacher is told before saving.
+  5. Kid can do story (must-use words shown), picture (anchors HIDDEN),
+     and sentence-building (tap one chip per column → assembled sentence
+     revealed → mic arms) steps; each returns a real deterministic score,
+     word chips, fix-it round and the V1.3 coach note.
+  6. Zero new `check_mode`; zero new scorer; zero LLM on the kid path
+     (fetch-never-made test).
+  7. `node --test` green (baseline 1239, none dropped); astro build clean;
+     founder build + complete gates PASS.
+  8. Rule 20: verified on the DEPLOYED production build (not locally) with
+     screenshots + the deployed SHA recorded.
+- Stop condition: any diff to the guardrail stack, caps, the free-talk
+  path, or the deterministic scoring functions themselves
+  (`scoreTranscript`/`scoreSpeechFrame` internals) — stop and escalate.
+  Any path where a v2 record produces different steps than today — stop.
+
+## Prior task (complete): speakup-v1-3-feedback-sandwich
+
+- Status: complete
 - Task ID: speakup-v1-3-feedback-sandwich
 - Owner: Elon authors the feedback prompt verbatim (safety-adjacent);
   Mark (bg, packet scratchpad/v13-mark-packet.md) builds the module +

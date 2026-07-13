@@ -20,9 +20,60 @@
       </button>
     </div>
 
-    <div class="space-y-4 px-6 py-5">
+    <div class="max-h-[75vh] space-y-4 overflow-y-auto px-6 py-5">
       <input type="hidden" name="class_id" id="homework-class-id" />
       <input type="hidden" name="code" id="homework-code" />
+
+      <!-- Schema v3 (2026-07-13): paste-the-lesson authoring. Phương pastes a
+           rich HTML lesson artifact (stages, question cards, chip columns) and
+           Minny drafts a typed task list below -- nothing saves until the
+           teacher confirms. The photo picker further down feeds the SAME
+           draft list (see hwRunExtract in classes.astro). -->
+      <div>
+        <label class="mb-1 block text-sm font-medium text-cream-muted" for="homework-lesson-paste">Dán bài giảng (Minny sẽ đọc và soạn bài tập)</label>
+        <textarea
+          id="homework-lesson-paste"
+          rows="4"
+          class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none"
+          placeholder="Dán nội dung bài giảng (kể cả HTML) vào đây…"
+        ></textarea>
+        <button
+          type="button"
+          id="homework-lesson-extract-btn"
+          class="mt-2 rounded-lg border border-dashed border-cream-dim/40 px-4 py-3 text-sm font-medium text-cream-muted transition hover:border-accent hover:text-accent"
+        >
+          ✨ Minny đọc bài giảng
+        </button>
+        <p id="homework-lesson-status" class="mt-1 hidden text-xs font-medium text-accent" role="status" aria-live="polite"></p>
+      </div>
+
+      <div>
+        <p class="mb-1 text-sm font-medium text-cream-muted">Minny hiểu bài như này</p>
+        <div id="homework-task-empty" class="rounded-lg border border-dashed border-cream-dim/30 p-4 text-center text-xs text-cream-dim">
+          Chưa có bài tập nào — dán bài giảng ở trên, chọn ảnh bên dưới, hoặc thêm bài tay.
+        </div>
+        <div id="homework-task-list" class="space-y-2"></div>
+        <div class="mt-2 flex flex-wrap items-center gap-2">
+          <select
+            id="homework-task-add-type"
+            class="fx-field rounded-lg border border-cream-dim/30 bg-navy-950 px-2 py-2 text-sm text-cream focus:border-accent focus:outline-none"
+          >
+            <option value="read">📖 Đọc câu</option>
+            <option value="present">🎤 Thuyết trình</option>
+            <option value="story">📚 Kể chuyện</option>
+            <option value="build">🧩 Ghép câu</option>
+            <option value="picture">🖼️ Tả ảnh</option>
+            <option value="qa">❓ Hỏi đáp</option>
+          </select>
+          <button
+            type="button"
+            id="homework-task-add-btn"
+            class="rounded-lg border border-cream-dim/30 px-3 py-2 text-xs font-medium text-cream transition hover:border-accent hover:text-accent"
+          >
+            + Thêm bài tay
+          </button>
+        </div>
+      </div>
 
       <div>
         <label class="mb-1 block text-sm font-medium text-cream-muted">Ảnh bài tập (tuỳ chọn)</label>
@@ -53,6 +104,11 @@
         <p class="mt-1 text-xs text-cream-dim">Ảnh cũ sẽ bị thay khi lưu bài mới. Nhận JPEG/PNG/WebP, tối đa 8MB.</p>
         <p id="homework-photo-status" class="mt-1 hidden text-xs font-medium text-accent" role="status" aria-live="polite"></p>
       </div>
+
+      <!-- Quick path (unchanged, kept for one-off homework): if the task
+           list above has 1+ items, save sends {tasks:[...]}; otherwise it
+           falls back to these two fields, exactly as before schema v3. -->
+      <p class="border-t border-cream-dim/15 pt-3 text-xs font-semibold uppercase tracking-wide text-cream-dim">Hoặc nhập nhanh (bỏ qua nếu đã có danh sách bài tập ở trên)</p>
 
       <div>
         <label class="mb-1 block text-sm font-medium text-cream-muted" for="homework-sentences">Câu / từ cần luyện</label>

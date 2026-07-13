@@ -75,6 +75,55 @@ test('buildFeedbackContext: empty transcript + nothing missed/close + no homewor
   assert.deepEqual(context.allowed_focus_words, []);
 });
 
+test('buildFeedbackContext: taskType (from the compiled step) overrides the check_mode-derived exercise_type', () => {
+  const result = { words_missed: [], words_close: [] };
+  const withTaskType = buildFeedbackContext({ checkMode: 'frame', result, transcript: 't', homework: null, azure: null, skipWords: SKIP_WORDS, taskType: 'story' });
+  assert.equal(withTaskType.exercise_type, 'story');
+});
+
+test('buildFeedbackContext: falls back to the current check_mode derivation when taskType is absent (untouched caller stays correct)', () => {
+  const result = { words_missed: [], words_close: [] };
+  const readCtx = buildFeedbackContext({ checkMode: 'read', result, transcript: 't', homework: null, azure: null, skipWords: SKIP_WORDS });
+  assert.equal(readCtx.exercise_type, 'read');
+  const frameCtx = buildFeedbackContext({ checkMode: 'frame', result: { stems: [] }, transcript: 't', homework: null, azure: null, skipWords: SKIP_WORDS });
+  assert.equal(frameCtx.exercise_type, 'frame');
+  const openCtx = buildFeedbackContext({ checkMode: 'open', result, transcript: 't', homework: null, azure: null, skipWords: SKIP_WORDS });
+  assert.equal(openCtx.exercise_type, 'photo_talk');
+});
+
+test('buildFeedbackContext: target_words surfaces every stem anchor_words from the graded result (frame mode) — must_use/anchors/qa-stem all ride the same field', () => {
+  const result = {
+    matchPct: 80,
+    stems: [
+      { id: 'story', text_en: 'Tell a story.', anchor_words: ['because', 'friend', 'happy'] },
+    ],
+  };
+  const context = buildFeedbackContext({ checkMode: 'frame', result, transcript: 'because my friend is happy', homework: null, azure: null, skipWords: SKIP_WORDS, taskType: 'story' });
+  assert.deepEqual(context.target_words, ['because', 'friend', 'happy']);
+});
+
+test('buildFeedbackContext: target_words is empty for read/open modes (no anchor-word concept there)', () => {
+  const readCtx = buildFeedbackContext({ checkMode: 'read', result: { words_missed: [], words_close: [] }, transcript: 't', homework: null, azure: null, skipWords: SKIP_WORDS });
+  assert.deepEqual(readCtx.target_words, []);
+  const openCtx = buildFeedbackContext({ checkMode: 'open', result: { words_missed: [], words_close: [] }, transcript: 't', homework: null, azure: null, skipWords: SKIP_WORDS });
+  assert.deepEqual(openCtx.target_words, []);
+});
+
+test('buildFeedbackContext: target_words does not widen the focus_word grounding fence (allowed_focus_words derivation is unchanged)', () => {
+  // A picture task's anchors are hidden from the kid; even though they now
+  // surface in target_words for the coach note, they must NOT become a new
+  // source for allowed_focus_words (the set validateFeedbackGrounding
+  // actually checks focus_word against).
+  const result = { stems: [{ id: 'picture', text_en: '', anchor_words: ['dog', 'park'] }] };
+  const context = buildFeedbackContext({ checkMode: 'frame', result, transcript: 'i saw a cat', homework: null, azure: null, skipWords: SKIP_WORDS, taskType: 'picture' });
+  assert.deepEqual(context.target_words, ['dog', 'park']);
+  // allowed_focus_words is untouched by target_words: nothing missed/close,
+  // no homework/stem text, and the transcript-fallback path is 'open'-only
+  // (frame mode has no reference text to fall back to) -- so it stays
+  // empty rather than silently picking up 'dog'/'park' from target_words.
+  assert.deepEqual(context.allowed_focus_words, []);
+});
+
 test('buildFeedbackContext: azure block passed through only when accuracy_percent is a finite number, capped to 3 words', () => {
   const withAzure = buildFeedbackContext({
     checkMode: 'frame',
