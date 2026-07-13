@@ -1,6 +1,6 @@
 # Release — Read2Lead
 
-- Candidate version: R2L-GIFTS-FIX — gift delete + the free-gift hole + the photo mystery — branch `claude/r2l-gifts-fix` (aa4a55d, f8e49cb, 9dba2cd). AWAITING FOUNDER GO.
+- Candidate version: R2L-GIFTS-FIX — gift delete, the free-gift hole, the photo mystery, the year-long photo cache, and a responsive grid — branch `claude/r2l-gifts-fix` (9dba2cd, f8e49cb, aa4a55d, 0ecdb4c, c92ab22, 691521e, 17021e8). FOUNDER GO GIVEN 2026-07-13 ("go and merge").
 - Staging URL: `https://claude-r2l-gifts-fix.felixbuilderhub.pages.dev/read2lead/gifts` (production: `https://felixbuilderhub.com/read2lead/gifts`)
 - Rollback commit or deployment: revert the three commits on main; Cloudflare Pages auto-redeploys. No schema change, no KV migration — the fix is inert against existing data.
 - Scope and UI approved: yes
@@ -13,7 +13,7 @@
 - Console and API errors checked: yes
 - Privacy and cost checked: yes
 - Screenshot or video proof ready: yes
-- Founder production approval: no
+- Founder production approval: yes
 - Production smoke test passed: no
 
 ## Evidence — R2L-GIFTS-FIX (2026-07-13)
