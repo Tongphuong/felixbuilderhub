@@ -30,6 +30,39 @@
 Touching any of these requires a Claude-reviewed written spec and Phuong's
 explicit approval. Aider workers may not expand into these files.
 
+## 1b. Landmines in THIS repo — each one has already caused a bug
+
+These are hub-specific traps, not general advice. They live here rather than in
+Founder OS on purpose: Founder OS governs every product, and stuffing one repo's
+trivia into it is how a governance layer rots into noise.
+
+1. **`normalizeProgressState()` silently deletes fields it does not know about.**
+   `functions/api/_read2lead-v2-state.js` rebuilds the student's state from an
+   explicit field **allow-list**, while `saveProgressState()` writes back whatever
+   object it is handed. So a field you add to the state is written to KV once, then
+   **silently dropped** the next time *any* endpoint does load → mutate → save.
+   *This already cost us:* the real-gift `redemptions[]` ledger was not on the list,
+   so a child could redeem a 30.000💎 football and then lose the entire record — and
+   with it the ability to ever be refunded — **by finishing one reading lesson.** A
+   worker nearly repeated the identical mistake in the same session with a new field.
+   **If you add a field to the progress state, add it to the allow-list, and write a
+   test that saves through an unrelated endpoint and re-reads it.**
+
+2. **`escapeHtml` in `src/lib/admin-shared.mjs` is BROKEN — it is a no-op.** Its
+   replacement strings are literal `&`/`<`/`>` rather than entities. Do not use it
+   on untrusted input. Working versions exist in `src/lib/gift-ux.ts` and
+   `src/lib/shop-ux.ts`.
+
+3. **Cloudflare Pages PREVIEW deployments read and write PRODUCTION data.** There is
+   no separate preview database. A branch preview is not a sandbox: redeeming,
+   spending, or deleting on a preview URL does it *for real*, to a real child.
+   Establish what your environment writes to **before** any destructive test, and use
+   a throwaway record.
+
+4. **`config:*` and `admin:*` keys share the `READ2LEAD_CODES` namespace** with the
+   student access codes themselves. `isAccessCodeKey()` filters them out by prefix —
+   if you add a new top-level key, check you have not broken code listings.
+
 ---
 
 ## 2. Zone matrix
