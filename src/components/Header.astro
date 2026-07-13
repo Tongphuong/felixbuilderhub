@@ -70,6 +70,7 @@ const progressHref = '/ho-so';
             </div>
             <nav class="flex flex-col p-2 text-sm font-semibold text-cream-muted" aria-label="Liên kết khác">
               <a href={progressHref} class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Xem tiến độ con</a>
+              <a href="/read2lead/gifts" data-r2l-gifts-link class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">🎁 Quà thật · đổi kim cương</a>
               <a href="/read2lead" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Read2Lead · Luyện đọc</a>
               <a href="/coaching" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Coaching</a>
               <a href="/speak-up" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">SpeakUp · Luyện nói</a>
@@ -147,6 +148,14 @@ const progressHref = '/ho-so';
     const params = new URLSearchParams(window.location.search);
     const code = (params.get('code') || '').trim().toUpperCase();
     if (code) {
+      // Carry the child's code onto the gift-shop link, so it opens THEIR shop
+      // rather than an empty "nhập mã học sinh" form. Done here because the
+      // code only exists at runtime, from the query string.
+      const giftsLink = stateHeader.querySelector('[data-r2l-gifts-link]');
+      if (giftsLink instanceof HTMLAnchorElement) {
+        giftsLink.href = `/read2lead/gifts?code=${encodeURIComponent(code)}`;
+      }
+
       fetch(`/api/read2lead-progress?code=${encodeURIComponent(code)}`)
         .then((response) => response.json())
         .then((data) => {

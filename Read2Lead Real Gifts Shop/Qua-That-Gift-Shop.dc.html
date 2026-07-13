@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/felix-coaching-design-system-05c19970-0964-4c70-bbd7-1dc2f8d82ac9/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/felix-coaching-design-system-05c19970-0964-4c70-bbd7-1dc2f8d82ac9/tokens/colors.css">
+<link rel="stylesheet" href="_ds/felix-coaching-design-system-05c19970-0964-4c70-bbd7-1dc2f8d82ac9/tokens/typography.css">
+<link rel="stylesheet" href="_ds/felix-coaching-design-system-05c19970-0964-4c70-bbd7-1dc2f8d82ac9/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/felix-coaching-design-system-05c19970-0964-4c70-bbd7-1dc2f8d82ac9/tokens/backgrounds.css">
+<link rel="stylesheet" href="_ds/felix-coaching-design-system-05c19970-0964-4c70-bbd7-1dc2f8d82ac9/tokens/base.css">
+<link rel="stylesheet" href="_ds/felix-coaching-design-system-05c19970-0964-4c70-bbd7-1dc2f8d82ac9/tokens/components.css">
+<link rel="stylesheet" href="_ds/felix-coaching-design-system-05c19970-0964-4c70-bbd7-1dc2f8d82ac9/styles.css">
+<script src="_ds/felix-coaching-design-system-05c19970-0964-4c70-bbd7-1dc2f8d82ac9/_ds_bundle.js"></script>
+<style>
+  @keyframes qt-shimmer { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+  @keyframes qt-pulse { 0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--gold) 55%, transparent); } 50% { box-shadow: 0 0 22px 4px color-mix(in srgb, var(--gold) 45%, transparent); } }
+  @keyframes qt-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { color: var(--gold-light); }
+  @media (prefers-reduced-motion: reduce) {
+    .qt-shimmer, .qt-pulse, .qt-float { animation: none !important; }
+  }
+</style>
+</helmet>
+
+<div class="star-field" style="min-height:100vh; font-family:var(--font-sans); color:var(--cream); padding:56px 40px 120px;">
+
+  <!-- ======================= HANDOFF HEADER ======================= -->
+  <header style="max-width:1160px; margin:0 auto 12px;">
+    <p class="fx-eyebrow" style="color:var(--gold-light);">Read2Lead · R2L-REAL-GIFTS</p>
+    <h1 style="font-family:var(--font-display); font-weight:800; font-size:44px; line-height:1.2; margin:10px 0 0; color:var(--cream); text-wrap:balance;">Quà thật — shop đổi kim cương</h1>
+    <p style="max-width:60ch; margin:16px 0 0; color:var(--cream-muted); font-size:16px; line-height:1.6;">Con dùng 💎 kim cương (thưởng ở lớp) để đổi lấy <strong style="color:var(--cream);">một món quà thật</strong> — cô mua và trao tận tay ở lớp. Mỗi thẻ quà mở đầu bằng <strong style="color:var(--cream);">ảnh thật của món quà</strong>: đó là lời hứa, không phải một dòng dữ liệu.</p>
+    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:20px;">
+      <span class="fx-badge fx-badge--neutral">7 màn hình</span>
+      <span class="fx-badge fx-badge--neutral">Chỉ tối · navy / gold / cream</span>
+      <span class="fx-badge fx-badge--neutral">Tiếng Việt · 44px+ tap</span>
+      <span class="fx-badge fx-badge--accent">💎 kim cương · không dùng 🪙 xu</span>
+    </div>
+  </header>
+
+  <!-- ======================= SECTION 1 — SHOP PAGE ======================= -->
+  <section id="s1" style="max-width:1160px; margin:64px auto 0;">
+    <div style="display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; border-top:1px solid var(--border-subtle); padding-top:28px;">
+      <span style="font-family:var(--font-display); font-weight:800; font-size:26px; color:var(--gold);">01</span>
+      <h2 style="font-family:var(--font-display); font-weight:800; font-size:24px; margin:0; color:var(--cream);">Trang shop — <span style="color:var(--cream-muted);">/read2lead/gifts</span></h2>
+    </div>
+    <p style="max-width:64ch; margin:12px 0 0; color:var(--cream-muted); font-size:15px; line-height:1.6;">Số dư 💎 to &amp; đầy tự hào ở đầu trang. Mục tiêu con đã chọn được ghim ngay dưới. Catalogue chia thành <strong style="color:var(--cream);">3 dải theo khoảng cách</strong> — <em>đổi được ngay · sắp đủ rồi · con đang xây dựng</em> — nên không món nào bị khoá hay làm mờ. Thẻ xa chỉ là một chặng đường con đang đi.</p>
+
+    <div style="display:flex; flex-wrap:wrap; gap:48px; align-items:flex-start; margin-top:32px;">
+
+      <!-- ---------- 1a MOBILE ---------- -->
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <span style="font-family:var(--font-display); font-weight:800; font-size:14px; color:var(--navy-950); background:var(--gold-light); border-radius:6px; padding:2px 9px;">1a</span>
+          <span style="color:var(--cream-dim); font-size:13px;">Mobile · 390px · bé Hiếu (Hieuenzo)</span>
+        </div>
+        <!-- phone frame -->
+        <div style="width:390px; border-radius:40px; padding:12px; background:linear-gradient(160deg,#0b1c2b,#132c40); box-shadow:0 40px 80px -30px rgba(0,0,0,.85), inset 0 0 0 1px rgba(245,230,200,.08);">
+          <div style="border-radius:30px; overflow:hidden; background:var(--navy-950); height:780px; overflow-y:auto;">
+
+            <!-- app top bar -->
+            <div style="position:sticky; top:0; z-index:5; display:flex; align-items:center; gap:12px; padding:16px 18px 12px; background:color-mix(in srgb, var(--navy-950) 92%, transparent); backdrop-filter:blur(8px); border-bottom:1px solid var(--border-subtle);">
+              <a href="#s1" aria-label="Quay lại" style="width:40px; height:40px; flex-shrink:0; display:grid; place-items:center; border-radius:999px; border:1px solid var(--border-subtle); color:var(--cream); font-size:18px;">‹</a>
+              <div style="flex:1; min-width:0;">
+                <p class="fx-eyebrow" style="color:var(--gold-light); margin:0;">Quà thật</p>
+                <p style="margin:2px 0 0; font-family:var(--font-display); font-weight:800; font-size:16px; color:var(--cream);">Cửa hàng của con</p>
+              </div>
+            </div>
+
+            <!-- balance hero -->
+            <div style="margin:16px; padding:20px; border-radius:20px; border:1px solid var(--accent-border); background:linear-gradient(135deg, color-mix(in srgb, var(--gold) 16%, transparent), color-mix(in srgb, var(--navy-900) 82%, transparent) 60%); text-align:center;">
+              <p class="fx-eyebrow" style="margin:0; color:var(--cream-muted);">Kim cương của con</p>
+              <p style="margin:8px 0 0; font-family:var(--font-display); font-weight:800; font-size:44px; line-height:1; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 4.295</p>
+              <p style="margin:10px 0 0; color:var(--cream-muted); font-size:12.5px;">Kim cương đến từ <strong style="color:var(--cream);">lớp học</strong> — cô thưởng mỗi buổi.</p>
+            </div>
+
+            <!-- pinned goal -->
+            <div style="margin:0 16px;">
+              <p class="fx-eyebrow" style="margin:0 0 8px; color:var(--gold-light);">★ Mục tiêu của con</p>
+              <div style="border-radius:18px; overflow:hidden; border:1px solid var(--accent-border); background:var(--surface-card);">
+                <div style="position:relative; aspect-ratio:16/9; background:radial-gradient(120% 120% at 50% 22%, #274563 0%, #14304600 62%), linear-gradient(180deg,#1d3f58,#11283b); box-shadow:inset 0 0 0 1px rgba(245,230,200,.10), inset 0 -46px 54px -34px rgba(0,0,0,.72); display:grid; place-items:center;">
+                  <div style="text-align:center;">
+                    <div class="qt-float" style="font-size:60px; line-height:1;">🧋</div>
+                    <p style="margin:8px 0 0; color:var(--cream-dim); font-size:11px;">Ảnh thật của Trà sữa hiện ở đây</p>
+                  </div>
+                </div>
+                <div style="padding:14px 16px 16px;">
+                  <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;">
+                    <strong style="font-family:var(--font-display); font-size:18px; color:var(--cream);">Trà sữa</strong>
+                    <span style="font-family:var(--font-display); font-weight:800; font-size:15px; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 10.000</span>
+                  </div>
+                  <span class="fx-progress" style="margin-top:12px; height:10px;"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:43%;"></span></span>
+                  <p style="margin:9px 0 0; color:var(--cream-muted); font-size:13px;">Con đã đi được <strong style="color:var(--gold-light);">43%</strong> chặng đường · còn 5.705 💎</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- band: đổi ngay -->
+            <p class="fx-eyebrow" style="margin:22px 16px 8px; color:var(--success);">✓ Con có thể đổi ngay</p>
+            <div style="margin:0 16px; border-radius:18px; overflow:hidden; border:1px solid color-mix(in srgb, var(--success) 40%, transparent); background:var(--surface-card);">
+              <div style="position:relative; aspect-ratio:16/9; background:radial-gradient(120% 120% at 50% 22%, #274563 0%, #14304600 62%), linear-gradient(180deg,#1d3f58,#11283b); box-shadow:inset 0 0 0 1px rgba(245,230,200,.10), inset 0 -46px 54px -34px rgba(0,0,0,.72); display:grid; place-items:center;">
+                <div style="font-size:56px; line-height:1;">🌟</div>
+                <span class="fx-badge fx-badge--solid" style="position:absolute; top:10px; left:10px; background:var(--success); color:var(--navy-950); font-weight:800;">Đổi được rồi!</span>
+              </div>
+              <div style="padding:14px 16px 16px;">
+                <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;">
+                  <strong style="font-family:var(--font-display); font-size:18px; color:var(--cream);">Sticker</strong>
+                  <span style="font-family:var(--font-display); font-weight:800; font-size:15px; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 1.000</span>
+                </div>
+                <span class="fx-progress" style="margin-top:12px; height:10px;"><span class="fx-progress__fill" style="width:100%; background:var(--success);"></span></span>
+                <p style="margin:9px 0 0; color:var(--success); font-size:13px;">Con đủ kim cương rồi 🎉</p>
+                <button type="button" class="fx-btn fx-btn--primary fx-btn--block" style="margin-top:12px; min-height:56px; font-size:16px; font-weight:800;">Đổi quà ngay 💎</button>
+              </div>
+            </div>
+
+            <!-- band: sắp đủ -->
+            <p class="fx-eyebrow" style="margin:22px 16px 8px; color:var(--gold-light);">Sắp đủ rồi</p>
+            <div style="margin:0 16px; border-radius:18px; overflow:hidden; border:1px solid var(--border-subtle); background:var(--surface-card);">
+              <div style="position:relative; aspect-ratio:16/9; background:radial-gradient(120% 120% at 50% 22%, #274563 0%, #14304600 62%), linear-gradient(180deg,#1d3f58,#11283b); box-shadow:inset 0 0 0 1px rgba(245,230,200,.10), inset 0 -46px 54px -34px rgba(0,0,0,.72); display:grid; place-items:center;">
+                <div style="font-size:56px; line-height:1;">🖊️</div>
+              </div>
+              <div style="padding:14px 16px 16px;">
+                <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;">
+                  <strong style="font-family:var(--font-display); font-size:18px; color:var(--cream);">Bút</strong>
+                  <span style="font-family:var(--font-display); font-weight:800; font-size:15px; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 5.000</span>
+                </div>
+                <span class="fx-progress" style="margin-top:12px; height:10px;"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:86%;"></span></span>
+                <p style="margin:9px 0 0; color:var(--cream-muted); font-size:13px;">Đi được <strong style="color:var(--gold-light);">86%</strong> — chỉ còn <strong style="color:var(--gold-light);">705 💎</strong>, khoảng một buổi học nữa!</p>
+                <button type="button" class="fx-btn fx-btn--secondary fx-btn--block" style="margin-top:12px; min-height:48px;">Đặt làm mục tiêu ★</button>
+              </div>
+            </div>
+
+            <!-- band: đang xây dựng -->
+            <p class="fx-eyebrow" style="margin:22px 16px 8px; color:var(--cream-muted);">Con đang xây dựng</p>
+            <div style="margin:0 16px 24px; border-radius:18px; overflow:hidden; border:1px solid var(--border-subtle); background:var(--surface-card);">
+              <div style="position:relative; aspect-ratio:16/9; background:radial-gradient(120% 120% at 50% 22%, #274563 0%, #14304600 62%), linear-gradient(180deg,#1d3f58,#11283b); box-shadow:inset 0 0 0 1px rgba(245,230,200,.10), inset 0 -46px 54px -34px rgba(0,0,0,.72); display:grid; place-items:center;">
+                <div style="font-size:56px; line-height:1;">⚽</div>
+              </div>
+              <div style="padding:14px 16px 16px;">
+                <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px;">
+                  <strong style="font-family:var(--font-display); font-size:18px; color:var(--cream);">Quả bóng đá</strong>
+                  <span style="font-family:var(--font-display); font-weight:800; font-size:15px; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 30.000</span>
+                </div>
+                <span class="fx-progress" style="margin-top:12px; height:10px;"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:14%;"></span></span>
+                <p style="margin:9px 0 0; color:var(--cream-muted); font-size:13px;">Đi được <strong style="color:var(--gold-light);">14%</strong> — mục tiêu cả năm của con ⚽</p>
+                <button type="button" class="fx-btn fx-btn--secondary fx-btn--block" style="margin-top:12px; min-height:48px;">Đặt làm mục tiêu ★</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------- 1b DESKTOP ---------- -->
+      <div style="flex:1; min-width:640px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <span style="font-family:var(--font-display); font-weight:800; font-size:14px; color:var(--navy-950); background:var(--gold-light); border-radius:6px; padding:2px 9px;">1b</span>
+          <span style="color:var(--cream-dim); font-size:13px;">Desktop · 1280px (thu gọn) · lưới catalogue đầy đủ 7 quà</span>
+        </div>
+        <!-- browser-ish shell -->
+        <div style="border-radius:16px; overflow:hidden; border:1px solid rgba(245,230,200,.10); box-shadow:0 40px 80px -30px rgba(0,0,0,.8);">
+          <div style="background:var(--navy-950); padding:26px 30px 34px;">
+
+            <!-- top bar -->
+            <div style="display:flex; align-items:center; gap:16px;">
+              <a href="#s1" aria-label="Quay lại" style="width:44px; height:44px; flex-shrink:0; display:grid; place-items:center; border-radius:999px; border:1px solid var(--border-subtle); color:var(--cream); font-size:20px;">‹</a>
+              <div style="flex:1;">
+                <p class="fx-eyebrow" style="color:var(--gold-light); margin:0;">Quà thật</p>
+                <p style="margin:2px 0 0; font-family:var(--font-display); font-weight:800; font-size:20px; color:var(--cream);">Cửa hàng của con</p>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; padding:10px 18px; border-radius:999px; border:1px solid var(--accent-border); background:color-mix(in srgb, var(--gold) 14%, transparent);">
+                <span style="font-size:22px;">💎</span>
+                <div style="line-height:1.1;">
+                  <span style="display:block; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--cream-muted); font-weight:800;">Kim cương của con</span>
+                  <strong style="font-family:var(--font-display); font-weight:800; font-size:24px; color:var(--gold-light); font-variant-numeric:tabular-nums;">4.295</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- pinned goal banner -->
+            <div style="margin-top:22px; display:flex; gap:18px; align-items:stretch; padding:16px; border-radius:18px; border:1px solid var(--accent-border); background:linear-gradient(135deg, color-mix(in srgb, var(--gold) 15%, transparent), color-mix(in srgb, var(--navy-900) 82%, transparent) 60%);">
+              <div style="position:relative; width:200px; flex-shrink:0; border-radius:12px; overflow:hidden;">
+                <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="qt-goal-d" fit="contain" placeholder="Thả ảnh Trà sữa" hint-size="100%,100%" style="position:absolute; inset:0;"></x-import>
+                <div style="position:absolute; inset:0; z-index:-1; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; font-size:56px;">🧋</div>
+              </div>
+              <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+                <p class="fx-eyebrow" style="margin:0; color:var(--gold-light);">★ Mục tiêu của con</p>
+                <div style="display:flex; align-items:baseline; gap:12px; margin-top:6px;">
+                  <strong style="font-family:var(--font-display); font-size:24px; color:var(--cream);">Trà sữa</strong>
+                  <span style="font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 10.000</span>
+                </div>
+                <span class="fx-progress" style="margin-top:12px; height:12px; max-width:420px;"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:43%;"></span></span>
+                <p style="margin:10px 0 0; color:var(--cream-muted); font-size:14px;">Con đã đi được <strong style="color:var(--gold-light);">43%</strong> chặng đường · còn <strong style="color:var(--gold-light);">5.705 💎</strong> nữa</p>
+              </div>
+              <button type="button" class="fx-btn fx-btn--secondary" style="align-self:center; min-height:44px;">Đổi mục tiêu</button>
+            </div>
+
+            <!-- band: đổi ngay -->
+            <p class="fx-eyebrow" style="margin:26px 0 12px; color:var(--success);">✓ Con có thể đổi ngay</p>
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
+              <!-- Sticker affordable -->
+              <div style="border-radius:16px; overflow:hidden; border:1px solid color-mix(in srgb, var(--success) 40%, transparent); background:var(--surface-card);">
+                <div style="position:relative; aspect-ratio:4/3;">
+                  <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="qt-sticker-d" fit="contain" placeholder="Thả ảnh Sticker" hint-size="100%,100%" style="position:absolute; inset:0;"></x-import>
+                  <div style="position:absolute; inset:0; z-index:-1; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; font-size:56px;">🌟</div>
+                  <span class="fx-badge fx-badge--solid" style="position:absolute; top:10px; left:10px; background:var(--success); color:var(--navy-950); font-weight:800;">Đổi được rồi!</span>
+                </div>
+                <div style="padding:14px 15px 16px;">
+                  <div style="display:flex; justify-content:space-between; align-items:baseline;"><strong style="font-family:var(--font-display); font-size:17px; color:var(--cream);">Sticker</strong><span style="font-family:var(--font-display); font-weight:800; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 1.000</span></div>
+                  <span class="fx-progress" style="margin-top:11px;"><span class="fx-progress__fill" style="width:100%; background:var(--success);"></span></span>
+                  <button type="button" class="fx-btn fx-btn--primary fx-btn--block" style="margin-top:12px; min-height:52px; font-weight:800;">Đổi quà ngay 💎</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- band: sắp đủ -->
+            <p class="fx-eyebrow" style="margin:26px 0 12px; color:var(--gold-light);">Sắp đủ rồi</p>
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
+              <!-- Bút -->
+              <div style="border-radius:16px; overflow:hidden; border:1px solid var(--border-subtle); background:var(--surface-card);">
+                <div style="position:relative; aspect-ratio:4/3;">
+                  <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="qt-but-d" fit="contain" placeholder="Thả ảnh Bút" hint-size="100%,100%" style="position:absolute; inset:0;"></x-import>
+                  <div style="position:absolute; inset:0; z-index:-1; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; font-size:56px;">🖊️</div>
+                </div>
+                <div style="padding:14px 15px 16px;">
+                  <div style="display:flex; justify-content:space-between; align-items:baseline;"><strong style="font-family:var(--font-display); font-size:17px; color:var(--cream);">Bút</strong><span style="font-family:var(--font-display); font-weight:800; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 5.000</span></div>
+                  <span class="fx-progress" style="margin-top:11px;"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:86%;"></span></span>
+                  <p style="margin:8px 0 0; color:var(--cream-muted); font-size:12.5px;">86% · còn <strong style="color:var(--gold-light);">705 💎</strong></p>
+                  <button type="button" class="fx-btn fx-btn--secondary fx-btn--block" style="margin-top:10px; min-height:44px;">Đặt làm mục tiêu ★</button>
+                </div>
+              </div>
+              <!-- Hộp bút -->
+              <div style="border-radius:16px; overflow:hidden; border:1px solid var(--border-subtle); background:var(--surface-card);">
+                <div style="position:relative; aspect-ratio:4/3; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; box-shadow:inset 0 0 0 1px rgba(245,230,200,.10), inset 0 -46px 54px -34px rgba(0,0,0,.72);">
+                  <span style="font-size:56px;">✏️</span>
+                </div>
+                <div style="padding:14px 15px 16px;">
+                  <div style="display:flex; justify-content:space-between; align-items:baseline;"><strong style="font-family:var(--font-display); font-size:17px; color:var(--cream);">Hộp bút</strong><span style="font-family:var(--font-display); font-weight:800; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 7.000</span></div>
+                  <span class="fx-progress" style="margin-top:11px;"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:61%;"></span></span>
+                  <p style="margin:8px 0 0; color:var(--cream-muted); font-size:12.5px;">61% · còn 2.705 💎</p>
+                  <button type="button" class="fx-btn fx-btn--secondary fx-btn--block" style="margin-top:10px; min-height:44px;">Đặt làm mục tiêu ★</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- band: đang xây dựng -->
+            <p class="fx-eyebrow" style="margin:26px 0 12px; color:var(--cream-muted);">Con đang xây dựng</p>
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
+              <!-- Bộ Lego -->
+              <div style="border-radius:16px; overflow:hidden; border:1px solid var(--border-subtle); background:var(--surface-card);">
+                <div style="position:relative; aspect-ratio:4/3; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; box-shadow:inset 0 0 0 1px rgba(245,230,200,.10), inset 0 -46px 54px -34px rgba(0,0,0,.72);">
+                  <span style="font-size:56px;">🧱</span>
+                </div>
+                <div style="padding:14px 15px 16px;">
+                  <div style="display:flex; justify-content:space-between; align-items:baseline;"><strong style="font-family:var(--font-display); font-size:17px; color:var(--cream);">Bộ Lego</strong><span style="font-family:var(--font-display); font-weight:800; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 20.000</span></div>
+                  <span class="fx-progress" style="margin-top:11px;"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:21%;"></span></span>
+                  <p style="margin:8px 0 0; color:var(--cream-muted); font-size:12.5px;">Đi được 21% chặng đường</p>
+                  <button type="button" class="fx-btn fx-btn--secondary fx-btn--block" style="margin-top:10px; min-height:44px;">Đặt làm mục tiêu ★</button>
+                </div>
+              </div>
+              <!-- Sách -->
+              <div style="border-radius:16px; overflow:hidden; border:1px solid var(--border-subtle); background:var(--surface-card);">
+                <div style="position:relative; aspect-ratio:4/3; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; box-shadow:inset 0 0 0 1px rgba(245,230,200,.10), inset 0 -46px 54px -34px rgba(0,0,0,.72);">
+                  <span style="font-size:56px;">📚</span>
+                </div>
+                <div style="padding:14px 15px 16px;">
+                  <div style="display:flex; justify-content:space-between; align-items:baseline;"><strong style="font-family:var(--font-display); font-size:17px; color:var(--cream);">Sách</strong><span style="font-family:var(--font-display); font-weight:800; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 20.000</span></div>
+                  <span class="fx-progress" style="margin-top:11px;"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:21%;"></span></span>
+                  <p style="margin:8px 0 0; color:var(--cream-muted); font-size:12.5px;">Đi được 21% chặng đường</p>
+                  <button type="button" class="fx-btn fx-btn--secondary fx-btn--block" style="margin-top:10px; min-height:44px;">Đặt làm mục tiêu ★</button>
+                </div>
+              </div>
+              <!-- Bóng -->
+              <div style="border-radius:16px; overflow:hidden; border:1px solid var(--border-subtle); background:var(--surface-card);">
+                <div style="position:relative; aspect-ratio:4/3;">
+                  <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="qt-bong-d" fit="contain" placeholder="Thả ảnh Bóng đá" hint-size="100%,100%" style="position:absolute; inset:0;"></x-import>
+                  <div style="position:absolute; inset:0; z-index:-1; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; font-size:56px;">⚽</div>
+                </div>
+                <div style="padding:14px 15px 16px;">
+                  <div style="display:flex; justify-content:space-between; align-items:baseline;"><strong style="font-family:var(--font-display); font-size:17px; color:var(--cream);">Quả bóng đá</strong><span style="font-family:var(--font-display); font-weight:800; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 30.000</span></div>
+                  <span class="fx-progress" style="margin-top:11px;"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:14%;"></span></span>
+                  <p style="margin:8px 0 0; color:var(--cream-muted); font-size:12.5px;">Đi được 14% · mục tiêu cả năm ⚽</p>
+                  <button type="button" class="fx-btn fx-btn--secondary fx-btn--block" style="margin-top:10px; min-height:44px;">Đặt làm mục tiêu ★</button>
+                </div>
+              </div>
+            </div>
+
+            <p style="margin:22px 0 0; text-align:center; color:var(--cream-dim); font-size:12.5px;">Ảnh thật là <strong style="color:var(--cream-muted);">nhân vật chính</strong> của mỗi thẻ. Ô ảnh có nền tối dịu để ảnh cắt nền trắng (Shopee/Lazada) không bị chói — thả thử một ảnh vào thẻ có khung ★.</p>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ---------- 1c CARD STATES ---------- -->
+    <div style="margin-top:52px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+        <span style="font-family:var(--font-display); font-weight:800; font-size:14px; color:var(--navy-950); background:var(--gold-light); border-radius:6px; padding:2px 9px;">1c</span>
+        <span style="color:var(--cream-dim); font-size:13px;">Năm trạng thái của thẻ quà + near-miss + trạng thái rỗng</span>
+      </div>
+      <p style="max-width:64ch; margin:0 0 24px; color:var(--cream-muted); font-size:14px; line-height:1.6;">Không bao giờ có trạng thái "con không mua được". Món chưa đủ tiền hiển thị là <em>đang tiến tới</em> — luôn có thanh tiến độ. Near-miss (còn vài chục 💎) là khoảnh khắc động lực lớn nhất — làm nó thật rực rỡ.</p>
+
+      <div style="display:flex; flex-wrap:wrap; gap:18px;">
+
+        <!-- STATE 1: Đang tiết kiệm -->
+        <div style="width:280px; border-radius:16px; overflow:hidden; border:1px solid var(--border-subtle); background:var(--surface-card);">
+          <div style="position:relative; aspect-ratio:4/3; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; box-shadow:inset 0 0 0 1px rgba(245,230,200,.10), inset 0 -46px 54px -34px rgba(0,0,0,.72);">
+            <span style="font-size:52px;">🧱</span>
+          </div>
+          <div style="padding:14px 15px 16px;">
+            <span class="fx-badge fx-badge--neutral" style="font-size:11px;">Đang tiết kiệm</span>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:10px;"><strong style="font-family:var(--font-display); font-size:16px; color:var(--cream);">Bộ Lego</strong><span style="font-family:var(--font-display); font-weight:800; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 20.000</span></div>
+            <span class="fx-progress" style="margin-top:10px;"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:21%;"></span></span>
+            <p style="margin:8px 0 0; color:var(--cream-muted); font-size:12.5px;">Con đã đi được <strong style="color:var(--gold-light);">21%</strong> chặng đường</p>
+            <button type="button" class="fx-btn fx-btn--secondary fx-btn--block" style="margin-top:11px; min-height:44px;">Đặt làm mục tiêu ★</button>
+          </div>
+        </div>
+
+        <!-- STATE 2: NEAR-MISS (loud) -->
+        <div class="qt-pulse" style="width:280px; border-radius:16px; overflow:hidden; border:1.5px solid var(--gold-light); background:linear-gradient(180deg, color-mix(in srgb, var(--gold) 20%, transparent), var(--surface-card) 55%);">
+          <div style="position:relative; aspect-ratio:4/3; background:radial-gradient(120% 120% at 50% 22%, #3a5170, #16304600 62%), linear-gradient(180deg,#22405b,#12293b); display:grid; place-items:center; box-shadow:inset 0 0 0 1px rgba(242,204,126,.22), inset 0 -46px 54px -34px rgba(0,0,0,.72);">
+            <span class="qt-float" style="font-size:52px;">🌟</span>
+            <span class="fx-badge" style="position:absolute; top:10px; left:10px; background:var(--gold-light); color:var(--navy-950); font-weight:800;">🔥 Sắp đổi được!</span>
+          </div>
+          <div style="padding:14px 15px 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:baseline;"><strong style="font-family:var(--font-display); font-size:16px; color:var(--cream);">Sticker</strong><span style="font-family:var(--font-display); font-weight:800; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 1.000</span></div>
+            <span class="fx-progress" style="margin-top:10px; height:12px;"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:99%;"></span></span>
+            <p style="margin:9px 0 0; color:var(--gold-light); font-size:14px; font-weight:700;">Chỉ còn 10 💎 nữa thôi! 🔥</p>
+            <p style="margin:4px 0 0; color:var(--cream-muted); font-size:12px;">Buổi học tới của con là đủ rồi!</p>
+            <button type="button" class="fx-btn fx-btn--secondary fx-btn--block" style="margin-top:11px; min-height:44px;">Đặt làm mục tiêu ★</button>
+          </div>
+        </div>
+
+        <!-- STATE 3: Đổi được rồi -->
+        <div style="width:280px; border-radius:16px; overflow:hidden; border:1px solid color-mix(in srgb, var(--success) 45%, transparent); background:var(--surface-card);">
+          <div style="position:relative; aspect-ratio:4/3; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; box-shadow:inset 0 0 0 1px rgba(245,230,200,.10), inset 0 -46px 54px -34px rgba(0,0,0,.72);">
+            <span style="font-size:52px;">🧋</span>
+            <span class="fx-badge" style="position:absolute; top:10px; left:10px; background:var(--success); color:var(--navy-950); font-weight:800;">Đổi được rồi!</span>
+          </div>
+          <div style="padding:14px 15px 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:baseline;"><strong style="font-family:var(--font-display); font-size:16px; color:var(--cream);">Trà sữa</strong><span style="font-family:var(--font-display); font-weight:800; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 10.000</span></div>
+            <span class="fx-progress" style="margin-top:10px;"><span class="fx-progress__fill" style="width:100%; background:var(--success);"></span></span>
+            <p style="margin:8px 0 0; color:var(--success); font-size:12.5px;">Con đủ kim cương rồi 🎉</p>
+            <button type="button" class="fx-btn fx-btn--primary fx-btn--block" style="margin-top:11px; min-height:56px; font-weight:800; font-size:16px;">Đổi quà ngay 💎</button>
+          </div>
+        </div>
+
+        <!-- STATE 4: Đang chờ cô duyệt -->
+        <div style="width:280px; border-radius:16px; overflow:hidden; border:1px solid var(--border-subtle); background:var(--surface-card);">
+          <div style="position:relative; aspect-ratio:4/3; background:radial-gradient(120% 120% at 50% 22%, #223d55, #122a3c); display:grid; place-items:center; box-shadow:inset 0 0 0 1px rgba(245,230,200,.10), inset 0 -46px 54px -34px rgba(0,0,0,.72);">
+            <span style="font-size:52px; opacity:.85;">🧋</span>
+            <span class="fx-badge fx-badge--neutral" style="position:absolute; top:10px; left:10px;">⏳ Đang chờ cô duyệt</span>
+          </div>
+          <div style="padding:14px 15px 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:baseline;"><strong style="font-family:var(--font-display); font-size:16px; color:var(--cream);">Trà sữa</strong><span style="font-family:var(--font-display); font-weight:800; color:var(--cream-dim); font-variant-numeric:tabular-nums;">−10.000 💎</span></div>
+            <p style="margin:10px 0 0; color:var(--cream-muted); font-size:12.5px; line-height:1.5;">Con đã gửi yêu cầu. Cô sẽ xem và chuẩn bị quà cho con nhé.</p>
+            <button type="button" class="fx-btn fx-btn--secondary fx-btn--block" disabled aria-disabled="true" style="margin-top:11px; min-height:44px;">Đã gửi yêu cầu</button>
+          </div>
+        </div>
+
+        <!-- STATE 5: Đang chuẩn bị quà (warm) -->
+        <div style="width:280px; border-radius:16px; overflow:hidden; border:1px solid var(--accent-border); background:var(--surface-card);">
+          <div class="qt-shimmer" style="position:relative; aspect-ratio:4/3; display:grid; place-items:center; background:linear-gradient(100deg, color-mix(in srgb,var(--gold) 8%,transparent) 20%, color-mix(in srgb,var(--gold) 26%,transparent) 50%, color-mix(in srgb,var(--gold) 8%,transparent) 80%); background-size:200% 100%; box-shadow:inset 0 0 0 1px rgba(242,204,126,.20);">
+            <span class="qt-float" style="font-size:52px;">🎁</span>
+            <span class="fx-badge" style="position:absolute; top:10px; left:10px; background:color-mix(in srgb,var(--gold) 90%,#fff); color:var(--navy-950); font-weight:800;">🎁 Cô đang chuẩn bị</span>
+          </div>
+          <div style="padding:14px 15px 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:baseline;"><strong style="font-family:var(--font-display); font-size:16px; color:var(--cream);">Trà sữa</strong></div>
+            <p style="margin:9px 0 0; color:var(--cream); font-size:13.5px; line-height:1.55; font-weight:600;">Cô đang chuẩn bị quà cho con — sắp mang tới lớp rồi! 💛</p>
+            <p style="margin:6px 0 0; color:var(--cream-dim); font-size:12px;">Cô nhận yêu cầu 2 ngày trước</p>
+          </div>
+        </div>
+
+        <!-- STATE 6: Đã nhận quà (trophy) -->
+        <div style="width:280px; border-radius:16px; overflow:hidden; border:1px solid color-mix(in srgb, var(--success) 40%, transparent); background:linear-gradient(180deg, color-mix(in srgb,var(--success) 10%,transparent), var(--surface-card) 55%);">
+          <div style="position:relative; aspect-ratio:4/3; background:radial-gradient(120% 120% at 50% 22%, #2b4a63, #143046); display:grid; place-items:center; box-shadow:inset 0 0 0 1px rgba(111,207,151,.20), inset 0 -46px 54px -34px rgba(0,0,0,.72);">
+            <span style="font-size:52px;">🧋</span>
+            <span class="fx-badge" style="position:absolute; top:10px; left:10px; background:var(--success); color:var(--navy-950); font-weight:800;">✓ Đã nhận quà</span>
+            <span style="position:absolute; top:10px; right:10px; font-size:18px;">🏆</span>
+          </div>
+          <div style="padding:14px 15px 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:baseline;"><strong style="font-family:var(--font-display); font-size:16px; color:var(--cream);">Trà sữa</strong></div>
+            <p style="margin:9px 0 0; color:var(--cream-muted); font-size:13px;">Con đã nhận từ cô ở lớp 💛</p>
+            <p style="margin:5px 0 0; color:var(--success); font-size:12.5px; font-weight:700;">Nhận ngày 12/03/2026</p>
+          </div>
+        </div>
+
+        <!-- EMPTY STATE -->
+        <div style="width:280px; border-radius:16px; border:1px dashed var(--border-strong); background:color-mix(in srgb, var(--cream) 3%, transparent); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:34px 22px; gap:10px;">
+          <span style="font-size:44px;">🎁</span>
+          <strong style="font-family:var(--font-display); color:var(--cream); font-size:16px;">Chưa có quà nào</strong>
+          <p style="margin:0; color:var(--cream-muted); font-size:13px; line-height:1.55;">Cô đang chọn thêm quà thật cho các con. Quay lại sau nhé!</p>
+          <a href="#s1" class="fx-btn fx-btn--secondary" style="margin-top:6px; min-height:44px;">Về hồ sơ của con</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= SECTION 2 & 3 — MODALS ======================= -->
+  <section id="s2" style="max-width:1160px; margin:64px auto 0;">
+    <div style="display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; border-top:1px solid var(--border-subtle); padding-top:28px;">
+      <span style="font-family:var(--font-display); font-weight:800; font-size:26px; color:var(--gold);">02 · 03</span>
+      <h2 style="font-family:var(--font-display); font-weight:800; font-size:24px; margin:0; color:var(--cream);">Xác nhận đổi &amp; ăn mừng</h2>
+    </div>
+    <p style="max-width:64ch; margin:12px 0 0; color:var(--cream-muted); font-size:15px; line-height:1.6;">Một cú chạm là <strong style="color:var(--cream);">cam kết không thể hoàn tác</strong> — trừ kim cương ngay, và cô lập tức "nợ" con một món quà thật. Xác nhận phải có sức nặng; huỷ phải dễ như đồng ý. Màn ăn mừng đặt kỳ vọng: <em>quà đến ở lớp, từ cô, sau một chút chờ đợi</em>.</p>
+
+    <div style="display:flex; flex-wrap:wrap; gap:40px; margin-top:32px;">
+
+      <!-- 2 CONFIRM -->
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <span style="font-family:var(--font-display); font-weight:800; font-size:14px; color:var(--navy-950); background:var(--gold-light); border-radius:6px; padding:2px 9px;">2</span>
+          <span style="color:var(--cream-dim); font-size:13px;">Modal xác nhận</span>
+        </div>
+        <div style="width:390px; border-radius:28px; padding:26px 20px; background:radial-gradient(120% 80% at 50% 0%, rgba(16,39,58,.55), rgba(4,10,16,.9)); box-shadow:inset 0 0 0 1px rgba(245,230,200,.06);">
+          <div style="border-radius:22px; overflow:hidden; background:var(--navy-900); border:1px solid var(--accent-border); box-shadow:var(--shadow-2xl);">
+            <div style="position:relative; aspect-ratio:16/10; background:radial-gradient(120% 120% at 50% 20%, #2b4a67, #14304600 62%), linear-gradient(180deg,#1d3f58,#11283b); display:grid; place-items:center; box-shadow:inset 0 -46px 54px -34px rgba(0,0,0,.72);">
+              <span class="qt-float" style="font-size:66px;">🧋</span>
+            </div>
+            <div style="padding:22px 22px 24px; text-align:center;">
+              <p class="fx-eyebrow" style="margin:0; color:var(--gold-light);">Xác nhận đổi quà</p>
+              <h3 style="font-family:var(--font-display); font-weight:800; font-size:22px; color:var(--cream); margin:10px 0 0; line-height:1.35;">Con muốn đổi 10.000 💎<br>lấy <span style="color:var(--gold-light);">Trà sữa</span>?</h3>
+              <p style="margin:10px 0 0; color:var(--cream-muted); font-size:13.5px;">Kim cương sẽ bị trừ ngay.</p>
+              <!-- balance before/after -->
+              <div style="display:flex; align-items:center; justify-content:center; gap:14px; margin:18px 0 0; padding:14px; border-radius:14px; background:color-mix(in srgb, var(--cream) 5%, transparent); border:1px solid var(--border-subtle);">
+                <div style="text-align:center;"><span style="display:block; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--cream-dim); font-weight:800;">Hiện có</span><strong style="font-family:var(--font-display); font-size:19px; color:var(--cream); font-variant-numeric:tabular-nums;">💎 12.400</strong></div>
+                <span style="font-size:20px; color:var(--gold-light);">→</span>
+                <div style="text-align:center;"><span style="display:block; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--cream-dim); font-weight:800;">Còn lại</span><strong style="font-family:var(--font-display); font-size:19px; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 2.400</strong></div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:10px; margin-top:18px;">
+                <button type="button" class="fx-btn fx-btn--primary fx-btn--block" style="min-height:64px; font-size:17px; font-weight:800;">Đúng rồi, đổi quà! 💎</button>
+                <button type="button" class="fx-btn fx-btn--secondary fx-btn--block" style="min-height:52px;">Để con nghĩ thêm</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 SUCCESS -->
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <span style="font-family:var(--font-display); font-weight:800; font-size:14px; color:var(--navy-950); background:var(--gold-light); border-radius:6px; padding:2px 9px;">3</span>
+          <span style="color:var(--cream-dim); font-size:13px;">Modal ăn mừng + đặt kỳ vọng</span>
+        </div>
+        <div style="width:390px; border-radius:28px; padding:26px 20px; background:radial-gradient(120% 80% at 50% 0%, rgba(45,74,99,.5), rgba(4,10,16,.9)); box-shadow:inset 0 0 0 1px rgba(245,230,200,.06);">
+          <div style="border-radius:22px; overflow:hidden; background:linear-gradient(180deg, color-mix(in srgb,var(--gold) 18%,var(--navy-900)), var(--navy-900) 55%); border:1px solid var(--accent-border); box-shadow:var(--shadow-2xl); text-align:center; padding:30px 24px 26px;">
+            <div style="width:96px; height:96px; margin:0 auto; display:grid; place-items:center; border-radius:999px; background:radial-gradient(circle at 40% 30%, #fff3c8, var(--gold-light) 55%, var(--gold)); box-shadow:0 0 40px color-mix(in srgb,var(--gold) 55%,transparent);">
+              <span class="qt-float" style="font-size:52px;">🧋</span>
+            </div>
+            <h3 style="font-family:var(--font-display); font-weight:800; font-size:24px; color:var(--cream); margin:18px 0 0;">Tuyệt vời! 🎉</h3>
+            <p style="margin:12px 0 0; color:var(--cream-muted); font-size:15px; line-height:1.6;">Cô sẽ chuẩn bị và trao <strong style="color:var(--cream);">Trà sữa</strong> cho con ở lớp nhé 🧋</p>
+            <div style="margin:18px 0 0; padding:14px 16px; border-radius:14px; background:color-mix(in srgb, var(--cream) 5%, transparent); border:1px solid var(--border-subtle); text-align:left; display:flex; gap:12px; align-items:flex-start;">
+              <span style="font-size:22px;">💛</span>
+              <p style="margin:0; color:var(--cream-muted); font-size:13px; line-height:1.55;">Cô cần một chút thời gian đi mua quà. Con để ý thẻ quà chuyển sang <strong style="color:var(--gold-light);">"Cô đang chuẩn bị"</strong> nha!</p>
+            </div>
+            <p style="margin:16px 0 0; color:var(--cream-dim); font-size:12.5px;">Số dư mới: <strong style="color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 2.400</strong></p>
+            <div style="display:flex; flex-direction:column; gap:10px; margin-top:18px;">
+              <button type="button" class="fx-btn fx-btn--primary fx-btn--block" style="min-height:56px; font-weight:800;">Xem quà của con</button>
+              <a href="#s1" class="fx-btn fx-btn--ghost" style="min-height:44px; justify-content:center;">Về cửa hàng</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================= SECTION 4 — GOAL CARD (reusable) ======================= -->
+  <section id="s4" style="max-width:1160px; margin:64px auto 0;">
+    <div style="display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; border-top:1px solid var(--border-subtle); padding-top:28px;">
+      <span style="font-family:var(--font-display); font-weight:800; font-size:26px; color:var(--gold);">04</span>
+      <h2 style="font-family:var(--font-display); font-weight:800; font-size:24px; margin:0; color:var(--cream);">Thẻ mục tiêu <span style="color:var(--cream-muted);">(GiftGoalCard — dùng lại 4 nơi)</span></h2>
+    </div>
+    <p style="max-width:66ch; margin:12px 0 0; color:var(--cream-muted); font-size:15px; line-height:1.6;">Một thẻ nhỏ khép kín: ảnh + tên + tiến độ mục tiêu. Nhúng ở <strong style="color:var(--cream);">màn hình cuối bài học</strong>, <strong style="color:var(--cream);">hồ sơ con</strong>, <strong style="color:var(--cream);">báo cáo phụ huynh</strong>, và <strong style="color:var(--cream);">trang shop</strong>. Vì kim cương <em>không</em> đến từ đọc bài, ở cuối bài học thẻ nhẹ nhàng hướng con tới lớp — <strong style="color:var(--cream);">không</strong> làm việc con vừa đọc thành vô nghĩa.</p>
+
+    <div style="display:flex; flex-wrap:wrap; gap:40px; align-items:flex-start; margin-top:32px;">
+
+      <!-- WIDE, in end-of-lesson context -->
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <span style="font-family:var(--font-display); font-weight:800; font-size:14px; color:var(--navy-950); background:var(--gold-light); border-radius:6px; padding:2px 9px;">4a</span>
+          <span style="color:var(--cream-dim); font-size:13px;">Bản rộng · trong màn hình cuối bài học</span>
+        </div>
+        <div style="width:600px; border-radius:20px; padding:24px; background:var(--navy-950); border:1px solid var(--border-subtle);">
+          <div style="text-align:center;">
+            <span style="font-size:40px;">🎊</span>
+            <h3 style="font-family:var(--font-display); font-weight:800; font-size:22px; color:var(--cream); margin:8px 0 0;">Con đọc xong bài rồi!</h3>
+            <div style="display:inline-flex; align-items:center; gap:8px; margin-top:12px; padding:8px 16px; border-radius:999px; border:1px solid var(--accent-border); background:color-mix(in srgb,var(--gold) 14%,transparent);">
+              <span style="font-size:18px;">🪙</span><strong style="font-family:var(--font-display); color:var(--gold-light); font-size:16px;">+40 xu</strong>
+            </div>
+          </div>
+          <!-- GOAL CARD (wide) -->
+          <div style="margin-top:20px; display:flex; gap:16px; align-items:center; padding:14px; border-radius:16px; border:1px solid var(--accent-border); background:linear-gradient(135deg, color-mix(in srgb,var(--gold) 13%,transparent), color-mix(in srgb,var(--navy-900) 82%,transparent) 60%);">
+            <div style="position:relative; width:118px; height:96px; flex-shrink:0; border-radius:12px; overflow:hidden;">
+              <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="qt-goal-lesson" fit="contain" placeholder="Ảnh Trà sữa" hint-size="100%,100%" style="position:absolute; inset:0;"></x-import>
+              <div style="position:absolute; inset:0; z-index:-1; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; font-size:44px;">🧋</div>
+            </div>
+            <div style="flex:1; min-width:0;">
+              <p class="fx-eyebrow" style="margin:0; color:var(--gold-light);">★ Mục tiêu của con</p>
+              <div style="display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-top:5px;"><strong style="font-family:var(--font-display); font-size:18px; color:var(--cream);">🧋 Trà sữa</strong><span style="font-family:var(--font-display); font-weight:800; color:var(--gold-light); font-size:14px; font-variant-numeric:tabular-nums;">3.400 / 10.000 💎</span></div>
+              <span class="fx-progress" style="margin-top:9px;"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:34%;"></span></span>
+              <p style="margin:8px 0 0; color:var(--cream-muted); font-size:12.5px;">Kim cương đến từ <strong style="color:var(--gold-light);">lớp học và SpeakUp!</strong></p>
+            </div>
+          </div>
+          <a href="#s1" class="fx-btn fx-btn--secondary fx-btn--block" style="margin-top:14px; min-height:48px;">Xem cửa hàng quà thật</a>
+        </div>
+      </div>
+
+      <!-- NARROW -->
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <span style="font-family:var(--font-display); font-weight:800; font-size:14px; color:var(--navy-950); background:var(--gold-light); border-radius:6px; padding:2px 9px;">4b</span>
+          <span style="color:var(--cream-dim); font-size:13px;">Bản hẹp · mobile / hồ sơ</span>
+        </div>
+        <div style="width:320px; border-radius:16px; overflow:hidden; border:1px solid var(--accent-border); background:linear-gradient(160deg, color-mix(in srgb,var(--gold) 12%,transparent), color-mix(in srgb,var(--navy-900) 84%,transparent) 55%);">
+          <div style="position:relative; aspect-ratio:16/9; background:radial-gradient(120% 120% at 50% 20%, #274563, #143046); display:grid; place-items:center; box-shadow:inset 0 -40px 50px -32px rgba(0,0,0,.7);">
+            <span style="font-size:48px;">🧋</span>
+            <span class="fx-badge fx-badge--gold" style="position:absolute; top:9px; left:9px;">★ Mục tiêu</span>
+          </div>
+          <div style="padding:14px 16px 16px;">
+            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:8px;"><strong style="font-family:var(--font-display); font-size:17px; color:var(--cream);">Trà sữa</strong><span style="font-family:var(--font-display); font-weight:800; color:var(--gold-light); font-size:13px; font-variant-numeric:tabular-nums;">3.400 / 10.000 💎</span></div>
+            <span class="fx-progress" style="margin-top:10px;"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:34%;"></span></span>
+            <p style="margin:8px 0 0; color:var(--cream-muted); font-size:12px;">Kim cương đến từ lớp học và SpeakUp!</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================= SECTION 5 — PARENT VIEW ======================= -->
+  <section id="s5" style="max-width:1160px; margin:64px auto 0;">
+    <div style="display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; border-top:1px solid var(--border-subtle); padding-top:28px;">
+      <span style="font-family:var(--font-display); font-weight:800; font-size:26px; color:var(--gold);">05</span>
+      <h2 style="font-family:var(--font-display); font-weight:800; font-size:24px; margin:0; color:var(--cream);">Phụ huynh xem mục tiêu <span style="color:var(--cream-muted);">(trong báo cáo tuần)</span></h2>
+    </div>
+    <p style="max-width:66ch; margin:12px 0 0; color:var(--cream-muted); font-size:15px; line-height:1.6;">Ấm áp, tự hào, không "bán hàng". Cho phụ huynh thấy con đang tiết kiệm cho gì, tiến độ, và <strong style="color:var(--cream);">kim cương đến từ đâu</strong> — vì kết quả mong muốn là bố mẹ đưa con đến lớp. Không có <em>cost_vnd</em> hay bất kỳ con số nội bộ nào ở đây.</p>
+
+    <div style="margin-top:28px; max-width:680px;">
+      <div style="border-radius:18px; padding:24px; background:var(--surface-card); border:1px solid var(--border-subtle); box-shadow:var(--shadow-card);">
+        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+          <h3 style="font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--cream); margin:0;">Con đang tiết kiệm cho</h3>
+          <span style="color:var(--cream-dim); font-size:12px;">Báo cáo tuần · bé Hiếu</span>
+        </div>
+        <div style="margin-top:16px; display:flex; gap:18px; align-items:center; flex-wrap:wrap;">
+          <div style="position:relative; width:150px; height:120px; flex-shrink:0; border-radius:14px; overflow:hidden;">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="qt-parent-lego" fit="contain" placeholder="Ảnh Bộ Lego" hint-size="100%,100%" style="position:absolute; inset:0;"></x-import>
+            <div style="position:absolute; inset:0; z-index:-1; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; font-size:52px;">🧱</div>
+          </div>
+          <div style="flex:1; min-width:220px;">
+            <div style="display:flex; align-items:baseline; gap:10px;"><strong style="font-family:var(--font-display); font-size:22px; color:var(--cream);">🧱 Bộ Lego</strong><span style="font-family:var(--font-display); font-weight:800; color:var(--gold-light); font-variant-numeric:tabular-nums;">💎 20.000</span></div>
+            <span class="fx-progress" style="margin-top:12px; height:12px;"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:34%;"></span></span>
+            <p style="margin:10px 0 0; color:var(--cream-muted); font-size:14px;">Bé đã đi được <strong style="color:var(--gold-light);">34%</strong> — còn 13.200 💎 nữa.</p>
+          </div>
+        </div>
+        <div style="margin-top:18px; padding:16px; border-radius:14px; border:1px solid var(--accent-border); background:color-mix(in srgb,var(--gold) 8%,transparent); display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:22px;">💎</span>
+          <p style="margin:0; color:var(--cream-muted); font-size:13.5px; line-height:1.6;">Kim cương là phần thưởng <strong style="color:var(--cream);">cô trao trong buổi học trực tiếp</strong> (300–1.000 💎 mỗi buổi). Anh chị đưa bé đi học đều đặn là cách nhanh nhất giúp bé chạm tới món quà mơ ước. 💛</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= SECTION 6 — ADMIN: GIFT MANAGER ======================= -->
+  <section id="s6" style="max-width:1160px; margin:64px auto 0;">
+    <div style="display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; border-top:1px solid var(--border-subtle); padding-top:28px;">
+      <span style="font-family:var(--font-display); font-weight:800; font-size:26px; color:var(--gold);">06</span>
+      <h2 style="font-family:var(--font-display); font-weight:800; font-size:24px; margin:0; color:var(--cream);">Quản trị — trình quản lý quà</h2>
+    </div>
+    <p style="max-width:66ch; margin:12px 0 0; color:var(--cream-muted); font-size:15px; line-height:1.6;">Cho Felix (không rành kỹ thuật) — phải hiểu ngay không cần hướng dẫn. Ảnh hỗ trợ <strong style="color:var(--cream);">cả dán link lẫn tải file</strong> (xem trước ngay). "Giới hạn" là <strong style="color:var(--cream);">chốt ngân sách, KHÔNG phải tồn kho</strong> — để trống = không giới hạn (mặc định). Cột <em>Giá thật</em> &amp; <em>₫ mỗi 💎</em> chỉ admin thấy.</p>
+
+    <div style="margin-top:28px; border-radius:18px; overflow:hidden; border:1px solid var(--border-subtle); background:var(--navy-950); box-shadow:var(--shadow-card);">
+      <!-- admin bar -->
+      <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:18px 22px; background:color-mix(in srgb,var(--navy-900) 80%,transparent); border-bottom:1px solid var(--border-subtle);">
+        <div style="flex:1; min-width:200px;">
+          <p class="fx-eyebrow" style="margin:0; color:var(--gold-light);">Trang quản trị · chỉ Felix thấy 🔒</p>
+          <p style="margin:3px 0 0; font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--cream);">Quà thật — 7 món</p>
+        </div>
+        <button type="button" class="fx-btn fx-btn--secondary" style="min-height:44px;">+ Thêm quà</button>
+        <button type="button" class="fx-btn fx-btn--primary" style="min-height:44px;">✓ Đã lưu</button>
+      </div>
+
+      <!-- column headers -->
+      <div style="display:grid; grid-template-columns:74px 1.3fr 96px 96px 64px 108px 92px; gap:10px; padding:10px 22px; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; font-weight:800; color:var(--cream-dim); border-bottom:1px solid var(--border-subtle);">
+        <span>Ảnh</span><span>Tên quà</span><span>Giá 💎</span><span>Giới hạn</span><span>Bật</span>
+        <span style="color:var(--gold-light);">Giá thật ₫ 🔒</span><span style="color:var(--gold-light);">₫/💎 🔒</span>
+      </div>
+
+      <!-- EXPANDED / EDITING ROW -->
+      <div style="padding:18px 22px; border-bottom:1px solid var(--border-subtle); background:color-mix(in srgb,var(--gold) 6%,transparent);">
+        <div style="display:grid; grid-template-columns:74px 1.3fr 96px 96px 64px 108px 92px; gap:10px; align-items:center;">
+          <div style="position:relative; width:64px; height:64px; border-radius:10px; overflow:hidden;">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="qt-admin-tea" fit="contain" placeholder="Ảnh" hint-size="100%,100%" style="position:absolute; inset:0;"></x-import>
+            <div style="position:absolute; inset:0; z-index:-1; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; font-size:30px;">🧋</div>
+          </div>
+          <input class="fx-field" value="Trà sữa" style="min-height:44px;">
+          <input class="fx-field" value="10.000" style="min-height:44px; font-variant-numeric:tabular-nums; text-align:right;">
+          <input class="fx-field" placeholder="—" style="min-height:44px; text-align:center;">
+          <div style="display:grid; place-items:center;"><span role="switch" aria-checked="true" style="width:46px; height:26px; border-radius:999px; background:var(--gold); position:relative; cursor:pointer; box-shadow:inset 0 0 0 1px rgba(0,0,0,.2);"><span style="position:absolute; top:3px; left:23px; width:20px; height:20px; border-radius:999px; background:var(--navy-950);"></span></span></div>
+          <input class="fx-field" value="30.000" style="min-height:44px; font-variant-numeric:tabular-nums; text-align:right; border-color:var(--accent-border);">
+          <div style="text-align:right; font-family:var(--font-display); font-weight:800; color:var(--cream-muted); font-variant-numeric:tabular-nums;">≈ 3₫</div>
+        </div>
+        <!-- photo controls -->
+        <div style="margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div style="padding:12px 14px; border-radius:12px; border:1.5px solid var(--accent); background:color-mix(in srgb,var(--gold) 10%,transparent);">
+            <div style="display:flex; align-items:center; justify-content:space-between;"><label class="fx-label" style="margin:0; color:var(--cream);">🔗 Dán link ảnh (Shopee/Lazada)</label><span class="fx-badge fx-badge--gold">Đang dùng</span></div>
+            <input class="fx-field" value="https://cf.shopee.vn/.../tra-sua.jpg" style="margin-top:8px; min-height:44px; font-size:13px;">
+            <p class="fx-field-hint" style="margin-top:6px;">Cách thường dùng — dán link ảnh tìm được trên mạng.</p>
+          </div>
+          <div style="padding:12px 14px; border-radius:12px; border:1px solid var(--border-default); background:color-mix(in srgb,var(--cream) 3%,transparent);">
+            <label class="fx-label" style="margin:0; color:var(--cream-muted);">📁 Hoặc tải ảnh từ máy</label>
+            <div style="margin-top:8px; display:flex; align-items:center; gap:10px; min-height:44px; padding:0 12px; border-radius:8px; border:1px dashed var(--border-strong); color:var(--cream-dim); font-size:13px;">Chọn tệp… <span style="margin-left:auto; color:var(--cream-dim);">chưa chọn</span></div>
+            <p class="fx-field-hint" style="margin-top:6px;">Ảnh con tải sẵn về máy.</p>
+          </div>
+        </div>
+        <div style="margin-top:12px; display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="fx-btn fx-btn--ghost" style="min-height:44px;">Huỷ</button>
+          <button type="button" class="fx-btn fx-btn--primary" style="min-height:44px;">Lưu quà này</button>
+        </div>
+      </div>
+
+      <!-- COMPACT ROWS -->
+      <!-- Sticker -->
+      <div style="display:grid; grid-template-columns:74px 1.3fr 96px 96px 64px 108px 92px; gap:10px; align-items:center; padding:12px 22px; border-bottom:1px solid var(--border-subtle);">
+        <div style="width:56px; height:56px; border-radius:10px; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; font-size:26px; box-shadow:inset 0 0 0 1px rgba(245,230,200,.08);">🌟</div>
+        <strong style="font-family:var(--font-display); color:var(--cream); font-size:15px;">Sticker</strong>
+        <span style="text-align:right; color:var(--gold-light); font-weight:700; font-variant-numeric:tabular-nums;">1.000</span>
+        <span style="text-align:center; color:var(--cream-dim);">—</span>
+        <div style="display:grid; place-items:center;"><span style="width:46px; height:26px; border-radius:999px; background:var(--gold); position:relative;"><span style="position:absolute; top:3px; left:23px; width:20px; height:20px; border-radius:999px; background:var(--navy-950);"></span></span></div>
+        <span style="text-align:right; color:var(--cream-muted); font-variant-numeric:tabular-nums;">2.000</span>
+        <span style="text-align:right; color:var(--cream-muted); font-variant-numeric:tabular-nums;">≈ 2₫</span>
+      </div>
+      <!-- Bút -->
+      <div style="display:grid; grid-template-columns:74px 1.3fr 96px 96px 64px 108px 92px; gap:10px; align-items:center; padding:12px 22px; border-bottom:1px solid var(--border-subtle);">
+        <div style="width:56px; height:56px; border-radius:10px; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; font-size:26px; box-shadow:inset 0 0 0 1px rgba(245,230,200,.08);">🖊️</div>
+        <strong style="font-family:var(--font-display); color:var(--cream); font-size:15px;">Bút</strong>
+        <span style="text-align:right; color:var(--gold-light); font-weight:700; font-variant-numeric:tabular-nums;">5.000</span>
+        <span style="text-align:center; color:var(--cream-dim);">—</span>
+        <div style="display:grid; place-items:center;"><span style="width:46px; height:26px; border-radius:999px; background:var(--gold); position:relative;"><span style="position:absolute; top:3px; left:23px; width:20px; height:20px; border-radius:999px; background:var(--navy-950);"></span></span></div>
+        <span style="text-align:right; color:var(--cream-muted); font-variant-numeric:tabular-nums;">8.000</span>
+        <span style="text-align:right; color:var(--cream-muted); font-variant-numeric:tabular-nums;">≈ 2₫</span>
+      </div>
+      <!-- Bộ Lego (best value highlight) -->
+      <div style="display:grid; grid-template-columns:74px 1.3fr 96px 96px 64px 108px 92px; gap:10px; align-items:center; padding:12px 22px; border-bottom:1px solid var(--border-subtle);">
+        <div style="width:56px; height:56px; border-radius:10px; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; font-size:26px; box-shadow:inset 0 0 0 1px rgba(245,230,200,.08);">🧱</div>
+        <div><strong style="font-family:var(--font-display); color:var(--cream); font-size:15px;">Bộ Lego</strong></div>
+        <span style="text-align:right; color:var(--gold-light); font-weight:700; font-variant-numeric:tabular-nums;">20.000</span>
+        <span style="text-align:center; color:var(--cream); font-variant-numeric:tabular-nums;" title="Giới hạn ngân sách tuần">2</span>
+        <div style="display:grid; place-items:center;"><span style="width:46px; height:26px; border-radius:999px; background:var(--gold); position:relative;"><span style="position:absolute; top:3px; left:23px; width:20px; height:20px; border-radius:999px; background:var(--navy-950);"></span></span></div>
+        <span style="text-align:right; color:var(--cream-muted); font-variant-numeric:tabular-nums;">400.000</span>
+        <span style="text-align:right; color:var(--gold-light); font-weight:700; font-variant-numeric:tabular-nums;" title="Đắt hơn nhiều so với các quà khác — cân nhắc giá 💎">≈ 20₫</span>
+      </div>
+      <!-- Quả bóng -->
+      <div style="display:grid; grid-template-columns:74px 1.3fr 96px 96px 64px 108px 92px; gap:10px; align-items:center; padding:12px 22px;">
+        <div style="width:56px; height:56px; border-radius:10px; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; font-size:26px; box-shadow:inset 0 0 0 1px rgba(245,230,200,.08);">⚽</div>
+        <strong style="font-family:var(--font-display); color:var(--cream); font-size:15px;">Quả bóng đá</strong>
+        <span style="text-align:right; color:var(--gold-light); font-weight:700; font-variant-numeric:tabular-nums;">30.000</span>
+        <span style="text-align:center; color:var(--cream); font-variant-numeric:tabular-nums;">1</span>
+        <div style="display:grid; place-items:center;"><span style="width:46px; height:26px; border-radius:999px; background:color-mix(in srgb,var(--cream) 16%,transparent); position:relative;" title="Đang tắt"><span style="position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:999px; background:var(--cream-dim);"></span></span></div>
+        <span style="text-align:right; color:var(--cream-muted); font-variant-numeric:tabular-nums;">150.000</span>
+        <span style="text-align:right; color:var(--cream-muted); font-variant-numeric:tabular-nums;">≈ 5₫</span>
+      </div>
+    </div>
+    <p style="margin:14px 0 0; color:var(--cream-dim); font-size:12.5px; max-width:70ch;">Để trống "Giới hạn" ở hầu hết các quà — cô mua theo yêu cầu nên <strong style="color:var(--cream-muted);">không bao giờ hết hàng</strong>. Chỉ điền số cho quà đắt (vd Lego: 2) để không bị bốn con đổi cùng tuần làm vỡ dòng tiền.</p>
+  </section>
+
+  <!-- ======================= SECTION 7 — ADMIN: REDEMPTION QUEUE ======================= -->
+  <section id="s7" style="max-width:1160px; margin:64px auto 0;">
+    <div style="display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; border-top:1px solid var(--border-subtle); padding-top:28px;">
+      <span style="font-family:var(--font-display); font-weight:800; font-size:26px; color:var(--gold);">07</span>
+      <h2 style="font-family:var(--font-display); font-weight:800; font-size:24px; margin:0; color:var(--cream);">Quản trị — hàng chờ đổi quà <span style="color:var(--cream-muted);">(danh sách đi mua)</span></h2>
+    </div>
+    <p style="max-width:66ch; margin:12px 0 0; color:var(--cream-muted); font-size:15px; line-height:1.6;">Kim cương của con đã trừ rồi — giờ cô "nợ" một món quà thật chưa mua. Vòng đời <strong style="color:var(--cream);">3 bước</strong>: Yêu cầu mới → Đang chuẩn bị (đang đi mua) → Đã trao quà. "Đang chuẩn bị" chính là <strong style="color:var(--cream);">danh sách đi mua</strong> — con chờ càng lâu càng nổi bật (lời hứa sắp vỡ). Từ chối luôn <strong style="color:var(--success);">tự hoàn 💎</strong>.</p>
+
+    <div style="margin-top:28px; max-width:760px; border-radius:18px; overflow:hidden; border:1px solid var(--border-subtle); background:var(--navy-950); box-shadow:var(--shadow-card);">
+      <!-- header + monthly total -->
+      <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:18px 22px; background:color-mix(in srgb,var(--navy-900) 80%,transparent); border-bottom:1px solid var(--border-subtle);">
+        <div style="flex:1; min-width:180px;">
+          <p class="fx-eyebrow" style="margin:0; color:var(--gold-light);">Trang quản trị · chỉ Felix thấy 🔒</p>
+          <p style="margin:3px 0 0; font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--cream);">Hàng chờ đổi quà</p>
+        </div>
+        <div style="text-align:right;">
+          <span style="display:block; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--cream-dim); font-weight:800;">Tháng 07 · chi phí quà 🔒</span>
+          <strong style="font-family:var(--font-display); font-weight:800; font-size:20px; color:var(--gold-light); font-variant-numeric:tabular-nums;">455.000₫</strong>
+        </div>
+      </div>
+
+      <!-- LANE: Yêu cầu mới -->
+      <div style="padding:16px 22px 6px;">
+        <div style="display:flex; align-items:center; gap:8px;"><span style="width:9px; height:9px; border-radius:999px; background:var(--gold-light); box-shadow:0 0 8px var(--gold-light);"></span><p class="fx-eyebrow" style="margin:0; color:var(--cream);">Yêu cầu mới · 2</p></div>
+      </div>
+      <!-- new row 1 -->
+      <div style="display:flex; align-items:center; gap:14px; padding:12px 22px; border-bottom:1px solid var(--border-subtle);">
+        <div style="width:52px; height:52px; flex-shrink:0; border-radius:10px; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; font-size:24px; box-shadow:inset 0 0 0 1px rgba(245,230,200,.08);">🌟</div>
+        <div style="flex:1; min-width:0;">
+          <strong style="font-family:var(--font-display); color:var(--cream); font-size:15px;">Bé Hiếu</strong>
+          <span style="color:var(--cream-dim); font-size:12px;"> · Lớp T3-CN</span>
+          <p style="margin:2px 0 0; color:var(--cream-muted); font-size:12.5px;">Sticker · <strong style="color:var(--gold-light);">1.000 💎</strong> · hôm nay</p>
+        </div>
+        <div style="display:flex; gap:8px; flex-shrink:0;">
+          <button type="button" class="fx-btn fx-btn--secondary" style="min-height:44px; font-size:13px;">Từ chối + hoàn 💎</button>
+          <button type="button" class="fx-btn fx-btn--primary" style="min-height:44px; font-size:13px;">Nhận &amp; đi mua →</button>
+        </div>
+      </div>
+      <!-- new row 2 -->
+      <div style="display:flex; align-items:center; gap:14px; padding:12px 22px; border-bottom:1px solid var(--border-subtle);">
+        <div style="width:52px; height:52px; flex-shrink:0; border-radius:10px; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; font-size:24px; box-shadow:inset 0 0 0 1px rgba(245,230,200,.08);">🌟</div>
+        <div style="flex:1; min-width:0;">
+          <strong style="font-family:var(--font-display); color:var(--cream); font-size:15px;">Mina</strong>
+          <span style="color:var(--cream-dim); font-size:12px;"> · Lớp T5</span>
+          <p style="margin:2px 0 0; color:var(--cream-muted); font-size:12.5px;">Sticker · <strong style="color:var(--gold-light);">1.000 💎</strong> · hôm nay</p>
+        </div>
+        <div style="display:flex; gap:8px; flex-shrink:0;">
+          <button type="button" class="fx-btn fx-btn--secondary" style="min-height:44px; font-size:13px;">Từ chối + hoàn 💎</button>
+          <button type="button" class="fx-btn fx-btn--primary" style="min-height:44px; font-size:13px;">Nhận &amp; đi mua →</button>
+        </div>
+      </div>
+
+      <!-- LANE: Đang chuẩn bị (to-buy) -->
+      <div style="padding:18px 22px 6px;">
+        <div style="display:flex; align-items:center; gap:8px;"><span style="width:9px; height:9px; border-radius:999px; background:var(--gold); box-shadow:0 0 8px var(--gold);"></span><p class="fx-eyebrow" style="margin:0; color:var(--cream);">Đang chuẩn bị · đang đi mua · 2</p></div>
+      </div>
+      <!-- preparing ok -->
+      <div style="display:flex; align-items:center; gap:14px; padding:12px 22px; border-bottom:1px solid var(--border-subtle);">
+        <div style="width:52px; height:52px; flex-shrink:0; border-radius:10px; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; font-size:24px; box-shadow:inset 0 0 0 1px rgba(245,230,200,.08);">🧋</div>
+        <div style="flex:1; min-width:0;">
+          <strong style="font-family:var(--font-display); color:var(--cream); font-size:15px;">Percy</strong>
+          <span style="color:var(--cream-dim); font-size:12px;"> · Lớp T3-CN</span>
+          <p style="margin:2px 0 0; color:var(--cream-muted); font-size:12.5px;">Trà sữa · <strong style="color:var(--gold-light);">10.000 💎</strong> · <span style="color:var(--cream-dim);">chờ 2 ngày</span></p>
+        </div>
+        <div style="display:flex; gap:8px; flex-shrink:0;">
+          <button type="button" class="fx-btn fx-btn--ghost" style="min-height:44px; font-size:13px;">Từ chối</button>
+          <button type="button" class="fx-btn fx-btn--primary" style="min-height:44px; font-size:13px;">✓ Đã trao ở lớp</button>
+        </div>
+      </div>
+      <!-- preparing URGENT 9 days -->
+      <div style="display:flex; align-items:center; gap:14px; padding:12px 22px; border-bottom:1px solid var(--border-subtle); background:color-mix(in srgb,var(--danger) 9%,transparent);">
+        <div style="width:52px; height:52px; flex-shrink:0; border-radius:10px; background:radial-gradient(120% 120% at 50% 22%, #274563, #143046); display:grid; place-items:center; font-size:24px; box-shadow:inset 0 0 0 1px rgba(248,113,113,.3);">🖊️</div>
+        <div style="flex:1; min-width:0;">
+          <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;"><strong style="font-family:var(--font-display); color:var(--cream); font-size:15px;">Ryan</strong><span style="color:var(--cream-dim); font-size:12px;">· Lớp T7</span><span class="fx-badge" style="background:var(--danger-soft); border:1px solid color-mix(in srgb,var(--danger) 45%,transparent); color:var(--danger); font-size:11px; padding:.1rem .5rem;">⚠ chờ 9 ngày</span></div>
+          <p style="margin:2px 0 0; color:var(--cream-muted); font-size:12.5px;">Bút · <strong style="color:var(--gold-light);">5.000 💎</strong> · lời hứa sắp trễ!</p>
+        </div>
+        <div style="display:flex; gap:8px; flex-shrink:0;">
+          <button type="button" class="fx-btn fx-btn--ghost" style="min-height:44px; font-size:13px;">Từ chối</button>
+          <button type="button" class="fx-btn fx-btn--primary" style="min-height:44px; font-size:13px;">✓ Đã trao ở lớp</button>
+        </div>
+      </div>
+
+      <!-- refund reassurance -->
+      <div style="margin:14px 22px; padding:12px 14px; border-radius:12px; border:1px solid color-mix(in srgb,var(--success) 35%,transparent); background:var(--success-soft); display:flex; gap:10px; align-items:flex-start;">
+        <span style="font-size:18px;">↩️</span>
+        <p style="margin:0; color:var(--cream-muted); font-size:12.5px; line-height:1.55;">Bấm <strong style="color:var(--success);">Từ chối</strong> là <strong style="color:var(--cream);">tự động hoàn lại toàn bộ 💎</strong> cho con ngay. Cô cứ yên tâm từ chối nếu hết món hoặc không mua được — con không mất gì.</p>
+      </div>
+
+      <!-- LANE: history -->
+      <div style="padding:6px 22px 6px;">
+        <div style="display:flex; align-items:center; gap:8px;"><span style="width:9px; height:9px; border-radius:999px; background:var(--success); box-shadow:0 0 8px var(--success);"></span><p class="fx-eyebrow" style="margin:0; color:var(--cream);">Đã trao quà · tháng này</p></div>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px; padding:10px 22px; border-top:1px solid var(--border-subtle); opacity:.82;">
+        <div style="width:44px; height:44px; flex-shrink:0; border-radius:9px; background:radial-gradient(120% 120% at 50% 22%, #223d55, #122a3c); display:grid; place-items:center; font-size:20px;">🧱</div>
+        <div style="flex:1; min-width:0;"><strong style="font-family:var(--font-display); color:var(--cream); font-size:14px;">Bé Hiếu</strong><span style="color:var(--cream-dim); font-size:12px;"> · Bộ Lego · 20.000 💎</span></div>
+        <span style="color:var(--success); font-size:12.5px; font-weight:700;">✓ 02/07</span>
+        <span style="color:var(--cream-dim); font-size:12px; font-variant-numeric:tabular-nums; width:72px; text-align:right;">400.000₫</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px; padding:10px 22px; border-top:1px solid var(--border-subtle); opacity:.82;">
+        <div style="width:44px; height:44px; flex-shrink:0; border-radius:9px; background:radial-gradient(120% 120% at 50% 22%, #223d55, #122a3c); display:grid; place-items:center; font-size:20px;">🧋</div>
+        <div style="flex:1; min-width:0;"><strong style="font-family:var(--font-display); color:var(--cream); font-size:14px;">Mina</strong><span style="color:var(--cream-dim); font-size:12px;"> · Trà sữa · 10.000 💎</span></div>
+        <span style="color:var(--success); font-size:12.5px; font-weight:700;">✓ 08/07</span>
+        <span style="color:var(--cream-dim); font-size:12px; font-variant-numeric:tabular-nums; width:72px; text-align:right;">30.000₫</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px; padding:10px 22px 16px; border-top:1px solid var(--border-subtle); opacity:.82;">
+        <div style="width:44px; height:44px; flex-shrink:0; border-radius:9px; background:radial-gradient(120% 120% at 50% 22%, #223d55, #122a3c); display:grid; place-items:center; font-size:20px;">✏️</div>
+        <div style="flex:1; min-width:0;"><strong style="font-family:var(--font-display); color:var(--cream); font-size:14px;">Percy</strong><span style="color:var(--cream-dim); font-size:12px;"> · Hộp bút · 7.000 💎</span></div>
+        <span style="color:var(--success); font-size:12.5px; font-weight:700;">✓ 05/07</span>
+        <span style="color:var(--cream-dim); font-size:12px; font-variant-numeric:tabular-nums; width:72px; text-align:right;">25.000₫</span>
+      </div>
+    </div>
+
+    <!-- footer note -->
+    <p style="max-width:70ch; margin:40px auto 0; text-align:center; color:var(--cream-dim); font-size:12.5px; line-height:1.6;">Bàn giao cho code: dark navy/gold/cream · Manrope + Inter · 💎 kim cương (không phải 🪙 xu) · tap ≥44px, nút chính trẻ em 64px · tiếng Việt &amp; định dạng số 10.000 · <code>cost_vnd</code> + <code>₫/💎</code> chỉ admin.</p>
+  </section>
+</div>
+</x-dc>
+</body>
+</html>

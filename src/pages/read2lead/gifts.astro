@@ -1,0 +1,223 @@
+---
+// "Quà thật" (Real Gifts) shop — R2L-REAL-GIFTS §1. Clones the shell shape
+// of src/pages/read2lead/shop.astro (BaseLayout + Header + code-entry +
+// shell + error div), but this is a SEPARATE economy from the monster shop:
+// diamonds (💎) only, no preview-flag gate — the diamond price is the only
+// gate here — and none of the monster shop's legacy kid-scoped classes or
+// its old warm-accent display-font styling.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import GiftConfirmModal from '../../components/read2lead/gifts/GiftConfirmModal.astro';
+import GiftSuccessModal from '../../components/read2lead/gifts/GiftSuccessModal.astro';
+import '../../styles/qua-that.css';
+---
+
+<BaseLayout
+  title="Quà thật | Read2Lead | Felix Coaching"
+  description="Con dùng kim cương đổi lấy một món quà thật — Coach Felix mua và trao tận tay ở lớp."
+  robots="noindex, follow"
+>
+  <Header read2LeadState={false} />
+
+  <main id="main" class="flex-1 bg-navy-950 px-4 py-8 sm:px-6">
+    <section class="mx-auto max-w-5xl">
+      <div class="qt-topbar">
+        <a href="/ho-so" aria-label="Quay lại" class="qt-back">‹</a>
+        <div class="qt-topbar__title">
+          <p class="fx-eyebrow" style="color:var(--gold-light);">Quà thật</p>
+          <p class="qt-topbar__heading">Cửa hàng của con</p>
+        </div>
+        <div id="gifts-balance-pill" class="qt-balance-pill hidden">
+          <span aria-hidden="true">💎</span>
+          <div>
+            <span class="qt-balance-pill__label">Kim cương của con</span>
+            <strong id="gifts-balance-pill-value">0</strong>
+          </div>
+        </div>
+      </div>
+
+      <div id="gifts-entry" class="qt-entry">
+        <label for="gifts-code" class="fx-label">Mã học sinh</label>
+        <div class="qt-entry__row">
+          <input
+            id="gifts-code"
+            maxlength="40"
+            autocomplete="off"
+            placeholder="R2L-..."
+            class="fx-field qt-entry__input"
+          />
+          <button id="gifts-load" type="button" class="fx-btn fx-btn--primary qt-entry__button">Vào cửa hàng</button>
+        </div>
+      </div>
+
+      <div id="gifts-error" class="qt-error hidden"></div>
+
+      <div id="gifts-shell" class="qt-shell hidden">
+        <div class="qt-balance-hero">
+          <p class="fx-eyebrow" style="color:var(--cream-muted);">Kim cương của con</p>
+          <p class="qt-balance-hero__value">💎 <span id="gifts-balance-hero-value">0</span></p>
+          <p class="qt-balance-hero__hint">Kim cương đến từ <strong style="color:var(--cream);">lớp học</strong> — Coach Felix thưởng mỗi buổi.</p>
+        </div>
+
+        <div id="gifts-inflight" class="qt-inflight-slot hidden"></div>
+
+        <div id="gifts-goal" class="qt-goal-slot hidden"></div>
+
+        <div id="gifts-bands" class="qt-bands"></div>
+
+        <div id="gifts-trophy" class="qt-trophy-slot hidden"></div>
+      </div>
+    </section>
+  </main>
+
+  <GiftConfirmModal />
+  <GiftSuccessModal />
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  import { initGiftsPage } from '../../lib/gift-ux';
+
+  function showGiftsError(message: string) {
+    const errorEl = document.querySelector('#gifts-error');
+    if (!errorEl) return;
+    errorEl.textContent = message;
+    errorEl.classList.remove('hidden');
+  }
+
+  initGiftsPage({ onError: showGiftsError });
+
+  // "Xem quà của con" scrolls back to the catalogue after the celebration
+  // closes; "Về cửa hàng" just closes. Wired here (page-shell concern) rather
+  // than in gift-ux.ts, which only owns data/state, not page scroll position.
+  document.querySelector('.qt-success-view')?.addEventListener('click', () => {
+    document.querySelector('#gifts-bands')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>
+
+<style>
+  .qt-topbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .qt-back {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    border: 1px solid var(--border-subtle);
+    color: var(--cream);
+    font-size: 20px;
+  }
+  .qt-back:hover { border-color: var(--accent); color: var(--accent); }
+  .qt-topbar__title { flex: 1; min-width: 0; }
+  .qt-topbar__heading {
+    margin: 2px 0 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--cream);
+  }
+
+  .qt-balance-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--accent-border);
+    background: color-mix(in srgb, var(--gold) 14%, transparent);
+    font-size: 22px;
+  }
+  .qt-balance-pill__label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream-muted);
+    font-weight: 800;
+  }
+  .qt-balance-pill strong {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 24px;
+    color: var(--gold-light);
+    font-variant-numeric: tabular-nums;
+  }
+  @media (max-width: 719px) {
+    .qt-balance-pill { display: none; }
+  }
+
+  .qt-entry {
+    margin-top: 24px;
+    border-radius: 1rem;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    padding: 1.25rem;
+  }
+  .qt-entry__row {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .qt-entry__input {
+    min-height: 64px;
+    width: 100%;
+    text-transform: uppercase;
+  }
+  .qt-entry__button { min-height: 64px; }
+  @media (min-width: 640px) {
+    .qt-entry__row { flex-direction: row; }
+  }
+
+  .qt-error {
+    margin-top: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(248, 113, 113, 0.4);
+    background: rgba(248, 113, 113, 0.1);
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    color: #fecaca;
+  }
+
+  .qt-shell {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .qt-balance-hero {
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid var(--accent-border);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--gold) 16%, transparent), color-mix(in srgb, var(--navy-900) 82%, transparent) 60%);
+    text-align: center;
+  }
+  .qt-balance-hero__value {
+    margin: 8px 0 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 44px;
+    line-height: 1;
+    color: var(--gold-light);
+    font-variant-numeric: tabular-nums;
+  }
+  .qt-balance-hero__hint {
+    margin: 10px 0 0;
+    color: var(--cream-muted);
+    font-size: 12.5px;
+  }
+  @media (min-width: 720px) {
+    .qt-balance-hero { display: none; }
+  }
+
+  .qt-bands { display: flex; flex-direction: column; }
+</style>

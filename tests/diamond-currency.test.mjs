@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { applyManualReward, DEFAULT_POSITIVE_PRESETS, DEFAULT_NEEDS_WORK_PRESETS } from '../functions/api/admin/_classes.js';
-import { normalizeProgressState, publicProgressState } from '../functions/api/_read2lead-v2-state.js';
+import { normalizeProgressState, publicProgressState, progressKey } from '../functions/api/_read2lead-v2-state.js';
+import { onRequestPost as giftsRedeem } from '../functions/api/read2lead-gifts-redeem.js';
 
 /**
  * Tests for the diamond currency system.
@@ -102,4 +103,94 @@ test('publicProgressState defaults diamonds to 0', () => {
   const state = makeBaseState();
   const pub = publicProgressState(state);
   assert.equal(pub.diamonds, 0, 'publicProgressState should default to 0');
+});
+
+/**
+ * clampDelta() in admin/_classes.js caps a single manual award. The founder
+ * awards up to 1000💎 per class; the old ±500 cap silently halved that.
+ * R2L-REAL-GIFTS raised the cap to ±2000 — see functions/api/admin/_classes.js.
+ */
+test('a 1,000💎 manual award now lands as 1,000 (not silently halved to 500)', () => {
+  const state = makeBaseState();
+  const result = applyManualReward(state, { diamondDelta: 1000, coinsDelta: 0 });
+  assert.equal(result.diamonds, 1000);
+});
+
+test('clampDelta still caps at the new ±2000 bound (does not become unbounded)', () => {
+  const state = makeBaseState();
+  const result = applyManualReward(state, { diamondDelta: 5000, coinsDelta: -9999 });
+  assert.equal(result.diamonds, 2000);
+  assert.equal(result.coins, 0, 'a -2000 clamp floored at 0 coins from a 0 starting balance');
+});
+
+/**
+ * Real-gift redemption is the highest-risk new path in R2L-REAL-GIFTS:
+ * it must NEVER touch rank_points, total_xp, coins, or unlocked_parts. See
+ * the comment at functions/api/admin/_classes.js applyManualReward and the
+ * matching invariant in functions/api/_gifts-v2.js.
+ */
+test('redeeming a real gift leaves rank_points, total_xp, coins, and unlocked_parts byte-identical', async () => {
+  const ACCESS_CODE = 'R2L-DIA-GIFT';
+  const initialProgress = {
+    schema_version: 2,
+    level_reset_version: 20260606,
+    diamonds: 5000,
+    rank_points: 7,
+    total_xp: 340,
+    xp_in_level: 40,
+    coins: 88,
+    unlocked_parts: ['png-default-detail-blue-horn-small'],
+  };
+  const codeStore = new Map();
+  codeStore.set('config:gifts:v1', JSON.stringify({
+    schema_version: 1,
+    gifts: [{ id: 'sticker', name_vi: 'Sticker', emoji: '🌟', price_diamonds: 1000, limit_total: null, redeemed_count: 0, cost_vnd: 0, active: true }],
+  }));
+  const progressStore = new Map();
+  progressStore.set(progressKey(ACCESS_CODE), JSON.stringify(initialProgress));
+
+  const env = {
+    READ2LEAD_CODES: {
+      async get(key, opts) {
+        if (key === ACCESS_CODE) {
+          const data = { student_profile: { student_name: 'Test' } };
+          return opts?.type === 'json' ? data : JSON.stringify(data);
+        }
+        const raw = codeStore.get(key);
+        if (!raw) return null;
+        return opts?.type === 'json' ? JSON.parse(raw) : raw;
+      },
+      async put(key, value) {
+        codeStore.set(key, value);
+      },
+    },
+    READ2LEAD_PROGRESS: {
+      async get(key, opts) {
+        const raw = progressStore.get(key);
+        if (!raw) return null;
+        return opts?.type === 'json' ? JSON.parse(raw) : raw;
+      },
+      async put(key, value) {
+        progressStore.set(key, value);
+      },
+    },
+  };
+
+  const response = await giftsRedeem({
+    request: new Request('https://example.com/api/read2lead-gifts-redeem', {
+      method: 'POST',
+      body: JSON.stringify({ code: ACCESS_CODE, gift_id: 'sticker' }),
+    }),
+    env,
+  });
+  const payload = await response.json();
+  assert.equal(response.status, 200, JSON.stringify(payload));
+
+  const saved = JSON.parse(progressStore.get(progressKey(ACCESS_CODE)));
+  assert.equal(saved.diamonds, 4000, 'diamonds must be debited by the gift price');
+  assert.equal(saved.rank_points, initialProgress.rank_points, 'rank_points must be byte-identical');
+  assert.equal(saved.total_xp, initialProgress.total_xp, 'total_xp must be byte-identical');
+  assert.equal(saved.xp_in_level, initialProgress.xp_in_level, 'xp_in_level must be byte-identical');
+  assert.equal(saved.coins, initialProgress.coins, 'coins must be byte-identical');
+  assert.deepEqual(saved.unlocked_parts, initialProgress.unlocked_parts, 'unlocked_parts must be byte-identical');
 });

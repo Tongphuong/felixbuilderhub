@@ -1,5 +1,6 @@
 import type { ProgressPayload } from './ho-so';
 import { escapeHtml, firstName, qs } from './ho-so';
+import { renderGiftGoalCard, type GiftGoalItem, type GiftGoalRedemption } from '../../lib/gift-goal-card';
 
 type Lesson = { parent_note_vi?: string; next_suggestion_vi?: string; story?: { title?: string } };
 type PortfolioEntry = { id: string; ts?: string; title?: string; note_vi?: string; parent_seen_at?: string | null; reactions?: { heart?: number; clap?: number; strong?: number }; video_url?: string };
@@ -10,6 +11,7 @@ let cachedLesson: Lesson | null = null;
 let cachedPortfolio: PortfolioEntry[] = [];
 let cachedTasks = new Set<string>();
 let cachedPortfolioFailed = false;
+let cachedGiftItem: GiftGoalItem | null = null;
 let lastFetchCode = '';
 
 function formatDate(value: unknown, includeTime = false) {
@@ -47,6 +49,49 @@ function renderStats(data: ProgressPayload) {
   const state = (data.read2lead_state || {}) as Record<string, unknown>;
   const growth = (data.weekly_growth || {}) as Record<string, unknown>;
   return `<article class="fx-card ho-so-p-stat"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">📦</span>Bài đã hoàn thành</div><strong>${Number(progress.completed_packs || 0)}</strong><small>${Number(growth.this_week_packs || 0)} bài trong tuần này</small></article><article class="fx-card ho-so-p-stat"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">🔥</span>Chuỗi ngày</div><strong>${Number(state.streak_days || 0)} <small>ngày liên tiếp</small></strong><small>${Number(state.streak_freeze_tokens || 0)} lượt giữ chuỗi</small></article><article class="fx-card ho-so-p-stat ho-so-p-stat--coins"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">🪙</span>Xu thưởng</div><strong>${Number(state.coins || 0)} <small>xu</small></strong><small>Dùng để trang trí quái vật</small></article><article class="fx-card ho-so-p-stat"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">💎</span>Kim cương</div><strong>${Number(state.diamonds || 0)} <small>kim cương</small></strong><small>Thưởng từ buổi coaching</small></article>`;
+}
+
+/**
+ * §5 — "Con đang tiết kiệm cho…". The highest-leverage surface in the whole
+ * feature per the packet: warm, proud, and plain about where 💎 comes from
+ * (Coach Felix awards it in live class), so a parent wants to bring their
+ * child to class — never a sales pitch, and never cost_vnd/₫ (kid/parent
+ * screens must not show real money). `item` is pre-fetched by
+ * renderParentView (read2lead_state only carries the goal's id, not its
+ * name/photo/price — see gift-goal-card.ts's own doc comment for why this
+ * card doesn't fetch the catalogue itself).
+ */
+function renderGiftGoalSection(data: ProgressPayload, code: string, item: GiftGoalItem | null): string {
+  const state = (data.read2lead_state || {}) as Record<string, unknown>;
+  const diamonds = Number(state.diamonds || 0);
+  const redemptions = (Array.isArray(state.redemptions) ? state.redemptions : []) as GiftGoalRedemption[];
+  const cardHtml = renderGiftGoalCard(item, diamonds, redemptions, {
+    variant: 'wide',
+    audience: 'parent',
+    code,
+    noteVi: '',
+  });
+  return `<article class="fx-card ho-so-p-chart">
+    <div class="ho-so-card-head"><h3>Con đang tiết kiệm cho</h3></div>
+    <div class="mt-3">${cardHtml}</div>
+    <div class="mt-4 flex items-start gap-3 rounded-2xl border p-4" style="border-color:var(--accent-border); background:color-mix(in srgb, var(--gold) 8%, transparent);">
+      <span style="font-size:22px;" aria-hidden="true">💎</span>
+      <p style="margin:0; color:var(--cream-muted); font-size:13.5px; line-height:1.6;">Kim cương là phần thưởng <strong style="color:var(--cream);">Coach Felix trao trong buổi học trực tiếp</strong> (300–1.000 💎 mỗi buổi). Anh chị đưa con đi học đều đặn là cách nhanh nhất giúp con chạm tới món quà mơ ước. 💛</p>
+    </div>
+  </article>`;
+}
+
+/** Creates (once) or reuses a host element right after `afterEl` for the
+ * gift-goal section — there's no static slot for this in ho-so/index.astro
+ * (outside this packet's owned file set), so this manages its own DOM node
+ * idempotently instead of accumulating a new sibling on every re-render. */
+function ensureGiftGoalHost(afterEl: Element): HTMLElement {
+  const existing = document.getElementById('ho-so-parent-gift-goal');
+  if (existing instanceof HTMLElement) return existing;
+  const host = document.createElement('div');
+  host.id = 'ho-so-parent-gift-goal';
+  afterEl.insertAdjacentElement('afterend', host);
+  return host;
 }
 
 function renderGrowth(data: ProgressPayload) {
@@ -148,7 +193,7 @@ function attachTaskInteractions(root: Element, code: string, tasks: ParentTask[]
   }));
 }
 
-function renderAll(data: ProgressPayload, code: string, lesson: Lesson | null, portfolio: PortfolioEntry[], taskState: Set<string>, failed: boolean) {
+function renderAll(data: ProgressPayload, code: string, lesson: Lesson | null, portfolio: PortfolioEntry[], taskState: Set<string>, failed: boolean, giftItem: GiftGoalItem | null) {
   const progress = (data.progress || {}) as Record<string, unknown>;
   const state = (data.read2lead_state || {}) as Record<string, unknown>;
   const name = String(progress.student_name || state.student_name || 'Bé yêu');
@@ -158,6 +203,7 @@ function renderAll(data: ProgressPayload, code: string, lesson: Lesson | null, p
   session.innerHTML = renderSession(name, code, state.last_activity_at || progress.last_activity_at);
   header.innerHTML = `<div><p class="fx-eyebrow ho-so-accent-eyebrow">Báo cáo tuần</p><h1>${escapeHtml(firstName(name))} ${Number(growth.this_week_packs || 0) ? 'đang giữ nhịp học đều trong tuần này.' : 'chưa học tuần này — bắt đầu lại bằng một buổi ngắn nhé.'}</h1>${lesson?.parent_note_vi ? `<p class="ho-so-chart-note">${escapeHtml(lesson.parent_note_vi)}</p>` : ''}</div><button class="fx-btn fx-btn--ghost" type="button" data-ho-so-print>Tải báo cáo PDF →</button>`;
   stats.innerHTML = renderStats(data);
+  ensureGiftGoalHost(stats).innerHTML = renderGiftGoalSection(data, code, giftItem);
   charts.innerHTML = renderGrowth(data) + renderQuality(data);
   stories.innerHTML = renderStories(data);
   minnyHost.innerHTML = renderMinnyPractice(data);
@@ -168,16 +214,27 @@ function renderAll(data: ProgressPayload, code: string, lesson: Lesson | null, p
 }
 
 export async function renderParentView(_container: Element, data: ProgressPayload, accessCode: string) {
-  if (lastFetchCode === accessCode) { renderAll(data, accessCode, cachedLesson, cachedPortfolio, new Set(cachedTasks), cachedPortfolioFailed); return; }
+  if (lastFetchCode === accessCode) { renderAll(data, accessCode, cachedLesson, cachedPortfolio, new Set(cachedTasks), cachedPortfolioFailed, cachedGiftItem); return; }
   const progress = (data.progress || {}) as Record<string, unknown>;
   const pack = progress.current_pack as Record<string, unknown> | undefined;
-  const [lessonResult, portfolioResult, tasksResult] = await Promise.all([
+  const state = (data.read2lead_state || {}) as Record<string, unknown>;
+  // read2lead_state only carries the goal's id (see gift-goal-card.ts's doc
+  // comment) — fetch the same catalogue endpoint the shop uses to get its
+  // name/photo/price, only when a goal is actually set.
+  const giftGoalId = typeof state.gift_goal === 'string' && state.gift_goal ? state.gift_goal : null;
+  const [lessonResult, portfolioResult, tasksResult, giftItemResult] = await Promise.all([
     pack?.pack_id && pack.status !== 'generation_in_progress' ? fetch(`/api/read2lead-lesson?code=${encodeURIComponent(accessCode)}&pack_id=${encodeURIComponent(String(pack.pack_id))}`).then((response) => response.ok ? response.json() : null).then((payload) => payload?.lesson || null).catch(() => null) : Promise.resolve(null),
     fetch(`/api/parent/portfolio?code=${encodeURIComponent(accessCode)}`).then(async (response) => { const payload = await response.json(); return response.ok && payload.ok ? { items: payload.items || [], failed: false } : { items: [], failed: true }; }).catch(() => ({ items: [], failed: true })),
     fetch(`/api/parent/weekly-tasks?code=${encodeURIComponent(accessCode)}`).then<WeeklyTaskState>(async (response) => response.ok ? response.json() as Promise<WeeklyTaskState> : {}).catch((): WeeklyTaskState => ({})),
+    giftGoalId
+      ? fetch('/api/read2lead-gifts-list', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: accessCode }) })
+          .then((response) => response.json())
+          .then((payload: { ok?: boolean; items?: GiftGoalItem[] }) => (payload?.ok ? (payload.items || []).find((entry) => entry.id === giftGoalId) || null : null))
+          .catch((): GiftGoalItem | null => null)
+      : Promise.resolve<GiftGoalItem | null>(null),
   ]);
-  lastFetchCode = accessCode; cachedLesson = lessonResult; cachedPortfolio = portfolioResult.items; cachedPortfolioFailed = portfolioResult.failed; cachedTasks = new Set(tasksResult.completed_task_ids || []);
-  renderAll(data, accessCode, cachedLesson, cachedPortfolio, new Set(cachedTasks), cachedPortfolioFailed);
+  lastFetchCode = accessCode; cachedLesson = lessonResult; cachedPortfolio = portfolioResult.items; cachedPortfolioFailed = portfolioResult.failed; cachedTasks = new Set(tasksResult.completed_task_ids || []); cachedGiftItem = giftItemResult;
+  renderAll(data, accessCode, cachedLesson, cachedPortfolio, new Set(cachedTasks), cachedPortfolioFailed, cachedGiftItem);
 }
 
-export function invalidateParentCache() { lastFetchCode = ''; cachedLesson = null; cachedPortfolio = []; cachedTasks = new Set(); cachedPortfolioFailed = false; }
+export function invalidateParentCache() { lastFetchCode = ''; cachedLesson = null; cachedPortfolio = []; cachedTasks = new Set(); cachedPortfolioFailed = false; cachedGiftItem = null; }

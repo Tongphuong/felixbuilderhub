@@ -8,6 +8,7 @@ import { escapeHtml, firstName, qs } from './ho-so';
 import { isV3Enabled } from '../../config/flags';
 import { buildHeroCta, defaultMonsterSvg, PROFILE_TIERS, statusMeta } from '../../lib/r2l-hero';
 import { renderEggHtml } from '../../lib/egg-renderer';
+import { renderGiftGoalCard, type GiftGoalItem, type GiftGoalRedemption } from '../../lib/gift-goal-card';
 import { renderMonster, type EquippedDisplayItem } from '../../lib/monster-avatar';
 import { monsterBuilderHtml, mountMonsterBuilder } from '../../lib/monster-builder';
 import { showRankUpModal } from '../../lib/rank-up-celebration';
@@ -510,7 +511,42 @@ function renderDailyExtras(state: Record<string, unknown>, pack: Record<string, 
   const v3 = isV3Enabled();
   const avatarStage = String(state.avatar_stage || 'basic');
   const builder = v3 && avatarStage === 'custom' ? monsterBuilderHtml(name, shopHref) : '';
-  return `<section class="fx-card ho-so-extra-card"><div class="ho-so-card-head"><h3>Nhiệm vụ hôm nay</h3>${chestHtml}</div>${questHtml ? `<div class="ho-so-quest-grid">${questHtml}</div>` : '<p class="ho-so-empty">Hoàn thành một bài để mở nhiệm vụ hôm nay.</p>'}${pack && !status.completed ? `<p class="ho-so-chart-note">${escapeHtml(pack.story_title || 'Bài đang mở')} · ${escapeHtml(status.label)}</p>` : ''}</section>${builder}<nav class="ho-so-extra-actions" aria-label="Tiện ích"><a class="fx-btn fx-btn--ghost" href="${shopHref}">🛒 Cửa hàng</a><a class="fx-btn fx-btn--ghost" href="/read2lead/games?code=${encodeURIComponent(currentAccessCode)}&v3=1">🎮 Mini game</a><a class="fx-btn fx-btn--ghost" href="/read2lead/leaderboard">🏆 Bảng hạng</a></nav>`;
+  return `<section class="fx-card ho-so-extra-card"><div class="ho-so-card-head"><h3>Nhiệm vụ hôm nay</h3>${chestHtml}</div>${questHtml ? `<div class="ho-so-quest-grid">${questHtml}</div>` : '<p class="ho-so-empty">Hoàn thành một bài để mở nhiệm vụ hôm nay.</p>'}${pack && !status.completed ? `<p class="ho-so-chart-note">${escapeHtml(pack.story_title || 'Bài đang mở')} · ${escapeHtml(status.label)}</p>` : ''}</section>${builder}<nav class="ho-so-extra-actions" aria-label="Tiện ích"><a class="fx-btn fx-btn--ghost" href="${shopHref}">🛒 Cửa hàng</a><a class="fx-btn fx-btn--ghost" href="/read2lead/games?code=${encodeURIComponent(currentAccessCode)}&v3=1">🎮 Mini game</a><a class="fx-btn fx-btn--ghost" href="/read2lead/leaderboard">🏆 Bảng hạng</a><a class="fx-btn fx-btn--ghost" href="/read2lead/gifts?code=${encodeURIComponent(currentAccessCode)}">🎁 Quà thật</a></nav>`;
+}
+
+// §4 GiftGoalCard — "Con đang tiết kiệm cho…". `state.gift_goal` is only a
+// gift id (see functions/api/_read2lead-v2-state.js's publicProgressState);
+// the name/photo/price live in the catalogue, so this fetches
+// read2lead-gifts-list (the same endpoint the shop page itself uses) and
+// prepends the rendered card once it resolves. Async and best-effort: it
+// never blocks the synchronous render above it, and a failed fetch just
+// leaves the card out — the rest of the profile must never wait on it.
+// Guards against a stale response landing after the user has already
+// switched away (or back) via `currentAccessCode`, which renderKidView
+// re-stamps on every call.
+async function loadGiftGoalCard(accessCode: string, extrasHost: HTMLElement, state: Record<string, unknown>) {
+  const diamonds = Number(state.diamonds || 0);
+  const redemptions = (Array.isArray(state.redemptions) ? state.redemptions : []) as GiftGoalRedemption[];
+  const giftGoal = typeof state.gift_goal === 'string' && state.gift_goal ? state.gift_goal : null;
+
+  if (!giftGoal) {
+    extrasHost.insertAdjacentHTML('afterbegin', renderGiftGoalCard(null, diamonds, redemptions, { variant: 'narrow', code: accessCode }));
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/read2lead-gifts-list', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: accessCode }),
+    });
+    const payload = (await res.json()) as { ok?: boolean; items?: GiftGoalItem[] };
+    if (currentAccessCode !== accessCode || !payload?.ok) return;
+    const item = (payload.items || []).find((entry) => entry.id === giftGoal) || null;
+    extrasHost.insertAdjacentHTML('afterbegin', renderGiftGoalCard(item, diamonds, redemptions, { variant: 'narrow', code: accessCode }));
+  } catch {
+    // Best-effort — see doc comment above.
+  }
 }
 
 function maybeShowRankUp(code: string, ladder: Record<string, unknown>, kidName: string) {
@@ -548,11 +584,12 @@ export function renderKidView(_container: Element, data: ProgressPayload, access
   renderSession(sessionHost, name, accessCode);
   heroHost.className = 'fx-card ho-so-hero-card';
   heroHost.innerHTML = `<div class="ho-so-hero"><div class="ho-so-hero__avatar" data-hub-monster>${defaultMonsterSvg()}</div><div><p class="fx-eyebrow">Hồ sơ của con</p><h1>${escapeHtml(name)}</h1><p>Đã đọc xong <strong>${Number(progress.completed_packs || state.completed_packs || 0)} truyện</strong> và giữ chuỗi <strong>${Number(state.streak_days || 0)} ngày</strong>.</p><div class="ho-so-pill-row"><span class="fx-rank fx-rank--${PROFILE_TIERS[Math.min(7, Number(ladder.tier_index) || 0)][2]}"><span class="fx-rank__dot"></span>${escapeHtml(ladder.label_vi || state.rank_title || 'Đồng')}</span><span class="fx-badge fx-badge--neutral">${escapeHtml((state.season as Record<string, unknown> | undefined)?.name_vi || 'Mùa hiện tại')}</span></div></div></div>`;
-  statsHost.innerHTML = `<article class="fx-card ho-so-stat"><span class="fx-eyebrow">⭐ XP tổng</span><strong>${Number(state.total_xp || 0).toLocaleString('vi-VN')}</strong><small>${Number(state.xp_in_level || 0)} / ${Number(state.xp_to_next_level || 0)} XP cấp hiện tại</small></article><article class="fx-card ho-so-stat ho-so-stat--coins"><span class="fx-eyebrow">🪙 Xu</span><strong>${Number(state.coins || 0)}</strong><small>Dùng để trang trí quái vật</small></article><article class="fx-card ho-so-stat"><span class="fx-eyebrow">💎 Kim cương</span><strong>${Number(state.diamonds || 0)}</strong><small>Thưởng từ buổi coaching</small></article><article class="fx-card ho-so-stat"><span class="fx-eyebrow">Chuỗi ngày</span><strong>🔥 ${Number(state.streak_days || 0)}</strong><small>Học thêm một bài để giữ nhịp</small></article>`;
+  statsHost.innerHTML = `<article class="fx-card ho-so-stat"><span class="fx-eyebrow">⭐ XP tổng</span><strong>${Number(state.total_xp || 0).toLocaleString('vi-VN')}</strong><small>${Number(state.xp_in_level || 0)} / ${Number(state.xp_to_next_level || 0)} XP cấp hiện tại</small></article><article class="fx-card ho-so-stat ho-so-stat--coins"><span class="fx-eyebrow">🪙 Xu</span><strong>${Number(state.coins || 0)}</strong><small>Dùng để trang trí quái vật</small></article><article class="fx-card ho-so-stat"><span class="fx-eyebrow">💎 Kim cương</span><strong>${Number(state.diamonds || 0)}</strong><small>Dùng để đổi quà thật</small></article><article class="fx-card ho-so-stat"><span class="fx-eyebrow">Chuỗi ngày</span><strong>🔥 ${Number(state.streak_days || 0)}</strong><small>Học thêm một bài để giữ nhịp</small></article>`;
   renderRankBoard(rankHost, state);
   renderBadges(badgesHost, state);
   renderSeason(seasonHost, state);
   extrasHost.innerHTML = renderDailyExtras(state, pack, data, name, shopHref);
+  void loadGiftGoalCard(accessCode, extrasHost, state);
 
   const ctaHtml = cta.action === 'lesson' && cta.href ? `<a class="fx-btn fx-btn--primary fx-btn--lg fx-btn--block" href="${escapeHtml(cta.href)}">${escapeHtml(cta.label)}</a>` : `<button id="ho-so-hero-cta" class="fx-btn fx-btn--primary fx-btn--lg fx-btn--block" type="button" ${cta.action === 'wait' ? 'disabled' : ''}>${escapeHtml(cta.label)}</button>`;
   ctaHost.innerHTML = `<div class="ho-so-cta">${ctaHtml}<p>Mất khoảng 30 giây — Minny viết riêng một truyện theo chủ đề con chọn.</p></div>`;

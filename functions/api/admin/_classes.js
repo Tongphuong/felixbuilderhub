@@ -207,7 +207,7 @@ export async function enrichClass(env, klass) {
 
 function clampDelta(value) {
   const parsed = Math.trunc(Number(value) || 0);
-  return Math.max(-500, Math.min(500, parsed));
+  return Math.max(-2000, Math.min(2000, parsed));
 }
 
 export function applyManualReward(state, { diamondDelta = 0, coinsDelta = 0 } = {}) {

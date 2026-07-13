@@ -36,6 +36,22 @@ build gate, so this doc can no longer silently fall behind the code.)
 | `READ2LEAD_BACKEND_URL` | Base URL of the Read2Lead Python service on Render (e.g., `https://read2lead-api-xxx.onrender.com`). Used to forward generation requests + voice samples. | generate-read2lead-pack | Render service URL |
 | `READ2LEAD_BACKEND_SECRET` | Shared HMAC-style token. Hub sends as header when calling backend; backend sends as header on task-state callback to hub. Bidirectional auth. | generate-read2lead-pack, task-state | Manually set (must match `READ2LEAD_BACKEND_SECRET` on Render side) |
 | `ADMIN_PASSWORD` | Password for `/admin/*` routes. Validated by `functions/_middleware.js`. | _middleware | Manually set |
+| `AZURE_SPEECH_KEY` | Azure Speech subscription key. Powers SpeakUp's per-word pronunciation assessment. | _azure-pronunciation | Azure portal → Speech resource |
+| `AZURE_SPEECH_REGION` | Azure Speech region (e.g. `southeastasia`). Must match the key's resource. | _azure-pronunciation | Azure portal → Speech resource |
+| `OPENAI_API_KEY` | OpenAI key — Whisper transcription (speaking check) + TTS. Fallback when `READ2LEAD_OPENAI_API_KEY` is absent. | read2lead-speaking-check, _minny-tts | OpenAI dashboard |
+| `READ2LEAD_OPENAI_API_KEY` | Read2Lead-scoped OpenAI key. Takes precedence over `OPENAI_API_KEY` so R2L spend can be tracked separately. | read2lead-speaking-check, _minny-tts | OpenAI dashboard |
+| `R2L_AUDIO_HOST` | Base host for pre-generated lesson audio. Empty/absent falls back to same-origin. | _read2lead-audio-url | Manually set |
+| `STUDENT_PROFILE_API_TOKEN` | Bearer token for the student-profile service. | _shared/student-profile.ts | Manually set |
+| `PUBLIC_R2L_W7` | Feature flag (`'1'` = on): unlocks `effects`/`frame` decoration slots in the **monster** shop. Not a secret — public build-time var. Unrelated to the "Quà thật" real-gift shop, which has no flag. | read2lead-shop-buy | Manually set |
+
+**Real-gift shop ("Quà thật", 2026-07-13)** — introduces no new bindings. It reuses
+`READ2LEAD_CODES` (catalogue at key `config:gifts:v1`; redemption queue index at
+`admin:gift-redemptions:v1`), `READ2LEAD_PROGRESS` (the child's `diamonds`,
+`gift_goal` and append-only `redemptions[]` ledger), and `R2L_MEDIA` (gift photos
+at `gifts/<gift_id>.<ext>`, served via `read2lead-gift-image`). Gift photo UPLOAD
+therefore depends on `R2L_MEDIA` being bound in the **Production** environment —
+it was missing there until 2026-07-13. Pasting an image URL needs no binding at
+all, and is the path the founder actually uses (he sources product photos online).
 | `TELEGRAM_BOT_TOKEN` | Bot token for the Felix lead-bot Telegram bot. Used to push lead notifications. | coaching-booking, msmw-lead, sharing-subscribe | https://t.me/BotFather |
 | `TELEGRAM_CHAT_ID` | Chat ID where bot messages land (Phương's chat). | Same as `TELEGRAM_BOT_TOKEN` consumers | Bot getUpdates response |
 | `OPENROUTER_API_KEY` | Bearer key for the Free Talking conversation brain (DeepSeek v4 Flash via OpenRouter). Missing key → llama-3.3 fallback → canned redirect. **Must be set on BOTH Preview and Production** (a Production-only key means preview Free Talk silently runs the fallback). | minny-conversation | OpenRouter dashboard (same key the retired Aider workers used, in `~/.config/aider/.env`) |
