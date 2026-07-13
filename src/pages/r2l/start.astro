@@ -229,8 +229,15 @@ const PET_SVG = defaultMonsterSvg();
   .r2l-pet__art svg,
   .r2l-pet__art img { width: 100%; height: 100%; object-fit: contain; }
   /* The child's real monster is rendered into a child element by renderMonster(), which
-     owns that element's classes — make it fill the slot our wrapper animates. */
-  .r2l-pet__art > :global(.r2l-monster) { width: 100%; height: 100%; }
+     owns that element's classes. Its art fills its box edge-to-edge, unlike the starter
+     pet the design was drawn around — so inset it to keep the design's proportions: the
+     medal sits on the pet's corner, not on its chest, and the rank line below can breathe. */
+  .r2l-pet__art > :global(.r2l-monster) {
+    width: 100%;
+    height: 100%;
+    transform: scale(.82);
+    transform-origin: center center;
+  }
   .r2l-pet__medal { position: absolute; bottom: 2%; right: 6%; width: clamp(46px, 13vw, 58px);
     height: auto; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .5)); }
   .r2l-world__rank { text-align: center; margin: 0 0 14px; font-family: var(--font-display);
