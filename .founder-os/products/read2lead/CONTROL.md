@@ -22,9 +22,12 @@ stale until 2026-07-05.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Started: 2026-07-13
+- Completed: 2026-07-13
 - Task ID: R2L-TEST-CODE-UNLIMITED
+- LIVE VERIFICATION ON PRODUCTION (0bcd88e, ~20s after merge): POST /api/generate-read2lead-pack with R2L-ONG-U5M6 — the code that had `uses_remaining: 0` and was returning `code_exhausted` — now returns `{ok: true, status: "done", story_title: "The Big, Big Matchbox", lesson_link: /read2lead/lesson?code=R2L-ONG-U5M6&pack_id=ee37d645…}`. Acceptance criterion #7 PASS: the test code generates again with no admin credit top-up. Criteria #1-#6 PASS via the 1270-test suite (15 new), including the four-path coverage and the six real-student regression guards. Criterion #2's no-decrement behaviour is not directly observable on prod (no machine-readable read of `uses_remaining` without the admin password) — it is covered by unit tests on all four completion paths plus the targeted mutation proof; and since the code was already clamped at 0, a decrement would have been a no-op there anyway. Stated honestly rather than claimed.
+- Founder handoff: DONE — Phương approved the expiry scope call (keep the kill switch) and gave the merge GO; merged to main 0bcd88e and deployed. Real students remain metered.
 - Owner: Claude Lead (Elon) — functions/api/generate-read2lead-pack.js + tests; Buffet reviews (author ≠ reviewer).
 - Lane: product (bug fix; no UI surface)
 - Problem: test codes are supposed to have unlimited testing, and they ALREADY bypass the "must review your previous pack" gate (`shouldRequireReviewBeforeNextPack` exempts `is_test`/`is_shared`) — but nobody ever exempted them from the LESSON-CREDIT gate. So a test code burns `uses_remaining` like a real student and eventually hits `code_exhausted` ("Mã đã hết lượt"), which is exactly what happened to R2L-ONG-U5M6 (verified `is_test: true` on prod) during the r2l-student-home live test: one generate consumed its last credit and the code is now dead for testing.
