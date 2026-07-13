@@ -271,6 +271,57 @@ assigns, commits, merges, deploys, or spends.
      founder build + complete gates PASS.
   8. Rule 20: verified on the DEPLOYED production build (not locally) with
      screenshots + the deployed SHA recorded.
+- Files owned: Mark — functions/api/_homework.js (schema v3),
+  functions/api/minny-speaking-context.js (task compiler),
+  functions/api/admin/classes/[id]/homework.js,
+  functions/api/admin/classes/[id]/homework-extract.js (NEW),
+  functions/api/_homework-feedback.js, tests/admin-homework.test.mjs,
+  tests/minny-speaking.test.mjs, tests/homework-extract.test.mjs (NEW),
+  tests/homework-feedback.test.mjs. Steve —
+  src/components/admin/HomeworkModal.astro, src/pages/admin/classes.astro,
+  src/pages/speak-up.astro, src/styles/speakup-app.css,
+  tests/speakup-homework-types-ui.test.mjs (NEW),
+  tests/admin-homework-modal-ui.test.mjs (NEW). Elon — docs/ENV.md, this
+  CONTROL block, the EXTRACT_SYSTEM_PROMPT, and the five review fixes.
+  (This line was MISSING until 2026-07-13 and the build gate passed anyway —
+  it was silently reading a completed prior task's field. Fixed by
+  `read_task_field` scoping; see EVOLUTION_LOG.)
+- Design self-verification: rule 20 on the DEPLOYED PRODUCTION build (not
+  preview, not local) via a routed playwright harness — real deployed bundle,
+  synthetic homework, zero real codes/sessions/spend. Story step: must-use
+  chips render ("because together kind special"), VN + EN prompt, ~105s target,
+  Minny red-robot — `_ops/hwv3-story-390.png`. Build step: the founder's real
+  Stage-4 lesson as 4 chip columns; one tap per column assembles "We play
+  football at school, we feel happy because it is fun."; mic arms ONLY when
+  every column is picked — `_ops/hwv3-PROD-build-390.png`,
+  `_ops/hwv3-PROD-build-armed-390.png`, `_ops/hwv3-PROD-build-1280.png`.
+  Zero page errors; the picture answer-key is absent from the DOM. Verdict:
+  MATCH. Honest caveat: the FIRST production render came out unstyled and was
+  nearly reported as a ship-blocker — a deploy race (HTML live, hashed
+  /_astro/*.css not yet propagated; `.hidden` is a CSS class, so the missing
+  sheet also un-hid every hidden element). Re-run after the assets returned 200
+  was pixel-correct. Now prevented by `_ops/scripts/wait-for-deploy.sh`.
+- Founder-operated surface check: **NOT driven by a human — founder waived.**
+  The admin authoring modal (paste-lesson → task list → confirm) is the screen
+  Phương uses to assign every piece of homework, and it shipped to production
+  exercised only by 20 unit tests and an API-level pipeline probe. Nobody had
+  typed into it. Elon rationalised the gap ("/admin/* is Basic-Auth'd, I did not
+  seek the password") and logged it as a follow-up rather than a blocker — the
+  exact failure rule 26 now exists to prevent. Phương's explicit waiver,
+  2026-07-13: "No need, i'll do that myself". He tests it on a test code before
+  any class sees it.
+- Founder handoff: shipped to production and reported in-session in plain
+  language — root cause of the picture bug (a Cloudflare PRODUCTION binding, not
+  code; his 2-minute dashboard fix, since done and verified live), what the typed
+  homework model buys him, the six bugs caught before any child saw them
+  (including two in Elon's own code, found by Buffet), and the deploy-race false
+  alarm. Decisions asked of him and given: R2 binding + merge ack (both done);
+  ratification of the six EVOLUTION_LOG proposals (approved); the Aider purge
+  (ordered). Standing recommendation put to him: stop shipping, drive the
+  authoring flow himself on a test code, watch the Azure F0 meter (the new task
+  types bill ~30s of Azure per step vs ~10s for a sentence; when the free tier
+  runs out, pronunciation/word-chips/fix-it silently stop — which is precisely
+  the "45% only" complaint that started V1).
 - Stop condition: any diff to the guardrail stack, caps, the free-talk
   path, or the deterministic scoring functions themselves
   (`scoreTranscript`/`scoreSpeechFrame` internals) — stop and escalate.
