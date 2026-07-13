@@ -439,6 +439,17 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
         document.getElementById('homework-frame').value = hw?.frame?.stems ? hw.frame.stems.map(s => s.text_en).join('\n') : '';
         document.getElementById('homework-duration').value = hw?.frame?.duration_s ?? 60;
         document.getElementById('homework-note').value = hw?.note_vi || '';
+        const lessonPasteEl = document.getElementById('homework-lesson-paste');
+        if (lessonPasteEl) lessonPasteEl.value = '';
+        hwLessonStatus('');
+        // Prefill the editable task list from the stored v3 tasks[] when
+        // present (deep-cloned — never edit the shared classState object in
+        // place). Older stored homework without tasks[] yet keeps the
+        // pre-existing sentences/frame textarea prefill above as its editing
+        // surface; the submit handler falls back to the old shape whenever
+        // the task list is empty.
+        hwTasksState = Array.isArray(hw?.tasks) ? hw.tasks.map(hwCloneTask) : [];
+        renderTaskList();
         hwPhotoPrefill(hw?.photo || null, klass.id);
         modal.showModal();
         return;
@@ -551,14 +562,304 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       }
     }
 
+    // --- Schema v3 task list (2026-07-13): "Dán bài giảng" (paste lesson)
+    // and the photo picker both draft into this SAME editable list —
+    // nothing here is saved until the teacher hits "Lưu bài tập". Kept as
+    // plain arrays/objects (not the wire schema's exact validation, which is
+    // server-side per the contract) — draft.tasks[] coming back from
+    // /homework-extract has already been run through the real validators, so
+    // this is a display/edit layer over already-valid shapes.
+    let hwTasksState = [];
+
+    const HW_TASK_TYPE_META = {
+      read: { emoji: '📖', label: 'Đọc câu' },
+      present: { emoji: '🎤', label: 'Thuyết trình' },
+      story: { emoji: '📚', label: 'Kể chuyện' },
+      build: { emoji: '🧩', label: 'Ghép câu' },
+      picture: { emoji: '🖼️', label: 'Tả ảnh' },
+      qa: { emoji: '❓', label: 'Hỏi đáp' },
+    };
+
+    function hwTaskId() {
+      return 't' + Math.random().toString(36).slice(2, 9);
+    }
+
+    function hwEmptyTask(type) {
+      const id = hwTaskId();
+      switch (type) {
+        case 'read': return { id, type: 'read', items: [{ id: 's1', text_en: '' }] };
+        case 'present': return { id, type: 'present', stems: [{ id: 'f1', text_en: '' }], duration_s: 60 };
+        case 'story': return { id, type: 'story', prompt_en: '', prompt_vi: '', must_use: [], duration_s: 90, use_photo: false };
+        case 'build': return { id, type: 'build', columns: [{ id: 'c1', label_en: '', options: ['', ''] }], sentences_required: 1 };
+        case 'picture': return { id, type: 'picture', anchors: [], duration_s: 60 };
+        case 'qa': return { id, type: 'qa', cards: [{ id: 'q1', question_en: '', stem: { text_en: '' } }], duration_s: 30 };
+        default: return null;
+      }
+    }
+
+    // Deep-clones a task pulled from classState (shared app state) before it
+    // enters the modal's draft array — editing hwTasksState in place must
+    // never mutate the class board behind the teacher's back before save.
+    function hwCloneTask(task) {
+      return JSON.parse(JSON.stringify(task));
+    }
+
+    function hwTaskSummary(task) {
+      switch (task.type) {
+        case 'read': {
+          const items = task.items || [];
+          if (!items.length) return '(chưa có câu nào)';
+          return `${items.length} câu — "${items[0]?.text_en || ''}"${items.length > 1 ? '…' : ''}`;
+        }
+        case 'present': {
+          const stems = task.stems || [];
+          return stems.length ? `${stems.length} câu khung · ~${task.duration_s || 60}s` : '(chưa có khung)';
+        }
+        case 'story':
+          return `${task.prompt_en || '(chưa có đề bài)'}${task.must_use?.length ? ' · từ cần dùng: ' + task.must_use.join(', ') : ''}`;
+        case 'build': {
+          const cols = task.columns || [];
+          return `${cols.length} cột · cần ghép ${task.sentences_required || 1} câu`;
+        }
+        case 'picture':
+          return `Tả ảnh${task.anchors?.length ? ' · từ khoá: ' + task.anchors.join(', ') : ' · (chưa có từ khoá)'}`;
+        case 'qa': {
+          const cards = task.cards || [];
+          return `${cards.length} câu hỏi`;
+        }
+        default:
+          return '';
+      }
+    }
+
+    function hwFieldWrap(label, inner) {
+      return `<label class="block text-xs text-cream-muted"><span class="mb-1 block">${escapeHtml(label)}</span>${inner}</label>`;
+    }
+    function hwTextareaField(field, value, placeholder) {
+      return `<textarea data-field="${escapeHtml(field)}" rows="3" class="fx-field w-full rounded border border-cream-dim/20 bg-navy-900 px-2 py-1 text-sm text-cream focus:border-accent focus:outline-none" placeholder="${escapeHtml(placeholder || '')}">${escapeHtml(value || '')}</textarea>`;
+    }
+    function hwInputField(field, value, type, placeholder) {
+      return `<input data-field="${escapeHtml(field)}" type="${escapeHtml(type || 'text')}" value="${escapeHtml(value ?? '')}" placeholder="${escapeHtml(placeholder || '')}" class="fx-field w-full rounded border border-cream-dim/20 bg-navy-900 px-2 py-1 text-sm text-cream focus:border-accent focus:outline-none" />`;
+    }
+    function hwCheckboxField(field, checked, label) {
+      return `<label class="flex items-center gap-2 text-xs text-cream-muted"><input data-field="${escapeHtml(field)}" type="checkbox" ${checked ? 'checked' : ''} /> ${escapeHtml(label)}</label>`;
+    }
+
+    // Renders per-type edit fields. build/qa use a small line-based mini
+    // format (documented in their own placeholder text) rather than a
+    // bespoke nested-array UI, since this is an internal authoring tool —
+    // see the dispatch report for the tradeoff.
+    function hwRenderTaskEditor(task) {
+      switch (task.type) {
+        case 'read':
+          return hwFieldWrap('Câu / từ (mỗi dòng một câu)', hwTextareaField('items_text', (task.items || []).map((i) => i.text_en).join('\n'), 'I have two cats.'));
+        case 'present':
+          return [
+            hwFieldWrap('Khung câu (mỗi dòng một câu, dùng ___ cho chỗ trống)', hwTextareaField('stems_text', (task.stems || []).map((s) => s.text_en).join('\n'), 'Last summer, I went to ___.')),
+            hwFieldWrap('Thời gian nói (giây)', hwInputField('duration_s', task.duration_s ?? 60, 'number')),
+          ].join('');
+        case 'story':
+          return [
+            hwFieldWrap('Đề bài (tiếng Anh)', hwInputField('prompt_en', task.prompt_en, 'text', 'Tell the story of your best friend.')),
+            hwFieldWrap('Đề bài (tiếng Việt, tuỳ chọn)', hwInputField('prompt_vi', task.prompt_vi, 'text', 'Con kể câu chuyện về người bạn thân nhé.')),
+            hwFieldWrap('Từ cần dùng (cách nhau bằng dấu phẩy)', hwInputField('must_use_text', (task.must_use || []).join(', '), 'text', 'because, friend, happy')),
+            hwFieldWrap('Thời gian nói (giây)', hwInputField('duration_s', task.duration_s ?? 90, 'number')),
+            hwCheckboxField('use_photo', !!task.use_photo, 'Hiện ảnh bài tập khi con kể chuyện'),
+          ].join('');
+        case 'build':
+          return [
+            hwFieldWrap('Các cột (mỗi dòng: Nhãn: lựa chọn 1 | lựa chọn 2 | ...)', hwTextareaField('columns_text', (task.columns || []).map((c) => `${c.label_en || ''}: ${(c.options || []).join(' | ')}`).join('\n'), 'We…: play football | draw pictures | eat snacks')),
+            hwFieldWrap('Số câu cần ghép', hwInputField('sentences_required', task.sentences_required ?? 1, 'number')),
+          ].join('');
+        case 'picture':
+          return [
+            hwFieldWrap('Từ khoá cần tìm trong ảnh (cách nhau bằng dấu phẩy — học sinh KHÔNG nhìn thấy danh sách này)', hwInputField('anchors_text', (task.anchors || []).join(', '), 'text', 'dog, park, ball, tree')),
+            hwFieldWrap('Thời gian nói (giây)', hwInputField('duration_s', task.duration_s ?? 60, 'number')),
+          ].join('');
+        case 'qa':
+          return hwFieldWrap('Câu hỏi (mỗi dòng: câu hỏi || khung trả lời có ___)', hwTextareaField('cards_text', (task.cards || []).map((c) => `${c.question_en || ''} || ${c.stem?.text_en || ''}`).join('\n'), 'Is your friend funny? || Yes, my friend is ___ because ___.'));
+        default:
+          return '';
+      }
+    }
+
+    function hwApplyTaskEdit(task, editorEl) {
+      const get = (field) => editorEl.querySelector(`[data-field="${field}"]`);
+      const lines = (value) => (value || '').split('\n').map((s) => s.trim()).filter(Boolean);
+      const words = (value) => (value || '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
+      switch (task.type) {
+        case 'read':
+          task.items = lines(get('items_text')?.value).map((text_en, i) => ({ id: `s${i + 1}`, text_en }));
+          break;
+        case 'present':
+          task.stems = lines(get('stems_text')?.value).map((text_en, i) => ({ id: `f${i + 1}`, text_en }));
+          task.duration_s = Number(get('duration_s')?.value) || 60;
+          break;
+        case 'story':
+          task.prompt_en = (get('prompt_en')?.value || '').trim();
+          task.prompt_vi = (get('prompt_vi')?.value || '').trim();
+          task.must_use = words(get('must_use_text')?.value);
+          task.duration_s = Number(get('duration_s')?.value) || 90;
+          task.use_photo = !!get('use_photo')?.checked;
+          break;
+        case 'build':
+          task.columns = lines(get('columns_text')?.value).map((line, i) => {
+            const sep = line.indexOf(':');
+            const label_en = sep >= 0 ? line.slice(0, sep).trim() : '';
+            const optionsRaw = sep >= 0 ? line.slice(sep + 1) : line;
+            const options = (optionsRaw || '').split('|').map((s) => s.trim()).filter(Boolean);
+            return { id: `c${i + 1}`, label_en, options };
+          });
+          task.sentences_required = Number(get('sentences_required')?.value) || 1;
+          break;
+        case 'picture':
+          task.anchors = words(get('anchors_text')?.value);
+          task.duration_s = Number(get('duration_s')?.value) || 60;
+          break;
+        case 'qa':
+          task.cards = lines(get('cards_text')?.value).map((line, i) => {
+            const [q, stem] = line.split('||').map((s) => (s || '').trim());
+            return { id: `q${i + 1}`, question_en: q || '', stem: { text_en: stem || '' } };
+          });
+          break;
+      }
+    }
+
+    function renderTaskList() {
+      const listEl = document.getElementById('homework-task-list');
+      const emptyEl = document.getElementById('homework-task-empty');
+      if (!listEl) return;
+      if (!hwTasksState.length) {
+        listEl.innerHTML = '';
+        emptyEl?.classList.remove('hidden');
+        return;
+      }
+      emptyEl?.classList.add('hidden');
+      listEl.innerHTML = hwTasksState.map((task, index) => {
+        const meta = HW_TASK_TYPE_META[task.type] || { emoji: '❔', label: escapeHtml(task.type || '?') };
+        return `
+          <div class="rounded-lg border border-cream-dim/15 bg-navy-950/70 p-3" data-task-index="${index}">
+            <div class="flex items-center justify-between gap-2">
+              <span class="rounded bg-accent/10 px-2 py-0.5 text-xs font-semibold text-accent">${meta.emoji} ${escapeHtml(meta.label)}</span>
+              <div class="flex gap-1">
+                <button type="button" data-task-action="edit" class="rounded border border-cream-dim/30 px-2 py-1 text-xs text-cream transition hover:border-accent hover:text-accent">Sửa</button>
+                <button type="button" data-task-action="delete" class="rounded border border-red-500/30 px-2 py-1 text-xs text-red-200 transition hover:bg-red-500/10">Xoá</button>
+              </div>
+            </div>
+            <p class="mt-1.5 text-xs text-cream-muted">${escapeHtml(hwTaskSummary(task))}</p>
+            <div class="mt-2 hidden space-y-2" data-task-editor></div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    document.getElementById('homework-task-list')?.addEventListener('click', (event) => {
+      const row = event.target.closest('[data-task-index]');
+      if (!row) return;
+      const index = Number(row.dataset.taskIndex);
+      const task = hwTasksState[index];
+      if (!task) return;
+      const editorEl = row.querySelector('[data-task-editor]');
+
+      if (event.target.closest('[data-task-action="delete"]')) {
+        if (!confirm('Xoá bài này khỏi danh sách?')) return;
+        hwTasksState.splice(index, 1);
+        renderTaskList();
+        return;
+      }
+      if (event.target.closest('[data-task-action="edit"]')) {
+        editorEl.innerHTML = `
+          ${hwRenderTaskEditor(task)}
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="button" data-task-action="cancel" class="rounded border border-cream-dim/30 px-3 py-1 text-xs text-cream">Huỷ</button>
+            <button type="button" data-task-action="apply" class="rounded border border-accent/50 px-3 py-1 text-xs font-semibold text-accent">Lưu sửa</button>
+          </div>
+        `;
+        editorEl.classList.remove('hidden');
+        return;
+      }
+      if (event.target.closest('[data-task-action="apply"]')) {
+        hwApplyTaskEdit(task, editorEl);
+        renderTaskList();
+        return;
+      }
+      if (event.target.closest('[data-task-action="cancel"]')) {
+        editorEl.classList.add('hidden');
+        editorEl.innerHTML = '';
+      }
+    });
+
+    document.getElementById('homework-task-add-btn')?.addEventListener('click', () => {
+      const type = document.getElementById('homework-task-add-type')?.value || 'read';
+      const task = hwEmptyTask(type);
+      if (!task) return;
+      hwTasksState.push(task);
+      renderTaskList();
+    });
+
+    function hwLessonStatus(msg) {
+      const el = document.getElementById('homework-lesson-status');
+      if (!el) return;
+      el.textContent = msg || '';
+      el.classList.toggle('hidden', !msg);
+    }
+
+    // Shared by "Dán bài giảng" (lesson_text) and the photo picker (r2_key)
+    // — both draft into the SAME task list (contract §5's ONE endpoint,
+    // ONE draft shape). draft:null (bad JSON, no key, timeout, everything
+    // invalid) always renders the calm nudge below, NEVER an error dialog —
+    // same for a network/parse failure here, which the catch block folds
+    // into the identical calm state rather than surfacing err.message.
+    async function hwRunExtract(payload) {
+      const classId = document.getElementById('homework-class-id').value;
+      hwLessonStatus('🔎 Minny đang đọc bài…');
+      try {
+        const res = await fetch(`/api/admin/classes/${encodeURIComponent(classId)}/homework-extract`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const result = await res.json().catch(() => ({}));
+        const draft = result && result.ok ? result.draft : null;
+        if (draft && Array.isArray(draft.tasks) && draft.tasks.length) {
+          hwTasksState = hwTasksState.concat(draft.tasks);
+          renderTaskList();
+          const noteEl = document.getElementById('homework-note');
+          if (draft.note_vi && noteEl && !noteEl.value.trim()) noteEl.value = draft.note_vi;
+          hwLessonStatus(`Minny đã soạn ${draft.tasks.length} bài — thầy kiểm tra rồi sửa giúp nhé ✏️`);
+        } else {
+          hwLessonStatus('Minny chưa đọc được bài này, thầy nhập tay nhé.');
+        }
+      } catch {
+        hwLessonStatus('Minny chưa đọc được bài này, thầy nhập tay nhé.');
+      }
+    }
+
+    document.getElementById('homework-lesson-extract-btn')?.addEventListener('click', async () => {
+      const text = document.getElementById('homework-lesson-paste')?.value || '';
+      if (!text.trim()) return;
+      const btn = document.getElementById('homework-lesson-extract-btn');
+      btn.disabled = true;
+      const original = btn.textContent;
+      btn.textContent = 'Đang đọc…';
+      try {
+        await hwRunExtract({ lesson_text: text });
+      } finally {
+        btn.disabled = false;
+        btn.textContent = original;
+      }
+    });
+
     document.getElementById('homework-photo-pick')?.addEventListener('click', () => {
       document.getElementById('homework-photo-input').click();
     });
 
     // Photo uploads on pick (not at save) so Minny can read it and draft
-    // the boxes while the teacher is still in the form. Extraction is
-    // best-effort: it only ever fills EMPTY boxes and failures just leave
-    // a hint — assignment is never blocked by it.
+    // tasks while the teacher is still in the form. Extraction now drives
+    // the SAME schema-v3 task-list draft as "Dán bài giảng" (hwRunExtract),
+    // not the old two-textarea shape — replaces the previous
+    // /homework-photo-extract call, which only ever filled the quick-path
+    // textareas. Best-effort throughout: a failed read never blocks save.
     document.getElementById('homework-photo-input')?.addEventListener('change', async (event) => {
       const file = event.target.files?.[0];
       event.target.value = '';
@@ -579,35 +880,23 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
           throw new Error(upResult.error_vi || upResult.message || upResult.error || 'Không tải được ảnh');
         }
         hwPhotoState = { status: 'saved', descriptor: upResult.photo };
-        hwPhotoStatus('🔎 Minny đang đọc ảnh…');
-        const exRes = await fetch(`/api/admin/classes/${encodeURIComponent(classId)}/homework-photo-extract`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ r2_key: upResult.photo.r2_key }),
-        });
-        const exResult = await exRes.json().catch(() => ({}));
-        const draft = exResult && exResult.ok ? exResult.draft : null;
-        if (draft) {
-          const sentencesEl = document.getElementById('homework-sentences');
-          const frameEl = document.getElementById('homework-frame');
-          let filled = false;
-          if (draft.sentences_text && !sentencesEl.value.trim()) {
-            sentencesEl.value = draft.sentences_text;
-            filled = true;
-          }
-          if (draft.frame_text && !frameEl.value.trim()) {
-            frameEl.value = draft.frame_text;
-            filled = true;
-          }
-          hwPhotoStatus(filled
-            ? 'Minny đã đọc ảnh — thầy kiểm tra rồi sửa giúp nhé ✏️'
-            : 'Minny đã đọc ảnh; các ô đã có nội dung nên giữ nguyên.');
-        } else {
-          hwPhotoStatus('Minny chưa đọc được ảnh — thầy nhập tay giúp nhé.');
-        }
+        hwPhotoStatus('✅ Đã tải ảnh.');
+        await hwRunExtract({ r2_key: upResult.photo.r2_key });
       } catch (err) {
+        // BUG FIX (2026-07-13): a failed upload used to clear the photo
+        // state BEFORE alerting, so the teacher would dismiss a generic
+        // "upload failed" message without realizing the homework was about
+        // to save with photo:null. Root cause of the failures is a missing
+        // prod R2 binding (fixed separately) — this silent-drop is a real UX
+        // bug regardless, so: alert with the CONCRETE consequence spelled
+        // out first, then clear (alert() is blocking, so this ordering is
+        // also the paint order the teacher actually sees).
+        alert(
+          'Lỗi tải ảnh: ' + err.message +
+          '\n\nBài tập sẽ được lưu KHÔNG có ảnh nếu thầy tiếp tục lưu bây giờ. ' +
+          'Thầy bấm "📷 Thêm ảnh bài tập" để thử lại nhé.',
+        );
         hwPhotoClear();
-        alert('Lỗi tải ảnh: ' + err.message);
       }
     });
 
@@ -625,25 +914,49 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       document.getElementById('homework-frame').value = '';
       document.getElementById('homework-duration').value = '60';
       document.getElementById('homework-note').value = '';
+      document.getElementById('homework-lesson-paste').value = '';
+      hwLessonStatus('');
+      hwTasksState = [];
+      renderTaskList();
       hwPhotoClear();
       modal.showModal();
     });
 
-    // Homework form submit
+    // Homework form submit. Schema v3: the task list (paste-lesson/photo
+    // draft, teacher-edited or teacher-added) wins whenever it has 1+ items
+    // and is sent as {tasks:[...]}; otherwise this falls back to the old
+    // {sentences_text, frame_text, frame_duration_s} shape exactly as
+    // before, per the contract's "old two-textarea path must keep working"
+    // requirement — the save endpoint accepts both.
     document.getElementById('homework-form')?.addEventListener('submit', async (event) => {
       event.preventDefault();
       const classId = document.getElementById('homework-class-id').value;
       const code = document.getElementById('homework-code').value;
-      const sentencesText = document.getElementById('homework-sentences').value;
-      const frameText = document.getElementById('homework-frame').value;
-      const frameDurationS = Number(document.getElementById('homework-duration').value) || 60;
       const noteVi = document.getElementById('homework-note').value;
-      const body = {
-        sentences_text: sentencesText,
-        frame_text: frameText,
-        frame_duration_s: frameDurationS,
-        note_vi: noteVi,
-      };
+      const legacySentences = document.getElementById('homework-sentences').value;
+      const legacyFrame = document.getElementById('homework-frame').value;
+
+      // The task list wins when it has entries — but never SILENTLY. If the
+      // teacher also typed into the old boxes, that text would be dropped on
+      // save with no warning: the same silent-data-loss class as the photo bug
+      // fixed in this release. Ask first.
+      if (hwTasksState.length && (legacySentences.trim() || legacyFrame.trim())) {
+        const proceed = confirm(
+          'Thầy có cả danh sách bài của Minny và chữ trong ô "Câu / từ cần luyện" hoặc "Khung thuyết trình".\n\n'
+          + 'Nếu lưu bây giờ, hệ thống chỉ dùng DANH SÁCH BÀI — phần chữ trong hai ô kia sẽ KHÔNG được lưu.\n\n'
+          + 'Thầy vẫn muốn lưu chứ?',
+        );
+        if (!proceed) return;
+      }
+
+      const body = hwTasksState.length
+        ? { tasks: hwTasksState, note_vi: noteVi }
+        : {
+            sentences_text: legacySentences,
+            frame_text: legacyFrame,
+            frame_duration_s: Number(document.getElementById('homework-duration').value) || 60,
+            note_vi: noteVi,
+          };
       if (code) {
         body.codes = [code];
       }

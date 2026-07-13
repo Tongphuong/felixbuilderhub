@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180" role="img" aria-label="felixbuilderhub app icon">
+  <defs>
+    <radialGradient id="g" cx="30%" cy="20%" r="80%">
+      <stop offset="0%" stop-color="#1d3f58"></stop>
+      <stop offset="100%" stop-color="#10273a"></stop>
+    </radialGradient>
+  </defs>
+  <rect width="180" height="180" rx="40" fill="url(#g)"></rect>
+  <path d="M90 20 L97.72 76 C99.05 85.56 94.44 80.95 104 82.28 L160 90 L104 97.72 C94.44 99.05 99.05 94.44 97.72 104 L90 160 L82.28 104 C80.95 94.44 85.56 99.05 76 97.72 L20 90 L76 82.28 C85.56 80.95 80.95 85.56 82.28 76 Z" fill="#c88f38"></path>
+  
+  <circle cx="140" cy="42" r="2.5" fill="#f2cc7e"></circle>
+  <circle cx="38" cy="140" r="2" fill="#f2cc7e"></circle>
+  <circle cx="150" cy="120" r="1.5" fill="#f2cc7e" opacity=".7"></circle>
+</svg>

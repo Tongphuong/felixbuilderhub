@@ -1,5 +1,6 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import { packHasV2Schema } from './_read2lead-pack-schema.js';
+import { spendUse } from './_read2lead-v2-state.js';
 
 const STATUS_POLL_TIMEOUT_MS = 5 * 60 * 1000;
 
@@ -116,7 +117,7 @@ export async function onRequestGet(context) {
     const updatedCode = {
       ...codeData,
       progress: nextProgress,
-      uses_remaining: Math.max(0, (codeData.uses_remaining ?? 0) - 1),
+      uses_remaining: spendUse(codeData),
       last_used_at: now.slice(0, 10),
     };
     await env.READ2LEAD_CODES.put(accessCode, JSON.stringify(updatedCode));

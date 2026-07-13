@@ -8,9 +8,11 @@
 import { isAccessCodeKey } from '../../../_read2lead-v2-state.js';
 
 const TOKEN_BYTES = 16; // 16 bytes → 32 hex chars = 128 bits of entropy
-const DEFAULT_EXPIRY_DAYS = 60;
+// Students open their link every day, and /r2l/start is now their home page —
+// each visit spends one use, so short-lived defaults locked kids out mid-term.
+const DEFAULT_EXPIRY_DAYS = 365;
 const MAX_EXPIRY_DAYS = 3650;
-const DEFAULT_MAX_USES = 50;
+const DEFAULT_MAX_USES = 5000;
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
