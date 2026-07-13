@@ -45,6 +45,15 @@
   box-sizing: border-box;
 }
 
+/* The emoji is a FALLBACK, not a permanent underlay — only hidden once a
+   real photo has actually decoded (img onload adds this class). A
+   broken/near-transparent photo (e.g. a mostly-transparent campaign PNG)
+   never triggers onerror, so without this the emoji would render stacked
+   underneath a photo that looks broken. onerror removes the <img> outright,
+   which never adds this class, so the emoji fallback still works exactly
+   as before for a truly failed load. */
+.qt-photo-well--has-img .qt-photo-well__emoji { display: none; }
+
 .qt-photo-well__badge {
   position: absolute;
   top: 10px;
@@ -110,6 +119,12 @@
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
   transition: border-color var(--duration-base) var(--ease-standard);
+  /* Lets descendants query the CARD's own rendered width (see the
+     @container rule below), not the viewport — with auto-fill grid columns
+     (below), the same viewport width can hand this card anywhere from
+     ~168px (many columns) to full-width (goal card, empty state), so a
+     viewport media query would be the wrong tool. */
+  container-type: inline-size;
 }
 .qt-gift-card__body { padding: 14px 15px 16px; }
 .qt-gift-card__head {
@@ -130,6 +145,49 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* The "saving" state's progress caption ("Con đã đi được N% chặng đường ·
+   còn N 💎") — pulled out of an inline style (src/lib/gift-ux.ts) so the
+   @container rule below can trim it at the narrow end without touching the
+   number/wording it renders. */
+.qt-gift-card__caption { font-size: 13px; }
+
+/* Narrow-card adaptations. Triggers whenever THIS card's own box is ≤220px
+   — comfortably covers the ~168-195px cards auto-fill produces at every
+   width from phone to laptop (see .qt-band-grid), while leaving the
+   full-width goal card (rule 3, unaffected — it never gets this narrow)
+   and the empty state alone.
+   - name/price: space-between + baseline was fine at full card width, but
+     at ~170px a long name ("Mô hình Gundam") and the price collide: stack
+     them instead of letting them fight over one row.
+   - CTA buttons: .fx-btn sets white-space:nowrap (design-system.css) which
+     is correct at full width but would push a long label ("Đặt làm mục
+     tiêu ★") past the button/card edge at this width, causing horizontal
+     overflow. Overriding to wrap here is scoped to narrow cards only — the
+     button's min-height (set inline in gift-ux.ts, 44-56px) is a FLOOR, so
+     a wrapped 2-line label grows the button taller and never shrinks the
+     tap target below it. */
+@container (max-width: 220px) {
+  .qt-gift-card__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .qt-gift-card__name {
+    font-size: 14.5px;
+    line-height: 1.3;
+  }
+  .qt-gift-card__price { font-size: 14px; }
+  .qt-gift-card__caption {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .qt-gift-card__body .fx-btn {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.3;
+  }
+}
+
 .qt-gift-card[data-state='affordable'] {
   border-color: color-mix(in srgb, var(--success) 40%, transparent);
 }
@@ -148,14 +206,33 @@
   border-color: var(--border-subtle);
 }
 
-/* Card grid inside a band: 1 column on mobile, 3 on wider screens. */
+/* Card grid inside a band — and inside the "🎁 Quà của con" in-flight group,
+   which renders through this same class (see renderInFlightGroup in
+   gift-ux.ts). Intrinsically responsive: auto-fill packs as many
+   168px-minimum columns as the container allows, then stretches them
+   equally to fill the remainder — no per-device breakpoints to maintain as
+   new screen sizes show up. Founder's rule (2026-07-13, verbatim): "I want
+   the shop to be in grid mode, not list mode of product... responsive,
+   works on phone, ipad and laptop. This is a rule." The old rule jumped
+   1-column-phone straight to 3-column at 720px, which was already cramped
+   at iPad's 768px and never adapted to anything in between.
+   168px is the floor: it's the narrowest a card renders while the longest
+   catalogue name ("Mô hình Gundam") and the redeem CTA still fit without
+   clipping or shrinking below the 44px tap target — see the @container
+   rules on .qt-gift-card above, sized to match this exact floor. Because
+   the page shell caps at max-w-5xl (src/pages/read2lead/gifts.astro, not
+   in this file's scope), the realized column count/card width — MEASURED
+   via computed styles against the real production catalogue (9 gifts,
+   R2L-PILOT-CYJS), not assumed — is: 390px viewport → 2 cols @172px,
+   768px → 4 cols @170px, 1024px → 5 cols @184px, 1280px → 5 cols @194px
+   (1024 and 1280 land within a few px of each other because both exceed
+   the max-w-5xl content cap). Zero horizontal overflow and zero buttons
+   under 44px at any of the four; see the grid-{390,768,1024,1280}.png
+   screenshots taken for this change. */
 .qt-band-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-@media (min-width: 720px) {
-  .qt-band-grid { grid-template-columns: repeat(3, 1fr); }
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: 14px;
 }
 
 /* ============================ Band headers ============================ */
@@ -217,7 +294,15 @@
 /* ============================ Trophy row ("🏆 Con đã nhận") ============================
    Deliberately NOT a shop card — a horizontal keepsake strip (photo/emoji +
    name + received date only, no price/CTA/progress bar) so it reads as a
-   memory, not a listing. Reuses .qt-photo-well at a small fixed width. */
+   memory, not a listing. Reuses .qt-photo-well at a small fixed width.
+   Deliberately NOT .qt-band-grid either, and this is intentional, not an
+   oversight in the 2026-07-13 grid-mode change: these are small fixed-size
+   mementos (108px), not shop cards competing for column width, so a
+   horizontally-scrolling flex strip already reads fine unchanged at any
+   viewport — there is no "1-column list mode" failure mode to fix here.
+   The "🎁 Quà của con" in-flight group, by contrast, DOES reuse
+   .qt-band-grid (via renderInFlightGroup in gift-ux.ts) and gets the same
+   responsive-grid fix as the catalogue bands below. */
 .qt-trophy-group { margin-top: 8px; }
 .qt-trophy-row {
   display: flex;

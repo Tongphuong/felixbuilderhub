@@ -45,7 +45,7 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
         <div class="ag-table">
           <div class="ag-columns" aria-hidden="true">
             <span>Ảnh</span><span>Tên quà</span><span>Giá 💎</span><span>Giới hạn</span><span>Bật</span>
-            <span class="ag-columns__locked">Giá thật ₫ 🔒</span><span class="ag-columns__locked">₫/💎 🔒</span>
+            <span class="ag-columns__locked">Giá thật ₫ 🔒</span><span class="ag-columns__locked">₫/💎 🔒</span><span></span>
           </div>
           <div id="gifts-mgr-rows">
             <p class="ag-loading">Đang tải danh sách quà…</p>
@@ -127,11 +127,11 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
   .ag-loading { padding: 22px; color: var(--cream-dim); font-size: 13px; }
 
   .ag-table-scroll { overflow-x: auto; }
-  .ag-table { min-width: 760px; }
+  .ag-table { min-width: 814px; }
 
   .ag-columns {
     display: grid;
-    grid-template-columns: 64px 1.3fr 100px 120px 56px 116px 92px;
+    grid-template-columns: 64px 1.3fr 100px 120px 56px 116px 92px 44px;
     gap: 10px;
     padding: 10px 22px;
     font-size: 10.5px;
@@ -149,9 +149,28 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
   }
   :global(.ag-row:last-child) { border-bottom: none; }
 
+  /* The Save button must never say "✓ Đã lưu" while changes are only in the
+     DOM — a deleted gift that looks saved but is still live and still free to
+     every child is the exact trap this whole task exists to close. */
+  :global(#gifts-mgr-save.ag-save--dirty) {
+    background: var(--gold);
+    color: var(--navy-950);
+    font-weight: 800;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 28%, transparent);
+  }
+
+  /* Save validation (§B): a row that fails the price/active guard gets a
+     quiet danger tint until it is fixed — cleared on the next save attempt. */
+  :global(.ag-row--invalid) {
+    background: color-mix(in srgb, var(--danger) 10%, transparent);
+    outline: 1.5px solid color-mix(in srgb, var(--danger) 50%, transparent);
+    outline-offset: -1px;
+    border-radius: 10px;
+  }
+
   :global(.ag-row__grid) {
     display: grid;
-    grid-template-columns: 64px 1.3fr 100px 120px 56px 116px 92px;
+    grid-template-columns: 64px 1.3fr 100px 120px 56px 116px 92px 44px;
     gap: 10px;
     align-items: center;
   }
@@ -189,6 +208,11 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
     padding: 10%;
     box-sizing: border-box;
   }
+  /* The emoji is a FALLBACK, not a permanent underlay — only hidden once a
+     real photo has actually decoded (img onload), so a broken/transparent
+     photo (the production incident) leaves the emoji visible instead of
+     silently stacking underneath it. */
+  :global(.ag-thumb--has-img .ag-thumb__emoji) { display: none; }
 
   :global(.ag-input) { min-height: 44px; font-size: 14px; }
   :global(.ag-input--num) { text-align: right; font-variant-numeric: tabular-nums; }
@@ -245,6 +269,21 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
   }
   :global(.ag-cpd--notable) { color: var(--gold-light); }
 
+  :global(.ag-delete-btn) {
+    justify-self: center;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 18px;
+  }
+  :global(.ag-delete-btn:hover) { background: color-mix(in srgb, var(--danger) 14%, transparent); color: var(--danger); }
+
   :global(.ag-photo-details) { margin-top: 14px; }
   :global(.ag-photo-summary) {
     cursor: pointer;
@@ -285,6 +324,18 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
   }
   :global(.ag-photo-badge[hidden]) { display: none; }
 
+  /* §D — teaches on blur rather than blocking: an unrecognized host might
+     still be a genuine image link, so this is a warning, not a hard gate. */
+  :global(.ag-input--error) { border-color: var(--danger) !important; }
+  :global(.ag-url-warning) {
+    margin: 6px 0 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--danger);
+    line-height: 1.5;
+  }
+  :global(.ag-url-warning[hidden]) { display: none; }
+
   :global(.ag-upload) {
     margin-top: 8px;
     display: flex;
@@ -302,7 +353,15 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
   :global(.ag-upload__status) { margin-left: auto; color: var(--cream-dim); }
 
   :global(.ag-photo-preview) { margin-top: 14px; }
-  :global(.ag-photo-actions) { margin-top: 12px; display: flex; justify-content: flex-end; }
+  :global(.ag-preview-note) {
+    margin: 10px 0 0;
+    max-width: 42ch;
+    color: var(--cream-muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  :global(.ag-photo-actions) { margin-top: 12px; display: flex; justify-content: flex-end; gap: 8px; }
+  :global(.ag-photo-actions .fx-btn) { min-height: 44px; padding-left: 14px; padding-right: 14px; }
 
   .ag-footnote {
     margin: 14px 22px 18px;

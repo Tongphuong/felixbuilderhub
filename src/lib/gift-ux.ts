@@ -4,6 +4,8 @@
 // currency: diamonds (💎) only, and no can_afford=false locked/greyed state
 // (unaffordable = a progress bar, per HANDOFF §0 rule 6).
 
+import { giftPhotoSrc } from './gift-photo';
+
 export type GiftItem = {
   id: string;
   name_vi: string;
@@ -151,12 +153,11 @@ function daysAgoVi(iso: string | undefined): string {
   return `${days} ngày trước`;
 }
 
-/** Image src precedence per HANDOFF §2: uploaded photo → pasted URL → none (emoji only). */
-function photoSrc(item: GiftItem): string | null {
-  if (item.image_key) return `/api/read2lead-gift-image?id=${encodeURIComponent(item.id)}`;
-  if (item.image_url) return item.image_url;
-  return null;
-}
+// Single source of truth — see src/lib/gift-photo.ts. This was a local copy, and
+// so were the ones in admin-gifts.ts and gift-goal-card.ts; when the photo-cache
+// bug was fixed, one of the three was missed. Three copies of a URL is three
+// chances to fix two of them.
+const photoSrc = giftPhotoSrc;
 
 // ---------------------------------------------------------------------------
 // Rendering (HTML strings, mirroring shop-ux.ts's renderShopItem pattern)
@@ -168,14 +169,15 @@ type PhotoWellOptions = {
   imageSrc?: string | null;
   size?: 'sm' | 'md' | 'lg';
   aspect?: '4/3' | '16/9';
-  modifier?: 'warm' | 'pending' | 'shimmer' | 'delivered';
+  modifier?: 'warm' | 'pending' | 'shimmer' | 'delivered' | 'unavailable';
   animateEmoji?: boolean;
   badgeHtml?: string;
   cornerHtml?: string;
 };
 
-/** GiftPhotoWell (HANDOFF §2). Three-tier fallback: photo -> pasted url -> emoji. */
-function renderPhotoWell(opts: PhotoWellOptions): string {
+/** GiftPhotoWell (HANDOFF §2). Three-tier fallback: photo -> pasted url -> emoji.
+ * Exported for unit tests — see tests/gift-ux.test.mjs. */
+export function renderPhotoWell(opts: PhotoWellOptions): string {
   const classes = ['qt-photo-well'];
   if (opts.aspect === '16/9') classes.push('qt-photo-well--banner');
   if (opts.size === 'lg') classes.push('qt-photo-well--lg');
@@ -187,7 +189,7 @@ function renderPhotoWell(opts: PhotoWellOptions): string {
   if (opts.animateEmoji) emojiClasses.push('qt-float');
 
   const img = opts.imageSrc
-    ? `<img class="qt-photo-well__img" src="${escapeHtml(opts.imageSrc)}" alt="${escapeHtml(opts.name)}" loading="lazy" onerror="this.remove()" />`
+    ? `<img class="qt-photo-well__img" src="${escapeHtml(opts.imageSrc)}" alt="${escapeHtml(opts.name)}" loading="lazy" onerror="this.remove()" onload="this.closest('.qt-photo-well')?.classList.add('qt-photo-well--has-img')" />`
     : '';
 
   return `
@@ -221,7 +223,12 @@ type GiftCardVariant = 'band' | 'goal';
  * branches only — "Đổi mục tiêu" (clear the goal) in place of "Đặt làm mục
  * tiêu ★" (you can't set as your goal what already is your goal).
  */
-function renderGiftCard(
+// Exported so tests can RENDER a card and inspect what a child is actually
+// offered, rather than grepping this file's source text for a string. The dead
+// "Đặt làm mục tiêu ★" button on an unavailable card survived a source-grep
+// test that asserted its PRESENCE; only rendering it and calling the real
+// endpoint exposed it.
+export function renderGiftCard(
   item: GiftItem,
   state: GiftCardState,
   redemption: GiftRedemption | undefined,
@@ -328,15 +335,21 @@ function renderGiftCard(
       badgeHtml: '<span class="fx-badge fx-badge--neutral qt-photo-well__badge">Tạm thời chưa mở</span>',
     });
     const percent = Math.max(0, Math.min(100, Math.round(item.progress_percent)));
-    // Goal variant: this gift IS already the child's pinned goal, so
-    // "Đặt làm mục tiêu ★" would be nonsensical — offer a one-tap way to pick
-    // a different goal instead (clears the pin; the full catalogue,
-    // including its own "Đặt làm mục tiêu ★" buttons, is right below on this
-    // same page). Band variant: this gift is NOT the goal, so the normal
-    // "set as goal" offer still applies — it may reopen later.
+    // Goal variant: this gift IS already the child's pinned goal (it went
+    // unavailable after she pinned it), so "Đặt làm mục tiêu ★" would be
+    // nonsensical — offer a one-tap way to pick a different goal instead.
+    //
+    // Band variant: NO action at all. This card used to offer "Đặt làm mục
+    // tiêu ★" on the theory that the gift "may reopen later" — but the server
+    // does not agree: read2lead-gift-goal.js gates on this same
+    // isGiftAvailable() and answers 400 `gift_unavailable`. The button was a
+    // DEAD CLICK: a child taps the only button on the card and is told no.
+    // Verified live against the deployed endpoint, not assumed. The caption
+    // already explains the situation; an action that always fails is worse
+    // than no action.
     const action = isGoal
       ? '<button type="button" class="fx-btn fx-btn--secondary fx-btn--block qt-clear-goal" style="margin-top:11px; min-height:44px;">Chọn mục tiêu khác ★</button>'
-      : `<button type="button" class="fx-btn fx-btn--secondary fx-btn--block qt-set-goal" data-gift-id="${escapeHtml(item.id)}" style="margin-top:11px; min-height:44px;">Đặt làm mục tiêu ★</button>`;
+      : '';
     return `
       <article class="${cardClass}" data-state="unavailable" data-gift-id="${escapeHtml(item.id)}">
         ${well}
@@ -427,7 +440,7 @@ function renderGiftCard(
           <span class="qt-gift-card__price">💎 ${price}</span>
         </div>
         ${progressBarHtml(percent)}
-        <p style="margin:9px 0 0; color:var(--cream-muted); font-size:13px;">${caption}</p>
+        <p class="qt-gift-card__caption" style="margin:9px 0 0; color:var(--cream-muted);">${caption}</p>
         ${savingAction}
       </div>
     </article>

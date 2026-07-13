@@ -162,34 +162,81 @@ test('validateGiftImageFile enforces the 2MB limit and content-type whitelist', 
   assert.equal(validateGiftImageFile(null).error, 'image_required');
 });
 
-test('gift image upload writes to R2 as gifts/<id>.<ext> and stores image_key', async () => {
+function uploadEnv(gifts = DEFAULT_GIFTS) {
   const r2Writes = [];
+  const r2Deletes = [];
   const env = {
-    READ2LEAD_CODES: memoryKv({
-      [GIFT_STORE_KEY]: { schema_version: 1, gifts: DEFAULT_GIFTS },
-    }),
+    READ2LEAD_CODES: memoryKv({ [GIFT_STORE_KEY]: { schema_version: 1, gifts } }),
     R2L_MEDIA: {
       async put(key, _body, opts) {
         r2Writes.push({ key, contentType: opts?.httpMetadata?.contentType });
       },
+      async delete(key) { r2Deletes.push(key); },
     },
   };
-  const form = new FormData();
-  form.append('gift_id', 'sticker');
-  form.append('image', new Blob(['fake-image-bytes'], { type: 'image/jpeg' }), 'sticker.jpg');
+  return { env, r2Writes, r2Deletes };
+}
 
+async function upload(env, giftId = 'sticker', type = 'image/jpeg') {
+  const form = new FormData();
+  form.append('gift_id', giftId);
+  form.append('image', new Blob(['fake-image-bytes'], { type }), 'x');
   const response = await uploadGiftImage({
     request: new Request('https://example.com/api/admin/gifts/upload', { method: 'POST', body: form }),
     env,
   });
-  const payload = await response.json();
+  return { response, payload: await response.json() };
+}
+
+test('gift image upload writes to R2 as gifts/<id>-<stamp>.<ext> and stores image_key', async () => {
+  const { env, r2Writes } = uploadEnv();
+  const { response, payload } = await upload(env);
+
   assert.equal(response.status, 200);
-  assert.equal(payload.image_key, 'gifts/sticker.jpg');
-  assert.equal(r2Writes[0].key, 'gifts/sticker.jpg');
+  assert.match(payload.image_key, /^gifts\/sticker-[a-z0-9]+\.jpg$/);
+  assert.equal(r2Writes[0].key, payload.image_key);
   assert.equal(r2Writes[0].contentType, 'image/jpeg');
 
   const stored = env.READ2LEAD_CODES.values.get(GIFT_STORE_KEY);
-  assert.equal(stored.gifts.find((g) => g.id === 'sticker').image_key, 'gifts/sticker.jpg');
+  assert.equal(stored.gifts.find((g) => g.id === 'sticker').image_key, payload.image_key);
+});
+
+// THE regression. The key used to be `gifts/<id>.<ext>` — stable across uploads —
+// and read2lead-gift-image.js serves `Cache-Control: max-age=31536000, immutable`
+// from a URL of just `?id=<id>`. So replacing a photo changed NOTHING any browser
+// or CDN could see: the old bytes were pinned for a year. Caught on the live shop,
+// where the server was provably serving the new 1000x750 WebP while the browser
+// happily showed the year-old Shopee voucher badge.
+test('replacing a photo produces a DIFFERENT key, or the new photo never reaches a child', async () => {
+  const { env, r2Writes, r2Deletes } = uploadEnv();
+
+  // Back to back, deliberately: two uploads inside the same millisecond must
+  // STILL get different keys. A timestamp alone did not manage that.
+  const first = (await upload(env)).payload.image_key;
+  const second = (await upload(env)).payload.image_key;
+
+  assert.notEqual(first, second, 'two uploads must not share a key — that is the cache bug');
+  assert.deepEqual(r2Writes.map((w) => w.key), [first, second]);
+  assert.deepEqual(r2Deletes, [first], 'the superseded object is cleaned up, not orphaned forever');
+
+  const stored = env.READ2LEAD_CODES.values.get(GIFT_STORE_KEY);
+  assert.equal(stored.gifts.find((g) => g.id === 'sticker').image_key, second);
+});
+
+test('the superseded photo is deleted AFTER the KV write, never before', async () => {
+  // If the delete ran first and the KV write then failed, the gift would point at
+  // a key that no longer exists and the child would see a broken photo. Fail
+  // toward a wasted byte in R2, never toward a broken screen.
+  const { env, r2Deletes } = uploadEnv();
+  const firstKey = (await upload(env)).payload.image_key;
+
+  env.READ2LEAD_CODES.put = async () => { throw new Error('KV down'); };
+  const { response } = await upload(env);
+
+  assert.equal(response.status, 502);
+  assert.ok(!r2Deletes.includes(firstKey), 'the still-referenced photo must survive a failed save');
+  const stored = env.READ2LEAD_CODES.values.get(GIFT_STORE_KEY);
+  assert.equal(stored.gifts.find((g) => g.id === 'sticker').image_key, firstKey, 'gift still points at a real object');
 });
 
 test('gift image upload 404s for an unknown gift_id and writes nothing to R2', async () => {

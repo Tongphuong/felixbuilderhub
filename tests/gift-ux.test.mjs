@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { createServer } from 'vite';
 import { getViteConfig } from 'astro/config';
 
@@ -28,6 +28,215 @@ async function loadGiftUx() {
   await ensureHarness();
   return viteServer.ssrLoadModule('/src/lib/gift-ux.ts');
 }
+
+async function loadGoalCard() {
+  await ensureHarness();
+  return viteServer.ssrLoadModule('/src/lib/gift-goal-card.ts');
+}
+
+// Buffet, MEDIUM: the goal card recomputes its own bar width instead of using
+// the server's progress_percent, and its price<=0 fallback hard-coded 100%.
+// Once a price-0 gift became `unavailable`, that produced a FULL GOLD BAR
+// sitting directly above "Món quà này tạm thời chưa đổi được." — on the
+// child's profile, the lesson-completion card AND the parent report.
+//
+// Note this test RENDERS the card and reads the bar out of the markup. The
+// pre-existing goal-card tests only grep the source text, which is exactly
+// why none of them caught it. A test that cannot see the bar cannot defend it.
+// Buffet, HIGH: the year-long photo-cache fix landed in gift-ux.ts and
+// admin-gifts.ts but NOT in gift-goal-card.ts — a third hand-copied photoSrc().
+// That copy feeds the child's profile, the end-of-lesson card and the PARENT'S
+// WEEKLY REPORT: the screens Coach Felix looks at first. So a replaced photo would
+// have stayed stale for a year on exactly those, while looking fixed in the shop.
+//
+// Patching the third copy would have left a fourth waiting. There is now ONE
+// builder (src/lib/gift-photo.ts) and these render each surface to prove it.
+test('gift goal card: the photo URL is versioned — the parent report cannot serve a year-old photo', async () => {
+  const { renderGiftGoalCard } = await loadGoalCard();
+  const gift = {
+    id: 'sticker', name_vi: 'Sticker', emoji: '🌟',
+    image_key: 'gifts/sticker-abc123.webp', image_url: null,
+    price_diamonds: 1000, can_afford: true, available: true, progress_percent: 100,
+  };
+  for (const audience of ['kid', 'parent']) {
+    const html = renderGiftGoalCard(gift, 1000, [], { variant: 'wide', code: 'R2L-TEST', audience });
+    assert.match(html, /v=gifts%2Fsticker-abc123\.webp/, `${audience}: photo URL must carry the version`);
+  }
+});
+
+// The shop's OWN photo output, rendered. Every other fixture in this file uses
+// `image_key: null`, so gift-ux.ts — the original site of the year-long cache bug —
+// had no rendered proof that its own card emits a versioned URL. Buffet caught that
+// the guard below was carrying that weight and could not.
+test('shop: a gift card renders a VERSIONED photo URL (the original site of the cache bug)', async () => {
+  const { renderGiftCard } = await loadGiftUx();
+  const withPhoto = {
+    id: 'sticker', name_vi: 'Sticker', emoji: '🌟',
+    image_key: 'gifts/sticker-abc123.webp', image_url: null,
+    price_diamonds: 1000, can_afford: true, available: true, progress_percent: 100,
+  };
+  const card = renderGiftCard(withPhoto, 'affordable', undefined, 1000, 'band');
+  assert.match(card, /v=gifts%2Fsticker-abc123\.webp/, 'without this a replaced photo is cached for a year');
+
+  // Precedence must be untouched by the de-duplication: a pasted URL is used raw.
+  const pasted = { ...withPhoto, image_key: null, image_url: 'https://cdn.example/x.jpg' };
+  assert.match(renderGiftCard(pasted, 'affordable', undefined, 1000, 'band'), /src="https:\/\/cdn\.example\/x\.jpg"/);
+
+  // And no photo at all still means no <img> — the emoji fallback.
+  const none = { ...withPhoto, image_key: null, image_url: null };
+  assert.doesNotMatch(renderGiftCard(none, 'affordable', undefined, 1000, 'band'), /<img/);
+});
+
+// The guard against a FOURTH copy. This walks the tree — it does not consult a
+// hardcoded list.
+//
+// The first version of this test DID consult a hardcoded list of three files, and
+// Buffet defeated it in one move: he added a brand-new file that hand-built the
+// same buggy URL, and the whole suite stayed green. A guard that only inspects the
+// files you already thought of is not a guard; it is a restatement of what you
+// already knew. It also matched only one exact string shape, so the same bug built
+// with string concatenation walked straight past it.
+test('NO file anywhere hand-builds a gift photo URL — gift-photo.ts is the only builder', () => {
+  const ROOTS = ['src', 'functions'];
+  const EXTS = ['.ts', '.tsx', '.js', '.mjs', '.astro'];
+  const ALLOWED = new Set([
+    'src/lib/gift-photo.ts',                       // the one builder
+    'functions/api/read2lead-gift-image.js',       // the endpoint being addressed
+  ]);
+
+  /** Any construction of the image endpoint's path, however it is spelled. */
+  const BUILDS_URL = /read2lead-gift-image\?id=/;
+
+  const offenders = [];
+  const walk = (dir) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = `${dir}/${entry.name}`;
+      if (entry.isDirectory()) {
+        if (entry.name === 'node_modules' || entry.name.startsWith('.')) continue;
+        walk(full);
+        continue;
+      }
+      if (!EXTS.some((e) => entry.name.endsWith(e))) continue;
+      if (ALLOWED.has(full)) continue;
+      // Strip comments first: a dead comment mentioning the URL is not a build.
+      const src = readFileSync(full, 'utf8')
+        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .replace(/^\s*\/\/.*$/gm, '');
+      if (BUILDS_URL.test(src)) offenders.push(full);
+    }
+  };
+  ROOTS.forEach(walk);
+
+  assert.deepEqual(
+    offenders, [],
+    'these files hand-build the gift photo URL. Import giftPhotoSrc from src/lib/gift-photo.ts '
+    + 'instead — a hand-copied URL is how the year-long photo cache bug survived on the parent report.',
+  );
+});
+
+// Rendered, not grepped. `read2lead-gift-goal.js` gates on isGiftAvailable()
+// and answers 400 `gift_unavailable` for an unavailable gift — verified against
+// the live deployed endpoint — so offering "Đặt làm mục tiêu ★" on that card is
+// a button a child taps and is refused. The old source-grep test asserted the
+// button's PRESENCE and stayed green the whole time.
+test('shop: an unavailable gift card offers a child NO button the server would refuse', async () => {
+  const { renderGiftCard } = await loadGiftUx();
+  const brokenRow = {
+    id: 'gift-blank', name_vi: 'Quà 8', emoji: '🎁', image_key: null, image_url: null,
+    price_diamonds: 0, can_afford: false, available: false, progress_percent: 0,
+  };
+  const card = renderGiftCard(brokenRow, 'unavailable', undefined, 4295, 'band');
+
+  assert.doesNotMatch(card, /qt-set-goal/, 'no "set as goal" button — the server answers 400 for this gift');
+  assert.doesNotMatch(card, /Đặt làm mục tiêu/);
+  assert.doesNotMatch(card, /qt-redeem/, 'and certainly no redeem button');
+  // The card must still explain itself rather than going silent.
+  assert.match(card, /tạm thời chưa đổi được/);
+});
+
+test('shop: an AVAILABLE gift a child cannot yet afford still offers the goal button', async () => {
+  const { renderGiftCard } = await loadGiftUx();
+  const football = {
+    id: 'football', name_vi: 'Quả bóng đá', emoji: '⚽', image_key: null, image_url: null,
+    price_diamonds: 30000, can_afford: false, available: true, progress_percent: 3,
+  };
+  const card = renderGiftCard(football, 'saving', undefined, 1000, 'band');
+  assert.match(card, /qt-set-goal/, 'the fix above must not strip the goal button from normal gifts');
+});
+
+// The escape hatch, RENDERED. Buffet flagged that it was still guarded only by
+// a source grep — the identical blind spot that hid the dead click, on the
+// sibling branch of the same `if`. A child whose pinned goal is switched off by
+// Coach Felix is STUCK on a dead goal unless this button exists: it is the one
+// control that gets her out. Nothing that important may be defended by grepping
+// for its own name in a source file.
+test('shop: a child whose PINNED goal went unavailable is still given a way out', async () => {
+  const { renderGiftCard } = await loadGiftUx();
+  const pausedGoal = {
+    id: 'lego', name_vi: 'Bộ Lego', emoji: '🧱', image_key: null, image_url: null,
+    price_diamonds: 20000, can_afford: false, available: false, progress_percent: 21,
+  };
+  const goalCard = renderGiftCard(pausedGoal, 'unavailable', undefined, 4295, 'goal');
+
+  assert.match(goalCard, /qt-clear-goal/, 'without this she cannot unpin a goal she can never reach');
+  assert.match(goalCard, /Chọn mục tiêu khác/);
+  assert.doesNotMatch(goalCard, /qt-set-goal/, 'it already IS her goal');
+});
+
+test('gift goal card: an unavailable pinned goal renders the escape-hatch link on every surface', async () => {
+  const { renderGiftGoalCard } = await loadGoalCard();
+  const pausedGoal = {
+    id: 'lego', name_vi: 'Bộ Lego', emoji: '🧱',
+    price_diamonds: 20000, can_afford: false, available: false, progress_percent: 21,
+  };
+  for (const variant of ['wide', 'narrow']) {
+    const html = renderGiftGoalCard(pausedGoal, 4295, [], { variant, code: 'R2L-TEST' });
+    assert.match(html, /Chọn mục tiêu khác|Chọn quà khác/, `${variant}: a stuck child must be offered a way out`);
+    assert.match(html, /tạm thời chưa đổi được/, `${variant}: and told why`);
+  }
+});
+
+// `blocked` had no coverage of any kind — not even a grep. It is what stops a
+// child tapping "Đổi quà ngay" while she already has a request in Coach Felix's
+// queue: the server would refuse it, so an enabled button is another dead click.
+test('shop: the redeem button is disabled while the child already has a gift in flight', async () => {
+  const { renderGiftCard } = await loadGiftUx();
+  const sticker = {
+    id: 'sticker', name_vi: 'Sticker', emoji: '🌟', image_key: null, image_url: null,
+    price_diamonds: 1000, can_afford: true, available: true, progress_percent: 100,
+  };
+  const free = renderGiftCard(sticker, 'affordable', undefined, 1000, 'band', false);
+  assert.match(free, /qt-redeem/);
+  assert.doesNotMatch(free, /qt-redeem[^>]*disabled/, 'nothing in flight: she may redeem');
+
+  const blocked = renderGiftCard(sticker, 'affordable', undefined, 1000, 'band', true);
+  assert.match(blocked, /disabled/, 'a request is already pending — the server would refuse a second');
+});
+
+test('gift goal card: a price-0 (unavailable) pinned goal renders an EMPTY bar, not a full one', async () => {
+  const { renderGiftGoalCard } = await loadGoalCard();
+  const brokenRow = {
+    id: 'gift-blank', name_vi: 'Quà 8', emoji: '🎁',
+    price_diamonds: 0, can_afford: false, available: false, progress_percent: 0,
+  };
+  const html = renderGiftGoalCard(brokenRow, 4295, [], { variant: 'wide', code: 'R2L-TEST' });
+
+  const width = html.match(/width:\s*(\d+)%/);
+  assert.ok(width, 'the card must render a progress bar');
+  assert.equal(width[1], '0', 'a gift no child can obtain must not show a completed bar');
+  assert.match(html, /tạm thời chưa đổi được/, 'and it must still say so in words');
+});
+
+test('gift goal card: a normal priced goal still reports real progress', async () => {
+  const { renderGiftGoalCard } = await loadGoalCard();
+  const pen = {
+    id: 'pen', name_vi: 'Bút', emoji: '🖊️',
+    price_diamonds: 5000, can_afford: false, available: true, progress_percent: 63,
+  };
+  const html = renderGiftGoalCard(pen, 3135, [], { variant: 'wide', code: 'R2L-TEST' });
+  const width = html.match(/width:\s*(\d+)%/);
+  assert.equal(width[1], '63');
+});
 
 const giftUxSource = readFileSync('src/lib/gift-ux.ts', 'utf8');
 const giftsPage = readFileSync('src/pages/read2lead/gifts.astro', 'utf8');
@@ -188,11 +397,19 @@ test('the unavailable-gift card is honest and kind: no hype text, no inventory l
   assert.match(unavailableBranch, /imageSrc: img/);
   assert.match(unavailableBranch, /progressBarHtml\(percent\)/);
   assert.match(unavailableBranch, /Món quà này tạm thời chưa đổi được\. Coach Felix sẽ mở lại sau nhé!/);
-  // Goal variant offers a path to a different goal; band variant still
-  // offers "Đặt làm mục tiêu ★" (it may reopen later) since it is by
-  // definition not already the goal (bands exclude the pinned goal id).
+  // The goal variant offers a path to a DIFFERENT goal.
   assert.match(unavailableBranch, /Chọn mục tiêu khác ★/);
-  assert.match(unavailableBranch, /Đặt làm mục tiêu ★/);
+
+  // Whether the BAND variant offers a goal button is deliberately NOT asserted
+  // here any more — see the rendered test 'an unavailable gift card offers a
+  // child NO button the server would refuse'. This grep-the-source test used to
+  // assert the button was PRESENT, on the theory the gift "may reopen later".
+  // The theory was false (read2lead-gift-goal.js answers 400 gift_unavailable),
+  // so it was a dead click, and this test stayed green through all of it.
+  // Worse, when the code was fixed, the assertion could only be satisfied by
+  // never mentioning the button — even in a COMMENT explaining its absence.
+  // A test that greps source text cannot tell code from prose, and cannot see
+  // what a child is offered. Render the card and look at it.
 });
 
 test('the "Tạm thời chưa mở" band exists and renders below "Con đang xây dựng" at the very bottom of the catalogue', () => {
@@ -355,4 +572,28 @@ test('qua-that.css keyframes are gated by prefers-reduced-motion', () => {
 
 test('the photo well falls back from photo to emoji via onerror', () => {
   assert.match(giftUxSource, /onerror="this\.remove\(\)"/);
+});
+
+// --- emoji-is-a-fallback regression (production bug: a mostly-transparent
+// Shopee campaign PNG stacked the emoji AND the img, so the emoji showed
+// through a broken photo instead of being hidden by a working one) --------
+
+test('renderPhotoWell emits an onload hook that hides the emoji once a real photo has decoded, and emits no <img> at all when there is no image source', async () => {
+  const { renderPhotoWell } = await loadGiftUx();
+  const withImg = renderPhotoWell({ emoji: '🌟', name: 'Sticker', imageSrc: 'https://cf.shopee.vn/sticker.jpg' });
+  assert.match(withImg, /<img /);
+  assert.match(withImg, /onload="this\.closest\('\.qt-photo-well'\)\?\.classList\.add\('qt-photo-well--has-img'\)"/);
+  assert.match(withImg, /onerror="this\.remove\(\)"/);
+
+  const withoutImg = renderPhotoWell({ emoji: '🌟', name: 'Sticker' });
+  assert.doesNotMatch(withoutImg, /<img/);
+  // The emoji itself is still rendered — it is the fallback, always present
+  // in the markup; only CSS (gated on the --has-img class) hides it.
+  assert.match(withoutImg, /qt-photo-well__emoji/);
+});
+
+test('qua-that.css only hides the emoji fallback once the has-img class is present (never unconditionally)', () => {
+  assert.match(quaThatCss, /\.qt-photo-well--has-img \.qt-photo-well__emoji \{\s*display: none;/);
+  // Regression guard: no bare rule hides qt-photo-well__emoji outright.
+  assert.doesNotMatch(quaThatCss, /^\.qt-photo-well__emoji\s*\{\s*display: none/m);
 });

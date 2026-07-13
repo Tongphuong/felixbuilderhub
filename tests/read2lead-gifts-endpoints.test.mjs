@@ -8,7 +8,7 @@ import { onRequestGet as redemptionsQueue } from '../functions/api/admin/gifts/r
 import { onRequestPatch as redemptionPatch } from '../functions/api/admin/gifts/redemptions/[id].js';
 import { loadProgressState, saveProgressState, progressKey } from '../functions/api/_read2lead-v2-state.js';
 import { applyRedemptionStatus } from '../functions/api/_gifts-v2.js';
-import { GIFT_STORE_KEY, loadGiftStore, saveGiftStore } from '../functions/api/admin/_gifts.js';
+import { GIFT_STORE_KEY, loadGiftStore, saveGiftStore, normalizeGift } from '../functions/api/admin/_gifts.js';
 
 const ACCESS_CODE = 'R2L-GIFT-W9';
 const GIFT_QUEUE_KEY = 'admin:gift-redemptions:v1';
@@ -823,4 +823,22 @@ test('a genuine request is not falsely flagged as unpaid', async () => {
   const row = payload.groups.requested.find((item) => item.redemption_id === redeemed.redemption.id);
   assert.equal(row.diamonds_taken, true, 'a real, paid-for redemption must never be flagged as a phantom');
   assert.equal(currentProgress(env).diamonds, 10000, 'and the child really was debited');
+});
+
+// --- Delete frees gift ids for reuse; a new gift must never inherit one -----
+// Buffet, LOW-MEDIUM. While gifts could only ever be ADDED, deriving a new
+// row's id from a slug of its name was harmless. Delete changes that: remove
+// "Sticker" (id `sticker`) while a child's redemption for it is still in the
+// queue, add a new gift also called "Sticker", and the old redemption's
+// thumbnail — and its budget-cap restore on reject — would silently resolve
+// against the NEW gift.
+test('normalizeGift: a new row never inherits a deleted gift id from its name', () => {
+  const readded = normalizeGift({ id: '', name_vi: 'Sticker', price_diamonds: 1000, active: true });
+  assert.notEqual(readded.id, 'sticker', 'a re-added "Sticker" must not reclaim the id `sticker`');
+  assert.match(readded.id, /^gift-/, 'it gets a fresh random id instead');
+});
+
+test('normalizeGift: a gift already in KV keeps its own id', () => {
+  const seeded = normalizeGift({ id: 'sticker', name_vi: 'Sticker', price_diamonds: 1000, active: true });
+  assert.equal(seeded.id, 'sticker', 'nothing already saved may be orphaned by the fix above');
 });

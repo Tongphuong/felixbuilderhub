@@ -90,3 +90,29 @@ node --test
 ```
 
 Both must pass before push. No `--no-verify`, no skipping.
+
+## 4. Responsive is a rule, not a preference (founder, 2026-07-13)
+
+> "responsive, works on phone, ipad and laptop. **This is a rule.**" — Phương
+
+**Every UI change is rendered and looked at, at FOUR widths, before it ships:**
+
+| Width | Device |
+|---|---|
+| **390px** | phone (the majority of kid + parent traffic) |
+| **768px** | iPad portrait |
+| **1024px** | iPad landscape |
+| **1280px** | laptop |
+
+A green test suite is not evidence — a layout only exists once someone has seen it.
+
+**Prefer intrinsic layouts over hand-picked breakpoints.** The gift shop shipped with
+`grid-template-columns: 1fr` below 720px and `repeat(3, 1fr)` above it: one giant card
+per row on a phone, three cramped ones on an iPad, and nothing considered in between.
+`repeat(auto-fill, minmax(<floor>, 1fr))` adapts to any width and cannot have a gap
+between the two sizes someone happened to test. Two magic numbers is exactly how a
+device nobody tested gets a broken screen.
+
+**Tap targets stay ≥44px at every width** (kid primary CTAs 56–64px). A card getting
+narrower may shrink its type and trim its copy; it may never shrink the button a
+seven-year-old has to hit.

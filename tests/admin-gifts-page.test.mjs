@@ -111,9 +111,27 @@ test('activePhotoSource: an uploaded file wins over a pasted URL, matching the k
   assert.equal(activePhotoSource({ image_key: 'gifts/sticker.jpg', image_url: 'https://example.com/x.jpg' }), 'upload');
   assert.equal(activePhotoSource({ image_key: null, image_url: 'https://example.com/x.jpg' }), 'url');
   assert.equal(activePhotoSource({ image_key: null, image_url: null }), 'none');
-  assert.equal(adminPhotoSrc({ id: 'sticker', image_key: 'gifts/sticker.jpg', image_url: null }), '/api/read2lead-gift-image?id=sticker');
+  assert.equal(
+    adminPhotoSrc({ id: 'sticker', image_key: 'gifts/sticker-123.jpg', image_url: null }),
+    '/api/read2lead-gift-image?id=sticker&v=gifts%2Fsticker-123.jpg',
+  );
   assert.equal(adminPhotoSrc({ id: 'sticker', image_key: null, image_url: 'https://example.com/x.jpg' }), 'https://example.com/x.jpg');
   assert.equal(adminPhotoSrc({ id: 'sticker', image_key: null, image_url: null }), null);
+});
+
+// Regression, found on the LIVE shop: the eight new photos were uploaded and the
+// server served them correctly (curl proved it: 1000x750 WebP), but the browser
+// still showed the old Shopee voucher badge — because read2lead-gift-image.js
+// answers `Cache-Control: max-age=31536000, immutable` and the URL was just
+// `?id=<id>`, identical before and after. The photo was cached for a YEAR.
+// Coach Felix would have replaced a bad photo, reloaded, seen the bad photo, and
+// concluded the upload was broken — the exact complaint that started this task.
+test('a photo URL CHANGES when the photo changes (or a replaced photo is cached for a year)', async () => {
+  const { adminPhotoSrc } = await loadAdminGifts();
+  const before = adminPhotoSrc({ id: 'sticker', image_key: 'gifts/sticker-1000.webp', image_url: null });
+  const after = adminPhotoSrc({ id: 'sticker', image_key: 'gifts/sticker-2000.webp', image_url: null });
+  assert.notEqual(before, after, 'same URL for two different photos = the new one never reaches a child');
+  assert.match(after, /v=/, 'the cache-busting param must survive');
 });
 
 test('escapeHtml neutralizes markup (admin-shared.mjs\'s copy is a documented no-op, so this file defines its own)', async () => {
@@ -216,6 +234,171 @@ test('renderQueue shows the monthly total (private, 🔒) and the always-honest 
   assert.match(html, /chi phí quà 🔒/);
   assert.match(html, /tự động hoàn lại toàn bộ 💎/);
   assert.match(html, /Coach Felix/);
+});
+
+// --- delete a gift (§A) -------------------------------------------------
+
+test('isInvalidActiveGift / findInvalidActiveGiftIndex flag an active price-0 row, and only that shape (§B save guard)', async () => {
+  const { isInvalidActiveGift, findInvalidActiveGiftIndex } = await loadAdminGifts();
+  const brokenActive = { active: true, price_diamonds: 0 };
+  const inactiveZero = { active: false, price_diamonds: 0 };
+  const activePriced = { active: true, price_diamonds: 500 };
+  assert.equal(isInvalidActiveGift(brokenActive), true, 'active + price 0 must be refused — the production "Quà 8" shape');
+  assert.equal(isInvalidActiveGift(inactiveZero), false, 'a toggled-off price-0 draft row is fine — it is not live');
+  assert.equal(isInvalidActiveGift(activePriced), false);
+
+  assert.equal(findInvalidActiveGiftIndex([activePriced, brokenActive, inactiveZero]), 1);
+  assert.equal(findInvalidActiveGiftIndex([activePriced, inactiveZero]), -1, 'a save-safe catalogue reports no invalid index');
+});
+
+test('saveAll refuses to call saveGifts when an active gift is priced 0, highlights the row, and reports through hooks.onError — never alert()', () => {
+  const saveAllFn = adminGiftsLib.slice(adminGiftsLib.indexOf('const saveAll = async'), adminGiftsLib.indexOf('addBtn.addEventListener'));
+  assert.match(saveAllFn, /findInvalidActiveGiftIndex\(gifts\)/);
+  assert.match(saveAllFn, /ag-row--invalid/);
+  assert.match(saveAllFn, /return null;/, 'must bail out before reaching saveGifts()');
+  assert.doesNotMatch(saveAllFn, /\balert\(/);
+  assert.match(saveAllFn, /hooks\.onError\(`Quà "\$\{name\}" đang bật phải có giá lớn hơn 0 💎\.`\)/);
+});
+
+test('removeGiftAt (pure model backing the delete-gift row removal) preserves order and does not mutate its input', async () => {
+  const { removeGiftAt } = await loadAdminGifts();
+  const gifts = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
+  const after = removeGiftAt(gifts, 1);
+  assert.deepEqual(after.map((g) => g.id), ['a', 'c']);
+  assert.equal(gifts.length, 3, 'the original array must be untouched');
+  assert.deepEqual(removeGiftAt(gifts, 0).map((g) => g.id), ['b', 'c']);
+  assert.deepEqual(removeGiftAt(gifts, 2).map((g) => g.id), ['a', 'b']);
+});
+
+test('renderGiftRow carries a >=44px delete button wired to data-ag-action="delete-gift"', async () => {
+  const { renderGiftRow } = await loadAdminGifts();
+  const gift = {
+    id: 'g1', name_vi: 'Sticker', emoji: '🌟', image_key: null, image_url: null,
+    price_diamonds: 1000, limit_total: null, redeemed_count: 0, cost_vnd: 0, active: true,
+  };
+  const html = renderGiftRow(gift, 0);
+  assert.match(html, /data-ag-action="delete-gift"/);
+  assert.match(html, /ag-delete-btn/);
+  assert.match(html, /aria-label="Xoá quà — Sticker"/);
+});
+
+test('the delete-gift handler confirms via confirm() (never a silent delete), naming the gift, and warns harder when redeemed_count > 0', () => {
+  const anchor = `const deleteBtn = target.closest<HTMLElement>('[data-ag-action="delete-gift"]');`;
+  const deleteBranchStart = adminGiftsLib.indexOf(anchor);
+  assert.ok(deleteBranchStart >= 0, 'expected the delete-gift click-delegation branch to exist');
+  const deleteBranch = adminGiftsLib.slice(deleteBranchStart, adminGiftsLib.indexOf('});', deleteBranchStart));
+  assert.match(deleteBranch, /if \(!confirm\(message\)\) return;/);
+  assert.match(deleteBranch, /Con nào đang chờ món này vẫn nhận được quà — nhưng món này sẽ biến mất khỏi cửa hàng\./);
+  assert.match(deleteBranch, /rowEl\.remove\(\);/);
+  // Deleting must NOT auto-save — matches every other edit in this manager
+  // (name/price/photo edits are all live-in-DOM-only until "✓ Đã lưu").
+  assert.doesNotMatch(deleteBranch, /saveAll\(\)/);
+});
+
+test('"Xoá ảnh" clears both image_key and image_url (dataset + url input + upload status) so the gift falls back to its emoji', () => {
+  const removeAnchor = `const removePhotoBtn = target.closest<HTMLElement>('[data-ag-action="remove-photo"]');`;
+  const deleteAnchor = `const deleteBtn = target.closest<HTMLElement>('[data-ag-action="delete-gift"]');`;
+  const removeStart = adminGiftsLib.indexOf(removeAnchor);
+  const deleteStart = adminGiftsLib.indexOf(deleteAnchor);
+  assert.ok(removeStart >= 0 && deleteStart > removeStart, 'expected the remove-photo branch to exist before the delete-gift branch');
+  const removePhotoBranch = adminGiftsLib.slice(removeStart, deleteStart);
+  assert.match(removePhotoBranch, /rowEl\.dataset\.imageKey = '';/);
+  assert.match(removePhotoBranch, /urlInput\.value = '';/);
+  assert.match(removePhotoBranch, /updateRowPhotoUi\(rowEl, readGiftFromRow\(rowEl\)\)/);
+});
+
+test('renderGiftRow renders the "Xoá ảnh" button next to "Đóng" inside the photo details panel', async () => {
+  const { renderGiftRow } = await loadAdminGifts();
+  const gift = {
+    id: 'g1', name_vi: 'Sticker', emoji: '🌟', image_key: null, image_url: 'https://cf.shopee.vn/x.jpg',
+    price_diamonds: 1000, limit_total: null, redeemed_count: 0, cost_vnd: 0, active: true,
+  };
+  const html = renderGiftRow(gift, 0);
+  const actionsBlock = html.slice(html.indexOf('ag-photo-actions'));
+  assert.match(actionsBlock, /data-ag-action="remove-photo">Xoá ảnh</);
+  assert.match(actionsBlock, /data-ag-action="close-photo">Đóng</);
+});
+
+test('the gift manager grid template gained an 8th (44px) column for the delete button, identically in .ag-columns and .ag-row__grid', () => {
+  const occurrences = (adminGiftsPage.match(/grid-template-columns: 64px 1\.3fr 100px 120px 56px 116px 92px 44px;/g) || []).length;
+  assert.equal(occurrences, 2, 'both .ag-columns and .ag-row__grid must share the identical 8-column template');
+});
+
+test('renderGiftManagerColumnHeaders and the hardcoded gifts.astro header both carry 8 column headers (7 labeled + 1 blank for the delete button)', async () => {
+  const { renderGiftManagerColumnHeaders } = await loadAdminGifts();
+  const helperHtml = renderGiftManagerColumnHeaders();
+  assert.equal((helperHtml.match(/<span/g) || []).length, 8);
+
+  const start = adminGiftsPage.indexOf('class="ag-columns"');
+  const pageHeaderBlock = adminGiftsPage.slice(start, adminGiftsPage.indexOf('</div>', start));
+  assert.equal((pageHeaderBlock.match(/<span/g) || []).length, 8);
+});
+
+// --- emoji-is-a-fallback on the admin side (§C) --------------------------
+
+test('renderGiftPhotoThumb emits the onload has-img hook when a photo exists, and no <img> at all when there is none', async () => {
+  const { renderGiftPhotoThumb } = await loadAdminGifts();
+  const withPhoto = renderGiftPhotoThumb({ id: 'sticker', emoji: '🌟', image_key: null, image_url: 'https://cf.shopee.vn/x.jpg' });
+  assert.match(withPhoto, /<img /);
+  assert.match(withPhoto, /onload="this\.closest\('\.ag-thumb'\)\?\.classList\.add\('ag-thumb--has-img'\)"/);
+  assert.match(withPhoto, /onerror="this\.remove\(\)"/);
+
+  const withoutPhoto = renderGiftPhotoThumb({ id: 'sticker', emoji: '🌟', image_key: null, image_url: null });
+  assert.doesNotMatch(withoutPhoto, /<img/);
+  assert.match(withoutPhoto, /ag-thumb__emoji/, 'the emoji fallback itself is still always rendered');
+});
+
+test('updateRowPhotoUi resets the has-img class before conditionally re-adding it, and wires the same onload hook as the initial render', () => {
+  const fnBody = adminGiftsLib.slice(adminGiftsLib.indexOf('function updateRowPhotoUi'), adminGiftsLib.indexOf('export type GiftManagerHooks'));
+  assert.match(fnBody, /well\.classList\.remove\('ag-thumb--has-img'\)/);
+  assert.match(fnBody, /img\.onload = \(\) => well\.classList\.add\('ag-thumb--has-img'\)/);
+});
+
+test('gifts.astro only hides the admin thumb emoji once the has-img class is present (never unconditionally)', () => {
+  assert.match(adminGiftsPage, /:global\(\.ag-thumb--has-img \.ag-thumb__emoji\) \{ display: none; \}/);
+});
+
+// --- image-URL field teaches, not silently accepts (§D) ------------------
+
+test('isLikelyImageUrl accepts known image-CDN hosts and direct image extensions, rejects a Shopee product-page URL, accepts empty (clearing is allowed)', async () => {
+  const { isLikelyImageUrl } = await loadAdminGifts();
+  assert.equal(isLikelyImageUrl('https://down-vn.img.susercontent.com/file/abc123'), true, 'Shopee\'s actual image host');
+  assert.equal(isLikelyImageUrl('https://cf.shopee.vn/file/sticker.webp'), true);
+  assert.equal(isLikelyImageUrl('https://example.com/photos/gift.jpg'), true, 'any host is fine as long as the path ends in an image extension');
+  assert.equal(isLikelyImageUrl('https://shopee.vn/San-pham-i.1253087927.26035316034'), false, 'the exact production incident: a product page, not an image');
+  assert.equal(isLikelyImageUrl(''), true, 'empty is valid — clearing the field is always allowed');
+  assert.equal(isLikelyImageUrl('   '), true);
+  assert.equal(isLikelyImageUrl('not a url'), false);
+});
+
+test('renderGiftRow replaces the generic hint with a teaching one, and adds a hidden-by-default warning line for the URL field', async () => {
+  const { renderGiftRow } = await loadAdminGifts();
+  const gift = {
+    id: 'g1', name_vi: 'Sticker', emoji: '🌟', image_key: null, image_url: null,
+    price_diamonds: 1000, limit_total: null, redeemed_count: 0, cost_vnd: 0, active: true,
+  };
+  const html = renderGiftRow(gift, 0);
+  assert.match(html, /Cần LINK ẢNH, không phải link sản phẩm/);
+  assert.match(html, /Sao chép địa chỉ hình ảnh/);
+  assert.doesNotMatch(html, /Cách thường dùng — dán link ảnh tìm được trên mạng\./, 'the old generic hint must be gone');
+  assert.match(html, /data-ag-url-warning hidden/);
+});
+
+test('renderGiftRow adds the "ảnh con sẽ thấy" honesty line under the Xem trước preview', async () => {
+  const { renderGiftRow } = await loadAdminGifts();
+  const gift = {
+    id: 'g1', name_vi: 'Sticker', emoji: '🌟', image_key: null, image_url: null,
+    price_diamonds: 1000, limit_total: null, redeemed_count: 0, cost_vnd: 0, active: true,
+  };
+  const html = renderGiftRow(gift, 0);
+  assert.match(html, /Ảnh này chính là ảnh con sẽ thấy\. Nếu ở đây trông sai, con cũng sẽ thấy sai\./);
+});
+
+test('the URL field is validated on focusout (blur\'s bubbling equivalent), teaching rather than blocking Save', () => {
+  const focusoutHandler = adminGiftsLib.slice(adminGiftsLib.indexOf("rowsHost.addEventListener('focusout'"), adminGiftsLib.indexOf("rowsHost.addEventListener('change'"));
+  assert.match(focusoutHandler, /isLikelyImageUrl\(input\.value\)/);
+  assert.match(focusoutHandler, /warningEl\.hidden = looksLikeImage/);
+  assert.doesNotMatch(focusoutHandler, /\balert\(/);
 });
 
 test('renderDeliveredRow shows history with cost_vnd (admin-only) and a done date', async () => {
