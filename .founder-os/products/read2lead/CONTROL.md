@@ -23,6 +23,24 @@ stale until 2026-07-05.
 ## Current task
 
 - Status: active
+- Started: 2026-07-13
+- Task ID: R2L-STUDENT-HOME
+- Owner: Claude Lead (Elon) — design mock, `functions/api/admin/codes/[code]/links.js`, review, merge; Steve (bg worker) — `src/pages/r2l/start.astro`, `src/scripts/r2l-start.client.ts`, AI-copy sweep, `tests/r2l-start-hub.test.mjs`; Buffet reviews the combined diff (author ≠ reviewer).
+- Lane: product (student-facing home hub; no backend/reward/selection logic touched)
+- Problem: `/r2l/start` is the student's daily front door now that kids arrive via unique magic links, but it is still built as a one-shot "create a lesson" screen with a 12-topic picker. The picker is a lie — books are human-written and drawn from the book pool, and the server ignores the chosen topic entirely. Kids also have no way to reach SpeakUp, the shop or the leaderboard from their landing page. Separately: the site claims products are "tăng cường bởi AI", which is now false positioning (books are human-written), and student links expire after 60 days / 50 opens even though kids open them daily.
+- Approach: turn the ready phase into a 5-button home hub — 2 huge (📖 Tạo bài đọc = one tap, runs the existing generate flow with no topic/interests; 🗣️ SpeakUp → `/speak-up?code=`, which already auto-loads) + 3 smaller (👤 Hồ sơ, 🏆 Bảng xếp hạng, 🛒 Cửa hàng), each with a short Vietnamese explainer. Delete the topic picker + interests input; result card falls back to the API's own `data.topic`. Sweep "tăng cường bởi AI" repo-wide. Raise link defaults to 365 days / 5000 opens (inside the existing 3650/10000 bounds).
+- Acceptance criteria: (1) a valid link shows greeting + exactly 5 buttons with VN explainers, matching the founder-approved mock at 390 and 1280; (2) no topic picker anywhere, and one tap on Tạo bài đọc creates a reading end-to-end (generating → result → "Mở bài học" opens); (3) SpeakUp opens `/speak-up?code=` and auto-loads with no typing, and Hồ sơ / Bảng xếp hạng / Cửa hàng each open their pages (shop with `code` + `v3=1`); (4) zero occurrences of "tăng cường bởi AI" repo-wide; (5) new links default to 365 days / 5000 opens and current students' links are regenerated post-merge; (6) full suite green incl. new `tests/r2l-start-hub.test.mjs`, with ho-so / lesson-open / error phases unbroken.
+- Files owned: src/pages/r2l/start.astro, src/scripts/r2l-start.client.ts, tests/r2l-start-hub.test.mjs (Steve); functions/api/admin/codes/[code]/links.js, CONTROL.md (Elon); AI-copy sweep across src/components/Footer.astro, src/layouts/BaseLayout.astro, src/pages/index.astro, src/pages/san-pham.astro, src/pages/coaching.astro (Steve).
+- Non-goals: `src/pages/read2lead.astro` (legacy public typed-code page) keeps its own topic picker; no mini-games button (founder asked for exactly 5); no change to generation, rewards, selection or the book pool; `src/components/ui/TopicTile.astro` and `ho-so/ho-so-topics.ts` are NOT edited (other pages still use them — we only stop referencing TopicTile from start.astro).
+- Stop condition: founder-approved design mock BEFORE any product code (design-first hard gate); then suite green + Buffet SHIP + founder gates PASS + Phương merge GO. Link regeneration runs only after merge.
+- Cost ceiling: Claude team (Max plan, not metered). No metered API spend — no LLM calls added; the link-lifespan change is a constant edit.
+- Reuse survey: (1) in-house fx design TOKENS (`src/styles/design-system.css`) — ADOPTED wholesale: every colour, radius, spacing and font in the hub resolves to an existing custom property, zero hard-coded hexes; (2) `Button.astro` / `Card.astro` components — ADOPTED for the untouched phases (error/generating/result/gen-error), but NOT used for the 5 hub tiles: their fixed variant/size shapes do not express the approved mock's icon-circle + stacked title/subtitle + chevron composition, so the tiles hand-roll ~130 lines of scoped `.r2l-hub-*` CSS built from the same tokens. Accepted deliberately (Buffet flagged the maintenance surface as a non-blocking reuse gap 2026-07-13); the file already hand-rolled its Hồ sơ/Bảng xếp hạng tiles this way before the change, so it is consistent with the local pattern, and `fx-card--interactive` cannot express the gold primary tile. Revisit if a third surface needs the same tile; (3) daisyUI / Flowbite button-and-card kits — REJECTED: a new dependency and a second visual language for zero capability we lack, and they would clash with the navy/gold/cream theme; (4) HyperUI / TailwindUI "app hub" layouts — REJECTED as code, kept as layout reference only; (5) the existing generate/poll flow in `r2l-start.client.ts` — ADOPTED unchanged: one-tap create is the same call with an empty topic, so no new network path.
+- Design self-verification: pending — mock at 390/1280 → founder approval → whole-screen compare of every phase (ready/generating/result/error) on the deployed preview.
+- Founder handoff: pending — mock approval first, then preview URL + fresh test link + before/after screenshots.
+
+## Previous task — R2L-PAGE-BANDS
+
+- Status: complete (shipped 2026-07-12; CONTROL block rotated 2026-07-13 — the closeout was missed at session end)
 - Started: 2026-07-12
 - Task ID: R2L-PAGE-BANDS
 - Owner: Claude Lead (Elon) — generate-read2lead-pack.js (bandForLevel/normalizeKidLevel/drift warn) + migration script + assignment tests; Mark (bg worker) — publish-read2lead-book.js (bandForPageCount, banded publish, reindex_only) + tests; Buffet reviews combined diff.
@@ -36,7 +54,7 @@ stale until 2026-07-05.
 - Cost ceiling: Claude team (Max plan, not metered); migration is KV reads + one reindex POST, $0.
 - Reuse survey: (1) in-repo book_index machinery — ADOPTED (re-bucketing the existing lists IS the feature; assignment path untouched); (2) sidecar book_index_pages:<band> store — REJECTED (two sources of truth); (3) assignment-time page filtering — REJECTED (extra KV reads on the hot path).
 - Design self-verification: N/A — backend assignment logic, no UI surface; verified by per-level integration tests + live low/high-level pack generation.
-- Founder handoff: pending — merge GO then migration report with band counts.
+- Founder handoff: DONE — merged 672ffd7 (bands) + bd3fc28 (admin "Đổi truyện mới cho tất cả" button); migration `--apply` run on prod, all 5 shelves verified MATCH (90/108/139/50/45, union 432, rollback snapshot saved); live check R2L-PILOT-CYJS (L4) drew a 16-page book = correct band. Buffet SHIP. Founder clicked the admin button so kids re-enter under the new bands; post-click live check PASS.
 
 ## Previous task — R2L-PAGE-LOOP
 

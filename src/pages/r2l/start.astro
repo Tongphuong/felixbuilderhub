@@ -4,26 +4,9 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Card from '../../components/ui/Card.astro';
 import Button from '../../components/ui/Button.astro';
-import TopicTile from '../../components/ui/TopicTile.astro';
-import Input from '../../components/ui/Input.astro';
 import ProgressBar from '../../components/ui/ProgressBar.astro';
 import SectionHeading from '../../components/ui/SectionHeading.astro';
 import { ZALO_URL } from '../../config/contact';
-
-const TOPICS = [
-  { value: 'animals_pets', label: 'Động vật & thú cưng', emoji: '🐾' },
-  { value: 'family_friends', label: 'Gia đình & bạn bè', emoji: '👨‍👩‍👧' },
-  { value: 'school', label: 'Trường học', emoji: '🏫' },
-  { value: 'sports', label: 'Thể thao', emoji: '⚽' },
-  { value: 'games_toys', label: 'Trò chơi & đồ chơi', emoji: '🎮' },
-  { value: 'vehicles', label: 'Xe cộ & di chuyển', emoji: '🚗' },
-  { value: 'food_cooking', label: 'Đồ ăn & nấu ăn', emoji: '🍳' },
-  { value: 'nature', label: 'Thiên nhiên', emoji: '🌳' },
-  { value: 'art_creativity', label: 'Vẽ tranh & sáng tạo', emoji: '🎨' },
-  { value: 'heroes_jobs', label: 'Nghề nghiệp & ước mơ', emoji: '🦸' },
-  { value: 'imagination', label: 'Tưởng tượng & phép màu', emoji: '✨' },
-  { value: 'vietnamese_holidays', label: 'Lễ hội Việt Nam', emoji: '🏮' },
-];
 
 const STAGE_LABELS = [
   'Đang chọn truyện phù hợp với con…',
@@ -74,57 +57,53 @@ const INITIAL_PROGRESS = ((0 + 1) / 4) * 100;
         </p>
       </div>
 
-      <Card variant="accent" class="mt-8">
-        <h2 class="font-display text-lg font-bold text-cream">Chọn chủ đề bài học</h2>
-        <div class="mt-4 grid grid-cols-3 gap-3">
-          {TOPICS.map((topic, i) => (
-            <TopicTile emoji={topic.emoji} label={topic.label} selected={i === 0} data-topic={topic.value} />
-          ))}
-        </div>
+      {/* Honeypot */}
+      <div class="r2l-honeypot" aria-hidden="true">
+        <label for="website">Website</label>
+        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
 
-        <div class="mt-6">
-          <Input
-            label="Sở thích của con (không bắt buộc)"
-            name="interests"
-            placeholder="VD: bóng đá, Roblox, mèo, vẽ tranh…"
-            maxlength={120}
-            autocomplete="off"
-            hint="Nếu điền, câu chuyện sẽ cố gắng đi theo điều con thích."
-          />
-        </div>
+      <div class="r2l-hub-big-grid">
+        <button type="button" id="generate-btn" class="r2l-hub-big r2l-hub-big--primary">
+          <span class="r2l-hub-big__icon" aria-hidden="true">📖</span>
+          <span class="r2l-hub-big__text">
+            <span class="r2l-hub-big__title">Tạo bài đọc</span>
+            <span class="r2l-hub-big__sub">Nhận một cuốn truyện mới và bắt đầu đọc ngay</span>
+          </span>
+          <span class="r2l-hub-big__chev" aria-hidden="true">›</span>
+        </button>
 
-        {/* Honeypot */}
-        <div class="r2l-honeypot" aria-hidden="true">
-          <label for="website">Website</label>
-          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
-        </div>
-
-        <div class="mt-6">
-          <Button variant="primary" size="lg" block id="generate-btn">Tạo bài học cho con</Button>
-        </div>
-      </Card>
-
-      <div class="mt-6 grid gap-4 sm:grid-cols-2">
-        <a
-          id="hoso-link"
-          href="/ho-so"
-          class="flex items-center gap-4 rounded-xl border border-cream-dim/20 bg-navy-900/70 p-5 transition hover:border-accent/40"
-        >
-          <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-cream/10 text-2xl">👤</span>
-          <div>
-            <p class="font-semibold text-cream">Hồ sơ & tiến độ</p>
-            <p class="mt-1 text-xs text-cream-muted">Cấp độ, điểm, bài đang mở</p>
-          </div>
+        <a id="speak-link" href="/speak-up" class="r2l-hub-big r2l-hub-big--secondary">
+          <span class="r2l-hub-big__icon" aria-hidden="true">🗣️</span>
+          <span class="r2l-hub-big__text">
+            <span class="r2l-hub-big__title">SpeakUp</span>
+            <span class="r2l-hub-big__sub">Luyện nói tiếng Anh cùng Minny</span>
+          </span>
+          <span class="r2l-hub-big__chev" aria-hidden="true">›</span>
         </a>
-        <a
-          href="/read2lead/leaderboard"
-          class="flex items-center gap-4 rounded-xl border border-cream-dim/20 bg-navy-900/70 p-5 transition hover:border-accent/40"
-        >
-          <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-cream/10 text-2xl">🏆</span>
-          <div>
-            <p class="font-semibold text-cream">Bảng xếp hạng</p>
-            <p class="mt-1 text-xs text-cream-muted">Xem thành tích các bạn nhỏ</p>
-          </div>
+      </div>
+
+      <div class="r2l-hub-small-grid">
+        <a id="hoso-link" href="/ho-so" class="r2l-hub-small">
+          <span class="r2l-hub-small__icon" aria-hidden="true">👤</span>
+          <span class="r2l-hub-small__text">
+            <span class="r2l-hub-small__title">Hồ sơ – Báo cáo tiến độ</span>
+            <span class="r2l-hub-small__sub">Xem con đã học được gì và giỏi lên thế nào</span>
+          </span>
+        </a>
+        <a href="/read2lead/leaderboard" class="r2l-hub-small">
+          <span class="r2l-hub-small__icon" aria-hidden="true">🏆</span>
+          <span class="r2l-hub-small__text">
+            <span class="r2l-hub-small__title">Bảng xếp hạng</span>
+            <span class="r2l-hub-small__sub">Xem thứ hạng của con so với các bạn</span>
+          </span>
+        </a>
+        <a id="shop-link" href="/read2lead/shop" class="r2l-hub-small">
+          <span class="r2l-hub-small__icon" aria-hidden="true">🛒</span>
+          <span class="r2l-hub-small__text">
+            <span class="r2l-hub-small__title">Cửa hàng</span>
+            <span class="r2l-hub-small__sub">Dùng xu con kiếm được để mua đồ cho thú cưng</span>
+          </span>
         </a>
       </div>
     </section>
@@ -145,7 +124,7 @@ const INITIAL_PROGRESS = ((0 + 1) / 4) * 100;
     <section class="phase-result">
       <Card variant="accent" class="mt-8 text-center">
         <h2 class="font-display r2l-result-title">Bài học của <span id="result-name" data-clarity-mask="true"></span> đã sẵn sàng! ✨</h2>
-        <p class="r2l-result-text">Chủ đề: <strong class="text-accent" id="result-topic"></strong></p>
+        <p class="r2l-result-text" id="result-topic-wrap" hidden>Chủ đề: <strong class="text-accent" id="result-topic"></strong></p>
         <p class="r2l-result-text" id="result-story" hidden>Tên truyện: <strong class="text-accent" id="result-story-title"></strong></p>
         <div class="r2l-result-actions">
           <Button variant="primary" size="lg" href="#" id="open-lesson">Mở bài học →</Button>
@@ -228,6 +207,135 @@ const INITIAL_PROGRESS = ((0 + 1) / 4) * 100;
     flex-direction: column;
     align-items: center;
     gap: var(--space-3);
+  }
+
+  /* ---- Home hub (ready phase) ---- */
+  .r2l-hub-big-grid {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+  .r2l-hub-big {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    width: 100%;
+    padding: 1.35rem var(--space-5);
+    border-radius: var(--radius-xl);
+    border: 1px solid transparent;
+    font-family: inherit;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform var(--duration-fast) var(--ease-standard);
+  }
+  .r2l-hub-big:active { transform: translateY(1px); }
+  .r2l-hub-big__icon {
+    flex: 0 0 auto;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.9rem;
+  }
+  .r2l-hub-big__text { display: block; }
+  .r2l-hub-big__title {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: var(--weight-extrabold);
+    font-size: var(--text-lg);
+    line-height: 1.2;
+  }
+  .r2l-hub-big__sub {
+    display: block;
+    margin-top: var(--space-1);
+    font-size: var(--text-sm);
+    line-height: 1.35;
+  }
+  .r2l-hub-big__chev {
+    margin-left: auto;
+    font-size: 1.3rem;
+    opacity: 0.55;
+    flex: 0 0 auto;
+  }
+  .r2l-hub-big--primary {
+    background: var(--gold);
+    color: var(--navy-950);
+    box-shadow: 0 6px 20px -8px color-mix(in srgb, var(--gold) 55%, transparent);
+  }
+  .r2l-hub-big--primary .r2l-hub-big__icon { background: color-mix(in srgb, var(--navy-950) 14%, transparent); }
+  .r2l-hub-big--primary .r2l-hub-big__title { color: var(--navy-950); }
+  .r2l-hub-big--primary .r2l-hub-big__sub { color: color-mix(in srgb, var(--navy-950) 78%, transparent); }
+  .r2l-hub-big--secondary {
+    background: var(--navy-850);
+    border-color: var(--accent-border);
+    color: var(--cream);
+  }
+  .r2l-hub-big--secondary .r2l-hub-big__icon { background: var(--accent-soft); }
+  .r2l-hub-big--secondary .r2l-hub-big__title { color: var(--cream); }
+  .r2l-hub-big--secondary .r2l-hub-big__sub { color: var(--cream-muted); }
+
+  .r2l-hub-small-grid {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+  .r2l-hub-small {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--navy-900) 70%, transparent);
+    border: 1px solid var(--border-subtle);
+    text-decoration: none;
+    transition: border-color var(--duration-base) var(--ease-standard);
+  }
+  .r2l-hub-small:hover { border-color: var(--accent-border); }
+  .r2l-hub-small__icon {
+    flex: 0 0 auto;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--cream) 8%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+  }
+  .r2l-hub-small__text { display: block; }
+  .r2l-hub-small__title {
+    display: block;
+    font-weight: var(--weight-bold);
+    color: var(--cream);
+    font-size: 0.92rem;
+    line-height: 1.2;
+  }
+  .r2l-hub-small__sub {
+    display: block;
+    margin-top: var(--space-1);
+    font-size: var(--text-xs);
+    color: var(--cream-dim);
+    line-height: 1.3;
+  }
+
+  @media (min-width: 768px) {
+    .r2l-hub-big-grid { grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+    .r2l-hub-big {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 1.75rem var(--space-6);
+      min-height: 12rem;
+    }
+    .r2l-hub-big__icon { width: 4rem; height: 4rem; font-size: 2.2rem; }
+    .r2l-hub-big__title { font-size: 1.45rem; margin-top: var(--space-4); }
+    .r2l-hub-big__sub { font-size: var(--text-sm); }
+    .r2l-hub-big__chev { display: none; }
+    .r2l-hub-small-grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+    .r2l-hub-small { flex-direction: column; align-items: flex-start; padding: var(--space-5); }
+    .r2l-hub-small__icon { margin-bottom: var(--space-2); }
   }
 
   /* All phases live in the DOM at once; CSS reveals one per data-phase. */
