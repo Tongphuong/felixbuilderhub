@@ -481,7 +481,11 @@ export async function submitV2Lesson({
       status: reviewedPack.status,
       title: lessonContext.story?.title || reviewedPack.story_title || '',
       topic: lessonContext.topic || reviewedPack.topic || '',
-      level: lessonContext.level || reviewedPack.level || '',
+      // The PACK's level wins, because it is the shelf the child actually drew from. lessonContext
+      // is the raw book record, and its `level` is the book's StoryWeaver difficulty tag — a
+      // different axis. That tag was winning here, riding into review_history, and surfacing on
+      // the parent's "Truyện đã đọc" list as "Cấp 4" under an L0 child.
+      level: reviewedPack.level || lessonContext.level || '',
       reviewed_at: submittedAt,
       score_percent: scorePercent,
       schema_version: 2,

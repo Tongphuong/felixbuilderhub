@@ -3,16 +3,37 @@ import { isValidBookPack } from './read2lead-lesson.js';
 const VALID_LEVELS = new Set(['L0', 'L1', 'L2', 'L3', 'L4']);
 const BAND_ORDER = ['L0', 'L1', 'L2', 'L3', 'L4'];
 
-// SPEC_R2L_PAGE_BANDS.md: books are shelved by PAGE COUNT (stamina), not
-// StoryWeaver text level. Non-finite/<1 input means "caller should reject",
-// signalled by returning null rather than guessing a shelf.
-export function bandForPageCount(pages) {
-  if (!Number.isFinite(pages) || pages < 1) return null;
-  if (pages <= 6) return 'L0';
-  if (pages <= 9) return 'L1';
-  if (pages <= 12) return 'L2';
-  if (pages <= 15) return 'L3';
-  return 'L4';
+// SPEC_R2L_PAGE_BANDS.md shelved books by PAGE COUNT alone and logged its own follow-up:
+// "page count != text difficulty; a words-per-page guard inside bands is the logged follow-up
+// if pilot feedback demands it." Pilot feedback demanded it — a 5-page/206-word L4 book
+// ("Never too late to accept your mistakes") reached an L0 child, because page count is blind
+// to how much text is ON a page. Books are now shelved by READING LOAD: total words, with a
+// words-per-page ceiling that promotes a short-but-dense book up a shelf.
+//
+// A book can only ever be promoted UP, never down, so no shelf loses stock to the guard.
+// Non-finite/<1 input means "caller should reject" — signalled by null, never a guessed shelf.
+const WORD_CUTS = [116, 202, 332, 531]; // quintiles of the published 394-book corpus
+const WPP_CEILING = { L0: 20, L1: 30, L2: 45, L3: 60, L4: Infinity };
+
+export function readingLoadOf(pack) {
+  const pages = (pack?.book_images || []).length;
+  const words = (pack?.story?.paragraphs_en || []).reduce(
+    (sum, paragraph) => sum + String(paragraph ?? '').split(/\s+/).filter(Boolean).length,
+    0,
+  );
+  return { words, pages };
+}
+
+export function bandForReadingLoad({ words, pages } = {}) {
+  if (!Number.isFinite(words) || !Number.isFinite(pages) || words < 1 || pages < 1) return null;
+
+  let band = WORD_CUTS.findIndex((cut) => words <= cut);
+  if (band === -1) band = BAND_ORDER.length - 1;
+
+  const wordsPerPage = words / pages;
+  while (band < BAND_ORDER.length - 1 && wordsPerPage > WPP_CEILING[BAND_ORDER[band]]) band += 1;
+
+  return BAND_ORDER[band];
 }
 
 function isValidReindexIndexes(indexes) {
@@ -116,7 +137,7 @@ export async function onRequestPost({ request, env }) {
     return json({ ok: false, error: 'invalid_book_activities' }, 400);
   }
 
-  const band = bandForPageCount(pages);
+  const band = bandForReadingLoad(readingLoadOf(pack));
   if (!band) {
     return json({ ok: false, error: 'invalid_book_pack' }, 400);
   }

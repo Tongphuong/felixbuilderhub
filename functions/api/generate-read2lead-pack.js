@@ -9,6 +9,7 @@ import {
 } from './_read2lead-v2-state.js';
 import { reconcileStrandedPack } from './_read2lead-reconcile-stranded.js';
 import { assessBookHealth } from '../../src/lib/read2lead-book-health.mjs';
+import { bandForReadingLoad, readingLoadOf } from './publish-read2lead-book.js';
 
 const GENERATION_LOCK_STALE_MS = 15 * 60 * 1000;
 
@@ -344,14 +345,8 @@ export function bandForLevel(level) {
   return BOOK_BAND_LEVELS.has(normalized) ? normalized : 'L1';
 }
 
-// Expected page range per band — used only for the drift alarm below.
-const BAND_PAGE_RANGES = {
-  L0: [1, 6],
-  L1: [7, 9],
-  L2: [10, 12],
-  L3: [13, 15],
-  L4: [16, Infinity],
-};
+// Shelf order, for asking "is this book graded harder than the shelf it was drawn from?".
+const BAND_ORDER = ['L0', 'L1', 'L2', 'L3', 'L4'];
 
 export function selectUnreadBook(
   rawIndex,
@@ -453,8 +448,9 @@ async function assignBookPack({
   const now = new Date().toISOString();
   const quarantined = await loadQuarantine(env, band);
   const excluded = new Set();
-  let chosen = null;          // { slug, pack } — a fully healthy book
+  let chosen = null;          // { slug, pack } — a fully healthy book, in-band
   let softFallback = null;    // { slug, pack, reasons } — finishable but cosmetically flawed
+  let mishelved = null;       // { slug, pack, graded } — healthy, but grades harder than the shelf
 
   // Keep drawing unread, un-quarantined books until we find a healthy one (or run
   // out). Quarantined + already-excluded slugs are filtered out of selection, so
@@ -470,20 +466,43 @@ async function assignBookPack({
     if (!slug) break;
     const candidatePack = await env.READ2LEAD_CODES.get('book:' + slug, { type: 'json' });
     const health = assessBookHealth(candidatePack, { now, expectedSlug: slug });
-    if (health.ok) {
-      // Drift alarm (never blocks the kid): a drawn book outside the kid's
-      // page band means the shelf data has drifted — surface it in logs.
-      const drawnPages = (candidatePack?.book_images || []).length;
-      const [minPages, maxPages] = BAND_PAGE_RANGES[band] || [0, Infinity];
-      if (drawnPages < minPages || drawnPages > maxPages) {
-        console.warn('book_band_mismatch', JSON.stringify({ slug, band, pages: drawnPages }));
-      }
+
+    // The shelf is a promise about reading load, so re-grade the book we actually drew and hold
+    // it to that promise. Stale shelving is what handed an L0 child a 206-word book: the old
+    // alarm compared page count against a band derived from page count, which is tautological,
+    // and only warned.
+    //
+    // This grading runs BEFORE any health branching, deliberately. Health and difficulty are
+    // independent axes: a book can be too hard for the child AND have a stray doubled word, and
+    // if the grade only ran on spotless books, that book would skip the check entirely and be
+    // kept as the cosmetic fallback — which is served in preference to everything below it. The
+    // too-hard book would reach the child through the hole in the guard meant to stop it.
+    const load = readingLoadOf(candidatePack);
+    const graded = bandForReadingLoad(load);
+    const tooHard = Boolean(graded) && BAND_ORDER.indexOf(graded) > BAND_ORDER.indexOf(band);
+
+    if (health.ok && !tooHard) {
       chosen = { slug, pack: candidatePack };
       break;
     }
+
     excluded.add(slug);
+
+    if (tooHard && health.hardOk && candidatePack) {
+      // Finishable, but harder than the shelf claims. Keep the gentlest one as a LAST resort: a
+      // stale shelf must never cost a child their lesson (before a reindex, most of a shelf can
+      // grade over), and serving a too-hard book is what happens today anyway — so this is never
+      // worse. It ranks below softFallback, because a book at the child's level with a cosmetic
+      // blemish beats a book they cannot read.
+      console.warn('book_band_mismatch', JSON.stringify({ slug, shelf: band, graded, ...load }));
+      if (!mishelved || BAND_ORDER.indexOf(graded) < BAND_ORDER.indexOf(mishelved.graded)) {
+        mishelved = { slug, pack: candidatePack, graded };
+      }
+      continue;
+    }
+
     if (health.hardOk && candidatePack) {
-      // Finishable, only cosmetic defects — remember the first one, keep hunting.
+      // Finishable and in-band, only cosmetic defects — remember the first one, keep hunting.
       if (!softFallback) softFallback = { slug, pack: candidatePack, reasons: health.reasons };
     } else {
       // Genuinely unfinishable — quarantine so we skip it cheaply next time.
@@ -492,13 +511,26 @@ async function assignBookPack({
   }
 
   if (!chosen && softFallback) {
-    // Don't strand the child: serve the least-bad finishable book and flag it.
+    // Don't strand the child: serve the least-bad finishable book and flag it. A book at the
+    // child's level with a cosmetic blemish beats a book they cannot read, so this outranks
+    // the mis-shelved fallback below.
     console.warn('book_pool_degraded', JSON.stringify({
       slug: softFallback.slug,
       level: levelForPack,
       reasons: softFallback.reasons.map((reason) => reason.code),
     }));
     chosen = { slug: softFallback.slug, pack: softFallback.pack };
+  }
+
+  if (!chosen && mishelved) {
+    // Every healthy book on this shelf grades too hard — the shelf itself is stale and wants a
+    // reindex. Serve the gentlest of them rather than failing the child, and say so loudly.
+    console.warn('book_shelf_stale', JSON.stringify({
+      slug: mishelved.slug,
+      shelf: band,
+      graded: mishelved.graded,
+    }));
+    chosen = { slug: mishelved.slug, pack: mishelved.pack };
   }
 
   if (!chosen) {
@@ -688,7 +720,12 @@ function buildFinalV2Pack({ pendingPack, pack, createdAt }) {
     created_at: createdAt,
     topic: pack.topic || pendingPack.topic || '',
     story_title: pack.story?.title || pack.story_title || 'Read2Lead V2 Mission',
-    level: pack.level || pendingPack.level,
+    // The child drew this book from their own shelf, so the pack reports THAT lane. It used to
+    // prefer the book's StoryWeaver tag — a different axis entirely — and that tag rides into
+    // review_history and out to the parent's "Truyện đã đọc" list. It is why a parent saw
+    // "Cấp 4" under an L0 child. The book's own tag is kept, just not as the child's level.
+    level: pendingPack.level || pack.level,
+    book_level: pack.level || null,
     schema_version: 2,
     review_context: pack,
   };

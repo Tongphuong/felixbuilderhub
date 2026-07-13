@@ -341,6 +341,111 @@ test('inactive levels preserve backend configuration fallback before locking', a
 
 // --- R2L-PAGE-BANDS: a kid at each level gets a book from their page band ---
 
+// The bug a parent found: an L0 child's history showed a "Cấp 4" book. Page-count shelving is
+// blind to density, so a 5-page/206-word book sat on the beginner shelf. The selector now
+// re-grades what it drew and puts back anything harder than the shelf it came from.
+function denseBook(slug, title) {
+  const book = storedBook(slug, title);
+  // 3 pages x 70 words = 210 words at 70 a page: the shape of the real offender (a short book
+  // that is a wall of text), so it grades far above the L1 shelf it is sitting on.
+  const page = Array.from({ length: 70 }, (_, i) => `word${i}`).join(' ');
+  book.story.paragraphs_en = [page, page, page];
+  return book;
+}
+
+test('a book that grades harder than its shelf is put back, and a fitting one served instead', async () => {
+  const fixture = makeKv({
+    [ACCESS_CODE]: codeData(),
+    [PROGRESS_KEY]: progressAtL1(),
+    'book_index:L1': ['book_901', 'book_902'],
+    'book:book_901': denseBook('book_901', 'Too Hard'),
+    'book:book_902': storedBook('book_902', 'Just Right'),
+  });
+
+  const response = await generate({
+    READ2LEAD_CODES: fixture.kv,
+    READ2LEAD_BOOK_LEVELS: 'L1',
+    RNG: () => 0, // draw the mis-shelved book first
+  });
+  const payload = await response.json();
+
+  assert.equal(response.status, 200);
+  assert.equal(payload.story_title, 'Just Right', 'the mis-shelved book must not reach the child');
+  const saved = fixture.store.get(ACCESS_CODE);
+  assert.equal(saved.progress.current_pack.review_context.book_slug, 'book_902');
+});
+
+test('a too-hard book does NOT sneak through by also having a cosmetic defect', async () => {
+  // The hole Buffet found: the re-grade used to run only on spotless books, so a book that was
+  // both too dense AND had a stray doubled word skipped the check entirely, was kept as the
+  // cosmetic fallback, and that fallback is served ahead of everything else. The wall of text
+  // reached the child through the guard built to stop it.
+  const sneaky = denseBook('book_901', 'Too Hard And Flawed');
+  sneaky.story.paragraphs_en = sneaky.story.paragraphs_en.map((p) => `${p} the the`); // doubled word
+  const fixture = makeKv({
+    [ACCESS_CODE]: codeData(),
+    [PROGRESS_KEY]: progressAtL1(),
+    'book_index:L1': ['book_901', 'book_902'],
+    'book:book_901': sneaky,
+    'book:book_902': storedBook('book_902', 'Just Right'),
+  });
+
+  const response = await generate({
+    READ2LEAD_CODES: fixture.kv,
+    READ2LEAD_BOOK_LEVELS: 'L1',
+    RNG: () => 0, // draw the sneaky one first
+  });
+  const payload = await response.json();
+
+  assert.equal(response.status, 200);
+  assert.equal(payload.story_title, 'Just Right', 'a blemish must not buy a too-hard book a free pass');
+});
+
+test('a shelf where every book grades too hard still serves one — a stale shelf never strands a child', async () => {
+  // Production's shelves are still page-count-based until the reindex runs, and 77% of the
+  // beginner shelf grades harder than it claims. The guard must degrade, not error.
+  const fixture = makeKv({
+    [ACCESS_CODE]: codeData(),
+    [PROGRESS_KEY]: progressAtL1(),
+    'book_index:L1': ['book_901', 'book_902'],
+    'book:book_901': denseBook('book_901', 'Hard'),
+    'book:book_902': denseBook('book_902', 'Also Hard'),
+  });
+
+  const response = await generate({
+    READ2LEAD_CODES: fixture.kv,
+    READ2LEAD_BOOK_LEVELS: 'L1',
+    RNG: () => 0,
+  });
+  const payload = await response.json();
+
+  assert.equal(response.status, 200, 'a stale shelf must not cost the child their lesson');
+  assert.equal(payload.ok, true);
+  assert.match(payload.story_title, /Hard/);
+});
+
+test('the pack reports the shelf the child drew from, not the book\'s StoryWeaver tag', async () => {
+  const book = storedBook('book_3', 'Fresh Book');
+  book.level = 'L4'; // the tag that showed a parent "Cấp 4" under an L0 child
+  const fixture = makeKv({
+    [ACCESS_CODE]: codeData(),
+    [PROGRESS_KEY]: progressAtL1(),
+    'book_index:L1': ['book_3'],
+    'book:book_3': book,
+  });
+
+  const response = await generate({
+    READ2LEAD_CODES: fixture.kv,
+    READ2LEAD_BOOK_LEVELS: 'L1',
+    RNG: () => 0,
+  });
+  assert.equal(response.status, 200);
+
+  const pack = fixture.store.get(ACCESS_CODE).progress.current_pack;
+  assert.equal(pack.level, 'L1', 'the child\'s lane — this is what reaches the parent\'s history');
+  assert.equal(pack.book_level, 'L4', 'the book\'s own tag is kept, just not shown as the level');
+});
+
 test('bandForLevel normalizes untrusted levels and clamps L5', () => {
   assert.equal(bandForLevel('L0'), 'L0');
   assert.equal(bandForLevel('L4'), 'L4');

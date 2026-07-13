@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import { loadBookLevels } from '../functions/api/generate-read2lead-pack.js';
-import { bandForPageCount, onRequestPost } from '../functions/api/publish-read2lead-book.js';
+import { bandForReadingLoad, readingLoadOf, onRequestPost } from '../functions/api/publish-read2lead-book.js';
 
 function validPack() {
   return {
@@ -59,12 +59,13 @@ test('publisher rejects unauthorized requests without writing', async () => {
 test('publisher writes book and idempotent index then activates level', async () => {
   const store = kv({ 'book_index:L1': ['book_100'] });
   const env = { READ2LEAD_BACKEND_SECRET: 'shared', READ2LEAD_CODES: store };
-  // 7 pages lands this pack in the L1 band (SPEC_R2L_PAGE_BANDS.md) so the
-  // seeded book_index:L1 list is the one exercised below.
+  // 7 pages x 17 words = 119 words: just past the L0 word cut (116) and well inside L1's
+  // density ceiling — so this lands on the L1 shelf and exercises the seeded list below.
+  const page = 'the quick brown fox jumps over the lazy dog and then runs far away again today ok';
   const pack = validPack();
   pack.book_images = ['a.jpg', 'b.jpg', 'c.jpg', 'd.jpg', 'e.jpg', 'f.jpg', 'g.jpg'];
   pack.book_page_audio = ['a.mp3', 'b.mp3', 'c.mp3', 'd.mp3', 'e.mp3', 'f.mp3', 'g.mp3'];
-  pack.story.paragraphs_en = ['One.', 'Two.', 'Three.', 'Four.', 'Five.', 'Six.', 'Seven.'];
+  pack.story.paragraphs_en = Array.from({ length: 7 }, () => page);
   for (let attempt = 0; attempt < 2; attempt += 1) {
     const response = await onRequestPost({ request: request({ pack, level: 'L1', activate_level: true }), env });
     assert.equal(response.status, 200);
@@ -74,9 +75,9 @@ test('publisher writes book and idempotent index then activates level', async ()
   assert.equal(JSON.parse(store.values.get('book:book_283570')).book_slug, 'book_283570');
 });
 
-test('publisher indexes by page-count band, independent of the pack level label', async () => {
+test('publisher indexes by reading load, independent of the pack level label', async () => {
   const store = kv();
-  const pack = validPack(); // 3 images/paragraphs -> L0 band
+  const pack = validPack(); // 3 pages / 3 words -> L0 shelf
   pack.level = 'L3'; // deliberately mismatched label; must not steer the index key
   const response = await onRequestPost({
     request: request({ pack, level: 'L3' }),
@@ -113,19 +114,42 @@ test('publisher rejects invalid activity selection before writing', async () => 
   assert.equal(store.values.size, 0);
 });
 
-test('bandForPageCount buckets by page count and rejects non-positive/non-finite input', () => {
-  assert.equal(bandForPageCount(3), 'L0');
-  assert.equal(bandForPageCount(6), 'L0');
-  assert.equal(bandForPageCount(7), 'L1');
-  assert.equal(bandForPageCount(9), 'L1');
-  assert.equal(bandForPageCount(10), 'L2');
-  assert.equal(bandForPageCount(12), 'L2');
-  assert.equal(bandForPageCount(13), 'L3');
-  assert.equal(bandForPageCount(15), 'L3');
-  assert.equal(bandForPageCount(16), 'L4');
-  assert.equal(bandForPageCount(24), 'L4');
-  assert.equal(bandForPageCount(0), null);
-  assert.equal(bandForPageCount(Number.NaN), null);
+test('bandForReadingLoad buckets by total words and rejects non-positive/non-finite input', () => {
+  // A light page is ~8 words, so these sit comfortably inside the density ceiling.
+  assert.equal(bandForReadingLoad({ words: 40, pages: 5 }), 'L0');
+  assert.equal(bandForReadingLoad({ words: 116, pages: 10 }), 'L0');
+  assert.equal(bandForReadingLoad({ words: 117, pages: 10 }), 'L1');
+  assert.equal(bandForReadingLoad({ words: 202, pages: 12 }), 'L1');
+  assert.equal(bandForReadingLoad({ words: 203, pages: 12 }), 'L2');
+  assert.equal(bandForReadingLoad({ words: 332, pages: 15 }), 'L2');
+  assert.equal(bandForReadingLoad({ words: 333, pages: 15 }), 'L3');
+  assert.equal(bandForReadingLoad({ words: 531, pages: 20 }), 'L3');
+  assert.equal(bandForReadingLoad({ words: 532, pages: 20 }), 'L4');
+
+  assert.equal(bandForReadingLoad({ words: 0, pages: 5 }), null);
+  assert.equal(bandForReadingLoad({ words: 40, pages: 0 }), null);
+  assert.equal(bandForReadingLoad({ words: Number.NaN, pages: 5 }), null);
+  assert.equal(bandForReadingLoad(), null);
+});
+
+test('the density guard promotes a short-but-dense book off the beginner shelf', () => {
+  // The exact book that reached an L0 child: 5 pages, 206 words — short, but 41 words a page.
+  assert.equal(bandForReadingLoad({ words: 206, pages: 5 }), 'L2');
+  // "Community Helper": 3 pages, 114 words. Few enough words for the L0 shelf by total, but
+  // 38 words on a page is a wall of text for a beginner, so it promotes.
+  assert.equal(bandForReadingLoad({ words: 114, pages: 3 }), 'L2');
+  // A genuinely gentle beginner book stays put.
+  assert.equal(bandForReadingLoad({ words: 44, pages: 5 }), 'L0');
+});
+
+test('readingLoadOf counts words and pages off a real pack shape', () => {
+  const load = readingLoadOf({
+    book_images: ['a.png', 'b.png'],
+    story: { paragraphs_en: ['one two three', '  four   five  '] },
+  });
+  assert.deepEqual(load, { words: 5, pages: 2 });
+  assert.deepEqual(readingLoadOf({}), { words: 0, pages: 0 });
+  assert.deepEqual(readingLoadOf(null), { words: 0, pages: 0 });
 });
 
 test('reindex_only requires the shared secret and leaves indexes untouched', async () => {

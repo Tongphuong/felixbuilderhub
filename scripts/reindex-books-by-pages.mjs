@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 /**
- * R2L-PAGE-BANDS migration: re-bucket the five book_index:<L> KV lists by
- * PAGE COUNT band instead of StoryWeaver level (SPEC_R2L_PAGE_BANDS.md).
+ * Re-bucket the five book_index:<L> KV lists by READING LOAD — total words, with a
+ * words-per-page ceiling (SPEC_R2L_PAGE_BANDS.md, as amended by its own logged follow-up).
+ *
+ * Supersedes the original page-count-only migration, which shelved a 5-page/206-word L4 book
+ * onto the beginner shelf and served it to an L0 child: page count cannot see how much text
+ * is on a page.
  *
  * Safety: prints the current config:book_levels (activation is a founder
  * decision, never automatic), snapshots the current indexes to a backup file
@@ -19,9 +23,9 @@
  * Without --apply it is a dry run (prints the plan, writes nothing).
  */
 import { readFileSync, writeFileSync } from 'node:fs';
-// Single source of truth for the page→band boundaries — shared with the
-// publish endpoint so the table can never drift between the two.
-import { bandForPageCount } from '../functions/api/publish-read2lead-book.js';
+// Single source of truth for the band boundaries — shared with the publish endpoint and the
+// selector's mis-shelving guard, so the table can never drift between the three.
+import { bandForReadingLoad, readingLoadOf } from '../functions/api/publish-read2lead-book.js';
 
 const BASE = (process.env.READ2LEAD_PUBLISH_URL || '').replace(/\/$/, '');
 const SECRET = process.env.READ2LEAD_BACKEND_SECRET || '';
@@ -78,8 +82,9 @@ async function main() {
         if (home) target[home].push(slug);
         continue;
       }
-      const band = bandForPageCount(pages);
-      if (!band) { problems.push(`${slug}: unbandable page count ${pages}`); continue; }
+      const load = readingLoadOf(r.pack);
+      const band = bandForReadingLoad(load);
+      if (!band) { problems.push(`${slug}: unbandable (${load.words}w / ${load.pages}p)`); continue; }
       target[band].push(slug);
     }
     if (problems.length) console.log('REPORT (kept on current shelf / skipped):\n  ' + problems.join('\n  '));
