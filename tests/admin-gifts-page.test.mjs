@@ -46,10 +46,15 @@ test('admin dashboard exposes a nav card for the gift tools', () => {
   assert.match(adminIndexPage, /title: 'Quà thật'/);
 });
 
-test('gifts.astro wraps in AdminLayout without adding a nav tab (a concurrent session owns AdminLayout.astro)', () => {
+test('gifts.astro wraps in AdminLayout and IS reachable from the admin nav', () => {
   assert.match(adminGiftsPage, /import AdminLayout from '\.\.\/\.\.\/layouts\/AdminLayout\.astro'/);
   assert.match(adminGiftsPage, /<AdminLayout/);
-  assert.doesNotMatch(adminLayout, /\/admin\/gifts/, 'AdminLayout.astro must stay untouched by this packet — Elon adds the tab after the logo-rebrand session merges');
+  // This assertion was originally inverted (`doesNotMatch`) on purpose: a
+  // concurrent logo-rebrand session owned AdminLayout.astro, so the packet was
+  // forbidden from touching it and the test guarded that boundary. That session
+  // has merged, the tab is added, and the guard now pins the real requirement —
+  // an admin page nobody can navigate to is an admin page that does not exist.
+  assert.match(adminLayout, /href: '\/admin\/gifts'/, 'AdminLayout must expose the Quà thật tab');
 });
 
 test('gifts.astro wires both the gift manager and the redemption queue on one page', () => {
