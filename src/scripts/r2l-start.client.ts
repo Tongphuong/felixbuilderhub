@@ -180,10 +180,16 @@ function initStart(): void {
     const redemptions = (Array.isArray(state.redemptions) ? state.redemptions : []) as GiftGoalRedemption[];
     const goalId = typeof state.gift_goal === 'string' && state.gift_goal ? state.gift_goal : null;
 
+    // Claude Design built two variants for a reason: `wide` (a side-by-side row) is for
+    // desktop, `narrow` (a stacked card with a big 16:9 photo of the prize) is for a phone.
+    // Most children are on a phone, and the prize is the point — the wide row squeezes the
+    // progress bar and shrinks the photo to a thumbnail.
+    const variant = window.matchMedia('(min-width: 768px)').matches ? 'wide' : 'narrow';
+
     // No goal yet — the card's own invitation. This is the normal state for most children:
     // diamonds only come from live class, so a new student has none and has chosen nothing.
     if (!goalId) {
-      giftSlot.innerHTML = renderGiftGoalCard(null, diamonds, redemptions, { variant: 'wide', code: accessCode });
+      giftSlot.innerHTML = renderGiftGoalCard(null, diamonds, redemptions, { variant, code: accessCode });
       return;
     }
 
@@ -198,7 +204,7 @@ function initStart(): void {
       // A goal pointing at a gift that has since been disabled resolves to null — the card
       // falls back to its invitation rather than rendering a blank.
       const item = (payload.items || []).find((entry) => entry.id === goalId) || null;
-      giftSlot.innerHTML = renderGiftGoalCard(item, diamonds, redemptions, { variant: 'wide', code: accessCode });
+      giftSlot.innerHTML = renderGiftGoalCard(item, diamonds, redemptions, { variant, code: accessCode });
     } catch {
       // Best-effort — see the doc comment above.
     }

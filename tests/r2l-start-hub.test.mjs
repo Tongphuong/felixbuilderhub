@@ -136,7 +136,10 @@ test("the gift card is Claude Design's shared component, not a home-only lookali
   // any of it here would be exactly the drift that component exists to prevent.
   assert.match(client, /renderGiftGoalCard/);
   assert.match(client, /from '\.\.\/lib\/gift-goal-card'/);
-  assert.match(client, /variant: 'wide'/);
+  // Claude Design shipped two variants: narrow (stacked, big prize photo) for phones and
+  // wide (side-by-side row) for desktop. Most children are on a phone and the prize is the
+  // point — forcing 'wide' everywhere shrinks the photo to a thumbnail and squeezes the bar.
+  assert.match(client, /matchMedia\('\(min-width: 768px\)'\)\.matches \? 'wide' : 'narrow'/);
   // The home must not import or restate the shop's state rules — it hands the raw gift item
   // to the shared card and lets it decide. (Naming the rule in a comment is fine; owning a
   // second copy of it is not.)
