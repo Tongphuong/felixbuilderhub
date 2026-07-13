@@ -7,6 +7,31 @@ on:
     branches: [main]
 
 jobs:
+  # BLOCKING. Everything else in this file is warn-only, and until 2026-07-13 so
+  # was every job here — `continue-on-error: true` on all of them, and no `test`
+  # script at all, so the 120-file suite had never once run on a push. A CI that
+  # cannot fail is decoration, and worse than nothing: it teaches you that a green
+  # tick means something.
+  #
+  # `npm test` globs tests/*.test.mjs deliberately. `node --test tests/` runs 171
+  # of 1579 tests (node's directory discovery does not match .test.mjs) and
+  # `tests/index.js` imports 15 of 120 files — both exit 0 and print green.
+  # check:test-discovery is what stops anyone re-introducing that: it fails if a
+  # test file exists that `npm test` would not run. See _ops/AGENTS.md rule 28.
+  test:
+    name: Unit tests (BLOCKING)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci
+      - name: Every test file is actually run by `npm test`
+        run: npm run check:test-discovery
+      - run: npm test
+
   format-check:
     name: Prettier check (warn-only)
     runs-on: ubuntu-latest
