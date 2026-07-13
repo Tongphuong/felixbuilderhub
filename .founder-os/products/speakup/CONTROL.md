@@ -89,8 +89,29 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: blocked
-- Blocked on: TWO founder actions (R2 PRODUCTION binding + merge ack) — code is COMPLETE, reviewed, and preview-verified; see BLOCKED ON FOUNDER below
+- Status: complete
+- Shipped: 2026-07-13 — merged to main (4ce4f21) and LIVE ON PRODUCTION.
+- FOUNDER ACTIONS DONE: (1) R2 binding `R2L_MEDIA` added to Cloudflare Pages
+  PRODUCTION + redeployed — production probe flipped 500 `config_error` → 404
+  `code_not_found`, i.e. THE REPORTED BUG IS FIXED, and the vision autofill,
+  parent portfolio video upload and the concurrent R2L gift-shop photo upload
+  are un-broken by the same change. (2) Merge ack given.
+- Merge: merged origin/main (R2L test-code credit fix, 2 commits) into the
+  branch first → 1390/1390 on the combined tree → fast-forward to main.
+- Rule 20 on PRODUCTION (not just preview — the whole point of this session's
+  lesson): the founder's real Stage-4 lesson renders as 4 chip columns and
+  assembles into "We play football at school, we feel happy because it is fun.";
+  mic arms ONLY when every column is picked; zero page errors; picture
+  answer-key absent from the DOM. `_ops/hwv3-PROD-build-armed-390.png`,
+  `_ops/hwv3-PROD-build-1280.png`.
+- FALSE ALARM (recorded so it is not repeated): the first production screenshot
+  rendered completely unstyled and I nearly reported a ship-blocker. Cause: I
+  probed 60s after push by grepping the HTML for a markup marker; the HTML had
+  propagated but the hashed `/_astro/*.css` had not — and because `.hidden` is a
+  CSS class, the missing stylesheet also un-hid every hidden element. Re-running
+  once the CSS returned 200 was pixel-correct. Second deploy-probe misfire in two
+  days → EVOLUTION_LOG proposal (5): a shared `wait-for-deploy.sh` that asserts
+  every referenced /_astro asset is 200 before any rule-20 screenshot.
 - Started: 2026-07-13
 - Task ID: speakup-adaptive-homework-types
 - Verified commit: 1d671e6 (origin/claude/speakup-homework-types); preview
