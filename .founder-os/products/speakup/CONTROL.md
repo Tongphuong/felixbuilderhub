@@ -286,6 +286,7 @@ assigns, commits, merges, deploys, or spends.
   (This line was MISSING until 2026-07-13 and the build gate passed anyway —
   it was silently reading a completed prior task's field. Fixed by
   `read_task_field` scoping; see EVOLUTION_LOG.)
+- Tradeoff watch: N/A — backfilled 2026-07-14 when the field was introduced (rule 29); this task predates it and logged no tradeoff. Not retroactively invented, for the same reason State inventory below was not: a watcher named by someone who did not make the tradeoff is theatre. The next SpeakUp task must fill it properly.
 - State inventory: N/A — backfilled 2026-07-13 when the field was introduced; this task predates it. NOT retroactively invented, because a state list written by someone who did not build the feature is theatre. The next SpeakUp task with a UI surface must fill this properly (SpeakUp has a rich state space — mic/permission, recording, scoring, Minny's moods, repair ladder — which is precisely where this field earns its keep).
 - Operational reality: N/A — backfilled 2026-07-13; see above. Fill it on the next task if a human must act in the real world for the feature to work.
 - Design self-verification: rule 20 on the DEPLOYED PRODUCTION build (not
