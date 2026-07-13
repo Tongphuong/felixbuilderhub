@@ -1,10 +1,10 @@
 # Control — Read2Lead
 
 - Product: Read2Lead
-- Current goal: Real-life gift shop — kids exchange 💎 diamonds for physical gifts (milk tea, Lego, books, football), with photos, a founder-editable catalogue (no deploy needed to add a gift), a teacher approval + handover queue, and a chosen-gift goal surfaced across the reading app to pull kids into class + SpeakUp. Fixes founder-reported "the shop is not cared about by students — they are not excited by the monster things".
-- Latest staging URL: not yet deployed (branch `claude/r2l-real-gifts`)
+- Current goal: SHIPPED 2026-07-13 — Real-life gift shop — kids exchange 💎 diamonds for physical gifts (milk tea, Lego, books, football), with photos, a founder-editable catalogue (no deploy needed to add a gift), a teacher approval + handover queue, and a chosen-gift goal surfaced across the reading app to pull kids into class + SpeakUp. Fixes founder-reported "the shop is not cared about by students — they are not excited by the monster things".
+- Latest staging URL: PRODUCTION — https://felixbuilderhub.com/read2lead/gifts (merged 2026-07-13, 7ff8816)
 - Active workers: 0
-- Last updated: 2026-07-13 (R2L-REAL-GIFTS started)
+- Last updated: 2026-07-13 (R2L-REAL-GIFTS SHIPPED)
 
 ## Operating team
 
@@ -22,8 +22,10 @@ stale until 2026-07-05.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Started: 2026-07-13
+- Completed: 2026-07-13 — SHIPPED TO PRODUCTION (merge 7ff8816, Phương GO). Production smoke PASS: all 7 gifts live at felixbuilderhub.com/read2lead/gifts, zero console errors, catalogue seeded, cost_vnd absent from the kid API. Refund proven on live Cloudflare KV BEFORE merge (Pilot spent 1.000💎 → founder rejected → all 1.000 back).
+- Verified commit: 7ff8816 (origin/main)
 - Task ID: R2L-REAL-GIFTS
 - Owner: Mark (bg worker) — backend: `functions/api/admin/_gifts.js`, `functions/api/_gifts-v2.js`, `functions/api/admin/gifts.js`, `functions/api/admin/gifts/upload.js`, `functions/api/admin/gifts/redemptions*.js`, `functions/api/read2lead-gifts-*.js`, `functions/api/read2lead-gift-image.js`, `clampDelta` fix in `functions/api/admin/_classes.js` + their tests. Steve (bg worker) — UI: `src/pages/admin/gifts.astro`, `src/pages/read2lead/gifts.astro`, `src/lib/gift-ux.ts`, `src/lib/gift-goal-card.ts`, marketing surfaces. Buffet reviews the combined diff. Elon plans, reviews line by line, integrates, commits.
 - Lane: product (new kid-facing gift shop + admin catalogue/queue; coin economy, monster shop, XP, rank and leaderboard semantics all UNCHANGED)
@@ -41,7 +43,7 @@ stale until 2026-07-05.
 - Review history (why this took 4 rounds): 8 defects were caught in review, and EVERY ONE passed the test suite first. (1) the "còn N 💎" figure was reconstructed from a rounded percent, telling a child 700 when the true answer was 705; (2) the near-miss state was unreachable in practice — a child's chosen goal is pulled out of the catalogue, and a child always chooses the gift they are closest to; (3) a delivered gift locked its card forever, so the shop shrank with every present given; (4) redeem CTAs stayed enabled while a request was pending, inviting a tap the server would refuse; (5) gifts in flight were banded under "Con có thể đổi ngay"; (6) `gift_goal`/`redemptions` were not on the `normalizeProgressState` whitelist, so finishing ONE reading lesson wiped a child's redemption ledger — taking the refund path with it (Elon, in review of Mark); (7) the admin queue could not tell a paid redemption from a phantom, so the founder could buy a real football for a child who never paid (Buffet); (8) an inactive or cap-exhausted gift still told a child "Chỉ còn 500 💎 nữa thôi! 🔥" about something no amount of diamonds could ever unlock (Buffet). 6 of the 8 were found by DRIVING THE RENDERED SCREEN or reasoning about crash interleavings — not by reading code and not by running tests.
 - Deliberate design rulings: fail-safe ordering — the admin queue entry is written BEFORE the child's diamonds are debited (a queue row with no debit is recoverable; a debit with no queue row means a child paid for a gift the founder never learns to buy), and `restoreCap` stamps the ledger BEFORE decrementing the budget cap (fail-closed: an interrupted reject leaves the slot counted as used and the founder raises the limit himself, rather than silently committing him to buy more than he budgeted).
 - Known residual (accepted, Buffet-reproduced): KV has no cross-key transactions, so a process crash inside the two-write `restoreCap` window can leave the budget cap over-counted. Fail-closed by construction; touches budget bookkeeping only, never diamonds, never kid-facing state. A fully airtight fix needs a Durable Object or a single-key redesign — out of scope, logged.
-- Blocked on a concurrent session: the site-header gift link (`src/components/Header.astro`) and the admin nav tab (`src/layouts/AdminLayout.astro`) are NOT added — the logo-rebrand session owns those files. Entry points exist meanwhile (ho-so kid nav, R2L home card, /admin index card). Add both after logo-rebrand merges.
+- Nav entry points: DONE. The logo-rebrand session merged before ship, so both deferred links landed in the same release — the child's header gift link (with their code carried onto it at runtime) and the `/admin/gifts` nav tab. The guard test that had pinned "AdminLayout must stay untouched" fired the moment the boundary was crossed, and was flipped to assert the tab now exists.
 - Founder handoff: pending — preview walkthrough, then merge GO.
 
 ## Previous task — R2L-PAGE-BANDS

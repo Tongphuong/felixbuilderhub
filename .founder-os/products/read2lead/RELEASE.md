@@ -1,7 +1,7 @@
 # Release — Read2Lead
 
-- Candidate version: R2L-REAL-GIFTS — "Quà thật" real-life gift shop (`claude/r2l-real-gifts`, commit 2e64d21)
-- Staging URL: `https://claude-r2l-real-gifts.felixbuilderhub.pages.dev`
+- Candidate version: R2L-REAL-GIFTS — "Quà thật" real-life gift shop — **SHIPPED to production 2026-07-13, merge commit 7ff8816**
+- Staging URL: `https://claude-r2l-real-gifts.felixbuilderhub.pages.dev` (production: `https://felixbuilderhub.com/read2lead/gifts`)
 - Rollback commit or deployment: revert the single feature commit on main; Cloudflare Pages auto-redeploys
 - Scope and UI approved: yes
 - Targeted tests passed: yes
@@ -12,8 +12,8 @@
 - Console and API errors checked: yes
 - Privacy and cost checked: yes
 - Screenshot or video proof ready: yes
-- Founder production approval: no
-- Production smoke test passed: no
+- Founder production approval: yes
+- Production smoke test passed: yes
 
 ## Evidence
 
@@ -32,3 +32,12 @@
 - **Not shipped, blocked on a concurrent session**: the site-header gift link (`src/components/Header.astro`) and the admin nav tab (`src/layouts/AdminLayout.astro`) — the logo-rebrand session owns those files. Entry points exist meanwhile: the ho-so kid nav, the R2L home action card, and the `/admin` index card. Add both once logo-rebrand merges.
 - **Founder action (optional)**: `R2L_MEDIA` must be bound in the **Production** Cloudflare environment for gift photo *upload* to work. Pasting an image URL — the path the founder actually uses, since he does not own the gifts and cannot photograph them — needs no binding.
 - **Economy on day one**: the diamond payout is unchanged (300–1.000 by hand per class), so the milk tea is ~2–3 months away and the football most of a year. The 1.000💎 sticker is reachable by 6 of 14 children immediately, and TuAnh (990💎) is **10 💎 short** — the single most motivating moment available anywhere in this product.
+
+## Production smoke test (2026-07-13, post-merge)
+
+- Deploy verified FULLY propagated via `_ops/scripts/wait-for-deploy.sh` — the marker went live BEFORE the `/_astro` stylesheets did, exactly the half-deploy trap the script exists to catch.
+- `https://felixbuilderhub.com/read2lead/gifts` renders all 7 gifts, correct prices, correct bands, **zero console errors** at 390px.
+- Catalogue seeded correctly on first production read.
+- `cost_vnd` confirmed absent from the production kid-facing API response.
+- R2L-PILOT-CYJS shows 1.000 💎 (the refunded diamonds), the Sticker affordable, his goal pinned, and his rejected redemption still in the ledger — i.e. the live-KV refund survived the merge.
+- Both nav entry points now live: the child's header (`🎁 Quà thật`, code carried onto the link) and the admin nav tab.
