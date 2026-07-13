@@ -8,6 +8,7 @@
 - Relevant full tests passed: yes
 - Core browser flow passed: yes
 - Mobile check passed: yes
+- Tablet check passed: no
 - Desktop check passed: yes
 - Console and API errors checked: yes
 - Privacy and cost checked: yes

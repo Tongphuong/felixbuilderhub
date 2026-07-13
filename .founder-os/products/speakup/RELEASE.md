@@ -8,6 +8,7 @@
 - Relevant full tests passed: no
 - Core browser flow passed: no
 - Mobile check passed: no
+- Tablet check passed: no
 - Desktop check passed: no
 - Console and API errors checked: no
 - Privacy and cost checked: no
