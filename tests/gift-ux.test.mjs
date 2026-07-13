@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { createServer } from 'vite';
 import { getViteConfig } from 'astro/config';
 
@@ -64,23 +64,74 @@ test('gift goal card: the photo URL is versioned — the parent report cannot se
   }
 });
 
-test('every gift photo URL in the codebase comes from ONE builder', () => {
-  // A fourth copy is the failure mode this guards. If you are adding a new surface
-  // that shows a gift photo, import giftPhotoSrc from src/lib/gift-photo.ts.
-  const files = [
-    'src/lib/gift-ux.ts',
-    'src/lib/gift-goal-card.ts',
-    'src/lib/admin-gifts.ts',
-  ];
-  for (const f of files) {
-    const src = readFileSync(f, 'utf8');
-    assert.doesNotMatch(
-      src,
-      /read2lead-gift-image\?id=\$\{/,
-      `${f} hand-builds the gift photo URL — import giftPhotoSrc from './gift-photo' instead`,
-    );
-    assert.match(src, /giftPhotoSrc/, `${f} must use the shared builder`);
-  }
+// The shop's OWN photo output, rendered. Every other fixture in this file uses
+// `image_key: null`, so gift-ux.ts — the original site of the year-long cache bug —
+// had no rendered proof that its own card emits a versioned URL. Buffet caught that
+// the guard below was carrying that weight and could not.
+test('shop: a gift card renders a VERSIONED photo URL (the original site of the cache bug)', async () => {
+  const { renderGiftCard } = await loadGiftUx();
+  const withPhoto = {
+    id: 'sticker', name_vi: 'Sticker', emoji: '🌟',
+    image_key: 'gifts/sticker-abc123.webp', image_url: null,
+    price_diamonds: 1000, can_afford: true, available: true, progress_percent: 100,
+  };
+  const card = renderGiftCard(withPhoto, 'affordable', undefined, 1000, 'band');
+  assert.match(card, /v=gifts%2Fsticker-abc123\.webp/, 'without this a replaced photo is cached for a year');
+
+  // Precedence must be untouched by the de-duplication: a pasted URL is used raw.
+  const pasted = { ...withPhoto, image_key: null, image_url: 'https://cdn.example/x.jpg' };
+  assert.match(renderGiftCard(pasted, 'affordable', undefined, 1000, 'band'), /src="https:\/\/cdn\.example\/x\.jpg"/);
+
+  // And no photo at all still means no <img> — the emoji fallback.
+  const none = { ...withPhoto, image_key: null, image_url: null };
+  assert.doesNotMatch(renderGiftCard(none, 'affordable', undefined, 1000, 'band'), /<img/);
+});
+
+// The guard against a FOURTH copy. This walks the tree — it does not consult a
+// hardcoded list.
+//
+// The first version of this test DID consult a hardcoded list of three files, and
+// Buffet defeated it in one move: he added a brand-new file that hand-built the
+// same buggy URL, and the whole suite stayed green. A guard that only inspects the
+// files you already thought of is not a guard; it is a restatement of what you
+// already knew. It also matched only one exact string shape, so the same bug built
+// with string concatenation walked straight past it.
+test('NO file anywhere hand-builds a gift photo URL — gift-photo.ts is the only builder', () => {
+  const ROOTS = ['src', 'functions'];
+  const EXTS = ['.ts', '.tsx', '.js', '.mjs', '.astro'];
+  const ALLOWED = new Set([
+    'src/lib/gift-photo.ts',                       // the one builder
+    'functions/api/read2lead-gift-image.js',       // the endpoint being addressed
+  ]);
+
+  /** Any construction of the image endpoint's path, however it is spelled. */
+  const BUILDS_URL = /read2lead-gift-image\?id=/;
+
+  const offenders = [];
+  const walk = (dir) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = `${dir}/${entry.name}`;
+      if (entry.isDirectory()) {
+        if (entry.name === 'node_modules' || entry.name.startsWith('.')) continue;
+        walk(full);
+        continue;
+      }
+      if (!EXTS.some((e) => entry.name.endsWith(e))) continue;
+      if (ALLOWED.has(full)) continue;
+      // Strip comments first: a dead comment mentioning the URL is not a build.
+      const src = readFileSync(full, 'utf8')
+        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .replace(/^\s*\/\/.*$/gm, '');
+      if (BUILDS_URL.test(src)) offenders.push(full);
+    }
+  };
+  ROOTS.forEach(walk);
+
+  assert.deepEqual(
+    offenders, [],
+    'these files hand-build the gift photo URL. Import giftPhotoSrc from src/lib/gift-photo.ts '
+    + 'instead — a hand-copied URL is how the year-long photo cache bug survived on the parent report.',
+  );
 });
 
 // Rendered, not grepped. `read2lead-gift-goal.js` gates on isGiftAvailable()
