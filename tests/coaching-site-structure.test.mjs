@@ -19,7 +19,8 @@ test('homepage features coaching as primary service', () => {
   assert.match(homePage, /Nhóm nhỏ tối đa 4 bé/);
   assert.doesNotMatch(homePage, /Lớp 1-1/);
   assert.match(homePage, /id="ai-products"/);
-  assert.match(homePage, /tăng cường bởi AI/);
+  assert.match(homePage, /Sản phẩm giáo dục cho trẻ em/);
+  assert.doesNotMatch(homePage, /tăng cường bởi AI/);
   assert.match(homePage, /tích điểm và leo cấp/);
   assert.match(homePage, /Read2Lead/);
   assert.match(homePage, /Sản phẩm giáo dục/);

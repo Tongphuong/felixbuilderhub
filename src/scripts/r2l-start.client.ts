@@ -56,34 +56,26 @@ function initStart(): void {
   const greetingLevel = document.querySelector<HTMLElement>('#greeting-level');
   const errorMessage = document.querySelector<HTMLElement>('#error-message');
   const genErrorMessage = document.querySelector<HTMLElement>('#gen-error-message');
-  const interestsInput = document.querySelector<HTMLInputElement>('input[name="interests"]');
   const honeypotInput = document.querySelector<HTMLInputElement>('input[name="website"]');
   const generateBtn = document.querySelector<HTMLButtonElement>('#generate-btn');
   const resetBtn = document.querySelector<HTMLButtonElement>('#reset');
   const retryBtn = document.querySelector<HTMLButtonElement>('#retry');
-  const tiles = Array.from(document.querySelectorAll<HTMLElement>('[data-topic]'));
   const stageLabel = document.querySelector<HTMLElement>('#stage-label');
   const genNote = document.querySelector<HTMLElement>('#gen-note');
   const progressFill = document.querySelector<HTMLElement>('#gen-progress .fx-progress__fill');
   const progressBar = document.querySelector<HTMLElement>('#gen-progress .fx-progress');
   const resultName = document.querySelector<HTMLElement>('#result-name');
+  const resultTopicWrap = document.querySelector<HTMLElement>('#result-topic-wrap');
   const resultTopic = document.querySelector<HTMLElement>('#result-topic');
   const resultStory = document.querySelector<HTMLElement>('#result-story');
   const resultStoryTitle = document.querySelector<HTMLElement>('#result-story-title');
   const openLesson = document.querySelector<HTMLAnchorElement>('#open-lesson');
   const hosoLink = document.querySelector<HTMLAnchorElement>('#hoso-link');
-
-  const topicLabels = tiles.map(
-    (tile) => tile.querySelector('.fx-topic__label')?.textContent?.trim() ?? '',
-  );
-  const topicValues = tiles.map((tile) => tile.dataset.topic ?? '');
+  const speakLink = document.querySelector<HTMLAnchorElement>('#speak-link');
+  const shopLink = document.querySelector<HTMLAnchorElement>('#shop-link');
 
   let accessCode = '';
   let studentName = '';
-  let topicIndex = Math.max(
-    0,
-    tiles.findIndex((tile) => tile.classList.contains('fx-topic--selected')),
-  );
 
   let stageTimer: ReturnType<typeof setInterval> | undefined;
   let pollTimer: ReturnType<typeof setInterval> | undefined;
@@ -144,6 +136,8 @@ function initStart(): void {
       if (greetingName) greetingName.textContent = studentName || 'bạn nhỏ';
       if (greetingLevel) greetingLevel.textContent = data.level || 'L1';
       if (hosoLink) hosoLink.href = `/ho-so?code=${encodeURIComponent(accessCode)}`;
+      if (speakLink) speakLink.href = `/speak-up?code=${encodeURIComponent(accessCode)}`;
+      if (shopLink) shopLink.href = `/read2lead/shop?code=${encodeURIComponent(accessCode)}&v3=1`;
 
       setPhase('ready');
     } catch {
@@ -177,7 +171,19 @@ function initStart(): void {
     activeTaskId = null;
 
     if (resultName) resultName.textContent = studentName || data.child_name || '';
-    if (resultTopic) resultTopic.textContent = topicLabels[topicIndex] || (data.topic ?? '');
+
+    // Book packs set their topic to the book's own title, so showing both lines
+    // prints the same string twice ("Chủ đề: My Family / Tên truyện: My Family").
+    // Only show the topic when it actually adds something the title doesn't.
+    const topic = (data.topic ?? '').trim();
+    const storyTitle = (data.story_title ?? '').trim();
+    const topicIsRedundant = topic.toLowerCase() === storyTitle.toLowerCase();
+    if (topic && !topicIsRedundant && resultTopic && resultTopicWrap) {
+      resultTopic.textContent = topic;
+      resultTopicWrap.hidden = false;
+    } else if (resultTopicWrap) {
+      resultTopicWrap.hidden = true;
+    }
     if (data.story_title && resultStory && resultStoryTitle) {
       resultStoryTitle.textContent = data.story_title;
       resultStory.hidden = false;
@@ -326,8 +332,8 @@ function initStart(): void {
 
     if (honeypotInput && honeypotInput.value) return;
 
-    const topic = topicValues[topicIndex] || '';
-    const interests = interestsInput?.value.trim() ?? '';
+    const topic = '';
+    const interests = '';
 
     generationComplete = false;
     activeTaskId = null;
@@ -380,17 +386,6 @@ function initStart(): void {
   }
 
   // ---- Wiring -----------------------------------------------------------------
-  tiles.forEach((tile, index) => {
-    tile.addEventListener('click', () => {
-      topicIndex = index;
-      tiles.forEach((other, otherIndex) => {
-        const selected = otherIndex === index;
-        other.classList.toggle('fx-topic--selected', selected);
-        if (other.tagName === 'BUTTON') other.setAttribute('aria-pressed', String(selected));
-      });
-    });
-  });
-
   generateBtn?.addEventListener('click', startGenerate);
   resetBtn?.addEventListener('click', backToReady);
   retryBtn?.addEventListener('click', backToReady);
