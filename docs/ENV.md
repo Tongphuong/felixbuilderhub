@@ -14,9 +14,22 @@ then reference in code.
 |---|---|---|
 | `R2L_MEDIA` | Binary media bucket: teacher-recorded portfolio videos (`portfolio/<CODE>/vp_*.{mp4,webm,mov}`) and SpeakUp homework photos (`homework/<class_id>/hp_*.{jpg,png,webp}`). Metadata/references live in KV; only the bytes live here. Objects are never public — every read is streamed through a code- or admin-authorized Function. | admin/portfolio/upload, admin/portfolio/[id], parent/video, admin/classes/[id]/homework-photo, speakup-homework-photo |
 
-(Documented 2026-07-07 while adding homework photos; this binding predates the
-entry — doc drift. `AI` (Workers AI), `DB`/`STUDENT_PROFILE_DB` (D1) and the
-Azure/OpenAI secrets are still undocumented here; see `grep -rohE "env\.[A-Z_]+" functions/` for the live list.)
+(`R2L_MEDIA` was documented 2026-07-07 while adding homework photos, but had
+existed undocumented long before — and was configured on Preview only, which is
+how SpeakUp's photo homework shipped to production stone dead and stayed that way
+for a month. Fixed 2026-07-13; drift is now enforced by `founder_check.py`'s
+build gate, so this doc can no longer silently fall behind the code.)
+## D1 Databases
+| Binding | Purpose | Used by |
+|---|---|---|
+| `STUDENT_PROFILE_DB` | D1 database holding the `student_profiles` table (migration `0001_student_profile.sql`). Read via `env.STUDENT_PROFILE_DB \|\| env.DB`, so either binding name works. | _shared/student-profile.ts |
+| `DB` | Fallback binding name for the same D1 database as `STUDENT_PROFILE_DB` — used when the project binds its D1 as plain `DB`. Bind ONE of the two; binding neither disables the profile path. | _shared/student-profile.ts |
+
+## Workers AI
+| Binding | Purpose | Used by |
+|---|---|---|
+| `AI` | Cloudflare Workers AI binding. Whisper STT (primary — runs inside Cloudflare, immune to the OpenAI geo-egress failure), Llama 3.3 (Free Talk brain fallback + homework-extract fallback), Llama Guard 3 (guardrail output screen), Llama 3.2 vision (teacher photo → homework draft). | minny-conversation, read2lead-speaking-check, admin/classes/[id]/homework-photo-extract, admin/classes/[id]/homework-extract |
+
 ## Secrets
 | Binding | Purpose | Used by | Source |
 |---|---|---|---|
@@ -27,10 +40,17 @@ Azure/OpenAI secrets are still undocumented here; see `grep -rohE "env\.[A-Z_]+"
 | `TELEGRAM_CHAT_ID` | Chat ID where bot messages land (Phương's chat). | Same as `TELEGRAM_BOT_TOKEN` consumers | Bot getUpdates response |
 | `OPENROUTER_API_KEY` | Bearer key for the Free Talking conversation brain (DeepSeek v4 Flash via OpenRouter). Missing key → llama-3.3 fallback → canned redirect. **Must be set on BOTH Preview and Production** (a Production-only key means preview Free Talk silently runs the fallback). | minny-conversation | OpenRouter dashboard (same key the retired Aider workers used, in `~/.config/aider/.env`) |
 | `DEBUG_SPEAKING_KEY` | Secret gate for the `/api/debug-speaking` and `/api/debug-convo-flags` diagnostic endpoints (they return 404 unless `?key=` matches). `debug:convo-flags` surfaces why each Free Talk turn was guardrail-flagged (`matched_rule`: `guard_error`/`guard_empty_response`/`sN`/`guard_degraded`/etc.). Optional — endpoints are simply invisible when unset. | debug-speaking, debug-convo-flags | Manually set (any random string; Phương-only diagnostic surface) |
+| `AZURE_SPEECH_KEY` | Azure Speech key for Pronunciation Assessment (per-word/phoneme scoring on homework: scripted for `read`, unscripted for `frame`/`open`). Missing → the deterministic local scorer runs and no pronunciation block is returned. **Must be set on BOTH Preview and Production.** | _azure-pronunciation (→ read2lead-speaking-check) | Azure portal → Speech resource → Keys (F0 free tier; rotated 2026-07-11) |
+| `AZURE_SPEECH_REGION` | Region of the Azure Speech resource above (e.g. `southeastasia`). Must match the key's resource or every PA call 401s. | _azure-pronunciation | Azure portal → Speech resource → Overview |
+| `OPENAI_API_KEY` | OpenAI key: Minny's TTS chain, and the STT fallback in the speaking checker. **Caveat:** OpenAI geo-blocks calls egressing from some Cloudflare colos (403 `unsupported_country_region_territory`) — see the comment in `read2lead-speaking-check.js`; this is why Workers AI is the STT primary. | _minny-tts, read2lead-speaking-check | OpenAI dashboard |
+| `READ2LEAD_OPENAI_API_KEY` | Legacy/alternate OpenAI key name read alongside `OPENAI_API_KEY` by the same two endpoints (whichever is present wins). Prefer `OPENAI_API_KEY` for new setups; this exists so the older configuration keeps working. | _minny-tts, read2lead-speaking-check | OpenAI dashboard |
+| `STUDENT_PROFILE_API_TOKEN` | Bearer token for the student-profile (D1) service calls. | _shared/student-profile.ts | Manually set (must match the profile service) |
 ## Variables (non-secret)
 | Variable | Purpose | Default |
 |---|---|---|
 | READ2LEAD_BOOK_LEVELS | Comma-separated StoryWeaver allowlist for generate-read2lead-pack (for example L1 or L1,L2). Only L1-L4 are accepted. When empty, the private book publisher may supply the same allowlist through `config:book_levels` in READ2LEAD_CODES. L5 always uses legacy generation. | Empty / book mode off |
+| R2L_AUDIO_HOST | Host used to build Read2Lead story-audio URLs. Safe to leave unset — the code falls back to its default host. | Empty / default host |
+| PUBLIC_R2L_W7 | Feature flag (`'1'` = on) unlocking the Wave-7 shop slots (`effects`, `frame`). Anything else keeps them locked. | Unset / slots locked |
 ## Per-endpoint binding matrix
 | Endpoint | KV | Backend URL | Backend Secret | Admin PW | Telegram |
 |---|---|---|---|---|---|
