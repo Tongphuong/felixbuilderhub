@@ -73,6 +73,55 @@ test('shop: an AVAILABLE gift a child cannot yet afford still offers the goal bu
   assert.match(card, /qt-set-goal/, 'the fix above must not strip the goal button from normal gifts');
 });
 
+// The escape hatch, RENDERED. Buffet flagged that it was still guarded only by
+// a source grep — the identical blind spot that hid the dead click, on the
+// sibling branch of the same `if`. A child whose pinned goal is switched off by
+// Coach Felix is STUCK on a dead goal unless this button exists: it is the one
+// control that gets her out. Nothing that important may be defended by grepping
+// for its own name in a source file.
+test('shop: a child whose PINNED goal went unavailable is still given a way out', async () => {
+  const { renderGiftCard } = await loadGiftUx();
+  const pausedGoal = {
+    id: 'lego', name_vi: 'Bộ Lego', emoji: '🧱', image_key: null, image_url: null,
+    price_diamonds: 20000, can_afford: false, available: false, progress_percent: 21,
+  };
+  const goalCard = renderGiftCard(pausedGoal, 'unavailable', undefined, 4295, 'goal');
+
+  assert.match(goalCard, /qt-clear-goal/, 'without this she cannot unpin a goal she can never reach');
+  assert.match(goalCard, /Chọn mục tiêu khác/);
+  assert.doesNotMatch(goalCard, /qt-set-goal/, 'it already IS her goal');
+});
+
+test('gift goal card: an unavailable pinned goal renders the escape-hatch link on every surface', async () => {
+  const { renderGiftGoalCard } = await loadGoalCard();
+  const pausedGoal = {
+    id: 'lego', name_vi: 'Bộ Lego', emoji: '🧱',
+    price_diamonds: 20000, can_afford: false, available: false, progress_percent: 21,
+  };
+  for (const variant of ['wide', 'narrow']) {
+    const html = renderGiftGoalCard(pausedGoal, 4295, [], { variant, code: 'R2L-TEST' });
+    assert.match(html, /Chọn mục tiêu khác|Chọn quà khác/, `${variant}: a stuck child must be offered a way out`);
+    assert.match(html, /tạm thời chưa đổi được/, `${variant}: and told why`);
+  }
+});
+
+// `blocked` had no coverage of any kind — not even a grep. It is what stops a
+// child tapping "Đổi quà ngay" while she already has a request in Coach Felix's
+// queue: the server would refuse it, so an enabled button is another dead click.
+test('shop: the redeem button is disabled while the child already has a gift in flight', async () => {
+  const { renderGiftCard } = await loadGiftUx();
+  const sticker = {
+    id: 'sticker', name_vi: 'Sticker', emoji: '🌟', image_key: null, image_url: null,
+    price_diamonds: 1000, can_afford: true, available: true, progress_percent: 100,
+  };
+  const free = renderGiftCard(sticker, 'affordable', undefined, 1000, 'band', false);
+  assert.match(free, /qt-redeem/);
+  assert.doesNotMatch(free, /qt-redeem[^>]*disabled/, 'nothing in flight: she may redeem');
+
+  const blocked = renderGiftCard(sticker, 'affordable', undefined, 1000, 'band', true);
+  assert.match(blocked, /disabled/, 'a request is already pending — the server would refuse a second');
+});
+
 test('gift goal card: a price-0 (unavailable) pinned goal renders an EMPTY bar, not a full one', async () => {
   const { renderGiftGoalCard } = await loadGoalCard();
   const brokenRow = {
