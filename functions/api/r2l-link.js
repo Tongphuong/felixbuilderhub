@@ -2,11 +2,15 @@
 // GET /api/r2l-link?token=... → { ok, access_code, student_name, level }
 //
 // The token is NEVER the access code — it's a 128-bit crypto-random hex string
-// stored in KV under `r2l_link:{token}`. This endpoint validates the token,
-// decrements its use counter, and returns the underlying access code so the
-// start page can call /api/generate-read2lead-pack.
+// stored in KV under `r2l_link:{token}`. This endpoint validates the token and
+// returns the underlying access code so the start page can call
+// /api/generate-read2lead-pack.
+//
+// It does NOT spend a "use" per visit. /r2l/start is the child's home page: they open it
+// daily, and metering page views ran the counter down until it locked the child out for
+// good (a parent hit exactly that). Expiry + admin revoke are the security controls.
 
-import { validateLinkRecord, linkKey } from './admin/codes/[code]/links.js';
+import { validateLinkRecord, linkKey, todayISO, addDaysISO } from './admin/codes/[code]/links.js';
 import {
   getClientIp,
   checkCodeRateLimit,
@@ -15,6 +19,19 @@ import {
 } from './_rate-limit.js';
 
 const TOKEN_PATTERN = /^[0-9a-f]{32}$/;
+
+const RENEW_WITHIN_DAYS = 30;
+const RENEW_TO_DAYS = 365;
+const DAY_SECONDS = 24 * 60 * 60;
+const KV_MIN_TTL_SECONDS = 60; // KV rejects anything shorter
+
+// TTL = through the end of the expiry day + a 1-day buffer, matching how links.js mints them.
+export function ttlSecondsFor(expiresAtISO, now = Date.now()) {
+  const expiresMs = Date.parse(`${expiresAtISO}T23:59:59Z`);
+  if (!Number.isFinite(expiresMs)) return (RENEW_TO_DAYS + 1) * DAY_SECONDS;
+  const seconds = Math.floor((expiresMs - now) / 1000) + DAY_SECONDS;
+  return Math.max(KV_MIN_TTL_SECONDS, seconds);
+}
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -61,13 +78,6 @@ export async function onRequestGet(context) {
       message: 'Link đã hết hạn. Nhắn Zalo Felix để nhận link mới.',
     }, 410);
   }
-  if (validationError === 'link_exhausted') {
-    return json({
-      ok: false,
-      error: 'link_exhausted',
-      message: 'Link đã hết lượt sử dụng. Nhắn Zalo Felix để nhận link mới.',
-    }, 410);
-  }
   if (validationError) {
     return json({
       ok: false,
@@ -85,9 +95,22 @@ export async function onRequestGet(context) {
     }, 404);
   }
 
-  record.uses_remaining = (record.uses_remaining ?? 1) - 1;
-  record.last_used_at = new Date().toISOString().slice(0, 10);
-  await kv.put(linkKey(token), JSON.stringify(record));
+  // A link the child is actively using must never age out from under them, so slide the expiry
+  // once it comes within RENEW_WITHIN_DAYS of lapsing. Otherwise only touch last_used_at, and
+  // only on the day it changes: refreshing the home page then costs zero KV writes, where the
+  // old code wrote on every single request.
+  const today = todayISO();
+  const renewing = !record.expires_at || record.expires_at <= addDaysISO(RENEW_WITHIN_DAYS);
+
+  if (renewing || record.last_used_at !== today) {
+    record.last_used_at = today;
+    if (renewing) record.expires_at = addDaysISO(RENEW_TO_DAYS);
+    // Always re-assert the TTL: a put() without one would strip the record's expiration
+    // entirely and leave the key in KV forever.
+    await kv.put(linkKey(token), JSON.stringify(record), {
+      expirationTtl: ttlSecondsFor(record.expires_at),
+    });
+  }
 
   const profile = codeData.student_profile || {};
   const progress = codeData.progress || {};

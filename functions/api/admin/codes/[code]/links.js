@@ -44,12 +44,18 @@ export function addDaysISO(days) {
 /**
  * Validate a magic link record and return an error string or null.
  * Exported for unit tests.
+ *
+ * `uses_remaining` is deliberately NOT enforced. /r2l/start is the child's home page, not a
+ * one-shot magic link — they open it every day, and a per-view counter only ever ran down
+ * until it locked the real child out (a parent hit exactly that: link_exhausted on a link
+ * minted with 50 uses). The token is 128 bits of unguessable random; expiry and the admin
+ * revoke button are the actual security controls. Ignoring the field here also revives every
+ * link already sitting in KV at zero, with no data migration and no re-sending of links.
  */
 export function validateLinkRecord(record, nowISO = new Date().toISOString().slice(0, 10)) {
   if (!record || typeof record !== 'object') return 'invalid_record';
   if (!record.access_code) return 'missing_access_code';
   if (record.expires_at && record.expires_at < nowISO) return 'link_expired';
-  if (record.uses_remaining != null && record.uses_remaining <= 0) return 'link_exhausted';
   return null;
 }
 
@@ -130,6 +136,8 @@ export async function onRequestGet(context) {
       // Token was deleted (revoked) or expired from KV — skip
       continue;
     }
+    // No is_exhausted: a link can no longer die of use (see validateLinkRecord). uses_remaining
+    // / max_uses are legacy fields kept only so old records still read back cleanly.
     items.push({
       token: entry.token,
       created_at: record.created_at,
@@ -138,7 +146,6 @@ export async function onRequestGet(context) {
       max_uses: record.max_uses,
       last_used_at: record.last_used_at,
       is_expired: record.expires_at < today,
-      is_exhausted: record.uses_remaining <= 0,
     });
   }
 
