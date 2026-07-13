@@ -1,8 +1,8 @@
 # Release — Read2Lead
 
-- Candidate version: R2L-REAL-GIFTS — "Quà thật" real-life gift shop — **SHIPPED to production 2026-07-13, merge commit 7ff8816**
-- Staging URL: `https://claude-r2l-real-gifts.felixbuilderhub.pages.dev` (production: `https://felixbuilderhub.com/read2lead/gifts`)
-- Rollback commit or deployment: revert the single feature commit on main; Cloudflare Pages auto-redeploys
+- Candidate version: R2L-GIFTS-FIX — gift delete + the free-gift hole + the photo mystery — branch `claude/r2l-gifts-fix` (aa4a55d, f8e49cb, 9dba2cd). AWAITING FOUNDER GO.
+- Staging URL: `https://claude-r2l-gifts-fix.felixbuilderhub.pages.dev/read2lead/gifts` (production: `https://felixbuilderhub.com/read2lead/gifts`)
+- Rollback commit or deployment: revert the three commits on main; Cloudflare Pages auto-redeploys. No schema change, no KV migration — the fix is inert against existing data.
 - Scope and UI approved: yes
 - Targeted tests passed: yes
 - Relevant full tests passed: yes
@@ -12,8 +12,22 @@
 - Console and API errors checked: yes
 - Privacy and cost checked: yes
 - Screenshot or video proof ready: yes
-- Founder production approval: yes
-- Production smoke test passed: yes
+- Founder production approval: no
+- Production smoke test passed: no
+
+## Evidence — R2L-GIFTS-FIX (2026-07-13)
+
+- **State inventory rendered and looked at** (the RELEASE.md rule, earned the hard way): the `unavailable` band gained its first-ever production member, and looking at it found defect 9 — a dead "Đặt làm mục tiêu ★" button that the server answers 400 for. That state had never been rendered because the band had always been empty.
+- **Core browser flow**: driven end to end on a LOCAL copy seeded with the real production catalogue — delete "Quà 8" → confirm → save → gone from KV; blank row refused with a named error; Shopee product-page link warned; "Xoá ảnh" clears a photo; and the save-race (mutating a row mid-save) refused.
+- **Destructive-test environment established BEFORE testing** (the second RELEASE.md rule): Cloudflare Pages previews read and write PRODUCTION data, so every destructive action was run against `wrangler pages dev` with a LOCAL KV, never the preview. The only production call made was a read, plus one `gift-goal` POST that the server rejected (400) and therefore did not write.
+- **Preview verified against real production data**: `can_afford: false` on the free gift, banded under "Tạm thời chưa mở", `cost_vnd` absent from the kid API, 0 console errors, screenshots at 390px and 1280px.
+- **Review**: Buffet BLOCKED the first round on 3 findings (a save race that silently resurrected the deleted free gift under a button reading "✓ Đã lưu"; a full gold progress bar on an unobtainable gift across 3 kid/parent surfaces; gift-id reuse after delete). All fixed, re-reviewed, SHIP. He then re-reviewed defect 9 and named two more grep-only tests, now rendered.
+- **1550 tests** (was 1520). `astro check` clean on every changed file. `astro build` clean.
+
+## Known state at ship (founder action required, not blockers)
+
+1. **"Quà 8" is still in the catalogue.** The fix makes it inert (no child can claim it), but Coach Felix should DELETE it in `/admin/gifts` — which he now can.
+2. **Sticker and Bút still carry the wrong photo** (a transparent Shopee campaign overlay). No code can fix that. He clears them with "Xoá ảnh" and pastes a real image link. The emoji no longer masks the problem, which is the point.
 
 ## Evidence
 
