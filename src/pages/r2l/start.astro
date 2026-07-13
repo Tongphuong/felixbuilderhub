@@ -65,7 +65,7 @@ const PET_SVG = defaultMonsterSvg();
           <span class="r2l-star r2l-star--c">★</span>
 
           <p class="fx-eyebrow r2l-world__eyebrow">HỌC SINH READ2LEAD</p>
-          <h1 class="r2l-world__hello">Chào con <span id="greeting-name" data-clarity-mask="true">bạn nhỏ</span>! 👋</h1>
+          <h1 class="r2l-world__hello">Chào <span id="greeting-name" data-clarity-mask="true">bạn nhỏ</span>! 👋</h1>
 
           <div class="r2l-pet">
             <div class="r2l-pet__glow"></div>
@@ -120,7 +120,16 @@ const PET_SVG = defaultMonsterSvg();
             <span class="r2l-speak__arrow" aria-hidden="true">→</span>
           </a>
 
-          {/* SECONDARY — three destinations */}
+          {/* ĐỔI QUÀ — the real-life gift the child is saving for.
+              Deliberately BELOW SpeakUp, not under Đọc tiếp: diamonds come from live class,
+              not from reading, so sitting under the reading button would promise a child
+              that reading fills this bar. It does not. The card (Claude Design's own,
+              shared with the lesson-end / profile / parent screens) says where diamonds
+              actually come from. Filled by the client; stays empty if gifts are unavailable. */}
+          <div id="gift-goal-slot" class="r2l-gift-slot"></div>
+
+          {/* SECONDARY — two destinations. The 🛒 monster shop was demoted off the home
+              (founder: no kid ever asks about it); it is still reachable from Hồ sơ. */}
           <div class="r2l-tiles">
             <a id="hoso-link" href="/ho-so" class="r2l-tile">
               <span class="r2l-tile__icon">👤</span>
@@ -131,11 +140,6 @@ const PET_SVG = defaultMonsterSvg();
               <span class="r2l-tile__icon">🏆</span>
               <span class="r2l-tile__label">Xếp hạng</span>
               <span class="r2l-tile__sub">Thi cùng các bạn</span>
-            </a>
-            <a id="shop-link" href="/read2lead/shop" class="r2l-tile">
-              <span class="r2l-tile__icon">🛒</span>
-              <span class="r2l-tile__label">Cửa hàng</span>
-              <span class="r2l-tile__sub">🪙 <span id="shop-coins">0</span> xu</span>
             </a>
           </div>
 
@@ -294,8 +298,12 @@ const PET_SVG = defaultMonsterSvg();
   .r2l-speak__sub { display: block; margin-top: 2px; font-size: 14px; color: var(--cream-muted); }
   .r2l-speak__arrow { flex: 0 0 auto; font-size: 22px; color: var(--gold); }
 
-  /* Secondary tiles */
-  .r2l-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  /* Đổi quà — the gift-goal card renders itself; the slot only reserves the space and
+     collapses to nothing when there is no card to show (gifts unavailable). */
+  .r2l-gift-slot:empty { display: none; }
+
+  /* Secondary tiles — two since the monster shop was demoted, so they share the row. */
+  .r2l-tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .r2l-tile { display: flex; flex-direction: column; align-items: center; gap: 9px; text-align: center;
     padding: 15px 8px; min-height: 112px; text-decoration: none; color: var(--cream);
     background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl);

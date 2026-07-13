@@ -13,6 +13,7 @@
  * The generate/poll flow is unchanged from the topic-picker version that preceded this.
  */
 import { buildHeroCta, bookPct, medalFor, statusMeta } from '../lib/r2l-hero';
+import { renderGiftGoalCard, type GiftGoalItem, type GiftGoalRedemption } from '../lib/gift-goal-card';
 import { renderMonster, type EquippedDisplayItem } from '../lib/monster-avatar';
 
 type Phase = 'resolving' | 'error' | 'ready' | 'generating' | 'result' | 'gen-error';
@@ -82,17 +83,16 @@ function initStart(): void {
   // The child's world + the wired destinations.
   const speakLink = $<HTMLAnchorElement>('#speak-link');
   const hosoLink = $<HTMLAnchorElement>('#hoso-link');
-  const shopLink = $<HTMLAnchorElement>('#shop-link');
   const continueLink = $<HTMLAnchorElement>('#continue-link');
   const ctaContinue = $('#cta-continue');
   const ctaCreate = $('#cta-create');
   const createSub = $('#create-sub');
+  const giftSlot = $('#gift-goal-slot');
   const petSlot = $('#pet-slot');
   const rankMedal = $<HTMLImageElement>('#rank-medal');
   const rankLabelEl = $('#rank-label');
   const statStreak = $('#stat-streak');
   const statCoins = $('#stat-coins');
-  const shopCoins = $('#shop-coins');
   const bookTitleEl = $('#book-title');
   const bookPctEl = $('#book-pct');
   const bookFill = $('#cta-continue .fx-progress__fill');
@@ -163,20 +163,66 @@ function initStart(): void {
     }
   }
 
+  /** The real-life gift the child is saving for.
+   *
+   * Renders Claude Design's own shared card — the same one on the lesson-end screen, the
+   * profile and the parent report — so those screens can never tell a child two different
+   * things about the same goal. The state rules live in the shop's `deriveGiftCardState`;
+   * nothing is re-implemented here.
+   *
+   * Best-effort and non-blocking, exactly as ho-so does it: if the gifts call fails, or the
+   * feature is not configured, the slot simply stays empty and the rest of the home is
+   * untouched. A child must never lose their home screen because a shop was unreachable.
+   */
+  async function loadGiftGoal(state: Record<string, any>): Promise<void> {
+    if (!giftSlot) return;
+    const diamonds = Number(state.diamonds || 0);
+    const redemptions = (Array.isArray(state.redemptions) ? state.redemptions : []) as GiftGoalRedemption[];
+    const goalId = typeof state.gift_goal === 'string' && state.gift_goal ? state.gift_goal : null;
+
+    // Claude Design built two variants for a reason: `wide` (a side-by-side row) is for
+    // desktop, `narrow` (a stacked card with a big 16:9 photo of the prize) is for a phone.
+    // Most children are on a phone, and the prize is the point — the wide row squeezes the
+    // progress bar and shrinks the photo to a thumbnail.
+    const variant = window.matchMedia('(min-width: 768px)').matches ? 'wide' : 'narrow';
+
+    // No goal yet — the card's own invitation. This is the normal state for most children:
+    // diamonds only come from live class, so a new student has none and has chosen nothing.
+    if (!goalId) {
+      giftSlot.innerHTML = renderGiftGoalCard(null, diamonds, redemptions, { variant, code: accessCode });
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/read2lead-gifts-list', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: accessCode }),
+      });
+      const payload = (await res.json()) as { ok?: boolean; items?: GiftGoalItem[] };
+      if (!payload?.ok) return;
+      // A goal pointing at a gift that has since been disabled resolves to null — the card
+      // falls back to its invitation rather than rendering a blank.
+      const item = (payload.items || []).find((entry) => entry.id === goalId) || null;
+      giftSlot.innerHTML = renderGiftGoalCard(item, diamonds, redemptions, { variant, code: accessCode });
+    } catch {
+      // Best-effort — see the doc comment above.
+    }
+  }
+
   function renderWorld(data: any): void {
     const progress = data?.progress || {};
     const state = data?.read2lead_state || {};
     const ladder = state.rank_ladder || {};
 
     renderPet(state);
+    void loadGiftGoal(state);
 
     if (rankMedal) rankMedal.src = medalFor(ladder.tier_index);
     if (rankLabelEl) rankLabelEl.textContent = ladder.label_vi || state.rank_title || 'Đồng';
 
-    const coins = String(Number(state.coins) || 0);
     if (statStreak) statStreak.textContent = String(Number(state.streak_days) || 0);
-    if (statCoins) statCoins.textContent = coins;
-    if (shopCoins) shopCoins.textContent = coins;
+    if (statCoins) statCoins.textContent = String(Number(state.coins) || 0);
 
     const pack = progress.current_pack;
     const cta = buildHeroCta(pack, data, accessCode);
@@ -230,7 +276,6 @@ function initStart(): void {
       if (greetingLevel) greetingLevel.textContent = data.level || 'L1';
       if (speakLink) speakLink.href = `/speak-up?code=${code}`;
       if (hosoLink) hosoLink.href = `/ho-so?code=${code}`;
-      if (shopLink) shopLink.href = `/read2lead/shop?code=${code}&v3=1`;
 
       setPhase('ready');
 

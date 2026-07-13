@@ -32,7 +32,9 @@ test("the world column renders the child's pet, rank medal, streak and coins", (
   assert.match(page, /id="stat-streak"/);
   assert.match(page, /id="stat-coins"/);
   assert.match(page, /HỌC SINH READ2LEAD/);
-  assert.match(page, /Chào con <span id="greeting-name"/);
+  // Founder ruling 2026-07-13: greet the child by name only — "Chào Ong!", not "Chào con Ong!".
+  assert.match(page, /Chào <span id="greeting-name"/);
+  assert.doesNotMatch(page, /Chào con <span id="greeting-name"/);
   assert.match(page, /id="greeting-level"/);
 });
 
@@ -93,20 +95,81 @@ test('a pack still being generated disables create rather than inviting a second
   assert.match(client, /Đang chuẩn bị bài đọc cho con…/);
 });
 
-// ---- SpeakUp + the three destinations ----------------------------------------------------
+// ---- SpeakUp + the two destinations -------------------------------------------------------
 
 test('SpeakUp shows Minny (the red robot) and every destination carries the access code', () => {
   assert.match(page, /id="speak-link"/);
   assert.match(page, /\/assets\/minny\/minny\.png/);
   assert.doesNotMatch(page, /koala|🐨/i);
   assert.match(page, /id="hoso-link"/);
-  assert.match(page, /id="shop-link"/);
   assert.match(page, /href="\/read2lead\/leaderboard"/);
-  assert.match(page, /id="shop-coins"/);
 
   assert.match(client, /speakLink\.href = `\/speak-up\?code=\$\{code\}`/);
   assert.match(client, /hosoLink\.href = `\/ho-so\?code=\$\{code\}`/);
-  assert.match(client, /shopLink\.href = `\/read2lead\/shop\?code=\$\{code\}&v3=1`/);
+});
+
+// ---- Đổi quà: the real-life gift ----------------------------------------------------------
+
+test('the monster shop is demoted off the home and the tile row is two wide tiles', () => {
+  // Founder: "no kid ever talked about the monster shop". It stays reachable from Hồ sơ
+  // (ho-so-kid-view.ts) — it just no longer takes a prime slot on the home.
+  assert.doesNotMatch(page, /id="shop-link"/);
+  assert.doesNotMatch(page, /id="shop-coins"/);
+  assert.doesNotMatch(page, /Cửa hàng/);
+  assert.doesNotMatch(client, /shopLink/);
+  assert.match(page, /\.r2l-tiles \{ display: grid; grid-template-columns: repeat\(2, 1fr\)/);
+});
+
+test('the gift card sits BELOW SpeakUp, never under Đọc tiếp', () => {
+  // Diamonds come from live class, not from reading. Under Đọc tiếp the card would promise
+  // a child that reading fills the diamond bar — it does not, and she would conclude that
+  // reading is worthless when the bar never moves.
+  const speakIdx = page.indexOf('id="speak-link"');
+  const giftIdx = page.indexOf('id="gift-goal-slot"');
+  const continueIdx = page.indexOf('id="cta-continue"');
+  assert.ok(giftIdx > -1, 'the gift slot must exist');
+  assert.ok(giftIdx > speakIdx, 'the gift card must come after SpeakUp');
+  assert.ok(giftIdx > continueIdx, 'the gift card must not sit under the reading CTA');
+});
+
+test("the gift card is Claude Design's shared component, not a home-only lookalike", () => {
+  // gift-goal-card.ts imports the shop's own deriveGiftCardState so that the lesson-end,
+  // profile, parent and home screens can never disagree about the same goal. Re-implementing
+  // any of it here would be exactly the drift that component exists to prevent.
+  assert.match(client, /renderGiftGoalCard/);
+  assert.match(client, /from '\.\.\/lib\/gift-goal-card'/);
+  // Claude Design shipped two variants: narrow (stacked, big prize photo) for phones and
+  // wide (side-by-side row) for desktop. Most children are on a phone and the prize is the
+  // point — forcing 'wide' everywhere shrinks the photo to a thumbnail and squeezes the bar.
+  assert.match(client, /matchMedia\('\(min-width: 768px\)'\)\.matches \? 'wide' : 'narrow'/);
+  // The home must not import or restate the shop's state rules — it hands the raw gift item
+  // to the shared card and lets it decide. (Naming the rule in a comment is fine; owning a
+  // second copy of it is not.)
+  assert.doesNotMatch(client, /import[^;]*deriveGiftCardState/);
+  assert.doesNotMatch(client, /function\s+derive\w*(Goal|Gift)\w*State/);
+  assert.doesNotMatch(client, /(can_afford|progress_percent)\s*[=:]/);
+});
+
+test('the gift card degrades safely: no goal invites, a failed call leaves the home intact', () => {
+  // Most children have no goal and zero diamonds (diamonds are handed out in class), so the
+  // invitation is the NORMAL state, not an edge case.
+  assert.match(client, /if \(!goalId\)/);
+  assert.match(client, /renderGiftGoalCard\(null, diamonds, redemptions/);
+  // A goal pointing at a since-disabled gift resolves to null → the card falls back to the
+  // invitation rather than rendering a blank.
+  assert.match(client, /\.find\(\(entry\) => entry\.id === goalId\) \|\| null/);
+  // A failed gifts call must not take the home down with it.
+  assert.match(client, /catch \{\s*\/\/ Best-effort/);
+  assert.match(page, /\.r2l-gift-slot:empty \{ display: none; \}/);
+});
+
+test('the gift call only happens for a child who actually set a goal', () => {
+  // The invitation renders synchronously from data the home already has — no child pays a
+  // network round-trip just to be told they have not chosen a gift yet.
+  const fn = client.slice(client.indexOf('async function loadGiftGoal'));
+  const earlyReturn = fn.indexOf('return;');
+  const fetchIdx = fn.indexOf('/api/read2lead-gifts-list');
+  assert.ok(earlyReturn > -1 && fetchIdx > earlyReturn, 'no-goal path must return before fetching');
 });
 
 // ---- What the redesign removed -----------------------------------------------------------
