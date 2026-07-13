@@ -82,9 +82,14 @@ test('client script posts an empty topic/interests for the one-tap generate flow
   assert.doesNotMatch(client, /interestsInput/);
 });
 
-test('client script keeps the result-topic wrapper toggled on data.topic presence', () => {
+// Live check on the preview (2026-07-13) showed book packs set topic === story title,
+// so the naive "show topic when non-empty" rule printed "Chủ đề: My Family" directly
+// above "Tên truyện: My Family". The topic line must be suppressed when it is redundant.
+test('client script hides the result-topic line when it merely repeats the story title', () => {
   assert.match(client, /resultTopicWrap/);
-  assert.match(client, /if \(data\.topic && resultTopic && resultTopicWrap\)/);
+  assert.match(client, /topicIsRedundant/);
+  assert.match(client, /topic\.toLowerCase\(\) === storyTitle\.toLowerCase\(\)/);
+  assert.match(client, /if \(topic && !topicIsRedundant && resultTopic && resultTopicWrap\)/);
 });
 
 test('AI-copy sweep: none of the swept marketing files claim "tăng cường bởi AI"', () => {

@@ -171,8 +171,15 @@ function initStart(): void {
     activeTaskId = null;
 
     if (resultName) resultName.textContent = studentName || data.child_name || '';
-    if (data.topic && resultTopic && resultTopicWrap) {
-      resultTopic.textContent = data.topic;
+
+    // Book packs set their topic to the book's own title, so showing both lines
+    // prints the same string twice ("Chủ đề: My Family / Tên truyện: My Family").
+    // Only show the topic when it actually adds something the title doesn't.
+    const topic = (data.topic ?? '').trim();
+    const storyTitle = (data.story_title ?? '').trim();
+    const topicIsRedundant = topic.toLowerCase() === storyTitle.toLowerCase();
+    if (topic && !topicIsRedundant && resultTopic && resultTopicWrap) {
+      resultTopic.textContent = topic;
       resultTopicWrap.hidden = false;
     } else if (resultTopicWrap) {
       resultTopicWrap.hidden = true;
