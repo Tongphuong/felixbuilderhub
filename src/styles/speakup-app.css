@@ -646,6 +646,56 @@
 
 @media (min-width: 1024px) { .spk-blank { padding: 0 44px; } }
 
+/* story task_type: must_use[] words -- shown, not hidden (contrast with
+   picture's anchors, which never reach the DOM at all). Non-interactive
+   (spans, not buttons): these are read-only prompts, distinct from the
+   tappable .minny-word feedback chips shown after scoring. */
+.spk-must-use { margin: 10px 0 0; }
+.spk-must-use.hidden { display: none; }
+
+.spk-must-use__label {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+.spk-must-use__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.spk-must-use-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 143, 56, 0.4);
+  background: rgba(200, 143, 56, 0.12);
+  color: var(--cream);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* build task_type: columns[] of tappable chips -- each column reuses the
+   shipped Free Talk .minny-options/.minny-option-chip markup verbatim (see
+   renderBuildColumns/#ft-scaffold's ftApplyScaffold), this just adds the
+   column grouping/label chrome around it. */
+.spk-build-columns {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.spk-build-columns.hidden { display: none; }
+
+.spk-build-column__label {
+  margin: 0 0 6px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--cream-muted);
+}
+
 /* Recorder panel (7a desktop board values; scales down for tablet/phone) */
 .spk-recorder {
   background: rgba(23, 53, 74, 0.5);

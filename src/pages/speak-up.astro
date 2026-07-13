@@ -137,7 +137,21 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
               <span class="spk-hw-photo__cap">📎 Ảnh bài tập của thầy — chạm để phóng to</span>
             </button>
             <p class="spk-story-card__en" id="prompt-en"></p>
+            <!-- story task_type: must_use[] words are the point of the
+                 exercise -- SHOW them, never hide them (contrast with
+                 picture's anchors, which must never render). -->
+            <div id="story-must-use" class="spk-must-use hidden">
+              <p class="spk-must-use__label">Con nhớ dùng những từ này nhé:</p>
+              <div id="story-must-use-chips" class="spk-must-use__chips"></div>
+            </div>
             <ol id="frame-stems" class="hidden"></ol>
+            <!-- build task_type: columns[] of tappable chips (one pick per
+                 column), reusing the shipped Free Talk chip/reveal markup
+                 (.minny-options/.minny-option-chip/.minny-sentence-frame) so
+                 tapping a chip NEVER submits or skips speaking -- it only
+                 reveals the assembled sentence and arms the mic. -->
+            <div id="build-columns" class="spk-build-columns hidden"></div>
+            <div id="build-reveal" class="hidden"></div>
           </div>
 
           <div id="speaking-result" class="hidden"></div>
@@ -421,6 +435,12 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       homeworkResults: [],
       homeworkComplete: false,
       fixit: null,
+      // build task_type (schema v3): one tap per column, keyed by column id;
+      // buildArmed only flips true once every column has a pick -- gates the
+      // record button in updateRecordUi() so tapping chips never skips
+      // speaking. Reset per-step in renderBuildColumns().
+      buildSelections: {},
+      buildArmed: false,
     };
 
     // V1.4 fix-it round (Wave D Set 2 screens 3-5, design_handoff_speakup_v1
@@ -722,8 +742,18 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       const el = document.getElementById('frame-stems');
       const metaEl = document.getElementById('frame-meta');
       if (!el) return;
-      const stems = step?.check_mode === 'frame' && Array.isArray(step.stems) ? step.stems : null;
-      if (!stems || !stems.length) {
+      // story's synthetic single stem is byte-identical to prompt_en (already
+      // shown by #prompt-en above) -- listing it again as "1. <same text>"
+      // would just be visual noise, so this list is skipped for story.
+      // picture-with-anchors compiles to a stem with an EMPTY text_en (its
+      // anchor_words must never be rendered -- see #8 in the contract), so
+      // the hasText check below hides the list rather than showing a bare,
+      // content-less numbered bullet.
+      const stems = step?.check_mode === 'frame' && step.task_type !== 'story' && Array.isArray(step.stems)
+        ? step.stems
+        : null;
+      const hasText = !!stems && stems.some((s) => String(s?.text_en || '').trim());
+      if (!stems || !stems.length || !hasText) {
         el.classList.add('hidden');
         el.innerHTML = '';
         if (metaEl) metaEl.classList.add('hidden');
@@ -748,6 +778,163 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       }
     }
 
+    // story task_type: must_use[] is an EXPLICIT, intentionally kid-visible
+    // field (contract #8 -- "SHOW these to the kid") -- do not confuse with
+    // picture's anchors, which live only in stems[0].anchor_words and are
+    // never read here or anywhere else in this file.
+    function renderStoryMustUse(step) {
+      const wrap = document.getElementById('story-must-use');
+      const chipsEl = document.getElementById('story-must-use-chips');
+      if (!wrap || !chipsEl) return;
+      const words = step?.task_type === 'story' && Array.isArray(step.must_use)
+        ? step.must_use.filter((w) => String(w || '').trim())
+        : [];
+      if (!words.length) {
+        wrap.classList.add('hidden');
+        chipsEl.innerHTML = '';
+        return;
+      }
+      chipsEl.innerHTML = words.map((w) => `<span class="spk-must-use-chip">${escapeHtml(w)}</span>`).join('');
+      wrap.classList.remove('hidden');
+    }
+
+    // build task_type: columns[] of tappable chips, one pick per column.
+    // Reuses the exact Free Talk chip pattern (.minny-options/
+    // .minny-option-chip) per the packet's instruction -- tapping never
+    // submits; it only marks the pick and (once every column has one)
+    // reveals the assembled sentence via buildMaybeReveal, which is what
+    // arms the mic (see updateRecordUi).
+    function renderBuildColumns(step) {
+      const wrap = document.getElementById('build-columns');
+      const reveal = document.getElementById('build-reveal');
+      if (!wrap || !reveal) return;
+      state.buildSelections = {};
+      state.buildArmed = false;
+      reveal.innerHTML = '';
+      reveal.classList.add('hidden');
+      const columns = step?.task_type === 'build' && Array.isArray(step.columns) ? step.columns : [];
+      if (!columns.length) {
+        wrap.classList.add('hidden');
+        wrap.innerHTML = '';
+        return;
+      }
+      wrap.innerHTML = columns
+        .map(
+          (col, i) => `
+            <div class="spk-build-column" data-build-col="${escapeHtml(col.id || `c${i + 1}`)}">
+              <p class="spk-build-column__label">${escapeHtml(col.label_en || '')}</p>
+              <div class="minny-options" role="group" aria-label="${escapeHtml(col.label_en || 'Chọn một ô')}">
+                ${(Array.isArray(col.options) ? col.options : [])
+                  .map((opt) => `<button type="button" class="minny-option-chip" data-build-option="${escapeHtml(opt)}">${escapeHtml(opt)}</button>`)
+                  .join('')}
+              </div>
+            </div>
+          `,
+        )
+        .join('');
+      wrap.classList.remove('hidden');
+    }
+
+    // A teacher's columns ARE a sentence template: her real lesson reads
+    // "We… / At… / We feel… / Because…" with options "play football",
+    // "school", "happy", "it is fun". The label's trailing "…"/"..." is the
+    // fill-in marker, so it is stripped and the chosen option appended.
+    //
+    // Joining the labels verbatim yields "We play football At school We feel
+    // happy Because it is fun." -- a run-on with mid-sentence capitals. That
+    // matters: this exact string is BOTH shown to the child to read aloud AND
+    // sent as expected_text for word-level scoring, so it has to be real
+    // English. Continuation labels are therefore lowercased, and a label that
+    // opens a new clause (a subject pronoun) is preceded by a comma, giving
+    // "We play football at school, we feel happy because it is fun."
+    const BUILD_CLAUSE_START = /^(?:we|i|they|he|she|it|you)\b/i;
+    // The ellipsis is a PLACEHOLDER POSITION, not a suffix to trim. Usually it
+    // sits at the end ("We…" + "play football"), but a teacher can put it
+    // mid-label ("Do you like...?" + "pizza" -> "Do you like pizza?"). Stripping
+    // only a trailing marker left that case as "Do you like...? pizza"
+    // (Buffet, 2026-07-13) — so substitute AT the marker wherever it appears,
+    // and only append when the label has no marker at all.
+    const BUILD_BLANK_MARKER = /(?:\.\.\.|…)/;
+
+    function buildAssembleSentence(step) {
+      const columns = Array.isArray(step?.columns) ? step.columns : [];
+      if (!columns.length) return null;
+      const segments = columns.map((col, i) => {
+        const key = col.id || `c${i + 1}`;
+        const chosen = state.buildSelections[key];
+        if (!chosen) return null;
+        let label = String(col.label_en || '').trim();
+        // Only the first column keeps the teacher's capitalisation; the rest
+        // are mid-sentence continuations.
+        if (i > 0 && label) label = label.charAt(0).toLowerCase() + label.slice(1);
+        let text;
+        if (BUILD_BLANK_MARKER.test(label)) {
+          text = label
+            .replace(BUILD_BLANK_MARKER, ` ${chosen} `)
+            .replace(/\s+/g, ' ')
+            .replace(/\s+([.,!?;:])/g, '$1')
+            .trim();
+        } else {
+          text = label ? `${label} ${chosen}` : chosen;
+        }
+        return { text, newClause: i > 0 && BUILD_CLAUSE_START.test(label) };
+      });
+      if (segments.some((s) => !s)) return null;
+      const raw = segments
+        .reduce((acc, seg, i) => (i === 0 ? seg.text : `${acc}${seg.newClause ? ',' : ''} ${seg.text}`), '')
+        .trim();
+      if (!raw) return null;
+      const capitalized = raw.charAt(0).toUpperCase() + raw.slice(1);
+      return /[.!?]$/.test(capitalized) ? capitalized : `${capitalized}.`;
+    }
+
+    // Called after every chip tap. Mutates the CURRENT step object in place
+    // (the same reference startRecording() captures as `prompt`) so
+    // submitAudio's existing expected_text/check_mode plumbing needs no
+    // changes -- once armed, a build step behaves exactly like a normal
+    // 'read' step whose expected_text happens to be assembled from taps.
+    function buildMaybeReveal() {
+      const step = currentStep();
+      const reveal = document.getElementById('build-reveal');
+      if (!reveal || step?.task_type !== 'build') return;
+      const sentence = buildAssembleSentence(step);
+      if (!sentence) {
+        reveal.classList.add('hidden');
+        reveal.innerHTML = '';
+        state.buildArmed = false;
+        updateRecordUi();
+        return;
+      }
+      step.expected_text = sentence;
+      state.buildArmed = true;
+      const escapedSentence = escapeHtml(sentence);
+      reveal.innerHTML = `
+        <div class="minny-sentence-frame">
+          <p class="minny-sentence-frame__label">Con hãy nói to câu này nhé!</p>
+          <p class="minny-sentence-frame__text">${escapedSentence}</p>
+          <p class="minny-sentence-frame__mic-armed">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0M12 17v4"></path></svg>
+            Mic đã sẵn sàng — con nói đi nào!
+          </p>
+        </div>
+      `;
+      reveal.classList.remove('hidden');
+      updateRecordUi();
+    }
+
+    document.getElementById('build-columns')?.addEventListener('click', (event) => {
+      const btn = event.target.closest('[data-build-option]');
+      if (!btn) return;
+      const colEl = btn.closest('[data-build-col]');
+      if (!colEl) return;
+      colEl.querySelectorAll('.minny-option-chip').forEach((b) => {
+        b.classList.toggle('is-selected', b === btn);
+        b.classList.toggle('is-dimmed', b !== btn);
+      });
+      state.buildSelections[colEl.dataset.buildCol] = btn.dataset.buildOption;
+      buildMaybeReveal();
+    });
+
     function renderStep() {
       const mode = activeMode();
       const step = currentStep();
@@ -761,10 +948,20 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       enEl.textContent = step.prompt_en || step.question_en || '';
       if (eyebrowEl) eyebrowEl.textContent = mode.title_vi || 'Luyện nói';
       renderFrameStems(step);
+      renderStoryMustUse(step);
+      renderBuildColumns(step);
 
       const photoBtn = document.getElementById('hw-photo-thumb-btn');
       if (photoBtn) {
-        const photoUrl = mode.id === 'homework' && mode.photo?.id
+        // Per-step gating (schema v3): 'picture' steps always carry
+        // show_photo:true and 'story' carries show_photo:!!use_photo (an
+        // explicit opt-in/out). Steps that predate this field (read,
+        // present, qa, build, and every upgraded v1/v2 step) don't set it at
+        // all -- default to the pre-existing behavior of showing the
+        // homework's attached photo throughout, so this stays byte-identical
+        // for every step that isn't new.
+        const stepWantsPhoto = step.show_photo === undefined ? true : !!step.show_photo;
+        const photoUrl = mode.id === 'homework' && mode.photo?.id && stepWantsPhoto
           ? `/api/speakup-homework-photo?code=${encodeURIComponent(state.accessCode)}&id=${encodeURIComponent(mode.photo.id)}`
           : null;
         if (photoUrl) {
@@ -975,6 +1172,19 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       `;
     }
 
+    // Rubric copy follows task_type (packet C: "story -> 'Con dùng đủ từ
+    // thầy dặn?' rather than 'Đủ 6 câu?'") -- only the FIRST row's wording
+    // varies; "Đủ thời gian"/"Nói to, rõ ràng" and the pronunciation row stay
+    // generic across every frame-mode task (present/story/picture/qa). The
+    // underlying rubric.spokeAllStems boolean is unchanged (server-computed
+    // coverage), this only changes what the kid is told it means.
+    const FRAME_RUBRIC_ROW1_VI = {
+      present: 'Nói đủ các câu trong khung',
+      story: 'Con dùng đủ từ thầy dặn?',
+      picture: 'Con tả được đủ những gì trong ảnh?',
+      qa: 'Con trả lời đủ ý câu hỏi?',
+    };
+
     function renderFrameResult(result) {
       const resultEl = document.getElementById('speaking-result');
       const actionsEl = document.getElementById('speaking-actions');
@@ -983,9 +1193,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       setMinnyMood(celebrate ? 'celebrate' : 'encourage');
       hwSetMood(celebrate ? 'celebrate' : 'encourage');
 
+      const taskType = currentStep()?.task_type;
+      const rubricRow1Label = FRAME_RUBRIC_ROW1_VI[taskType] || FRAME_RUBRIC_ROW1_VI.present;
       const rubric = result.rubric || {};
       const rubricHtml = [
-        rubricRow(!!rubric.spokeAllStems, 'Nói đủ các câu trong khung'),
+        rubricRow(!!rubric.spokeAllStems, rubricRow1Label),
         rubricRow(!!rubric.durationOnTarget, 'Đủ thời gian', 'Kể chậm lại một chút, hít thở giữa các câu.'),
         rubricRow(!!rubric.spokeClearly, 'Nói to, rõ ràng', 'Nói to hơn một xíu, như đang kể cho bạn nghe.'),
         pronunciationRow(result.pronunciation),
@@ -1568,9 +1780,16 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         return;
       }
 
+      // build task_type: the mic stays disarmed until a chip is tapped in
+      // every column (buildMaybeReveal flips buildArmed) -- "tapping must
+      // never skip the speaking" per the contract, enforced here rather than
+      // by hiding the button so the status line can tell the kid what to do.
+      const buildNotArmed = step?.task_type === 'build' && !state.buildArmed;
       const micBlocked = state.modePicked && !state.micGateReady;
-      btn.disabled = !micReady() || micBlocked;
-      if (micBlocked) {
+      btn.disabled = !micReady() || micBlocked || buildNotArmed;
+      if (buildNotArmed) {
+        statusEl.textContent = 'Con chọn một ô ở mỗi cột trước nhé!';
+      } else if (micBlocked) {
         statusEl.textContent = 'Con kiểm tra micro ở màn hình trước nhé.';
       } else {
         statusEl.textContent = micReady() ? 'Bấm nút đỏ rồi nói to, rõ nhé.' : 'Micro chưa sẵn sàng.';

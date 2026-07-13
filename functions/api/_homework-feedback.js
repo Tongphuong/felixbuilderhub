@@ -43,7 +43,7 @@ const MAX_RECAST_EN = 80;
 // throws (every field is defensively read with optional chaining / type
 // guards so a malformed `result`/`homework` degrades to an empty context
 // rather than a crash).
-export function buildFeedbackContext({ checkMode, result, transcript, homework, azure, skipWords } = {}) {
+export function buildFeedbackContext({ checkMode, result, transcript, homework, azure, skipWords, taskType } = {}) {
   const mode = checkMode === 'frame' ? 'frame' : (checkMode === 'open' ? 'open' : 'read');
 
   // The expected homework text relevant to THIS attempt — read from the
@@ -126,8 +126,33 @@ export function buildFeedbackContext({ checkMode, result, transcript, homework, 
       }
     : null;
 
+  // Schema v3 target words (2026-07-13): the homework compiler
+  // (minny-speaking-context.js) puts a task's must_use/anchors/stem anchor
+  // words uniformly into the compiled step's stems[].anchor_words, for
+  // every frame-check_mode task type (present/story/qa/picture-with-
+  // anchors) — so result.stems[].anchor_words IS "the task's target words"
+  // for whichever task this attempt was. Informational only: this is a
+  // SEPARATE field from allowed_focus_words, not a new source for it — the
+  // focus_word grounding fence (validateFeedbackGrounding) is unchanged and
+  // still only accepts a word from allowed_focus_words.
+  const targetWordsSet = new Set();
+  if (mode === 'frame' && Array.isArray(result?.stems)) {
+    for (const st of result.stems) {
+      if (Array.isArray(st?.anchor_words)) {
+        for (const w of st.anchor_words) {
+          const norm = normalizePracticeWord(w);
+          if (norm) targetWordsSet.add(norm);
+        }
+      }
+    }
+  }
+
   return {
-    exercise_type: mode === 'open' ? 'photo_talk' : mode,
+    // task_type (from the compiled step, when the caller has it) takes
+    // priority over the check_mode-derived value; falls back to today's
+    // derivation when absent so an untouched caller (read2lead-speaking-
+    // check.js, frozen) keeps working unchanged.
+    exercise_type: typeof taskType === 'string' && taskType ? taskType : (mode === 'open' ? 'photo_talk' : mode),
     homework: {
       note_vi: typeof homework?.note_vi === 'string' ? homework.note_vi.slice(0, 300) : '',
       text: homeworkText.slice(0, 600),
@@ -141,6 +166,7 @@ export function buildFeedbackContext({ checkMode, result, transcript, homework, 
     azure: azureBlock,
     transcript: String(transcript || '').slice(0, MAX_TRANSCRIPT_CHARS),
     allowed_focus_words: allowedFocusWords,
+    target_words: [...targetWordsSet].slice(0, 20),
   };
 }
 

@@ -67,9 +67,20 @@ or new account):
    - `ADMIN_PASSWORD`
    - `TELEGRAM_BOT_TOKEN`
    - `TELEGRAM_CHAT_ID`
-3. On the Render side, ensure `READ2LEAD_BACKEND_SECRET` matches exactly.
-4. Verify by hitting `/api/check-generation-status?code=...&pack_id=...`
-   — should return JSON, not 500.
+3. **R2 → bind the media bucket as `R2L_MEDIA` (bucket
+   `felixbuilderhub-read2lead`) for BOTH the Production and Preview
+   environments — they are configured separately.** Anything that stores
+   binary media needs it: SpeakUp homework photos, the teacher's vision
+   autofill, parent portfolio videos, Read2Lead gift photos. A missing
+   binding does not fail at build time — it surfaces at runtime as
+   `config_error` / "Hệ thống ảnh chưa được cấu hình." **Bindings only take
+   effect on a NEW deployment: redeploy after adding one.**
+4. On the Render side, ensure `READ2LEAD_BACKEND_SECRET` matches exactly.
+5. Verify by hitting `/api/check-generation-status?code=...&pack_id=...`
+   — should return JSON, not 500. Verify R2 by hitting
+   `/api/speakup-homework-photo?code=NOPE-NOPE-0000&id=hp_000000000000` —
+   should return 404 `photo_not_found`, **not** 500 `config_error` (that
+   guard runs before auth, so a 500 means the binding is missing).
 ## Drift detection (manual)
 Run this grep periodically; new bindings must appear in this doc:
 cd /home/felixbuilderhub/work/repos/felixbuilderhub
