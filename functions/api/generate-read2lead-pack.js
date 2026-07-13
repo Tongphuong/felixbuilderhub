@@ -1,8 +1,10 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import {
   computeRankLadder,
+  isUnlimitedCode,
   loadProgressState,
   PACKS_TO_NEXT_LEVEL,
+  spendUse,
   XP_PER_PASSED_PACK,
 } from './_read2lead-v2-state.js';
 import { reconcileStrandedPack } from './_read2lead-reconcile-stranded.js';
@@ -241,7 +243,7 @@ export async function onRequestPost(context) {
           child_gender: progress.child_gender,
         },
         progress: nextProgress,
-        uses_remaining: Math.max(0, (codeData.uses_remaining ?? 0) - 1),
+        uses_remaining: spendUse(codeData),
         last_used_at: finalPack.created_at.slice(0, 10),
       };
       await env.READ2LEAD_CODES.put(accessCode, JSON.stringify(updatedCode));
@@ -552,7 +554,7 @@ async function assignBookPack({
         child_gender: progress.child_gender,
       },
       progress: nextProgress,
-      uses_remaining: Math.max(0, (codeData.uses_remaining ?? 0) - 1),
+      uses_remaining: spendUse(codeData),
       last_used_at: finalPack.created_at.slice(0, 10),
     }),
   );
@@ -603,6 +605,10 @@ function checkStudentProfile(progress) {
 }
 
 function checkCodeAvailability(codeData) {
+  // Unlimited (test) codes never run out of uses. Expiry is still enforced for them:
+  // it is the only time-based kill switch on a code that has no credit ceiling, so a
+  // leaked test code cannot generate for ever — an admin bumps the date to keep one
+  // alive. (Buffet's call, 2026-07-13; the reported bug was exhausted uses, not expiry.)
   if (codeData.expires_at) {
     const today = new Date().toISOString().slice(0, 10);
     if (codeData.expires_at < today) {
@@ -610,7 +616,7 @@ function checkCodeAvailability(codeData) {
     }
   }
 
-  if ((codeData.uses_remaining ?? 0) <= 0) {
+  if (!isUnlimitedCode(codeData) && (codeData.uses_remaining ?? 0) <= 0) {
     return json({ ok: false, error: 'code_exhausted', message: 'Mã đã hết lượt. Vui lòng liên hệ Felix qua Zalo để gia hạn.' }, 403);
   }
   return null;

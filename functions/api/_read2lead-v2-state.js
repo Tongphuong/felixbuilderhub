@@ -53,6 +53,28 @@ export function gradeRewards(scorePercent) {
   const pct = Math.max(0, Math.min(100, Math.round(Number(scorePercent) || 0)));
   return GRADE_TIERS.find((tier) => pct >= tier.min_percent) ?? GRADE_TIERS[GRADE_TIERS.length - 1];
 }
+// Test codes exist so the team can exercise the product without spending a real
+// student's lesson credits. They already bypass the "review your previous pack" gate
+// (see shouldRequireReviewBeforeNextPack) and must also never run out of uses.
+//
+// Deliberately NOT extended to is_shared: a shared code goes to several people, so
+// unlimited generation on it would be a cost hole.
+//
+// Lives here, not in generate-read2lead-pack.js, because a pack can be finalised from
+// THREE places — the generate endpoint, check-generation-status.js (client polling) and
+// read2lead-progress.js (dashboard self-heal) — and each of them spends a credit. Keeping
+// the rule in one shared place is what stops a fourth caller from quietly re-introducing
+// the bug this fixes.
+export function isUnlimitedCode(codeData) {
+  return codeData?.is_test === true;
+}
+
+// A completed generation spends one credit — unless the code is unlimited.
+export function spendUse(codeData) {
+  if (isUnlimitedCode(codeData)) return codeData.uses_remaining ?? 0;
+  return Math.max(0, (codeData?.uses_remaining ?? 0) - 1);
+}
+
 export const LEVEL_RESET_VERSION = 20260606;
 export const START_LEVEL = 'L0';
 export const COINS_TOOLTIP = 'Tiết kiệm xu cho cửa hàng sắp mở! 🛒';
