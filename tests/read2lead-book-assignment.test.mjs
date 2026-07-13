@@ -49,10 +49,15 @@ function storedBook(slug, title) {
   };
 }
 
+// NOTE: this is a REAL student code (is_test: false). These tests assert credit
+// metering (uses_remaining 3 → 2 on a successful generate), and test codes are exempt
+// from metering entirely — see isUnlimitedCode() — so an is_test fixture would make
+// every metering assertion below pass vacuously. The test-code exemption has its own
+// coverage in tests/read2lead-test-code-unlimited.test.mjs.
 function codeData({ completed = [], currentBook = '' } = {}) {
   return {
     uses_remaining: 3,
-    is_test: true,
+    is_test: false,
     completed_books: completed,
     student_profile: {
       student_name: 'Minh',

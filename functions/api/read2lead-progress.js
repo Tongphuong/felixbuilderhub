@@ -2,7 +2,7 @@ import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse
 import { buildStoryProgressForProfile } from './_read2lead-library.js';
 import { buildWeeklyGrowthForProfile } from './_read2lead-growth.js';
 import { buildSkillQuality } from './_read2lead-profile-quality.js';
-import { loadProgressState, PACKS_TO_NEXT_LEVEL, publicProgressState } from './_read2lead-v2-state.js';
+import { loadProgressState, PACKS_TO_NEXT_LEVEL, publicProgressState, spendUse } from './_read2lead-v2-state.js';
 import { isV2PackSchemaVersion, packHasV2Schema } from './_read2lead-pack-schema.js';
 import { reconcileStrandedPack } from './_read2lead-reconcile-stranded.js';
 
@@ -274,7 +274,7 @@ async function reconcileGenerationState(kv, accessCode, codeData) {
         current_pack: finalPack,
         packs_created: (codeData.progress?.packs_created || 0) + 1,
       },
-      uses_remaining: Math.max(0, (codeData.uses_remaining ?? 0) - 1),
+      uses_remaining: spendUse(codeData),
       last_used_at: now.slice(0, 10),
     };
     await kv.put(accessCode, JSON.stringify(updated));

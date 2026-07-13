@@ -4,6 +4,8 @@
  * Never reads or writes `progress:{ACCESS_CODE}` (rank / XP / level_progress).
  */
 
+import { isUnlimitedCode } from './_read2lead-v2-state.js';
+
 export const DEFAULT_CLEAR_STATUSES = ['generation_in_progress'];
 export const ALLOWED_CLEAR_STATUSES = ['generation_in_progress', 'awaiting_review'];
 export const REFUND_ON_CLEAR_STATUSES = ['awaiting_review'];
@@ -80,7 +82,9 @@ export async function clearOpenLessonsFromKv(kv, options = {}) {
             current_pack: null,
           },
         };
-        if (shouldRefund) {
+        // Unlimited (test) codes never spend a use, so there is nothing to refund —
+        // refunding one would inflate their meter above its seeded value.
+        if (shouldRefund && !isUnlimitedCode(record)) {
           const usesRemaining = Number(record.uses_remaining) || 0;
           const usesTotal = Number(record.uses_total);
           let newUsesRemaining = usesRemaining + 1;
