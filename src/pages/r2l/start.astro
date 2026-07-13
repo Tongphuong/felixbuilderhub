@@ -1,147 +1,189 @@
 ---
+/**
+ * Read2Lead student home hub — the screen a child opens from their magic link.
+ *
+ * Two columns (wrapping to one stack on a phone): the child's world (pet, rank medal,
+ * level / streak / coins) and their actions (continue-or-create, SpeakUp, three tiles).
+ * All six phases live in the DOM at once; `data-phase` on <main> reveals one.
+ *
+ * The pet rendered here is the fallback. If the child has customised a monster, the client
+ * swaps in their real one — see r2l-start.client.ts.
+ */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Card from '../../components/ui/Card.astro';
 import Button from '../../components/ui/Button.astro';
 import ProgressBar from '../../components/ui/ProgressBar.astro';
-import SectionHeading from '../../components/ui/SectionHeading.astro';
 import { ZALO_URL } from '../../config/contact';
+import { defaultMonsterSvg } from '../../lib/r2l-hero';
 
 const STAGE_LABELS = [
   'Đang chọn truyện phù hợp với con…',
   'Đang chuẩn bị phần nghe…',
   'Đang ghi âm các cụm câu…',
-  'Đang chuẩn bị nhiệm vụ web…',
+  'Đang chuẩn bị nhiệm vụ đọc…',
 ];
-const INITIAL_PROGRESS = ((0 + 1) / 4) * 100;
+const INITIAL_PROGRESS = 12;
+
+const PET_SVG = defaultMonsterSvg();
 ---
 
 <BaseLayout
-  title="Tạo bài học — Read2Lead | Felix Coaching"
-  description="Tạo bài đọc và nghe phù hợp cho con."
+  title="Trang chủ — Read2Lead | Felix Coaching"
+  description="Trang chủ của con trên Read2Lead."
   robots="noindex, nofollow"
 >
   <Header />
 
-  <main id="main" class="mx-auto max-w-3xl px-6 py-12" data-phase="resolving">
-    {/* ========================== RESOLVING ========================== */}
-    <section class="phase-resolving flex min-h-[40vh] flex-col items-center justify-center text-center">
+  <main id="main" class="r2l-home mx-auto w-full max-w-5xl px-6 py-8" data-phase="resolving">
+    {/* ============================ RESOLVING ============================ */}
+    <section class="phase-resolving r2l-center">
       <div class="r2l-spinner" aria-label="Đang tải"></div>
-      <p class="mt-6 text-lg font-semibold text-cream">Đang mở bài của con…</p>
+      <p class="r2l-center__msg">Đang mở bài của con…</p>
     </section>
 
-    {/* ============================= ERROR ============================= */}
-    <section class="phase-error flex min-h-[40vh] flex-col items-center justify-center">
-      <Card variant="raised" class="max-w-md text-center">
-        <p class="text-4xl">😕</p>
-        <h2 class="font-display mt-4 text-xl font-bold text-cream">Không mở được link</h2>
-        <p id="error-message" class="mt-3 leading-relaxed text-cream-muted" role="alert">
-          Link không hợp lệ hoặc đã hết hạn.
+    {/* ============================== ERROR ============================== */}
+    <section class="phase-error r2l-center">
+      <Card variant="raised" class="r2l-state-card">
+        <p class="r2l-state-emoji">😕</p>
+        <h2 class="r2l-state-title">Không mở được link</h2>
+        <p id="error-message" class="r2l-state-text" role="alert">
+          Link không hợp lệ hoặc đã hết hạn. Nhờ bố mẹ mở lại giúp con nhé.
         </p>
-        <div class="mt-6">
-          <Button variant="secondary" href={ZALO_URL}>Nhắn Zalo Felix</Button>
-        </div>
+        <div class="mt-6"><Button variant="secondary" href={ZALO_URL}>Nhắn Zalo Felix</Button></div>
       </Card>
     </section>
 
-    {/* ============================= READY ============================= */}
+    {/* ============================== READY ============================== */}
     <section class="phase-ready">
-      <div class="text-center">
-        <p class="fx-eyebrow text-accent">HỌC SINH READ2LEAD</p>
-        <h1 class="mt-3 font-display text-2xl font-extrabold text-cream sm:text-3xl">
-          Chào con <span id="greeting-name" data-clarity-mask="true">bạn nhỏ</span>! 👋
-        </h1>
-        <p class="mt-2 text-cream-muted">
-          Cấp <span id="greeting-level" class="font-semibold text-accent">L1</span>
-        </p>
-      </div>
+      <div class="r2l-hub">
+        {/* ---- Column A: the child's world ---- */}
+        <aside class="r2l-world">
+          <span class="r2l-star r2l-star--a">★</span>
+          <span class="r2l-star r2l-star--b">★</span>
+          <span class="r2l-star r2l-star--c">★</span>
 
-      {/* Honeypot */}
-      <div class="r2l-honeypot" aria-hidden="true">
-        <label for="website">Website</label>
-        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
-      </div>
+          <p class="fx-eyebrow r2l-world__eyebrow">HỌC SINH READ2LEAD</p>
+          <h1 class="r2l-world__hello">Chào con <span id="greeting-name" data-clarity-mask="true">bạn nhỏ</span>! 👋</h1>
 
-      <div class="r2l-hub-big-grid">
-        <button type="button" id="generate-btn" class="r2l-hub-big r2l-hub-big--primary">
-          <span class="r2l-hub-big__icon" aria-hidden="true">📖</span>
-          <span class="r2l-hub-big__text">
-            <span class="r2l-hub-big__title">Tạo bài đọc</span>
-            <span class="r2l-hub-big__sub">Nhận một cuốn truyện mới và bắt đầu đọc ngay</span>
-          </span>
-          <span class="r2l-hub-big__chev" aria-hidden="true">›</span>
-        </button>
+          <div class="r2l-pet">
+            <div class="r2l-pet__glow"></div>
+            <div class="r2l-pet__art" id="pet-slot" set:html={PET_SVG}></div>
+            <img id="rank-medal" class="r2l-pet__medal" src="/assets/r2l/ranks/rank-l1-bronze.svg" alt="" />
+          </div>
+          <p class="r2l-world__rank">Hạng <b id="rank-label">Đồng</b></p>
 
-        <a id="speak-link" href="/speak-up" class="r2l-hub-big r2l-hub-big--secondary">
-          <span class="r2l-hub-big__icon" aria-hidden="true">🗣️</span>
-          <span class="r2l-hub-big__text">
-            <span class="r2l-hub-big__title">SpeakUp</span>
-            <span class="r2l-hub-big__sub">Luyện nói tiếng Anh cùng Minny</span>
-          </span>
-          <span class="r2l-hub-big__chev" aria-hidden="true">›</span>
-        </a>
-      </div>
+          <div class="r2l-chips">
+            <span class="r2l-chip r2l-chip--gold">Cấp <span id="greeting-level">L1</span></span>
+            <span class="r2l-chip"><span class="r2l-flame">🔥</span> <span id="stat-streak">0</span> ngày</span>
+            <span class="r2l-chip">🪙 <span id="stat-coins">0</span> xu</span>
+          </div>
+        </aside>
 
-      <div class="r2l-hub-small-grid">
-        <a id="hoso-link" href="/ho-so" class="r2l-hub-small">
-          <span class="r2l-hub-small__icon" aria-hidden="true">👤</span>
-          <span class="r2l-hub-small__text">
-            <span class="r2l-hub-small__title">Hồ sơ – Báo cáo tiến độ</span>
-            <span class="r2l-hub-small__sub">Xem con đã học được gì và giỏi lên thế nào</span>
-          </span>
-        </a>
-        <a href="/read2lead/leaderboard" class="r2l-hub-small">
-          <span class="r2l-hub-small__icon" aria-hidden="true">🏆</span>
-          <span class="r2l-hub-small__text">
-            <span class="r2l-hub-small__title">Bảng xếp hạng</span>
-            <span class="r2l-hub-small__sub">Xem thứ hạng của con so với các bạn</span>
-          </span>
-        </a>
-        <a id="shop-link" href="/read2lead/shop" class="r2l-hub-small">
-          <span class="r2l-hub-small__icon" aria-hidden="true">🛒</span>
-          <span class="r2l-hub-small__text">
-            <span class="r2l-hub-small__title">Cửa hàng</span>
-            <span class="r2l-hub-small__sub">Dùng xu con kiếm được để mua đồ cho thú cưng</span>
-          </span>
-        </a>
+        {/* ---- Column B: the actions ---- */}
+        <div class="r2l-actions">
+          {/* PRIMARY 1a — CONTINUE the open book. The client reveals exactly one of these two. */}
+          <section class="r2l-cta" id="cta-continue" hidden>
+            <p class="fx-eyebrow r2l-cta__eyebrow">ĐỌC TIẾP</p>
+            <div class="r2l-cta__row">
+              <div class="r2l-cover"><span class="r2l-cover__spine"></span><span class="r2l-cover__glyph">📖</span></div>
+              <div class="r2l-cta__meta">
+                <p class="r2l-cta__kicker">Con đang đọc dở cuốn</p>
+                <h2 class="r2l-cta__title" id="book-title">…</h2>
+                <div class="r2l-cta__progress">
+                  <ProgressBar value={0} gradient aria-label="Tiến độ đọc" />
+                  <span class="r2l-cta__pct" id="book-pct">0%</span>
+                </div>
+              </div>
+            </div>
+            <a id="continue-link" class="fx-btn fx-btn--primary fx-btn--lg fx-btn--block r2l-cta__go" href="/read2lead/lesson">Đọc tiếp 📖</a>
+            <button id="generate-btn" type="button" class="fx-btn fx-btn--ghost r2l-cta__alt">hoặc nhận một cuốn truyện mới ✨</button>
+          </section>
+
+          {/* PRIMARY 1b — CREATE a new book (no open book). */}
+          <section class="r2l-cta r2l-cta--create" id="cta-create" hidden>
+            <div class="r2l-cta__bigglyph">📖</div>
+            <p class="fx-eyebrow r2l-cta__eyebrow">BÀI ĐỌC MỚI</p>
+            <h2 class="r2l-cta__title r2l-cta__title--center">Nhận một cuốn truyện mới</h2>
+            <p class="r2l-cta__sub" id="create-sub">và bắt đầu đọc ngay 🎧</p>
+            <Button variant="primary" size="lg" block id="generate-btn-create" class="r2l-cta__go">Tạo bài đọc</Button>
+          </section>
+
+          {/* PRIMARY 2 — SpeakUp. Minny is a red robot. */}
+          <a id="speak-link" href="/speak-up" class="r2l-speak">
+            <span class="r2l-speak__avatar"><img src="/assets/minny/minny.png" alt="Minny" /></span>
+            <span class="r2l-speak__meta">
+              <span class="r2l-speak__title">SpeakUp</span>
+              <span class="r2l-speak__sub">Luyện nói tiếng Anh cùng Minny</span>
+            </span>
+            <span class="r2l-speak__arrow" aria-hidden="true">→</span>
+          </a>
+
+          {/* SECONDARY — three destinations */}
+          <div class="r2l-tiles">
+            <a id="hoso-link" href="/ho-so" class="r2l-tile">
+              <span class="r2l-tile__icon">👤</span>
+              <span class="r2l-tile__label">Hồ sơ</span>
+              <span class="r2l-tile__sub">Tiến độ của con</span>
+            </a>
+            <a href="/read2lead/leaderboard" class="r2l-tile">
+              <span class="r2l-tile__icon">🏆</span>
+              <span class="r2l-tile__label">Xếp hạng</span>
+              <span class="r2l-tile__sub">Thi cùng các bạn</span>
+            </a>
+            <a id="shop-link" href="/read2lead/shop" class="r2l-tile">
+              <span class="r2l-tile__icon">🛒</span>
+              <span class="r2l-tile__label">Cửa hàng</span>
+              <span class="r2l-tile__sub">🪙 <span id="shop-coins">0</span> xu</span>
+            </a>
+          </div>
+
+          {/* Honeypot — anti-bot; the client refuses to generate if it is filled. */}
+          <div class="r2l-honeypot" aria-hidden="true">
+            <label for="website">Website</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+        </div>
       </div>
     </section>
 
-    {/* ========================== GENERATING ========================== */}
-    <section class="phase-generating">
-      <SectionHeading align="center" title="Minny đang chuẩn bị bài cho con…" />
-      <Card variant="raised" class="mt-8 text-center">
-        <div id="gen-progress">
-          <ProgressBar value={INITIAL_PROGRESS} gradient aria-label="Tiến độ tạo bài học" />
-        </div>
-        <p id="stage-label" class="r2l-stage-label" aria-live="polite">{STAGE_LABELS[0]}</p>
-        <p id="gen-note" class="r2l-gen-note">Lần đầu có thể chậm hơn một chút vì máy chủ cần khởi động.</p>
-      </Card>
+    {/* =========================== GENERATING =========================== */}
+    <section class="phase-generating r2l-center">
+      <div class="r2l-gen">
+        <div class="r2l-gen__pet" id="gen-pet" set:html={PET_SVG}></div>
+        <h2 class="r2l-gen__title">Đang chuẩn bị bài đọc cho con…</h2>
+        <Card variant="raised" class="r2l-gen__card">
+          <div id="gen-progress"><ProgressBar value={INITIAL_PROGRESS} gradient aria-label="Tiến độ tạo bài học" /></div>
+          <p id="stage-label" class="r2l-gen__stage" aria-live="polite">{STAGE_LABELS[0]}</p>
+          <p id="gen-note" class="r2l-gen__note">Lần đầu có thể chậm hơn một chút vì máy chủ cần khởi động.</p>
+        </Card>
+      </div>
     </section>
 
-    {/* ============================ RESULT ============================ */}
-    <section class="phase-result">
-      <Card variant="accent" class="mt-8 text-center">
-        <h2 class="font-display r2l-result-title">Bài học của <span id="result-name" data-clarity-mask="true"></span> đã sẵn sàng! ✨</h2>
-        <p class="r2l-result-text" id="result-topic-wrap" hidden>Chủ đề: <strong class="text-accent" id="result-topic"></strong></p>
-        <p class="r2l-result-text" id="result-story" hidden>Tên truyện: <strong class="text-accent" id="result-story-title"></strong></p>
-        <div class="r2l-result-actions">
-          <Button variant="primary" size="lg" href="#" id="open-lesson">Mở bài học →</Button>
-          <Button variant="secondary" id="reset">Tạo bài khác</Button>
-        </div>
-      </Card>
+    {/* ============================= RESULT ============================= */}
+    <section class="phase-result r2l-center">
+      <div class="r2l-result">
+        <div class="r2l-result__spark">✨</div>
+        <Card variant="accent" class="r2l-result__card">
+          <h2 class="r2l-state-title">Bài học của <span id="result-name" data-clarity-mask="true"></span> đã sẵn sàng!</h2>
+          <p class="r2l-state-text" id="result-story" hidden>Tên truyện: <strong class="text-accent" id="result-story-title"></strong></p>
+          <div class="r2l-result__actions">
+            <Button variant="primary" size="lg" href="#" id="open-lesson" block>Mở bài học →</Button>
+            <Button variant="secondary" id="reset">Tạo bài khác</Button>
+          </div>
+        </Card>
+      </div>
     </section>
 
     {/* =========================== GEN-ERROR =========================== */}
-    <section class="phase-gen-error">
-      <Card variant="raised" class="mt-8 text-center">
-        <h2 class="font-display r2l-result-title">Chưa tạo được bài học</h2>
-        <p class="r2l-result-text" id="gen-error-message" aria-live="polite" role="alert"></p>
-        <div class="r2l-result-actions">
-          <Button variant="primary" size="lg" id="retry">Thử lại</Button>
-        </div>
-        <p class="r2l-gen-note">Nếu vẫn lỗi, anh chị nhắn Zalo Felix để được hỗ trợ.</p>
+    <section class="phase-gen-error r2l-center">
+      <Card variant="raised" class="r2l-state-card">
+        <p class="r2l-state-emoji">🌧️</p>
+        <h2 class="r2l-state-title">Chưa tạo được bài học</h2>
+        <p id="gen-error-message" class="r2l-state-text" aria-live="polite" role="alert">Mạng hơi chậm một chút. Con thử lại nhé!</p>
+        <div class="mt-6"><Button variant="primary" size="lg" id="retry">Thử lại</Button></div>
+        <p class="r2l-state-note">Nếu vẫn lỗi, bố mẹ nhắn Zalo Felix để được hỗ trợ.</p>
       </Card>
     </section>
   </main>
@@ -154,212 +196,151 @@ const INITIAL_PROGRESS = ((0 + 1) / 4) * 100;
 </BaseLayout>
 
 <style>
-  /* Spinner — matches ho-so pattern. */
-  .r2l-spinner {
-    width: 2.5rem;
-    height: 2.5rem;
-    border: 3px solid color-mix(in srgb, var(--cream) 20%, transparent);
-    border-top-color: var(--accent);
-    border-radius: var(--radius-full);
-    animation: r2l-spin 0.7s linear infinite;
-  }
-  @keyframes r2l-spin {
-    to { transform: rotate(360deg); }
+  /* Two artwork-derived colours, deliberately literal: they are sampled from Minny's PNG
+     and the book-cover art in the approved design, not theme colours — mapping them onto
+     the nearest navy token would visibly change the design. Everything else is a token. */
+  .r2l-home {
+    --minny-red: #e0533f;
+    --book-cover-lit: #2f6285;
   }
 
-  /* Honeypot */
-  .r2l-honeypot {
-    position: absolute;
-    left: -9999px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-  }
+  /* Layout is intrinsically responsive via flex-wrap + clamp — no media queries needed. */
+  .r2l-hub { display: flex; flex-wrap: wrap; gap: 18px; align-items: stretch; }
+  .r2l-world { flex: 1 1 320px; position: relative; overflow: hidden; display: flex; flex-direction: column;
+    background: var(--surface-raised); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-2xl); padding: clamp(20px, 3.5vw, 30px); box-shadow: var(--shadow-card); }
+  .r2l-actions { flex: 1.7 1 440px; display: flex; flex-direction: column; gap: 14px; }
 
-  /* Generating stage caption. */
-  .r2l-stage-label {
-    margin-top: var(--space-6);
-    font-size: var(--text-lg);
-    font-weight: var(--weight-semibold);
-    color: var(--cream);
-  }
-  .r2l-gen-note {
-    margin-top: var(--space-3);
-    font-size: var(--text-sm);
-    color: var(--cream-dim);
-  }
+  .r2l-world__eyebrow { color: var(--gold); margin: 0; }
+  .r2l-world__hello { font-family: var(--font-display); font-weight: 800;
+    font-size: clamp(26px, 4.4vw, 34px); line-height: 1.25; margin: 10px 0 0; text-wrap: balance; }
 
-  /* Result card. */
-  .r2l-result-title {
-    margin: 0;
-    font-size: var(--text-h3);
-    font-weight: var(--weight-bold);
-    color: var(--cream);
-  }
-  .r2l-result-text {
-    margin-top: var(--space-4);
-    color: var(--text-body);
-    line-height: var(--leading-relaxed);
-  }
-  .r2l-result-actions {
-    margin-top: var(--space-6);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-3);
-  }
+  .r2l-star { position: absolute; animation: r2l-twinkle 2.8s ease-in-out infinite; }
+  .r2l-star--a { top: 18px; right: 26px; font-size: 13px; color: var(--gold-light); }
+  .r2l-star--b { top: 52px; right: 64px; font-size: 9px; color: var(--cream); animation-delay: .6s; }
+  .r2l-star--c { bottom: 40px; left: 24px; font-size: 10px; color: var(--gold-light); animation-delay: 1.1s; }
 
-  /* ---- Home hub (ready phase) ---- */
-  .r2l-hub-big-grid {
-    display: grid;
-    gap: var(--space-4);
-    margin-top: var(--space-8);
-  }
-  .r2l-hub-big {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-    width: 100%;
-    padding: 1.35rem var(--space-5);
-    border-radius: var(--radius-xl);
-    border: 1px solid transparent;
-    font-family: inherit;
-    text-align: left;
-    text-decoration: none;
-    cursor: pointer;
-    transition: transform var(--duration-fast) var(--ease-standard);
-  }
-  .r2l-hub-big:active { transform: translateY(1px); }
-  .r2l-hub-big__icon {
-    flex: 0 0 auto;
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: var(--radius-full);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.9rem;
-  }
-  .r2l-hub-big__text { display: block; }
-  .r2l-hub-big__title {
-    display: block;
-    font-family: var(--font-display);
-    font-weight: var(--weight-extrabold);
-    font-size: var(--text-lg);
-    line-height: 1.2;
-  }
-  .r2l-hub-big__sub {
-    display: block;
-    margin-top: var(--space-1);
-    font-size: var(--text-sm);
-    line-height: 1.35;
-  }
-  .r2l-hub-big__chev {
-    margin-left: auto;
-    font-size: 1.3rem;
-    opacity: 0.55;
-    flex: 0 0 auto;
-  }
-  .r2l-hub-big--primary {
-    background: var(--gold);
-    color: var(--navy-950);
-    box-shadow: 0 6px 20px -8px color-mix(in srgb, var(--gold) 55%, transparent);
-  }
-  .r2l-hub-big--primary .r2l-hub-big__icon { background: color-mix(in srgb, var(--navy-950) 14%, transparent); }
-  .r2l-hub-big--primary .r2l-hub-big__title { color: var(--navy-950); }
-  .r2l-hub-big--primary .r2l-hub-big__sub { color: color-mix(in srgb, var(--navy-950) 78%, transparent); }
-  .r2l-hub-big--secondary {
-    background: var(--navy-850);
-    border-color: var(--accent-border);
-    color: var(--cream);
-  }
-  .r2l-hub-big--secondary .r2l-hub-big__icon { background: var(--accent-soft); }
-  .r2l-hub-big--secondary .r2l-hub-big__title { color: var(--cream); }
-  .r2l-hub-big--secondary .r2l-hub-big__sub { color: var(--cream-muted); }
+  .r2l-pet { position: relative; align-self: center; margin: 14px 0 6px;
+    width: clamp(150px, 42vw, 190px); aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; }
+  .r2l-pet__glow { position: absolute; inset: 8%; border-radius: 50%;
+    background: radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--rank-legend) 26%, transparent), transparent 70%); }
+  .r2l-pet__art { width: 100%; height: 100%; animation: r2l-bob 4.2s ease-in-out infinite;
+    filter: drop-shadow(0 12px 18px rgba(0, 0, 0, .45)); }
+  .r2l-pet__art svg,
+  .r2l-pet__art img { width: 100%; height: 100%; object-fit: contain; }
+  /* The child's real monster is rendered into a child element by renderMonster(), which
+     owns that element's classes — make it fill the slot our wrapper animates. */
+  .r2l-pet__art > :global(.r2l-monster) { width: 100%; height: 100%; }
+  .r2l-pet__medal { position: absolute; bottom: 2%; right: 6%; width: clamp(46px, 13vw, 58px);
+    height: auto; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .5)); }
+  .r2l-world__rank { text-align: center; margin: 0 0 14px; font-family: var(--font-display);
+    font-weight: 700; color: var(--cream); font-size: 15px; }
+  .r2l-world__rank b { color: var(--gold-light); }
 
-  .r2l-hub-small-grid {
-    display: grid;
-    gap: var(--space-3);
-    margin-top: var(--space-4);
-  }
-  .r2l-hub-small {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-4);
-    border-radius: var(--radius-lg);
-    background: color-mix(in srgb, var(--navy-900) 70%, transparent);
-    border: 1px solid var(--border-subtle);
-    text-decoration: none;
-    transition: border-color var(--duration-base) var(--ease-standard);
-  }
-  .r2l-hub-small:hover { border-color: var(--accent-border); }
-  .r2l-hub-small__icon {
-    flex: 0 0 auto;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: var(--radius-full);
-    background: color-mix(in srgb, var(--cream) 8%, transparent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem;
-  }
-  .r2l-hub-small__text { display: block; }
-  .r2l-hub-small__title {
-    display: block;
-    font-weight: var(--weight-bold);
-    color: var(--cream);
-    font-size: 0.92rem;
-    line-height: 1.2;
-  }
-  .r2l-hub-small__sub {
-    display: block;
-    margin-top: var(--space-1);
-    font-size: var(--text-xs);
-    color: var(--cream-dim);
-    line-height: 1.3;
-  }
+  .r2l-chips { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; margin-top: auto; }
+  .r2l-chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px;
+    border-radius: var(--radius-full); font-size: 14px; font-weight: 600; color: var(--cream);
+    background: color-mix(in srgb, var(--navy-950) 55%, transparent); border: 1px solid var(--border-subtle); }
+  .r2l-chip--gold { background: var(--accent-soft); border-color: var(--accent-border); color: var(--gold-light); font-weight: 700; }
+  .r2l-flame { display: inline-block; animation: r2l-flame 1.6s ease-in-out infinite; }
 
-  @media (min-width: 768px) {
-    .r2l-hub-big-grid { grid-template-columns: 1fr 1fr; gap: var(--space-5); }
-    .r2l-hub-big {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 1.75rem var(--space-6);
-      min-height: 12rem;
-    }
-    .r2l-hub-big__icon { width: 4rem; height: 4rem; font-size: 2.2rem; }
-    .r2l-hub-big__title { font-size: 1.45rem; margin-top: var(--space-4); }
-    .r2l-hub-big__sub { font-size: var(--text-sm); }
-    .r2l-hub-big__chev { display: none; }
-    .r2l-hub-small-grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
-    .r2l-hub-small { flex-direction: column; align-items: flex-start; padding: var(--space-5); }
-    .r2l-hub-small__icon { margin-bottom: var(--space-2); }
-  }
+  /* Primary contextual card — the heaviest thing on the screen. */
+  .r2l-cta { position: relative; overflow: hidden; box-shadow: var(--shadow-lg);
+    background: color-mix(in srgb, var(--gold) 9%, var(--surface-raised));
+    border: 1.5px solid var(--accent-border); border-radius: var(--radius-2xl); padding: clamp(18px, 3vw, 24px); }
+  .r2l-cta--create { text-align: center; padding: clamp(20px, 3.4vw, 28px); }
+  .r2l-cta__eyebrow { color: var(--gold-light); margin: 0 0 12px; }
+  .r2l-cta__row { display: flex; gap: 16px; align-items: center; }
+  .r2l-cover { flex: 0 0 auto; width: clamp(64px, 17vw, 82px); aspect-ratio: 3/4; position: relative;
+    display: flex; align-items: center; justify-content: center; border-radius: var(--radius-lg);
+    overflow: hidden; border: 1px solid var(--border-strong); box-shadow: var(--shadow-card);
+    background: linear-gradient(140deg, var(--book-cover-lit), var(--navy-850)); }
+  .r2l-cover__spine { position: absolute; left: 7px; top: 8px; bottom: 8px; width: 5px;
+    border-radius: 3px; background: color-mix(in srgb, var(--gold) 55%, transparent); }
+  .r2l-cover__glyph { font-size: 30px; line-height: 1; }
+  .r2l-cta__meta { flex: 1 1 auto; min-width: 0; }
+  .r2l-cta__kicker { margin: 0 0 4px; font-size: 13px; color: var(--cream-muted); }
+  .r2l-cta__title { font-family: var(--font-display); font-weight: 800; margin: 0; color: var(--cream);
+    font-size: clamp(19px, 3.2vw, 24px); line-height: 1.25; text-wrap: balance; }
+  .r2l-cta__title--center { font-size: clamp(21px, 3.4vw, 26px); }
+  .r2l-cta__sub { margin: 8px 0 0; color: var(--cream-muted); font-size: 15px; }
+  .r2l-cta__bigglyph { font-size: 40px; line-height: 1; }
+  .r2l-cta__progress { margin-top: 12px; display: flex; align-items: center; gap: 10px; }
+  .r2l-cta__progress .fx-progress { flex: 1 1 auto; }
+  .r2l-cta__pct { font-size: 13px; font-weight: 700; color: var(--gold-light); white-space: nowrap; }
+  .r2l-cta__go { margin-top: 18px; font-size: clamp(17px, 2.6vw, 20px); border-radius: var(--radius-xl); }
+  .r2l-cta__alt { margin-top: 6px; width: 100%; justify-content: center; }
 
-  /* All phases live in the DOM at once; CSS reveals one per data-phase. */
-  .phase-resolving,
-  .phase-error,
-  .phase-ready,
-  .phase-generating,
-  .phase-result,
-  .phase-gen-error {
-    display: none;
-  }
+  /* SpeakUp */
+  .r2l-speak { display: flex; align-items: center; gap: 15px; text-decoration: none;
+    background: var(--surface-raised); border: 1px solid var(--border-strong);
+    border-radius: var(--radius-2xl); padding: 16px clamp(16px, 2.6vw, 22px); box-shadow: var(--shadow-card);
+    transition: border-color var(--duration-base) var(--ease-standard), transform var(--duration-fast) var(--ease-standard); }
+  .r2l-speak:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .r2l-speak__avatar { flex: 0 0 auto; width: 64px; height: 64px; border-radius: 50%; overflow: hidden;
+    background: var(--navy-950); border: 2px solid color-mix(in srgb, var(--minny-red) 60%, transparent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--minny-red) 16%, transparent); }
+  .r2l-speak__avatar img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 36%; }
+  .r2l-speak__meta { flex: 1 1 auto; min-width: 0; }
+  .r2l-speak__title { display: block; font-family: var(--font-display); font-weight: 800;
+    font-size: clamp(19px, 3vw, 23px); color: var(--cream); }
+  .r2l-speak__sub { display: block; margin-top: 2px; font-size: 14px; color: var(--cream-muted); }
+  .r2l-speak__arrow { flex: 0 0 auto; font-size: 22px; color: var(--gold); }
+
+  /* Secondary tiles */
+  .r2l-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .r2l-tile { display: flex; flex-direction: column; align-items: center; gap: 9px; text-align: center;
+    padding: 15px 8px; min-height: 112px; text-decoration: none; color: var(--cream);
+    background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl);
+    transition: border-color var(--duration-base) var(--ease-standard); }
+  .r2l-tile:hover { border-color: var(--gold); }
+  .r2l-tile__icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 22px; background: color-mix(in srgb, var(--gold) 12%, transparent); }
+  .r2l-tile__label { font-weight: 700; font-size: 14px; line-height: 1.2; }
+  .r2l-tile__sub { font-size: 11px; color: var(--cream-dim); line-height: 1.25; }
+
+  /* Shared state chrome */
+  .r2l-center { min-height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .r2l-center__msg { margin-top: 22px; font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--cream); }
+  .r2l-state-card { max-width: 420px; text-align: center; }
+  .r2l-state-emoji { font-size: 46px; margin: 0; }
+  .r2l-state-title { font-family: var(--font-display); font-weight: 800; font-size: 20px; margin: 14px 0 0; color: var(--cream); }
+  .r2l-state-text { margin: 12px 0 0; color: var(--cream-muted); line-height: 1.6; }
+  .r2l-state-note { margin: 14px 0 0; font-size: 12px; color: var(--cream-dim); }
+
+  .r2l-gen { width: min(460px, 100%); }
+  .r2l-gen__pet { width: 150px; height: 150px; margin: 0 auto 10px; animation: r2l-bob 4.2s ease-in-out infinite;
+    filter: drop-shadow(0 12px 18px rgba(0, 0, 0, .45)); }
+  .r2l-gen__pet svg,
+  .r2l-gen__pet img { width: 100%; height: 100%; object-fit: contain; }
+  .r2l-gen__title { font-family: var(--font-display); font-weight: 800; font-size: 22px; margin: 0 0 18px; color: var(--cream); }
+  .r2l-gen__stage { margin: 18px 0 0; font-weight: 600; font-size: 16px; color: var(--cream); }
+  .r2l-gen__note { margin: 8px 0 0; font-size: 13px; color: var(--cream-dim); }
+
+  .r2l-result { width: min(440px, 100%); animation: r2l-pop .5s var(--ease-standard); }
+  .r2l-result__spark { font-size: 52px; }
+  .r2l-result__actions { margin-top: 22px; display: flex; flex-direction: column; gap: 10px; }
+
+  .r2l-spinner { width: 46px; height: 46px; border: 3px solid color-mix(in srgb, var(--cream) 20%, transparent);
+    border-top-color: var(--gold); border-radius: var(--radius-full); animation: r2l-spin .7s linear infinite; }
+  .r2l-honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  @keyframes r2l-bob { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-9px) rotate(1.5deg); } }
+  @keyframes r2l-twinkle { 0%, 100% { opacity: .25; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.15); } }
+  @keyframes r2l-flame { 0%, 100% { transform: scale(1) rotate(-3deg); } 50% { transform: scale(1.18) rotate(4deg); } }
+  @keyframes r2l-spin { to { transform: rotate(360deg); } }
+  @keyframes r2l-pop { 0% { transform: scale(.6); opacity: 0; } 60% { transform: scale(1.08); } 100% { transform: scale(1); opacity: 1; } }
+
+  /* Phase machine — one block visible at a time. */
+  .phase-resolving, .phase-error, .phase-ready, .phase-generating, .phase-result, .phase-gen-error { display: none; }
   [data-phase='resolving'] .phase-resolving { display: flex; }
   [data-phase='error'] .phase-error { display: flex; }
   [data-phase='ready'] .phase-ready { display: block; }
-  [data-phase='generating'] .phase-generating { display: block; }
-  [data-phase='result'] .phase-result { display: block; }
-  [data-phase='gen-error'] .phase-gen-error { display: block; }
+  [data-phase='generating'] .phase-generating { display: flex; }
+  [data-phase='result'] .phase-result { display: flex; }
+  [data-phase='gen-error'] .phase-gen-error { display: flex; }
 
   @media (prefers-reduced-motion: reduce) {
-    .r2l-spinner { animation: none; }
-    .phase-generating .fx-progress__fill,
-    .phase-generating .fx-progress__fill--gradient {
-      transition: none !important;
-      animation: none !important;
-    }
+    .r2l-pet__art, .r2l-gen__pet, .r2l-star, .r2l-flame, .r2l-spinner, .r2l-result { animation: none !important; }
   }
 </style>

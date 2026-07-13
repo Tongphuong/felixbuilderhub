@@ -6,6 +6,7 @@ import type { ProgressPayload } from './ho-so';
 import { escapeHtml, firstName, qs } from './ho-so';
 
 import { isV3Enabled } from '../../config/flags';
+import { buildHeroCta, defaultMonsterSvg, PROFILE_TIERS, statusMeta } from '../../lib/r2l-hero';
 import { renderEggHtml } from '../../lib/egg-renderer';
 import { renderMonster, type EquippedDisplayItem } from '../../lib/monster-avatar';
 import { monsterBuilderHtml, mountMonsterBuilder } from '../../lib/monster-builder';
@@ -76,44 +77,9 @@ function clearPendingGeneration(code: string) {
 }
 
 // ── Pack status ──
-
-function statusMeta(state: string, pack: Record<string, unknown> | null | undefined) {
-  if (!pack) return { label: 'Chưa có bài', completed: false, step: 0 };
-  if (state === 'generation_in_progress' || pack.status === 'generation_in_progress')
-    return { label: 'Đang tạo', completed: false, step: 0 };
-  if (
-    state === 'reviewed' ||
-    pack.status === 'reviewed_pass' ||
-    pack.status === 'reviewed_pass_web' ||
-    pack.status === 'reviewed_pass_web_v2'
-  ) return { label: 'Đã xong', completed: true, step: 3 };
-  const steps = (pack.web_lesson_steps as Record<string, unknown>) || {};
-  if (steps.read_completed_at) return { label: 'Làm bài', completed: false, step: 2 };
-  if (steps.listen_completed_at) return { label: 'Đang nghe', completed: false, step: 1 };
-  return { label: 'Sẵn sàng', completed: false, step: 1 };
-}
-
-function buildHeroCta(
-  pack: Record<string, unknown> | null | undefined,
-  data: ProgressPayload,
-  code: string,
-) {
-  const encoded = encodeURIComponent(code);
-  if (!pack) return { label: 'Tạo bài đọc mới ✨', action: 'create' as const, href: null };
-  if (data.state === 'generation_in_progress' || pack.status === 'generation_in_progress')
-    return { label: 'Minny đang chuẩn bị...', action: 'wait' as const, href: null };
-  if (
-    data.state === 'reviewed' ||
-    pack.status === 'reviewed_pass' ||
-    pack.status === 'reviewed_pass_web' ||
-    pack.status === 'reviewed_pass_web_v2'
-  ) return { label: 'Tạo bài đọc mới ✨', action: 'create' as const, href: null };
-  return {
-    label: 'Đọc tiếp 📖',
-    action: 'lesson' as const,
-    href: `/read2lead/lesson?code=${encoded}&pack_id=${encodeURIComponent(String(pack.pack_id || ''))}`,
-  };
-}
+// statusMeta / buildHeroCta / PROFILE_TIERS / defaultMonsterSvg now live in
+// src/lib/r2l-hero.ts — the student home hub (/r2l/start) applies the same rules, and
+// "continue vs create" must have a single definition. Imported at the top of this file.
 
 function missionNodes(pack: Record<string, unknown> | null | undefined, data: ProgressPayload): QuestNode[] {
   if (!pack) {
@@ -495,21 +461,6 @@ function wireW2Handlers(dash: HTMLElement, code: string) {
 }
 
 // ── Redesigned dashboard rendering ──
-
-const PROFILE_TIERS = [
-  ['Đồng', 'var(--rank-bronze)', 'bronze'],
-  ['Bạc', 'var(--rank-silver)', 'silver'],
-  ['Vàng', 'var(--rank-gold)', 'gold'],
-  ['Bạch Kim', 'var(--rank-silver)', 'silver'],
-  ['Kim Cương', 'var(--rank-diamond)', 'diamond'],
-  ['Tinh Anh', 'var(--rank-legend)', 'legend'],
-  ['Cao Thủ', 'var(--rank-legend)', 'legend'],
-  ['Thách Đấu', 'var(--rank-legend)', 'legend'],
-] as const;
-
-function defaultMonsterSvg() {
-  return `<svg viewBox="0 0 120 120" aria-hidden="true"><defs><radialGradient id="hs-glow"><stop offset="0%" stop-color="#c89bff" stop-opacity=".45"/><stop offset="100%" stop-color="#c89bff" stop-opacity="0"/></radialGradient><linearGradient id="hs-body" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b08af0"/><stop offset="100%" stop-color="#7558c7"/></linearGradient></defs><circle cx="60" cy="64" r="46" fill="url(#hs-glow)"/><line x1="48" y1="42" x2="42" y2="22" stroke="#7558c7" stroke-width="3"/><circle cx="42" cy="20" r="3.5" fill="#f2cc7e"/><line x1="72" y1="42" x2="78" y2="22" stroke="#7558c7" stroke-width="3"/><circle cx="78" cy="20" r="3.5" fill="#f2cc7e"/><path d="M28 72Q28 38 60 38T92 72Q92 100 60 100T28 72Z" fill="url(#hs-body)"/><ellipse cx="60" cy="82" rx="20" ry="12" fill="#d6c1f7" opacity=".5"/><circle cx="48" cy="64" r="10" fill="#fff"/><circle cx="72" cy="64" r="10" fill="#fff"/><circle cx="50" cy="66" r="4.5" fill="#10273a"/><circle cx="74" cy="66" r="4.5" fill="#10273a"/><path d="M50 80Q60 88 70 80" stroke="#10273a" stroke-width="2.6" stroke-linecap="round" fill="none"/></svg>`;
-}
 
 function renderSession(host: HTMLElement, name: string, code: string) {
   host.innerHTML = `<div class="ho-so-session"><div class="ho-so-session__identity"><span class="fx-eyebrow">Học sinh</span><span class="ho-so-session__name" data-clarity-mask="true">${escapeHtml(firstName(name))}</span><span class="ho-so-session__code" data-clarity-mask="true">${escapeHtml(code)}</span></div><div class="ho-so-session__actions"><button class="fx-btn fx-btn--ghost fx-btn--sm" type="button" data-ho-so-switch-role>Xem như phụ huynh</button><button class="fx-btn fx-btn--secondary fx-btn--sm" type="button" data-ho-so-change-code>Đổi mã</button></div></div>`;

@@ -6,6 +6,9 @@ const page = readFileSync('src/pages/ho-so/index.astro', 'utf8');
 const css = readFileSync('src/pages/ho-so/ho-so.css', 'utf8');
 const controller = readFileSync('src/pages/ho-so/ho-so.ts', 'utf8');
 const kid = readFileSync('src/pages/ho-so/ho-so-kid-view.ts', 'utf8');
+// PROFILE_TIERS was extracted to the shared hero module (the student home hub renders the
+// same rank ladder), so the eight-tier assertion below reads it from there.
+const hero = readFileSync('src/lib/r2l-hero.ts', 'utf8');
 const parent = readFileSync('src/pages/ho-so/ho-so-parent-view.ts', 'utf8');
 const modal = readFileSync('src/components/read2lead/v3/rank/RankUpModal.astro', 'utf8');
 const modalController = readFileSync('src/lib/rank-up-celebration.ts', 'utf8');
@@ -37,7 +40,7 @@ test('Ho-so responsive CSS supports eight-tier layout and accessible targets', (
   assert.match(css, /min-height: 44px/);
   assert.match(css, /prefers-reduced-motion/);
   assert.match(css, /@media print/);
-  assert.equal((kid.match(/^  \['/gm) || []).length, 8);
+  assert.equal((hero.match(/^  \['/gm) || []).length, 8);
 });
 
 test('parent redesign keeps real data and persistence interactions', () => {

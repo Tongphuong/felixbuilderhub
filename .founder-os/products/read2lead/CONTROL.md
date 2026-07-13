@@ -22,6 +22,25 @@ stale until 2026-07-05.
 
 ## Current task
 
+- Status: active
+- Started: 2026-07-13
+- Task ID: R2L-HOME-HUB
+- Owner: Claude Lead (Elon) — shared extraction, start.astro, r2l-start.client.ts, tests; Buffet reviews the diff (author ≠ reviewer).
+- Lane: product (student-facing home page; zero backend change)
+- Problem: `/r2l/start` is the child's daily front door but is still a topic-picker screen whose picker the server ignores. Attempt 1 (branch `claude/r2l-student-home`) was built, Buffet-reviewed and preview-verified — and Phương REJECTED THE VISUAL at the merge gate: "boring — not for a kid" and "missing the child's world" (no pet, coins, rank, current book, Minny). It never shipped.
+- Approach: build Claude Design's redesign from `design_handoff_r2l_student_home/` (prose spec + 6 state screenshots + interactive mock + a production-shaped reference implementation). Two columns wrapping to one stack on a phone: LEFT = the child's world (real pet monster + rank medal + Hạng + level/streak/coins chips); RIGHT = a CONTEXTUAL primary CTA (gold "ĐỌC TIẾP" card with cover, book title and progress bar when a book is open; gold "BÀI ĐỌC MỚI" create card when not), then SpeakUp (Minny the red robot), then three tiles (Hồ sơ / Xếp hạng / Cửa hàng with her coin count). Data comes from ONE existing endpoint, `GET /api/read2lead-progress?code=` — the same one ho-so already uses. No backend work.
+- FOUNDER'S GOAL, VERBATIM: "My only goal is the home looks exactly as claude design." Fidelity IS the acceptance criterion — verified by whole-screen comparison against the handoff screenshots at 390px and desktop, not by "it builds".
+- Acceptance criteria: (1) the ready screen matches the design at 390 + desktop in BOTH variants (continue and create), rendering real data — pet, medal, rank, streak, coins, book title, progress; (2) the other five states match screenshots 02..06; (3) one tap creates a reading end-to-end, Đọc tiếp opens the open book, and SpeakUp/Hồ sơ/Xếp hạng/Cửa hàng all carry the access code; no topic picker anywhere; (4) `buildHeroCta`/`statusMeta` exist in exactly ONE place in the codebase; (5) ho-so is provably unbroken by the extraction; full suite green; astro build clean.
+- Files owned: src/lib/r2l-hero.ts (NEW, shared), src/pages/ho-so/ho-so-kid-view.ts (imports the extracted helpers — no behaviour change), src/pages/r2l/start.astro, src/scripts/r2l-start.client.ts, tests/r2l-start-hub.test.mjs, CONTROL.md.
+- Non-goals: no backend change; no new dependency; `src/pages/read2lead.astro` (legacy public typed-code page) keeps its own topic picker; no sixth button.
+- Stop condition: fidelity verified against the handoff screenshots + full suite green + Buffet SHIP + founder gates PASS + Phương merge GO.
+- Cost ceiling: Claude team (Max plan, not metered). No metered spend — no new API calls beyond one existing endpoint the page already has the code for.
+- Reuse survey (rule 21): (1) the FOUR helpers already in `ho-so/ho-so-kid-view.ts` — `buildHeroCta` (the exact continue-vs-create rule the founder wants), `statusMeta`, `PROFILE_TIERS`, `defaultMonsterSvg` — ADOPTED by EXTRACTING them to `src/lib/r2l-hero.ts` and importing from both pages. The design handoff's reference implementation ships trimmed COPIES of these; shipping those copies is REJECTED — it would create a second source of truth for the rule deciding what a child sees first, and the two would drift. (2) `renderMonster()` (`src/lib/monster-avatar.ts`) — ADOPTED to draw the child's REAL pet (the mock's purple monster is a placeholder; Ong has a custom one, and "the screen belongs to that child" is the entire point of the redesign). (3) existing rank medal SVGs `public/assets/r2l/ranks/rank-l{0..5}-*.svg` — ADOPTED, all six already exist. (4) `Button.astro`/`Card.astro`/`ProgressBar.astro` + `design-system.css` tokens — ADOPTED; zero hard-coded hex. (5) the existing phase machine, generate/poll loop, honeypot and `activateOpenLessonWhenReady()` gate in `r2l-start.client.ts` — ADOPTED unchanged. (6) a new component library / new fonts — REJECTED (no new deps; the design is expressible in the existing token system).
+- Design self-verification: pending — whole-screen compare of all 6 states vs `design_handoff_r2l_student_home/screenshots/01..06` at 390 + desktop, then live on the deployed preview with a real student magic link (Ong: 1400 coins, 3-day streak, rank Bạc III, custom pet, open book → exercises the continue variant with real data).
+- Founder handoff: pending.
+
+## Previous task — R2L-TEST-CODE-UNLIMITED
+
 - Status: complete
 - Started: 2026-07-13
 - Completed: 2026-07-13
