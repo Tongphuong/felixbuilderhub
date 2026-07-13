@@ -111,9 +111,27 @@ test('activePhotoSource: an uploaded file wins over a pasted URL, matching the k
   assert.equal(activePhotoSource({ image_key: 'gifts/sticker.jpg', image_url: 'https://example.com/x.jpg' }), 'upload');
   assert.equal(activePhotoSource({ image_key: null, image_url: 'https://example.com/x.jpg' }), 'url');
   assert.equal(activePhotoSource({ image_key: null, image_url: null }), 'none');
-  assert.equal(adminPhotoSrc({ id: 'sticker', image_key: 'gifts/sticker.jpg', image_url: null }), '/api/read2lead-gift-image?id=sticker');
+  assert.equal(
+    adminPhotoSrc({ id: 'sticker', image_key: 'gifts/sticker-123.jpg', image_url: null }),
+    '/api/read2lead-gift-image?id=sticker&v=gifts%2Fsticker-123.jpg',
+  );
   assert.equal(adminPhotoSrc({ id: 'sticker', image_key: null, image_url: 'https://example.com/x.jpg' }), 'https://example.com/x.jpg');
   assert.equal(adminPhotoSrc({ id: 'sticker', image_key: null, image_url: null }), null);
+});
+
+// Regression, found on the LIVE shop: the eight new photos were uploaded and the
+// server served them correctly (curl proved it: 1000x750 WebP), but the browser
+// still showed the old Shopee voucher badge — because read2lead-gift-image.js
+// answers `Cache-Control: max-age=31536000, immutable` and the URL was just
+// `?id=<id>`, identical before and after. The photo was cached for a YEAR.
+// Coach Felix would have replaced a bad photo, reloaded, seen the bad photo, and
+// concluded the upload was broken — the exact complaint that started this task.
+test('a photo URL CHANGES when the photo changes (or a replaced photo is cached for a year)', async () => {
+  const { adminPhotoSrc } = await loadAdminGifts();
+  const before = adminPhotoSrc({ id: 'sticker', image_key: 'gifts/sticker-1000.webp', image_url: null });
+  const after = adminPhotoSrc({ id: 'sticker', image_key: 'gifts/sticker-2000.webp', image_url: null });
+  assert.notEqual(before, after, 'same URL for two different photos = the new one never reaches a child');
+  assert.match(after, /v=/, 'the cache-busting param must survive');
 });
 
 test('escapeHtml neutralizes markup (admin-shared.mjs\'s copy is a documented no-op, so this file defines its own)', async () => {

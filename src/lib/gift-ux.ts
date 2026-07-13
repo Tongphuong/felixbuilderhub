@@ -151,9 +151,24 @@ function daysAgoVi(iso: string | undefined): string {
   return `${days} ngày trước`;
 }
 
-/** Image src precedence per HANDOFF §2: uploaded photo → pasted URL → none (emoji only). */
+/**
+ * Image src precedence per HANDOFF §2: uploaded photo → pasted URL → none (emoji only).
+ *
+ * The `v` param is the whole reason a replaced photo ever reaches a child.
+ * read2lead-gift-image.js serves with `max-age=31536000, immutable`, and this URL
+ * used to be just `?id=<id>` — identical before and after an upload. So a browser
+ * (and the CDN edge) that had cached the OLD photo kept serving it for a year:
+ * Coach Felix would swap a wrong photo for a right one, reload, still see the
+ * wrong one, and reasonably conclude the upload was broken. He reported exactly
+ * that once. `image_key` now carries an upload timestamp, so it changes on every
+ * upload — which makes this URL change, which makes `immutable` finally honest.
+ * The server ignores `v`; it exists only to be different.
+ */
 function photoSrc(item: GiftItem): string | null {
-  if (item.image_key) return `/api/read2lead-gift-image?id=${encodeURIComponent(item.id)}`;
+  if (item.image_key) {
+    return `/api/read2lead-gift-image?id=${encodeURIComponent(item.id)}`
+      + `&v=${encodeURIComponent(item.image_key)}`;
+  }
   if (item.image_url) return item.image_url;
   return null;
 }
@@ -439,7 +454,7 @@ export function renderGiftCard(
           <span class="qt-gift-card__price">💎 ${price}</span>
         </div>
         ${progressBarHtml(percent)}
-        <p style="margin:9px 0 0; color:var(--cream-muted); font-size:13px;">${caption}</p>
+        <p class="qt-gift-card__caption" style="margin:9px 0 0; color:var(--cream-muted);">${caption}</p>
         ${savingAction}
       </div>
     </article>

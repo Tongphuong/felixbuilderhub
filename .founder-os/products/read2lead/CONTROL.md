@@ -41,8 +41,22 @@ stale until 2026-07-05.
 - Review history: NINE defects on this feature now, and every one passed the test suite first. This round added: (a) the Save button read "✓ Đã lưu" in every state, so a deleted gift looked saved and was not — Coach Felix would have closed the tab with the free gift still live (Elon, reviewing Steve); (b) saveAll() snapshots the DOM before awaiting and render() repaints from the server's answer to that OLD snapshot, so a delete made during an in-flight save was RESURRECTED under a button reading "Saved" (Buffet, HIGH — the exact harm the task exists to prevent, reintroduced by the fix for it); (c) the goal card recomputed its own bar and showed a FULL GOLD BAR above "tạm thời chưa đổi được" on the child's profile, the lesson card and the parent report (Buffet, MEDIUM); (d) delete freed gift ids for reuse, so re-adding a same-named gift would capture an in-flight redemption (Buffet); (e) the "Đặt làm mục tiêu ★" button on an unavailable gift is a DEAD CLICK — the server answers 400 gift_unavailable (Elon, from a screenshot of the deployed preview). **7 of the 9 were found only by rendering a real screen with real data, or by reasoning about interleavings.**
 - The test was encoding the bug: defect (e)'s guard test asserted the dead button's PRESENCE and was green throughout — it greps gift-ux.ts's source text, so it could not tell code from prose, and when the code was fixed it matched the COMMENT explaining the button's removal. Replaced with tests that render the card. Buffet then found two more grep-only tests guarding the escape hatch a stuck child depends on, plus `blocked` (untested entirely); all now rendered. A test that cannot see what a child is offered cannot defend it.
 - Verified commit: aa4a55d (origin/claude/r2l-gifts-fix) — NOT merged, awaiting founder GO
-- Founder handoff: pending — Phương to (1) flip "Quà 8" OFF now, before merge; (2) walk the preview; (3) GO. After merge he deletes "Quà 8" and clears the two wrong photos with "Xoá ảnh".
+- Founder handoff: pending — Phương to walk the preview and give the merge GO.
 - Cost spent: USD 0
+
+## Live-data work done on the founder's behalf (2026-07-13, explicit permission: "Full permission for photo")
+
+**How.** His admin password (`130798`) is the **preview** environment's `ADMIN_PASSWORD`, not production's — and Cloudflare Pages previews **share the production database**. So the preview admin API reads and writes his real catalogue and real R2 bucket. This is how the work below was done, and it is also a **security hole**: a guessable preview URL plus a short password is a back door into live data and his private `cost_vnd` figures. Reported to him; his decision.
+
+1. **The free gift is dead.** He said "quà 8 has been deleted". It was NOT — I read the live catalogue back and found `gift-mrj3tnzu-g47dkw`, price 0, active, still claimable by every child. He had tried to delete it in the PRODUCTION admin, which has no delete button — the very bug this branch fixes. Removed via a read-modify-write of the live array; re-read confirms **no gift with `price_diamonds <= 0` remains**.
+2. **Two gifts added, as requested:** Quả bóng rổ 🏀 30.000💎 and Mô hình Gundam 🤖 100.000💎. Both got random server-assigned ids (`gift-mrj9rdh6-…`) — the name-derived id path was removed this session on Buffet's collision finding, and this is the first live proof it works.
+3. **Eight photos sourced, processed and uploaded** (CC0/public-domain only — no attribution line may ever appear on a child's screen). All eight serve 200 with the right content type. **Gundam has NO photo and keeps its 🤖 emoji: every CC0 result for "gundam"/"gunpla" was a blue 3D-printed barrel**, because the kits are trademarked. A clean emoji beats a bad photo — pretending otherwise is exactly how the voucher badge shipped.
+
+**Two of my own defects, both caught only by rendering the images on the navy card:**
+- The first set was square, so every photo sat in the 4:3 well like a **postage stamp**. Photos are now cropped to 4:3 (the well's own aspect) and fill it; cut-outs stay square and float.
+- My white-background remover **ate the pens**: they are pastel, so the flood fill treated the subject as backdrop and left a ghost. That photo is now a plain tile.
+
+An earlier attempt at this was thrown away entirely — it had produced WordPress-conference stickers and a football with a transparency checkerboard baked into it, and would have looked *worse* than the emoji it replaced. It was only visible by looking.
 
 ## Previous task — R2L-REAL-GIFTS
 

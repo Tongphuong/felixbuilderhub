@@ -81,7 +81,27 @@ export async function onRequestPost(context) {
     );
   }
 
-  const imageKey = `gifts/${giftId}.${validation.extension}`;
+  // The key carries a timestamp, so REPLACING a photo produces a NEW key.
+  //
+  // It used to be `gifts/<id>.<ext>` — stable across uploads. That looked tidy
+  // and was a real bug: read2lead-gift-image.js serves with
+  // `Cache-Control: public, max-age=31536000, immutable`, and the kid-facing URL
+  // (`?id=<id>`) never changed either. So a child who had already loaded the old
+  // photo kept it FOR A YEAR, and so did the CDN edge. Coach Felix would swap a
+  // wrong photo for a right one, reload, still see the wrong one, and conclude —
+  // correctly, from where he sat — that the upload was broken. He reported that
+  // exact symptom once already.
+  //
+  // With a unique key per upload the URL changes (the client appends the key as
+  // a `v` param), so `immutable` becomes TRUE instead of a lie: those bytes
+  // really never change.
+  // A timestamp ALONE is not enough: two uploads inside the same millisecond
+  // produce the same key, and then the failure-rollback below (`delete(imageKey)`)
+  // would delete the object the gift still points at. Caught by the test that
+  // uploads twice back to back. A random suffix makes the key genuinely unique.
+  const previousKey = gift.image_key || null;
+  const stamp = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
+  const imageKey = `gifts/${giftId}-${stamp}.${validation.extension}`;
 
   try {
     await env.R2L_MEDIA.put(imageKey, image, {
@@ -109,6 +129,19 @@ export async function onRequestPost(context) {
       { ok: false, error: 'storage_error', message: 'Chưa lưu được thông tin quà tặng. Vui lòng thử lại.' },
       502,
     );
+  }
+
+  // The old object is now unreferenced. Delete it AFTER the KV write, never
+  // before: if this fails, R2 keeps one orphan (harmless, ~100KB); if it ran
+  // first and the KV write then failed, the gift would point at a key that no
+  // longer exists and the child would see a broken photo. Fail toward the
+  // wasted byte, never toward the broken screen.
+  if (previousKey && previousKey !== imageKey) {
+    try {
+      await env.R2L_MEDIA.delete(previousKey);
+    } catch {
+      // Orphaned object; the gift is correct, which is what matters.
+    }
   }
 
   return json({ ok: true, gift_id: giftId, image_key: imageKey });

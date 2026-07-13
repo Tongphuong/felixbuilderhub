@@ -106,8 +106,20 @@ export function activePhotoSource(gift: Pick<AdminGift, 'image_key' | 'image_url
   return 'none';
 }
 
+/**
+ * Must stay in lockstep with photoSrc() in src/lib/gift-ux.ts — the `v` param is
+ * what makes a REPLACED photo actually appear. The image endpoint serves
+ * `immutable, max-age=31536000`, so without a URL that changes, Coach Felix would
+ * upload a new photo, still see the old one, and conclude the upload was broken.
+ * It matters twice over here: the admin preview is where he decides whether a
+ * photo is any good, so a stale preview would lie to him about the exact thing he
+ * opened it to check.
+ */
 export function adminPhotoSrc(gift: Pick<AdminGift, 'id' | 'image_key' | 'image_url'>): string | null {
-  if (gift.image_key) return `/api/read2lead-gift-image?id=${encodeURIComponent(gift.id)}`;
+  if (gift.image_key) {
+    return `/api/read2lead-gift-image?id=${encodeURIComponent(gift.id)}`
+      + `&v=${encodeURIComponent(gift.image_key)}`;
+  }
   if (gift.image_url) return gift.image_url;
   return null;
 }
