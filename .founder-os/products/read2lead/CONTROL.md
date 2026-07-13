@@ -22,8 +22,10 @@ stale until 2026-07-05.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Started: 2026-07-13
+- Completed: 2026-07-13 — SHIPPED TO PRODUCTION (merge 1ed2645, Phương "go and merge"). Production smoke PASS on felixbuilderhub.com with a real child's code: all 8 photos render at their true size (not the Shopee overlay), every photo URL versioned, emoji correctly hidden behind photos and shown for Gundam, ZERO free gifts, cost_vnd absent from the kid API, 2 columns at 390px, smallest button 44px, 0 console errors.
+- Verified commit: 1ed2645 (origin/main)
 - Task ID: R2L-GIFTS-FIX
 - Owner: Steve (bg worker) — UI: `src/lib/admin-gifts.ts`, `src/pages/admin/gifts.astro`, `src/lib/gift-ux.ts`, `src/styles/qua-that.css` + their tests. Elon — `functions/api/_gifts-v2.js` + `tests/read2lead-gifts.test.mjs` (two-line security fix, file set disjoint from Steve's; Buffet is its reviewer, not Elon). Buffet reviews the combined diff.
 - Lane: product (gift shop follow-up — admin CRUD gap + one live security hole + one rendering bug)

@@ -14,7 +14,7 @@
 - Privacy and cost checked: yes
 - Screenshot or video proof ready: yes
 - Founder production approval: yes
-- Production smoke test passed: no
+- Production smoke test passed: yes
 
 ## Evidence — R2L-GIFTS-FIX (2026-07-13)
 
@@ -24,6 +24,21 @@
 - **Preview verified against real production data**: `can_afford: false` on the free gift, banded under "Tạm thời chưa mở", `cost_vnd` absent from the kid API, 0 console errors, screenshots at 390px and 1280px.
 - **Review**: Buffet BLOCKED the first round on 3 findings (a save race that silently resurrected the deleted free gift under a button reading "✓ Đã lưu"; a full gold progress bar on an unobtainable gift across 3 kid/parent surfaces; gift-id reuse after delete). All fixed, re-reviewed, SHIP. He then re-reviewed defect 9 and named two more grep-only tests, now rendered.
 - **1550 tests** (was 1520). `astro check` clean on every changed file. `astro build` clean.
+
+## Production smoke test — 2026-07-13, merge 1ed2645, felixbuilderhub.com
+
+Driven on the REAL site with a real child's code (`R2L-PILOT-CYJS`), after
+`wait-for-deploy` confirmed the new bundle had propagated (the shared photo builder
+with `&v=` was present in production's own JS, not just in the repo).
+
+- **All 8 photos render**, every one at its true uploaded size (1000×750 / 800×800) —
+  NOT the 1200×1200 Shopee voucher overlay. The year-long cache is broken.
+- **Every photo URL is versioned** (`&v=`), on every card.
+- **The emoji is hidden behind every photo** and shown for Gundam, which has none.
+- **No free gift survives**: zero items with `price_diamonds <= 0`.
+- **`cost_vnd` absent** from the kid-facing API.
+- **2 columns at 390px, smallest button 44px**, no console errors.
+- Screenshot: `_ops/gifts-PROD-final-390.png`.
 
 ## Responsive check — measured on the deployed preview, all four widths (2026-07-13)
 
