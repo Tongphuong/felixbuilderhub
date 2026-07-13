@@ -45,6 +45,15 @@
   box-sizing: border-box;
 }
 
+/* The emoji is a FALLBACK, not a permanent underlay — only hidden once a
+   real photo has actually decoded (img onload adds this class). A
+   broken/near-transparent photo (e.g. a mostly-transparent campaign PNG)
+   never triggers onerror, so without this the emoji would render stacked
+   underneath a photo that looks broken. onerror removes the <img> outright,
+   which never adds this class, so the emoji fallback still works exactly
+   as before for a truly failed load. */
+.qt-photo-well--has-img .qt-photo-well__emoji { display: none; }
+
 .qt-photo-well__badge {
   position: absolute;
   top: 10px;

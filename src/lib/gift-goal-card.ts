@@ -243,9 +243,15 @@ export function renderGiftGoalCard(
   const chooseDifferentGoalHtml = state === 'unavailable' ? renderChooseDifferentGoalLink(options) : '';
 
   const isDone = state === 'affordable' || state === 'delivered';
+  // A gift priced 0 is a broken admin row, never obtainable (isGiftAvailable
+  // in functions/api/_gifts-v2.js). This fallback used to read 100 — back when
+  // a price-0 gift really WAS free — and after that changed it left a full
+  // gold bar sitting directly above "Món quà này tạm thời chưa đổi được." on
+  // the child's profile, the lesson-completion card AND the parent report.
+  // 0 is the honest number: there is no progress toward a gift with no price.
   const percent = isDone
     ? 100
-    : item.price_diamonds > 0 ? Math.round((diamonds / item.price_diamonds) * 100) : 100;
+    : item.price_diamonds > 0 ? Math.round((diamonds / item.price_diamonds) * 100) : 0;
   const bar = progressBarHtml(percent, isDone ? 'var(--success)' : undefined);
 
   const captionStyle = `margin:8px 0 0; color:${caption.color || 'var(--cream-muted)'}; font-size:${variant === 'wide' ? '12.5px' : '12px'};${caption.color ? ' font-weight:700;' : ''}`;

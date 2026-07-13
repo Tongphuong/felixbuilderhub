@@ -55,7 +55,15 @@ function makeGiftId() {
 
 export function normalizeGift(raw = {}, i = 0) {
   const nameVi = String(raw?.name_vi || raw?.name || '').trim().slice(0, 80);
-  const id = cleanGiftId(raw?.id) || cleanGiftId(nameVi) || makeGiftId();
+  // A NEW row (the admin sends id: '') always gets a fresh random id. It used
+  // to fall back to a slug of the name — harmless while gifts could only ever
+  // be ADDED, but delete now frees ids for reuse: delete "Sticker" (id
+  // `sticker`) while a child's redemption for it is still in the queue, add a
+  // new gift also called "Sticker", and it would inherit the SAME id — so the
+  // old redemption's thumbnail, and its budget-cap restore on reject, would
+  // silently resolve against the new gift. (Buffet, LOW-MEDIUM.) Every gift in
+  // DEFAULT_GIFTS carries an explicit id, so nothing depends on the slug path.
+  const id = cleanGiftId(raw?.id) || makeGiftId();
   const priceDiamonds = Math.max(0, Math.trunc(Number(raw?.price_diamonds) || 0));
   const limitTotalRaw = raw?.limit_total;
   const limitTotal = limitTotalRaw === null || limitTotalRaw === undefined || limitTotalRaw === ''

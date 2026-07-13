@@ -29,6 +29,45 @@ async function loadGiftUx() {
   return viteServer.ssrLoadModule('/src/lib/gift-ux.ts');
 }
 
+async function loadGoalCard() {
+  await ensureHarness();
+  return viteServer.ssrLoadModule('/src/lib/gift-goal-card.ts');
+}
+
+// Buffet, MEDIUM: the goal card recomputes its own bar width instead of using
+// the server's progress_percent, and its price<=0 fallback hard-coded 100%.
+// Once a price-0 gift became `unavailable`, that produced a FULL GOLD BAR
+// sitting directly above "Món quà này tạm thời chưa đổi được." — on the
+// child's profile, the lesson-completion card AND the parent report.
+//
+// Note this test RENDERS the card and reads the bar out of the markup. The
+// pre-existing goal-card tests only grep the source text, which is exactly
+// why none of them caught it. A test that cannot see the bar cannot defend it.
+test('gift goal card: a price-0 (unavailable) pinned goal renders an EMPTY bar, not a full one', async () => {
+  const { renderGiftGoalCard } = await loadGoalCard();
+  const brokenRow = {
+    id: 'gift-blank', name_vi: 'Quà 8', emoji: '🎁',
+    price_diamonds: 0, can_afford: false, available: false, progress_percent: 0,
+  };
+  const html = renderGiftGoalCard(brokenRow, 4295, [], { variant: 'wide', code: 'R2L-TEST' });
+
+  const width = html.match(/width:\s*(\d+)%/);
+  assert.ok(width, 'the card must render a progress bar');
+  assert.equal(width[1], '0', 'a gift no child can obtain must not show a completed bar');
+  assert.match(html, /tạm thời chưa đổi được/, 'and it must still say so in words');
+});
+
+test('gift goal card: a normal priced goal still reports real progress', async () => {
+  const { renderGiftGoalCard } = await loadGoalCard();
+  const pen = {
+    id: 'pen', name_vi: 'Bút', emoji: '🖊️',
+    price_diamonds: 5000, can_afford: false, available: true, progress_percent: 63,
+  };
+  const html = renderGiftGoalCard(pen, 3135, [], { variant: 'wide', code: 'R2L-TEST' });
+  const width = html.match(/width:\s*(\d+)%/);
+  assert.equal(width[1], '63');
+});
+
 const giftUxSource = readFileSync('src/lib/gift-ux.ts', 'utf8');
 const giftsPage = readFileSync('src/pages/read2lead/gifts.astro', 'utf8');
 
@@ -355,4 +394,28 @@ test('qua-that.css keyframes are gated by prefers-reduced-motion', () => {
 
 test('the photo well falls back from photo to emoji via onerror', () => {
   assert.match(giftUxSource, /onerror="this\.remove\(\)"/);
+});
+
+// --- emoji-is-a-fallback regression (production bug: a mostly-transparent
+// Shopee campaign PNG stacked the emoji AND the img, so the emoji showed
+// through a broken photo instead of being hidden by a working one) --------
+
+test('renderPhotoWell emits an onload hook that hides the emoji once a real photo has decoded, and emits no <img> at all when there is no image source', async () => {
+  const { renderPhotoWell } = await loadGiftUx();
+  const withImg = renderPhotoWell({ emoji: '🌟', name: 'Sticker', imageSrc: 'https://cf.shopee.vn/sticker.jpg' });
+  assert.match(withImg, /<img /);
+  assert.match(withImg, /onload="this\.closest\('\.qt-photo-well'\)\?\.classList\.add\('qt-photo-well--has-img'\)"/);
+  assert.match(withImg, /onerror="this\.remove\(\)"/);
+
+  const withoutImg = renderPhotoWell({ emoji: '🌟', name: 'Sticker' });
+  assert.doesNotMatch(withoutImg, /<img/);
+  // The emoji itself is still rendered — it is the fallback, always present
+  // in the markup; only CSS (gated on the --has-img class) hides it.
+  assert.match(withoutImg, /qt-photo-well__emoji/);
+});
+
+test('qua-that.css only hides the emoji fallback once the has-img class is present (never unconditionally)', () => {
+  assert.match(quaThatCss, /\.qt-photo-well--has-img \.qt-photo-well__emoji \{\s*display: none;/);
+  // Regression guard: no bare rule hides qt-photo-well__emoji outright.
+  assert.doesNotMatch(quaThatCss, /^\.qt-photo-well__emoji\s*\{\s*display: none/m);
 });

@@ -168,14 +168,15 @@ type PhotoWellOptions = {
   imageSrc?: string | null;
   size?: 'sm' | 'md' | 'lg';
   aspect?: '4/3' | '16/9';
-  modifier?: 'warm' | 'pending' | 'shimmer' | 'delivered';
+  modifier?: 'warm' | 'pending' | 'shimmer' | 'delivered' | 'unavailable';
   animateEmoji?: boolean;
   badgeHtml?: string;
   cornerHtml?: string;
 };
 
-/** GiftPhotoWell (HANDOFF §2). Three-tier fallback: photo -> pasted url -> emoji. */
-function renderPhotoWell(opts: PhotoWellOptions): string {
+/** GiftPhotoWell (HANDOFF §2). Three-tier fallback: photo -> pasted url -> emoji.
+ * Exported for unit tests — see tests/gift-ux.test.mjs. */
+export function renderPhotoWell(opts: PhotoWellOptions): string {
   const classes = ['qt-photo-well'];
   if (opts.aspect === '16/9') classes.push('qt-photo-well--banner');
   if (opts.size === 'lg') classes.push('qt-photo-well--lg');
@@ -187,7 +188,7 @@ function renderPhotoWell(opts: PhotoWellOptions): string {
   if (opts.animateEmoji) emojiClasses.push('qt-float');
 
   const img = opts.imageSrc
-    ? `<img class="qt-photo-well__img" src="${escapeHtml(opts.imageSrc)}" alt="${escapeHtml(opts.name)}" loading="lazy" onerror="this.remove()" />`
+    ? `<img class="qt-photo-well__img" src="${escapeHtml(opts.imageSrc)}" alt="${escapeHtml(opts.name)}" loading="lazy" onerror="this.remove()" onload="this.closest('.qt-photo-well')?.classList.add('qt-photo-well--has-img')" />`
     : '';
 
   return `

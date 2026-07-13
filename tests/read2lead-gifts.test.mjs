@@ -23,6 +23,12 @@ const RETIRED = {
   id: 'retired', name_vi: 'Quà cũ', emoji: '🎁',
   price_diamonds: 500, limit_total: null, redeemed_count: 0, active: false,
 };
+// The exact shape "+ Thêm quà" creates and Coach Felix left live: a blank row,
+// active, priced 0. It reached production as gift-mrj3tnzu-g47dkw / "Quà 8".
+const BLANK_ROW = {
+  id: 'gift-blank', name_vi: 'Quà 8', emoji: '🎁',
+  price_diamonds: 0, limit_total: null, redeemed_count: 0, active: true,
+};
 
 function makeState(overrides = {}) {
   return { diamonds: 0, redemptions: [], gift_goal: null, ...overrides };
@@ -57,6 +63,31 @@ test('buildGiftView: capped gift with room left is available', () => {
   const view = buildGiftView(makeState({ diamonds: 999999 }), [LEGO_ROOM]);
   assert.equal(view[0].available, true);
   assert.equal(view[0].can_afford, true);
+});
+
+// Regression: a priced-0 gift shipped to production and every child could
+// claim it for free, because can_afford is `diamonds >= price` and every
+// balance clears 0. Each claim queued a real object Coach Felix had to buy.
+test('buildGiftView: a gift priced 0 is NEVER available and NEVER affordable', () => {
+  const broke = buildGiftView(makeState({ diamonds: 0 }), [BLANK_ROW]);
+  assert.equal(broke[0].available, false);
+  assert.equal(broke[0].can_afford, false, 'a 0-diamond child must not be able to claim a 0-price gift');
+
+  const rich = buildGiftView(makeState({ diamonds: 999999 }), [BLANK_ROW]);
+  assert.equal(rich[0].available, false);
+  assert.equal(rich[0].can_afford, false);
+});
+
+test('buildGiftView: a gift priced 0 shows 0% progress, not a full bar', () => {
+  const view = buildGiftView(makeState({ diamonds: 4295 }), [BLANK_ROW]);
+  assert.equal(view[0].progress_percent, 0);
+});
+
+test('executeRedeem: a gift priced 0 cannot be redeemed at any balance', () => {
+  const result = executeRedeem(makeState({ diamonds: 4295 }), [BLANK_ROW], 'gift-blank');
+  assert.equal(result.error, 'gift_unavailable');
+  assert.equal(result.state.diamonds, 4295, 'balance untouched');
+  assert.deepEqual(result.state.redemptions, [], 'no queue entry for Coach Felix to buy');
 });
 
 test('buildGiftView: progress_percent is diamonds/price capped at 100', () => {

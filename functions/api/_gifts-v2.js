@@ -39,6 +39,14 @@ function isCapped(gift) {
 // a gift_goal) reuse this exact rule instead of re-implementing it.
 export function isGiftAvailable(gift) {
   if (!gift?.active) return false;
+  // A gift priced at 0 is not a gift, it is an unfinished admin row — "+ Thêm
+  // quà" creates one with price 0, and until this check existed it went live
+  // as FREE: can_afford is `diamonds >= price`, which every child satisfies.
+  // One such row ("Quà 8") reached production and every child could claim it,
+  // each claim landing in Coach Felix's queue as a real object he was expected
+  // to go out and buy. The admin now refuses to save a priced-0 active gift,
+  // but THIS is the load-bearing check: it holds for rows already in KV.
+  if (numberOrZero(gift.price_diamonds) <= 0) return false;
   if (isCapped(gift) && numberOrZero(gift.redeemed_count) >= gift.limit_total) return false;
   return true;
 }
@@ -48,9 +56,13 @@ export function buildGiftView(state, catalog) {
   return (Array.isArray(catalog) ? catalog : []).map((gift) => {
     const price = numberOrZero(gift.price_diamonds);
     const available = isGiftAvailable(gift);
+    // A priced-0 gift is a broken admin row, never available (see
+    // isGiftAvailable). It used to report 100% — a full green bar reading
+    // "Con đủ kim cương rồi 🎉" on a gift no child may have. 0 is the honest
+    // number: there is no progress to make toward a gift with no price.
     const progressPercent = price > 0
       ? Math.max(0, Math.min(100, Math.round((diamonds / price) * 100)))
-      : 100;
+      : 0;
     return {
       ...gift,
       can_afford: available && diamonds >= price,
