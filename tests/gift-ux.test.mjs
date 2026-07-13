@@ -43,6 +43,36 @@ async function loadGoalCard() {
 // Note this test RENDERS the card and reads the bar out of the markup. The
 // pre-existing goal-card tests only grep the source text, which is exactly
 // why none of them caught it. A test that cannot see the bar cannot defend it.
+// Rendered, not grepped. `read2lead-gift-goal.js` gates on isGiftAvailable()
+// and answers 400 `gift_unavailable` for an unavailable gift — verified against
+// the live deployed endpoint — so offering "Đặt làm mục tiêu ★" on that card is
+// a button a child taps and is refused. The old source-grep test asserted the
+// button's PRESENCE and stayed green the whole time.
+test('shop: an unavailable gift card offers a child NO button the server would refuse', async () => {
+  const { renderGiftCard } = await loadGiftUx();
+  const brokenRow = {
+    id: 'gift-blank', name_vi: 'Quà 8', emoji: '🎁', image_key: null, image_url: null,
+    price_diamonds: 0, can_afford: false, available: false, progress_percent: 0,
+  };
+  const card = renderGiftCard(brokenRow, 'unavailable', undefined, 4295, 'band');
+
+  assert.doesNotMatch(card, /qt-set-goal/, 'no "set as goal" button — the server answers 400 for this gift');
+  assert.doesNotMatch(card, /Đặt làm mục tiêu/);
+  assert.doesNotMatch(card, /qt-redeem/, 'and certainly no redeem button');
+  // The card must still explain itself rather than going silent.
+  assert.match(card, /tạm thời chưa đổi được/);
+});
+
+test('shop: an AVAILABLE gift a child cannot yet afford still offers the goal button', async () => {
+  const { renderGiftCard } = await loadGiftUx();
+  const football = {
+    id: 'football', name_vi: 'Quả bóng đá', emoji: '⚽', image_key: null, image_url: null,
+    price_diamonds: 30000, can_afford: false, available: true, progress_percent: 3,
+  };
+  const card = renderGiftCard(football, 'saving', undefined, 1000, 'band');
+  assert.match(card, /qt-set-goal/, 'the fix above must not strip the goal button from normal gifts');
+});
+
 test('gift goal card: a price-0 (unavailable) pinned goal renders an EMPTY bar, not a full one', async () => {
   const { renderGiftGoalCard } = await loadGoalCard();
   const brokenRow = {
@@ -227,11 +257,19 @@ test('the unavailable-gift card is honest and kind: no hype text, no inventory l
   assert.match(unavailableBranch, /imageSrc: img/);
   assert.match(unavailableBranch, /progressBarHtml\(percent\)/);
   assert.match(unavailableBranch, /Món quà này tạm thời chưa đổi được\. Coach Felix sẽ mở lại sau nhé!/);
-  // Goal variant offers a path to a different goal; band variant still
-  // offers "Đặt làm mục tiêu ★" (it may reopen later) since it is by
-  // definition not already the goal (bands exclude the pinned goal id).
+  // The goal variant offers a path to a DIFFERENT goal.
   assert.match(unavailableBranch, /Chọn mục tiêu khác ★/);
-  assert.match(unavailableBranch, /Đặt làm mục tiêu ★/);
+
+  // Whether the BAND variant offers a goal button is deliberately NOT asserted
+  // here any more — see the rendered test 'an unavailable gift card offers a
+  // child NO button the server would refuse'. This grep-the-source test used to
+  // assert the button was PRESENT, on the theory the gift "may reopen later".
+  // The theory was false (read2lead-gift-goal.js answers 400 gift_unavailable),
+  // so it was a dead click, and this test stayed green through all of it.
+  // Worse, when the code was fixed, the assertion could only be satisfied by
+  // never mentioning the button — even in a COMMENT explaining its absence.
+  // A test that greps source text cannot tell code from prose, and cannot see
+  // what a child is offered. Render the card and look at it.
 });
 
 test('the "Tạm thời chưa mở" band exists and renders below "Con đang xây dựng" at the very bottom of the catalogue', () => {

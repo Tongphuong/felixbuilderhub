@@ -222,7 +222,12 @@ type GiftCardVariant = 'band' | 'goal';
  * branches only — "Đổi mục tiêu" (clear the goal) in place of "Đặt làm mục
  * tiêu ★" (you can't set as your goal what already is your goal).
  */
-function renderGiftCard(
+// Exported so tests can RENDER a card and inspect what a child is actually
+// offered, rather than grepping this file's source text for a string. The dead
+// "Đặt làm mục tiêu ★" button on an unavailable card survived a source-grep
+// test that asserted its PRESENCE; only rendering it and calling the real
+// endpoint exposed it.
+export function renderGiftCard(
   item: GiftItem,
   state: GiftCardState,
   redemption: GiftRedemption | undefined,
@@ -329,15 +334,21 @@ function renderGiftCard(
       badgeHtml: '<span class="fx-badge fx-badge--neutral qt-photo-well__badge">Tạm thời chưa mở</span>',
     });
     const percent = Math.max(0, Math.min(100, Math.round(item.progress_percent)));
-    // Goal variant: this gift IS already the child's pinned goal, so
-    // "Đặt làm mục tiêu ★" would be nonsensical — offer a one-tap way to pick
-    // a different goal instead (clears the pin; the full catalogue,
-    // including its own "Đặt làm mục tiêu ★" buttons, is right below on this
-    // same page). Band variant: this gift is NOT the goal, so the normal
-    // "set as goal" offer still applies — it may reopen later.
+    // Goal variant: this gift IS already the child's pinned goal (it went
+    // unavailable after she pinned it), so "Đặt làm mục tiêu ★" would be
+    // nonsensical — offer a one-tap way to pick a different goal instead.
+    //
+    // Band variant: NO action at all. This card used to offer "Đặt làm mục
+    // tiêu ★" on the theory that the gift "may reopen later" — but the server
+    // does not agree: read2lead-gift-goal.js gates on this same
+    // isGiftAvailable() and answers 400 `gift_unavailable`. The button was a
+    // DEAD CLICK: a child taps the only button on the card and is told no.
+    // Verified live against the deployed endpoint, not assumed. The caption
+    // already explains the situation; an action that always fails is worse
+    // than no action.
     const action = isGoal
       ? '<button type="button" class="fx-btn fx-btn--secondary fx-btn--block qt-clear-goal" style="margin-top:11px; min-height:44px;">Chọn mục tiêu khác ★</button>'
-      : `<button type="button" class="fx-btn fx-btn--secondary fx-btn--block qt-set-goal" data-gift-id="${escapeHtml(item.id)}" style="margin-top:11px; min-height:44px;">Đặt làm mục tiêu ★</button>`;
+      : '';
     return `
       <article class="${cardClass}" data-state="unavailable" data-gift-id="${escapeHtml(item.id)}">
         ${well}
