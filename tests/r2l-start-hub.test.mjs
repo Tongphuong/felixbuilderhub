@@ -32,7 +32,9 @@ test("the world column renders the child's pet, rank medal, streak and coins", (
   assert.match(page, /id="stat-streak"/);
   assert.match(page, /id="stat-coins"/);
   assert.match(page, /HỌC SINH READ2LEAD/);
-  assert.match(page, /Chào con <span id="greeting-name"/);
+  // Founder ruling 2026-07-13: greet the child by name only — "Chào Ong!", not "Chào con Ong!".
+  assert.match(page, /Chào <span id="greeting-name"/);
+  assert.doesNotMatch(page, /Chào con <span id="greeting-name"/);
   assert.match(page, /id="greeting-level"/);
 });
 
