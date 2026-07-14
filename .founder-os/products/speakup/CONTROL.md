@@ -206,6 +206,22 @@ assigns, commits, merges, deploys, or spends.
   inflation teaches nothing. Azure quota: if `azureUnderFreeTier` denies >20%
   of homework calls in a week, surface the paid-tier decision to Phương with
   usage numbers instead of silently degrading every kid to local scoring.
+- Scope addendum (2026-07-15, after-battery discovery): the live battery that
+  verified the scoring fixes ALSO exposed a production-resident isolate-killer:
+  the V1.3 coach block (63693fe, on prod since 07-12) awaits the Llama Guard
+  ML backstop inline via a Promise.race whose loser side kills the Workers
+  isolate (error 1102) under degraded Workers-AI load — including on isolated
+  single requests; ~83% of scoring requests died on burst-tested previews; the
+  crash leaves no server-side trace. Two promise-hygiene fixes (clearTimeout,
+  waitUntil-the-orphan; both reviewed) proved structurally insufficient.
+  FOUNDER RULINGS (2026-07-15): (1) the ML backstop moves OFF the response
+  path — deterministic guards stay inline and gating; Llama Guard runs in the
+  background via waitUntil with retraction + loud log on a flagged verdict
+  (safety floor unchanged: the shipped design already fail-opens the coach when
+  the guard is slow); (2) the guard fix HOTFIXES PROD as its own release once
+  reviewed, ahead of the full grading-honesty ship. Free Talking's guard
+  semantics to be verified before receiving the same treatment — fail-closed
+  semantics there would need a separate founder decision.
 - Design self-verification: pending (rule 18 — filled at complete gate).
 - Founder handoff: pending (rule 19 — filled at complete gate).
 
