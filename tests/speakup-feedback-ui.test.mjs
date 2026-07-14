@@ -115,10 +115,13 @@ test('renderCoachSandwich: focus word renders as a real minny-word button (exist
   assert.match(html, /<button type="button" class="minny-word minny-word--close minny-word--focus" data-word="went">went<\/button>/);
 });
 
-test('renderCoachSandwich: model sentence renders plain (no tap-to-hear) — TODO(elon): only focus_word reuses the existing delegate trivially', () => {
+test('renderCoachSandwich: model sentence renders with a tap-to-hear play button (speakup-grading-honesty-ui, 2026-07-14)', () => {
   const html = renderCoachSandwich({ coach: FULL_COACH }, true);
   assert.match(html, /<p class="minny-feedback-sandwich__model-en">"Last summer, I went to Đà Nẵng with my family\."<\/p>/);
-  assert.doesNotMatch(html, /model-en[^>]*<button/, 'model sentence must not be a button — no tap-to-hear wiring exists for it yet');
+  assert.match(
+    html,
+    /<button type="button" class="minny-word minny-word--close minny-model-play" data-sentence="Last summer, I went to Đà Nẵng with my family\.">🔊 Nghe mẫu<\/button>/,
+  );
 });
 
 test('renderCoachSandwich: recast_en (optional field) has no slot in the approved mock and is never rendered', () => {
