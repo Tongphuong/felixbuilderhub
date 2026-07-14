@@ -41,6 +41,16 @@ export const MAX_AUDIO_BYTES_LONG = 10 * 1024 * 1024;
 // "did the child actually speak" rather than each place inventing its own.
 export const EFFORT_WORDS_FOR_FULL_CREDIT = 10;
 
+// Defense in depth (revision 2, 2026-07-14 — fixes Buffet's reject finding
+// 2): the pronunciation_effort branch with no Azure blend has NO content
+// basis at all — pure word-count effort, unable to tell a genuine long
+// answer from gibberish (Buffet reproduced 100 + "Hay quá!" praise on 12
+// nonsense words). A hard ceiling below the top praise tier means an
+// effort-only number can never claim the "Hay quá!"/"Tuyệt vời!" tier,
+// regardless of what upstream evidence (Azure chunk failures, an exhausted
+// free tier) put this attempt on this branch.
+export const EFFORT_ONLY_SCORE_CEILING = 60;
+
 // A no-reference open attempt: the photo carries the task (no expected_text
 // exists to score against) or Free Talking (the conversation LLM handles
 // Vietnamese there, score is ignored client-side). scoreOpenTranscript must
@@ -80,6 +90,46 @@ function levenshteinDistance(a, b) {
     }
   }
   return matrix[a.length][b.length];
+}
+
+// Length-aware content-match floor (grading-honesty packet REVISION 2,
+// 2026-07-14 — fixes Buffet's reject finding 1). Plain Levenshtein ratio
+// (wordSimilarity) is unfit for judging whether a spoken word IS a target
+// word: any 3-4 letter English rhyme pair (park/dark, cat/hat, book/look,
+// sing/ring) differs by exactly one edit and clears any single flat
+// threshold that also has to admit real typos/mishearings ("hapy"->"happy",
+// "becase"->"because"). Bucketed by word length instead of one flat number:
+//   - up to 4 letters: the first letter must match, on top of the existing
+//     0.75 bar. A mis-heard/mis-transcribed word overwhelmingly keeps its
+//     onset consonant — every false-rhyme pair above differs in the FIRST
+//     letter (dark/park, cat/hat, book/look, sing/ring), while the genuine
+//     near-miss this packet's own fixture relies on ("pack" heard for
+//     "park") shares it. A literal "exact match only" rule (the packet's
+//     starting suggestion) would also reject pack/park and break the
+//     existing near-miss test — this is the documented refinement, same
+//     shape as the 5-6 bucket's explicitly-invited one below.
+//   - 5-6 letters: first letter must match, similarity >= 0.8. Raising the
+//     bar to 0.84 instead was tried and rejected: "hapy"/"happy" sits at
+//     exactly 0.8, so 0.84 would reject a required-to-match pair. The
+//     first-letter tiebreak is what lets 0.8 stay the floor while still
+//     rejecting house/mouse (0.8, first letters differ).
+//   - 7+ letters: unchanged, similarity >= 0.75 ("as today" per the revision
+//     brief) — "becase"/"because" (0.857) and "footbal"/"football" (0.875)
+//     must keep matching.
+// Used everywhere fuzzy matching grants CONTENT CREDIT or NEAR-MISS status:
+// scoreOpenTranscript's wordsMatched loop, computeContentPrecision,
+// findNearMissVocabularyWords. Deliberately NOT used by scoreTranscript's
+// read-aloud close/exact buckets or scoreSpeechFrame's anchor-word coverage
+// — out of this revision's scope (see the packet's scope guard); those keep
+// wordSimilarity + SIMILARITY_THRESHOLD/CLOSE_THRESHOLD exactly as before.
+export function isLikelyContentMatch(a, b) {
+  if (!a || !b) return false;
+  if (a === b) return true;
+  const maxLen = Math.max(a.length, b.length);
+  const sameFirstLetter = a[0] === b[0];
+  if (maxLen <= 4) return sameFirstLetter && wordSimilarity(a, b) >= SIMILARITY_THRESHOLD;
+  if (maxLen <= 6) return sameFirstLetter && wordSimilarity(a, b) >= 0.8;
+  return wordSimilarity(a, b) >= SIMILARITY_THRESHOLD;
 }
 
 function tokenize(text) {
@@ -265,14 +315,14 @@ export function deriveHomeworkVocabulary(homeworkRaw) {
   return [...words];
 }
 
-// Dedicated, stricter-than-CLOSE_THRESHOLD similarity floor for near-miss
-// detection (grading-honesty packet, 2026-07-14): CLOSE_THRESHOLD (0.5) is
-// tuned for read-aloud PARTIAL CREDIT, not "this is probably the same
-// intended word" — at 0.5, unrelated words like "saw"/"draw" cross it (a
-// false accusation the honesty rule forbids). Empirically, "pack"/"park"
-// (a genuine likely mis-hearing) sits at 0.75; 0.65 cleanly separates the two.
-export const NEAR_MISS_SIMILARITY_THRESHOLD = 0.65;
-
+// A single flat similarity floor for near-miss detection (this constant,
+// 0.65) was Buffet's reject finding 1: at 0.65+, ordinary English rhyme
+// pairs (park/dark, cat/hat, sing/ring...) read as "the child mis-said the
+// homework word" just as easily as genuine mis-hearings like "pack"/"park"
+// do — a false accusation the honesty rule forbids. Superseded 2026-07-14
+// (revision 2) by isLikelyContentMatch's length-bucketed rule above, which
+// separates the two cases the flat threshold could not.
+//
 // A transcript content word that is NOT an exact homework-vocabulary member
 // but closely resembles one (grading-honesty packet, 2026-07-14) is a likely
 // mis-said homework word — "grid-grounded", deterministic (never an LLM
@@ -293,13 +343,14 @@ export function findNearMissVocabularyWords(transcript, vocabulary) {
     let bestWord = null;
     let bestSim = 0;
     for (const vocabWord of vocabSet) {
+      if (!isLikelyContentMatch(norm, vocabWord)) continue;
       const sim = wordSimilarity(norm, vocabWord);
       if (sim > bestSim) {
         bestSim = sim;
         bestWord = vocabWord;
       }
     }
-    if (bestWord && bestSim >= NEAR_MISS_SIMILARITY_THRESHOLD && bestSim < 1) {
+    if (bestWord) {
       results.push({ said: norm, nearest: bestWord, similarity: Math.round(bestSim * 100) / 100 });
     }
   }
@@ -328,7 +379,7 @@ export function computeContentPrecision(transcript, vocabulary) {
   if (!contentWords.size) return 0;
   let matched = 0;
   for (const word of contentWords) {
-    if (vocabList.some((kw) => wordSimilarity(word, kw) >= SIMILARITY_THRESHOLD)) matched += 1;
+    if (vocabList.some((kw) => isLikelyContentMatch(word, kw))) matched += 1;
   }
   return Math.round((matched / contentWords.size) * 100);
 }
@@ -371,7 +422,7 @@ export function scoreOpenTranscript(transcript, storyContext, { homeworkVocabula
 
   for (const keyword of keywords) {
     const norm = normalizeWord(keyword);
-    const hit = transcriptWords.some((spoken) => wordSimilarity(spoken, norm) >= SIMILARITY_THRESHOLD);
+    const hit = transcriptWords.some((spoken) => isLikelyContentMatch(spoken, norm));
     if (hit) wordsMatched.push(keyword);
   }
 
@@ -396,9 +447,16 @@ export function scoreOpenTranscript(transcript, storyContext, { homeworkVocabula
   // the live battery this packet fixes.
   const useAzureBlend = gradedAgainst === 'pronunciation_effort' && Number.isFinite(azurePronunciationPercent);
   const effortWeight = gradedAgainst === 'homework_content' ? 0.3 : 0.45;
-  const scorePercent = useAzureBlend
+  const rawScorePercent = useAzureBlend
     ? Math.round(effortScore * 0.45 + azurePronunciationPercent * 0.55)
     : Math.round(effortScore * effortWeight + relevanceScore * (1 - effortWeight));
+  // pronunciation_effort + no Azure blend = zero content basis — see
+  // EFFORT_ONLY_SCORE_CEILING above. Every other branch (homework_content,
+  // real story-context, and pronunciation_effort WITH an Azure blend) is
+  // unaffected.
+  const scorePercent = (gradedAgainst === 'pronunciation_effort' && !useAzureBlend)
+    ? Math.min(rawScorePercent, EFFORT_ONLY_SCORE_CEILING)
+    : rawScorePercent;
 
   const nearMissWords = gradedAgainst === 'homework_content'
     ? findNearMissVocabularyWords(transcript, vocabulary)
@@ -766,11 +824,24 @@ export async function runSpeakingCheck({
           // child); whatever chunks already succeeded are still used below.
           // eslint-disable-next-line no-await-in-loop
           if (!(await azureUnderFreeTier(kv, chunk.sampledSeconds))) break;
-          // eslint-disable-next-line no-await-in-loop
-          const best = await assessPronunciationWithAzure({ env, audioBlob: chunk.wav, referenceText: '', fetchFn });
-          // eslint-disable-next-line no-await-in-loop
-          await azureBumpUsage(kv, chunk.sampledSeconds);
-          successfulChunks.push({ best, sampledSeconds: chunk.sampledSeconds });
+          try {
+            // A transient per-chunk failure (Azure 5xx, timeout) on chunk N
+            // must not discard chunks 1..N-1 (revision 2, 2026-07-14 — fixes
+            // Buffet's reject finding 2: this used to fall through to a full
+            // re-transcription with no vocabulary/Azure evidence, landing in
+            // the uncapped pronunciation_effort branch). Same "keep whatever
+            // already succeeded" shape as the free-tier `break` above — one
+            // code path, both `break` out of this loop and let the merge
+            // below run on however many chunks made it.
+            // eslint-disable-next-line no-await-in-loop
+            const best = await assessPronunciationWithAzure({ env, audioBlob: chunk.wav, referenceText: '', fetchFn });
+            // eslint-disable-next-line no-await-in-loop
+            await azureBumpUsage(kv, chunk.sampledSeconds);
+            successfulChunks.push({ best, sampledSeconds: chunk.sampledSeconds });
+          } catch (chunkErr) {
+            console.error(`[read2lead-speaking-check] azure unscripted PA chunk failed (${chunkErr?.message} ${chunkErr?.detail || ''}); keeping ${successfulChunks.length} prior chunk(s)`);
+            break;
+          }
         }
         if (successfulChunks.length) merged = mergeAzureChunkResults(successfulChunks);
       }

@@ -19,6 +19,7 @@ import {
   runSpeakingCheck,
   VIETNAMESE_REDIRECT_VI,
   detectVietnameseSpeech,
+  EFFORT_ONLY_SCORE_CEILING,
 } from '../functions/api/read2lead-speaking-check.js';
 
 function makeFakeKv() {
@@ -354,6 +355,59 @@ test('runSpeakingCheck: photo_talk clip whose Azure meter is already exhausted f
   assert.equal(result.pronunciation, undefined);
   assert.equal(result.check_mode, 'open');
   assert.ok(result.score_percent >= 0, 'the child still gets a graceful local score, never blocked');
+});
+
+// Mid-clip exception (revision 2, 2026-07-14 — fixes Buffet's reject finding
+// 2a): a TRANSIENT per-chunk failure (Azure 5xx, timeout on chunk N) must
+// keep chunks 1..N-1, the same partial-merge semantics the free-tier `break`
+// above already had. Before this fix, a thrown error anywhere in the loop
+// discarded every prior successful chunk and fell all the way through to a
+// fresh Whisper transcription with no Azure evidence at all.
+test('runSpeakingCheck: a transient Azure failure on chunk 2 keeps chunk 1\'s result — same partial-merge semantics as the free-tier break (finding 2a)', async () => {
+  const kv = makeFakeKv();
+  let azureCalls = 0;
+  const fetchFn = async () => {
+    azureCalls += 1;
+    if (azureCalls === 2) return new Response('Internal Server Error', { status: 500 });
+    return new Response(JSON.stringify(AZURE_NBEST), { status: 200 });
+  };
+  const longWav = new Blob([makeWavBuffer({ durationSeconds: 45 })], { type: 'audio/wav' });
+  const result = await runSpeakingCheck({
+    audioBlob: longWav,
+    expectedText: 'photo_talk',
+    checkMode: 'open',
+    env: { AZURE_SPEECH_KEY: 'k', AZURE_SPEECH_REGION: 'southeastasia', READ2LEAD_CODES: kv },
+    fetchFn,
+  });
+  assert.equal(azureCalls, 2, 'chunk 1 succeeds, chunk 2 throws — no retry beyond the failed chunk');
+  assert.ok(result.pronunciation, 'chunk 1\'s result must still be used, not discarded — this used to fall through to a fresh Whisper transcription with zero Azure evidence');
+  assert.equal(result.pronunciation.sampled_seconds, 30, 'only the successful first chunk is merged, not the full 45s');
+  const meterKey = [...kv.store.keys()].find((k) => k.startsWith('azure-pa-secs:'));
+  assert.equal(JSON.parse(kv.store.get(meterKey)), 30, 'only chunk 1 is metered — the failed chunk 2 is never billed');
+});
+
+// Defense in depth (revision 2, 2026-07-14 — fixes Buffet's reject finding
+// 2b): when EVERY chunk fails (or the clip is short enough to be a single
+// failing chunk) and the fallback Whisper transcript is gibberish with no
+// homework vocabulary to ground it, EFFORT_ONLY_SCORE_CEILING must cap the
+// score below top-tier praise — the exact live bug Buffet reproduced
+// (gibberish scoring 100 with "Hay quá!").
+test('runSpeakingCheck: Azure chunk failure + gibberish fallback transcript never reaches top-tier praise (finding 2b)', async () => {
+  const kv = makeFakeKv();
+  const fetchFn = async () => new Response('Internal Server Error', { status: 500 });
+  const gibberishAi = { async run() { return { text: 'Slum Backs Joe Tab Appendix Smurf Vinyl Craft Sybil Morfin Generalplan Frumpy' }; } };
+  const result = await runSpeakingCheck({
+    audioBlob: new Blob([makeWavBuffer({ durationSeconds: 5 })], { type: 'audio/wav' }),
+    expectedText: 'photo_talk',
+    checkMode: 'open',
+    ai: gibberishAi,
+    env: { AZURE_SPEECH_KEY: 'k', AZURE_SPEECH_REGION: 'southeastasia', READ2LEAD_CODES: kv },
+    fetchFn,
+  });
+  assert.equal(result.pronunciation, undefined, 'no Azure evidence at all -- falls through to the local Whisper-transcript scorer');
+  assert.equal(result.graded_against, 'pronunciation_effort');
+  assert.ok(result.score_percent <= EFFORT_ONLY_SCORE_CEILING, `expected <=${EFFORT_ONLY_SCORE_CEILING}, got ${result.score_percent}`);
+  assert.doesNotMatch(result.feedback_vi, /Hay quá/, 'gibberish must never earn top-tier praise');
 });
 
 // ---------------------------------------------------------------------------

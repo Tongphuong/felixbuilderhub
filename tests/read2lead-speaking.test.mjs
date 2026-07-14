@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 
 import {
   MAX_AUDIO_BYTES,
+  EFFORT_ONLY_SCORE_CEILING,
   collectFlaggedWords,
   feedbackOpenVi,
   feedbackVi,
@@ -17,6 +18,7 @@ import {
   scoreTranscript,
   transcribeAudio,
   wordSimilarity,
+  isLikelyContentMatch,
   deriveHomeworkVocabulary,
   findNearMissVocabularyWords,
   computeContentPrecision,
@@ -499,6 +501,41 @@ test('wordSimilarity treats near matches as close', () => {
   assert.ok(wordSimilarity('park', 'park') === 1);
 });
 
+// ---------------------------------------------------------------------------
+// isLikelyContentMatch — Buffet's reject finding 1 (2026-07-14, revision 2).
+// Raw wordSimilarity (above) is fine for read-aloud partial credit but is
+// NOT what content-grounding/near-miss code should use directly — see the
+// function's own header. Buffet's exact probe list from the reject report.
+// ---------------------------------------------------------------------------
+
+test('isLikelyContentMatch: short-word rhyme pairs are never a match, regardless of raw similarity (Buffet\'s reject probes)', () => {
+  assert.equal(isLikelyContentMatch('park', 'dark'), false, 'wordSimilarity is 0.75 but this is a false accusation');
+  assert.equal(isLikelyContentMatch('cat', 'hat'), false);
+  assert.equal(isLikelyContentMatch('book', 'look'), false, 'wordSimilarity is 0.75');
+  assert.equal(isLikelyContentMatch('sing', 'ring'), false, 'wordSimilarity is 0.75');
+});
+
+test('isLikelyContentMatch: real typos/mishearings still match (Buffet\'s reject probes)', () => {
+  assert.equal(isLikelyContentMatch('hapy', 'happy'), true);
+  assert.equal(isLikelyContentMatch('becase', 'because'), true);
+  assert.equal(isLikelyContentMatch('footbal', 'football'), true);
+});
+
+test('isLikelyContentMatch: 5-6 letter words also need the first-letter tiebreak — house/mouse (0.8, first letters differ) does not match', () => {
+  assert.equal(wordSimilarity('house', 'mouse'), 0.8, 'sanity check: raw similarity alone would pass the 0.8 bucket floor');
+  assert.equal(isLikelyContentMatch('house', 'mouse'), false);
+});
+
+test('isLikelyContentMatch: the packet\'s own genuine near-miss fixture ("pack" heard for "park") still matches at length 4', () => {
+  assert.equal(isLikelyContentMatch('pack', 'park'), true, 'same first letter, 0.75 similarity — a real likely mis-hearing, not a rhyme');
+});
+
+test('isLikelyContentMatch: identical words and empty inputs', () => {
+  assert.equal(isLikelyContentMatch('park', 'park'), true);
+  assert.equal(isLikelyContentMatch('', 'park'), false);
+  assert.equal(isLikelyContentMatch('park', ''), false);
+});
+
 test('speaking endpoint runs Whisper inside Cloudflare first, OpenAI as fallback', () => {
   // Workers AI primary — direct OpenAI/Groq calls from VN-serving colos get
   // geo-blocked (403 unsupported_country_region_territory).
@@ -695,6 +732,16 @@ test('findNearMissVocabularyWords: empty vocabulary -> [] (never throws)', () =>
   assert.deepEqual(findNearMissVocabularyWords('anything at all', []), []);
 });
 
+test('findNearMissVocabularyWords / scoreOpenTranscript: Buffet\'s reject repro — "dark" is never flagged as a near-miss of "park", nor credited as words_matched (finding 1, live vocabulary)', () => {
+  const vocab = deriveHomeworkVocabulary(BATTERY_HOMEWORK); // includes park, happy, football, school
+  const transcript = 'We went to a dark place and had a great time every single day';
+  const near = findNearMissVocabularyWords(transcript, vocab);
+  assert.equal(near.find((n) => n.nearest === 'park'), undefined, '"dark" must not be flagged as a near-miss of "park" — false accusation');
+
+  const scored = scoreOpenTranscript(transcript, 'photo_talk', { homeworkVocabulary: vocab });
+  assert.equal(scored.words_matched.includes('park'), false, 'the child never said "park" — no green-chip credit for "dark"');
+});
+
 // ---------------------------------------------------------------------------
 // scoreOpenTranscript — sentinel-aware content grounding (rows 1, 3, 13)
 // ---------------------------------------------------------------------------
@@ -707,7 +754,14 @@ test('scoreOpenTranscript: sentinel text itself is never treated as content — 
   // relevance-zeroed ceiling.
   const result = scoreOpenTranscript('We play football at the park and have a great time every day', 'photo_talk');
   assert.equal(result.graded_against, 'pronunciation_effort');
-  assert.ok(result.score_percent >= 70, 'no fake-keyword ceiling — effort-only scoring for a long real answer');
+  // Revision 2 (2026-07-14, Buffet's reject finding 2) added
+  // EFFORT_ONLY_SCORE_CEILING as defense in depth: this exact branch has NO
+  // content basis (gibberish scored 100 + top praise through it before the
+  // fix), so it is now capped well below top praise regardless of how long
+  // or genuine the answer is — no fake-keyword ceiling (the original bug
+  // this test guarded against), but also no gibberish-reaches-100 hole.
+  assert.equal(result.score_percent, EFFORT_ONLY_SCORE_CEILING, 'capped below top praise, not the old fake-keyword ceiling either');
+  assert.doesNotMatch(result.feedback_vi, /Hay quá/, 'an effort-only score must never trigger top-tier praise');
 });
 
 test('scoreOpenTranscript row 1: perfect on-topic English against real homework vocabulary scores HIGH, not 45', () => {
@@ -921,7 +975,7 @@ test('runSpeakingCheck (Whisper path): garbled/off-topic transcript (simulated V
   assert.equal(calls, 2, 'the scored pass, then the VN detection pass');
 });
 
-test('runSpeakingCheck (Whisper path): a bare photo homework (no derivable vocabulary) still grades on effort — the current live case, honestly labeled', async () => {
+test('runSpeakingCheck (Whisper path): a bare photo homework (no derivable vocabulary) grades on effort, capped below top praise — the current live case, honestly labeled', async () => {
   const result = await runSpeakingCheck({
     audioBlob: new Blob(['audio'], { type: 'audio/webm' }),
     expectedText: 'photo_talk',
@@ -930,7 +984,13 @@ test('runSpeakingCheck (Whisper path): a bare photo homework (no derivable vocab
     homework: { schema_version: 3, tasks: [{ id: 't_picture', type: 'picture', anchors: [], duration_s: 60 }] },
   });
   assert.equal(result.graded_against, 'pronunciation_effort');
-  assert.ok(result.score_percent >= 70, 'a genuinely long, real answer still scores well on effort alone');
+  // Revision 2 (2026-07-14, Buffet's reject finding 2): this exact branch —
+  // no homework vocabulary, no Azure blend — has zero content basis, so it
+  // is capped at EFFORT_ONLY_SCORE_CEILING regardless of how genuine the
+  // answer is (the branch cannot tell genuine effort from gibberish, which
+  // is exactly what let gibberish reach 100 + "Hay quá!" before this fix).
+  assert.equal(result.score_percent, EFFORT_ONLY_SCORE_CEILING);
+  assert.doesNotMatch(result.feedback_vi, /Hay quá/, 'an effort-only score must never trigger top-tier praise');
 });
 
 // ---------------------------------------------------------------------------
