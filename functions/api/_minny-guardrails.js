@@ -179,3 +179,81 @@ export async function screenWithLlamaGuard(ai, replyText, userText = '', waitUnt
     return { flagged: false, degraded: true, category: 'guard_error', raw: null };
   }
 }
+
+// Layer: DETACHED variant of screenWithLlamaGuard for callers who have
+// ALREADY delivered the content being screened and want the ML backstop to
+// run entirely AFTER the response, inside the caller's ctx.waitUntil --
+// never gating delivery, never racing a timer against the response's own
+// I/O teardown.
+//
+// Founder ruling (2026-07-15, speakup-guard-redesign): the coach note ships
+// the instant the DETERMINISTIC guards (validateReplyShape/
+// detectCharacterBreak/scanBannedTopics -- unchanged, inline, always
+// gating) pass. This function screens that same text afterward; on a
+// genuine flag it calls `onFlagged` so the caller can retract whatever it
+// persisted (e.g. rewrite a KV record so a retracted note can't be
+// tapped-to-hear again) and logs the flag loudly so it's findable in CF
+// logs. Safety-floor rationale: screenWithLlamaGuard above ALREADY ships
+// the reply on `degraded` (guard slow/errored/unparsable) -- backgrounding
+// the ML backstop entirely does not lower that floor, it removes the
+// inline `await` of the guard call that was the actual isolate-killer
+// (error 1102, ~83% of live requests even after both hygiene fixes above --
+// see speakup-503-hunt history). There is no race and no timer here: a
+// plain `await ai.run(...)`, and `waitUntil`'s own contract is what keeps
+// this call alive past the response -- nothing to leak.
+//
+// This intentionally duplicates screenWithLlamaGuard's small verdict-parse
+// step (safe/unsafe/degraded classification) rather than sharing code with
+// it -- screenWithLlamaGuard is still the fail-closed-on-flag path for
+// minny-conversation.js's live turn reply and has already been through two
+// rounds of live-reproducer review; touching it to share code here is not
+// worth the risk to a call site this function does not serve.
+//
+// Never throws, never rejects -- fully try/catch-wrapped so a background
+// failure can never surface as an unhandled rejection inside waitUntil.
+// Returns the job promise so a caller/test can await it directly in
+// addition to (or instead of) handing it to waitUntil.
+export function screenWithLlamaGuardDetached({ ai, replyText, userText = '', accessCode = '', onFlagged } = {}) {
+  return (async () => {
+    try {
+      if (!ai || typeof ai.run !== 'function') {
+        console.error('[GUARD-DEGRADED]', accessCode, 'guard_unavailable');
+        return;
+      }
+      const messages = [];
+      if (userText) messages.push({ role: 'user', content: String(userText) });
+      messages.push({ role: 'assistant', content: String(replyText || '') });
+      const result = await ai.run('@cf/meta/llama-guard-3-8b', { messages });
+      const raw = typeof result === 'string' ? result : (result?.response ?? result?.text ?? '');
+      const normalized = String(raw ?? '').trim().toLowerCase();
+      if (!normalized) {
+        console.error('[GUARD-DEGRADED]', accessCode, 'guard_empty_response');
+        return;
+      }
+      if (normalized.startsWith('safe')) {
+        return; // clean verdict -- nothing to retract
+      }
+      const categoryMatch = normalized.match(/s\d+/);
+      if (normalized.includes('unsafe') || categoryMatch) {
+        const category = categoryMatch ? categoryMatch[0] : 'unsafe';
+        // Loud, findable in CF logs -- this is the only signal a retracted
+        // coach note leaves once the response has already gone out.
+        console.error('[GUARD-RETRACT]', accessCode, category, raw);
+        if (typeof onFlagged === 'function') {
+          try {
+            await onFlagged({ category, raw });
+          } catch (err) {
+            console.error('[GUARD-RETRACT-FAILED]', accessCode, category, err?.message || err);
+          }
+        }
+        return;
+      }
+      // Non-empty but neither a clear "safe" nor a clear "unsafe" verdict --
+      // can't trust it, so degrade (no retraction), same posture as the
+      // inline guard's guard_unparsed case.
+      console.error('[GUARD-DEGRADED]', accessCode, 'guard_unparsed');
+    } catch (err) {
+      console.error('[GUARD-DEGRADED]', accessCode, 'guard_error', err?.message || err);
+    }
+  })();
+}

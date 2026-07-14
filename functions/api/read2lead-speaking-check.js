@@ -16,7 +16,7 @@ import {
 // V1.3 homework feedback sandwich (2026-07-12) — see that file's header for
 // the two-way-import note (it imports normalizePracticeWord from here).
 import { buildFeedbackContext, generateHomeworkFeedback } from './_homework-feedback.js';
-import { validateReplyShape, detectCharacterBreak, scanBannedTopics, screenWithLlamaGuard } from './_minny-guardrails.js';
+import { validateReplyShape, detectCharacterBreak, scanBannedTopics, screenWithLlamaGuardDetached } from './_minny-guardrails.js';
 // Grading-honesty packet (2026-07-14): the no-reference open scorer grounds
 // relevance on the child's OWN homework vocabulary instead of story
 // keywords — normalizeHomeworkRecord is the one tolerant-read chokepoint for
@@ -1177,56 +1177,95 @@ export async function onRequestPost(context) {
           const topicFlag = scanBannedTopics(feedbackText);
           const deterministicFlag = Boolean(shapeFlag) || characterFlag.flagged || topicFlag.flagged;
           if (!deterministicFlag) {
-            // speakup-503-hunt revision 2 (2026-07-15): plumb `waitUntil`
-            // (captured at the top of onRequestPost, above the shadowing
-            // local `context`) so a Llama Guard call that outlasts the 3.5s
-            // race timeout doesn't leave its own promise orphaned past this
-            // request's teardown -- Buffet confirmed this call site shares
-            // screenWithLlamaGuard and therefore the same mirror-side bug.
-            const guardResult = await screenWithLlamaGuard(workersAi, feedbackText, result.transcript || '', waitUntil);
-            if (!guardResult.flagged) {
-              result.coach = feedback;
+            // Founder ruling (2026-07-15, speakup-guard-redesign): the child
+            // gets the coach note right after the deterministic guards above
+            // pass -- the ML backstop (Llama Guard) never gates delivery any
+            // more; it runs IN THE BACKGROUND via waitUntil, below. Safety
+            // floor rationale: the OLD code here already fail-opened the
+            // coach when the guard was slow/errored/unparsable
+            // (guardResult.degraded -> reply shipped anyway, just logged),
+            // so backgrounding the backstop entirely does not lower that
+            // floor -- it removes the inline `await screenWithLlamaGuard`
+            // that was the actual isolate-killer (error 1102, ~83% of live
+            // requests even after both hygiene fixes -- see
+            // speakup-503-hunt). On a genuine flag the note is retracted
+            // (the KV rewrite below kills tap-to-hear for it) and logged
+            // loudly for review; it is never re-shown.
+            result.coach = feedback;
 
-              // V1.3 fix round (2026-07-12, Steve's UI review): focus_word
-              // gets the same tap-to-hear treatment as any other practice
-              // chip, but minny-voice's `word` branch only allows words
-              // present in the flagged-words:<code> record. On the
-              // kid-did-great path, allowed_focus_words fell back to
-              // homework content words instead of anything actually
-              // flagged, so focus_word was never written above — merge it
-              // in now. Safe to allow: focus_word is only ever set from the
-              // SAME allowed_focus_words set validateFeedbackGrounding just
-              // enforced membership against, never an arbitrary word.
-              //
-              // Grading-honesty packet (2026-07-14): the coach's own
-              // model_sentence_en is a NOVEL sentence the model composed
-              // (never derivable from the static homework record, unlike
-              // deriveHomeworkTapAllowlist's static sentences), so it needs
-              // its own short-TTL allowlist entry too — persisted here
-              // alongside the word merge so minny-voice's `text` branch can
-              // allow tapping the coach's sentence. This is why the write
-              // below now also fires when focus_word was already flagged:
-              // the sentence itself is still new information either way.
-              try {
-                const normalizedFocus = normalizePracticeWord(feedback.focus_word);
-                const modelSentence = typeof feedback.model_sentence_en === 'string' ? feedback.model_sentence_en.trim() : '';
-                const needsWordMerge = normalizedFocus && !flaggedWords.includes(normalizedFocus);
-                if (needsWordMerge || modelSentence) {
-                  const mergedWords = needsWordMerge ? [...flaggedWords, normalizedFocus] : flaggedWords;
+            // V1.3 fix round (2026-07-12, Steve's UI review): focus_word
+            // gets the same tap-to-hear treatment as any other practice
+            // chip, but minny-voice's `word` branch only allows words
+            // present in the flagged-words:<code> record. On the
+            // kid-did-great path, allowed_focus_words fell back to
+            // homework content words instead of anything actually
+            // flagged, so focus_word was never written above — merge it
+            // in now. Safe to allow: focus_word is only ever set from the
+            // SAME allowed_focus_words set validateFeedbackGrounding just
+            // enforced membership against, never an arbitrary word.
+            //
+            // Grading-honesty packet (2026-07-14): the coach's own
+            // model_sentence_en is a NOVEL sentence the model composed
+            // (never derivable from the static homework record, unlike
+            // deriveHomeworkTapAllowlist's static sentences), so it needs
+            // its own short-TTL allowlist entry too — persisted here
+            // alongside the word merge so minny-voice's `text` branch can
+            // allow tapping the coach's sentence. This write now always
+            // fires on a clean deterministic pass (not gated on the ML
+            // guard any more): the sentence is retracted below instead, on
+            // the rare background flag.
+            const normalizedFocus = normalizePracticeWord(feedback.focus_word);
+            const modelSentence = typeof feedback.model_sentence_en === 'string' ? feedback.model_sentence_en.trim() : '';
+            try {
+              const needsWordMerge = normalizedFocus && !flaggedWords.includes(normalizedFocus);
+              if (needsWordMerge || modelSentence) {
+                const mergedWords = needsWordMerge ? [...flaggedWords, normalizedFocus] : flaggedWords;
+                await env.READ2LEAD_CODES.put(
+                  `flagged-words:${accessCode}`,
+                  JSON.stringify({
+                    words: mergedWords,
+                    sentences: modelSentence ? [modelSentence] : [],
+                    at: Date.now(),
+                  }),
+                  { expirationTtl: 3600 },
+                );
+              }
+            } catch {
+              /* best-effort; must never block the response */
+            }
+
+            // speakup-guard-redesign (2026-07-15): the ML backstop, detached
+            // from the response -- plain `await ai.run(...)` inside the job,
+            // no race, no timer. `waitUntil`'s own contract sanctions the
+            // call's lifetime past this response, which the inline
+            // Promise.race+setTimeout version could never safely do (that
+            // was the isolate-killer). On a genuine flag, retract the
+            // sentence written above so tap-to-hear can't replay it; nothing
+            // else persists the coach text server-side (result.coach only
+            // ever rides in this one HTTP response body), so there is
+            // nothing else to retract.
+            waitUntil(screenWithLlamaGuardDetached({
+              ai: workersAi,
+              replyText: feedbackText,
+              userText: result.transcript || '',
+              accessCode,
+              onFlagged: async () => {
+                if (!modelSentence) return;
+                try {
+                  const existing = await env.READ2LEAD_CODES.get(`flagged-words:${accessCode}`, { type: 'json' });
+                  if (!existing || !Array.isArray(existing.sentences)) return;
+                  const remaining = existing.sentences.filter((s) => s !== modelSentence);
+                  if (remaining.length === existing.sentences.length) return;
                   await env.READ2LEAD_CODES.put(
                     `flagged-words:${accessCode}`,
-                    JSON.stringify({
-                      words: mergedWords,
-                      sentences: modelSentence ? [modelSentence] : [],
-                      at: Date.now(),
-                    }),
+                    JSON.stringify({ ...existing, sentences: remaining, at: Date.now() }),
                     { expirationTtl: 3600 },
                   );
+                } catch {
+                  /* best-effort; a retraction failure must not throw */
                 }
-              } catch {
-                /* best-effort; must never block the response */
-              }
-            }
+              },
+            }));
           }
         }
       }

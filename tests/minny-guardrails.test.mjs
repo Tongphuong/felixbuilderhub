@@ -7,6 +7,7 @@ import {
   validateReplyShape,
   detectCharacterBreak,
   screenWithLlamaGuard,
+  screenWithLlamaGuardDetached,
 } from '../functions/api/_minny-guardrails.js';
 
 import { onRequestPost } from '../functions/api/minny-conversation.js';
@@ -366,6 +367,93 @@ test('KILL INPUT: screenWithLlamaGuard degrades gracefully (no throw) when the t
   } finally {
     restoreSetTimeout();
   }
+});
+
+// ---------------------------------------------------------------------------
+// speakup-guard-redesign (2026-07-15, founder ruling): screenWithLlamaGuardDetached
+// -- the coach path's ML backstop moved entirely off the response path. No
+// race, no timer (that's the whole point -- there is nothing left to leak),
+// so the KILL INPUT coverage here is about the CALLBACK contract instead:
+// exactly one ai.run() per job, a genuine flag calls onFlagged and logs
+// loudly, degraded/safe never call onFlagged, and nothing this function does
+// can throw past its own boundary.
+// ---------------------------------------------------------------------------
+
+test('screenWithLlamaGuardDetached: no-flag (safe) verdict never calls onFlagged', async () => {
+  const ai = { run: async () => 'safe' };
+  let flaggedCalls = 0;
+  await screenWithLlamaGuardDetached({ ai, replyText: 'nice job!', onFlagged: async () => { flaggedCalls += 1; } });
+  assert.equal(flaggedCalls, 0);
+});
+
+test('screenWithLlamaGuardDetached: degraded (binding missing) never calls onFlagged and never throws', async () => {
+  let flaggedCalls = 0;
+  await assert.doesNotReject(
+    screenWithLlamaGuardDetached({ ai: null, replyText: 'nice job!', onFlagged: async () => { flaggedCalls += 1; } }),
+  );
+  assert.equal(flaggedCalls, 0);
+});
+
+test('screenWithLlamaGuardDetached: degraded (ai.run throws) never calls onFlagged and never throws', async () => {
+  const ai = { run: async () => { throw new Error('workers ai down'); } };
+  let flaggedCalls = 0;
+  await assert.doesNotReject(
+    screenWithLlamaGuardDetached({ ai, replyText: 'nice job!', onFlagged: async () => { flaggedCalls += 1; } }),
+  );
+  assert.equal(flaggedCalls, 0);
+});
+
+test('screenWithLlamaGuardDetached: ai.run is invoked exactly once per job', async () => {
+  let calls = 0;
+  const ai = { run: async () => { calls += 1; return 'safe'; } };
+  await screenWithLlamaGuardDetached({ ai, replyText: 'nice job!' });
+  assert.equal(calls, 1);
+});
+
+test('screenWithLlamaGuardDetached: a genuine unsafe verdict calls onFlagged with the category, exactly once', async () => {
+  const ai = { run: async () => 'unsafe\nS4' };
+  const calls = [];
+  await screenWithLlamaGuardDetached({
+    ai,
+    replyText: 'bad sentence',
+    accessCode: 'R2L-TEST',
+    onFlagged: async (verdict) => { calls.push(verdict); },
+  });
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].category, 's4');
+});
+
+test('screenWithLlamaGuardDetached: KILL INPUT -- an onFlagged that itself throws is swallowed, not surfaced as an unhandled rejection', async () => {
+  const ai = { run: async () => 'unsafe' };
+  let unhandled = null;
+  const onUnhandledRejection = (err) => { unhandled = err; };
+  process.on('unhandledRejection', onUnhandledRejection);
+  try {
+    await assert.doesNotReject(
+      screenWithLlamaGuardDetached({ ai, replyText: 'bad', onFlagged: async () => { throw new Error('KV down'); } }),
+    );
+    await new Promise((resolve) => { setTimeout(resolve, 10); });
+    assert.equal(unhandled, null, 'a retraction failure must never escape as an unhandled rejection');
+  } finally {
+    process.removeListener('unhandledRejection', onUnhandledRejection);
+  }
+});
+
+test('screenWithLlamaGuardDetached: KILL INPUT -- no timer is ever armed (there is no race to leak in the first place)', async () => {
+  const spy = spyOnTimers();
+  try {
+    const ai = { run: async () => 'safe' };
+    await screenWithLlamaGuardDetached({ ai, replyText: 'nice job!' });
+    assert.equal(spy.armed.size, 0, 'screenWithLlamaGuardDetached must never set a timer -- backgrounding via waitUntil is what replaces the race entirely');
+  } finally {
+    spy.restore();
+  }
+});
+
+test('screenWithLlamaGuardDetached: returns the job promise so a caller can hand it straight to waitUntil', () => {
+  const ai = { run: async () => 'safe' };
+  const job = screenWithLlamaGuardDetached({ ai, replyText: 'nice job!' });
+  assert.equal(typeof job.then, 'function', 'must return a thenable so waitUntil(job) works');
 });
 
 // ---------------------------------------------------------------------------
