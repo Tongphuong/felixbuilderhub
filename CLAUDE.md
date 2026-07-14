@@ -44,6 +44,6 @@ Read `_ops/LEAD.md`, the last 10 lines of `_ops/AGENT_LOG.md`, and
 | Doc | Purpose |
 |---|---|
 | `_ops/AGENTS.md` | Team roles, rules, permissions |
-| `_ops/specs/MASTER_PLAN.md` | Approved roadmap for lesson redesign |
+| `_ops/archive/MASTER_PLAN.md` | Historical roadmap (archived — current work is per-spec in `_ops/specs/`) |
 | `docs/ENV.md` | Environment variables and setup |
 | `schemas/SCHEMA.md` | KV data structure documentation |

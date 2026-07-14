@@ -28,7 +28,8 @@
 5. **Backend contract:** the pack JSON shape the hub reads from backend. Do not rename fields the lesson renderer depends on.
 
 Touching any of these requires a Claude-reviewed written spec and Phuong's
-explicit approval. Aider workers may not expand into these files.
+explicit approval. Workers may not expand into these files, and the CEO
+cannot edit them at all (`ceo-code-lock`, Company OS v2).
 
 ## 1b. Landmines in THIS repo — each one has already caused a bug
 
@@ -71,14 +72,14 @@ trivia into it is how a governance layer rots into noise.
 |---|---|---|
 | `src/pages/read2lead/lesson.astro` | Approved spec owner only | Protected completion logic |
 | `public/scripts/r2l-*.js` | Approved spec owner only | Protected mic/recorder flow |
-| `src/pages/` (other pages) | Claude-assigned Aider worker | Standard frontend work |
-| `src/components/` | Claude-assigned Aider worker | UI components |
-| `src/styles/` | Claude-assigned Aider worker | CSS |
-| `functions/` | Claude-assigned Aider worker | CF Worker API endpoints |
-| `public/assets/` | Claude-assigned Aider worker | Static assets |
+| `src/pages/` (other pages) | Design (Steve) | Standard frontend work |
+| `src/components/` | Design (Steve) | UI components |
+| `src/styles/` | Design (Steve) | CSS |
+| `functions/` | Engineering (Mark) | CF Worker API endpoints |
+| `public/assets/` | Design (Steve) | Static assets |
 
 The active spec or product `CONTROL.md` must name one owner and exact files. A
-zone being eligible for both workers never permits simultaneous ownership.
+zone being eligible for both departments never permits simultaneous ownership.
 
 ---
 
