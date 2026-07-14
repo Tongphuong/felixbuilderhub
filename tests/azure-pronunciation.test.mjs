@@ -11,6 +11,8 @@ import {
   mapAzureOpenResult,
   mapAzureFramePronunciation,
   trimWavToSeconds,
+  splitWavIntoChunks,
+  mergeAzureChunkResults,
   AZURE_PA_MONTHLY_FREE_SECONDS,
 } from '../functions/api/_azure-pronunciation.js';
 import {
@@ -256,7 +258,17 @@ test('unscripted PA: header has NO ReferenceText and EnableMiscue false; scripte
   assert.equal(header.EnableMiscue, true);
 });
 
-test('runSpeakingCheck: photo_talk WAV ≤30s graded unscripted, keeps open contract', async () => {
+// Grading-honesty packet (2026-07-14): the photo_talk Azure path now
+// requires a genuinely parseable canonical WAV (it chunks the buffer itself
+// instead of forwarding raw bytes untouched) — makeWavBuffer (below, hoisted
+// function declaration) builds a real one instead of the old placeholder
+// string-blob fixture. score_percent is no longer a bare PronScore
+// passthrough: with no homework passed, there is no vocabulary to ground
+// relevance on, so the score blends effort + Azure pronunciation
+// (graded_against: 'pronunciation_effort'), and the Azure numbers move under
+// the additive `pronunciation` block (mirrors frame mode's existing shape)
+// instead of living at the top level.
+test('runSpeakingCheck: photo_talk WAV ≤30s graded unscripted, pronunciation_effort when no homework vocabulary exists', async () => {
   const kv = makeFakeKv();
   let azureCalls = 0;
   const fetchFn = async (url, init) => {
@@ -266,45 +278,82 @@ test('runSpeakingCheck: photo_talk WAV ≤30s graded unscripted, keeps open cont
     return new Response(JSON.stringify(AZURE_NBEST), { status: 200 });
   };
   const result = await runSpeakingCheck({
-    audioBlob: new Blob(['wav-bytes'], { type: 'audio/wav' }),
+    audioBlob: new Blob([makeWavBuffer({ durationSeconds: 5 })], { type: 'audio/wav' }),
     expectedText: 'photo_talk',
     checkMode: 'open',
     env: { AZURE_SPEECH_KEY: 'k', AZURE_SPEECH_REGION: 'southeastasia', READ2LEAD_CODES: kv },
     fetchFn,
   });
-  assert.equal(azureCalls, 1);
-  assert.equal(result.scorer, 'azure_pronunciation_unscripted');
+  assert.equal(azureCalls, 1, 'a single ≤30s clip is exactly one chunk');
   assert.equal(result.check_mode, 'open');
-  assert.equal(result.score_percent, 88);
+  assert.equal(result.graded_against, 'pronunciation_effort', 'no homework -> nothing to ground content relevance on');
+  assert.equal(result.pronunciation.scorer, 'azure_pronunciation_unscripted');
+  assert.equal(result.pronunciation.accuracy_percent, 90);
+  assert.equal(result.pronunciation.fluency_percent, 85);
+  // AZURE_NBEST's Display "I like apples." is 3 words -> effort 30; blended
+  // with Azure's PronScore (88) at the same 0.45/0.55 split scoreOpenTranscript
+  // already uses for effort+relevance.
+  assert.equal(result.score_percent, Math.round(30 * 0.45 + 88 * 0.55));
   assert.ok(Array.isArray(result.words_matched));
   assert.ok(result.feedback_vi.length > 0);
 });
 
-test('runSpeakingCheck: photo_talk clip over 30s skips Azure and uses the open scorer', async () => {
+// "The Ear on long clips" (design point 5, grading-honesty packet
+// 2026-07-14): Azure's short-audio REST endpoint caps at 30s/call, so a
+// longer photo_talk clip used to skip Azure entirely past the first 30s and
+// fall to the local open scorer -- now it is chunked into sequential ≤30s
+// pieces, each graded, and merged (duration-weighted) instead of being
+// abandoned. This replaces the old "clip over 30s skips Azure" test, which
+// documented the exact limitation this packet closes.
+test('runSpeakingCheck: photo_talk clip over 30s is chunked into sequential ≤30s pieces and merged, not skipped', async () => {
   const kv = makeFakeKv();
   let azureCalls = 0;
   const fetchFn = async () => {
     azureCalls += 1;
     return new Response(JSON.stringify(AZURE_NBEST), { status: 200 });
   };
-  const bigWav = new Blob([new Uint8Array(31 * 32000)], { type: 'audio/wav' });
-  const fakeAi = {
-    async run() {
-      return { text: 'I can see a big mountain and a river in the picture.' };
-    },
-  };
+  const longWav = new Blob([makeWavBuffer({ durationSeconds: 45 })], { type: 'audio/wav' });
   const result = await runSpeakingCheck({
-    audioBlob: bigWav,
+    audioBlob: longWav,
+    expectedText: 'photo_talk',
+    checkMode: 'open',
+    env: { AZURE_SPEECH_KEY: 'k', AZURE_SPEECH_REGION: 'southeastasia', READ2LEAD_CODES: kv },
+    fetchFn,
+  });
+  assert.equal(azureCalls, 2, 'two chunks: 30s + 15s -- the clip is graded in full, not truncated to the first 30s');
+  assert.equal(result.check_mode, 'open');
+  assert.ok(result.pronunciation, 'the long clip still gets graded, not abandoned past 30s');
+  assert.equal(result.pronunciation.sampled_seconds, 45);
+  const meterKey = [...kv.store.keys()].find((k) => k.startsWith('azure-pa-secs:'));
+  assert.equal(JSON.parse(kv.store.get(meterKey)), 45, 'both chunks metered, not a flat 30s estimate');
+});
+
+// Meter denial mid-clip (grading-honesty packet, 2026-07-14): "Respect
+// azureUnderFreeTier for EVERY chunk -- the meter is the hard stop." When
+// the free tier runs out before the FIRST chunk, no chunk ever succeeds, so
+// the whole attempt gracefully falls through to the local Whisper-based open
+// scorer -- never blocks the child.
+test('runSpeakingCheck: photo_talk clip whose Azure meter is already exhausted falls through to the local open scorer', async () => {
+  const kv = makeFakeKv();
+  await kv.put('azure-pa-secs:' + new Date().toISOString().slice(0, 7), JSON.stringify(5 * 3600));
+  let azureCalls = 0;
+  const fetchFn = async () => {
+    azureCalls += 1;
+    return new Response(JSON.stringify(AZURE_NBEST), { status: 200 });
+  };
+  const fakeAi = { async run() { return { text: 'I can see a big mountain and a river in the picture.' }; } };
+  const result = await runSpeakingCheck({
+    audioBlob: new Blob([makeWavBuffer({ durationSeconds: 5 })], { type: 'audio/wav' }),
     expectedText: 'photo_talk',
     checkMode: 'open',
     ai: fakeAi,
     env: { AZURE_SPEECH_KEY: 'k', AZURE_SPEECH_REGION: 'southeastasia', READ2LEAD_CODES: kv },
     fetchFn,
   });
-  assert.equal(azureCalls, 0);
-  assert.equal(result.scorer, undefined);
+  assert.equal(azureCalls, 0, 'meter denied before any chunk -- Azure never called');
+  assert.equal(result.pronunciation, undefined);
   assert.equal(result.check_mode, 'open');
-  assert.ok(result.score_percent >= 0);
+  assert.ok(result.score_percent >= 0, 'the child still gets a graceful local score, never blocked');
 });
 
 // ---------------------------------------------------------------------------
@@ -507,4 +556,70 @@ test('mapAzureFramePronunciation words[]: key entirely absent (not an empty arra
 test('mapAzureFramePronunciation words[]: missing/non-array Words[] is safe (no words key, no throw)', () => {
   const mapped = mapAzureFramePronunciation({ AccuracyScore: 50, FluencyScore: 50 }, 10, SKIP_WORDS_FIXTURE);
   assert.equal('words' in mapped, false);
+});
+
+// ---------------------------------------------------------------------------
+// splitWavIntoChunks / mergeAzureChunkResults — "The Ear on long clips"
+// (grading-honesty packet, 2026-07-14). splitWavIntoChunks covers the ENTIRE
+// clip (unlike trimWavToSeconds, which keeps only the first slice).
+// ---------------------------------------------------------------------------
+
+test('splitWavIntoChunks: a clip under maxSeconds is a single whole chunk', () => {
+  const buffer = makeWavBuffer({ durationSeconds: 10 });
+  const chunks = splitWavIntoChunks(buffer, 30);
+  assert.equal(chunks.length, 1);
+  assert.equal(chunks[0].sampledSeconds, 10);
+  assert.equal(chunks[0].wav.length, buffer.byteLength);
+});
+
+test('splitWavIntoChunks: a 45s clip splits into a 30s chunk + a 15s chunk covering the FULL clip, byte-exact', () => {
+  const buffer = makeWavBuffer({ sampleRate: 16000, channels: 1, bitsPerSample: 16, durationSeconds: 45 });
+  const chunks = splitWavIntoChunks(buffer, 30);
+  assert.equal(chunks.length, 2);
+  assert.equal(chunks[0].sampledSeconds, 30);
+  assert.equal(chunks[1].sampledSeconds, 15);
+  const original = new Uint8Array(buffer);
+  const chunk0Bytes = 16000 * 2 * 30;
+  assert.deepEqual(chunks[0].wav.subarray(44), original.subarray(44, 44 + chunk0Bytes));
+  assert.deepEqual(chunks[1].wav.subarray(44), original.subarray(44 + chunk0Bytes));
+  // Each chunk is itself a valid canonical WAV header.
+  for (const c of chunks) {
+    const view = new DataView(c.wav.buffer, c.wav.byteOffset, c.wav.byteLength);
+    assert.equal(view.getUint32(4, true), c.wav.length - 8);
+    assert.equal(view.getUint32(40, true), c.wav.length - 44);
+  }
+});
+
+test('splitWavIntoChunks: a clip covering many chunks (e.g. a 105s presentation) produces one chunk per 30s, plus a remainder', () => {
+  const buffer = makeWavBuffer({ durationSeconds: 105 });
+  const chunks = splitWavIntoChunks(buffer, 30);
+  assert.equal(chunks.length, 4);
+  assert.deepEqual(chunks.map((c) => c.sampledSeconds), [30, 30, 30, 15]);
+});
+
+test('splitWavIntoChunks: junk/nonstandard input returns null, same constraints as trimWavToSeconds', () => {
+  assert.equal(splitWavIntoChunks(new ArrayBuffer(10), 30), null);
+  assert.equal(splitWavIntoChunks(null, 30), null);
+  const badRiff = new Uint8Array(makeWavBuffer({ durationSeconds: 1 }));
+  writeAscii(badRiff, 0, 'JUNK');
+  assert.equal(splitWavIntoChunks(badRiff, 30), null);
+});
+
+test('mergeAzureChunkResults: duration-weighted average of PronScore/AccuracyScore/FluencyScore, Display concatenated in order, Words[] concatenated', () => {
+  const merged = mergeAzureChunkResults([
+    { best: { Display: 'Once upon a time', PronScore: 90, AccuracyScore: 92, FluencyScore: 88, Words: [{ Word: 'Once', AccuracyScore: 90 }] }, sampledSeconds: 30 },
+    { best: { Display: 'there was a dog', PronScore: 60, AccuracyScore: 62, FluencyScore: 58, Words: [{ Word: 'dog', AccuracyScore: 60 }] }, sampledSeconds: 15 },
+  ]);
+  assert.equal(merged.Display, 'Once upon a time there was a dog');
+  // weighted: (90*30 + 60*15) / 45 = 80
+  assert.equal(merged.PronScore, 80);
+  assert.equal(merged.AccuracyScore, (92 * 30 + 62 * 15) / 45);
+  assert.equal(merged.FluencyScore, (88 * 30 + 58 * 15) / 45);
+  assert.equal(merged.Words.length, 2);
+  assert.equal(merged.sampledSeconds, 45);
+});
+
+test('mergeAzureChunkResults: empty/non-array input -> null, never throws', () => {
+  assert.equal(mergeAzureChunkResults([]), null);
+  assert.equal(mergeAzureChunkResults(null), null);
 });

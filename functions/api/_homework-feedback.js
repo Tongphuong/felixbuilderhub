@@ -95,6 +95,27 @@ export function buildFeedbackContext({ checkMode, result, transcript, homework, 
     if (norm) focusSet.add(norm);
   }
 
+  // Grid-grounded near-miss words (grading-honesty packet, 2026-07-14): for a
+  // no-reference open attempt (photo_talk), scoreOpenTranscript already
+  // deterministically compared the transcript against the child's homework
+  // vocabulary and attaches result.near_miss_words for any transcript word
+  // that isn't an exact vocabulary member but closely resembles one (e.g.
+  // said "pack", the homework's build grid has "park"). Both the said word
+  // and the homework's word are allowed focus-word choices — the honesty
+  // rule (validateFeedbackGrounding) still enforces focus_word ∈
+  // allowed_focus_words either way; near_miss_words additionally rides the
+  // context JSON so the prompt can target the correction at the real
+  // homework word instead of parroting the mistake back.
+  const nearMissWords = mode === 'open' && Array.isArray(result?.near_miss_words) ? result.near_miss_words : [];
+  if (nearMissWords.length) {
+    for (const nm of nearMissWords) {
+      const saidNorm = normalizePracticeWord(nm?.said);
+      const nearestNorm = normalizePracticeWord(nm?.nearest);
+      if (saidNorm) focusSet.add(saidNorm);
+      if (nearestNorm) focusSet.add(nearestNorm);
+    }
+  }
+
   let allowedFocusWords = [...focusSet];
   if (!allowedFocusWords.length) {
     const fallbackSource = homeworkText || (mode === 'open' ? transcript : '');
@@ -167,17 +188,24 @@ export function buildFeedbackContext({ checkMode, result, transcript, homework, 
     transcript: String(transcript || '').slice(0, MAX_TRANSCRIPT_CHARS),
     allowed_focus_words: allowedFocusWords,
     target_words: [...targetWordsSet].slice(0, 20),
+    ...(nearMissWords.length
+      ? { near_miss_words: nearMissWords.slice(0, 5).map((nm) => ({ said: nm.said, nearest: nm.nearest })) }
+      : {}),
   };
 }
 
 // ---------------------------------------------------------------------------
 // 2. FEEDBACK_SYSTEM_PROMPT — Lead-authored (Elon), paste VERBATIM. Do not
 //    edit this string's wording; it is the safety-adjacent prompt text.
+//    2026-07-14 (grading-honesty packet, dispatched by Elon): ONE new rule
+//    bullet appended for near_miss_words (the grid-grounded recast for a
+//    no-reference photo attempt) plus the input-JSON sentence updated to
+//    mention it — every character before this line is untouched.
 // ---------------------------------------------------------------------------
 
 export const FEEDBACK_SYSTEM_PROMPT = `You are Minny, a warm Vietnamese teaching assistant writing ONE short feedback note for a young child (age 6-12) who just finished an English speaking exercise. You write Vietnamese warmly, like a kind teacher — never like a report.
 
-You will receive JSON with: the exercise content the teacher assigned, what the child actually said (an automatic transcript — may contain small errors, be generous), the exercise results, allowed_focus_words, and pronunciation data (may be null).
+You will receive JSON with: the exercise content the teacher assigned, what the child actually said (an automatic transcript — may contain small errors, be generous), the exercise results, allowed_focus_words, pronunciation data (may be null), and near_miss_words (may be absent).
 
 Respond with strict JSON only, no other text, no markdown:
 {"praise_vi": "...", "focus_word": "...", "model_sentence_en": "...", "tiny_challenge_vi": "...", "recast_en": "..."}
@@ -190,6 +218,7 @@ Rules:
 - tiny_challenge_vi (Vietnamese, max 140 chars): one tiny, concrete thing to try next time (speak louder at the end, pause between sentences, try the focus word in a new sentence). Never negative, never a number, never more than one thing.
 - recast_en (English, max 80 chars): ONLY if the transcript contains a clear grammar slip, write the corrected version of that one phrase naturally. Otherwise omit this key entirely.
 - Mention pronunciation ONLY if pronunciation data is provided, and only in words ("rõ ràng", "trôi chảy"), never numbers.
+- If near_miss_words is provided, each entry means the child said a real word ("said") that does not match the homework's own word ("nearest") but sounds close to it — the child was NOT wrong to try, they likely meant the homework word. When this happens: prefer focus_word = the "nearest" value, ALWAYS include recast_en modeling that homework word naturally in place of what was said, and never say the child made a mistake.
 - Never mention: being an AI, scores, the transcript itself, personal information, anything outside this exercise.`;
 
 // ---------------------------------------------------------------------------

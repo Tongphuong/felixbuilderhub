@@ -13,9 +13,15 @@ import {
   resolveOpenAIApiKey,
   runSpeakingCheck,
   scoreOpenTranscript,
+  scoreSpeechFrame,
   scoreTranscript,
   transcribeAudio,
   wordSimilarity,
+  deriveHomeworkVocabulary,
+  findNearMissVocabularyWords,
+  computeContentPrecision,
+  hasLowContentRelevance,
+  OPEN_NO_REFERENCE_SENTINELS,
 } from '../functions/api/read2lead-speaking-check.js';
 
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
@@ -594,4 +600,383 @@ test('lesson page wires legacy speaking and book read-aloud through the speaking
   assert.match(lessonPage, /_r2lMicIsReady/);
   assert.match(lessonPage, /data-speak-feedback/);
   assert.doesNotMatch(lessonPage, /speaking-check-section/);
+});
+
+// ===========================================================================
+// Grading-honesty packet (2026-07-14) — 13-row live battery acceptance.
+// ===========================================================================
+
+// Mirrors the real battery scenario: a build task (shared vocabulary with
+// the photo answer) + a bare zero-anchor picture task (the photo_talk step).
+const BATTERY_HOMEWORK = {
+  schema_version: 3,
+  tasks: [
+    {
+      id: 't_build', type: 'build', sentences_required: 2,
+      columns: [
+        { id: 'c1', label_en: 'We...', options: ['play football', 'draw pictures', 'eat snacks'] },
+        { id: 'c2', label_en: 'At...', options: ['school', 'the park', 'break time'] },
+        { id: 'c3', label_en: 'we feel...', options: ['happy', 'excited', 'relaxed'] },
+        { id: 'c4', label_en: 'because...', options: ['it is fun', 'we learn new things', 'we laugh a lot'] },
+      ],
+    },
+    { id: 't_picture', type: 'picture', anchors: [], duration_s: 60 },
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// deriveHomeworkVocabulary
+// ---------------------------------------------------------------------------
+
+test('deriveHomeworkVocabulary: pulls build columns\' label_en + options, drops picture anchors (the answer key)', () => {
+  const vocab = deriveHomeworkVocabulary(BATTERY_HOMEWORK);
+  for (const word of ['play', 'football', 'school', 'park', 'happy', 'fun', 'draw', 'pictures', 'eat', 'snacks']) {
+    assert.ok(vocab.includes(word), `expected "${word}" in derived vocabulary`);
+  }
+  assert.equal(vocab.includes('the'), false, 'SKIP_WORDS excluded');
+});
+
+test('deriveHomeworkVocabulary: read items, present/qa anchor_words, story must_use all contribute', () => {
+  const homework = {
+    schema_version: 3,
+    tasks: [
+      { id: 't1', type: 'read', items: [{ id: 's1', text_en: 'I have two cats.' }] },
+      { id: 't2', type: 'present', stems: [{ id: 'f1', text_en: 'Last summer, I went to ___.', anchor_words: ['last', 'summer', 'went'] }], duration_s: 60 },
+      { id: 't3', type: 'story', prompt_en: 'Tell a story.', prompt_vi: '', must_use: ['because', 'friend'], duration_s: 90, use_photo: false },
+      { id: 't4', type: 'qa', cards: [{ id: 'q1', question_en: 'Is it fun?', stem: { text_en: 'Yes, it is ___.', anchor_words: ['yes'] } }], duration_s: 30 },
+    ],
+  };
+  const vocab = deriveHomeworkVocabulary(homework);
+  for (const word of ['cats', 'summer', 'went', 'because', 'friend', 'fun', 'yes']) {
+    assert.ok(vocab.includes(word), `expected "${word}"`);
+  }
+});
+
+test('deriveHomeworkVocabulary: no homework / empty tasks -> [] (the bare-photo live case)', () => {
+  assert.deepEqual(deriveHomeworkVocabulary(null), []);
+  assert.deepEqual(deriveHomeworkVocabulary(undefined), []);
+  assert.deepEqual(deriveHomeworkVocabulary({ schema_version: 3, tasks: [] }), []);
+  assert.deepEqual(deriveHomeworkVocabulary({ schema_version: 3, tasks: [{ id: 't_picture', type: 'picture', anchors: [], duration_s: 60 }] }), []);
+});
+
+test('deriveHomeworkVocabulary: legacy v1/v2 .sentences upgrades via normalizeHomeworkRecord', () => {
+  const legacy = { schema_version: 2, sentences: [{ id: 's1', text_en: 'The dog runs fast.' }], frame: null, photo: null, photo_talk: null };
+  const vocab = deriveHomeworkVocabulary(legacy);
+  assert.ok(vocab.includes('dog'));
+  assert.ok(vocab.includes('runs'));
+  assert.ok(vocab.includes('fast'));
+});
+
+// ---------------------------------------------------------------------------
+// findNearMissVocabularyWords — row 13's "grid-grounded" detection
+// ---------------------------------------------------------------------------
+
+test('findNearMissVocabularyWords: "pack" resembles the vocabulary word "park" (row 13)', () => {
+  const vocab = deriveHomeworkVocabulary(BATTERY_HOMEWORK);
+  const near = findNearMissVocabularyWords('We play football at the Pack. We feel happy because it is fun.', vocab);
+  const match = near.find((n) => n.said === 'pack');
+  assert.ok(match, 'pack flagged as a near-miss');
+  assert.equal(match.nearest, 'park');
+});
+
+test('findNearMissVocabularyWords: an exact vocabulary word is never flagged', () => {
+  const vocab = deriveHomeworkVocabulary(BATTERY_HOMEWORK);
+  const near = findNearMissVocabularyWords('We play football at the park.', vocab);
+  assert.equal(near.find((n) => n.said === 'park'), undefined);
+});
+
+test('findNearMissVocabularyWords: a word unrelated to any vocabulary word is not flagged (no false accusation)', () => {
+  const vocab = deriveHomeworkVocabulary(BATTERY_HOMEWORK);
+  const near = findNearMissVocabularyWords('We saw a giant dinosaur yesterday.', vocab);
+  assert.equal(near.length, 0);
+});
+
+test('findNearMissVocabularyWords: empty vocabulary -> [] (never throws)', () => {
+  assert.deepEqual(findNearMissVocabularyWords('anything at all', []), []);
+});
+
+// ---------------------------------------------------------------------------
+// scoreOpenTranscript — sentinel-aware content grounding (rows 1, 3, 13)
+// ---------------------------------------------------------------------------
+
+test('scoreOpenTranscript: sentinel text itself is never treated as content — no bogus "phototalk"/"freetalkingnoscore" keyword', () => {
+  // Before this packet, scoreOpenTranscript(transcript, 'photo_talk') greped
+  // the literal sentinel string for keywords ("phototalk"), which a real
+  // transcript could never contain -> relevance always 0. Confirm the
+  // sentinel path with NO vocabulary degrades to pure effort, not a
+  // relevance-zeroed ceiling.
+  const result = scoreOpenTranscript('We play football at the park and have a great time every day', 'photo_talk');
+  assert.equal(result.graded_against, 'pronunciation_effort');
+  assert.ok(result.score_percent >= 70, 'no fake-keyword ceiling — effort-only scoring for a long real answer');
+});
+
+test('scoreOpenTranscript row 1: perfect on-topic English against real homework vocabulary scores HIGH, not 45', () => {
+  const vocab = deriveHomeworkVocabulary(BATTERY_HOMEWORK);
+  const transcript = 'We play football at the park. We feel happy because it is fun. We draw pictures at school.';
+  const result = scoreOpenTranscript(transcript, 'photo_talk', { homeworkVocabulary: vocab });
+  assert.equal(result.graded_against, 'homework_content');
+  assert.ok(result.score_percent >= 70, `expected >=70, got ${result.score_percent}`);
+});
+
+test('scoreOpenTranscript row 3: gibberish against real homework vocabulary scores LOW, not a pronunciation-only 81', () => {
+  const vocab = deriveHomeworkVocabulary(BATTERY_HOMEWORK);
+  const transcript = 'Slum Backs, Joe Tab was Appendix, Smurf, Vinyl Craft, Sybil Morfin, Generalplan, Frumpy.';
+  const result = scoreOpenTranscript(transcript, 'photo_talk', { homeworkVocabulary: vocab });
+  assert.equal(result.graded_against, 'homework_content');
+  assert.ok(result.score_percent <= 40, `expected <=40, got ${result.score_percent}`);
+});
+
+test('scoreOpenTranscript: no derivable vocabulary + an Azure pronunciation score -> blended effort+pronunciation, graded_against pronunciation_effort', () => {
+  const shortTranscript = 'I like apples';
+  const result = scoreOpenTranscript(shortTranscript, 'photo_talk', { homeworkVocabulary: [], azurePronunciationPercent: 88 });
+  assert.equal(result.graded_against, 'pronunciation_effort');
+  const expectedEffort = Math.min(100, Math.round((3 / 10) * 100));
+  assert.equal(result.score_percent, Math.round(expectedEffort * 0.45 + 88 * 0.55));
+});
+
+test('scoreOpenTranscript: genuine story-context scoring (non-sentinel) carries no graded_against field — contract unchanged', () => {
+  const result = scoreOpenTranscript(
+    'I liked when Pilot holds the rabbit softly and walks the dog',
+    'Pilot learns how to hold the rabbit softly and feed the turtle with small leaves.',
+  );
+  assert.equal('graded_against' in result, false);
+  assert.equal('near_miss_words' in result, false);
+});
+
+test('scoreOpenTranscript row 13: a near-miss word attaches near_miss_words and steps the praise tone down, but does not tank the score', () => {
+  const vocab = deriveHomeworkVocabulary(BATTERY_HOMEWORK);
+  const transcript = 'We play football at the Pack. We feel happy because it is fun.';
+  const result = scoreOpenTranscript(transcript, 'photo_talk', { homeworkVocabulary: vocab });
+  assert.ok(result.near_miss_words?.length, 'pack/park near-miss surfaced');
+  assert.equal(result.near_miss_words[0].said, 'pack');
+  assert.equal(result.near_miss_words[0].nearest, 'park');
+  assert.ok(result.score_percent >= 70, 'one near-miss word must not tank an otherwise-perfect score');
+  assert.doesNotMatch(result.feedback_vi, /Hay quá/, 'top-tier praise must not fire when a word was flagged');
+});
+
+test('scoreOpenTranscript: a clean recording against real vocabulary has zero near_miss_words and gets the top praise tier', () => {
+  const vocab = deriveHomeworkVocabulary(BATTERY_HOMEWORK);
+  const transcript = 'We play football at the park. We feel happy because it is fun.';
+  const result = scoreOpenTranscript(transcript, 'photo_talk', { homeworkVocabulary: vocab });
+  assert.equal('near_miss_words' in result, false);
+  assert.match(result.feedback_vi, /Hay quá/);
+});
+
+test('OPEN_NO_REFERENCE_SENTINELS contains exactly the two known sentinels', () => {
+  assert.equal(OPEN_NO_REFERENCE_SENTINELS.has('photo_talk'), true);
+  assert.equal(OPEN_NO_REFERENCE_SENTINELS.has('free_talking_no_score'), true);
+  assert.equal(OPEN_NO_REFERENCE_SENTINELS.has('a real story about a rabbit'), false);
+});
+
+test('computeContentPrecision: fraction of the TRANSCRIPT\'s own content words that are real vocabulary — precision, not recall', () => {
+  const vocab = ['play', 'football', 'park', 'happy'];
+  // Only 2 of 4 vocabulary words are used, but 100% of what was SAID is real
+  // vocabulary — a menu of alternatives must not punish this as low relevance.
+  assert.equal(computeContentPrecision('We play football', vocab), 100);
+});
+
+test('computeContentPrecision: gibberish that shares nothing with the vocabulary scores 0', () => {
+  const vocab = ['play', 'football', 'park', 'happy'];
+  assert.equal(computeContentPrecision('Slum backs joe tab appendix smurf', vocab), 0);
+});
+
+test('computeContentPrecision: one coincidental common-word match among many irrelevant words stays low, not a false "relevant"', () => {
+  const vocab = ['play', 'football', 'park', 'happy', 'because', 'fun', 'new'];
+  const precision = computeContentPrecision('You entered ABBA Malcolm being vitamin paid video click new version bank', vocab);
+  assert.ok(precision < 20, `expected a low precision, got ${precision}`);
+});
+
+test('computeContentPrecision: empty vocabulary or empty transcript -> 0, never throws', () => {
+  assert.equal(computeContentPrecision('hello world', []), 0);
+  assert.equal(computeContentPrecision('', ['play']), 0);
+});
+
+// ---------------------------------------------------------------------------
+// hasLowContentRelevance — the VN-redirect trigger (row 4)
+// ---------------------------------------------------------------------------
+
+test('hasLowContentRelevance: homework_content + near-zero content_relevance_percent -> true regardless of score (row 4: fluent Vietnamese must redirect even if Azure liked the pronunciation)', () => {
+  assert.equal(hasLowContentRelevance({ graded_against: 'homework_content', content_relevance_percent: 8, score_percent: 80 }), true);
+});
+
+test('hasLowContentRelevance: homework_content + high content_relevance_percent -> false (row 1: genuine English never redirects)', () => {
+  assert.equal(hasLowContentRelevance({ graded_against: 'homework_content', content_relevance_percent: 100, score_percent: 20 }), false);
+});
+
+test('hasLowContentRelevance: homework_content + missing content_relevance_percent -> treated as 0 (never throws, defensive default)', () => {
+  assert.equal(hasLowContentRelevance({ graded_against: 'homework_content', score_percent: 90 }), true);
+});
+
+test('hasLowContentRelevance: pronunciation_effort (no vocabulary) falls back to the original score<20 gate, unchanged', () => {
+  assert.equal(hasLowContentRelevance({ graded_against: 'pronunciation_effort', score_percent: 19 }), true);
+  assert.equal(hasLowContentRelevance({ graded_against: 'pronunciation_effort', score_percent: 20 }), false);
+});
+
+// ---------------------------------------------------------------------------
+// scoreSpeechFrame — zero-anchor carve-out (row 8)
+// ---------------------------------------------------------------------------
+
+test('scoreSpeechFrame row 8: a zero-anchor stem with an EMPTY transcript is not an automatic 100', () => {
+  const result = scoreSpeechFrame('', [{ id: 'story', text_en: 'Tell a story.', anchor_words: [] }], 90, {});
+  assert.equal(result.stems[0].coveragePct, 0);
+  assert.equal(result.stems[0].matched, false);
+  assert.equal(result.matchPct, 0, 'not an auto-100');
+});
+
+test('scoreSpeechFrame: a zero-anchor stem still rewards genuine spoken effort (matched once enough words were said)', () => {
+  const longTranscript = 'Once upon a time there was a happy dog who loved to run in the park every single day';
+  const result = scoreSpeechFrame(longTranscript, [{ id: 'story', text_en: 'Tell a story.', anchor_words: [] }], 90, {});
+  assert.equal(result.stems[0].matched, true);
+  assert.ok(result.stems[0].coveragePct >= 50);
+});
+
+test('scoreSpeechFrame: zero-anchor stem mixed with a real-anchor stem — only the zero-anchor one uses the effort carve-out', () => {
+  const transcript = 'I saw a big dog and a park';
+  const stems = [
+    { id: 'f1', text_en: 'I saw ___.', anchor_words: ['dog', 'park'] },
+    { id: 'story', text_en: 'Tell a story.', anchor_words: [] },
+  ];
+  const result = scoreSpeechFrame(transcript, stems, 60, {});
+  assert.equal(result.stems[0].coveragePct, 100, 'real-anchor stem unaffected by the carve-out');
+  assert.ok(result.stems[1].coveragePct > 0, 'zero-anchor stem scored on effort, not auto-100');
+});
+
+// ---------------------------------------------------------------------------
+// feedbackVi / feedbackOpenVi — praise-copy honesty (design point 7)
+// ---------------------------------------------------------------------------
+
+test('feedbackVi: a flagged word steps the top-tier praise down one level, never claims "cực kỳ rõ ràng"', () => {
+  assert.match(feedbackVi(96, false), /Tuyệt vời! Con đọc cực kỳ rõ ràng!/);
+  const stepped = feedbackVi(96, true);
+  assert.doesNotMatch(stepped, /cực kỳ rõ ràng/);
+  assert.match(stepped, /Giỏi lắm/);
+});
+
+test('feedbackVi: default hasFlaggedWord is false — existing one-arg call sites are unchanged', () => {
+  assert.match(feedbackVi(96), /cực kỳ rõ ràng/);
+});
+
+test('feedbackOpenVi: a flagged word steps the top-tier praise down one level, never claims "rất tốt" top tier', () => {
+  assert.match(feedbackOpenVi(90, false), /Hay quá/);
+  const stepped = feedbackOpenVi(90, true);
+  assert.doesNotMatch(stepped, /Hay quá/);
+  assert.match(stepped, /Giỏi lắm/);
+});
+
+// ---------------------------------------------------------------------------
+// runSpeakingCheck integration — Whisper-transcribed open path with homework
+// vocabulary (rows 1/3/4 without Azure configured, i.e. the non-WAV / no-key
+// fallback path also gets the honesty fix, not just the Azure-eligible one).
+// ---------------------------------------------------------------------------
+
+function fakeAiFixedText(text) {
+  return { async run() { return { text }; } };
+}
+
+test('runSpeakingCheck (Whisper path): perfect on-topic photo answer against real homework vocabulary scores high', async () => {
+  const result = await runSpeakingCheck({
+    audioBlob: new Blob(['audio'], { type: 'audio/webm' }),
+    expectedText: 'photo_talk',
+    checkMode: 'open',
+    ai: fakeAiFixedText('We play football at the park. We feel happy because it is fun. We draw pictures at school.'),
+    homework: BATTERY_HOMEWORK,
+  });
+  assert.equal(result.graded_against, 'homework_content');
+  assert.ok(result.score_percent >= 70, `expected >=70, got ${result.score_percent}`);
+});
+
+test('runSpeakingCheck (Whisper path): gibberish photo answer against real homework vocabulary scores low', async () => {
+  const result = await runSpeakingCheck({
+    audioBlob: new Blob(['audio'], { type: 'audio/webm' }),
+    expectedText: 'photo_talk',
+    checkMode: 'open',
+    ai: fakeAiFixedText('Slum Backs, Joe Tab was Appendix, Smurf, Vinyl Craft, Sybil Morfin.'),
+    homework: BATTERY_HOMEWORK,
+  });
+  assert.equal(result.graded_against, 'homework_content');
+  assert.ok(result.score_percent <= 40, `expected <=40, got ${result.score_percent}`);
+});
+
+test('runSpeakingCheck (Whisper path): garbled/off-topic transcript (simulated Vietnamese) with real vocabulary redirects regardless of raw score', async () => {
+  let calls = 0;
+  const ai = {
+    async run(model, input) {
+      calls += 1;
+      if (input?.language === 'en') {
+        // Whisper forced to English on real Vietnamese speech -> garbage
+        // English words that share nothing with the homework vocabulary.
+        return { text: 'You entered ABBA Malcolm being vitamin paid video click new version bank' };
+      }
+      return { text: 'con muốn nói tiếng Việt' };
+    },
+  };
+  const result = await runSpeakingCheck({
+    audioBlob: new Blob(['audio'], { type: 'audio/webm' }),
+    expectedText: 'photo_talk',
+    checkMode: 'open',
+    ai,
+    homework: BATTERY_HOMEWORK,
+  });
+  assert.equal(result.vietnamese_detected, true);
+  assert.equal(calls, 2, 'the scored pass, then the VN detection pass');
+});
+
+test('runSpeakingCheck (Whisper path): a bare photo homework (no derivable vocabulary) still grades on effort — the current live case, honestly labeled', async () => {
+  const result = await runSpeakingCheck({
+    audioBlob: new Blob(['audio'], { type: 'audio/webm' }),
+    expectedText: 'photo_talk',
+    checkMode: 'open',
+    ai: fakeAiFixedText('We play football at the park and we have a great time every single day'),
+    homework: { schema_version: 3, tasks: [{ id: 't_picture', type: 'picture', anchors: [], duration_s: 60 }] },
+  });
+  assert.equal(result.graded_against, 'pronunciation_effort');
+  assert.ok(result.score_percent >= 70, 'a genuinely long, real answer still scores well on effort alone');
+});
+
+// ---------------------------------------------------------------------------
+// row 11: scripted read/build with a close (mispronounced) word — flags
+// exactly the expected word and steps the praise tone down.
+// ---------------------------------------------------------------------------
+
+test('runSpeakingCheck row 11 (read/Azure): a close word both flags the word AND steps feedback_vi down from top praise', async () => {
+  const AZURE_NBEST_PARK_CLOSE = {
+    RecognitionStatus: 'Success',
+    NBest: [{
+      Display: 'We play football at the park, we feel happy because it is fun.',
+      PronScore: 96,
+      AccuracyScore: 96,
+      FluencyScore: 95,
+      Words: [
+        { Word: 'We', ErrorType: 'None', AccuracyScore: 95 },
+        { Word: 'play', ErrorType: 'None', AccuracyScore: 95 },
+        { Word: 'football', ErrorType: 'None', AccuracyScore: 95 },
+        { Word: 'at', ErrorType: 'None', AccuracyScore: 95 },
+        { Word: 'the', ErrorType: 'None', AccuracyScore: 95 },
+        { Word: 'park', ErrorType: 'Mispronunciation', AccuracyScore: 65 }, // close, not exact
+        { Word: 'we', ErrorType: 'None', AccuracyScore: 95 },
+        { Word: 'feel', ErrorType: 'None', AccuracyScore: 95 },
+        { Word: 'happy', ErrorType: 'None', AccuracyScore: 95 },
+        { Word: 'because', ErrorType: 'None', AccuracyScore: 95 },
+        { Word: 'it', ErrorType: 'None', AccuracyScore: 95 },
+        { Word: 'is', ErrorType: 'None', AccuracyScore: 95 },
+        { Word: 'fun', ErrorType: 'None', AccuracyScore: 95 },
+      ],
+    }],
+  };
+  const kv = new Map();
+  const fakeKv = {
+    async get(key, opts) { return kv.has(key) ? (opts?.type === 'json' ? JSON.parse(kv.get(key)) : kv.get(key)) : null; },
+    async put(key, value) { kv.set(key, value); },
+  };
+  const fetchFn = async () => new Response(JSON.stringify(AZURE_NBEST_PARK_CLOSE), { status: 200 });
+  const result = await runSpeakingCheck({
+    audioBlob: new Blob(['wav'], { type: 'audio/wav' }),
+    expectedText: 'We play football at the park, we feel happy because it is fun.',
+    checkMode: 'read',
+    env: { AZURE_SPEECH_KEY: 'k', AZURE_SPEECH_REGION: 'southeastasia', READ2LEAD_CODES: fakeKv },
+    fetchFn,
+  });
+  assert.ok(result.words_close.includes('park'), 'exactly "park" flagged close');
+  assert.equal(result.words_missed.length, 0);
+  assert.doesNotMatch(result.feedback_vi, /cực kỳ rõ ràng/, 'top praise must not fire when "park" was flagged');
 });

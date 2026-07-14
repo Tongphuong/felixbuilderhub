@@ -8,14 +8,19 @@ import { normalizeTeacherLine, parseHomeworkLines, parseFrameStems } from '../..
 
 export const VISION_MODEL = '@cf/meta/llama-3.2-11b-vision-instruct';
 
+// build_columns added (grading-honesty packet, 2026-07-14): a slide photo of
+// a mix-and-match grid (columns of choices the child picks from to build
+// their own sentence) previously had no matching draft shape at all — the
+// existing frame_lines/sentence_lines instructions are untouched.
 export const VISION_PROMPT = [
   'This image is homework for Vietnamese children (age 7-11) learning to SPEAK English.',
   'Extract the English speaking task from the image and answer with STRICT JSON only, no other text:',
-  '{"frame_lines": [], "sentence_lines": []}',
+  '{"frame_lines": [], "sentence_lines": [], "build_columns": []}',
   '- frame_lines: presentation sentence starters that contain blanks for the child to fill while speaking. Write each starter as one line and mark every blank as exactly ___ (three underscores). Do not include labels like "Where?" or numbering.',
   '- sentence_lines: complete English sentences or single words the child must read aloud, one per line, no numbering.',
-  'Use frame_lines OR sentence_lines, whichever matches the image; leave the other empty.',
-  'If the image has no readable English speaking task, return both arrays empty.',
+  '- build_columns: use ONLY when the image shows columns, a table, or lists of choices the child picks from to build their own sentence (often called mix and match). Each entry is {"label_en": "...", "options": ["...", "..."]}. Copy the column heading and each option exactly as written in the image. 2 to 4 columns, 2 to 6 options each.',
+  'Use frame_lines, sentence_lines, OR build_columns, whichever matches the image; leave the other(s) empty.',
+  'If the image has no readable English speaking task, return all three arrays empty.',
 ].join('\n');
 
 // The model may wrap JSON in prose or code fences — take the first {...}

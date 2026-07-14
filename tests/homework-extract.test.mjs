@@ -185,6 +185,86 @@ test('draftFromPhoto: vision model finds nothing readable -> null', async () => 
 });
 
 // ---------------------------------------------------------------------------
+// build_columns (grading-honesty packet, 2026-07-14): a slide photo of a
+// mix-and-match grid — VISION_PROMPT's third array, assembled through the
+// REAL validateTask/validateBuildTask (schema v1 rules), same posture as
+// every other draft task.
+// ---------------------------------------------------------------------------
+
+test('draftFromPhoto: build_columns alone (no frame/sentence lines) produces a build task', async () => {
+  const env = {
+    R2L_MEDIA: { get: async () => ({ arrayBuffer: async () => new ArrayBuffer(4) }) },
+    AI: {
+      run: async () => ({
+        response: JSON.stringify({
+          frame_lines: [],
+          sentence_lines: [],
+          build_columns: [
+            { label_en: 'We...', options: ['play football', 'draw pictures'] },
+            { label_en: 'At...', options: ['school', 'the park'] },
+          ],
+        }),
+      }),
+    },
+  };
+  const result = await draftFromPhoto({ env, classId: 'class1', r2Key: 'homework/class1/hp_abc123def456.jpg' });
+  assert.ok(result);
+  assert.equal(result.tasks.length, 1);
+  assert.equal(result.tasks[0].type, 'build');
+  assert.equal(result.tasks[0].columns.length, 2);
+  assert.equal(result.tasks[0].columns[0].label_en, 'We...');
+  assert.deepEqual(result.tasks[0].columns[0].options, ['play football', 'draw pictures']);
+});
+
+test('draftFromPhoto: build_columns alongside sentence_lines produces BOTH a read task and a build task', async () => {
+  const env = {
+    R2L_MEDIA: { get: async () => ({ arrayBuffer: async () => new ArrayBuffer(4) }) },
+    AI: {
+      run: async () => ({
+        response: JSON.stringify({
+          frame_lines: [],
+          sentence_lines: ['I have two cats.'],
+          build_columns: [
+            { label_en: 'We...', options: ['play football', 'draw pictures'] },
+            { label_en: 'At...', options: ['school', 'the park'] },
+          ],
+        }),
+      }),
+    },
+  };
+  const result = await draftFromPhoto({ env, classId: 'class1', r2Key: 'homework/class1/hp_abc123def456.jpg' });
+  assert.ok(result);
+  assert.deepEqual(result.tasks.map((t) => t.type), ['read', 'build']);
+});
+
+test('draftFromPhoto: an invalid build_columns shape (1 column — below the 2-column minimum) is dropped, not defaulted', async () => {
+  const env = {
+    R2L_MEDIA: { get: async () => ({ arrayBuffer: async () => new ArrayBuffer(4) }) },
+    AI: {
+      run: async () => ({
+        response: JSON.stringify({
+          frame_lines: [],
+          sentence_lines: [],
+          build_columns: [{ label_en: 'We...', options: ['play football', 'draw pictures'] }],
+        }),
+      }),
+    },
+  };
+  const result = await draftFromPhoto({ env, classId: 'class1', r2Key: 'homework/class1/hp_abc123def456.jpg' });
+  assert.equal(result, null, 'invalid build task AND no other tasks -> null, not an empty-but-truthy draft');
+});
+
+test('draftFromPhoto: build_columns absent entirely -> unchanged legacy-only behaviour', async () => {
+  const env = {
+    R2L_MEDIA: { get: async () => ({ arrayBuffer: async () => new ArrayBuffer(4) }) },
+    AI: { run: async () => ({ response: JSON.stringify({ frame_lines: [], sentence_lines: ['I have two cats.'] }) }) },
+  };
+  const result = await draftFromPhoto({ env, classId: 'class1', r2Key: 'homework/class1/hp_abc123def456.jpg' });
+  assert.equal(result.tasks.length, 1);
+  assert.equal(result.tasks[0].type, 'read');
+});
+
+// ---------------------------------------------------------------------------
 // onRequestPost — end-to-end. ANY failure -> {ok:true, draft:null}, NEVER a
 // teacher-facing error, NEVER a 500 (except genuinely malformed request JSON,
 // which stays the ordinary 400 invalid_json every admin endpoint uses).
