@@ -23,6 +23,13 @@ import { validateReplyShape, detectCharacterBreak, scanBannedTopics, screenWithL
 // any stored schema version (v1/v2/v3), reused here rather than re-deriving
 // task shapes a second time (rule 21).
 import { normalizeHomeworkRecord } from './_homework.js';
+// Grading-honesty packet v3 (2026-07-15): the commonness gate on CREDIT —
+// see _common-english-words.js's own header for the full source/license
+// history and why string similarity alone (isLikelyContentMatch below)
+// cannot separate "the child said a different real word on purpose"
+// (pork/park) from "the transcriber mangled the intended word"
+// (footbal/football).
+import { isCommonWord } from './_common-english-words.js';
 
 export const SKIP_WORDS = new Set([
   'a', 'an', 'the', 'is', 'are', 'was', 'were', 'to', 'of', 'in', 'on', 'at',
@@ -130,6 +137,31 @@ export function isLikelyContentMatch(a, b) {
   if (maxLen <= 4) return sameFirstLetter && wordSimilarity(a, b) >= SIMILARITY_THRESHOLD;
   if (maxLen <= 6) return sameFirstLetter && wordSimilarity(a, b) >= 0.8;
   return wordSimilarity(a, b) >= SIMILARITY_THRESHOLD;
+}
+
+// Commonness gate on CREDIT (grading-honesty packet v3, 2026-07-15 — the
+// design that replaces this packet's two rejected string-only attempts; see
+// _common-english-words.js's header for the full history). isLikelyContentMatch
+// above stays UNCHANGED and is still exactly what candidate proposal
+// (findNearMissVocabularyWords) uses — a candidate may legitimately be
+// proposed for ANY close pair, including two different common words
+// (pack->park AND pork->park both surface as candidates; the LLM feedback
+// layer decides from context whether either is worth mentioning). This
+// function is the separate, narrower rule for automatic SCORE/CREDIT: a
+// spoken word that both (a) fuzzy-matches a vocabulary word AND (b) is
+// itself an ordinary, common English word the child could easily have said
+// on purpose must NOT earn fuzzy credit — only an exact (normalized) match
+// does. A spoken word NOT in the common set (a misspelling/mis-hearing like
+// "hapy"/"becase"/"footbal", or a genuinely rare word) keeps crediting under
+// the existing bucketed fuzzy rule. Used by computeContentPrecision and
+// scoreOpenTranscript's wordsMatched loop — nowhere else (scoreTranscript's
+// read-aloud buckets and scoreSpeechFrame's anchor coverage are out of this
+// revision's scope, same as isLikelyContentMatch itself).
+export function isCreditableContentMatch(spoken, vocabWord) {
+  if (!spoken || !vocabWord) return false;
+  if (spoken === vocabWord) return true; // exact match always credits, common or not
+  if (isCommonWord(spoken)) return false; // ordinary word, not what was asked for -> no fuzzy credit
+  return isLikelyContentMatch(spoken, vocabWord);
 }
 
 function tokenize(text) {
@@ -379,7 +411,10 @@ export function computeContentPrecision(transcript, vocabulary) {
   if (!contentWords.size) return 0;
   let matched = 0;
   for (const word of contentWords) {
-    if (vocabList.some((kw) => isLikelyContentMatch(word, kw))) matched += 1;
+    // Commonness gate (grading-honesty packet v3, 2026-07-15): fuzzy credit
+    // via isCreditableContentMatch, not raw isLikelyContentMatch — see that
+    // function's header. Exact matches always count regardless of commonness.
+    if (vocabList.some((kw) => isCreditableContentMatch(word, kw))) matched += 1;
   }
   return Math.round((matched / contentWords.size) * 100);
 }
@@ -422,7 +457,13 @@ export function scoreOpenTranscript(transcript, storyContext, { homeworkVocabula
 
   for (const keyword of keywords) {
     const norm = normalizeWord(keyword);
-    const hit = transcriptWords.some((spoken) => isLikelyContentMatch(spoken, norm));
+    // Commonness gate (grading-honesty packet v3, 2026-07-15): a spoken word
+    // only earns "words_matched" credit for this keyword via fuzzy
+    // similarity when it is NOT itself a common English word the child could
+    // have said on purpose (isCreditableContentMatch) — exact matches always
+    // count. This is what stops "pork" (common, spoken) from lighting up
+    // "park" (vocabulary) as a green chip the child never actually said.
+    const hit = transcriptWords.some((spoken) => isCreditableContentMatch(spoken, norm));
     if (hit) wordsMatched.push(keyword);
   }
 

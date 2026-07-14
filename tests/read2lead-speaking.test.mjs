@@ -19,12 +19,14 @@ import {
   transcribeAudio,
   wordSimilarity,
   isLikelyContentMatch,
+  isCreditableContentMatch,
   deriveHomeworkVocabulary,
   findNearMissVocabularyWords,
   computeContentPrecision,
   hasLowContentRelevance,
   OPEN_NO_REFERENCE_SENTINELS,
 } from '../functions/api/read2lead-speaking-check.js';
+import { COMMON_ENGLISH_WORDS, isCommonWord } from '../functions/api/_common-english-words.js';
 
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
 const speakingEndpoint = readFileSync('functions/api/read2lead-speaking-check.js', 'utf-8');
@@ -536,6 +538,67 @@ test('isLikelyContentMatch: identical words and empty inputs', () => {
   assert.equal(isLikelyContentMatch('park', ''), false);
 });
 
+// ---------------------------------------------------------------------------
+// Commonness gate on CREDIT — grading-honesty packet v3 (2026-07-15, rule-4
+// second worker after round-2's reject on the SAME axis: same-first-letter,
+// different-real-word pairs the length-bucketed isLikelyContentMatch rule
+// above cannot distinguish from a genuine mis-hearing). See
+// _common-english-words.js's header for the full source/license history.
+// ---------------------------------------------------------------------------
+
+test('_common-english-words.js: sanity-asserts the word list actually contains what the design requires', () => {
+  // Every word this packet's probe battery relies on must be common.
+  for (const w of ['pork', 'ball', 'bell', 'house', 'horse', 'mouse', 'moose', 'ship', 'shop', 'fill', 'fall', 'dark', 'cat', 'hat', 'book', 'look', 'sing', 'ring', 'pack', 'park']) {
+    assert.ok(isCommonWord(w), `expected "${w}" to be a common word`);
+  }
+  // The genuine near-misses this packet's honesty rule depends on staying
+  // OUT of the common set (misspellings + the deliberately-rare "footfall").
+  for (const w of ['hapy', 'becase', 'footbal', 'footfall']) {
+    assert.equal(isCommonWord(w), false, `expected "${w}" NOT to be a common word`);
+  }
+  assert.ok(COMMON_ENGLISH_WORDS.size >= 3000 && COMMON_ENGLISH_WORDS.size <= 5500, `expected roughly 3000-5000 words, got ${COMMON_ENGLISH_WORDS.size}`);
+});
+
+test('isCreditableContentMatch: Buffet\'s round-2 reject probes — same-first-letter, different-real-word pairs earn ZERO credit either direction', () => {
+  const pairs = [
+    ['pork', 'park'], ['ball', 'bell'], ['bell', 'ball'],
+    ['house', 'horse'], ['horse', 'house'],
+    ['mouse', 'moose'], ['moose', 'mouse'],
+    ['ship', 'shop'], ['shop', 'ship'],
+    ['fill', 'fall'], ['fall', 'fill'],
+  ];
+  for (const [said, vocab] of pairs) {
+    assert.equal(isCreditableContentMatch(said, vocab), false, `"${said}" must not credit "${vocab}" — both are ordinary words, no false correction`);
+  }
+});
+
+test('isCreditableContentMatch: round-1 rhyme families still zero credit (isLikelyContentMatch\'s first-letter tiebreak already blocks these; unaffected by the commonness gate)', () => {
+  for (const [said, vocab] of [['dark', 'park'], ['cat', 'hat'], ['book', 'look'], ['sing', 'ring']]) {
+    assert.equal(isCreditableContentMatch(said, vocab), false);
+  }
+});
+
+test('isCreditableContentMatch: "pack" heard for "park" is common -> zero CREDIT even though it stays a valid near-miss CANDIDATE elsewhere (findNearMissVocabularyWords, row 13)', () => {
+  assert.equal(isCreditableContentMatch('pack', 'park'), false, 'no fuzzy score credit for a common word');
+  assert.equal(isLikelyContentMatch('pack', 'park'), true, 'candidate proposal is unaffected — this is what findNearMissVocabularyWords uses');
+});
+
+test('isCreditableContentMatch: real typos/mis-transcriptions (not common words) still credit — unchanged from isLikelyContentMatch', () => {
+  assert.equal(isCreditableContentMatch('hapy', 'happy'), true);
+  assert.equal(isCreditableContentMatch('becase', 'because'), true);
+  assert.equal(isCreditableContentMatch('footbal', 'football'), true);
+});
+
+test('isCreditableContentMatch: exact matches always credit, common or not', () => {
+  assert.equal(isCreditableContentMatch('park', 'park'), true);
+  assert.equal(isCreditableContentMatch('football', 'football'), true);
+});
+
+test('isCreditableContentMatch: empty inputs never throw', () => {
+  assert.equal(isCreditableContentMatch('', 'park'), false);
+  assert.equal(isCreditableContentMatch('park', ''), false);
+});
+
 test('speaking endpoint runs Whisper inside Cloudflare first, OpenAI as fallback', () => {
   // Workers AI primary — direct OpenAI/Groq calls from VN-serving colos get
   // geo-blocked (403 unsupported_country_region_territory).
@@ -740,6 +803,73 @@ test('findNearMissVocabularyWords / scoreOpenTranscript: Buffet\'s reject repro 
 
   const scored = scoreOpenTranscript(transcript, 'photo_talk', { homeworkVocabulary: vocab });
   assert.equal(scored.words_matched.includes('park'), false, 'the child never said "park" — no green-chip credit for "dark"');
+});
+
+// ---------------------------------------------------------------------------
+// Grading-honesty packet v3 (2026-07-15) — round-2's live-reproduced boundary
+// probes, at the full scoreOpenTranscript level. Buffet's round-2 reject
+// found these EXACT pairs credited via computeContentPrecision/wordsMatched
+// through the first-letter tiebreak (both share an onset letter, so round
+// 2's fix did not block them). Candidates may still exist (near_miss_words
+// is not asserted away here — that is correct v3 behaviour, see the
+// isCreditableContentMatch unit tests above); what must never happen is
+// score/words_matched credit for a word the child did not say.
+// ---------------------------------------------------------------------------
+
+test('scoreOpenTranscript: Buffet\'s live repro — "pork" (ordinary, intentional food word) never credits "park"', () => {
+  const vocab = ['park', 'happy', 'football', 'school'];
+  const transcript = 'We ate pork for dinner and it was happy time with my family every single day';
+  const result = scoreOpenTranscript(transcript, 'photo_talk', { homeworkVocabulary: vocab });
+  assert.equal(result.words_matched.includes('park'), false, 'the child said "pork" (food), not "park" — no false credit');
+});
+
+test('scoreOpenTranscript: Buffet\'s live repro — "horse" never credits "house"', () => {
+  const vocab = ['house', 'garden', 'family'];
+  const transcript = 'I saw a horse running in the garden with my family yesterday afternoon';
+  const result = scoreOpenTranscript(transcript, 'photo_talk', { homeworkVocabulary: vocab });
+  assert.equal(result.words_matched.includes('house'), false, 'the child said "horse" (animal), not "house" — no false credit');
+});
+
+test('scoreOpenTranscript: Buffet\'s live repro — "bell" never credits "ball"', () => {
+  const vocab = ['ball', 'game', 'friend'];
+  const transcript = 'I heard the bell ring and then played with my friend after the game';
+  const result = scoreOpenTranscript(transcript, 'photo_talk', { homeworkVocabulary: vocab });
+  assert.equal(result.words_matched.includes('ball'), false, 'the child said "bell" (heard it ring), not "ball" — no false credit');
+});
+
+test('scoreOpenTranscript: full boundary-probe sweep — every Buffet round-2 pair earns zero words_matched credit, said as the sole transcript content word against its neighbor as the sole vocabulary word', () => {
+  const pairs = [
+    ['pork', 'park'], ['ball', 'bell'], ['bell', 'ball'],
+    ['house', 'horse'], ['horse', 'house'],
+    ['mouse', 'moose'], ['moose', 'mouse'],
+    ['ship', 'shop'], ['shop', 'ship'],
+    ['fill', 'fall'], ['fall', 'fill'],
+    ['dark', 'park'], ['cat', 'hat'], ['book', 'look'], ['sing', 'ring'],
+  ];
+  for (const [said, vocabWord] of pairs) {
+    const result = scoreOpenTranscript(`I really like the ${said} a lot today`, 'photo_talk', { homeworkVocabulary: [vocabWord] });
+    assert.equal(result.words_matched.includes(vocabWord), false, `"${said}" must not credit "${vocabWord}"`);
+  }
+});
+
+test('scoreOpenTranscript: misspellings/mis-transcriptions still credit at the full scoreOpenTranscript level (not common words, unaffected by the gate)', () => {
+  const vocab = ['happy', 'because', 'football'];
+  const result = scoreOpenTranscript('We are hapy becase footbal is so much fun', 'photo_talk', { homeworkVocabulary: vocab });
+  assert.ok(result.words_matched.includes('happy'), 'hapy -> happy still credits');
+  assert.ok(result.words_matched.includes('because'), 'becase -> because still credits');
+  assert.ok(result.words_matched.includes('football'), 'footbal -> football still credits');
+});
+
+test('scoreOpenTranscript: computeContentPrecision-level regression — "pack" no longer inflates content_relevance_percent the way it did pre-v3', () => {
+  const vocab = deriveHomeworkVocabulary(BATTERY_HOMEWORK);
+  const transcript = 'We play football at the Pack. We feel happy because it is fun.';
+  const result = scoreOpenTranscript(transcript, 'photo_talk', { homeworkVocabulary: vocab });
+  // "pack" is excluded from the precision numerator now (commonness gate);
+  // this is a precision measure over 7 content words (play, football, pack,
+  // feel, happy, because, fun) with 5 real exact vocabulary hits — informative
+  // regression guard, not a spec'd exact number.
+  assert.ok(result.content_relevance_percent < 100, 'pack must not count as a vocabulary hit');
+  assert.ok(result.content_relevance_percent >= 60, `still comfortably high on an otherwise-correct answer, got ${result.content_relevance_percent}`);
 });
 
 // ---------------------------------------------------------------------------

@@ -143,7 +143,9 @@ test('buildFeedbackContext: azure block passed through only when accuracy_percen
 });
 
 // ---------------------------------------------------------------------------
-// FEEDBACK_SYSTEM_PROMPT — pasted verbatim, never edited.
+// FEEDBACK_SYSTEM_PROMPT — Elon-authored, edited only via a dispatched
+// packet (2026-07-15: the near_miss_words rule bullet was rewritten by the
+// grading-honesty v3 packet — see the source file's own header for why).
 // ---------------------------------------------------------------------------
 
 test('FEEDBACK_SYSTEM_PROMPT: carries the required JSON shape and the never-a-number rule', () => {
@@ -153,6 +155,21 @@ test('FEEDBACK_SYSTEM_PROMPT: carries the required JSON shape and the never-a-nu
   assert.match(FEEDBACK_SYSTEM_PROMPT, /tiny_challenge_vi/);
   assert.match(FEEDBACK_SYSTEM_PROMPT, /recast_en/);
   assert.match(FEEDBACK_SYSTEM_PROMPT, /Never mention numbers or percentages/);
+});
+
+test('FEEDBACK_SYSTEM_PROMPT v3 (2026-07-15): the near_miss_words rule is context-based (candidates), not an unconditional always-recast instruction', () => {
+  // The packet's own required rule, verbatim-equivalent: "recast ONLY when
+  // the child's own sentence does not make sense with the word they said
+  // (or it is clearly a mangled grid word); when the sentence is sensible
+  // with their word, SAY NOTHING about it; silence is always acceptable."
+  assert.match(FEEDBACK_SYSTEM_PROMPT, /CANDIDATE, not a verdict/i);
+  assert.match(FEEDBACK_SYSTEM_PROMPT, /say NOTHING about that word/i);
+  assert.match(FEEDBACK_SYSTEM_PROMPT, /silence is always the safe, correct choice/i);
+  assert.match(FEEDBACK_SYSTEM_PROMPT, /does NOT make sense with the word they said/i);
+  assert.match(FEEDBACK_SYSTEM_PROMPT, /garbled\/mangled version of the homework word/i);
+  // The v2 unconditional instruction must be GONE, not merely supplemented.
+  assert.doesNotMatch(FEEDBACK_SYSTEM_PROMPT, /ALWAYS include recast_en/);
+  assert.doesNotMatch(FEEDBACK_SYSTEM_PROMPT, /never say the child made a mistake/);
 });
 
 // ---------------------------------------------------------------------------
