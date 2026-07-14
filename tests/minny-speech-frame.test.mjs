@@ -373,10 +373,19 @@ test('renderFrameResult wires pronunciationRow into the rubric card off result.p
 });
 
 test('client recorder condition: frame steps record WAV, alongside read and hw_photo_talk (Task 1)', () => {
-  assert.match(
-    speakingPage,
-    /recStep\.check_mode === 'read' \|\| recStep\.id === 'hw_photo_talk' \|\| recStep\.check_mode === 'frame'/,
-  );
+  // Was a literal-source regex on the old inline `recStep.check_mode === ...`
+  // condition; speakup-grading-honesty-ui (2026-07-14) extracted that
+  // decision into the pure recorderEngineOptions(activeModeId, step) helper
+  // (see tests/speakup-homework-types-ui.test.mjs for its full coverage
+  // including the new homework-mode-forces-wav branch). Re-pointed at actual
+  // behavior: call the extracted function and confirm frame/read/hw_photo_talk
+  // steps still force the WAV engine outside homework mode, same as before.
+  const recorderEngineOptions = new Function(
+    `${extractFunctionSrc(speakingPage, 'recorderEngineOptions')}\nreturn recorderEngineOptions;`,
+  )();
+  assert.deepEqual(recorderEngineOptions('free_talk', { check_mode: 'read' }), { engine: 'wav' });
+  assert.deepEqual(recorderEngineOptions('free_talk', { check_mode: 'frame' }), { engine: 'wav' });
+  assert.deepEqual(recorderEngineOptions('free_talk', { id: 'hw_photo_talk', check_mode: 'open' }), { engine: 'wav' });
 });
 
 // ---------------------------------------------------------------------------
@@ -418,13 +427,23 @@ test('renderFrameResult wires practiceWordsRow into the rubric card, right after
   assert.match(src, /pronunciationRow\(result\.pronunciation\)[\s\S]*practiceWordsRow\(result\.pronunciation\)/);
 });
 
-test('tap-to-hear: one delegated click handler on #speaking-result covers every .minny-word chip', () => {
+test('tap-to-hear: one delegated click handler on #speaking-result covers every .minny-word chip, including data-sentence model-play buttons', () => {
   const idx = speakingPage.indexOf("getElementById('speaking-result')?.addEventListener('click'");
   assert.notEqual(idx, -1, 'delegated click handler registered on the results container');
   const handlerSrc = speakingPage.slice(idx, speakingPage.indexOf('});', idx) + 3);
-  assert.match(handlerSrc, /closest\('\.minny-word'\)/, 'delegation targets any chip rendered by wordChips (read-step + frame)');
+  assert.match(handlerSrc, /closest\('\.minny-word'\)/, 'delegation targets any chip rendered by wordChips (read-step + frame) or the model-sentence play button');
+  // speakup-grading-honesty-ui (2026-07-14) extended the single handler to
+  // also route the new data-sentence model-play button (renderCoachSandwich,
+  // see tests/speakup-feedback-ui.test.mjs) to { text }, falling back to the
+  // pre-existing normalized data-word path -- still one delegated handler,
+  // no second Audio pattern, still shows is-loading while in flight.
+  assert.match(handlerSrc, /chip\.dataset\.sentence/, 'checks the chip for a data-sentence value (model-play button) before falling back to a plain word chip');
   assert.match(handlerSrc, /normalizePracticeWord\(chip\.dataset\.word\)/, 'normalizes the chip word before sending -- must match what the server allowlisted');
-  assert.match(handlerSrc, /playMinnyVoice\(\{\s*word\s*\}\s*,\s*''\s*\)/, 'reuses the page\'s existing fetch-then-play helper, no new Audio pattern');
+  assert.match(
+    handlerSrc,
+    /playMinnyVoice\(sentence \? \{\s*text:\s*sentence\s*\}\s*:\s*\{\s*word\s*\}\s*,\s*''\s*\)/,
+    'reuses the page\'s existing fetch-then-play helper for both chip kinds, no new Audio pattern',
+  );
   assert.doesNotMatch(handlerSrc, /new Audio\(/, 'must not add a second Audio-playing pattern');
   assert.match(handlerSrc, /is-loading/, 'pressed/pulse state while the request is in flight');
 });

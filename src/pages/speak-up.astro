@@ -997,6 +997,25 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         : 'Nghe Minny nhắc, rồi con kể nhé.';
     }
 
+    // WAV engine decision for startRecording() (speakup-grading-honesty-ui,
+    // 2026-07-14) — pure so it's testable without a DOM/media pipeline (see
+    // tests/speakup-homework-types-ui.test.mjs). ALL homework-mode steps
+    // force WAV (needed for the Ear / Azure per-word scoring to run at all
+    // on iPhone Safari, which otherwise records audio/mp4); Free Talking
+    // and any other non-homework mode keep the original, narrower
+    // check_mode-based triggers (read/frame steps, or the legacy
+    // hw_photo_talk id) untouched.
+    function recorderEngineOptions(activeModeId, step) {
+      return step && (
+        activeModeId === 'homework'
+        || step.check_mode === 'read'
+        || step.id === 'hw_photo_talk'
+        || step.check_mode === 'frame'
+      )
+        ? { engine: 'wav' }
+        : {};
+    }
+
     function wordChips(words, tone) {
       if (!Array.isArray(words) || !words.length) return '';
       // V1 word-level feedback (2026-07-12): real buttons (not spans) so a
@@ -1006,6 +1025,24 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       return words.map((w) => `<button type="button" class="minny-word minny-word--${tone}" data-word="${escapeHtml(w)}">${escapeHtml(w)}</button>`).join('');
     }
 
+    // Grading-honesty rule (2026-07-14, real founder report): a student who
+    // did photo homework correctly scored 45% and the summary still read
+    // "Khớp bài thầy dạy: 45%" (matches what the teacher taught) — but
+    // open/photo_talk/frame steps are never compared against the teacher's
+    // content, so that label was flatly false for them. A step only counts
+    // as genuinely graded against homework content when it's a read step,
+    // or a build step (the assembled sentence rides the exact same
+    // check_mode: 'read' scoring pipeline — see buildMaybeReveal's
+    // `step.expected_text = sentence` comment), or the backend explicitly
+    // says so via the response's optional graded_against field. graded_against
+    // wins when present (forward-compatible with Mark's backend work); the
+    // check_mode/task_type check is the fallback for today's backend, which
+    // doesn't send it yet.
+    function isGradedAgainstHomeworkContent(entry) {
+      if (entry && entry.graded_against) return entry.graded_against === 'homework_content';
+      return entry?.check_mode === 'read' || entry?.task_type === 'build';
+    }
+
     // Homework mode accumulates each completed step's score for the
     // end-of-set summary; keyed by step id so retries replace, not duplicate.
     function finalizeHomeworkStep(result, isLast) {
@@ -1013,7 +1050,14 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       const step = currentStep();
       const stepId = step?.id || `step_${state.stepIndex}`;
       const scorePercent = result.check_mode === 'frame' ? result.matchPct : result.score_percent;
-      const entry = { step_id: stepId, ok: true, score_percent: scorePercent };
+      const entry = {
+        step_id: stepId,
+        ok: true,
+        score_percent: scorePercent,
+        check_mode: result.check_mode || step?.check_mode || null,
+        task_type: step?.task_type || null,
+        graded_against: result.graded_against || null,
+      };
       const existingIdx = state.homeworkResults.findIndex((r) => r.step_id === stepId);
       if (existingIdx >= 0) state.homeworkResults[existingIdx] = entry;
       else state.homeworkResults.push(entry);
@@ -1032,12 +1076,17 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         })
         .join('');
 
-      const matchPercent = (() => {
-        const valid = state.homeworkResults.filter(r => Number.isFinite(Number(r.score_percent)));
-        if (valid.length === 0) return null;
-        const sum = valid.reduce((acc, r) => acc + Number(r.score_percent), 0);
-        return Math.round(sum / valid.length);
-      })();
+      const valid = state.homeworkResults.filter(r => Number.isFinite(Number(r.score_percent)));
+      const matchPercent = valid.length
+        ? Math.round(valid.reduce((acc, r) => acc + Number(r.score_percent), 0) / valid.length)
+        : null;
+      // Honest label: only claim "Khớp bài thầy dạy" (matches what the
+      // teacher taught) when EVERY valid entry was actually graded against
+      // homework content — a single open/photo/frame step in the set falls
+      // back to the neutral "Kết quả luyện nói hôm nay" phrasing. Per-row
+      // "Câu N: NN%" rows above are unaffected either way.
+      const gradedAgainstContent = valid.length > 0 && valid.every(isGradedAgainstHomeworkContent);
+      const summaryLabel = gradedAgainstContent ? 'Khớp bài thầy dạy' : 'Kết quả luyện nói hôm nay';
 
       const summary = document.createElement('div');
       summary.className = 'minny-frame-rubric-card';
@@ -1045,7 +1094,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         <p class="minny-frame-rubric-card__eyebrow">Hoàn thành bài tập</p>
         <p style="margin:0;font-family:Manrope,sans-serif;font-weight:800;font-size:18px;color:var(--cream)">Con đã hoàn thành bài tập thầy giao! 🎉</p>
         ${rows}
-        ${matchPercent !== null ? `<p style="margin:10px 0 0;font-family:Manrope,sans-serif;font-weight:800;font-size:18px;color:var(--gold-light)">Khớp bài thầy dạy: ${matchPercent}%</p>` : ''}
+        ${matchPercent !== null ? `<p style="margin:10px 0 0;font-family:Manrope,sans-serif;font-weight:800;font-size:18px;color:var(--gold-light)">${escapeHtml(summaryLabel)}: ${matchPercent}%</p>` : ''}
       `;
       resultEl.appendChild(summary);
 
@@ -1139,6 +1188,13 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     // dispatch report. Same for a Vietnamese translation under
     // model_sentence_en: the mock's __model-vi line has no backing field in
     // result.coach today, so it is omitted rather than invented.
+    // Tap-to-hear on model_sentence_en (speakup-grading-honesty-ui, 2026-07-14):
+    // a real .minny-word button, reusing the exact same delegated handler and
+    // is-loading pulse as the word chips below — see the click listener on
+    // #speaking-result, which now branches on data-sentence vs data-word so
+    // this sends the full model sentence to /api/minny-voice as `{ text }`
+    // (the payload shape already used for other full-sentence Minny audio)
+    // instead of the single-word `{ word }` shape.
     function renderCoachSandwich(result, celebrateMood) {
       const coach = result?.coach;
       if (!coach || typeof coach !== 'object') return '';
@@ -1162,6 +1218,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             <span class="ico" aria-hidden="true">📘</span>
             <div class="minny-feedback-sandwich__model">
               <p class="minny-feedback-sandwich__model-en">"${escapeHtml(model_sentence_en)}"</p>
+              <button type="button" class="minny-word minny-word--close minny-model-play" data-sentence="${escapeHtml(model_sentence_en)}">🔊 Nghe mẫu</button>
             </div>
           </div>
           <div class="minny-feedback-sandwich__row">
@@ -1368,24 +1425,30 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       return { check_mode: 'read', expected_text: String(word || ''), practice_mode: '1' };
     }
 
-    // Tap-to-hear (V1 word-level feedback, 2026-07-12): one delegated
-    // handler on the results container covers BOTH the read step's chips
-    // ("Luyện thêm:"/"Gần đúng:") and the new frame "Từ cần luyện:" chips —
-    // every chip is rendered by the same wordChips() button markup. Reuses
+    // Tap-to-hear (V1 word-level feedback, 2026-07-12; extended
+    // 2026-07-14 to the coach sandwich's model sentence): one delegated
+    // handler on the results container covers the read step's chips
+    // ("Luyện thêm:"/"Gần đúng:"), the frame "Từ cần luyện:" chips, the
+    // coach sandwich's focus-word chip, AND the model_sentence_en play
+    // button — every one of them is a `.minny-word` button. A
+    // data-sentence attribute (full model sentence) routes to the
+    // `{ text }` minny-voice payload; a plain data-word attribute routes to
+    // the single-word `{ word }` payload, same as before. Reuses
     // playMinnyVoice (the page's existing fetch-then-play helper) rather
     // than a new Audio pattern; an empty fallback text means a 403/error
-    // stays a silent no-op (never an error popup for a kid tapping a word) —
-    // this also covers "Con nhắc tới:" (words_matched, tone 'good') chips,
-    // which are never in the flagged-words record, so those taps are
-    // expected to always 403 and silently no-op, by design.
+    // stays a silent no-op (never a broken button or a console error for a
+    // kid tapping a chip) — this also covers "Con nhắc tới:" (words_matched,
+    // tone 'good') chips, which are never in the flagged-words record, so
+    // those taps are expected to always 403 and silently no-op, by design.
     document.getElementById('speaking-result')?.addEventListener('click', async (event) => {
       const chip = event.target.closest('.minny-word');
       if (!chip || chip.classList.contains('is-loading')) return;
-      const word = normalizePracticeWord(chip.dataset.word);
-      if (!word) return;
+      const sentence = chip.dataset.sentence || '';
+      const word = sentence ? '' : normalizePracticeWord(chip.dataset.word);
+      if (!sentence && !word) return;
       chip.classList.add('is-loading');
       try {
-        await playMinnyVoice({ word }, '');
+        await playMinnyVoice(sentence ? { text: sentence } : { word }, '');
       } finally {
         chip.classList.remove('is-loading');
       }
@@ -1938,13 +2001,19 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           return;
         }
 
-        // Homework read steps, photo_talk, and frame (presentation) steps all
-        // record raw WAV 16k (the engine's existing WAV path) — required by
-        // Azure Pronunciation Assessment's REST endpoint.
+        // WAV engine is load-bearing for the Ear (per-word Azure Pronunciation
+        // Assessment): iPhone Safari's default MediaRecorder output is
+        // audio/mp4, which the Azure REST endpoint can't score, so any
+        // homework step recorded with the default engine silently loses
+        // per-word feedback on iPhone. ALL homework steps now force WAV
+        // regardless of step kind/check_mode (2026-07-14 fix — was
+        // hw_photo_talk-only, which left read/open/build/frame homework
+        // steps locked out). Free Talking and any other non-homework mode
+        // keep the original, narrower check_mode-based triggers untouched.
+        // Extracted as recorderEngineOptions() so the decision is testable
+        // without a DOM/media pipeline (see tests/speakup-homework-types-ui.test.mjs).
         const recStep = currentStep();
-        const recorderOptions = recStep && (recStep.check_mode === 'read' || recStep.id === 'hw_photo_talk' || recStep.check_mode === 'frame')
-          ? { engine: 'wav' }
-          : {};
+        const recorderOptions = recorderEngineOptions(state.activeModeId, recStep);
         const recorder = window.R2LRecorder?.createRecorder
           ? window.R2LRecorder.createRecorder(stream, recorderOptions)
           : (() => {

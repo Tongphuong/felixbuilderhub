@@ -73,6 +73,97 @@ function assembleWith(buildSelections, step) {
   return buildAssemblerFactory({ buildSelections })(step);
 }
 
+// recorderEngineOptions and isGradedAgainstHomeworkContent (packet
+// speakup-grading-honesty-ui, 2026-07-14) are plain pure functions with no
+// module-level state to close over -- extract and evaluate directly.
+function loadGradingHonestyHelpers() {
+  const pieces = [
+    extractFunctionSrc(speakingPage, 'recorderEngineOptions'),
+    extractFunctionSrc(speakingPage, 'isGradedAgainstHomeworkContent'),
+  ];
+  const body = `${pieces.join('\n\n')}\n\nreturn { recorderEngineOptions, isGradedAgainstHomeworkContent };`;
+  // eslint-disable-next-line no-new-func -- see file header: pure source extracted from the page itself
+  return new Function(body)();
+}
+const { recorderEngineOptions, isGradedAgainstHomeworkContent } = loadGradingHonestyHelpers();
+
+// ---------------------------------------------------------------------------
+// WAV engine forced for ALL homework steps (speakup-grading-honesty-ui):
+// a real student's iPhone Safari records audio/mp4 by default, which locks
+// the Ear (per-word Azure scoring) out entirely unless the WAV engine runs.
+// Was hw_photo_talk-only; now homework mode forces WAV regardless of step
+// kind, while Free Talking/other modes keep their pre-existing triggers.
+// ---------------------------------------------------------------------------
+
+test('recorderEngineOptions: every homework step kind forces the WAV engine, regardless of check_mode', () => {
+  const steps = [
+    { id: 'hw_read_1', check_mode: 'read' },
+    { id: 'hw_open_1', check_mode: 'open' },
+    { id: 'hw_photo_talk', check_mode: 'open' },
+    { id: 'hw_frame_1', check_mode: 'frame', task_type: 'present' },
+    { id: 'hw_build_1', check_mode: 'read', task_type: 'build' },
+    { id: 'hw_story_1', check_mode: 'frame', task_type: 'story' },
+  ];
+  for (const step of steps) {
+    assert.deepEqual(
+      recorderEngineOptions('homework', step),
+      { engine: 'wav' },
+      `homework step ${step.id} (check_mode=${step.check_mode}) must force wav`,
+    );
+  }
+});
+
+test('recorderEngineOptions: Free Talking / non-homework modes keep the original narrower triggers unchanged', () => {
+  assert.deepEqual(recorderEngineOptions('free_talk', { check_mode: 'read' }), { engine: 'wav' });
+  assert.deepEqual(recorderEngineOptions('free_talk', { check_mode: 'frame' }), { engine: 'wav' });
+  assert.deepEqual(recorderEngineOptions('free_talk', { id: 'hw_photo_talk', check_mode: 'open' }), { engine: 'wav' });
+  // A plain open-check_mode Free Talking step (not read/frame/hw_photo_talk) stays on the default (non-wav) engine.
+  assert.deepEqual(recorderEngineOptions('free_talk', { check_mode: 'open', id: 'ft_turn_1' }), {});
+});
+
+test('recorderEngineOptions: no current step -> default (non-wav) engine options', () => {
+  assert.deepEqual(recorderEngineOptions('homework', null), {});
+  assert.deepEqual(recorderEngineOptions('free_talk', undefined), {});
+});
+
+// ---------------------------------------------------------------------------
+// Honest homework summary label (speakup-grading-honesty-ui, 2026-07-14):
+// a real student scored 45% on photo homework done correctly, and the
+// summary falsely read "Khớp bài thầy dạy: 45%" (matches what the teacher
+// taught) even though open/photo/frame steps are never compared against
+// homework content. isGradedAgainstHomeworkContent gates the honest label.
+// ---------------------------------------------------------------------------
+
+test('isGradedAgainstHomeworkContent: read and build steps are genuinely graded against homework content', () => {
+  assert.equal(isGradedAgainstHomeworkContent({ check_mode: 'read' }), true);
+  assert.equal(isGradedAgainstHomeworkContent({ check_mode: 'read', task_type: 'build' }), true);
+  assert.equal(isGradedAgainstHomeworkContent({ task_type: 'build' }), true);
+});
+
+test('isGradedAgainstHomeworkContent: open, photo_talk, and frame steps are NOT graded against homework content by default', () => {
+  assert.equal(isGradedAgainstHomeworkContent({ check_mode: 'open' }), false);
+  assert.equal(isGradedAgainstHomeworkContent({ check_mode: 'open', step_id: 'hw_photo_talk' }), false);
+  assert.equal(isGradedAgainstHomeworkContent({ check_mode: 'frame', task_type: 'story' }), false);
+});
+
+test('isGradedAgainstHomeworkContent: backend graded_against, when present, wins over the check_mode/task_type fallback in both directions', () => {
+  assert.equal(isGradedAgainstHomeworkContent({ check_mode: 'open', graded_against: 'homework_content' }), true);
+  assert.equal(isGradedAgainstHomeworkContent({ check_mode: 'read', graded_against: 'pronunciation_effort' }), false);
+});
+
+test('appendHomeworkSummary: an all-read/build homework set uses the honest "Khớp bài thầy dạy" label', () => {
+  const src = extractFunctionSrc(speakingPage, 'appendHomeworkSummary');
+  assert.match(src, /gradedAgainstContent \? 'Khớp bài thầy dạy' : 'Kết quả luyện nói hôm nay'/);
+  assert.match(src, /valid\.length > 0 && valid\.every\(isGradedAgainstHomeworkContent\)/);
+});
+
+test('finalizeHomeworkStep: carries check_mode/task_type/graded_against onto each homeworkResults entry, so the summary can classify it', () => {
+  const src = extractFunctionSrc(speakingPage, 'finalizeHomeworkStep');
+  assert.match(src, /check_mode: result\.check_mode \|\| step\?\.check_mode \|\| null/);
+  assert.match(src, /task_type: step\?\.task_type \|\| null/);
+  assert.match(src, /graded_against: result\.graded_against \|\| null/);
+});
+
 // ---------------------------------------------------------------------------
 // build task_type: sentence assembly (the one genuinely algorithmic piece
 // Steve had discretion over -- see dispatch report)
