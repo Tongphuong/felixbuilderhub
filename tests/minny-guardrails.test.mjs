@@ -229,6 +229,76 @@ test('screenWithLlamaGuard degrades on an unrecognizable (neither safe nor unsaf
 });
 
 // ---------------------------------------------------------------------------
+// speakup-503-hunt regression (2026-07-15): screenWithLlamaGuard's internal
+// Promise.race used to leave its losing setTimeout armed whenever ai.run()
+// won the race (the common case). Node never notices a dangling timer --
+// this is exactly why "full test suite: 1665/1665 green" never caught it --
+// but on deployed Cloudflare Pages Functions that orphaned timer fires 3.5s
+// later into a request context the platform already tore down, which killed
+// the whole isolate with error 1102 on every read2lead-speaking-check call
+// where codeData.homework is truthy (confirmed by deployment bisection:
+// disabling the coach-feedback block alone fixed it; re-enabling it with
+// only this clearTimeout fix also fixed it). These tests assert the actual
+// mechanism directly -- that no timer is left armed after screenWithLlamaGuard
+// settles, on both the resolve and the throw exit paths -- by spying on the
+// real global timer functions (the only way to observe "was clearTimeout
+// called on this handle" from outside the module).
+// ---------------------------------------------------------------------------
+
+function spyOnTimers() {
+  const originalSetTimeout = global.setTimeout;
+  const originalClearTimeout = global.clearTimeout;
+  const armed = new Set();
+  global.setTimeout = (fn, ms, ...args) => {
+    const handle = originalSetTimeout(fn, ms, ...args);
+    armed.add(handle);
+    return handle;
+  };
+  global.clearTimeout = (handle) => {
+    armed.delete(handle);
+    return originalClearTimeout(handle);
+  };
+  return {
+    armed,
+    restore() {
+      global.setTimeout = originalSetTimeout;
+      global.clearTimeout = originalClearTimeout;
+      // Safety net: never leave a real timer armed past this test even if
+      // the assertion below fails.
+      for (const handle of armed) originalClearTimeout(handle);
+    },
+  };
+}
+
+test('KILL INPUT: screenWithLlamaGuard clears its race timeout once ai.run() wins (no dangling timer survives past the request)', async () => {
+  const spy = spyOnTimers();
+  try {
+    const ai = { run: async () => 'safe' };
+    const result = await screenWithLlamaGuard(ai, 'That sounds fun!', 'I have two cats');
+    assert.equal(result.flagged, false);
+    assert.equal(
+      spy.armed.size,
+      0,
+      'a timer left armed here is the exact 1102 isolate-killer: it fires 3.5s after this function returns, into a request context Cloudflare Workers already tore down',
+    );
+  } finally {
+    spy.restore();
+  }
+});
+
+test('KILL INPUT: screenWithLlamaGuard clears its race timeout even when ai.run() throws', async () => {
+  const spy = spyOnTimers();
+  try {
+    const ai = { run: async () => { throw new Error('down'); } };
+    const result = await screenWithLlamaGuard(ai, 'reply');
+    assert.equal(result.degraded, true);
+    assert.equal(spy.armed.size, 0, 'the catch path must clear the timer too, not just the happy path');
+  } finally {
+    spy.restore();
+  }
+});
+
+// ---------------------------------------------------------------------------
 // Red-team fixtures, exercised end-to-end through onRequestPost -- every
 // fixture must yield a canned redirect, never the raw flagged content.
 // ---------------------------------------------------------------------------

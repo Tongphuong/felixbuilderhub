@@ -96,6 +96,24 @@ export async function screenWithLlamaGuard(ai, replyText, userText = '') {
   if (!ai || typeof ai.run !== 'function') {
     return { flagged: false, degraded: true, category: 'guard_unavailable', raw: null };
   }
+  // speakup-503-hunt (2026-07-15): this setTimeout handle MUST be cleared on
+  // every exit path below. The losing side of the race used to be a bare,
+  // never-cancelled timer -- when ai.run() won (the common case, p50
+  // 0.4-1.1s), the timer stayed armed and fired its reject() 3.5s later, into
+  // a request whose I/O context Cloudflare Workers already considers torn
+  // down (the response was already returned). That is what was killing the
+  // whole isolate with error 1102 ("Worker exceeded resource limits") on
+  // every read2lead-speaking-check call where codeData.homework is truthy
+  // and OPENROUTER_API_KEY is configured -- both required to reach this guard
+  // call at all -- with the aftershock (unrelated routes 503ing for ~100ms
+  // until Cloudflare respawns the isolate) landing on whatever request
+  // happened to hit that isolate next. Node's test runner never catches this
+  // because a dangling setTimeout is completely harmless outside Workers'
+  // per-request I/O scoping -- confirmed by deployment bisection
+  // (claude-bg/speakup-503-probe-1: disabling the whole coach-feedback block
+  // was healthy 3/3; claude-bg/speakup-503-probe-2: re-enabling it with just
+  // this clearTimeout fix was healthy 3/3, coach field present).
+  let timeoutHandle;
   try {
     const messages = [];
     if (userText) messages.push({ role: 'user', content: String(userText) });
@@ -109,8 +127,9 @@ export async function screenWithLlamaGuard(ai, replyText, userText = '') {
       // same outcome the timeout already gives: the degraded path (the
       // deterministic gate already passed; degradation is logged to the flag
       // ring). Safety order and flag semantics unchanged.
-      new Promise((_, reject) => setTimeout(() => reject(new Error('llama_guard_timeout')), 3500)),
+      new Promise((_, reject) => { timeoutHandle = setTimeout(() => reject(new Error('llama_guard_timeout')), 3500); }),
     ]);
+    clearTimeout(timeoutHandle);
     const raw = typeof result === 'string' ? result : (result?.response ?? result?.text ?? '');
     const normalized = String(raw ?? '').trim().toLowerCase();
     if (!normalized) {
@@ -128,6 +147,9 @@ export async function screenWithLlamaGuard(ai, replyText, userText = '') {
     // can't trust it, so degrade to the deterministic gate rather than block.
     return { flagged: false, degraded: true, category: 'guard_unparsed', raw };
   } catch {
+    // The timeout branch of the race rejecting lands here too -- clear it
+    // regardless of which side of the race threw.
+    clearTimeout(timeoutHandle);
     return { flagged: false, degraded: true, category: 'guard_error', raw: null };
   }
 }
