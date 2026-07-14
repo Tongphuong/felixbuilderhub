@@ -299,6 +299,76 @@ test('KILL INPUT: screenWithLlamaGuard clears its race timeout even when ai.run(
 });
 
 // ---------------------------------------------------------------------------
+// speakup-503-hunt revision 2 (2026-07-15): the clearTimeout fix above closed
+// the TIMER side of the race, but Buffet's live reproducer against that
+// revision-1 preview still died 15/18 requests with the identical error 1102
+// -- the MIRROR side of the same race. When the TIMEOUT wins (Llama Guard
+// genuinely slower than 3.5s), ai.run()'s own promise was left PENDING and
+// unhandled past screenWithLlamaGuard's return -- a still-in-flight Workers
+// AI binding call left dangling past response teardown kills the isolate the
+// same way the orphaned timer did. These tests force the TIMEOUT side of the
+// race to win deterministically -- by hijacking setTimeout to fire almost
+// immediately regardless of the requested delay, while an ai.run() mock
+// promise is held open under the test's control -- so the "timeout wins
+// while ai.run() is still in flight" case is exercised without a real 3.5s
+// wait.
+// ---------------------------------------------------------------------------
+
+function forceRaceTimeoutToWinImmediately() {
+  const originalSetTimeout = global.setTimeout;
+  global.setTimeout = (fn, _ms, ...args) => originalSetTimeout(fn, 0, ...args);
+  return () => { global.setTimeout = originalSetTimeout; };
+}
+
+test('KILL INPUT: screenWithLlamaGuard hands the pending guard promise to waitUntil exactly once when the timeout wins, and the orphan never becomes an unhandled rejection', async () => {
+  const restoreSetTimeout = forceRaceTimeoutToWinImmediately();
+  let rejectGuard;
+  // Never settles on its own -- simulates Llama Guard genuinely outlasting
+  // the 3.5s race timeout (the mirror-side scenario).
+  const ai = { run: () => new Promise((_resolve, reject) => { rejectGuard = reject; }) };
+  const waitUntilCalls = [];
+  const waitUntilSpy = (p) => waitUntilCalls.push(p);
+  let unhandled = null;
+  const onUnhandledRejection = (err) => { unhandled = err; };
+  process.on('unhandledRejection', onUnhandledRejection);
+  try {
+    const result = await screenWithLlamaGuard(ai, 'reply', 'kid text', waitUntilSpy);
+    assert.equal(result.flagged, false);
+    assert.equal(result.degraded, true);
+    assert.equal(result.category, 'guard_error');
+    assert.equal(
+      waitUntilCalls.length,
+      1,
+      'waitUntil should receive exactly one promise for the orphaned guard call',
+    );
+    // The "genuinely slow" ai.run() finally settles well after
+    // screenWithLlamaGuard already returned via the timeout path -- this must
+    // not surface as an unhandled rejection, and the promise handed to
+    // waitUntil must resolve without throwing.
+    rejectGuard(new Error('llama guard eventually failed'));
+    await waitUntilCalls[0];
+    await new Promise((resolve) => { setTimeout(resolve, 10); });
+    assert.equal(unhandled, null, 'the orphaned guard promise must never surface as an unhandled rejection');
+  } finally {
+    process.removeListener('unhandledRejection', onUnhandledRejection);
+    restoreSetTimeout();
+  }
+});
+
+test('KILL INPUT: screenWithLlamaGuard degrades gracefully (no throw) when the timeout wins and no waitUntil was provided', async () => {
+  const restoreSetTimeout = forceRaceTimeoutToWinImmediately();
+  const ai = { run: () => new Promise(() => {}) }; // never settles
+  try {
+    const result = await screenWithLlamaGuard(ai, 'reply', 'kid text');
+    assert.equal(result.flagged, false);
+    assert.equal(result.degraded, true);
+    assert.equal(result.category, 'guard_error');
+  } finally {
+    restoreSetTimeout();
+  }
+});
+
+// ---------------------------------------------------------------------------
 // Red-team fixtures, exercised end-to-end through onRequestPost -- every
 // fixture must yield a canned redirect, never the raw flagged content.
 // ---------------------------------------------------------------------------

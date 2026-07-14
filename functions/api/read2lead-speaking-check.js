@@ -954,6 +954,17 @@ export async function runSpeakingCheck({
 
 export async function onRequestPost(context) {
   const { request, env } = context;
+  // speakup-503-hunt revision 2 (2026-07-15): captured here, not read off
+  // `context` at the call site below -- a local `const context =
+  // buildFeedbackContext(...)` further down this function shadows this
+  // outer `context` parameter, so reading `context.waitUntil` there would
+  // silently resolve to undefined. Mirrors minny-conversation.js's
+  // onRequestPost: Pages Functions supplies waitUntil to finish work after
+  // the response is sent; plain node tests call this handler without it, so
+  // fall back to fire-and-forget so the promise still runs to completion.
+  const waitUntil = typeof context.waitUntil === 'function'
+    ? context.waitUntil.bind(context)
+    : (p) => { Promise.resolve(p).catch(() => {}); };
 
   if (!env.READ2LEAD_CODES) {
     return json(
@@ -1166,7 +1177,13 @@ export async function onRequestPost(context) {
           const topicFlag = scanBannedTopics(feedbackText);
           const deterministicFlag = Boolean(shapeFlag) || characterFlag.flagged || topicFlag.flagged;
           if (!deterministicFlag) {
-            const guardResult = await screenWithLlamaGuard(workersAi, feedbackText, result.transcript || '');
+            // speakup-503-hunt revision 2 (2026-07-15): plumb `waitUntil`
+            // (captured at the top of onRequestPost, above the shadowing
+            // local `context`) so a Llama Guard call that outlasts the 3.5s
+            // race timeout doesn't leave its own promise orphaned past this
+            // request's teardown -- Buffet confirmed this call site shares
+            // screenWithLlamaGuard and therefore the same mirror-side bug.
+            const guardResult = await screenWithLlamaGuard(workersAi, feedbackText, result.transcript || '', waitUntil);
             if (!guardResult.flagged) {
               result.coach = feedback;
 

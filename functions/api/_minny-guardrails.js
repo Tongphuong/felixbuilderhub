@@ -92,34 +92,52 @@ export function detectCharacterBreak(reply) {
 //
 // Llama Guard classifies a CONVERSATION, so we pass the kid's turn plus the
 // assistant reply being screened (not a lone assistant message).
-export async function screenWithLlamaGuard(ai, replyText, userText = '') {
+//
+// `waitUntil` (optional, 4th arg): the caller's Cloudflare Pages
+// `context.waitUntil` (or an equivalent), plumbed through as a plain
+// parameter -- never read from a global, so this file stays pure/env-free
+// per the header comment. See the block comment below for why it exists.
+export async function screenWithLlamaGuard(ai, replyText, userText = '', waitUntil) {
   if (!ai || typeof ai.run !== 'function') {
     return { flagged: false, degraded: true, category: 'guard_unavailable', raw: null };
   }
-  // speakup-503-hunt (2026-07-15): this setTimeout handle MUST be cleared on
-  // every exit path below. The losing side of the race used to be a bare,
-  // never-cancelled timer -- when ai.run() won (the common case, p50
+  // speakup-503-hunt revision 1 (2026-07-15): this setTimeout handle MUST be
+  // cleared on every exit path below. The losing side of the race used to be
+  // a bare, never-cancelled timer -- when ai.run() won (the common case, p50
   // 0.4-1.1s), the timer stayed armed and fired its reject() 3.5s later, into
   // a request whose I/O context Cloudflare Workers already considers torn
-  // down (the response was already returned). That is what was killing the
-  // whole isolate with error 1102 ("Worker exceeded resource limits") on
-  // every read2lead-speaking-check call where codeData.homework is truthy
-  // and OPENROUTER_API_KEY is configured -- both required to reach this guard
-  // call at all -- with the aftershock (unrelated routes 503ing for ~100ms
-  // until Cloudflare respawns the isolate) landing on whatever request
-  // happened to hit that isolate next. Node's test runner never catches this
-  // because a dangling setTimeout is completely harmless outside Workers'
-  // per-request I/O scoping -- confirmed by deployment bisection
-  // (claude-bg/speakup-503-probe-1: disabling the whole coach-feedback block
-  // was healthy 3/3; claude-bg/speakup-503-probe-2: re-enabling it with just
-  // this clearTimeout fix was healthy 3/3, coach field present).
+  // down. That was PART of what was killing the isolate with error 1102
+  // ("Worker exceeded resource limits").
+  //
+  // speakup-503-hunt revision 2 (2026-07-15): revision 1 closed the TIMER
+  // side, but Buffet's live reproducer against the revision-1 preview still
+  // died 15/18 times with the identical error 1102 -- the MIRROR side of the
+  // same race. When the TIMEOUT wins (Llama Guard genuinely slower than
+  // 3.5s -- common under evening Workers-AI load), this function used to
+  // return via `catch` immediately while ai.run()'s own promise was still
+  // PENDING at that moment: nothing ever awaited, cancelled, or attached a
+  // handler to it. A still-in-flight Workers AI binding call left dangling
+  // past response teardown kills the isolate exactly like the orphaned timer
+  // did. Fix: capture `guardPromise` BEFORE the race (so a reference to it
+  // survives regardless of which side wins), attach a swallowing `.catch()`
+  // immediately so a late rejection is never an unhandled rejection, and --
+  // when the caller passed a `waitUntil` -- hand that same swallowed promise
+  // to it on any exit through `catch`. `ctx.waitUntil()` is the sanctioned
+  // Workers mechanism for letting I/O outlive the response: the platform
+  // keeps the isolate alive until the handed-off promise settles instead of
+  // tearing it down mid-flight.
   let timeoutHandle;
+  let guardPromise;
   try {
     const messages = [];
     if (userText) messages.push({ role: 'user', content: String(userText) });
     messages.push({ role: 'assistant', content: String(replyText || '') });
+    // Wrapped in Promise.resolve() so `.catch()` below is always safe to call
+    // even if a binding ever returned a bare non-promise value.
+    guardPromise = Promise.resolve(ai.run('@cf/meta/llama-guard-3-8b', { messages }));
+    guardPromise.catch(() => {});
     const result = await Promise.race([
-      ai.run('@cf/meta/llama-guard-3-8b', { messages }),
+      guardPromise,
       // 3.5s (was 6s, tuned 2026-07-10): the two-phase turn awaits ONLY the
       // guard before showing the reply, so this timeout directly caps the
       // kid's time-to-text. Guard p50 is 0.4-1.1s live; a verdict slower than
@@ -150,6 +168,14 @@ export async function screenWithLlamaGuard(ai, replyText, userText = '') {
     // The timeout branch of the race rejecting lands here too -- clear it
     // regardless of which side of the race threw.
     clearTimeout(timeoutHandle);
+    // Mirror-side fix: guardPromise may still be pending (timeout won) or
+    // may already be settled (ai.run() itself rejected/threw) -- either way,
+    // handing it to waitUntil is safe (an already-settled promise resolves
+    // waitUntil's wait near-instantly) and closes the orphan-past-teardown
+    // gap for the pending case, which is the one that actually kills isolates.
+    if (typeof waitUntil === 'function' && guardPromise) {
+      waitUntil(guardPromise.catch(() => {}));
+    }
     return { flagged: false, degraded: true, category: 'guard_error', raw: null };
   }
 }
