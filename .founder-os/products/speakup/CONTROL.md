@@ -89,6 +89,128 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Started: 2026-07-14
+- Task ID: speakup-grading-honesty
+- Owner: Mark (backend packet: functions/api grading + feedback + vision
+  extraction + tests) and Steve (UI packet: speak-up.astro summary label +
+  homework WAV engine + word-chip tap-to-hear); Elon dispatches, reviews,
+  integrates; Buffet gates the commit.
+- Lane: backend now claude-bg/speakup-grading-honesty-v3 (second-worker
+  lineage per rule 4, worktree englead; supersedes claude-bg/speakup-grading-honesty
+  after two same-axis rejects — that branch merges via v3's base) and
+  claude-bg/speakup-grading-honesty-ui (Steve, worktree steve, tip 50e57dc
+  APPROVED round 2); integration branch by Elon after Buffet's ledger verdict
+  on the v3 tip; Phương gates main.
+- Files owned: Mark — functions/api/read2lead-speaking-check.js,
+  functions/api/_azure-pronunciation.js, functions/api/_homework-feedback.js,
+  functions/api/minny-voice.js, functions/api/admin/classes/[id]/homework-extract.js,
+  functions/api/admin/classes/[id]/homework-photo-extract.js, tests/* (backend).
+  Steve — src/pages/speak-up.astro, tests/speakup-*-ui.test.mjs. No overlap.
+- Stop condition: any change that would alter reward semantics
+  (gradeRewards thresholds), touch Free Talking guardrails, or write a new
+  file outside the owned set → stop and ask Elon. Two failed attempts on the
+  same packet → back to Elon for re-plan (never self-expand scope).
+- State inventory: student KV records (READ2LEAD_CODES) hold homework
+  records — NOT restructured by this task (schema v3 unchanged; vision
+  extraction only changes what NEW teacher saves produce). Review ledger +
+  dispatch-active.json are runtime state. Azure free-tier usage meter in KV
+  (azureUnderFreeTier) is extended-load state to watch. No migration of past
+  scores: history stays as recorded.
+- Operational reality: previews share PRODUCTION KV — battery runs use the
+  is_test throwaway code R2L-TESTBOT-UPVW (expires 2026-07-15); per-IP rate
+  limiter forces ~12s gaps between battery rows; Azure unscripted REST caps
+  at 30s/clip which is WHY long clips fell to the broken scorer; iPhone
+  Safari records audio/mp4 unless the WAV engine is forced, which gates the
+  whole Ear layer — Steve's engine change is load-bearing, not cosmetic.
+- Problem (founder report, screenshot on file): a real student (code
+  R2L-VODKA-GPEX) did his photo homework correctly and scored exactly 45%,
+  shown to parents as "Khớp bài thầy dạy: 45%". Confirmed root cause: photo-only
+  homework grades the child against the literal sentinel string `photo_talk`
+  (`scoreOpenTranscript` → `extractStoryKeywords('photo_talk')` → keyword
+  `phototalk`, never spoken → relevance 0 → ceiling `round(100*0.45)=45`).
+  The Azure path that would grade properly refuses clips >30s, and a 75s photo
+  task always exceeds it. Live battery (2026-07-14, simulated child voice,
+  throwaway test code R2L-TESTBOT-UPVW `is_test`, 1-day expiry): perfect
+  45s answer → 45; **gibberish → 81** (short-clip Azure grades pronunciation
+  only — cleanly-babbled nonsense outscores a real answer). Reward-system
+  consequence (game-systems.md): the 45 cap graded every photo homework F —
+  zero XP, zero coins — regardless of performance.
+- Scope: (A) no-reference open scoring honest (sentinel-aware, Vietnamese
+  redirect decoupled from the <20 gate, no effort-only 100s, content grounding
+  so gibberish cannot outscore real answers); (B) zero-anchor frame auto-100
+  if battery confirms; (C) photo→build-grid vision extraction (`build_columns`
+  in VISION_PROMPT + draftFromPhoto wiring through existing validateBuildTask);
+  (2c) word-to-word feedback "Ear + Brain with an honesty rule": Azure per-word
+  chunked >30s + feedback LLM given the grid as context, grounded by the
+  existing validateFeedbackGrounding so it can never name a word the evidence
+  didn't flag; minny-voice allowlist extended to the child's own homework words
+  so flagged words are tappable-to-hear. (2b, Steve) summary label stops
+  claiming "Khớp bài thầy dạy" for step sets not graded against teacher
+  content; WAV engine forced for all homework steps.
+- Reuse survey (rule 21): (1) Azure Pronunciation Assessment — ADOPTED
+  (already integrated `_azure-pronunciation.js`; this task extends it with
+  ≤30s chunking, no new dependency); (2) forced-alignment stacks
+  (Gentle/aeneas/WhisperX word-timestamps) — REJECTED: self-hosted alignment
+  infra for marginal gain over the already-paid-for Azure per-word scores;
+  (3) LLM-as-judge for the score itself (OpenRouter) — REJECTED for scoring
+  (non-deterministic kid-facing numbers; retained only for grounded feedback
+  *wording* via the existing `_homework-feedback.js` sandwich); (4) edge-tts
+  (uvx, test harness only) — ADOPTED as lab equipment to simulate the child's
+  voice; never ships, not kid-facing (premium-voice rule untouched);
+  (5) open English word-frequency list — google-10000-english REJECTED at
+  implementation (its own LICENSE.md warns against commercial use without
+  LDC licensing; SpeakUp is paid — caught by the v3 worker, not by Elon's
+  survey, which had named it); SCOWL REJECTED (source-dictionary + build
+  toolchain, not a flat list); **hermitdave/FrequencyWords (en_50k,
+  MIT license, commercial-use-permitted, OpenSubtitles2018-derived) ADOPTED
+  2026-07-15**, top 5000 normalized words, profanity-filtered (LDNOOBW +
+  manual supplement; internal-only Set, filtered as hygiene), one curated
+  addition ("moose") — for the v3 commonness gate after two review rejects
+  proved string similarity alone cannot separate "child said a different real
+  word" (pork/park — no credit, no correction) from "transcriber mangled the
+  intended word" (footbal/football — credit): common words are taken at face
+  value, rare/mangled words keep fuzzy matching; vendored into
+  `functions/api/_common-english-words.js`, no runtime fetch, no dependency.
+- Cost ceiling: Claude team (Max plan, not metered). Runtime: Azure F0 free
+  tier remains hard-gated by `azureUnderFreeTier` (chunking multiplies usage;
+  meter says no → graceful local fallback, never blocks); OpenRouter feedback
+  unchanged ≈ $0.002/homework set; harness TTS $0. Any paid-tier want goes to
+  Phương with numbers first (notify >$5/op).
+- Acceptance criteria: the 13-row live battery
+  (`scratchpad/speakup-battery/`, results-before.json vs results-after.json) —
+  (1) perfect >30s photo answer scores high, NOT 45; (3) gibberish LOW, not 81;
+  (4) fluent Vietnamese redirects regardless of score; (5) silence graceful;
+  (6/12) correct build sentence high with ZERO flagged words (false accusation
+  is the trust-killer); (8) zero-anchor frame not auto-100; (11) clean "pack"
+  for "park" flags exactly "park" with a model sentence containing "park";
+  (13) wrong word on photo task gets a grid-grounded gentle recast, no score
+  penalty; plus full `node tests/index.js` green and existing real-story open
+  scoring unchanged.
+- Founder ruling (2026-07-15, after three same-axis review rejects — threshold,
+  first-letter tiebreak, commonness corpus — each moved the fuzzy-credit leak
+  instead of closing it): **score credit is EXACT normalized match only**; no
+  fuzzy credit for any word class. Almost-right words are handled exclusively
+  by the coaching layer (near-miss candidates → LLM context judgment →
+  grounding gate), which Buffet approved in round 3. This supersedes the
+  "hapy/becase/footbal still credit" clause of the original acceptance
+  criteria; the rest of the battery acceptance stands.
+- Tradeoff watch (rule 29): we deliberately raise photo-task scores (the 45
+  cap was wrong — it also hard-wired grade F/zero rewards) while adding content
+  grounding to keep them honest. Exact-only credit slightly undercounts
+  mangled-but-attempted vocabulary; WATCH: if pilot kids' photo-task relevance
+  scores cluster oddly low while their coaching flags show mostly near-misses,
+  revisit with Phương (a score-strictness knob, not a fuzzy-credit revival). WATCH: if the pilot's median photo-task score
+  exceeds 90 for two consecutive weeks (`minny-practice-log` match_percent),
+  the effort/content weighting is too generous — revisit before praise
+  inflation teaches nothing. Azure quota: if `azureUnderFreeTier` denies >20%
+  of homework calls in a week, surface the paid-tier decision to Phương with
+  usage numbers instead of silently degrading every kid to local scoring.
+- Design self-verification: pending (rule 18 — filled at complete gate).
+- Founder handoff: pending (rule 19 — filled at complete gate).
+
+## Prior task (complete): speakup-adaptive-homework-types
+
 - Status: complete
 - Shipped: 2026-07-13 — merged to main (4ce4f21) and LIVE ON PRODUCTION.
 - FOUNDER ACTIONS DONE: (1) R2 binding `R2L_MEDIA` added to Cloudflare Pages
