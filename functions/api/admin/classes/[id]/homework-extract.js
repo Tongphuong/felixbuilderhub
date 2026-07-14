@@ -193,6 +193,22 @@ export async function callExtractLLM({ env, lessonText, fetchFn = fetch }) {
   return null;
 }
 
+// Vision build-grid extraction (grading-honesty packet, 2026-07-14): a slide
+// photo of a mix-and-match grid (columns of choices) previously had no
+// matching draft task at all. Assembled through the REAL validateTask ->
+// validateBuildTask (schema v1 rules, already imported above) — same
+// posture as validateDraftTasks below: dropped, not defaulted, on any
+// validation failure. Returns null when build_columns is absent/empty, or
+// when the assembled task fails validation.
+function buildTaskFromVisionColumns(rawColumns) {
+  if (!Array.isArray(rawColumns) || !rawColumns.length) return null;
+  const columns = rawColumns
+    .filter((c) => c && typeof c === 'object')
+    .map((c) => ({ label_en: c.label_en, options: Array.isArray(c.options) ? c.options : [] }));
+  const result = validateTask({ type: 'build', columns, sentences_required: 2 }, 0, { photo: null });
+  return result.ok ? result.value : null;
+}
+
 // Reuses the existing vision path (homework-photo-extract.js) unchanged to
 // read a slide photo into { frame_text, sentence_lines }-shaped text, then
 // converts that into read/present tasks via the same legacy-shape converter
@@ -217,13 +233,16 @@ export async function draftFromPhoto({ env, classId, r2Key }) {
   const raw = result?.response ?? result?.description ?? '';
   const parsed = raw && typeof raw === 'object' ? raw : parseVisionReply(raw);
   const visionDraft = buildVisionDraft(parsed);
-  if (!visionDraft) return null;
 
-  const sentencesResult = parseHomeworkLines(visionDraft.sentences_text);
-  const frameResult = parseFrameStems(visionDraft.frame_text);
-  const sentences = sentencesResult.ok ? sentencesResult.lines : [];
-  const frameStems = frameResult.ok ? frameResult.stems : [];
-  const tasks = tasksFromLegacyShape({ sentences, frameStems, frameDurationS: 60, photo: null });
+  const sentencesResult = visionDraft ? parseHomeworkLines(visionDraft.sentences_text) : null;
+  const frameResult = visionDraft ? parseFrameStems(visionDraft.frame_text) : null;
+  const sentences = sentencesResult?.ok ? sentencesResult.lines : [];
+  const frameStems = frameResult?.ok ? frameResult.stems : [];
+  const legacyTasks = tasksFromLegacyShape({ sentences, frameStems, frameDurationS: 60, photo: null });
+
+  const buildTask = buildTaskFromVisionColumns(parsed?.build_columns);
+  const tasks = buildTask ? [...legacyTasks, buildTask] : legacyTasks;
+
   return tasks.length ? { tasks } : null;
 }
 

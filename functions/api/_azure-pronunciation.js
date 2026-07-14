@@ -240,6 +240,116 @@ function readAsciiTag(bytes, offset) {
   return String.fromCharCode(bytes[offset], bytes[offset + 1], bytes[offset + 2], bytes[offset + 3]);
 }
 
+// Same canonical-header validation trimWavToSeconds uses, factored out ONLY
+// for splitWavIntoChunks below (2026-07-14, honesty+grid packet). Deliberately
+// NOT wired into trimWavToSeconds itself — that function is byte-exact tested
+// (tests/azure-pronunciation.test.mjs) and this packet must not risk it; a
+// few duplicated lines here is the safer trade.
+function parseCanonicalWavHeader(bytes) {
+  if (bytes.length < 44) return null;
+  if (readAsciiTag(bytes, 0) !== 'RIFF') return null;
+  if (readAsciiTag(bytes, 8) !== 'WAVE') return null;
+  if (readAsciiTag(bytes, 12) !== 'fmt ') return null;
+  if (readAsciiTag(bytes, 36) !== 'data') return null; // canonical header only — no extra chunks before data
+
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  const fmtChunkSize = view.getUint32(16, true);
+  const audioFormat = view.getUint16(20, true);
+  const sampleRate = view.getUint32(24, true);
+  const blockAlign = view.getUint16(32, true);
+  const dataSize = view.getUint32(40, true);
+
+  if (fmtChunkSize !== 16 || audioFormat !== 1) return null; // PCM, canonical 16-byte fmt chunk only
+  if (!sampleRate || !blockAlign) return null;
+  if (44 + dataSize > bytes.length) return null; // header claims more data than the buffer has
+  if (dataSize === 0) return null;
+
+  return { sampleRate, blockAlign, dataSize };
+}
+
+// Builds one standalone canonical WAV from a byte range of `bytes`' data
+// chunk, reusing the same 44-byte header (RIFF/data chunk sizes rewritten).
+function buildWavSlice(bytes, byteOffset, byteLength) {
+  const totalSize = 44 + byteLength;
+  const out = new Uint8Array(totalSize);
+  out.set(bytes.subarray(0, 44), 0);
+  out.set(bytes.subarray(44 + byteOffset, 44 + byteOffset + byteLength), 44);
+  const outView = new DataView(out.buffer);
+  outView.setUint32(4, totalSize - 8, true); // RIFF chunk size
+  outView.setUint32(40, byteLength, true); // data chunk size
+  return out;
+}
+
+// Splits a canonical PCM WAV into sequential chunks of at most maxSeconds
+// each, covering the ENTIRE clip (unlike trimWavToSeconds, which keeps only
+// the first slice) — for the open/photo_talk "Ear on long clips" grading
+// (V1 honesty+grid packet, 2026-07-14): Azure's short-audio REST endpoint
+// caps at 30s/call, so a long presentation is graded in sequential pieces
+// instead of being skipped past the first 30s. Pure, never throws: returns
+// null on anything nonstandard (same constraints as trimWavToSeconds), or an
+// array of { wav: Uint8Array, sampledSeconds } covering the full clip.
+export function splitWavIntoChunks(arrayBufferOrUint8, maxSeconds) {
+  if (!arrayBufferOrUint8 || !Number.isFinite(maxSeconds) || maxSeconds <= 0) return null;
+  const bytes = arrayBufferOrUint8 instanceof Uint8Array
+    ? arrayBufferOrUint8
+    : new Uint8Array(arrayBufferOrUint8);
+  const header = parseCanonicalWavHeader(bytes);
+  if (!header) return null;
+
+  const { sampleRate, blockAlign, dataSize } = header;
+  const rawMaxBytes = sampleRate * blockAlign * maxSeconds;
+  const maxBytes = Math.floor(rawMaxBytes / blockAlign) * blockAlign; // whole sample frames only
+  if (maxBytes <= 0) return null;
+
+  const chunks = [];
+  for (let offset = 0; offset < dataSize; offset += maxBytes) {
+    const length = Math.min(maxBytes, dataSize - offset);
+    chunks.push({
+      wav: buildWavSlice(bytes, offset, length),
+      sampledSeconds: length / (sampleRate * blockAlign),
+    });
+  }
+  return chunks.length ? chunks : null;
+}
+
+// Merges the per-chunk Azure NBest[0] "best" objects splitWavIntoChunks'
+// pieces each produced (via assessPronunciationWithAzure) into one synthetic
+// best-shaped object: PronScore/AccuracyScore/FluencyScore duration-weighted
+// averages, Display concatenated in order, Words[] concatenated (so a future
+// per-word consumer sees the whole clip, not just one chunk). Pure, never
+// throws. `chunkResults`: [{ best, sampledSeconds }], in chunk order.
+export function mergeAzureChunkResults(chunkResults) {
+  if (!Array.isArray(chunkResults) || !chunkResults.length) return null;
+  const totalSeconds = chunkResults.reduce((sum, c) => sum + (Number(c?.sampledSeconds) || 0), 0);
+
+  const weightedAvg = (field) => {
+    if (!totalSeconds) return null;
+    let sum = 0;
+    for (const c of chunkResults) {
+      const value = Number(c?.best?.[field]);
+      if (Number.isFinite(value)) sum += value * (Number(c.sampledSeconds) || 0);
+    }
+    return sum / totalSeconds;
+  };
+
+  const displays = [];
+  const words = [];
+  for (const c of chunkResults) {
+    const display = String(c?.best?.Display || '').trim();
+    if (display) displays.push(display);
+    if (Array.isArray(c?.best?.Words)) words.push(...c.best.Words);
+  }
+
+  return {
+    Display: displays.join(' '),
+    PronScore: weightedAvg('PronScore'),
+    AccuracyScore: weightedAvg('AccuracyScore'),
+    FluencyScore: weightedAvg('FluencyScore'),
+    Words: words,
+    sampledSeconds: totalSeconds,
+  };
+}
+
 // Trims a canonical 44-byte-header PCM WAV recording down to at most
 // maxSeconds of audio, for the frame homework step's Azure pronunciation
 // grading (V1 speakup-azure-frame-grading): Azure's short-audio REST

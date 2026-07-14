@@ -9,13 +9,20 @@ import {
   mapAzureOpenResult,
   mapAzureFramePronunciation,
   trimWavToSeconds,
+  splitWavIntoChunks,
+  mergeAzureChunkResults,
   AZURE_PA_EST_SECONDS_PER_CALL,
-  AZURE_PA_UNSCRIPTED_MAX_WAV_BYTES,
 } from './_azure-pronunciation.js';
 // V1.3 homework feedback sandwich (2026-07-12) — see that file's header for
 // the two-way-import note (it imports normalizePracticeWord from here).
 import { buildFeedbackContext, generateHomeworkFeedback } from './_homework-feedback.js';
 import { validateReplyShape, detectCharacterBreak, scanBannedTopics, screenWithLlamaGuard } from './_minny-guardrails.js';
+// Grading-honesty packet (2026-07-14): the no-reference open scorer grounds
+// relevance on the child's OWN homework vocabulary instead of story
+// keywords — normalizeHomeworkRecord is the one tolerant-read chokepoint for
+// any stored schema version (v1/v2/v3), reused here rather than re-deriving
+// task shapes a second time (rule 21).
+import { normalizeHomeworkRecord } from './_homework.js';
 
 export const SKIP_WORDS = new Set([
   'a', 'an', 'the', 'is', 'are', 'was', 'were', 'to', 'of', 'in', 'on', 'at',
@@ -26,6 +33,32 @@ export const SIMILARITY_THRESHOLD = 0.75;
 export const CLOSE_THRESHOLD = 0.5;
 export const MAX_AUDIO_BYTES = 5 * 1024 * 1024;
 export const MAX_AUDIO_BYTES_LONG = 10 * 1024 * 1024;
+
+// Shared "how many spoken words counts as full effort" scale — used by both
+// scoreOpenTranscript's effort component and scoreSpeechFrame's zero-anchor
+// carve-out below (grading-honesty packet, 2026-07-14), so a stem/attempt
+// with nothing to match against still degrades to one consistent notion of
+// "did the child actually speak" rather than each place inventing its own.
+export const EFFORT_WORDS_FOR_FULL_CREDIT = 10;
+
+// Defense in depth (revision 2, 2026-07-14 — fixes Buffet's reject finding
+// 2): the pronunciation_effort branch with no Azure blend has NO content
+// basis at all — pure word-count effort, unable to tell a genuine long
+// answer from gibberish (Buffet reproduced 100 + "Hay quá!" praise on 12
+// nonsense words). A hard ceiling below the top praise tier means an
+// effort-only number can never claim the "Hay quá!"/"Tuyệt vời!" tier,
+// regardless of what upstream evidence (Azure chunk failures, an exhausted
+// free tier) put this attempt on this branch.
+export const EFFORT_ONLY_SCORE_CEILING = 60;
+
+// A no-reference open attempt: the photo carries the task (no expected_text
+// exists to score against) or Free Talking (the conversation LLM handles
+// Vietnamese there, score is ignored client-side). scoreOpenTranscript must
+// never extract "keywords" out of either literal sentinel string itself —
+// that was the root cause of the 45%-ceiling bug (greping the sentinel text
+// for a fake "phototalk" keyword). Real story-context scoring (a genuine
+// story's text as storyContext) is untouched by this set.
+export const OPEN_NO_REFERENCE_SENTINELS = new Set(['photo_talk', 'free_talking_no_score']);
 
 export function normalizeWord(word) {
   return String(word || '').toLowerCase().replace(/[^a-z]/g, '');
@@ -57,6 +90,46 @@ function levenshteinDistance(a, b) {
     }
   }
   return matrix[a.length][b.length];
+}
+
+// Length-aware content-match floor (grading-honesty packet REVISION 2,
+// 2026-07-14 — fixes Buffet's reject finding 1). Plain Levenshtein ratio
+// (wordSimilarity) is unfit for judging whether a spoken word IS a target
+// word: any 3-4 letter English rhyme pair (park/dark, cat/hat, book/look,
+// sing/ring) differs by exactly one edit and clears any single flat
+// threshold that also has to admit real typos/mishearings ("hapy"->"happy",
+// "becase"->"because"). Bucketed by word length instead of one flat number:
+//   - up to 4 letters: the first letter must match, on top of the existing
+//     0.75 bar. A mis-heard/mis-transcribed word overwhelmingly keeps its
+//     onset consonant — every false-rhyme pair above differs in the FIRST
+//     letter (dark/park, cat/hat, book/look, sing/ring), while the genuine
+//     near-miss this packet's own fixture relies on ("pack" heard for
+//     "park") shares it. A literal "exact match only" rule (the packet's
+//     starting suggestion) would also reject pack/park and break the
+//     existing near-miss test — this is the documented refinement, same
+//     shape as the 5-6 bucket's explicitly-invited one below.
+//   - 5-6 letters: first letter must match, similarity >= 0.8. Raising the
+//     bar to 0.84 instead was tried and rejected: "hapy"/"happy" sits at
+//     exactly 0.8, so 0.84 would reject a required-to-match pair. The
+//     first-letter tiebreak is what lets 0.8 stay the floor while still
+//     rejecting house/mouse (0.8, first letters differ).
+//   - 7+ letters: unchanged, similarity >= 0.75 ("as today" per the revision
+//     brief) — "becase"/"because" (0.857) and "footbal"/"football" (0.875)
+//     must keep matching.
+// Used everywhere fuzzy matching grants CONTENT CREDIT or NEAR-MISS status:
+// scoreOpenTranscript's wordsMatched loop, computeContentPrecision,
+// findNearMissVocabularyWords. Deliberately NOT used by scoreTranscript's
+// read-aloud close/exact buckets or scoreSpeechFrame's anchor-word coverage
+// — out of this revision's scope (see the packet's scope guard); those keep
+// wordSimilarity + SIMILARITY_THRESHOLD/CLOSE_THRESHOLD exactly as before.
+export function isLikelyContentMatch(a, b) {
+  if (!a || !b) return false;
+  if (a === b) return true;
+  const maxLen = Math.max(a.length, b.length);
+  const sameFirstLetter = a[0] === b[0];
+  if (maxLen <= 4) return sameFirstLetter && wordSimilarity(a, b) >= SIMILARITY_THRESHOLD;
+  if (maxLen <= 6) return sameFirstLetter && wordSimilarity(a, b) >= 0.8;
+  return wordSimilarity(a, b) >= SIMILARITY_THRESHOLD;
 }
 
 function tokenize(text) {
@@ -136,7 +209,7 @@ export function scoreTranscript(expectedText, transcript) {
     words_close: wordsClose,
     words_exact: wordsExact,
     word_feedback: wordFeedback,
-    feedback_vi: feedbackVi(scorePercent),
+    feedback_vi: feedbackVi(scorePercent, wordsMissed.length > 0 || wordsClose.length > 0),
   };
 }
 
@@ -161,15 +234,22 @@ function wordFeedbackEntry(expectedWord, spokenWord, status, similarity) {
   };
 }
 
-export function feedbackVi(scorePercent) {
-  if (scorePercent >= 90) return 'Tuyệt vời! Con đọc cực kỳ rõ ràng!';
+// hasFlaggedWord (grading-honesty packet, 2026-07-14): true when at least
+// one content word was flagged close/missed this attempt. The top-praise
+// line ("cực kỳ rõ ràng" / "rất tốt") claims a level of correctness that
+// isn't true when a real word was flagged — praise copy must not claim it,
+// so a flagged attempt steps down exactly one tier instead (never mentions
+// the word itself; the coach names it). Purely a tone change: scorePercent
+// and every other field are untouched.
+export function feedbackVi(scorePercent, hasFlaggedWord = false) {
+  if (scorePercent >= 90 && !hasFlaggedWord) return 'Tuyệt vời! Con đọc cực kỳ rõ ràng!';
   if (scorePercent >= 70) return 'Giỏi lắm! Con đọc được hầu hết các từ rồi!';
   if (scorePercent >= 50) return 'Cố lên! Con đang tiến bộ rất tốt!';
   return 'Không sao, thử lại nào! Đọc to hơn một chút nhé!';
 }
 
-export function feedbackOpenVi(scorePercent) {
-  if (scorePercent >= 80) return 'Hay quá! Con kể và suy nghĩ về truyện rất tốt!';
+export function feedbackOpenVi(scorePercent, hasFlaggedWord = false) {
+  if (scorePercent >= 80 && !hasFlaggedWord) return 'Hay quá! Con kể và suy nghĩ về truyện rất tốt!';
   if (scorePercent >= 55) return 'Giỏi lắm! Minny thấy con hiểu câu chuyện rồi!';
   if (scorePercent >= 35) return 'Con đã cố trả lời! Thử nói thêm một chút về truyện nhé.';
   return 'Con thử trả lời bằng tiếng Anh, nói to và rõ hơn một chút nhé!';
@@ -188,27 +268,210 @@ export function extractStoryKeywords(storyContext) {
   return keywords;
 }
 
-export function scoreOpenTranscript(transcript, storyContext) {
+// Deterministic homework vocabulary (grading-honesty packet, 2026-07-14): the
+// real content grounding for a no-reference open attempt (photo_talk) —
+// build columns' label_en+options, present/qa stems' anchor_words, story
+// must_use, and read items' content words, from EVERY task on the child's
+// current homework, not just whichever task compiled to this step (a bare
+// photo answer can legitimately echo vocabulary the teacher put in a
+// DIFFERENT task on the same assignment). normalizeHomeworkRecord upgrades
+// any stored schema version first. Words <3 chars are dropped (same
+// threshold mapAzureFramePronunciation already uses to skip trivial words).
+// Pure, never throws.
+export function deriveHomeworkVocabulary(homeworkRaw) {
+  const homework = normalizeHomeworkRecord(homeworkRaw);
+  const tasks = Array.isArray(homework?.tasks) ? homework.tasks : [];
+  const words = new Set();
+  const add = (raw) => {
+    for (const token of tokenize(raw)) {
+      const norm = normalizeWord(token);
+      if (norm && norm.length >= 3 && !SKIP_WORDS.has(norm)) words.add(norm);
+    }
+  };
+  for (const task of tasks) {
+    if (!task || typeof task !== 'object') continue;
+    if (task.type === 'read') {
+      for (const item of task.items || []) add(item?.text_en);
+    } else if (task.type === 'present') {
+      for (const stem of task.stems || []) {
+        for (const w of stem?.anchor_words || []) add(w);
+      }
+    } else if (task.type === 'story') {
+      for (const w of task.must_use || []) add(w);
+    } else if (task.type === 'build') {
+      for (const col of task.columns || []) {
+        add(col?.label_en);
+        for (const opt of col?.options || []) add(opt);
+      }
+    } else if (task.type === 'qa') {
+      for (const card of task.cards || []) {
+        add(card?.question_en);
+        for (const w of card?.stem?.anchor_words || []) add(w);
+      }
+    }
+    // picture: anchors are the answer key (hidden from the child) — never a
+    // vocabulary source, same reasoning minny-voice's tap-allowlist excludes them.
+  }
+  return [...words];
+}
+
+// A single flat similarity floor for near-miss detection (this constant,
+// 0.65) was Buffet's reject finding 1: at 0.65+, ordinary English rhyme
+// pairs (park/dark, cat/hat, sing/ring...) read as "the child mis-said the
+// homework word" just as easily as genuine mis-hearings like "pack"/"park"
+// do — a false accusation the honesty rule forbids. Superseded 2026-07-14
+// (revision 2) by isLikelyContentMatch's length-bucketed rule above, which
+// separates the two cases the flat threshold could not.
+//
+// A transcript content word that is NOT an exact homework-vocabulary member
+// but closely resembles one (grading-honesty packet, 2026-07-14) is a likely
+// mis-said homework word — "grid-grounded", deterministic (never an LLM
+// guess). Used both to step the praise tone down (feedbackOpenVi) and, via
+// the caller's result object, as a hint for the coach's grid-grounded recast
+// (_homework-feedback.js reads result.near_miss_words). Pure, never throws.
+export function findNearMissVocabularyWords(transcript, vocabulary) {
+  const vocabList = Array.isArray(vocabulary) ? vocabulary : [];
+  if (!vocabList.length) return [];
+  const vocabSet = new Set(vocabList);
+  const seen = new Set();
+  const results = [];
+  for (const token of tokenize(transcript)) {
+    const norm = normalizeWord(token);
+    if (!norm || norm.length < 3 || SKIP_WORDS.has(norm) || seen.has(norm)) continue;
+    seen.add(norm);
+    if (vocabSet.has(norm)) continue; // already a known-good vocabulary word
+    let bestWord = null;
+    let bestSim = 0;
+    for (const vocabWord of vocabSet) {
+      if (!isLikelyContentMatch(norm, vocabWord)) continue;
+      const sim = wordSimilarity(norm, vocabWord);
+      if (sim > bestSim) {
+        bestSim = sim;
+        bestWord = vocabWord;
+      }
+    }
+    if (bestWord) {
+      results.push({ said: norm, nearest: bestWord, similarity: Math.round(bestSim * 100) / 100 });
+    }
+  }
+  return results;
+}
+
+// Precision, not recall (grading-honesty packet, 2026-07-14): homework
+// vocabulary drawn from a multi-column build task is a MENU of alternatives
+// — a real, correct answer only ever uses a handful of them, so "what
+// fraction of the whole menu did the child recite" unfairly caps a genuinely
+// on-topic answer well under 100%. The honest question is the other
+// direction: of the real content words the child actually SAID, how many
+// are genuine homework vocabulary? Gibberish or off-topic speech (including
+// mistranscribed Vietnamese, forced through English ASR) scores near zero
+// here even when it happens to contain one common English word, because the
+// measure is a fraction of ALL the distinct content words spoken, not a
+// bare yes/no. Pure, never throws.
+export function computeContentPrecision(transcript, vocabulary) {
+  const vocabList = Array.isArray(vocabulary) ? vocabulary : [];
+  if (!vocabList.length) return 0;
+  const contentWords = new Set();
+  for (const token of tokenize(transcript)) {
+    const norm = normalizeWord(token);
+    if (norm && norm.length >= 3 && !SKIP_WORDS.has(norm)) contentWords.add(norm);
+  }
+  if (!contentWords.size) return 0;
+  let matched = 0;
+  for (const word of contentWords) {
+    // Exact-only credit (founder ruling, 2026-07-15): fuzzy/commonness-gated
+    // credit is retired; a spoken word only counts toward precision when it
+    // is an exact normalized match to a vocabulary word. Near-miss handling
+    // moved entirely to the coaching layer (findNearMissVocabularyWords).
+    if (vocabList.some((kw) => word === kw)) matched += 1;
+  }
+  return Math.round((matched / contentWords.size) * 100);
+}
+
+/**
+ * Scores a no-reference-text-safe open attempt. Real story-context scoring
+ * (storyContext is genuine story text, not a sentinel) is UNCHANGED — same
+ * extractStoryKeywords-based relevance as before this packet.
+ *
+ * For a no-reference attempt (storyContext is photo_talk / free_talking_no_
+ * score — OPEN_NO_REFERENCE_SENTINELS), scoreOpenTranscript must never treat
+ * the sentinel string itself as content to extract keywords from (that was
+ * the 45%-ceiling bug: greping "photo_talk" produced one fake keyword,
+ * "phototalk", that a real transcript could never literally contain).
+ * Instead:
+ *   - homeworkVocabulary present -> ground relevance on it (real content),
+ *     graded_against: 'homework_content'.
+ *   - no derivable vocabulary at all (bare photo, empty tasks) -> effort +
+ *     Azure pronunciation only when azurePronunciationPercent is supplied
+ *     (the caller only has this on the Azure-graded path), else pure effort
+ *     — graded_against: 'pronunciation_effort'. The UI can label the result
+ *     honestly instead of implying content was graded when it wasn't.
+ *
+ * @param {string} transcript
+ * @param {string} storyContext
+ * @param {{homeworkVocabulary?: string[], azurePronunciationPercent?: number}} [opts]
+ */
+export function scoreOpenTranscript(transcript, storyContext, { homeworkVocabulary, azurePronunciationPercent } = {}) {
   const transcriptWords = tokenize(transcript)
     .map((word) => normalizeWord(word))
     .filter(Boolean);
   const spokenCount = transcriptWords.length;
-  const keywords = extractStoryKeywords(storyContext);
+
+  const isNoReference = OPEN_NO_REFERENCE_SENTINELS.has(String(storyContext || '').trim());
+  const vocabulary = isNoReference && Array.isArray(homeworkVocabulary) ? homeworkVocabulary : [];
+  const gradedAgainst = isNoReference ? (vocabulary.length ? 'homework_content' : 'pronunciation_effort') : null;
+
+  const keywords = isNoReference ? vocabulary : extractStoryKeywords(storyContext);
   const wordsMatched = [];
 
   for (const keyword of keywords) {
     const norm = normalizeWord(keyword);
-    const hit = transcriptWords.some((spoken) => wordSimilarity(spoken, norm) >= SIMILARITY_THRESHOLD);
+    // Exact-only credit (founder ruling, 2026-07-15): no fuzzy/commonness
+    // credit — this is what stops "pork" (spoken) from lighting up "park"
+    // (vocabulary) as a green chip the child never actually said. Near-miss
+    // candidates for coaching still come from findNearMissVocabularyWords
+    // below, which is unaffected.
+    const hit = transcriptWords.some((spoken) => spoken === norm);
     if (hit) wordsMatched.push(keyword);
   }
 
-  const effortScore = Math.min(100, Math.round((spokenCount / 10) * 100));
-  const relevanceScore = keywords.length
-    ? Math.round((wordsMatched.length / keywords.length) * 100)
-    : Math.min(100, effortScore);
-  const scorePercent = Math.round(effortScore * 0.45 + relevanceScore * 0.55);
+  const effortScore = Math.min(100, Math.round((spokenCount / EFFORT_WORDS_FOR_FULL_CREDIT) * 100));
 
-  return {
+  // homework_content uses computeContentPrecision (see above) instead of the
+  // keywords-matched/keywords.length recall fraction real story-context
+  // scoring still uses below — a menu of build-task alternatives makes recall
+  // an unfair, unreachable ceiling for a genuinely correct answer.
+  const contentRelevancePercent = gradedAgainst === 'homework_content'
+    ? computeContentPrecision(transcript, vocabulary)
+    : null;
+  const relevanceScore = gradedAgainst === 'homework_content'
+    ? contentRelevancePercent
+    : (keywords.length ? Math.round((wordsMatched.length / keywords.length) * 100) : Math.min(100, effortScore));
+
+  // homework_content weights relevance more heavily than the real
+  // story-context/no-vocabulary 0.45/0.55 split: effort alone must never
+  // carry a zero-relevance (gibberish/off-topic) answer past a low ceiling
+  // (100 * 0.3 = 30, comfortably under the honesty rule's "low" bar) — see
+  // row 3 (gibberish) and row 4 (Vietnamese, garbled through English ASR) in
+  // the live battery this packet fixes.
+  const useAzureBlend = gradedAgainst === 'pronunciation_effort' && Number.isFinite(azurePronunciationPercent);
+  const effortWeight = gradedAgainst === 'homework_content' ? 0.3 : 0.45;
+  const rawScorePercent = useAzureBlend
+    ? Math.round(effortScore * 0.45 + azurePronunciationPercent * 0.55)
+    : Math.round(effortScore * effortWeight + relevanceScore * (1 - effortWeight));
+  // pronunciation_effort + no Azure blend = zero content basis — see
+  // EFFORT_ONLY_SCORE_CEILING above. Every other branch (homework_content,
+  // real story-context, and pronunciation_effort WITH an Azure blend) is
+  // unaffected.
+  const scorePercent = (gradedAgainst === 'pronunciation_effort' && !useAzureBlend)
+    ? Math.min(rawScorePercent, EFFORT_ONLY_SCORE_CEILING)
+    : rawScorePercent;
+
+  const nearMissWords = gradedAgainst === 'homework_content'
+    ? findNearMissVocabularyWords(transcript, vocabulary)
+    : [];
+
+  const result = {
     transcript: String(transcript || '').trim(),
     score_percent: scorePercent,
     correct_count: wordsMatched.length,
@@ -216,9 +479,18 @@ export function scoreOpenTranscript(transcript, storyContext) {
     words_missed: [],
     words_close: [],
     words_matched: wordsMatched,
-    feedback_vi: feedbackOpenVi(scorePercent),
+    feedback_vi: feedbackOpenVi(scorePercent, nearMissWords.length > 0),
     check_mode: 'open',
   };
+  if (gradedAgainst) result.graded_against = gradedAgainst;
+  // content_relevance_percent (grading-honesty packet, 2026-07-14): the SAME
+  // precision measure that drove the score, exposed so hasLowContentRelevance
+  // (the VN-redirect trigger) can threshold on it rather than a bare "did
+  // they touch the vocabulary at all" boolean — see hasLowContentRelevance's
+  // own header for why that boolean was too easy to clear by accident.
+  if (contentRelevancePercent !== null) result.content_relevance_percent = contentRelevancePercent;
+  if (nearMissWords.length) result.near_miss_words = nearMissWords;
+  return result;
 }
 
 /**
@@ -239,7 +511,15 @@ export function scoreSpeechFrame(transcript, stems, durationTargetSec, telemetry
   const stemResults = stems.map((stem) => {
     const anchorWords = Array.isArray(stem.anchor_words) ? stem.anchor_words : [];
     if (anchorWords.length === 0) {
-      return { id: stem.id, text_en: stem.text_en, matched: true, coveragePct: 100 };
+      // Zero-anchor carve-out (grading-honesty packet, 2026-07-14): a story
+      // task's must_use is legitimately allowed to be empty ("if the lesson
+      // names no target words, use an empty list"), which used to auto-score
+      // this stem 100 regardless of what — or whether — the child said
+      // anything. There is nothing to match against, so score on spoken
+      // effort instead (same EFFORT_WORDS_FOR_FULL_CREDIT scale
+      // scoreOpenTranscript uses), never a free 100.
+      const coveragePct = Math.min(100, Math.round((wordCount / EFFORT_WORDS_FOR_FULL_CREDIT) * 100));
+      return { id: stem.id, text_en: stem.text_en, matched: coveragePct >= 50, coveragePct };
     }
     let matchedCount = 0;
     for (const anchor of anchorWords) {
@@ -438,6 +718,27 @@ export async function detectVietnameseSpeech(audioBlob, ai) {
   }
 }
 
+// VN-redirect trigger for no-reference open attempts (grading-honesty
+// packet, 2026-07-14): a raw score<20 gate was proven insufficient — a
+// fluent Vietnamese answer that Azure pronounces well, or that racks up
+// effort-score word count, can clear 20 easily while matching NONE of the
+// homework vocabulary. When the attempt was graded against real vocabulary
+// (graded_against 'homework_content'), "low relevance" is thresholded on
+// content_relevance_percent (the same precision measure that drove the
+// score) — NOT a bare "did they touch the vocabulary at all" boolean: a
+// garbled/mistranscribed transcript can coincidentally contain one common
+// English word that happens to be in the homework vocabulary (observed live:
+// "...new version bank" from real Vietnamese speech matched the vocabulary
+// word "new") while being overwhelmingly irrelevant otherwise. When there is
+// no vocabulary to grade against, fall back to the original score<20 gate
+// (unchanged behaviour).
+export function hasLowContentRelevance(result) {
+  if (result?.graded_against === 'homework_content') {
+    return Number(result?.content_relevance_percent ?? 0) < VIETNAMESE_REDIRECT_THRESHOLD;
+  }
+  return Number(result?.score_percent) < VIETNAMESE_REDIRECT_THRESHOLD;
+}
+
 export const VIETNAMESE_REDIRECT_VI = 'Minny nghe con nói tiếng Việt — mình thử lại bằng tiếng Anh nhé!';
 
 function vietnameseRedirectResult(checkMode) {
@@ -471,6 +772,12 @@ export async function runSpeakingCheck({
   durationTargetSec,
   telemetry,
   env = null,
+  // Grading-honesty packet (2026-07-14): the child's own homework record
+  // (codeData.homework, any stored schema version — the caller already has
+  // it from the access-code lookup). Only ever consulted for checkMode
+  // 'open' (content grounding for a no-reference attempt); read/frame modes
+  // ignore it entirely, so omitting it changes nothing for those paths.
+  homework = null,
 } = {}) {
   // Homework reading: Azure Pronunciation Assessment first (purpose-built,
   // per-word/phoneme scoring — rule 21 reuse). Requires the WAV recording the
@@ -495,7 +802,7 @@ export async function runSpeakingCheck({
         return {
           ok: true,
           ...mapped,
-          feedback_vi: feedbackVi(mapped.score_percent),
+          feedback_vi: feedbackVi(mapped.score_percent, mapped.words_missed.length > 0 || mapped.words_close.length > 0),
           check_mode: 'read',
         };
       } catch (err) {
@@ -505,36 +812,74 @@ export async function runSpeakingCheck({
   }
 
   // Photo-only homework ("photo_talk"): the photo carries the task, so
-  // there is no reference text — grade pronunciation-only via Azure's
-  // unscripted mode (REST caps at 30s of audio). Anything else — longer
-  // clips, Azure down/over tier, non-WAV — falls through to the normal
-  // transcribe + open scorer below. Scripted read grading is untouched.
-  if (
-    checkMode === 'open'
-    && expectedText === 'photo_talk'
-    && env && azureSpeechConfigured(env) && isWav
-    && audioBlob.size <= AZURE_PA_UNSCRIPTED_MAX_WAV_BYTES
-  ) {
+  // there is no reference text — grade via Azure's unscripted mode (REST
+  // caps at 30s/call, so a longer clip is chunked into sequential ≤30s
+  // pieces and merged — "The Ear on long clips", grading-honesty packet
+  // 2026-07-14). Anything else — Azure down/over tier the whole way through,
+  // non-WAV, unparseable WAV — falls through to the normal transcribe + open
+  // scorer below. Scripted read grading is untouched.
+  if (checkMode === 'open' && expectedText === 'photo_talk' && env && azureSpeechConfigured(env) && isWav) {
     const kv = env.READ2LEAD_CODES;
-    if (await azureUnderFreeTier(kv)) {
-      try {
-        const best = await assessPronunciationWithAzure({
-          env,
-          audioBlob,
-          referenceText: '',
-          fetchFn,
-        });
-        await azureBumpUsage(kv, AZURE_PA_EST_SECONDS_PER_CALL);
-        const mapped = mapAzureOpenResult(best);
-        return {
-          ok: true,
-          ...mapped,
-          feedback_vi: feedbackOpenVi(mapped.score_percent),
-          check_mode: 'open',
-        };
-      } catch (err) {
-        console.error(`[read2lead-speaking-check] azure unscripted PA failed (${err?.message} ${err?.detail || ''}); using open scorer`);
+    let merged = null;
+    try {
+      const buffer = await audioBlob.arrayBuffer();
+      const chunks = splitWavIntoChunks(buffer, 30);
+      if (chunks) {
+        const successfulChunks = [];
+        for (const chunk of chunks) {
+          // Hard stop: the meter is checked before EVERY chunk, never just
+          // the first — a long clip must not silently overspend the free
+          // tier partway through. Denied -> stop chunking (never block the
+          // child); whatever chunks already succeeded are still used below.
+          // eslint-disable-next-line no-await-in-loop
+          if (!(await azureUnderFreeTier(kv, chunk.sampledSeconds))) break;
+          try {
+            // A transient per-chunk failure (Azure 5xx, timeout) on chunk N
+            // must not discard chunks 1..N-1 (revision 2, 2026-07-14 — fixes
+            // Buffet's reject finding 2: this used to fall through to a full
+            // re-transcription with no vocabulary/Azure evidence, landing in
+            // the uncapped pronunciation_effort branch). Same "keep whatever
+            // already succeeded" shape as the free-tier `break` above — one
+            // code path, both `break` out of this loop and let the merge
+            // below run on however many chunks made it.
+            // eslint-disable-next-line no-await-in-loop
+            const best = await assessPronunciationWithAzure({ env, audioBlob: chunk.wav, referenceText: '', fetchFn });
+            // eslint-disable-next-line no-await-in-loop
+            await azureBumpUsage(kv, chunk.sampledSeconds);
+            successfulChunks.push({ best, sampledSeconds: chunk.sampledSeconds });
+          } catch (chunkErr) {
+            console.error(`[read2lead-speaking-check] azure unscripted PA chunk failed (${chunkErr?.message} ${chunkErr?.detail || ''}); keeping ${successfulChunks.length} prior chunk(s)`);
+            break;
+          }
+        }
+        if (successfulChunks.length) merged = mergeAzureChunkResults(successfulChunks);
       }
+    } catch (err) {
+      console.error(`[read2lead-speaking-check] azure unscripted PA failed (${err?.message} ${err?.detail || ''}); using open scorer`);
+    }
+
+    if (merged) {
+      const azureMapped = mapAzureOpenResult(merged);
+      const homeworkVocabulary = deriveHomeworkVocabulary(homework);
+      const scored = scoreOpenTranscript(azureMapped.transcript, expectedText, {
+        homeworkVocabulary,
+        azurePronunciationPercent: azureMapped.score_percent,
+      });
+      const result = {
+        ok: true,
+        ...scored,
+        pronunciation: {
+          accuracy_percent: azureMapped.accuracy_percent,
+          fluency_percent: azureMapped.fluency_percent,
+          scorer: azureMapped.scorer,
+          sampled_seconds: merged.sampledSeconds,
+        },
+        check_mode: 'open',
+      };
+      if (hasLowContentRelevance(result) && (await detectVietnameseSpeech(audioBlob, ai))) {
+        return vietnameseRedirectResult('open');
+      }
+      return result;
     }
   }
 
@@ -546,12 +891,13 @@ export async function runSpeakingCheck({
   }
 
   if (checkMode === 'open') {
-    const result = { ok: true, ...scoreOpenTranscript(transcript, expectedText) };
+    const homeworkVocabulary = OPEN_NO_REFERENCE_SENTINELS.has(expectedText) ? deriveHomeworkVocabulary(homework) : undefined;
+    const result = { ok: true, ...scoreOpenTranscript(transcript, expectedText, { homeworkVocabulary }) };
     // Free Talking submits expected_text 'free_talking_no_score' and ignores
     // the score (the conversation LLM handles Vietnamese there) — skip.
     if (
       expectedText !== 'free_talking_no_score'
-      && result.score_percent < VIETNAMESE_REDIRECT_THRESHOLD
+      && hasLowContentRelevance(result)
       && (await detectVietnameseSpeech(audioBlob, ai))
     ) {
       return vietnameseRedirectResult('open');
@@ -752,6 +1098,7 @@ export async function onRequestPost(context) {
       durationTargetSec,
       telemetry: { ...clientTelemetry, duration_seconds: durationSec },
       env,
+      homework: codeData.homework,
     });
 
     // V1 word-level feedback (2026-07-12): best-effort, short-TTL record of
@@ -833,12 +1180,29 @@ export async function onRequestPost(context) {
               // in now. Safe to allow: focus_word is only ever set from the
               // SAME allowed_focus_words set validateFeedbackGrounding just
               // enforced membership against, never an arbitrary word.
+              //
+              // Grading-honesty packet (2026-07-14): the coach's own
+              // model_sentence_en is a NOVEL sentence the model composed
+              // (never derivable from the static homework record, unlike
+              // deriveHomeworkTapAllowlist's static sentences), so it needs
+              // its own short-TTL allowlist entry too — persisted here
+              // alongside the word merge so minny-voice's `text` branch can
+              // allow tapping the coach's sentence. This is why the write
+              // below now also fires when focus_word was already flagged:
+              // the sentence itself is still new information either way.
               try {
                 const normalizedFocus = normalizePracticeWord(feedback.focus_word);
-                if (normalizedFocus && !flaggedWords.includes(normalizedFocus)) {
+                const modelSentence = typeof feedback.model_sentence_en === 'string' ? feedback.model_sentence_en.trim() : '';
+                const needsWordMerge = normalizedFocus && !flaggedWords.includes(normalizedFocus);
+                if (needsWordMerge || modelSentence) {
+                  const mergedWords = needsWordMerge ? [...flaggedWords, normalizedFocus] : flaggedWords;
                   await env.READ2LEAD_CODES.put(
                     `flagged-words:${accessCode}`,
-                    JSON.stringify({ words: [...flaggedWords, normalizedFocus], at: Date.now() }),
+                    JSON.stringify({
+                      words: mergedWords,
+                      sentences: modelSentence ? [modelSentence] : [],
+                      at: Date.now(),
+                    }),
                     { expirationTtl: 3600 },
                   );
                 }

@@ -143,7 +143,9 @@ test('buildFeedbackContext: azure block passed through only when accuracy_percen
 });
 
 // ---------------------------------------------------------------------------
-// FEEDBACK_SYSTEM_PROMPT — pasted verbatim, never edited.
+// FEEDBACK_SYSTEM_PROMPT — Elon-authored, edited only via a dispatched
+// packet (2026-07-15: the near_miss_words rule bullet was rewritten by the
+// grading-honesty v3 packet — see the source file's own header for why).
 // ---------------------------------------------------------------------------
 
 test('FEEDBACK_SYSTEM_PROMPT: carries the required JSON shape and the never-a-number rule', () => {
@@ -153,6 +155,21 @@ test('FEEDBACK_SYSTEM_PROMPT: carries the required JSON shape and the never-a-nu
   assert.match(FEEDBACK_SYSTEM_PROMPT, /tiny_challenge_vi/);
   assert.match(FEEDBACK_SYSTEM_PROMPT, /recast_en/);
   assert.match(FEEDBACK_SYSTEM_PROMPT, /Never mention numbers or percentages/);
+});
+
+test('FEEDBACK_SYSTEM_PROMPT v3 (2026-07-15): the near_miss_words rule is context-based (candidates), not an unconditional always-recast instruction', () => {
+  // The packet's own required rule, verbatim-equivalent: "recast ONLY when
+  // the child's own sentence does not make sense with the word they said
+  // (or it is clearly a mangled grid word); when the sentence is sensible
+  // with their word, SAY NOTHING about it; silence is always acceptable."
+  assert.match(FEEDBACK_SYSTEM_PROMPT, /CANDIDATE, not a verdict/i);
+  assert.match(FEEDBACK_SYSTEM_PROMPT, /say NOTHING about that word/i);
+  assert.match(FEEDBACK_SYSTEM_PROMPT, /silence is always the safe, correct choice/i);
+  assert.match(FEEDBACK_SYSTEM_PROMPT, /does NOT make sense with the word they said/i);
+  assert.match(FEEDBACK_SYSTEM_PROMPT, /garbled\/mangled version of the homework word/i);
+  // The v2 unconditional instruction must be GONE, not merely supplemented.
+  assert.doesNotMatch(FEEDBACK_SYSTEM_PROMPT, /ALWAYS include recast_en/);
+  assert.doesNotMatch(FEEDBACK_SYSTEM_PROMPT, /never say the child made a mistake/);
 });
 
 // ---------------------------------------------------------------------------
@@ -648,7 +665,12 @@ test('onRequestPost: kid-did-great (nothing flagged) still merges the coach\'s f
   }
 });
 
-test('onRequestPost: when focus_word is already an actually-flagged word, the merge write is skipped (no redundant duplicate put)', async () => {
+// Grading-honesty packet (2026-07-14): this write now ALSO fires when
+// focus_word was already flagged, because the coach's model_sentence_en is
+// persisted alongside the word merge (a novel sentence, never derivable from
+// the static homework record — see minny-voice.js's tap-to-hear `text`
+// branch). The word LIST itself must still not gain a duplicate.
+test('onRequestPost: focus_word already flagged -> the word list gains no duplicate, but the coach sentence is still merged in', async () => {
   const originalFetch = globalThis.fetch;
   const kv = makeCodeKv({ 'R2L-HW-0001': homeworkCodeData() });
   try {
@@ -683,8 +705,10 @@ test('onRequestPost: when focus_word is already an actually-flagged word, the me
     assert.ok(payload.coach);
 
     const flagPuts = kv.puts.filter((p) => p.key === 'flagged-words:R2L-HW-0001');
-    assert.equal(flagPuts.length, 1, 'only the original collectFlaggedWords write happens -- focus_word was already in it, so no second write');
-    assert.deepEqual(JSON.parse(flagPuts[0].value).words, ['happy']);
+    assert.equal(flagPuts.length, 2, 'the original collectFlaggedWords write, plus one merge write for the coach sentence');
+    const merged = JSON.parse(flagPuts[1].value);
+    assert.deepEqual(merged.words, ['happy'], 'no duplicate word added -- "happy" was already flagged');
+    assert.deepEqual(merged.sentences, ['I feel happy.'], 'the coach sentence is persisted for tap-to-hear');
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -753,4 +777,135 @@ test('parseFeedback: recast_en as an EMPTY string is treated as absent, not a re
   }));
   assert.ok(parsed, 'parses successfully');
   assert.equal('recast_en' in parsed, false, 'empty recast dropped, not kept');
+});
+
+// ===========================================================================
+// Grading-honesty packet (2026-07-14) — near_miss_words wiring + coach fires
+// for real homework-mode attempts (the live battery's "no coach in ANY
+// response" was traced to the Testbot access code carrying NO homework
+// record in KV at all -- codeData.homework was falsy, so feedbackEligible
+// was false for every row. That is the correct, intended behaviour of the
+// existing gate (feedback must never leak into a code with no homework
+// attached) -- not a bug. These tests exercise the SAME gate with a real
+// homework record present, exactly like a real student's code, to prove the
+// coach path fires correctly once that precondition is met.
+// ===========================================================================
+
+test('buildFeedbackContext: near_miss_words (from result.near_miss_words) widen allowed_focus_words with BOTH the said word and the homework word', () => {
+  const result = {
+    check_mode: 'open',
+    words_missed: [],
+    words_close: [],
+    near_miss_words: [{ said: 'pack', nearest: 'park', similarity: 0.75 }],
+  };
+  const context = buildFeedbackContext({ checkMode: 'open', result, transcript: 'we play at the pack', homework: null, azure: null, skipWords: SKIP_WORDS });
+  assert.ok(context.allowed_focus_words.includes('pack'));
+  assert.ok(context.allowed_focus_words.includes('park'));
+  assert.deepEqual(context.near_miss_words, [{ said: 'pack', nearest: 'park' }]);
+});
+
+test('buildFeedbackContext: no near_miss_words on the result -> context carries no near_miss_words key at all (unchanged contract)', () => {
+  const result = { check_mode: 'open', words_missed: [], words_close: [] };
+  const context = buildFeedbackContext({ checkMode: 'open', result, transcript: 'i saw a dog', homework: null, azure: null, skipWords: SKIP_WORDS });
+  assert.equal('near_miss_words' in context, false);
+});
+
+const BATTERY_HOMEWORK_RECORD = {
+  schema_version: 3,
+  tasks: [
+    {
+      id: 't_build', type: 'build', sentences_required: 2,
+      columns: [
+        { id: 'c1', label_en: 'We...', options: ['play football', 'draw pictures'] },
+        { id: 'c2', label_en: 'At...', options: ['school', 'the park'] },
+        { id: 'c3', label_en: 'we feel...', options: ['happy', 'excited'] },
+        { id: 'c4', label_en: 'because...', options: ['it is fun', 'we laugh a lot'] },
+      ],
+    },
+    { id: 't_picture', type: 'picture', anchors: [], duration_s: 60 },
+  ],
+};
+
+async function postPhotoTalk({ env, transcriptText }) {
+  const formData = new FormData();
+  formData.append('access_code', 'r2l-photo-0001');
+  formData.append('pack_id', 'pack-1');
+  formData.append('expected_text', 'photo_talk');
+  formData.append('check_mode', 'open');
+  formData.append('audio', new Blob(['audio'], { type: 'audio/webm' }), 'audio.webm');
+  return onRequestPost({
+    request: new Request('https://example.com/api/read2lead-speaking-check', { method: 'POST', body: formData }),
+    env: {
+      READ2LEAD_CODES: makeCodeKv({ 'R2L-PHOTO-0001': { progress: { current_pack: { pack_id: 'pack-1' } }, homework: BATTERY_HOMEWORK_RECORD } }),
+      AI: fakeAiSpeaking(transcriptText),
+      ...env,
+    },
+  });
+}
+
+test('onRequestPost (photo_talk, real homework present): coach DOES fire — confirms the battery\'s "no coach in any response" was a homeworkless test code, not a code bug', async () => {
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async () => new Response(JSON.stringify({
+      choices: [{
+        message: {
+          content: JSON.stringify({
+            praise_vi: 'Con kể chuyện rất tự nhiên!',
+            focus_word: 'happy',
+            model_sentence_en: 'We feel happy today.',
+            tiny_challenge_vi: 'Lần sau nói to hơn xíu nhé!',
+          }),
+        },
+      }],
+    }), { status: 200 });
+    const response = await postPhotoTalk({
+      env: { OPENROUTER_API_KEY: 'or-key' },
+      transcriptText: 'We play football at the park. We feel happy because it is fun.',
+    });
+    assert.equal(response.status, 200);
+    const payload = await response.json();
+    assert.equal(payload.graded_against, 'homework_content');
+    assert.ok(payload.coach, 'coach fires for a real photo_talk homework attempt once homework exists on the code');
+    assert.equal(payload.coach.focus_word, 'happy');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('onRequestPost row 13 (photo_talk, wrong word "pack" for "park"): near_miss_words reaches the coach and the recast is accepted', async () => {
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async (url, init) => {
+      const body = JSON.parse(init.body);
+      const sentContext = JSON.parse(body.messages[1].content);
+      assert.ok(Array.isArray(sentContext.near_miss_words) && sentContext.near_miss_words.length, 'the model receives near_miss_words');
+      assert.deepEqual(sentContext.near_miss_words[0], { said: 'pack', nearest: 'park' });
+      return new Response(JSON.stringify({
+        choices: [{
+          message: {
+            content: JSON.stringify({
+              praise_vi: 'Con kể chuyện rất tự nhiên!',
+              focus_word: 'park', // the homework word, not the mistake
+              model_sentence_en: 'We play at the park.',
+              tiny_challenge_vi: 'Lần sau nói rõ hơn xíu nhé!',
+              recast_en: 'We play football at the park.',
+            }),
+          },
+        }],
+      }), { status: 200 });
+    };
+    const response = await postPhotoTalk({
+      env: { OPENROUTER_API_KEY: 'or-key' },
+      transcriptText: 'We play football at the Pack. We feel happy because it is fun.',
+    });
+    assert.equal(response.status, 200);
+    const payload = await response.json();
+    assert.deepEqual(payload.near_miss_words, [{ said: 'pack', nearest: 'park', similarity: 0.75 }]);
+    assert.ok(payload.coach, 'the grid-grounded recast is accepted by validateFeedbackGrounding');
+    assert.equal(payload.coach.focus_word, 'park');
+    assert.equal(payload.coach.recast_en, 'We play football at the park.');
+    assert.ok(payload.score_percent >= 70, 'one wrong word must not tank the score (acceptance row 13)');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });
