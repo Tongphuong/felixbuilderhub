@@ -197,6 +197,72 @@ test('draftFromPhoto: vision model finds nothing readable -> null', async () => 
 });
 
 // ---------------------------------------------------------------------------
+// draftFromPhoto + OpenAI vision primary path (speakup-vision-upgrade
+// packet, founder-ratified 2026-07-15): proves the wiring routes through
+// homework-photo-extract.js's extractWithOpenAI when a key is configured,
+// and falls back to the CF model (drained) exactly as onRequestPost does.
+// ---------------------------------------------------------------------------
+
+test('draftFromPhoto: OPENAI_API_KEY present -> uses OpenAI vision, never calls env.AI', async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response(JSON.stringify({
+    choices: [{ message: { content: '{"frame_lines":[],"sentence_lines":["I have two cats."]}' } }],
+  }), { status: 200 });
+  try {
+    const env = {
+      R2L_MEDIA: { get: async () => ({ arrayBuffer: async () => new ArrayBuffer(4), httpMetadata: { contentType: 'image/jpeg' } }) },
+      OPENAI_API_KEY: 'sk-test',
+      AI: { run: async () => { throw new Error('CF vision must not be called when OpenAI succeeds'); } },
+    };
+    const result = await draftFromPhoto({ env, classId: 'class1', r2Key: 'homework/class1/hp_abc123def456.jpg' });
+    assert.ok(result);
+    assert.equal(result.tasks[0].items[0].text_en, 'I have two cats.');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('draftFromPhoto: OpenAI non-OK falls back to CF vision cleanly (bodyUsed drained)', async () => {
+  const originalFetch = globalThis.fetch;
+  let capturedResponse;
+  globalThis.fetch = async () => {
+    capturedResponse = new Response('server error', { status: 500 });
+    return capturedResponse;
+  };
+  try {
+    const env = {
+      R2L_MEDIA: { get: async () => ({ arrayBuffer: async () => new ArrayBuffer(4), httpMetadata: { contentType: 'image/jpeg' } }) },
+      OPENAI_API_KEY: 'sk-test',
+      AI: { run: async () => ({ response: JSON.stringify({ frame_lines: [], sentence_lines: ['Fallback sentence.'] }) }) },
+    };
+    const result = await draftFromPhoto({ env, classId: 'class1', r2Key: 'homework/class1/hp_abc123def456.jpg' });
+    assert.ok(result);
+    assert.equal(result.tasks[0].items[0].text_en, 'Fallback sentence.');
+    assert.equal(capturedResponse.bodyUsed, true, 'non-OK OpenAI response must be drained before falling back to CF');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('draftFromPhoto: no OpenAI key -> CF model direct, fetch never called', async () => {
+  const originalFetch = globalThis.fetch;
+  let fetchCalled = false;
+  globalThis.fetch = async () => { fetchCalled = true; throw new Error('must not be called without an OpenAI key'); };
+  try {
+    const env = {
+      R2L_MEDIA: { get: async () => ({ arrayBuffer: async () => new ArrayBuffer(4), httpMetadata: { contentType: 'image/jpeg' } }) },
+      AI: { run: async () => ({ response: JSON.stringify({ frame_lines: [], sentence_lines: ['I have two cats.'] }) }) },
+    };
+    const result = await draftFromPhoto({ env, classId: 'class1', r2Key: 'homework/class1/hp_abc123def456.jpg' });
+    assert.ok(result);
+    assert.equal(result.tasks[0].items[0].text_en, 'I have two cats.');
+    assert.equal(fetchCalled, false);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+// ---------------------------------------------------------------------------
 // build_columns (grading-honesty packet, 2026-07-14): a slide photo of a
 // mix-and-match grid — VISION_PROMPT's third array, assembled through the
 // REAL validateTask/validateBuildTask (schema v1 rules), same posture as

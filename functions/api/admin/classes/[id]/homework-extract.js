@@ -19,7 +19,8 @@ import {
   parseHomeworkLines,
   parseFrameStems,
 } from '../../../_homework.js';
-import { VISION_MODEL, VISION_PROMPT, parseVisionReply, buildDraft as buildVisionDraft } from './homework-photo-extract.js';
+import { VISION_MODEL, VISION_PROMPT, parseVisionReply, buildDraft as buildVisionDraft, extractWithOpenAI } from './homework-photo-extract.js';
+import { resolveOpenAIApiKey } from '../../../read2lead-speaking-check.js';
 
 const LESSON_TEXT_MAX_CHARS = 20000;
 const MAX_DRAFT_TASKS = 8;
@@ -225,13 +226,28 @@ export async function draftFromPhoto({ env, classId, r2Key }) {
   if (!object) return null;
 
   const buffer = await object.arrayBuffer();
-  const result = await env.AI.run(VISION_MODEL, {
-    prompt: VISION_PROMPT,
-    image: [...new Uint8Array(buffer)],
-    max_tokens: 1024,
-  });
-  const raw = result?.response ?? result?.description ?? '';
-  const parsed = raw && typeof raw === 'object' ? raw : parseVisionReply(raw);
+  const contentType = object.httpMetadata?.contentType || 'image/jpeg';
+
+  // Fallback chain mirrors homework-photo-extract.js's onRequestPost
+  // (speakup-vision-upgrade packet, founder-ratified 2026-07-15): no
+  // OpenAI key -> CF model directly (unchanged below); OpenAI
+  // error/timeout/unparseable -> drained + CF model, one console.error
+  // (both handled inside extractWithOpenAI).
+  const openaiApiKey = resolveOpenAIApiKey(env);
+  let parsed = openaiApiKey
+    ? await extractWithOpenAI({ imageBuffer: buffer, contentType, apiKey: openaiApiKey })
+    : null;
+
+  if (!parsed) {
+    const result = await env.AI.run(VISION_MODEL, {
+      prompt: VISION_PROMPT,
+      image: [...new Uint8Array(buffer)],
+      max_tokens: 1024,
+    });
+    const raw = result?.response ?? result?.description ?? '';
+    parsed = raw && typeof raw === 'object' ? raw : parseVisionReply(raw);
+  }
+
   const visionDraft = buildVisionDraft(parsed);
 
   const sentencesResult = visionDraft ? parseHomeworkLines(visionDraft.sentences_text) : null;

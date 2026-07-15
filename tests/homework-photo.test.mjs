@@ -12,6 +12,9 @@ import {
   onRequestPost as extractPhoto,
   parseVisionReply,
   buildDraft,
+  extractWithOpenAI,
+  OPENAI_VISION_MODEL,
+  VISION_PROMPT,
 } from '../functions/api/admin/classes/[id]/homework-photo-extract.js';
 
 function createKv(records = {}) {
@@ -341,4 +344,230 @@ test('extract endpoint: model garbage or thrown error → ok:true draft:null; fo
     params: { id: 'class2' },
   });
   assert.equal(foreign.status, 404);
+});
+
+// ---------------------------------------------------------------------------
+// extractWithOpenAI — PRIMARY vision path, gpt-4o-mini (speakup-vision-
+// upgrade packet, founder-ratified 2026-07-15). fetchFn is injectable, same
+// pattern as read2lead-speaking-check.js's transcribeWithOpenAI and
+// _homework-feedback.js's generateHomeworkFeedback.
+// ---------------------------------------------------------------------------
+
+test('extractWithOpenAI: happy path JSON round-trip via mocked fetch, correct request shape', async () => {
+  let capturedUrl = null;
+  let capturedInit = null;
+  const result = await extractWithOpenAI({
+    imageBuffer: new TextEncoder().encode('jpeg-bytes').buffer,
+    contentType: 'image/jpeg',
+    apiKey: 'sk-test',
+    fetchFn: async (url, init) => {
+      capturedUrl = url;
+      capturedInit = init;
+      return new Response(JSON.stringify({
+        choices: [{ message: { content: '{"frame_lines":[],"sentence_lines":["I have two cats."],"build_columns":[]}' } }],
+      }), { status: 200 });
+    },
+  });
+  assert.deepEqual(result, { frame_lines: [], sentence_lines: ['I have two cats.'], build_columns: [] });
+  assert.equal(capturedUrl, 'https://api.openai.com/v1/chat/completions');
+  assert.equal(capturedInit.headers.Authorization, 'Bearer sk-test');
+  assert.ok(capturedInit.signal instanceof AbortSignal, 'must send an AbortSignal.timeout signal');
+  const body = JSON.parse(capturedInit.body);
+  assert.equal(body.model, OPENAI_VISION_MODEL);
+  assert.equal(body.messages[0].role, 'system');
+  assert.equal(body.messages[0].content, VISION_PROMPT, 'system prompt is shared verbatim with the CF fallback model');
+  assert.equal(body.messages[1].role, 'user');
+  assert.equal(body.messages[1].content[0].type, 'image_url');
+  assert.match(body.messages[1].content[0].image_url.url, /^data:image\/jpeg;base64,/);
+  assert.deepEqual(body.response_format, { type: 'json_object' });
+});
+
+test('extractWithOpenAI: non-OK response is drained before falling back (bodyUsed guard, Workers 6-connection-cap leak pattern)', async () => {
+  let capturedResponse;
+  const result = await extractWithOpenAI({
+    imageBuffer: new ArrayBuffer(4),
+    contentType: 'image/jpeg',
+    apiKey: 'sk-test',
+    fetchFn: async () => {
+      capturedResponse = new Response('rate limited', { status: 429 });
+      return capturedResponse;
+    },
+  });
+  assert.equal(result, null);
+  assert.ok(capturedResponse, 'sanity: fetchFn was called');
+  assert.equal(capturedResponse.bodyUsed, true, 'a non-OK response must have its body read before being discarded, or the connection leaks toward the isolate-kill cap');
+});
+
+test('extractWithOpenAI: OK response but unparseable model reply -> null (outer body already drained by res.json())', async () => {
+  let capturedResponse;
+  const result = await extractWithOpenAI({
+    imageBuffer: new ArrayBuffer(4),
+    contentType: 'image/jpeg',
+    apiKey: 'sk-test',
+    fetchFn: async () => {
+      capturedResponse = new Response(JSON.stringify({ choices: [{ message: { content: 'I could not read the image, sorry.' } }] }), { status: 200 });
+      return capturedResponse;
+    },
+  });
+  assert.equal(result, null);
+  assert.equal(capturedResponse.bodyUsed, true);
+});
+
+test('extractWithOpenAI: fetch throw (timeout/network) -> null, never throws', async () => {
+  await assert.doesNotReject(async () => {
+    const result = await extractWithOpenAI({
+      imageBuffer: new ArrayBuffer(4),
+      contentType: 'image/jpeg',
+      apiKey: 'sk-test',
+      fetchFn: async () => {
+        const err = new Error('The operation was aborted');
+        err.name = 'TimeoutError';
+        throw err;
+      },
+    });
+    assert.equal(result, null);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// onRequestPost fallback chain: no key -> CF direct; OpenAI success -> CF
+// never called; OpenAI failure -> drained + CF fallback used; neither
+// available -> no_ai_binding (early return preserved).
+// ---------------------------------------------------------------------------
+
+function r2WithBuffer(r2) {
+  return {
+    ...r2,
+    async get(key) {
+      const stored = r2.objects.get(key);
+      if (!stored) return null;
+      return { arrayBuffer: async () => new TextEncoder().encode('jpeg-bytes').buffer, httpMetadata: { contentType: 'image/jpeg' } };
+    },
+  };
+}
+
+function extractRequest(r2Key, classId = 'class1') {
+  return new Request(`https://example.com/api/admin/classes/${classId}/homework-photo-extract`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ r2_key: r2Key }),
+  });
+}
+
+test('extract endpoint: OPENAI_API_KEY present -> uses OpenAI vision, never calls env.AI', async () => {
+  const r2 = createR2();
+  await r2.put('homework/class1/hp_abc123def456.jpg', 'jpeg-bytes', { httpMetadata: { contentType: 'image/jpeg' } });
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response(JSON.stringify({
+    choices: [{ message: { content: '{"frame_lines":["I went to ___."],"sentence_lines":[]}' } }],
+  }), { status: 200 });
+  try {
+    const env = {
+      R2L_MEDIA: r2WithBuffer(r2),
+      OPENAI_API_KEY: 'sk-test',
+      AI: { run: async () => { throw new Error('CF vision must not be called when OpenAI succeeds'); } },
+    };
+    const response = await extractPhoto({
+      request: extractRequest('homework/class1/hp_abc123def456.jpg'),
+      env,
+      params: { id: 'class1' },
+    });
+    const bodyJson = await response.json();
+    assert.equal(bodyJson.ok, true);
+    assert.equal(bodyJson.draft.frame_text, 'I went to ___.');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('extract endpoint: OpenAI non-OK response falls back to CF vision model cleanly (bodyUsed drained)', async () => {
+  const r2 = createR2();
+  await r2.put('homework/class1/hp_abc123def456.jpg', 'jpeg-bytes', { httpMetadata: { contentType: 'image/jpeg' } });
+  const originalFetch = globalThis.fetch;
+  let capturedResponse;
+  globalThis.fetch = async () => {
+    capturedResponse = new Response('server error', { status: 500 });
+    return capturedResponse;
+  };
+  try {
+    const env = {
+      R2L_MEDIA: r2WithBuffer(r2),
+      OPENAI_API_KEY: 'sk-test',
+      AI: { run: async () => ({ response: '{"frame_lines":["I saw ___ there."],"sentence_lines":[]}' }) },
+    };
+    const response = await extractPhoto({
+      request: extractRequest('homework/class1/hp_abc123def456.jpg'),
+      env,
+      params: { id: 'class1' },
+    });
+    const bodyJson = await response.json();
+    assert.equal(bodyJson.ok, true);
+    assert.equal(bodyJson.draft.frame_text, 'I saw ___ there.');
+    assert.equal(capturedResponse.bodyUsed, true, 'non-OK OpenAI response must be drained before falling back to CF');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('extract endpoint: OpenAI timeout falls back to CF vision model', async () => {
+  const r2 = createR2();
+  await r2.put('homework/class1/hp_abc123def456.jpg', 'jpeg-bytes', { httpMetadata: { contentType: 'image/jpeg' } });
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => {
+    const err = new Error('The operation was aborted');
+    err.name = 'TimeoutError';
+    throw err;
+  };
+  try {
+    const env = {
+      R2L_MEDIA: r2WithBuffer(r2),
+      OPENAI_API_KEY: 'sk-test',
+      AI: { run: async () => ({ response: '{"frame_lines":[],"sentence_lines":["Fallback sentence."]}' }) },
+    };
+    const response = await extractPhoto({
+      request: extractRequest('homework/class1/hp_abc123def456.jpg'),
+      env,
+      params: { id: 'class1' },
+    });
+    const bodyJson = await response.json();
+    assert.equal(bodyJson.ok, true);
+    assert.equal(bodyJson.draft.sentences_text, 'Fallback sentence.');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('extract endpoint: no OpenAI key -> CF model direct, fetch never called', async () => {
+  const r2 = createR2();
+  await r2.put('homework/class1/hp_abc123def456.jpg', 'jpeg-bytes', { httpMetadata: { contentType: 'image/jpeg' } });
+  const originalFetch = globalThis.fetch;
+  let fetchCalled = false;
+  globalThis.fetch = async () => { fetchCalled = true; throw new Error('must not be called without an OpenAI key'); };
+  try {
+    const env = {
+      R2L_MEDIA: r2WithBuffer(r2),
+      AI: { run: async () => ({ response: '{"frame_lines":[],"sentence_lines":["Hi there."]}' }) },
+    };
+    const response = await extractPhoto({
+      request: extractRequest('homework/class1/hp_abc123def456.jpg'),
+      env,
+      params: { id: 'class1' },
+    });
+    const bodyJson = await response.json();
+    assert.equal(bodyJson.ok, true);
+    assert.equal(bodyJson.draft.sentences_text, 'Hi there.');
+    assert.equal(fetchCalled, false);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('extract endpoint: no OpenAI key AND no AI binding -> no_ai_binding (early return preserved, before R2 fetch)', async () => {
+  const response = await extractPhoto({
+    request: extractRequest('homework/class1/hp_abc123def456.jpg'),
+    env: { R2L_MEDIA: { get: async () => { throw new Error('must not be reached — no_ai_binding short-circuits before R2 fetch'); } } },
+    params: { id: 'class1' },
+  });
+  const bodyJson = await response.json();
+  assert.deepEqual(bodyJson, { ok: true, draft: null, reason: 'no_ai_binding' });
 });
