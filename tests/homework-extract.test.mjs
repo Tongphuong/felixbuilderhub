@@ -217,6 +217,7 @@ test('draftFromPhoto: OPENAI_API_KEY present -> uses OpenAI vision, never calls 
     const result = await draftFromPhoto({ env, classId: 'class1', r2Key: 'homework/class1/hp_abc123def456.jpg' });
     assert.ok(result);
     assert.equal(result.tasks[0].items[0].text_en, 'I have two cats.');
+    assert.equal(result.source, 'openai');
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -238,6 +239,7 @@ test('draftFromPhoto: OpenAI non-OK falls back to CF vision cleanly (bodyUsed dr
     const result = await draftFromPhoto({ env, classId: 'class1', r2Key: 'homework/class1/hp_abc123def456.jpg' });
     assert.ok(result);
     assert.equal(result.tasks[0].items[0].text_en, 'Fallback sentence.');
+    assert.equal(result.source, 'workers-ai');
     assert.equal(capturedResponse.bodyUsed, true, 'non-OK OpenAI response must be drained before falling back to CF');
   } finally {
     globalThis.fetch = originalFetch;
@@ -256,6 +258,7 @@ test('draftFromPhoto: no OpenAI key -> CF model direct, fetch never called', asy
     const result = await draftFromPhoto({ env, classId: 'class1', r2Key: 'homework/class1/hp_abc123def456.jpg' });
     assert.ok(result);
     assert.equal(result.tasks[0].items[0].text_en, 'I have two cats.');
+    assert.equal(result.source, 'workers-ai');
     assert.equal(fetchCalled, false);
   } finally {
     globalThis.fetch = originalFetch;
@@ -290,6 +293,7 @@ test('draftFromPhoto: OPENAI key set + env.AI ABSENT -> OpenAI is still attempte
     assert.ok(fetchCalled, 'OpenAI must be attempted when a key is set, even with no CF binding');
     assert.ok(result);
     assert.equal(result.tasks[0].items[0].text_en, 'No CF binding needed.');
+    assert.equal(result.source, 'openai');
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -575,6 +579,7 @@ test('onRequestPost: r2_key path returns a draft built from the vision model, ig
   assert.equal(json.ok, true);
   assert.equal(json.draft.tasks[0].type, 'read');
   assert.equal(json.draft.tasks[0].items[0].text_en, 'I have two cats.');
+  assert.equal(json.draft_source, 'workers-ai');
 });
 
 test('onRequestPost: an unexpected throw anywhere in the flow still returns 200 with draft:null, never a 500', async () => {

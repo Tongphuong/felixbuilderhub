@@ -241,9 +241,14 @@ export async function draftFromPhoto({ env, classId, r2Key }) {
   // OpenAI key -> CF model directly (unchanged below); OpenAI
   // error/timeout/unparseable -> drained + CF model, one console.error
   // (both handled inside extractWithOpenAI).
+  // source tracks which reader actually answered (speakup-vision-tuning
+  // packet, 2026-07-15), threaded out to onRequestPost's draft_source --
+  // same diagnosis need as homework-photo-extract.js's onRequestPost.
+  let source = null;
   let parsed = openaiApiKey
     ? await extractWithOpenAI({ imageBuffer: buffer, contentType, apiKey: openaiApiKey })
     : null;
+  if (parsed) source = 'openai';
 
   if (!parsed) {
     // Explicit guard (Buffet review, 2026-07-15 revision): degrade the same
@@ -258,6 +263,7 @@ export async function draftFromPhoto({ env, classId, r2Key }) {
     });
     const raw = result?.response ?? result?.description ?? '';
     parsed = raw && typeof raw === 'object' ? raw : parseVisionReply(raw);
+    if (parsed) source = 'workers-ai';
   }
 
   const visionDraft = buildVisionDraft(parsed);
@@ -271,7 +277,7 @@ export async function draftFromPhoto({ env, classId, r2Key }) {
   const buildTask = buildTaskFromVisionColumns(parsed?.build_columns);
   const tasks = buildTask ? [...legacyTasks, buildTask] : legacyTasks;
 
-  return tasks.length ? { tasks } : null;
+  return tasks.length ? { tasks, source } : null;
 }
 
 // Validates every raw draft task through the REAL validators (schema v1
@@ -304,7 +310,14 @@ export async function onRequestPost(context) {
 
     if (r2Key) {
       const photoDraft = await draftFromPhoto({ env, classId: params.id, r2Key });
-      return json({ ok: true, draft: photoDraft });
+      // draft_source surfaced at the top level (speakup-vision-tuning
+      // packet, 2026-07-15); draft itself keeps its existing {tasks} shape
+      // -- source is not nested inside it.
+      return json({
+        ok: true,
+        draft: photoDraft ? { tasks: photoDraft.tasks } : null,
+        draft_source: photoDraft?.source ?? null,
+      });
     }
 
     const lessonText = stripLessonHtml(lessonTextRaw);

@@ -327,7 +327,9 @@ test('extract endpoint: model garbage or thrown error → ok:true draft:null; fo
     env: { ...baseEnv, AI: { async run() { return { response: 'unreadable' }; } } },
     params: { id: 'class1' },
   });
-  assert.equal((await garbage.json()).draft, null);
+  const garbageJson = await garbage.json();
+  assert.equal(garbageJson.draft, null);
+  assert.equal(garbageJson.draft_source, null, 'no reader produced a usable draft -> draft_source null too');
 
   const thrown = await extractPhoto({
     request: req('homework/class1/hp_abc123def456.jpg'),
@@ -475,6 +477,7 @@ test('extract endpoint: OPENAI_API_KEY present -> uses OpenAI vision, never call
     const bodyJson = await response.json();
     assert.equal(bodyJson.ok, true);
     assert.equal(bodyJson.draft.frame_text, 'I went to ___.');
+    assert.equal(bodyJson.draft_source, 'openai');
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -503,6 +506,7 @@ test('extract endpoint: OpenAI non-OK response falls back to CF vision model cle
     const bodyJson = await response.json();
     assert.equal(bodyJson.ok, true);
     assert.equal(bodyJson.draft.frame_text, 'I saw ___ there.');
+    assert.equal(bodyJson.draft_source, 'workers-ai');
     assert.equal(capturedResponse.bodyUsed, true, 'non-OK OpenAI response must be drained before falling back to CF');
   } finally {
     globalThis.fetch = originalFetch;
@@ -532,6 +536,7 @@ test('extract endpoint: OpenAI timeout falls back to CF vision model', async () 
     const bodyJson = await response.json();
     assert.equal(bodyJson.ok, true);
     assert.equal(bodyJson.draft.sentences_text, 'Fallback sentence.');
+    assert.equal(bodyJson.draft_source, 'workers-ai');
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -556,6 +561,7 @@ test('extract endpoint: no OpenAI key -> CF model direct, fetch never called', a
     const bodyJson = await response.json();
     assert.equal(bodyJson.ok, true);
     assert.equal(bodyJson.draft.sentences_text, 'Hi there.');
+    assert.equal(bodyJson.draft_source, 'workers-ai');
     assert.equal(fetchCalled, false);
   } finally {
     globalThis.fetch = originalFetch;

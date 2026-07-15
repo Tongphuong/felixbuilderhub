@@ -36,8 +36,8 @@ export const VISION_PROMPT = [
   '- frame_lines: presentation sentence starters that contain blanks for the child to fill while speaking. Write each starter as one line and mark every blank as exactly ___ (three underscores). Do not include labels like "Where?" or numbering.',
   '- sentence_lines: complete English sentences or single words the child must read aloud, one per line, no numbering.',
   '- build_columns: use for TWO patterns. (1) MIX AND MATCH: the image shows columns, a table, or lists of choices the child picks from to build their own sentence. Copy the column heading and each option exactly as written in the image. (2) VOCAB CARDS + SENTENCE: the image shows vocabulary cards (a set of highlighted words, often with example sentences) plus a fill-in-the-blank sentence or speaking task. Output one column per blank, in sentence order. Each column\'s label_en is the sentence fragment leading up to that blank (e.g. "My favourite food is...", "It tastes...", "and..."). For a blank whose meaning matches the cards (adjectives, flavours), the options are the card words copied exactly. For a free-noun blank (like the food itself), use concrete nouns visible in the sheet\'s example sentences (e.g. cake, chips, lemons, chilli, coffee, fried chicken, vegetables) as options. Each entry is {"label_en": "...", "options": ["...", "..."]}. 2 to 4 columns, 2 to 8 options each.',
-  'EXAMPLE: image shows 8 vocabulary word cards (delicious, sweet, sour, spicy, salty, bitter, fresh, crunchy) and the sentence "My favourite food is ______. It tastes ______ and ______." -> {"frame_lines":[],"sentence_lines":[],"build_columns":[{"label_en":"My favourite food is...","options":["cake","chips","lemons","chilli","coffee","fried chicken","vegetables"]},{"label_en":"It tastes...","options":["delicious","sweet","sour","spicy","salty","bitter","fresh","crunchy"]},{"label_en":"and...","options":["delicious","sweet","sour","spicy","salty","bitter","fresh","crunchy"]}]}',
-  'Most photos are plain sentences to read or a blank-frame WITHOUT vocabulary cards — use sentence_lines or frame_lines for those and leave build_columns empty; only use build_columns when the image actually shows columns/cards to pick from.',
+  'Many photos are plain sentences to read or a blank-frame WITHOUT vocabulary cards — use sentence_lines or frame_lines for those and leave build_columns empty; only use build_columns when the image actually shows columns/cards to pick from.',
+  'FULL WORKED EXAMPLE. Image shows: a title; a small SUBTITLE line with blanks ("Say the word -> make the face -> use it..."); 8 vocabulary word cards (delicious, sweet, sour, spicy, salty, bitter, fresh, crunchy), each with its own example sentence; and, below the cards, a highlighted SPEAKING TASK box: "My favourite food is ______. It tastes ______ and ______. Say TWO flavour words!" The subtitle line is instructions for the page, NOT the exercise -- ignore it, do not use it as a frame_line. The highlighted SPEAKING TASK box at the bottom IS the exercise. The 8 vocabulary cards are choices to pick from even though the image never draws them as a column -- treat them as one. Correct output: {"frame_lines":[],"sentence_lines":[],"build_columns":[{"label_en":"My favourite food is...","options":["cake","chips","lemons","chilli","coffee","fried chicken","vegetables"]},{"label_en":"It tastes...","options":["delicious","sweet","sour","spicy","salty","bitter","fresh","crunchy"]},{"label_en":"and...","options":["delicious","sweet","sour","spicy","salty","bitter","fresh","crunchy"]}]}',
   'Use frame_lines, sentence_lines, OR build_columns, whichever matches the image; leave the other(s) empty.',
   'If the image has no readable English speaking task, return all three arrays empty.',
 ].join('\n');
@@ -198,9 +198,15 @@ export async function onRequestPost(context) {
     // behavior, unchanged below); OpenAI error/timeout/unparseable -> CF
     // model. Teacher-facing feature: degrade gracefully, never fail the
     // request because the premium reader hiccupped.
+    // draft_source (speakup-vision-tuning packet, 2026-07-15): which reader
+    // actually answered was previously invisible in the response, making a
+    // wrong-frame draft undiagnosable (gpt-4o-mini vs. the CF fallback?).
+    // Admin-authed teacher API only -- no kid surface reads this endpoint.
+    let draftSource = null;
     let parsed = openaiApiKey
       ? await extractWithOpenAI({ imageBuffer: buffer, contentType, apiKey: openaiApiKey })
       : null;
+    if (parsed) draftSource = 'openai';
 
     if (!parsed) {
       if (!env.AI) {
@@ -220,10 +226,11 @@ export async function onRequestPost(context) {
       // Some Workers AI builds return `response` as an already-parsed object
       // (JSON mode); others as a string to parse.
       parsed = raw && typeof raw === 'object' ? raw : parseVisionReply(raw);
+      if (parsed) draftSource = 'workers-ai';
     }
 
     const draft = buildDraft(parsed);
-    return json({ ok: true, draft });
+    return json({ ok: true, draft, draft_source: draft ? draftSource : null });
   } catch (err) {
     console.error(`[homework-photo-extract] vision failed: ${err?.message}`);
     // detail is admin-facing (Basic-Auth route) — makes live failures
