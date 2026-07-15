@@ -13,6 +13,18 @@ import {
 } from '../functions/api/admin/classes/[id]/homework-extract.js';
 
 // ---------------------------------------------------------------------------
+// EXTRACT_SYSTEM_PROMPT — Lead-authored (Elon), VERBATIM string. Only its
+// build-shape option-cap wording is asserted here (speakup-cardsheet-build,
+// 2026-07-15: raised alongside validateBuildTask's 2-8 cap), not the whole
+// string — the wording itself is Elon's call, not a test-owned contract.
+// ---------------------------------------------------------------------------
+
+test('EXTRACT_SYSTEM_PROMPT: build-shape option cap reads 2 to 8, not the old 2 to 6', () => {
+  assert.match(EXTRACT_SYSTEM_PROMPT, /2 to 8 options each/);
+  assert.doesNotMatch(EXTRACT_SYSTEM_PROMPT, /2 to 6 options each/);
+});
+
+// ---------------------------------------------------------------------------
 // stripLessonHtml — HTML stripping, whitespace collapse, 20k cap.
 // ---------------------------------------------------------------------------
 
@@ -262,6 +274,41 @@ test('draftFromPhoto: build_columns absent entirely -> unchanged legacy-only beh
   const result = await draftFromPhoto({ env, classId: 'class1', r2Key: 'homework/class1/hp_abc123def456.jpg' });
   assert.equal(result.tasks.length, 1);
   assert.equal(result.tasks[0].type, 'read');
+});
+
+// speakup-cardsheet-build (2026-07-15): the second build_columns pattern —
+// vocabulary cards (e.g. Phương's "Flavour Words" sheet: 8 highlighted
+// words) plus a fill-in-the-blank speaking line. One column per blank, up to
+// the raised 8-option cap, must round-trip through the REAL validateTask the
+// same as the mix-and-match pattern.
+test('draftFromPhoto: card-sheet pattern (3 columns x 8 options each) round-trips into a valid build task', async () => {
+  const flavourWords = ['sweet', 'sour', 'salty', 'spicy', 'bitter', 'fresh', 'crunchy', 'juicy'];
+  const foodNouns = ['cake', 'chips', 'lemons', 'chilli', 'coffee', 'fried chicken', 'vegetables', 'noodles'];
+  const env = {
+    R2L_MEDIA: { get: async () => ({ arrayBuffer: async () => new ArrayBuffer(4) }) },
+    AI: {
+      run: async () => ({
+        response: JSON.stringify({
+          frame_lines: [],
+          sentence_lines: [],
+          build_columns: [
+            { label_en: 'My favourite food is...', options: foodNouns },
+            { label_en: 'It tastes...', options: flavourWords },
+            { label_en: 'and...', options: flavourWords },
+          ],
+        }),
+      }),
+    },
+  };
+  const result = await draftFromPhoto({ env, classId: 'class1', r2Key: 'homework/class1/hp_abc123def456.jpg' });
+  assert.ok(result);
+  assert.equal(result.tasks.length, 1);
+  assert.equal(result.tasks[0].type, 'build');
+  assert.equal(result.tasks[0].columns.length, 3);
+  assert.equal(result.tasks[0].columns[0].label_en, 'My favourite food is...');
+  assert.deepEqual(result.tasks[0].columns[0].options, foodNouns);
+  assert.equal(result.tasks[0].columns[1].options.length, 8);
+  assert.deepEqual(result.tasks[0].columns[2].options, flavourWords);
 });
 
 // ---------------------------------------------------------------------------

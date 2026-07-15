@@ -222,16 +222,36 @@ assigns, commits, merges, deploys, or spends.
   reviewed, ahead of the full grading-honesty ship. Free Talking's guard
   semantics to be verified before receiving the same treatment — fail-closed
   semantics there would need a separate founder decision.
-- Verification state (2026-07-15, honest ledger): battery-verified LIVE —
-  45-cap dead (45→81), gibberish 81→27, Vietnamese 80→redirect, silence
+- Verification state (2026-07-15, honest ledger — COMPLETE 15/15): battery-verified
+  LIVE — 45-cap dead (45→81), gibberish 81→27, Vietnamese 80→redirect, silence
   graceful, build control 97 with zero flagged words (false-accusation probe
   clean), zero-anchor frame 100→60, oversize clean 413, VN-accented not
-  punished, coach fires with grounding. Implemented + Buffet-approved +
-  unit-verified but NOT yet live-battery-verified (blocked by the free-tier
-  platform ceiling, rows 503 mid-battery): the three word-to-word rows
-  (clean "pack"→flags "park"; photo wrong-word recast; sensible off-grid
-  "pork" sentence no-false-credit). Verify live after the Workers Paid
-  upgrade.
+  punished, coach fires with grounding — AND the three word-to-word rows,
+  verified live 2026-07-15 post-release (single spaced requests on the
+  release-content preview): row 11 clean "pack"→Azure flags park:close, coach
+  focus="park" + model sentence, praise steps down one tier; row 13 photo
+  wrong-word → grid-grounded recast "We play football at the park." with no
+  score penalty (90); row 14 sensible off-grid pork sentence → honest low
+  relevance (30), recast EMPTY (no false accusation), coach works with the
+  child's own word.
+- Capacity verification (classroom burst): **VERIFIED 2026-07-15, closed.**
+  The $5/mo Workers Paid upgrade works — with the deploy-time gotcha found
+  the hard way: plan limits bind per DEPLOYMENT, so pre-upgrade builds keep
+  free-tier limits (first post-upgrade battery died all-1102 until an
+  empty-commit rebuild). Preview burst 8/8 + admin clean (pre-upgrade
+  baseline died at ~4); production rebuilt on Phương's explicit order
+  ("rebuild production", f4558b2) and verified 5/5 coached scoring at
+  classroom pace + health checks green. Classroom capacity DECLARED.
+- Flavour-homework live case (2026-07-15, founder-ordered stress test):
+  real student R2L-DANGNEMO-2UNF assigned the Flavour Words photo homework
+  (photo + 8 read words + speaking frame; classmates untouched; zero test
+  attempts on the child's record — clone code absorbed all load). Battery
+  7/7 sane on new content incl. word-to-word (creepy→crispy 89 flagged+coached,
+  flesh→fresh 87). Findings tracked: vision extraction PARTIAL on card-style
+  sheets (8/8 words read, speaking-frame line MISSED — teacher-confirm
+  covered it); homework-extract returns silent draft:null on unrecognized
+  body (should 400); frame mode scores Vietnamese honestly (0) but lacks the
+  open-mode redirect message.
 - Design self-verification: no new design-mock screen in this task (summary
   label copy swap + a play button on the already-shipped chip row; the
   grading work is API-level). Verified via 1688/1688 suite incl. UI-logic
