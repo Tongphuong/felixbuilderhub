@@ -418,6 +418,50 @@ test('generateHomeworkFeedback: HTTP 500 -> null', async () => {
   assert.equal(result, null);
 });
 
+// PROD HOTFIX (coach-leak-hotfix packet, 2026-07-15): the `!res.ok` early
+// return used to discard the Response without ever reading its body.
+// Cloudflare Workers caps an isolate at 6 simultaneous open connections;
+// an unread body keeps a subrequest connection open until the isolate is
+// torn down, and every OTHER exit from this function drains the body as a
+// side effect of res.json() (even when JSON.parse then throws) -- only the
+// non-OK path skipped it. Asserted directly against a real Response's
+// `bodyUsed` flag (the actual runtime signal for "stream fully consumed"),
+// not a hand-rolled spy, so this catches a regression to the old
+// `if (!res.ok) return null;` shape exactly.
+test('generateHomeworkFeedback: non-OK response body is drained, not left open (Workers 6-connection-cap leak guard)', async () => {
+  let capturedResponse;
+  const result = await generateHomeworkFeedback({
+    env: { OPENROUTER_API_KEY: 'k' },
+    context: baseContext(),
+    fetchFn: async () => {
+      capturedResponse = new Response('rate limited', { status: 429 });
+      return capturedResponse;
+    },
+  });
+  assert.equal(result, null);
+  assert.ok(capturedResponse, 'sanity: fetchFn was called');
+  assert.equal(capturedResponse.bodyUsed, true, 'a non-OK response must have its body read/cancelled before being discarded, or the connection leaks toward the isolate-kill cap');
+});
+
+test('generateHomeworkFeedback: a grounding-rejected response still had its body fully drained by res.json() (regression guard on the reject path, not just the non-OK path)', async () => {
+  let capturedResponse;
+  const result = await generateHomeworkFeedback({
+    env: { OPENROUTER_API_KEY: 'k' },
+    context: baseContext(),
+    fetchFn: async () => {
+      capturedResponse = openRouterResponse({
+        praise_vi: 'Con nói "I love dogs" rất tốt!', // never in the transcript -> grounding rejects
+        focus_word: 'cat',
+        model_sentence_en: 'I like my cat.',
+        tiny_challenge_vi: 'Lần sau nói to hơn nhé!',
+      });
+      return capturedResponse;
+    },
+  });
+  assert.equal(result, null);
+  assert.equal(capturedResponse.bodyUsed, true, 'res.json() must have fully consumed the stream even though validateFeedbackGrounding later rejected the parsed content');
+});
+
 test('generateHomeworkFeedback: timeout/network throw -> null, never throws itself', async () => {
   await assert.doesNotReject(async () => {
     const result = await generateHomeworkFeedback({
