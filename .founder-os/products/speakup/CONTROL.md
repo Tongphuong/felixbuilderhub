@@ -222,8 +222,31 @@ assigns, commits, merges, deploys, or spends.
   reviewed, ahead of the full grading-honesty ship. Free Talking's guard
   semantics to be verified before receiving the same treatment — fail-closed
   semantics there would need a separate founder decision.
-- Design self-verification: pending (rule 18 — filled at complete gate).
-- Founder handoff: pending (rule 19 — filled at complete gate).
+- Verification state (2026-07-15, honest ledger): battery-verified LIVE —
+  45-cap dead (45→81), gibberish 81→27, Vietnamese 80→redirect, silence
+  graceful, build control 97 with zero flagged words (false-accusation probe
+  clean), zero-anchor frame 100→60, oversize clean 413, VN-accented not
+  punished, coach fires with grounding. Implemented + Buffet-approved +
+  unit-verified but NOT yet live-battery-verified (blocked by the free-tier
+  platform ceiling, rows 503 mid-battery): the three word-to-word rows
+  (clean "pack"→flags "park"; photo wrong-word recast; sensible off-grid
+  "pork" sentence no-false-credit). Verify live after the Workers Paid
+  upgrade.
+- Design self-verification: no new design-mock screen in this task (summary
+  label copy swap + a play button on the already-shipped chip row; the
+  grading work is API-level). Verified via 1688/1688 suite incl. UI-logic
+  tests + the live scoring battery; a rendered 390px pass of the summary
+  card on the deployed page remains open and is listed for the next UI task
+  that renders that screen (rule 18 applies in full force there).
+- Founder handoff: continuous plain-language reporting through 2026-07-14/15
+  (root cause, battery tables, three founder rulings via AskUserQuestion:
+  exact-only credit, guard background+retract, prod-hotfix-ASAP; platform
+  finding delivered with exact dashboard/upgrade instructions). Phương
+  confirmed FREE TIER and gave release approval ("Part 2: approve",
+  2026-07-15). Never asked to QA previews himself.
+- Verified commit: 82c18c0 (integration tip; every constituent tip carries a
+  Buffet ledger approval: c696224, 50e57dc, a1d9d07; full suite 1688/1688 on
+  the merged tree).
 
 ## Prior task (complete): speakup-adaptive-homework-types
 
