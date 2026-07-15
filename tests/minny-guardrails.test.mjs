@@ -358,13 +358,22 @@ test('KILL INPUT: screenWithLlamaGuard hands the pending guard promise to waitUn
 
 test('KILL INPUT: screenWithLlamaGuard degrades gracefully (no throw) when the timeout wins and no waitUntil was provided', async () => {
   const restoreSetTimeout = forceRaceTimeoutToWinImmediately();
-  const ai = { run: () => new Promise(() => {}) }; // never settles
+  // Never settles ON ITS OWN (that's the scenario under test), but this test
+  // still captures the resolver so it CAN settle it in cleanup below --
+  // speakup-guard-limiter's module-level llamaGuardInFlight flag (shared
+  // across the whole file) only releases once this promise actually
+  // settles, so an unsettled one here would wrongly report every later
+  // guard call in this file as busy.
+  let settleGuard;
+  const ai = { run: () => new Promise((resolve) => { settleGuard = resolve; }) };
   try {
     const result = await screenWithLlamaGuard(ai, 'reply', 'kid text');
     assert.equal(result.flagged, false);
     assert.equal(result.degraded, true);
     assert.equal(result.category, 'guard_error');
   } finally {
+    settleGuard('safe');
+    await new Promise((resolve) => { setTimeout(resolve, 10); });
     restoreSetTimeout();
   }
 });
@@ -454,6 +463,155 @@ test('screenWithLlamaGuardDetached: returns the job promise so a caller can hand
   const ai = { run: async () => 'safe' };
   const job = screenWithLlamaGuardDetached({ ai, replyText: 'nice job!' });
   assert.equal(typeof job.then, 'function', 'must return a thenable so waitUntil(job) works');
+});
+
+// ---------------------------------------------------------------------------
+// speakup-guard-limiter (2026-07-15, Fable re-plan after five failed
+// promise-hygiene swings): the module-level `llamaGuardInFlight` flag caps
+// the isolate at ONE in-flight Llama Guard ai.run() call, shared by BOTH
+// screenWithLlamaGuard (inline/race-based, minny-conversation's live turn)
+// and screenWithLlamaGuardDetached (coach path, backgrounded via waitUntil).
+// Root cause: a pending ai.run() call holds one of the isolate's 6
+// subrequest connection slots for its FULL latency (30s+ under degraded
+// Workers-AI conditions), regardless of which function invoked it or
+// whether that function's own timeout/race has already returned -- so
+// requests arriving while a slow guard call is still draining must skip
+// starting a second one rather than piling up another slot-holding call.
+// These tests exercise the actual mechanism: a second call/job arriving
+// while the first is still in flight must NOT invoke ai.run() again (busy
+// skip / busy-degraded shape), and the flag must release once the first
+// call's underlying ai.run() promise actually settles -- whether it
+// resolves, rejects, or (for the inline function) the function itself has
+// already returned via its own 3.5s timeout while ai.run() is still
+// pending.
+// ---------------------------------------------------------------------------
+
+test('screenWithLlamaGuardDetached: a second job skips ai.run entirely while the first is still in flight, then ai.run runs again once the first settles', async () => {
+  let runCalls = 0;
+  const resolvers = [];
+  const ai = {
+    run: async () => {
+      runCalls += 1;
+      return new Promise((resolve) => { resolvers.push(resolve); });
+    },
+  };
+
+  const firstJob = screenWithLlamaGuardDetached({ ai, replyText: 'first reply' });
+  await Promise.resolve(); // let the first job's synchronous prefix (incl. the ai.run() call) run
+  assert.equal(runCalls, 1, 'the first job must call ai.run()');
+
+  const secondJob = screenWithLlamaGuardDetached({ ai, replyText: 'second reply' });
+  await secondJob;
+  assert.equal(
+    runCalls,
+    1,
+    'a second job arriving while the first is still in flight must NOT call ai.run() a second time -- this is the whole fix',
+  );
+
+  // Settle the first job's ai.run() call -- releases the flag via the
+  // try/finally around `await ai.run(...)`.
+  resolvers[0]('safe');
+  await firstJob;
+
+  const thirdJob = screenWithLlamaGuardDetached({ ai, replyText: 'third reply' });
+  await Promise.resolve();
+  assert.equal(runCalls, 2, 'once the first job has settled and released the flag, a new job must call ai.run() again');
+
+  resolvers[1]('safe');
+  await thirdJob;
+});
+
+test('screenWithLlamaGuardDetached: the in-flight flag is released via finally even when ai.run() throws, so a subsequent job still runs', async () => {
+  let runCalls = 0;
+  const ai = {
+    run: async () => {
+      runCalls += 1;
+      throw new Error('workers ai down');
+    },
+  };
+
+  await screenWithLlamaGuardDetached({ ai, replyText: 'first reply' });
+  assert.equal(runCalls, 1);
+
+  // If the flag were not released on the throw path, this second job would
+  // wrongly skip and runCalls would stay at 1.
+  await screenWithLlamaGuardDetached({ ai, replyText: 'second reply' });
+  assert.equal(
+    runCalls,
+    2,
+    'the flag must be released even when ai.run() throws (finally), so a later job is not permanently blocked',
+  );
+});
+
+test('screenWithLlamaGuard: a second call gets the busy-degraded shape while the first is still draining (ai.run runs once), and runs again once the first settles', async () => {
+  const restoreSetTimeout = forceRaceTimeoutToWinImmediately();
+  let runCalls = 0;
+  const rejectors = [];
+  const ai = {
+    run: () => {
+      runCalls += 1;
+      return new Promise((_resolve, reject) => { rejectors.push(reject); });
+    },
+  };
+  try {
+    // The forced-immediate timeout wins the race while ai.run() is still
+    // pending -- returns via the guard_error catch path (mirror-side
+    // scenario, same as the speakup-503-hunt revision-2 tests above), but
+    // the in-flight flag must stay true because the underlying ai.run()
+    // promise has not settled yet.
+    const first = await screenWithLlamaGuard(ai, 'first reply', 'kid text');
+    assert.equal(first.degraded, true);
+    assert.equal(runCalls, 1, 'the first call must invoke ai.run()');
+
+    const second = await screenWithLlamaGuard(ai, 'second reply', 'kid text');
+    assert.equal(second.flagged, false);
+    assert.equal(second.degraded, true);
+    assert.equal(second.category, 'guard_busy');
+    assert.equal(
+      runCalls,
+      1,
+      'a busy second call must not invoke ai.run() again -- that is the whole fix',
+    );
+
+    // Settle the first ai.run() call -- the flag releases via
+    // guardPromise.finally(), independent of this function's own return
+    // (which already happened, via the timeout side of the race).
+    rejectors[0](new Error('first guard call eventually failed'));
+    await new Promise((resolve) => { setTimeout(resolve, 10); });
+
+    const third = await screenWithLlamaGuard(ai, 'third reply', 'kid text');
+    assert.equal(runCalls, 2, 'once the first call has settled and released the flag, a new call must invoke ai.run() again');
+    assert.equal(third.degraded, true);
+  } finally {
+    // Clean up: settle any still-pending ai.run() promise so the shared
+    // llamaGuardInFlight flag does not leak busy state into later tests.
+    rejectors.forEach((reject) => reject(new Error('test cleanup')));
+    await new Promise((resolve) => { setTimeout(resolve, 10); });
+    restoreSetTimeout();
+  }
+});
+
+test('screenWithLlamaGuard: the in-flight flag is released even when ai.run() throws, so a subsequent call still runs (not wrongly reported busy)', async () => {
+  let runCalls = 0;
+  const ai = {
+    run: async () => {
+      runCalls += 1;
+      throw new Error('workers ai down');
+    },
+  };
+
+  const first = await screenWithLlamaGuard(ai, 'first reply');
+  assert.equal(first.degraded, true);
+  assert.equal(runCalls, 1);
+
+  const second = await screenWithLlamaGuard(ai, 'second reply');
+  assert.equal(second.degraded, true);
+  assert.notEqual(
+    second.category,
+    'guard_busy',
+    'the flag must be released after the first call throws, so the second call is not wrongly skipped as busy',
+  );
+  assert.equal(runCalls, 2, 'the second call must invoke ai.run() again once the flag is released');
 });
 
 // ---------------------------------------------------------------------------

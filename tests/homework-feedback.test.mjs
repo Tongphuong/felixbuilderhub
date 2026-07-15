@@ -719,11 +719,18 @@ function coachedFeedbackFetch() {
 test('onRequestPost: coach ships WITHOUT awaiting the ML guard -- a guard call that never resolves still returns promptly with coach present', async () => {
   const originalFetch = globalThis.fetch;
   const kv = makeCodeKv({ 'R2L-HW-0001': homeworkCodeData() });
+  // Never settles ON ITS OWN (that's the scenario under test -- the coach
+  // response must not wait on it), but this test still captures the
+  // resolver so it CAN settle it in cleanup below -- speakup-guard-limiter's
+  // module-level llamaGuardInFlight flag (shared across this whole file)
+  // only releases once this promise actually settles, so an unsettled one
+  // here would wrongly report every later guard call in this file as busy.
+  let settleGuard;
   try {
     globalThis.fetch = coachedFeedbackFetch();
     const hangingAi = {
       async run(model) {
-        if (String(model).includes('llama-guard')) return new Promise(() => {}); // never resolves
+        if (String(model).includes('llama-guard')) return new Promise((resolve) => { settleGuard = resolve; }); // never resolves on its own
         return { text: 'the cat is happy' };
       },
     };
@@ -739,6 +746,10 @@ test('onRequestPost: coach ships WITHOUT awaiting the ML guard -- a guard call t
     assert.ok(elapsedMs < 2000, `response must not wait on the guard (took ${elapsedMs}ms)`);
   } finally {
     globalThis.fetch = originalFetch;
+    if (settleGuard) {
+      settleGuard('safe');
+      await new Promise((resolve) => { setTimeout(resolve, 10); });
+    }
   }
 });
 

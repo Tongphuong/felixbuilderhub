@@ -97,9 +97,42 @@ export function detectCharacterBreak(reply) {
 // `context.waitUntil` (or an equivalent), plumbed through as a plain
 // parameter -- never read from a global, so this file stays pure/env-free
 // per the header comment. See the block comment below for why it exists.
+//
+// speakup-guard-limiter (2026-07-15, Fable re-plan after five failed
+// promise-hygiene swings): every coached/free-talk request starts with a
+// Llama Guard call (`ai.run('@cf/meta/llama-guard-3-8b', ...)`). Under
+// degraded Workers-AI conditions that call can take 30s+ -- and no fix so
+// far has ever actually TERMINATED it (the race abandoned it, waitUntil
+// extended it, the detached job backgrounds it), so each in-flight guard
+// call holds ONE of the isolate's 6 subrequest connection slots for its
+// full latency the whole time it's pending. At typical request spacing,
+// pending guard calls accumulate across requests until the isolate has no
+// slots left for its own Whisper/Azure calls -> error 1102 -> every route
+// on that isolate 503s.
+//
+// This module-level flag is the actual fix: cap the isolate at ONE
+// in-flight `ai.run('@cf/meta/llama-guard-3-8b', ...)` call, full stop --
+// shared by BOTH guard entry points below (the inline race-based
+// screenWithLlamaGuard and the detached screenWithLlamaGuardDetached).
+// Module state persists per isolate, which is the point: a second guard
+// call arriving while one is already draining is skipped entirely (same
+// fail-open degraded posture as every other guard-infra failure -- the
+// deterministic word-list gate already passed) instead of piling up
+// another slot-holding call. Deliberately a plain module-level `let`, not
+// per-request state -- the isolate itself is the resource being protected.
+let llamaGuardInFlight = false;
+
 export async function screenWithLlamaGuard(ai, replyText, userText = '', waitUntil) {
   if (!ai || typeof ai.run !== 'function') {
     return { flagged: false, degraded: true, category: 'guard_unavailable', raw: null };
+  }
+  // speakup-guard-limiter (2026-07-15): a guard call is already draining on
+  // this isolate -- do not start a second one. Same fail-open degraded
+  // contract as every other cause below (timeout, error, empty response):
+  // the deterministic gate already passed, so the caller relies on it and
+  // ships the reply.
+  if (llamaGuardInFlight) {
+    return { flagged: false, degraded: true, category: 'guard_busy', raw: null };
   }
   // speakup-503-hunt revision 1 (2026-07-15): this setTimeout handle MUST be
   // cleared on every exit path below. The losing side of the race used to be
@@ -136,6 +169,18 @@ export async function screenWithLlamaGuard(ai, replyText, userText = '', waitUnt
     // even if a binding ever returned a bare non-promise value.
     guardPromise = Promise.resolve(ai.run('@cf/meta/llama-guard-3-8b', { messages }));
     guardPromise.catch(() => {});
+    // speakup-guard-limiter (2026-07-15): the in-flight flag tracks
+    // ai.run()'s REAL lifetime (the thing actually holding the subrequest
+    // slot), not this function's own 3.5s race -- release it only when
+    // guardPromise itself settles, which on the timeout side of the race
+    // below can be well after this function has already returned.
+    llamaGuardInFlight = true;
+    // `.finally()` returns a NEW promise that adopts guardPromise's eventual
+    // rejection -- nothing else references or awaits that returned promise,
+    // so without this trailing `.catch(() => {})` it becomes its own
+    // unhandled rejection on the exact same error guardPromise's own
+    // `.catch()` above already swallowed.
+    guardPromise.finally(() => { llamaGuardInFlight = false; }).catch(() => {});
     const result = await Promise.race([
       guardPromise,
       // 3.5s (was 6s, tuned 2026-07-10): the two-phase turn awaits ONLY the
@@ -220,10 +265,27 @@ export function screenWithLlamaGuardDetached({ ai, replyText, userText = '', acc
         console.error('[GUARD-DEGRADED]', accessCode, 'guard_unavailable');
         return;
       }
+      // speakup-guard-limiter (2026-07-15): a guard call is already
+      // draining on this isolate (inline or another detached job) -- skip
+      // rather than start a second one. The deterministic guards already
+      // gated this content and the coach note already shipped (this job
+      // only ever runs after delivery, see the block comment above), so
+      // this is the same fail-open degraded semantics as every other guard
+      // outage here -- just with nothing to retract on this turn.
+      if (llamaGuardInFlight) {
+        console.error('[GUARD-SKIPPED-BUSY]', accessCode);
+        return;
+      }
       const messages = [];
       if (userText) messages.push({ role: 'user', content: String(userText) });
       messages.push({ role: 'assistant', content: String(replyText || '') });
-      const result = await ai.run('@cf/meta/llama-guard-3-8b', { messages });
+      llamaGuardInFlight = true;
+      let result;
+      try {
+        result = await ai.run('@cf/meta/llama-guard-3-8b', { messages });
+      } finally {
+        llamaGuardInFlight = false;
+      }
       const raw = typeof result === 'string' ? result : (result?.response ?? result?.text ?? '');
       const normalized = String(raw ?? '').trim().toLowerCase();
       if (!normalized) {
