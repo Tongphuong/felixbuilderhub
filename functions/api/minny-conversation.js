@@ -693,7 +693,13 @@ export async function onRequestPost(context) {
     let guardMs = 0;
     let ttsMs = null;
     const ttsPromise = (async () => { const r = await synthesizeOrNull(env, apiKey, gated.reply_en); ttsMs = Date.now() - parStart; return r; })();
-    const guardResult = await (async () => { const r = await screenWithLlamaGuard(env.AI, gated.reply_en, transcript); guardMs = Date.now() - parStart; return r; })();
+    // speakup-503-hunt revision 2 (2026-07-15): plumb the same `waitUntil`
+    // this handler already resolves above (Pages context, or the
+    // fire-and-forget test fallback) into the guard call, so a Llama Guard
+    // call that outlasts the 3.5s race timeout doesn't leave its own promise
+    // orphaned past this request's teardown -- the mirror side of the
+    // dangling-timer isolate-killer the revision-1 clearTimeout fix closed.
+    const guardResult = await (async () => { const r = await screenWithLlamaGuard(env.AI, gated.reply_en, transcript, waitUntil); guardMs = Date.now() - parStart; return r; })();
 
     if (guardResult.flagged) {
       // Rare: discard the just-synthesized audio and send a canned redirect.

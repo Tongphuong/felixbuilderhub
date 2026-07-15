@@ -418,6 +418,50 @@ test('generateHomeworkFeedback: HTTP 500 -> null', async () => {
   assert.equal(result, null);
 });
 
+// PROD HOTFIX (coach-leak-hotfix packet, 2026-07-15): the `!res.ok` early
+// return used to discard the Response without ever reading its body.
+// Cloudflare Workers caps an isolate at 6 simultaneous open connections;
+// an unread body keeps a subrequest connection open until the isolate is
+// torn down, and every OTHER exit from this function drains the body as a
+// side effect of res.json() (even when JSON.parse then throws) -- only the
+// non-OK path skipped it. Asserted directly against a real Response's
+// `bodyUsed` flag (the actual runtime signal for "stream fully consumed"),
+// not a hand-rolled spy, so this catches a regression to the old
+// `if (!res.ok) return null;` shape exactly.
+test('generateHomeworkFeedback: non-OK response body is drained, not left open (Workers 6-connection-cap leak guard)', async () => {
+  let capturedResponse;
+  const result = await generateHomeworkFeedback({
+    env: { OPENROUTER_API_KEY: 'k' },
+    context: baseContext(),
+    fetchFn: async () => {
+      capturedResponse = new Response('rate limited', { status: 429 });
+      return capturedResponse;
+    },
+  });
+  assert.equal(result, null);
+  assert.ok(capturedResponse, 'sanity: fetchFn was called');
+  assert.equal(capturedResponse.bodyUsed, true, 'a non-OK response must have its body read/cancelled before being discarded, or the connection leaks toward the isolate-kill cap');
+});
+
+test('generateHomeworkFeedback: a grounding-rejected response still had its body fully drained by res.json() (regression guard on the reject path, not just the non-OK path)', async () => {
+  let capturedResponse;
+  const result = await generateHomeworkFeedback({
+    env: { OPENROUTER_API_KEY: 'k' },
+    context: baseContext(),
+    fetchFn: async () => {
+      capturedResponse = openRouterResponse({
+        praise_vi: 'Con nói "I love dogs" rất tốt!', // never in the transcript -> grounding rejects
+        focus_word: 'cat',
+        model_sentence_en: 'I like my cat.',
+        tiny_challenge_vi: 'Lần sau nói to hơn nhé!',
+      });
+      return capturedResponse;
+    },
+  });
+  assert.equal(result, null);
+  assert.equal(capturedResponse.bodyUsed, true, 'res.json() must have fully consumed the stream even though validateFeedbackGrounding later rejected the parsed content');
+});
+
 test('generateHomeworkFeedback: timeout/network throw -> null, never throws itself', async () => {
   await assert.doesNotReject(async () => {
     const result = await generateHomeworkFeedback({
@@ -613,6 +657,214 @@ test('onRequestPost: happy path attaches result.coach on top of the unchanged de
     });
     const { coach, ...withoutCoach } = payload;
     assert.deepEqual(withoutCoach, baseline, 'every deterministic field is unchanged; coach is purely additive');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+// ---------------------------------------------------------------------------
+// speakup-guard-redesign (2026-07-15, founder ruling): the coach note ships
+// off the deterministic guards alone now; the ML backstop (Llama Guard) runs
+// entirely in the background via waitUntil and RETRACTS on a genuine flag
+// instead of gating delivery. Pages Functions itself keeps the isolate alive
+// on waitUntil; a plain node test has to opt in explicitly by supplying its
+// own `waitUntil` on the context (same mechanism onRequestPost already falls
+// back to fire-and-forget without) so the background job can be awaited
+// before asserting KV state.
+// ---------------------------------------------------------------------------
+
+function capturingWaitUntil() {
+  const jobs = [];
+  return { waitUntil: (p) => { jobs.push(Promise.resolve(p)); }, settle: () => Promise.all(jobs) };
+}
+
+function fakeAiSpeakingWithGuard(transcriptText, guardVerdict) {
+  let guardCalls = 0;
+  const ai = {
+    async run(model) {
+      if (String(model).includes('llama-guard')) {
+        guardCalls += 1;
+        return typeof guardVerdict === 'function' ? guardVerdict() : guardVerdict;
+      }
+      return { text: transcriptText };
+    },
+  };
+  return { ai, guardCallCount: () => guardCalls };
+}
+
+function homeworkReadRequest() {
+  const formData = new FormData();
+  formData.append('access_code', 'r2l-hw-0001');
+  formData.append('pack_id', 'pack-1');
+  formData.append('expected_text', 'The cat is happy');
+  formData.append('audio', new Blob(['audio'], { type: 'audio/webm' }), 'audio.webm');
+  return new Request('https://example.com/api/read2lead-speaking-check', { method: 'POST', body: formData });
+}
+
+function coachedFeedbackFetch() {
+  return async () => new Response(JSON.stringify({
+    choices: [{
+      message: {
+        content: JSON.stringify({
+          praise_vi: 'Con nói rất tốt!',
+          focus_word: 'cat',
+          model_sentence_en: 'I like my cat.',
+          tiny_challenge_vi: 'Lần sau nói to hơn xíu nhé!',
+        }),
+      },
+    }],
+  }), { status: 200 });
+}
+
+test('onRequestPost: coach ships WITHOUT awaiting the ML guard -- a guard call that never resolves still returns promptly with coach present', async () => {
+  const originalFetch = globalThis.fetch;
+  const kv = makeCodeKv({ 'R2L-HW-0001': homeworkCodeData() });
+  // Never settles ON ITS OWN (that's the scenario under test -- the coach
+  // response must not wait on it), but this test still captures the
+  // resolver so it CAN settle it in cleanup below -- speakup-guard-limiter's
+  // module-level llamaGuardInFlight flag (shared across this whole file)
+  // only releases once this promise actually settles, so an unsettled one
+  // here would wrongly report every later guard call in this file as busy.
+  let settleGuard;
+  try {
+    globalThis.fetch = coachedFeedbackFetch();
+    const hangingAi = {
+      async run(model) {
+        if (String(model).includes('llama-guard')) return new Promise((resolve) => { settleGuard = resolve; }); // never resolves on its own
+        return { text: 'the cat is happy' };
+      },
+    };
+    const started = Date.now();
+    const response = await onRequestPost({
+      request: homeworkReadRequest(),
+      env: { READ2LEAD_CODES: kv, AI: hangingAi, OPENROUTER_API_KEY: 'or-key' },
+    });
+    const elapsedMs = Date.now() - started;
+    assert.equal(response.status, 200);
+    const payload = await response.json();
+    assert.ok(payload.coach, 'coach ships even though the guard call never resolves');
+    assert.ok(elapsedMs < 2000, `response must not wait on the guard (took ${elapsedMs}ms)`);
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (settleGuard) {
+      settleGuard('safe');
+      await new Promise((resolve) => { setTimeout(resolve, 10); });
+    }
+  }
+});
+
+test('onRequestPost: the background guard job runs exactly once per coached response', async () => {
+  const originalFetch = globalThis.fetch;
+  const kv = makeCodeKv({ 'R2L-HW-0001': homeworkCodeData() });
+  try {
+    globalThis.fetch = coachedFeedbackFetch();
+    const { ai, guardCallCount } = fakeAiSpeakingWithGuard('the cat is happy', 'safe');
+    const { waitUntil, settle } = capturingWaitUntil();
+
+    const response = await onRequestPost({
+      request: homeworkReadRequest(),
+      env: { READ2LEAD_CODES: kv, AI: ai, OPENROUTER_API_KEY: 'or-key' },
+      waitUntil,
+    });
+    assert.equal(response.status, 200);
+    const payload = await response.json();
+    assert.ok(payload.coach);
+    await settle();
+    assert.equal(guardCallCount(), 1, 'the guard must run exactly once for a coached response');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('onRequestPost: a no-flag (safe) background verdict leaves the coach sentence in place for tap-to-hear', async () => {
+  const originalFetch = globalThis.fetch;
+  const kv = makeCodeKv({ 'R2L-HW-0001': homeworkCodeData() });
+  try {
+    globalThis.fetch = coachedFeedbackFetch();
+    const { ai } = fakeAiSpeakingWithGuard('the cat is happy', 'safe');
+    const { waitUntil, settle } = capturingWaitUntil();
+
+    const response = await onRequestPost({
+      request: homeworkReadRequest(),
+      env: { READ2LEAD_CODES: kv, AI: ai, OPENROUTER_API_KEY: 'or-key' },
+      waitUntil,
+    });
+    assert.equal(response.status, 200);
+    await settle();
+    const record = await kv.get('flagged-words:R2L-HW-0001', { type: 'json' });
+    assert.deepEqual(record.sentences, ['I like my cat.'], 'a safe verdict must never retract the sentence');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('onRequestPost: a genuine background guard flag retracts the coach sentence from flagged-words KV and logs loudly, but the note still shipped this turn', async () => {
+  const originalFetch = globalThis.fetch;
+  const originalConsoleError = console.error;
+  const kv = makeCodeKv({ 'R2L-HW-0001': homeworkCodeData() });
+  const errorLogs = [];
+  console.error = (...args) => { errorLogs.push(args); };
+  try {
+    globalThis.fetch = coachedFeedbackFetch();
+    const { ai } = fakeAiSpeakingWithGuard('the cat is happy', 'unsafe\nS4');
+    const { waitUntil, settle } = capturingWaitUntil();
+
+    const response = await onRequestPost({
+      request: homeworkReadRequest(),
+      env: { READ2LEAD_CODES: kv, AI: ai, OPENROUTER_API_KEY: 'or-key' },
+      waitUntil,
+    });
+    assert.equal(response.status, 200);
+    const payload = await response.json();
+    // Per the founder ruling this response has ALREADY gone out with the
+    // note attached -- retraction only prevents it being tapped again, it
+    // cannot un-ship this turn's payload.
+    assert.ok(payload.coach, 'the note ships this turn regardless of the later background verdict');
+    assert.equal(payload.coach.model_sentence_en, 'I like my cat.');
+
+    await settle();
+
+    const record = await kv.get('flagged-words:R2L-HW-0001', { type: 'json' });
+    assert.ok(record, 'sanity: the merge write happened before the background job ran');
+    assert.deepEqual(record.sentences, [], 'the retracted sentence is removed -- tap-to-hear can no longer replay it');
+    assert.deepEqual(record.words, ['cat'], 'the practice word list itself is untouched -- only the novel sentence is retracted');
+
+    const retractLog = errorLogs.find((args) => args[0] === '[GUARD-RETRACT]');
+    assert.ok(retractLog, 'a retraction must log loudly so it is findable in CF logs');
+    assert.equal(retractLog[1], 'R2L-HW-0001');
+    assert.equal(retractLog[2], 's4');
+  } finally {
+    globalThis.fetch = originalFetch;
+    console.error = originalConsoleError;
+  }
+});
+
+test('onRequestPost: a degraded background guard (ai.run throws) does not retract the sentence and does not throw', async () => {
+  const originalFetch = globalThis.fetch;
+  const kv = makeCodeKv({ 'R2L-HW-0001': homeworkCodeData() });
+  try {
+    globalThis.fetch = coachedFeedbackFetch();
+    const ai = {
+      async run(model) {
+        if (String(model).includes('llama-guard')) throw new Error('workers ai down');
+        return { text: 'the cat is happy' };
+      },
+    };
+    const { waitUntil, settle } = capturingWaitUntil();
+
+    const response = await onRequestPost({
+      request: homeworkReadRequest(),
+      env: { READ2LEAD_CODES: kv, AI: ai, OPENROUTER_API_KEY: 'or-key' },
+      waitUntil,
+    });
+    assert.equal(response.status, 200);
+    const payload = await response.json();
+    assert.ok(payload.coach);
+
+    await assert.doesNotReject(settle());
+
+    const record = await kv.get('flagged-words:R2L-HW-0001', { type: 'json' });
+    assert.deepEqual(record.sentences, ['I like my cat.'], 'a degraded guard must not retract anything');
   } finally {
     globalThis.fetch = originalFetch;
   }

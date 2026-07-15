@@ -461,7 +461,24 @@ export async function generateHomeworkFeedback({ env, context, fetchFn = fetch, 
       signal: AbortSignal.timeout(4000),
     });
 
-    if (!res.ok) return null;
+    if (!res.ok) {
+      // PROD HOTFIX (2026-07-15, coach-leak-hotfix packet): Cloudflare
+      // Workers caps a single isolate at 6 SIMULTANEOUS OPEN CONNECTIONS
+      // (subrequests). Discarding a Response without reading its body
+      // leaves that connection open until the isolate itself is torn
+      // down -- every other exit from this function reads the body via
+      // res.json() (which drains the stream even when JSON.parse then
+      // throws), but this early return skipped it entirely. A run of
+      // non-2xx OpenRouter replies (rate limit, outage) under sustained
+      // coached-request load leaked one connection per reply; once ~5-6
+      // had leaked the isolate hit the cap and died outright (matches
+      // the deployment-bisection signature: fine for ~4 requests, then
+      // total collapse, recovers once idle). Drain before discarding, same
+      // pattern as the sibling non-OK paths in _azure-pronunciation.js and
+      // read2lead-speaking-check.js's transcribeWithOpenAI.
+      try { await res.text(); } catch { /* best-effort drain */ }
+      return null;
+    }
     const data = await res.json();
     const raw = data?.choices?.[0]?.message?.content;
     const feedback = parseFeedback(raw);
