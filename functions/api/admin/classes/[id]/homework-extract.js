@@ -80,7 +80,7 @@ Use when the lesson asks the child to tell or retell a story in their own words.
 
 4. Building sentences from columns of choices:
 {"type":"build","columns":[{"label_en":"We...","options":["play football","draw pictures"]},{"label_en":"At...","options":["school","the park"]}],"sentences_required":3}
-Use when the lesson shows columns, tables or lists the child picks from to make their own sentence (often called mix and match). 2 to 4 columns, 2 to 6 options each. Copy the column headings and the options exactly as written.
+Use when the lesson shows columns, tables or lists the child picks from to make their own sentence (often called mix and match). 2 to 4 columns, 2 to 8 options each. Copy the column headings and the options exactly as written.
 
 5. Describing a picture:
 {"type":"picture","anchors":["dog","park","ball"],"duration_s":60}

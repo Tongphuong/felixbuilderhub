@@ -13,6 +13,18 @@ import {
 } from '../functions/api/admin/classes/[id]/homework-extract.js';
 
 // ---------------------------------------------------------------------------
+// EXTRACT_SYSTEM_PROMPT — Lead-authored (Elon), VERBATIM string. Only its
+// build-shape option-cap wording is asserted here (speakup-cardsheet-build,
+// 2026-07-15: raised alongside validateBuildTask's 2-8 cap), not the whole
+// string — the wording itself is Elon's call, not a test-owned contract.
+// ---------------------------------------------------------------------------
+
+test('EXTRACT_SYSTEM_PROMPT: build-shape option cap reads 2 to 8, not the old 2 to 6', () => {
+  assert.match(EXTRACT_SYSTEM_PROMPT, /2 to 8 options each/);
+  assert.doesNotMatch(EXTRACT_SYSTEM_PROMPT, /2 to 6 options each/);
+});
+
+// ---------------------------------------------------------------------------
 // stripLessonHtml — HTML stripping, whitespace collapse, 20k cap.
 // ---------------------------------------------------------------------------
 
