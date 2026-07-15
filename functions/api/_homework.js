@@ -351,8 +351,8 @@ function validateBuildTask(taskRaw, id, index) {
     const labelV = validateEnglishText(colRaw.label_en, { allowUnderscore: false });
     if (!labelV.ok) return { ok: false, error_vi: englishTextError(labelV, `${label}, cột ${i + 1}`) };
     const optionsRaw = Array.isArray(colRaw.options) ? colRaw.options : [];
-    if (optionsRaw.length < 2 || optionsRaw.length > 6) {
-      return { ok: false, error_vi: `${label}, cột ${i + 1}: cần 2-6 lựa chọn.` };
+    if (optionsRaw.length < 2 || optionsRaw.length > 8) {
+      return { ok: false, error_vi: `${label}, cột ${i + 1}: cần 2-8 lựa chọn.` };
     }
     const options = [];
     for (let j = 0; j < optionsRaw.length; j++) {

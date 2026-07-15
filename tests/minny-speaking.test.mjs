@@ -455,6 +455,9 @@ test('buildHomeworkSteps(build): one step per required sentence; no server-side 
     assert.deepEqual(step.columns, columns);
     assert.equal(step.max_seconds, 30);
     assert.equal('expected_text' in step, false, 'server never assembles expected_text for build steps');
+    // Phương's hard ruling (kids have no patience): every step says exactly
+    // what to do — the shipped explicit kid instruction, not a generic one.
+    assert.equal(step.prompt_vi, 'Con chọn một ô ở mỗi cột rồi nói câu của con nhé');
   }
 });
 

@@ -716,7 +716,7 @@ test('validateTask(story): must_use caps at 12 words, anchors-style task caps at
 });
 
 // -- build --
-test('validateTask(build): 2..4 columns, 2..6 options each, sentences_required clamps to 1..5', () => {
+test('validateTask(build): 2..4 columns, 2..8 options each, sentences_required clamps to 1..5', () => {
   const oneColumn = validateTask({ type: 'build', columns: [{ label_en: 'We', options: ['play', 'run'] }] }, 0, {});
   assert.equal(oneColumn.ok, false);
 
@@ -741,6 +741,28 @@ test('validateTask(build): 2..4 columns, 2..6 options each, sentences_required c
   assert.equal(ok.value.columns.length, 2);
   assert.equal(ok.value.columns[0].id, 'c1');
   assert.equal(ok.value.sentences_required, 5, 'clamped to the 1..5 max');
+});
+
+test('validateTask(build): 8 options in a column is accepted (vocab-card sheets need the full bank); 9 is rejected with the 2-8 Vietnamese error copy', () => {
+  const eightOptions = validateTask({
+    type: 'build',
+    columns: [
+      { label_en: 'It tastes...', options: ['sweet', 'sour', 'salty', 'spicy', 'bitter', 'fresh', 'crunchy', 'juicy'] },
+      { label_en: 'and...', options: ['sweet', 'sour', 'salty', 'spicy', 'bitter', 'fresh', 'crunchy', 'juicy'] },
+    ],
+  }, 0, {});
+  assert.equal(eightOptions.ok, true);
+  assert.equal(eightOptions.value.columns[0].options.length, 8);
+
+  const nineOptions = validateTask({
+    type: 'build',
+    columns: [
+      { label_en: 'We…', options: ['play', 'run'] },
+      { label_en: 'It tastes...', options: ['sweet', 'sour', 'salty', 'spicy', 'bitter', 'fresh', 'crunchy', 'juicy', 'tangy'] },
+    ],
+  }, 0, {});
+  assert.equal(nineOptions.ok, false);
+  assert.match(nineOptions.error_vi, /cần 2-8 lựa chọn/);
 });
 
 // -- picture --
