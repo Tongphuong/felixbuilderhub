@@ -263,6 +263,68 @@ test('draftFromPhoto: no OpenAI key -> CF model direct, fetch never called', asy
 });
 
 // ---------------------------------------------------------------------------
+// Buffet review (2026-07-15 revision, blocking finding): the guard
+// cross-product cell where env.AI is ABSENT but an OpenAI key IS set was
+// unguarded and untested — every test above kept AI present. These three
+// cover exactly that cell, on the LIVE route.
+// ---------------------------------------------------------------------------
+
+test('draftFromPhoto: OPENAI key set + env.AI ABSENT -> OpenAI is still attempted, draft returned', async () => {
+  const originalFetch = globalThis.fetch;
+  let fetchCalled = false;
+  globalThis.fetch = async () => {
+    fetchCalled = true;
+    return new Response(JSON.stringify({
+      choices: [{ message: { content: '{"frame_lines":[],"sentence_lines":["No CF binding needed."]}' } }],
+    }), { status: 200 });
+  };
+  try {
+    const env = {
+      R2L_MEDIA: { get: async () => ({ arrayBuffer: async () => new ArrayBuffer(4), httpMetadata: { contentType: 'image/jpeg' } }) },
+      OPENAI_API_KEY: 'sk-test',
+      // env.AI intentionally absent -- this is the cell Buffet's review
+      // found unguarded: the old `!env?.AI` early-return silently dropped
+      // out here before OpenAI was ever attempted.
+    };
+    const result = await draftFromPhoto({ env, classId: 'class1', r2Key: 'homework/class1/hp_abc123def456.jpg' });
+    assert.ok(fetchCalled, 'OpenAI must be attempted when a key is set, even with no CF binding');
+    assert.ok(result);
+    assert.equal(result.tasks[0].items[0].text_en, 'No CF binding needed.');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('draftFromPhoto: key set + env.AI absent + OpenAI fails -> clean null, never throws (no CF binding to fall back to)', async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response('server error', { status: 500 });
+  try {
+    const env = {
+      R2L_MEDIA: { get: async () => ({ arrayBuffer: async () => new ArrayBuffer(4), httpMetadata: { contentType: 'image/jpeg' } }) },
+      OPENAI_API_KEY: 'sk-test',
+      // env.AI intentionally absent -- the explicit `if (!env.AI) return
+      // null;` guard before the CF-fallback call must degrade cleanly here
+      // rather than throwing when env.AI.run is reached on an undefined AI.
+    };
+    await assert.doesNotReject(async () => {
+      const result = await draftFromPhoto({ env, classId: 'class1', r2Key: 'homework/class1/hp_abc123def456.jpg' });
+      assert.equal(result, null);
+    });
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('draftFromPhoto: no key AND no env.AI -> null before ever touching R2 (early-return guard, no R2 fetch attempted)', async () => {
+  const env = {
+    R2L_MEDIA: { get: async () => { throw new Error('must not be called — guard should short-circuit before R2'); } },
+    // no OPENAI_API_KEY / READ2LEAD_OPENAI_API_KEY, no AI binding
+  };
+  const result = await draftFromPhoto({ env, classId: 'class1', r2Key: 'homework/class1/hp_abc123def456.jpg' });
+  assert.equal(result, null);
+});
+
+// ---------------------------------------------------------------------------
 // build_columns (grading-honesty packet, 2026-07-14): a slide photo of a
 // mix-and-match grid — VISION_PROMPT's third array, assembled through the
 // REAL validateTask/validateBuildTask (schema v1 rules), same posture as

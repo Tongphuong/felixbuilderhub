@@ -217,7 +217,15 @@ function buildTaskFromVisionColumns(rawColumns) {
 // scoped to reading text off a slide — it never proposes a picture-describe
 // task (that would need a bound homework.photo this endpoint doesn't have).
 export async function draftFromPhoto({ env, classId, r2Key }) {
-  if (!env?.R2L_MEDIA || !env?.AI) return null;
+  // Widened per Buffet review (2026-07-15 revision, blocking finding):
+  // resolveOpenAIApiKey is checked here too, mirroring
+  // homework-photo-extract.js's onRequestPost guard (line ~167-170) — an
+  // OpenAI-only config (key set, CF Workers AI binding absent) must still
+  // reach the primary vision path on THIS route, the one a teacher actually
+  // hits. The old `!env?.AI` guard silently returned null before
+  // extractWithOpenAI was ever attempted in that config.
+  const openaiApiKey = resolveOpenAIApiKey(env);
+  if (!env?.R2L_MEDIA || (!env?.AI && !openaiApiKey)) return null;
   const classSegment = String(classId || '');
   if (!/^[a-z0-9_-]+$/.test(classSegment)) return null;
   if (!new RegExp(`^homework/${classSegment}/hp_[a-z0-9]{12}\\.(jpg|png|webp)$`).test(r2Key)) return null;
@@ -233,12 +241,16 @@ export async function draftFromPhoto({ env, classId, r2Key }) {
   // OpenAI key -> CF model directly (unchanged below); OpenAI
   // error/timeout/unparseable -> drained + CF model, one console.error
   // (both handled inside extractWithOpenAI).
-  const openaiApiKey = resolveOpenAIApiKey(env);
   let parsed = openaiApiKey
     ? await extractWithOpenAI({ imageBuffer: buffer, contentType, apiKey: openaiApiKey })
     : null;
 
   if (!parsed) {
+    // Explicit guard (Buffet review, 2026-07-15 revision): degrade the same
+    // clean way onRequestPost's own no_ai_binding branch does, rather than
+    // leaning on env.AI.run throwing into the outer try/catch in
+    // onRequestPost as an incidental safety net.
+    if (!env.AI) return null;
     const result = await env.AI.run(VISION_MODEL, {
       prompt: VISION_PROMPT,
       image: [...new Uint8Array(buffer)],
