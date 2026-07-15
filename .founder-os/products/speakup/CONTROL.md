@@ -222,16 +222,24 @@ assigns, commits, merges, deploys, or spends.
   reviewed, ahead of the full grading-honesty ship. Free Talking's guard
   semantics to be verified before receiving the same treatment — fail-closed
   semantics there would need a separate founder decision.
-- Verification state (2026-07-15, honest ledger): battery-verified LIVE —
-  45-cap dead (45→81), gibberish 81→27, Vietnamese 80→redirect, silence
+- Verification state (2026-07-15, honest ledger — COMPLETE 15/15): battery-verified
+  LIVE — 45-cap dead (45→81), gibberish 81→27, Vietnamese 80→redirect, silence
   graceful, build control 97 with zero flagged words (false-accusation probe
   clean), zero-anchor frame 100→60, oversize clean 413, VN-accented not
-  punished, coach fires with grounding. Implemented + Buffet-approved +
-  unit-verified but NOT yet live-battery-verified (blocked by the free-tier
-  platform ceiling, rows 503 mid-battery): the three word-to-word rows
-  (clean "pack"→flags "park"; photo wrong-word recast; sensible off-grid
-  "pork" sentence no-false-credit). Verify live after the Workers Paid
-  upgrade.
+  punished, coach fires with grounding — AND the three word-to-word rows,
+  verified live 2026-07-15 post-release (single spaced requests on the
+  release-content preview): row 11 clean "pack"→Azure flags park:close, coach
+  focus="park" + model sentence, praise steps down one tier; row 13 photo
+  wrong-word → grid-grounded recast "We play football at the park." with no
+  score penalty (90); row 14 sensible off-grid pork sentence → honest low
+  relevance (30), recast EMPTY (no false accusation), coach works with the
+  child's own word.
+- Capacity verification (classroom burst): DEFERRED. Phương reported the
+  Workers Paid upgrade done (2026-07-15) but it is unverified from this side
+  (no dashboard access; the permission classifier correctly blocked a prod
+  burst on an unverified upgrade, per the standing rule). NEXT SESSION: verify
+  the plan in the dashboard or via one 6-request spaced-burst on a preview;
+  only then declare classroom capacity.
 - Design self-verification: no new design-mock screen in this task (summary
   label copy swap + a play button on the already-shipped chip row; the
   grading work is API-level). Verified via 1688/1688 suite incl. UI-logic
