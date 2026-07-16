@@ -14,3 +14,4 @@ import './r2l-level-label.test.mjs';
 import './read2lead-book-reader-behaviour.test.mjs';
 import './read2lead-checkpoint-save.test.mjs';
 import './read2lead-dropoff.test.mjs';
+import './read2lead-voice.test.mjs';

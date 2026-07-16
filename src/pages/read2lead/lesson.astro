@@ -4360,8 +4360,50 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     window.speechSynthesis.speak(utterance);
   }
 
-  function _r2lSpeakEnglishLine(text, onEnd) {
+  async function _r2lSpeakServerLine(text, onEnd) {
+    const line = String(text || '').trim();
+    if (!line) {
+      if (typeof onEnd === 'function') onEnd();
+      return;
+    }
+    _r2lTrackLearningEvent('audio');
+    window.speechSynthesis.cancel();
+    try {
+      const res = await fetch('/api/read2lead-voice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_code: state.accessCode,
+          text: line,
+        }),
+      });
+      const data = await safeJson(res);
+      if (data.ok && data.audio_b64) {
+        const audio = new Audio('data:audio/mpeg;base64,' + data.audio_b64);
+        audio.addEventListener('ended', () => {
+          if (typeof onEnd === 'function') onEnd();
+        });
+        audio.addEventListener('error', () => {
+          // Fall through to browser speech on audio decode error
+          console.warn('[r2l-tts] audio decode error, falling back to browser speech');
+          _r2lSpeakLine(text, 'en-US', onEnd);
+        });
+        audio.play().catch(() => {
+          // Fall through to browser speech on playback error
+          console.warn('[r2l-tts] playback error, falling back to browser speech');
+          _r2lSpeakLine(text, 'en-US', onEnd);
+        });
+        return;
+      }
+    } catch (err) {
+      console.warn('[r2l-tts] server TTS failed, falling back to browser speech:', err?.message || err);
+    }
+    // Fallback: browser Web Speech API (offline safety net)
     _r2lSpeakLine(text, 'en-US', onEnd);
+  }
+
+  function _r2lSpeakEnglishLine(text, onEnd) {
+    _r2lSpeakServerLine(text, onEnd);
   }
 
   function _r2lSpeakVietnameseLine(text, onEnd) {
