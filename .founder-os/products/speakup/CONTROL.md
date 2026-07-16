@@ -71,18 +71,18 @@ assigns, commits, merges, deploys, or spends.
    package, or forkable project. Only hand-roll it if nothing suitable
    exists, and note that search briefly in the spec for that phase.
 
-## V1 phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V1.md`, approved 2026-07-10)
+## V1 phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V1.md`, approved 2026-07-10; RECONCILED 2026-07-16 per spec-drift audit #1 — statuses below now match this file's own task records)
 
 | Wave/Phase | What | Owner | Status | Gate |
 |---|---|---|---|---|
 | Wave 0 | V0 close-out: **DONE 2026-07-11** — all founder items done; Phương gave explicit merge GO in-session; `claude/speakup-v0` merged to `main` (72e589b, conflict-free, 950/950 tests) and production verified live (`/speak-up/` + context endpoint answering on felixbuilderhub.com). Pilot can start. | **Phương** + Elon | **DONE** | V1 code UNBLOCKED |
 | Wave D | Design mocks batch 1: choice-chip conversation view (L1–L2) + homework feedback panel v2 + fix-it round | Steve (delivered f141620) | **APPROVED (Phương, 2026-07-10)** — as-drawn; README open questions resolved to the mocks' defaults; Vietnamese copy tone pass rides the build phases | done |
 | Wave D2 | Design mocks batch 2: L3–L5 free talk — topic picker (R2L HUB_TOPICS/TopicTile reuse), 💡 hint-on-demand states, L4–L5 game cards (build-a-story / debate / would-you-rather) | Steve (delivered e903682) | **APPROVED (Phương, 2026-07-10)** — as-drawn, same terms; V1-D6 teacher-panel mock exemption stands (not vetoed) | done |
-| V1.1 | Free-talk brain (backend): L1–L2 chips protocol + expected-answer matching + repair ladder; L3–L5 topic-seeded prompt + hint field; L4–L5 game protocols (former V1.P, folded) | Elon (prompt) + Mark (glue) + Buffet (review) | not started | Wave 0 |
-| V1.2 | Free-talk UI, 2 sequential packets: (1) L1–L2 chips + hands-free toggle; (2) L3–L5 topic picker + hint button + game cards | Steve + Buffet | not started | packet 1: Wave D approval + V1.1; packet 2: Wave D2 approval + packet 1 |
-| V1.3 | Homework feedback sandwich (relaxes zero-LLM per V1-D1; consumes homework brief) | Elon (prompt) + Mark + Buffet (red-team) | not started | Wave 0 + **explicit Phương ack of zero-LLM relaxation** |
-| V1.3b | Homework brief "Minny hiểu bài như này" (V1-D6): assign-time generation + teacher confirm in HomeworkModal (photo-extract draft pattern; design-mock exempt as internal pattern-copy — Phương may veto) | Elon (prompt) + Mark + Buffet | not started | Wave 0; lands with/just before V1.3 |
-| V1.4 | Fix-it round + listen-and-compare | Steve + Mark + Buffet | not started | Wave D approval + V1.2 packet 1 + V1.3 |
+| V1.1 | Free-talk brain (backend): L1–L2 chips protocol + expected-answer matching + repair ladder; L3–L5 topic-seeded prompt + hint field; L4–L5 game protocols (former V1.P, folded) | Elon (prompt) + Mark (glue) + Buffet (review) | **DONE 2026-07-12** — brain 8b6995d merged to main (see the speakup-v1-1 task record in this file) | Wave 0 |
+| V1.2 | Free-talk UI, 2 sequential packets: (1) L1–L2 chips + hands-free toggle; (2) L3–L5 topic picker + hint button + game cards | Steve + Buffet | **DONE 2026-07-12** — p1 chips UI fdb6fe5 (merged with V1.1); p2 games/topic UI production-verified a1240f2 (rule 20; 4 recorded mock deviations awaiting Phương's ack/veto — see speakup-v1-2-packet2-games-ui) | packet 1: Wave D approval + V1.1; packet 2: Wave D2 approval + packet 1 |
+| V1.3 | Homework feedback sandwich (relaxes zero-LLM per V1-D1; grounding from schema-v3 `stems[].anchor_words` — the brief was superseded) | Elon (prompt) + Mark + Buffet (red-team) | **DONE 2026-07-12** (63693fe; speakup-v1-3-feedback-sandwich complete) — then reworked by the grading-honesty release 82c18c0→5738553 (2026-07-15, founder-approved) and the guard redesign (ML backstop detached per founder ruling; spec V1-D1 corrected 2026-07-16) | Wave 0 + **explicit Phương ack of zero-LLM relaxation** |
+| ~~V1.3b~~ | **SUPERSEDED 2026-07-13** — homework brief absorbed by schema-v3 typed `tasks[]` (adaptive-homework-types 4ce4f21); do not build (spec reconciled 2026-07-16, drift audit #1) | — | superseded | — |
+| V1.4 | Fix-it round + listen-and-compare | Steve + Mark + Buffet | **DONE** (speakup-v1-4-fixit-round complete — see task record in this file) | Wave D approval + V1.2 packet 1 + V1.3 |
 | ~~V1.P~~ | **FOLDED 2026-07-10 evening** into V1.1/V1.2 as the L4–L5 free-talk game protocols/UI (Phương's clean mode separation: production lives in Free Talk as activities, homework not involved) | — | folded | — |
 | V1.5–V1.7 | Error profile / teacher digest / tenant-readiness config | — | HELD | pilot-evidence review (~2 weeks of pilot) |
 | S2S spike | Speech-to-speech cost comparison (already approved) | own session | queued | own gate; recommended after V1.1 |
@@ -423,6 +423,9 @@ assigns, commits, merges, deploys, or spends.
   phase V1.3b** ("homework brief") — typed tasks carrying target words
   already give `_homework-feedback.js` the grounding context the `brief`
   was invented to supply. Reconcile the spec rather than build it twice.
+  **(RESOLVED 2026-07-16: spec reconciled — V1-D6/V1.3b marked superseded
+  in SPEC_SPEAKUP_V1.md, tracker rows corrected; drift audit #1, Phương
+  approved the update pass.)**
   Also note V1-D3 placed story/debate in Free Talk as games; the founder
   has now additionally asked for storytelling as GRADED HOMEWORK — that
   is a founder scope decision, not a code question, and does not weaken
