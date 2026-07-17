@@ -103,7 +103,9 @@ export function validateShadowingVideo(json) {
       const start = isFiniteNumber(seg.start) ? seg.start : null;
       const end = isFiniteNumber(seg.end) ? seg.end : null;
       if (start === null) errors.push(`${label}.start must be a number`);
+      else if (start < 0) errors.push(`${label}.start must not be negative`);
       if (end === null) errors.push(`${label}.end must be a number`);
+      else if (end < 0) errors.push(`${label}.end must not be negative`);
       if (start !== null && end !== null && !(end > start)) {
         errors.push(`${label}.end must be greater than ${label}.start`);
       }

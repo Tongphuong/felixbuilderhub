@@ -192,9 +192,10 @@ function wordFeedbackEntry(expectedWord, spokenWord, status, similarity) {
 // short function words live ASR interim results most often drop or garble,
 // so requiring a direct hit would leave them stuck on 'pending' even once
 // the sentence around them is clearly being read correctly. Kept simple and
-// deterministic: a SKIP_WORD lights 'exact' the moment EITHER (a) some
-// not-yet-consumed-by-content-matching transcript word normalizes to it
-// exactly (a direct loose hit), OR (b) its nearest neighboring CONTENT word
+// deterministic: a SKIP_WORD lights 'exact' the moment EITHER (a) any
+// transcript word (the full interim transcript, not filtered by what
+// content-word matching has consumed) normalizes to it exactly (a direct
+// loose hit), OR (b) its nearest neighboring CONTENT word
 // (scanning outward, skipping over other SKIP_WORDS) has already settled to
 // 'exact' or 'close' — i.e. filler-word credit propagates from the content
 // word next to it. Otherwise 'pending'. This never feeds back into or

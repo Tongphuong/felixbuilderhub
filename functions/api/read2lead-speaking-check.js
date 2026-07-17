@@ -24,6 +24,48 @@ import { validateReplyShape, detectCharacterBreak, scanBannedTopics, screenWithL
 // task shapes a second time (rule 21).
 import { normalizeHomeworkRecord } from './_homework.js';
 
+// ---------------------------------------------------------------------------
+// SHADOWING PACKET (speakup-shadowing-v1-p2): per-access-code call throttle
+// for shadow_practice requests only. Distinct from _rate-limit.js's
+// checkCodeRateLimit (per-IP, and only counts FAILED code lookups -- wrong
+// shape here, since a classroom is many valid codes sharing one IP, and this
+// exists to smooth ONE kid's own call rate, not brute-force code guessing).
+// Same KV binding (READ2LEAD_CODES), separate key prefix so the two never
+// collide. Fixed-window counter, same shape as checkCodeRateLimit itself.
+//
+// Constants: Cloudflare KV's expirationTtl has a hard 60s floor (every TTL
+// already in this file/repo is >=600s, consistent with that), so a literal
+// "12s window / burst 3" envelope can't actually be enforced by a KV-backed
+// counter -- 60s is the shortest real window available. Translated the given
+// envelope (~1 call/4s sustained, burst 3, "must not trip a classroom") into:
+// 60s window, 20 calls (15 = 60s/4s from the envelope, +~33% headroom since
+// real per-kid pace -- watch+question+record+retries -- is well under 15/min
+// in practice), keyed per access_code so a classroom's combined volume on
+// one shared IP never interacts with any single kid's own budget.
+const SHADOW_PRACTICE_WINDOW_SECONDS = 60;
+const SHADOW_PRACTICE_CALL_LIMIT = 20;
+
+async function checkShadowPracticeRateLimit(kv, accessCode) {
+  if (!kv || !accessCode) return { blocked: false };
+  const key = `shd-rl:${accessCode}`;
+  try {
+    const now = Math.floor(Date.now() / 1000);
+    let record = await kv.get(key, { type: 'json' });
+    if (!record || now - record.first_at > SHADOW_PRACTICE_WINDOW_SECONDS) {
+      record = { count: 0, first_at: now };
+    }
+    if (record.count >= SHADOW_PRACTICE_CALL_LIMIT) {
+      return { blocked: true, retryAfter: Math.max(1, SHADOW_PRACTICE_WINDOW_SECONDS - (now - record.first_at)) };
+    }
+    record.count += 1;
+    await kv.put(key, JSON.stringify(record), { expirationTtl: SHADOW_PRACTICE_WINDOW_SECONDS });
+    return { blocked: false };
+  } catch {
+    return { blocked: false }; // fail-open, same posture as checkCodeRateLimit
+  }
+}
+// --- end shadowing packet rate-limit block ----------------------------------
+
 export const SKIP_WORDS = new Set([
   'a', 'an', 'the', 'is', 'are', 'was', 'were', 'to', 'of', 'in', 'on', 'at',
 ]);
@@ -778,13 +820,23 @@ export async function runSpeakingCheck({
   // 'open' (content grounding for a no-reference attempt); read/frame modes
   // ignore it entirely, so omitting it changes nothing for those paths.
   homework = null,
+  // SHADOWING PACKET (speakup-shadowing-v1-p2): true only for a read-mode
+  // practice-mode Shadowing attempt (see onRequestPost). Defaulted false so
+  // every existing call site is byte-identical to today.
+  shadowPractice = false,
 } = {}) {
   // Homework reading: Azure Pronunciation Assessment first (purpose-built,
   // per-word/phoneme scoring — rule 21 reuse). Requires the WAV recording the
   // client sends for read steps; any failure, missing config, or exhausted
   // free tier falls straight through to the local scorer below.
   const isWav = Boolean(audioBlob && /wav/i.test(String(audioBlob.type || '')));
-  if (checkMode === 'read' && env && azureSpeechConfigured(env) && isWav) {
+  // SHADOWING PACKET (speakup-shadowing-v1-p2): Azure bypass. A shadow
+  // practice attempt must NEVER reach Azure (Shadowing already grades this
+  // sentence server-side via this same function; Azure PA is reserved for
+  // homework reading) -- falls straight through to the exact same
+  // transcribeAudio + local scoreTranscript path this code already takes
+  // whenever Azure isn't configured/available. No new response shape.
+  if (checkMode === 'read' && env && azureSpeechConfigured(env) && isWav && !shadowPractice) {
     const kv = env.READ2LEAD_CODES;
     if (await azureUnderFreeTier(kv)) {
       try {
@@ -999,6 +1051,10 @@ export async function onRequestPost(context) {
   const expectedText = String(formData.get('expected_text') || '').trim();
   const checkMode = String(formData.get('check_mode') || 'read').trim().toLowerCase();
   const practiceMode = String(formData.get('practice_mode') || '').trim() === '1';
+  // SHADOWING PACKET (speakup-shadowing-v1-p2): only meaningful for a
+  // read-mode practice-mode attempt (Shadowing is inherently practice) --
+  // all three conditions computed once here.
+  const shadowPractice = String(formData.get('shadow_practice') || '').trim() === '1' && checkMode === 'read' && practiceMode;
   const audio = formData.get('audio');
 
   const clientTelemetry = {
@@ -1098,6 +1154,16 @@ export async function onRequestPost(context) {
     }
   }
 
+  // SHADOWING PACKET (speakup-shadowing-v1-p2): per-access-code throttle,
+  // shadow_practice calls only -- see checkShadowPracticeRateLimit's header
+  // comment near the top of this file for the constants/reasoning.
+  if (shadowPractice) {
+    const shadowRate = await checkShadowPracticeRateLimit(env.READ2LEAD_CODES, accessCode);
+    if (shadowRate.blocked) {
+      return rateLimitedResponse(shadowRate.retryAfter);
+    }
+  }
+
   try {
     const result = await runSpeakingCheck({
       audioBlob: audio,
@@ -1110,6 +1176,7 @@ export async function onRequestPost(context) {
       telemetry: { ...clientTelemetry, duration_seconds: durationSec },
       env,
       homework: codeData.homework,
+      shadowPractice,
     });
 
     // V1 word-level feedback (2026-07-12): best-effort, short-TTL record of

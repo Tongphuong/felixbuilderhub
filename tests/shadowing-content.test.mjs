@@ -165,6 +165,21 @@ test('rejects a segment where end <= start', () => {
   expectError(video, /end must be greater than/, 'segment end<=start');
 });
 
+test('rejects a negative segment start', () => {
+  const video = clone(VALID_VIDEO);
+  video.segments[0].start = -1;
+  expectError(video, /start must not be negative/, 'segment start negative');
+});
+
+test('rejects a negative segment end', () => {
+  const video = clone(VALID_VIDEO);
+  // Keep end > start (both negative) so this fixture isolates the
+  // negative-end check from the separate end>start check above.
+  video.segments[0].start = -5;
+  video.segments[0].end = -1;
+  expectError(video, /end must not be negative/, 'segment end negative');
+});
+
 test('rejects overlapping segments', () => {
   const video = clone(VALID_VIDEO);
   video.segments[1].start = video.segments[0].start; // overlaps segment 0 entirely
