@@ -118,9 +118,24 @@ assigns, commits, merges, deploys, or spends.
   lights** (after the speech-engine quality report: browser SR is
   device-variable, weakest on iPads, unproven on Vietnamese kids → grading
   stays on the proven server path; SR is cosmetic word-lighting only).
+- DESIGN PIVOT (2026-07-17, founder order in-session): Phương REJECTED the
+  first mock set (Steve, claude-bg/shadowing-mock @ 1595d5c) — verbatim
+  failure picks: boring/flat, doesn't feel like a kids' product,
+  cluttered/confusing (the navy brand itself NOT rejected). Page design is
+  OUTSOURCED to **Claude Design** (Anthropic `frontend-design` capability,
+  agent on Fable per founder quality mandate, logged), managed personally by
+  Elon; target vibe founder-picked: **Game world** (arcade/Duolingo energy).
+  Process (plan-approved same day): round 1 = TWO competing directions of the
+  two core screens → founder picks → round 2 = full 8-state set → founder
+  approval = the design gate. Steve remains the UI BUILDER to the approved
+  design. Lane: worktree `claude-design-shadowing` →
+  `claude-bg/shadowing-design`, folder `design_handoff_speakup_shadowing_v2/`
+  (v1 folder retained as rejected/functional reference; steve-shadowing-mock
+  lane cleared).
 - Lane: Mark worktree `mark-shadowing-core` → `claude-bg/shadowing-core`;
-  Steve worktree `steve-shadowing-mock` → `claude-bg/shadowing-mock` (mock),
-  then a build packet; integration branch `claude/speakup-shadowing` → main on
+  design lane `claude-design-shadowing` → `claude-bg/shadowing-design`
+  (Claude Design, see pivot above); Steve build packet after design approval;
+  integration branch `claude/speakup-shadowing` → main on
   Phương's ack. CONCURRENT (rule of the house): `mark-speakup-rewards` +
   `steve-speakup-ui` worktrees are live from other work — file sets disjoint
   except `speakup-app.css` (both append-only sections) and
