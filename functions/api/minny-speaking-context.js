@@ -1,5 +1,6 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import { normalizeHomeworkRecord } from './_homework.js';
+import { loadProgressState, publicProgressState } from './_read2lead-v2-state.js';
 
 // SpeakUp is a separate product from Read2Lead: they share student codes and
 // profile/XP state, never activities. This endpoint must not read the kid's
@@ -229,6 +230,9 @@ export async function onRequestGet(context) {
 
   const modes = buildSpeakingModes(codeData);
 
+  const progressState = await loadProgressState(env, accessCode, codeData);
+  const diamondBalance = Number(publicProgressState(progressState).diamonds) || 0;
+
   let greeting;
   const homeworkMode = modes.find(m => m.id === 'homework');
   if (homeworkMode && homeworkMode.homework_updated_at) {
@@ -255,6 +259,7 @@ export async function onRequestGet(context) {
     modes,
     greeting_vi: greeting,
     practice_count_this_week: numberOrZero(practiceLog.sessions_this_week),
+    diamond_balance: diamondBalance,
     coaching_link: coachingLink,
     profile_link: profileLink,
   });

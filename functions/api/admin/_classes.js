@@ -156,6 +156,39 @@ export async function codeExists(env, code) {
   return Boolean(await kv.get(cleanCode, { type: 'json' }));
 }
 
+// VN calendar date (UTC+7) for an arbitrary ISO timestamp — same convention
+// as todayVN(), just for a stored timestamp instead of "now".
+function vnDateFromIso(iso) {
+  const ts = Date.parse(String(iso || ''));
+  if (!Number.isFinite(ts)) return null;
+  return new Date(ts + 7 * 60 * 60 * 1000).toISOString().slice(0, 10);
+}
+
+// Teacher-dashboard bucket for how recently a student practiced SpeakUp.
+function practiceStatus(lastActivityAt, today) {
+  const lastDate = vnDateFromIso(lastActivityAt);
+  if (!lastDate) return 'inactive';
+  if (lastDate === today) return 'today';
+  const diffDays = Math.round((Date.parse(today) - Date.parse(lastDate)) / 86400000);
+  if (diffDays >= 1 && diffDays <= 3) return 'recent';
+  return 'inactive';
+}
+
+// R2L doesn't expose a ready-made "packs completed this week" count in
+// publicProgressState — only 7day_summary's internal rates. Recompute the
+// same rolling-7-day-window count (LEARNING_WINDOW_MS in
+// _read2lead-v2-state.js) from the packs_history it DOES expose, without
+// touching that protected file.
+function weeklyCompletedCount(learningMetrics, nowIso) {
+  const now = Date.parse(String(nowIso || ''));
+  const cutoff = Number.isFinite(now) ? now - 7 * 24 * 60 * 60 * 1000 : 0;
+  const history = Array.isArray(learningMetrics?.packs_history) ? learningMetrics.packs_history : [];
+  return history.filter((entry) => {
+    const ts = Date.parse(String(entry?.passed_at || entry?.started_at || ''));
+    return Number.isFinite(ts) && (!cutoff || ts >= cutoff);
+  }).length;
+}
+
 function attendanceStreak(attendanceByDate, code) {
   const cleanCode = normalizeCode(code);
   const dates = Object.keys(attendanceByDate || {}).sort().reverse();
@@ -171,6 +204,7 @@ function attendanceStreak(attendanceByDate, code) {
 export async function enrichClass(env, klass) {
   const kv = classKv(env);
   const today = todayVN();
+  const nowIso = new Date().toISOString();
   const students = [];
   for (const code of klass.student_codes) {
     const codeData = await kv.get(code, { type: 'json' });
@@ -187,6 +221,8 @@ export async function enrichClass(env, klass) {
     const state = await loadProgressState(env, code, codeData);
     const publicState = publicProgressState(state);
     const profile = codeData.student_profile || {};
+    const lastActivityAt = codeData.progress?.last_activity_at || null;
+    const minnyPractice = codeData.progress?.minny_practice || {};
     students.push({
       code,
       missing: false,
@@ -196,6 +232,14 @@ export async function enrichClass(env, klass) {
       class_attendance_streak: attendanceStreak(klass.attendance_by_date, code),
       read2lead_state: publicState,
       homework: codeData.homework || null,
+      last_activity_at: lastActivityAt,
+      minny_practice: {
+        last_at: minnyPractice.last_at || null,
+        sessions_this_week: minnyPractice.sessions_this_week || 0,
+      },
+      practice_status: practiceStatus(lastActivityAt, today),
+      r2l_streak_days: Number(publicState.streak_days) || 0,
+      r2l_weekly_completed: weeklyCompletedCount(publicState.learning_metrics, nowIso),
     });
   }
   return {
