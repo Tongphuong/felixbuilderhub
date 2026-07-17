@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>06 Retry + Encourage — Đêm sân khấu</title>
+<style>
+  :root{
+    --night:#0a1b2b; --navy-900:#17354a; --navy-850:#1d3f58;
+    --gold:#c88f38; --gold-light:#f2cc7e; --gold-hot:#ffe9a8;
+    --cream:#f5e6c8; --cream-muted:#d9c7a4; --cream-dim:#aa9673; --ember:#ef9b4a;
+    --font:ui-rounded,"SF Pro Rounded","Nunito","Varela Round","Segoe UI",system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#06121f;font-family:var(--font);display:flex;flex-direction:column;align-items:center;padding:28px 0 60px;color:#8fa6b8}
+  .phone{width:390px;border-radius:34px;overflow:hidden;box-shadow:0 30px 80px -20px rgba(0,0,0,.8);flex:none}
+  .screen{width:390px;min-height:690px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 60% at 50% 34%, rgba(239,155,74,.14), transparent 62%),
+      radial-gradient(120% 55% at 50% 108%, rgba(200,143,56,.22), transparent 60%),
+      linear-gradient(180deg,#0e2436 0%, #0a1b2b 55%, #081724 100%);
+    display:flex;flex-direction:column;align-items:center;padding:18px 16px 24px;gap:12px}
+
+  .hud{display:flex;justify-content:space-between;align-items:center;width:100%;position:relative;z-index:2}
+  .counter{display:flex;align-items:center;gap:7px;background:rgba(23,53,74,.85);
+    border:2px solid rgba(242,204,126,.35);border-radius:999px;padding:8px 16px 8px 12px;
+    font-weight:800;font-size:19px;color:var(--gold-light);
+    box-shadow:0 0 18px rgba(242,204,126,.15), inset 0 1px 0 rgba(245,230,200,.12)}
+  .counter .em{font-size:20px;filter:drop-shadow(0 0 6px rgba(242,204,126,.8))}
+
+  .body{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:13px;flex:1;justify-content:center;width:100%}
+  .minny{width:150px;height:150px;border-radius:50%;overflow:hidden;
+    border:5px solid var(--ember);box-shadow:0 0 30px rgba(239,155,74,.4);
+    animation:sway 2.8s ease-in-out infinite}
+  @keyframes sway{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+  .minny img{width:100%;height:190%;object-fit:cover;transform:translateY(-27%)}
+
+  .cheer{color:var(--cream);font-weight:800;font-size:27px;text-shadow:0 0 22px rgba(239,155,74,.3)}
+  .sub{color:var(--cream-muted);font-weight:700;font-size:16.5px;margin-top:-4px}
+
+  /* the sentence so far — progress kept, warmth kept */
+  .words{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:2px 6px}
+  .word{font-weight:800;font-size:17px;padding:8px 12px;border-radius:12px;line-height:1}
+  .word.lit{background:linear-gradient(180deg,var(--gold-hot),var(--gold-light) 55%,var(--gold));
+    color:#10273a;border:2px solid #ffe9a8;box-shadow:0 0 14px rgba(255,233,168,.5)}
+  .word.warm{background:rgba(239,155,74,.16);color:var(--ember);border:2px solid rgba(239,155,74,.75)}
+  .word.off{background:#152f44;color:rgba(217,199,164,.6);border:2px solid rgba(170,150,115,.22)}
+
+  /* THE one action: try again */
+  .retry{width:100%;border:none;cursor:pointer;position:relative;overflow:hidden;
+    background:linear-gradient(180deg,var(--gold-hot),var(--gold-light) 45%,var(--gold));
+    color:#10273a;font-family:var(--font);font-weight:800;font-size:23px;
+    border-radius:22px;padding:19px 10px;min-height:64px;margin-top:6px;
+    box-shadow:0 0 30px rgba(242,204,126,.35), 0 12px 26px -8px rgba(0,0,0,.7), inset 0 2px 0 rgba(255,255,255,.5)}
+  .replay{align-self:center;display:inline-flex;align-items:center;gap:9px;
+    background:rgba(23,53,74,.9);border:2px solid rgba(242,204,126,.45);color:var(--gold-light);
+    font-family:var(--font);font-weight:800;font-size:16.5px;border-radius:999px;padding:13px 24px;cursor:pointer;min-height:48px}
+  .replay .ic{font-size:18px}
+
+  /* ================= inset: 3rd miss — move on warmly ================= */
+  .insetwrap{width:390px;margin-top:34px}
+  .insettitle{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7f97a8;margin-bottom:10px;font-weight:700}
+  .inset{width:390px;border-radius:26px;overflow:hidden;position:relative;
+    background:linear-gradient(180deg,#0e2436,#0a1b2b);
+    box-shadow:0 20px 50px -16px rgba(0,0,0,.8);
+    display:flex;flex-direction:column;align-items:center;gap:13px;padding:22px 20px 26px}
+  .ihud{display:flex;justify-content:space-between;width:100%}
+  .icounter{display:flex;align-items:center;gap:6px;background:rgba(23,53,74,.85);
+    border:2px solid rgba(242,204,126,.3);border-radius:999px;padding:6px 13px 6px 10px;
+    font-weight:800;font-size:16px;color:var(--gold-light)}
+  /* streak at 0 — calm, still warm, no drama */
+  .icounter.zero{color:var(--cream-dim);border-color:rgba(170,150,115,.3)}
+  .icounter.zero .em{filter:none;opacity:.7}
+  .iminny{width:104px;height:104px;border-radius:50%;overflow:hidden;
+    border:4px solid var(--gold-light);box-shadow:0 0 22px rgba(242,204,126,.35)}
+  .iminny img{width:100%;height:190%;object-fit:cover;transform:translateY(-27%)}
+  .imsg{color:var(--cream);font-weight:800;font-size:19.5px;text-align:center;line-height:1.45;padding:0 6px}
+  .inext{width:100%;border:none;cursor:pointer;
+    background:linear-gradient(180deg,var(--gold-hot),var(--gold-light) 45%,var(--gold));
+    color:#10273a;font-family:var(--font);font-weight:800;font-size:20px;
+    border-radius:18px;padding:16px 10px;min-height:56px;
+    box-shadow:0 0 24px rgba(242,204,126,.3), 0 10px 22px -8px rgba(0,0,0,.7), inset 0 2px 0 rgba(255,255,255,.5)}
+
+  .note{width:390px;margin-top:20px;font-size:13.5px;line-height:1.6}
+  .note b{color:#c9d8e4}
+
+  @media (prefers-reduced-motion: reduce){
+    .minny{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="screen">
+
+    <div class="hud">
+      <div class="counter" id="shd-stars"><span class="em">⭐</span> 8</div>
+      <div class="counter" id="shd-streak"><span class="em">🔥</span> 3</div>
+    </div>
+
+    <div class="body" id="shd-summary">
+      <div class="minny"><img src="../../public/assets/minny/minny_encourage.png" alt="Minny động viên"></div>
+      <div class="cheer">Gần đúng rồi!</div>
+      <p class="sub">Thử lại lần nữa nhé!</p>
+
+      <div class="words" id="shd-words">
+        <span class="word lit">The</span>
+        <span class="word lit">cat</span>
+        <span class="word warm">is</span>
+        <span class="word warm">sleeping</span>
+        <span class="word off">on</span>
+        <span class="word off">the</span>
+        <span class="word off">mat</span>
+      </div>
+
+      <button class="retry" id="shd-mic-btn">Thử lại 🎤</button>
+      <button class="replay" id="shd-replay-btn"><span class="ic">↻</span> Nghe lại câu</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="insetwrap">
+  <div class="insettitle">Lần thử thứ 3 — nhẹ nhàng đi tiếp</div>
+  <div class="inset">
+    <div class="ihud">
+      <div class="icounter"><span class="em">⭐</span> 8</div>
+      <div class="icounter zero"><span class="em">🔥</span> 0</div>
+    </div>
+    <div class="iminny"><img src="../../public/assets/minny/minny_encourage.png" alt="Minny an ủi"></div>
+    <div class="imsg">Nghe lại rồi mình qua câu tiếp nhé! 💛</div>
+    <button class="inext" id="shd-next-btn">Câu tiếp theo →</button>
+  </div>
+</div>
+
+<div class="note">
+  <b>06 — Chưa được thì thử lại, ấm áp.</b> Minny trong vòng cam động viên; hai chữ đã sáng vẫn giữ
+  nguyên (bé thấy mình ĐÃ làm được một phần). Một nút vàng lớn "Thử lại". Khối dưới: sau lần thứ 3,
+  không có lời chê — chuỗi lửa lặng lẽ về 0 (không tô đỏ, không rung), sao vẫn giữ, và cả câu chuyện
+  chỉ là "mình qua câu tiếp nhé!".
+</div>
+
+</body>
+</html>

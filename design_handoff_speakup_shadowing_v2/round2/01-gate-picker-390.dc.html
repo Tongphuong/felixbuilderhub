@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>01 Gate + Picker — Đêm sân khấu</title>
+<style>
+  :root{
+    --night:#0a1b2b; --navy-900:#17354a; --navy-850:#1d3f58;
+    --gold:#c88f38; --gold-light:#f2cc7e; --gold-hot:#ffe9a8;
+    --cream:#f5e6c8; --cream-muted:#d9c7a4; --cream-dim:#aa9673; --ember:#ef9b4a;
+    --font:ui-rounded,"SF Pro Rounded","Nunito","Varela Round","Segoe UI",system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#06121f;font-family:var(--font);display:flex;flex-direction:column;align-items:center;padding:28px 0 60px;color:#8fa6b8}
+  .phone{width:390px;border-radius:34px;overflow:hidden;box-shadow:0 30px 80px -20px rgba(0,0,0,.8);flex:none}
+  .screen{width:390px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 55% at 50% 108%, rgba(200,143,56,.24), transparent 60%),
+      radial-gradient(90% 40% at 50% -10%, #1d3f58, transparent 70%),
+      linear-gradient(180deg,#0e2436 0%, #0a1b2b 55%, #081724 100%);
+    display:flex;flex-direction:column;padding:22px 16px 26px;gap:16px}
+  .screen::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:
+      radial-gradient(1.5px 1.5px at 40px 90px, rgba(245,230,200,.5), transparent 60%),
+      radial-gradient(1px 1px at 330px 60px, rgba(245,230,200,.4), transparent 60%),
+      radial-gradient(1.5px 1.5px at 250px 140px, rgba(242,204,126,.45), transparent 60%),
+      radial-gradient(1px 1px at 120px 40px, rgba(245,230,200,.35), transparent 60%),
+      radial-gradient(1.5px 1.5px at 70px 240px, rgba(242,204,126,.3), transparent 60%)}
+
+  /* ================= FRAME 1 — the ticket booth (code gate) ================= */
+  .gate{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:16px;padding:10px 0 8px}
+  .minny{width:96px;height:96px;border-radius:50%;overflow:hidden;border:4px solid var(--gold-light);
+    box-shadow:0 0 24px rgba(242,204,126,.45);animation:sway 3s ease-in-out infinite}
+  @keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+  .minny img{width:100%;height:190%;object-fit:cover;transform:translateY(-27%)}
+  .gatetitle{color:var(--cream);font-weight:800;font-size:23px;text-align:center}
+  .cells{display:flex;gap:12px}
+  .cell{width:58px;height:66px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:30px;color:var(--gold-hot);background:#152f44;
+    border:2.5px solid rgba(242,204,126,.35);box-shadow:inset 0 2px 6px rgba(0,0,0,.35)}
+  .cell.filled{background:linear-gradient(180deg,#1d3f58,#17354a);border-color:var(--gold-light);
+    box-shadow:0 0 16px rgba(242,204,126,.25)}
+  .cell.caret{border-color:var(--gold-hot)}
+  .cell.caret i{width:3px;height:30px;background:var(--gold-hot);border-radius:2px;animation:blink 1s steps(2,start) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .go{width:100%;border:none;cursor:pointer;margin-top:4px;
+    background:linear-gradient(180deg,var(--gold-hot),var(--gold-light) 45%,var(--gold));
+    color:#10273a;font-family:var(--font);font-weight:800;font-size:21px;
+    border-radius:20px;padding:17px 10px;min-height:58px;
+    box-shadow:0 0 26px rgba(242,204,126,.3), 0 10px 22px -8px rgba(0,0,0,.7), inset 0 2px 0 rgba(255,255,255,.5)}
+
+  /* ================= FRAME 2 — tonight's shows (picker) ================= */
+  .pickhead{position:relative;z-index:2;color:var(--cream);font-weight:800;font-size:21px;text-align:center;padding-top:2px}
+  .pickhead .spark{color:var(--gold-light);font-size:14px;vertical-align:5px;margin:0 6px;text-shadow:0 0 10px rgba(242,204,126,.9)}
+  .cards{position:relative;z-index:2;display:flex;flex-direction:column;gap:13px}
+  .card{display:flex;align-items:center;gap:13px;background:rgba(23,53,74,.85);
+    border:2.5px solid rgba(170,150,115,.25);border-radius:20px;padding:11px;cursor:pointer;min-height:86px}
+  .card.tonight{border-color:var(--gold-light);
+    box-shadow:0 0 26px rgba(242,204,126,.28), inset 0 1px 0 rgba(245,230,200,.1);position:relative}
+  /* marquee bulbs on the featured poster edge */
+  .card.tonight::after{content:"";position:absolute;left:14px;right:14px;top:-4px;height:7px;
+    background:radial-gradient(circle 3.5px at 10px 3.5px, var(--gold-hot) 3px, transparent 4px);
+    background-size:28px 7px;background-repeat:repeat-x;filter:drop-shadow(0 0 5px rgba(255,233,168,.9))}
+  .thumb{width:104px;height:66px;border-radius:12px;overflow:hidden;position:relative;flex:none;
+    border:2px solid rgba(242,204,126,.35)}
+  .sky{position:absolute;inset:0}
+  .t1 .sky{background:linear-gradient(180deg,#8fd3ff 0%,#c6ecff 55%,#7ac96f 55%,#5cb85f 100%)}
+  .t1 .blob{position:absolute;bottom:8px;left:34px;width:38px;height:18px;background:#f59e42;border-radius:10px}
+  .t1 .blob::before{content:"";position:absolute;left:-10px;bottom:0;width:16px;height:16px;background:#f59e42;border-radius:50%}
+  .t2 .sky{background:linear-gradient(180deg,#ffd98c 0%,#ffe9b0 55%,#9a7b4f 55%,#7c6240 100%)}
+  .t2 .blob{position:absolute;bottom:10px;left:36px;width:30px;height:24px;background:#8a5a2b;border-radius:50% 50% 40% 40%}
+  .t2 .blob::before{content:"";position:absolute;left:4px;top:-8px;width:9px;height:12px;background:#8a5a2b;border-radius:50%}
+  .t2 .blob::after{content:"";position:absolute;right:4px;top:-8px;width:9px;height:12px;background:#8a5a2b;border-radius:50%}
+  .t3 .sky{background:linear-gradient(180deg,#9db9ff 0%,#c9d9ff 60%,#e8f0ff 100%)}
+  .t3 .blob{position:absolute;top:16px;left:26px;width:44px;height:16px;background:#fff;border-radius:999px}
+  .t3 .blob::before{content:"";position:absolute;left:10px;top:-8px;width:20px;height:16px;background:#fff;border-radius:999px}
+  .t4 .sky{background:linear-gradient(180deg,#1d3f58 0%,#244a64 60%,#31567a 100%)}
+  .t4 .blob{position:absolute;bottom:8px;left:38px;width:26px;height:30px;background:#c0392b;border-radius:9px 9px 7px 7px}
+  .t4 .blob::before{content:"";position:absolute;left:3px;top:-12px;width:20px;height:16px;background:#c0392b;border-radius:50% 50% 40% 40%}
+  .meta{display:flex;flex-direction:column;gap:7px;min-width:0}
+  .vtitle{color:var(--cream);font-weight:800;font-size:16.5px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .lchip{font-weight:800;font-size:13px;color:#10273a;border-radius:8px;padding:3.5px 9px;
+    background:linear-gradient(180deg,var(--gold-hot),var(--gold-light));
+    box-shadow:0 0 10px rgba(242,204,126,.4)}
+  .vstars{color:var(--gold-light);font-weight:800;font-size:14.5px}
+  .fresh{color:var(--cream-dim);font-weight:700;font-size:13px;border:1.5px dashed rgba(170,150,115,.5);
+    border-radius:999px;padding:3px 10px}
+
+  .note{width:390px;margin-top:20px;font-size:13.5px;line-height:1.6}
+  .note b{color:#c9d8e4}
+  .gapcap{width:390px;margin:26px 0 10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7f97a8;font-weight:700}
+
+  @media (prefers-reduced-motion: reduce){
+    .minny,.cell.caret i{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="gapcap">Bước 1 · Quầy vé — nhập mã</div>
+<div class="phone">
+  <div class="screen" style="min-height:560px;justify-content:center">
+    <div class="gate" id="shd-code-card">
+      <div class="minny"><img src="../../public/assets/minny/minny_idle.png" alt="Minny chờ con"></div>
+      <div class="gatetitle">Mã của con là gì?</div>
+      <div class="cells">
+        <div class="cell filled">5</div>
+        <div class="cell filled">3</div>
+        <div class="cell caret"><i></i></div>
+        <div class="cell"></div>
+      </div>
+      <button class="go">Vào xem!</button>
+    </div>
+  </div>
+</div>
+
+<div class="gapcap">Bước 2 · Chọn phim tối nay</div>
+<div class="phone">
+  <div class="screen" style="min-height:640px">
+    <div class="pickhead"><span class="spark">✦</span>Chọn phim cho hôm nay nhé!<span class="spark">✦</span></div>
+    <div class="cards" id="shd-video-picker">
+
+      <div class="card tonight">
+        <div class="thumb t1"><div class="sky"></div><div class="blob"></div></div>
+        <div class="meta">
+          <div class="vtitle">Chú mèo lười biếng</div>
+          <div class="row"><span class="lchip">L2</span><span class="vstars">⭐ 12</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="thumb t2"><div class="sky"></div><div class="blob"></div></div>
+        <div class="meta">
+          <div class="vtitle">Bữa sáng của gấu</div>
+          <div class="row"><span class="lchip">L1</span><span class="vstars">⭐ 21</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="thumb t3"><div class="sky"></div><div class="blob"></div></div>
+        <div class="meta">
+          <div class="vtitle">Cuộc phiêu lưu trên mây</div>
+          <div class="row"><span class="lchip">L4</span><span class="fresh">Chưa luyện</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="thumb t4"><div class="sky"></div><div class="blob"></div></div>
+        <div class="meta">
+          <div class="vtitle">Robot nhỏ tốt bụng</div>
+          <div class="row"><span class="lchip">L3</span><span class="fresh">Chưa luyện</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="note">
+  <b>01 — Quầy vé & chọn phim.</b> Nhập mã như lấy vé vào rạp — một việc duy nhất, nút vàng lớn.
+  Danh sách phim là các poster đêm: phim "tối nay" có dàn đèn marquee sáng trên viền; phim đã luyện
+  khoe số sao, phim mới ghi "Chưa luyện". Chip L1–L5 đúng hệ mức các bé đã quen ở bài tập.
+</div>
+
+</body>
+</html>
