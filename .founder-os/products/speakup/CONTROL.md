@@ -1,7 +1,11 @@
 # Control — SpeakUp
 
 - Product: SpeakUp
-- Current goal: PILOT RUNNING (started 2026-07-12, Phương's order). Watch week-one signals (chips vs freeze, question-rate ~61%, hint taps, repair-ladder frequency, Azure F0 meter, debug:convo-flags ring); V1.3 awaits its own founder gate; V1.5–V1.7 held for pilot evidence.
+- Current goal: PILOT RUNNING (started 2026-07-12, Phương's order) + BUILDING
+  the shadowing page (speakup-shadowing-v1, founder top priority 2026-07-17 —
+  see Current task below). Watch week-one signals (chips vs freeze,
+  question-rate ~61%, hint taps, repair-ladder frequency, Azure F0 meter,
+  debug:convo-flags ring); V1.5–V1.7 held for pilot evidence.
 - Branch: `claude/speakup-v0` (off `main`)
 - Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
 - Active workers: 0
@@ -90,6 +94,128 @@ assigns, commits, merges, deploys, or spends.
 ## Current task
 
 - Status: active
+- Started: 2026-07-17
+- Task ID: speakup-shadowing-v1
+- Spec: `_ops/specs/SPEC_SPEAKUP_SHADOWING.md` (approved 2026-07-17); plan of
+  record `~/.claude/plans/zippy-gathering-matsumoto.md` (Phương plan-mode
+  approval same day). Session note: Elon on Fable 5 by Phương's explicit
+  `/model` order for this session (logged in _ops/AGENT_LOG.md).
+- Owner: Elon (spec, packets, line-by-line review, integration — writes no
+  product source); Mark (engine modules + prep script + bounded server
+  micro-diff); Steve (design mock first, then page UI); Buffet (ledger verdict
+  gates every commit). Phương gates the mock, every kid-facing sentence and
+  question, and main.
+- Problem: founder order (2026-07-17, top priority): shadowing page — kid
+  watches a YouTube video sentence-by-sentence, tap comprehension check at key
+  moments, records the sentence, ≥50% match advances, dopamine at every step,
+  free to maintain (one-time prep cost only). Reopens the 2026-07-11 "video
+  mode REJECTED" brainstorm note as an Owner scope decision (spec records the
+  lineage; mode separation untouched — shadowing is a third mode).
+- Founder decisions (2026-07-17, AskUserQuestion): YouTube embed
+  (youtube-nocookie; ads = curation fence); starter set first (admin authoring
+  = phase 2); questions at key moments only; page-local stars/streaks (XP/coin
+  economy never called — structural CI test); **Whisper grades, browser
+  lights** (after the speech-engine quality report: browser SR is
+  device-variable, weakest on iPads, unproven on Vietnamese kids → grading
+  stays on the proven server path; SR is cosmetic word-lighting only).
+- Lane: Mark worktree `mark-shadowing-core` → `claude-bg/shadowing-core`;
+  Steve worktree `steve-shadowing-mock` → `claude-bg/shadowing-mock` (mock),
+  then a build packet; integration branch `claude/speakup-shadowing` → main on
+  Phương's ack. CONCURRENT (rule of the house): `mark-speakup-rewards` +
+  `steve-speakup-ui` worktrees are live from other work — file sets disjoint
+  except `speakup-app.css` (both append-only sections) and
+  `read2lead-speaking-check.js` (our diff is one bounded marked branch) —
+  collision-check + reconcile at every integration step.
+- Reuse survey (rule 21, external candidates with verdicts): ADOPTED —
+  **YouTube IFrame Player API** (free embed + cue control; the only legal
+  zero-cost path for copyrighted kid video); **browser Web Speech API** for
+  cosmetic word-lighting only (founder D5 rejected it as the grading judge:
+  device-variable, weakest on iPads, unproven on Vietnamese kids);
+  **yt-dlp** (captions-only fallback in the offline prep script, never
+  shipped); canvas-confetti + howler (already vendored). REJECTED —
+  **transformers.js Whisper-in-browser** (too heavy for kids' devices);
+  self-hosted video (copyright + storage); D1 (KV-only repo, static starter
+  set). INTERNAL reuse — `scoreTranscript`/`wordSimilarity`/`SKIP_WORDS`
+  ported client-side with a CI parity test importing BOTH implementations;
+  student-code gate + `minny-speaking-context`; `guided-question.astro`
+  shapes; `SpeakUpAppLayout`; `speakup-app.css` `shd-` append section;
+  `lesson-juice.ts`/`r2l-audio.ts`/Minny assets/`ProgressBar.astro`;
+  `minny-practice-log`; OpenRouter JSON-mode pattern (prep script only);
+  `r2l-recorder.js` + `/api/read2lead-speaking-check` as the PRIMARY grading
+  path (byte-identical to speak-up.astro's existing practice call,
+  `pack_id:'general'` verified in code).
+- Cost ceiling: Claude team (Max plan, not metered). Runtime ~$0–1/month at
+  pilot scale (Whisper via Workers AI allocation on the paid plan; shadowing
+  calls bypass Azure by design); prep ~$0.01/video one-time; standing notify
+  Phương >$5/op.
+- Acceptance criteria:
+  1. Kid flow on the deployed preview: code gate → video picker → segment
+     plays and auto-pauses → key-moment tap question (fires once, blocks mic
+     until answered, wrong answer reveals gently and continues) → record →
+     ≥50% passes with star/streak celebration → next; fail path = encourage +
+     replay + max 2 retries then warm advance (never a dead end).
+  2. Whisper grades every device identically; browser SR does lighting only —
+     a session with SR unavailable (Firefox / Siri-off iPad) completes with
+     grading intact (test + live check).
+  3. Server micro-diff: shadowing-marked calls never touch Azure (bite test:
+     a shadowing call that WOULD hit Azure fails CI) and clear the per-code
+     rate allowance at classroom pace; homework calls byte-identical
+     (regression fixtures).
+  4. Economy fence: structural test proves the page never references
+     `gradeRewards`/`submit-read2lead-lesson`/chest-quest paths; stars/streaks
+     live in localStorage only (+ one practice-log write per completed video).
+  5. Scorer parity: client port == server `scoreTranscript` on ~30 fixture
+     pairs incl. the 49/50 boundary; parity test imports the LIVE server
+     module so drift breaks CI.
+  6. Every shipped `src/data/shadowing/*.json` validates in CI (monotonic
+     non-overlapping segments, questions in range, shapes complete); every
+     sentence + question founder-approved before merge.
+  7. `node --test` green (baseline ~1688, none dropped); astro build clean;
+     founder build/complete gates PASS.
+  8. Rule 20: deployed-preview screenshots (390 + 1280) vs the approved mock,
+     SHA recorded; iPad Safari tap-to-play verified.
+- Files owned: Mark — `src/lib/shadowing-{score,engine,speech,player,content}.mjs`,
+  `scripts/prep-shadowing-video.mjs`, `src/data/shadowing/*.json`,
+  `tests/shadowing-*.test.mjs`, `functions/api/read2lead-speaking-check.js`
+  (bounded marked-branch micro-diff only). Steve —
+  `design_handoff_speakup_shadowing/`, `src/pages/shadowing.astro`,
+  `src/styles/speakup-app.css` (append-only `shd-` section),
+  `tests/shadowing-ui.test.mjs` if split needed. Elon — spec, this block,
+  AGENT_LOG, packet docs. No overlap.
+- Stop condition: any diff touching `gradeRewards`/`submit-read2lead-lesson.js`/
+  `_read2lead-v2-state.js`/Free Talk guardrails → stop; any
+  `read2lead-speaking-check.js` change outside the marked shadowing branch →
+  stop; any change to deterministic scorer internals → stop; two failed
+  attempts on one packet → back to Elon for re-plan (rule 4, no self-expand).
+- State inventory: NEW client-side state only — localStorage
+  `shd_progress_<videoId>` (per-device resume); optional `minny-practice-log`
+  KV writes in the existing record shape. No KV schema changes, no student
+  record restructuring, no new bindings.
+- Operational reality: previews share PRODUCTION KV (practice-log writes from
+  preview tests use a test code); classroom = many kids behind one NAT IP
+  (that's what the rate allowance is for); YouTube's own ads cannot be removed
+  (low-ad curation is the fence, founder-acknowledged); iPads with Siri &
+  Dictation off lose lighting only, never grading.
+- Tradeoff watch (rule 29): we accept device-INconsistent lighting to keep
+  grading device-consistent. WATCH: if week-one shadowing scores
+  (`minny-practice-log`, `prompt_id shadow_*`) cluster clearly below the same
+  kids' homework read-mode scores, suspect recorder/clip quality before kid
+  ability, and re-check with Phương before tuning any threshold. WATCH:
+  Workers AI neuron usage — if shadowing pushes past the included allocation,
+  bring numbers to Phương before any degrade.
+- Design self-verification: pending — rule 20 at Phase 4 (deployed preview vs
+  approved mock, 390 + 1280, SHA recorded).
+- Founder handoff: pending — plain-language report at each phase gate; Phương
+  QA on preview with a test code before merge.
+
+## Prior task (complete): speakup-grading-honesty
+
+- Status: complete
+- Completed: 2026-07-15 (release shipped to production on the founder's word;
+  15/15 battery verified live; classroom capacity verified post
+  Workers-Paid upgrade). Block closed 2026-07-17 when the shadowing task
+  opened — the open founder follow-up stands: Vodka (R2L-VODKA-GPEX) still
+  needs one teacher re-save of his homework.
 - Started: 2026-07-14
 - Task ID: speakup-grading-honesty
 - Owner: Mark (backend packet: functions/api grading + feedback + vision
