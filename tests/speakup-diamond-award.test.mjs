@@ -40,6 +40,26 @@ function baseCodeData(overrides = {}) {
   };
 }
 
+// Same shape as makeKv, but with artificial latency on get/put so genuinely
+// concurrent requests interleave their KV round trips -- mirrors Buffet's
+// race_repro4_cap_corruption.mjs, needed to actually exercise the
+// per-student serialization lock rather than a same-tick synchronous race.
+function makeRacyKv(seed = {}, latencyMs = 5) {
+  const store = new Map(Object.entries(seed).map(([k, v]) => [k, JSON.stringify(v)]));
+  return {
+    async get(key, opts) {
+      await new Promise((resolve) => { setTimeout(resolve, latencyMs); });
+      const raw = store.get(key);
+      if (raw === undefined) return null;
+      return opts?.type === 'json' ? JSON.parse(raw) : raw;
+    },
+    async put(key, value) {
+      await new Promise((resolve) => { setTimeout(resolve, latencyMs); });
+      store.set(key, value);
+    },
+  };
+}
+
 // Mirrors the private weekKey() in minny-practice-log.js (Monday-anchored ISO
 // week) so the weekly-backstop fixture below always lands in the SAME week
 // bucket the endpoint computes for "now", regardless of what day the suite
@@ -239,21 +259,70 @@ test('idempotency: two POSTs with DIFFERENT completion_ids pay twice (up to the 
   assert.equal(payload2.diamond_balance, 20);
 });
 
-test('idempotency fallback (no completion_id from the caller): an identical repeated POST for the same kid+mode+pack+VN-day still collapses to one payment', async () => {
-  const accessCode = 'R2L-IDEM-FALLBACK';
+// Finding 1 (Buffet re-review, 2026-07-17 -- corrected design): the earlier
+// synthesized pack-based fallback key (access_code:prompt_id:pack_id:day)
+// was broken -- pack_id is hardcoded 'general' for every kid/day
+// (minny-speaking-context.js), and no client sends completion_id yet, so a
+// kid's genuine SECOND same-day homework completion reused the exact same
+// fallback key and silently paid 0, making HOMEWORK_DAILY_CAP=2
+// unreachable. The corrected rule: dedup ONLY on a real completion_id; with
+// no id, rely solely on the daily/weekly caps (safe now that one kid's
+// awards serialize -- see the concurrency test below), so a genuine second
+// session is never under-paid, only cap-bounded.
+test('no completion_id (real current frontend shape): two same-day homework_summary posts with NO completion_id BOTH pay, up to the cap', async () => {
+  const accessCode = 'R2L-NO-ID';
   const kv = makeKv({ [accessCode]: baseCodeData() });
 
-  // No completion_id supplied at all -- exercises the derived fallback key
-  // (access_code:prompt_id:pack_id:today_vn), which is what defeats Buffet's
-  // literal repro (many identical POSTs, no client id).
   const res1 = await postPracticeLog({ kv, accessCode, promptId: 'homework_summary' });
   const payload1 = await res1.json();
-  assert.equal(payload1.diamonds_awarded, 10);
+  assert.equal(payload1.diamonds_awarded, 10, 'the first no-id completion pays');
 
   const res2 = await postPracticeLog({ kv, accessCode, promptId: 'homework_summary' });
   const payload2 = await res2.json();
-  assert.equal(payload2.diamonds_awarded, 0, 'identical retry with no completion_id must still be deduped by the fallback key');
-  assert.equal(payload2.diamond_balance, 10);
+  assert.equal(payload2.diamonds_awarded, 10, 'a second no-id completion the same day must NOT be collapsed to 0 -- only the cap should stop it');
+  assert.equal(payload2.diamond_balance, 20);
+
+  const res3 = await postPracticeLog({ kv, accessCode, promptId: 'homework_summary' });
+  const payload3 = await res3.json();
+  assert.equal(payload3.diamonds_awarded, 0, 'a third no-id completion the same day is blocked by the 2/day cap, same as with distinct ids');
+});
+
+// Finding 2 (Buffet re-review, 2026-07-17): concurrent requests for the SAME
+// kid with DIFFERENT completion_ids used to each read the same stale
+// codeData/ledger and each write, corrupting homework_count/week_total (and
+// letting a LATER, fully sequential request that day overpay on top of
+// that). The fix serializes all of one kid's diamond-award decisions within
+// the isolate (keyed by accessCode alone) and re-reads fresh state on each
+// turn. Modeled directly on Buffet's race_repro4_cap_corruption.mjs.
+test('Finding 2 (concurrency): N concurrent distinct-completion_id homework completions for one kid never exceed the daily cap, and the ledger stays consistent with the real balance', async () => {
+  const accessCode = 'R2L-CONCURRENT-CAP';
+  const kv = makeRacyKv({ [accessCode]: baseCodeData() });
+
+  const results = await Promise.all(
+    ['a', 'b', 'c', 'd', 'e'].map((id) =>
+      postPracticeLog({ kv, accessCode, promptId: 'homework_summary', completionId: `concurrent-${id}` }),
+    ),
+  );
+  const payloads = await Promise.all(results.map((r) => r.json()));
+  const totalAwarded = payloads.reduce((sum, p) => sum + p.diamonds_awarded, 0);
+
+  assert.ok(totalAwarded <= 20, `total awarded (${totalAwarded}) must never exceed the 2/day x 10 = 20 cap`);
+  assert.equal(totalAwarded, 20, 'exactly 2 of the 5 concurrent completions should have been admitted (the daily cap)');
+
+  const ledgerCodeData = await kv.get(accessCode, { type: 'json' });
+  const ledger = ledgerCodeData.progress.minny_practice.diamond_awards;
+  assert.equal(ledger.homework_count, 2, 'the ledger must correctly remember 2 payouts, not be corrupted by the race');
+  assert.equal(ledger.week_total, 20);
+
+  const progressData = await kv.get(progressKey(accessCode), { type: 'json' });
+  assert.equal(progressData.diamonds, 20, 'the REAL persisted diamond balance must match the ledger exactly -- no corruption drift');
+
+  // A further, fully sequential, distinct-id request the same day must
+  // correctly see the cap as already exhausted (not overpay because the
+  // race corrupted homework_count below its true value).
+  const followUp = await postPracticeLog({ kv, accessCode, promptId: 'homework_summary', completionId: 'concurrent-follow-up' });
+  const followUpPayload = await followUp.json();
+  assert.equal(followUpPayload.diamonds_awarded, 0, 'the cap must already be remembered as exhausted');
 });
 
 // ---------------------------------------------------------------------------

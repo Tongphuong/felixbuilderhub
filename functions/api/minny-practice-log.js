@@ -12,21 +12,47 @@ const HOMEWORK_DAILY_CAP = 2;
 const FREE_TALK_DAILY_CAP = 1;
 const WEEKLY_DIAMOND_CAP = 100;
 
-// Same-isolate in-flight guard for the diamond-award decision, keyed by
-// idemKey (see below) — mirrors the existing llamaGuardInFlight pattern in
-// _minny-guardrails.js: module state persisting per isolate, on purpose,
-// to protect against a concurrent duplicate for the exact same completion
-// arriving WHILE the first one is still mid check-then-act. The persisted
-// paid_ids ledger alone is not enough: a burst of identical retries that
-// all issue their KV read before any of their writes lands would all see
-// the same pre-write counters and all get paid (Buffet's live repro paid
-// 60-70 diamonds against a 20/day cap this way). The check-then-set below
-// is synchronous (no `await` between reading and setting the flag), so JS's
-// single-threaded execution makes it atomic: exactly one concurrent request
-// for the same key can ever be "in flight" at a time. Cleared in `finally`
-// so a throw never leaves a key stuck locked out for the rest of the
-// isolate's life.
-const diamondAwardInFlight = new Set();
+// Same-isolate serialization for the diamond-award decision, keyed by
+// accessCode ALONE (Buffet finding 2, 2026-07-17 — corrected from an
+// earlier version keyed by accessCode+idemKey). A kid is one person; ALL
+// of their diamond-award decisions must run one at a time on this isolate,
+// even across DIFFERENT completion_ids — two concurrent requests for the
+// SAME kid with different completion_ids don't share an idemKey, so a
+// lock keyed on idemKey let them both read the same stale ledger and both
+// write, corrupting homework_count/week_total (and, through that, letting
+// a later same-day request overpay). Two different kids never block each
+// other (different keys). This is a genuine mutex (each turn awaits its
+// predecessor and re-reads fresh state), not a skip-if-busy flag: unlike a
+// single-completion in-flight guard, distinct concurrent completions must
+// each still be evaluated once it's their turn, so the daily/weekly caps
+// below can legitimately admit BOTH of two eligible completions, not just
+// the first one to arrive. Release always happens in a `finally` so a
+// throw never leaves a kid's lock stuck held for the rest of the isolate's
+// life.
+const studentAwardLocks = new Map(); // accessCode -> Promise (resolves when free)
+
+async function acquireStudentAwardLock(accessCode) {
+  // Loop rather than a single await: while this waiter was asleep, another
+  // waiter may have grabbed the lock first (see the release-then-resolve
+  // ordering below) — re-check after waking up instead of assuming the
+  // lock is free.
+  for (;;) {
+    const current = studentAwardLocks.get(accessCode);
+    if (!current) break;
+    await current;
+  }
+  let release;
+  const held = new Promise((resolve) => { release = resolve; });
+  studentAwardLocks.set(accessCode, held);
+  return () => {
+    // Delete BEFORE resolving: microtasks drain one at a time, so the
+    // first waiter to wake up from `await current` always sees the map
+    // entry already gone (or already replaced by a still-earlier waiter)
+    // rather than racing this cleanup.
+    studentAwardLocks.delete(accessCode);
+    release();
+  };
+}
 
 function weekKey(isoDate = new Date().toISOString()) {
   const date = new Date(isoDate);
@@ -94,52 +120,36 @@ export async function onRequestPost(context) {
   }
 
   const now = new Date().toISOString();
-  const progress = codeData.progress || {};
-  const prev = progress.minny_practice || {};
   const currentWeek = weekKey(now);
   const todayKey = todayVN();
 
-  // Idempotency guard (Buffet blocker, 2026-07-17): the daily/weekly counters
-  // below are a check-then-act read of KV with no CAS, so a burst of
-  // identical retries (flaky network, a kid mashing "finish") can all read
-  // the same pre-write counts and all get paid before any of their writes
-  // land — reproduced live at 60-70💎 against a 20💎/day intended cap, with
-  // the persisted ledger and the REAL diamond balance drifting apart on top
-  // of that. A client-supplied completion_id (stable per finished session,
-  // same value on every retry of THAT completion) lets us dedupe on the
-  // exact completion instead of racing a counter. Older/direct callers with
-  // no completion_id fall back to a same-kid+mode+pack+VN-day key, which
-  // still collapses an identical-payload retry storm to one payment.
-  const idemKey = completionId || `${accessCode}:${promptId}:${packId}:${todayKey}`;
-  const lockKey = `${accessCode}:${idemKey}`;
+  // Dedup ONLY on a REAL client-supplied completion_id (Buffet finding 1,
+  // 2026-07-17 — corrected design; the earlier synthesized pack-based
+  // fallback key was broken: pack_id is hardcoded 'general' for every
+  // kid/day in minny-speaking-context.js, and no client sends
+  // completion_id yet, so a kid's genuine SECOND same-day homework
+  // completion reused the exact same fallback key and silently paid 0 —
+  // HOMEWORK_DAILY_CAP=2 was unreachable). With no id, we do not dedup at
+  // all and rely solely on the daily/weekly caps below (safe now that all
+  // of one kid's awards serialize — see acquireStudentAwardLock) — worst
+  // case is cap-bounded, never an under-pay of a genuine second session.
+  // The client will always send a stable completion_id once Steve's
+  // frontend change ships; this no-id path is purely defensive.
+  const idemKey = completionId || null;
 
-  if (diamondAwardInFlight.has(lockKey)) {
-    // A concurrent duplicate for the EXACT same completion is already being
-    // decided/written on this isolate right now (Buffet's identical-retry
-    // repro). Treat this one as an instant no-op instead of racing the same
-    // check-then-act read on codeData — the winning request already owns
-    // this completion's payout and log entry. Only the balance is worth a
-    // fresh read here so the UI never sees a stale/zero value.
-    const state = await loadProgressState(env, accessCode, codeData);
-    return json({
-      ok: true,
-      sessions_this_week: numberOrZero(prev.sessions_this_week) || 1,
-      diamonds_awarded: 0,
-      diamond_balance: Number(publicProgressState(state).diamonds) || 0,
-      message_vi: readyForClass
-        ? 'Minny đã lưu — hẹn gặp con trong lớp coaching với Felix!'
-        : 'Minny đã lưu buổi luyện của con.',
-    });
-  }
-
-  // Held for the ENTIRE decide -> reward -> persist sequence below (not just
-  // the rewardStudent call) — releasing it any earlier leaves a window where
-  // a request that arrives right after release, but before this request's
-  // own accessCode write lands, would still read the pre-write ledger and
-  // pay again. That gap is exactly what let the ledger and the real
-  // persisted diamond balance drift apart in the first version of this fix.
-  diamondAwardInFlight.add(lockKey);
+  const releaseLock = await acquireStudentAwardLock(accessCode);
   try {
+    // Re-read fresh state now that it's this request's turn (Buffet finding
+    // 2, 2026-07-17): concurrent requests for the SAME kid with DIFFERENT
+    // completion_ids used to all read the stale codeData captured before
+    // any of them had written, corrupting homework_count/week_total and
+    // letting a later same-day request overpay. Serializing on accessCode
+    // and re-reading here is what makes the daily/weekly caps below
+    // actually hold under concurrency.
+    const freshCodeData = (await env.READ2LEAD_CODES.get(accessCode, { type: 'json' })) || codeData;
+    const progress = freshCodeData.progress || {};
+    const prev = progress.minny_practice || {};
+
     const sessionsThisWeek = prev.weekly_key === currentWeek
       ? numberOrZero(prev.sessions_this_week) + 1
       : 1;
@@ -155,7 +165,7 @@ export async function onRequestPost(context) {
     let weekTotal = sameWeek ? numberOrZero(prevAwards.week_total) : 0;
 
     const prevPaidIds = Array.isArray(prevAwards.paid_ids) ? prevAwards.paid_ids : [];
-    const alreadyPaid = prevPaidIds.includes(idemKey);
+    const alreadyPaid = idemKey ? prevPaidIds.includes(idemKey) : false;
 
     let diamondsToAward = 0;
     if (!alreadyPaid) {
@@ -185,7 +195,9 @@ export async function onRequestPost(context) {
         if (promptId === 'homework_summary') homeworkCount += 1;
         else if (promptId === 'free_talk_summary') freetalkCount += 1;
         weekTotal += diamondsAwarded;
-        paidIds = [idemKey, ...prevPaidIds].slice(0, 40);
+        // Only a REAL completion_id is ever recorded — there is nothing to
+        // dedup a no-id caller against next time, by design (see above).
+        if (idemKey) paidIds = [idemKey, ...prevPaidIds].slice(0, 40);
       }
     }
 
@@ -193,7 +205,7 @@ export async function onRequestPost(context) {
       // Nothing was awarded (ineligible, capped, already-paid replay, or the
       // reward call failed) — report the student's actual current balance,
       // not a stale/zero value.
-      const state = await loadProgressState(env, accessCode, codeData);
+      const state = await loadProgressState(env, accessCode, freshCodeData);
       diamondBalance = Number(publicProgressState(state).diamonds) || 0;
     }
 
@@ -217,7 +229,7 @@ export async function onRequestPost(context) {
     };
 
     const nextCodeData = {
-      ...codeData,
+      ...freshCodeData,
       progress: {
         ...progress,
         minny_practice: nextPractice,
@@ -237,7 +249,7 @@ export async function onRequestPost(context) {
         : 'Minny đã lưu buổi luyện của con.',
     });
   } finally {
-    diamondAwardInFlight.delete(lockKey);
+    releaseLock();
   }
 }
 
