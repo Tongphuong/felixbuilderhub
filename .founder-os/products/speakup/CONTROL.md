@@ -242,10 +242,26 @@ assigns, commits, merges, deploys, or spends.
   ability, and re-check with Phương before tuning any threshold. WATCH:
   Workers AI neuron usage — if shadowing pushes past the included allocation,
   bring numbers to Phương before any degrade.
-- Design self-verification: pending — rule 20 at Phase 4 (deployed preview vs
-  approved mock, 390 + 1280, SHA recorded).
-- Founder handoff: pending — plain-language report at each phase gate; Phương
-  QA on preview with a test code before merge.
+- Design self-verification: **DONE 2026-07-17 — rule 20 MATCH on the DEPLOYED
+  preview** (claude-speakup-shadowing.felixbuilderhub.pages.dev, SHA 59441e0)
+  at 390 AND 1280 vs the approved Night Arcade boards, via a routed harness
+  (stubbed identity only, real bundle + real content). Pass #1 caught 3
+  defects (1280 stage collapse, ribbon crowding, hardcoded "Đang ghi âm"
+  while idle) — all fixed (Steve rounds 3–4, Buffet reject→approve cycle
+  incl. the overflow-clip shear catch) and re-verified live in pass #2.
+  Screenshots `_ops/shadowing-r20-*.png`.
+- Capacity/burst verification: **DONE 2026-07-17 live on the preview**
+  (throwaway is_test code R2L-SHADOWPROB-6HBV, synth voice, 1-day expiry):
+  classroom pace 10/10 HTTP 200, score 100, 1.3–2.1s latency, azure evidence
+  ABSENT from every response (bypass verified live); hammer phase tripped the
+  per-code limiter at exactly call #21/60s with Retry-After (20/60s design
+  confirmed).
+- Verified commit: 59441e0 (origin/claude/speakup-shadowing, deployed preview
+  verified live).
+- Founder handoff: IN PROGRESS — remaining founder gates: (1) content review
+  of both DEV-DRAFT videos (flip `content_status` → `approved` per video =
+  the sign-off artifact), (2) hands-on QA on the preview with a test code,
+  (3) merge ack to main.
 
 ## Prior task (complete): speakup-rewards-tracker
 
