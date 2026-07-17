@@ -230,8 +230,15 @@ export async function onRequestGet(context) {
 
   const modes = buildSpeakingModes(codeData);
 
-  const progressState = await loadProgressState(env, accessCode, codeData);
-  const diamondBalance = Number(publicProgressState(progressState).diamonds) || 0;
+  // A KV hiccup loading progress state must only degrade the diamond pill,
+  // never the whole bootstrap response a kid needs to start practicing.
+  let diamondBalance = 0;
+  try {
+    const progressState = await loadProgressState(env, accessCode, codeData);
+    diamondBalance = Number(publicProgressState(progressState).diamonds) || 0;
+  } catch (err) {
+    console.error('[minny-speaking-context] loadProgressState failed', accessCode, err?.message || err);
+  }
 
   let greeting;
   const homeworkMode = modes.find(m => m.id === 'homework');
