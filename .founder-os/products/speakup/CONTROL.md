@@ -140,7 +140,13 @@ assigns, commits, merges, deploys, or spends.
   (AGENT_LOG 2026-07-17): founder asked whether Claude Design is external —
   answered honestly (a dedicated Claude agent driven by Anthropic's
   frontend-design skill inside Claude Code, not an external studio); founder
-  continued the arrangement. Round 2 (full 8-state set in A) in flight.
+  continued the arrangement. Round 2 delivered (43ce699) + Elon QA fix round
+  (01 code entry: 4 digit cells → full-code ticket input, bef74ce — real codes
+  are R2L-XXXX-XXXX; caught before presentation). **DESIGN GATE PASSED
+  2026-07-17: Phương approved the full 8-screen Night Arcade set as-drawn
+  ("Approve — build it") — design of record =
+  `design_handoff_speakup_shadowing_v2/round2/` @ bef74ce; rule-20 comparison
+  target for the build.**
 - Lane: Mark worktree `mark-shadowing-core` → `claude-bg/shadowing-core`;
   design lane `claude-design-shadowing` → `claude-bg/shadowing-design`
   (Claude Design, see pivot above); Steve build packet after design approval;
