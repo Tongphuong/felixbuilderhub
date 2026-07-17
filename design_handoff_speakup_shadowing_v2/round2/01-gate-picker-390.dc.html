@@ -35,15 +35,14 @@
   @keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
   .minny img{width:100%;height:190%;object-fit:cover;transform:translateY(-27%)}
   .gatetitle{color:var(--cream);font-weight:800;font-size:23px;text-align:center}
-  .cells{display:flex;gap:12px}
-  .cell{width:58px;height:66px;border-radius:16px;display:flex;align-items:center;justify-content:center;
-    font-weight:800;font-size:30px;color:var(--gold-hot);background:#152f44;
-    border:2.5px solid rgba(242,204,126,.35);box-shadow:inset 0 2px 6px rgba(0,0,0,.35)}
-  .cell.filled{background:linear-gradient(180deg,#1d3f58,#17354a);border-color:var(--gold-light);
-    box-shadow:0 0 16px rgba(242,204,126,.25)}
-  .cell.caret{border-color:var(--gold-hot)}
-  .cell.caret i{width:3px;height:30px;background:var(--gold-hot);border-radius:2px;animation:blink 1s steps(2,start) infinite}
-  @keyframes blink{50%{opacity:0}}
+  .ticket-input{width:100%;min-height:60px;border-radius:16px;text-align:center;
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-weight:700;font-size:20px;letter-spacing:.05em;color:var(--gold-hot);
+    background:#152f44;border:2.5px solid rgba(242,204,126,.35);
+    box-shadow:inset 0 2px 6px rgba(0,0,0,.35);padding:0 14px;caret-color:var(--gold-hot)}
+  .ticket-input::placeholder{color:var(--cream-dim);opacity:1}
+  .ticket-input:focus{outline:none;border-color:var(--gold-hot);
+    box-shadow:0 0 18px rgba(242,204,126,.3), inset 0 2px 6px rgba(0,0,0,.35)}
   .go{width:100%;border:none;cursor:pointer;margin-top:4px;
     background:linear-gradient(180deg,var(--gold-hot),var(--gold-light) 45%,var(--gold));
     color:#10273a;font-family:var(--font);font-weight:800;font-size:21px;
@@ -93,7 +92,7 @@
   .gapcap{width:390px;margin:26px 0 10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7f97a8;font-weight:700}
 
   @media (prefers-reduced-motion: reduce){
-    .minny,.cell.caret i{animation:none}
+    .minny{animation:none}
   }
 </style>
 </head>
@@ -105,12 +104,7 @@
     <div class="gate" id="shd-code-card">
       <div class="minny"><img src="../../public/assets/minny/minny_idle.png" alt="Minny chờ con"></div>
       <div class="gatetitle">Mã của con là gì?</div>
-      <div class="cells">
-        <div class="cell filled">5</div>
-        <div class="cell filled">3</div>
-        <div class="cell caret"><i></i></div>
-        <div class="cell"></div>
-      </div>
+      <input class="ticket-input" id="shd-code-input" type="text" placeholder="VD: R2L-LINH-8F3KQ2" autocomplete="off" spellcheck="false">
       <button class="go">Vào xem!</button>
     </div>
   </div>

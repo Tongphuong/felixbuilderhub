@@ -22,7 +22,7 @@ Hướng thắng vòng 1 (Night Arcade) phủ đủ 8 trạng thái. Hai màn 04
 
 | Màn | Ý chính | Khi "giảm chuyển động" |
 |---|---|---|
-| 01 | Quầy vé (mã 4 số, 1 nút vàng) + poster phim đêm, phim nổi bật có dàn đèn marquee; L1–L5 + ⭐ mỗi phim / "Chưa luyện" | Minny đứng yên, con trỏ nhập không nhấp nháy; đèn marquee vẫn sáng (tĩnh) |
+| 01 | Quầy vé (1 ô vé duy nhất nhập MÃ ĐẦY ĐỦ dạng R2L-LINH-8F3KQ2 — gõ hoặc dán cả mã; placeholder đúng nguyên văn "VD: R2L-LINH-8F3KQ2"; 1 nút vàng) + poster phim đêm, phim nổi bật có dàn đèn marquee; L1–L5 + ⭐ mỗi phim / "Chưa luyện" | Minny đứng yên; đèn marquee vẫn sáng (tĩnh) |
 | 02 | Sân khấu sáng đèn, 2 luồng đèn rọi; tiến độ = 12 bóng đèn (4 sáng, bóng 5 nhấp nháy); 1 dòng nhắc | Bóng "hiện tại" ngừng nháy nhưng vẫn sáng trắng nổi bật |
 | 03 | Minny hỏi qua bong bóng; 3 tấm VÉ ≥64px; vé đúng bừng vàng + dấu ✓ cuống vé | Vé thắng ngừng "thở" nhưng vẫn sáng và to hơn 3% |
 | 04 | (Như vòng 1 đã duyệt) câu = bảng đèn marquee; mic đồng xu đỏ-vàng | Vòng sóng ẩn, đèn giữ sáng tĩnh |
@@ -51,7 +51,7 @@ Hướng thắng vòng 1 (Night Arcade) phủ đủ 8 trạng thái. Hai màn 04
   (5) chip L1–L5; (6) 🔥 0 hiển thị bình thường-ấm áp, không đỏ/không rung; (7) crop Minny bằng
   mask tròn + `transform:translateY(-27%)` với `height:190%` (object-position KHÔNG ăn theo chiều dọc
   ở đây); (8) chuỗi copy canonical giữ verbatim từng dấu.
-- Mọi id vùng có sẵn trong markup các board: shd-code-card, shd-video-picker, shd-player-host,
+- Mọi id vùng có sẵn trong markup các board: shd-code-card, shd-code-input, shd-video-picker, shd-player-host,
   shd-words, shd-mic-btn, shd-replay-btn, shd-next-btn, shd-question-card, shd-stars, shd-streak,
   shd-progress, shd-summary.
 - Font nhúng: KHÔNG dùng (đã cân nhắc quyền nhúng 1 woff2 — subset tiếng Việt đủ dấu quá nặng để lặp
