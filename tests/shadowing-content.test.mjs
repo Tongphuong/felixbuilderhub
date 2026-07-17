@@ -1,11 +1,43 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { validateShadowingVideo } from '../src/lib/shadowing-content.mjs';
 
 function clone(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
+
+// ---------------------------------------------------------------------------
+// Every shipped video in src/data/shadowing/*.json must validate cleanly --
+// a hand-authored or hand-edited file (segments nudged, questions authored
+// without the LLM step) is just as much a schema-compliance risk as a
+// prep-script bug. Globs the directory rather than hardcoding filenames so a
+// newly-added video rides this automatically (speakup-shadowing-v1-p4-content).
+// ---------------------------------------------------------------------------
+
+const SHADOWING_DATA_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'src', 'data', 'shadowing');
+
+function shippedVideoFiles() {
+  if (!fs.existsSync(SHADOWING_DATA_DIR)) return [];
+  return fs.readdirSync(SHADOWING_DATA_DIR)
+    .filter((name) => name.endsWith('.json'))
+    .map((name) => path.join(SHADOWING_DATA_DIR, name));
+}
+
+test('every shipped src/data/shadowing/*.json validates cleanly', () => {
+  const files = shippedVideoFiles();
+  assert.ok(files.length > 0, 'expected at least one shipped shadowing video JSON file');
+  for (const file of files) {
+    const raw = fs.readFileSync(file, 'utf8');
+    let parsed;
+    assert.doesNotThrow(() => { parsed = JSON.parse(raw); }, `${path.basename(file)} must be valid JSON`);
+    const { ok, errors } = validateShadowingVideo(parsed);
+    assert.equal(ok, true, `${path.basename(file)} failed validation: ${JSON.stringify(errors)}`);
+  }
+});
 
 const VALID_VIDEO = {
   schema_version: 1,
@@ -14,6 +46,7 @@ const VALID_VIDEO = {
   title_vi: 'Hạt Giống Nhỏ',
   title_en: 'The Tiny Seed',
   level: 'L2',
+  content_status: 'dev_draft',
   duration_s: 185.5,
   prepared_at: '2026-07-17T10:00:00.000Z',
   source: { caption_kind: 'manual' },
@@ -123,6 +156,38 @@ test('rejects an invalid level', () => {
   const video = clone(VALID_VIDEO);
   video.level = 'L6';
   expectError(video, /level must be one of/, 'level');
+});
+
+// ---------------------------------------------------------------------------
+// content_status (Buffet review round, 2026-07-17): required going forward --
+// exactly 'dev_draft' or 'approved', missing entirely is also an error. The
+// field flip to 'approved' is Phuong's own content-review sign-off artifact.
+// ---------------------------------------------------------------------------
+
+test('accepts content_status: dev_draft', () => {
+  const video = clone(VALID_VIDEO);
+  video.content_status = 'dev_draft';
+  const { ok, errors } = validateShadowingVideo(video);
+  assert.equal(ok, true, JSON.stringify(errors));
+});
+
+test('accepts content_status: approved', () => {
+  const video = clone(VALID_VIDEO);
+  video.content_status = 'approved';
+  const { ok, errors } = validateShadowingVideo(video);
+  assert.equal(ok, true, JSON.stringify(errors));
+});
+
+test('rejects a missing content_status', () => {
+  const video = clone(VALID_VIDEO);
+  delete video.content_status;
+  expectError(video, /content_status/, 'content_status missing');
+});
+
+test('rejects an invalid content_status value', () => {
+  const video = clone(VALID_VIDEO);
+  video.content_status = 'published';
+  expectError(video, /content_status/, 'content_status invalid value');
 });
 
 test('rejects a non-positive duration_s', () => {

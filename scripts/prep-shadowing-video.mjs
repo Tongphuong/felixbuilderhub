@@ -509,6 +509,10 @@ async function main(argv, { fetchFn = fetch } = {}) {
         title_vi: titleVi || 'placeholder-for-validation-only',
         title_en: titleEn || 'placeholder-for-validation-only',
         level: args.level,
+        // content_status (Buffet review round, 2026-07-17): now required by
+        // the validator. A prep run always writes dev_draft -- flipping to
+        // approved is Phuong's own content-review sign-off, never this script's.
+        content_status: 'dev_draft',
         duration_s: durationS || 1,
         prepared_at: new Date().toISOString(),
         source: { caption_kind: captionsResult.captionKind },
@@ -541,6 +545,8 @@ async function main(argv, { fetchFn = fetch } = {}) {
     title_vi: titleVi,
     title_en: titleEn || '',
     level: args.level,
+    // See baseShell's comment above -- always dev_draft; Phuong flips it.
+    content_status: 'dev_draft',
     duration_s: durationS,
     prepared_at: new Date().toISOString(),
     source: { caption_kind: captionsResult.captionKind },

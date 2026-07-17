@@ -1,9 +1,23 @@
 /**
  * YouTube IFrame API wrapper for the Shadowing page: loads the API once,
  * then drives a single embedded player through one segment at a time.
- * NO auto-chaining — every playSegment/replaySegment call is expected to
- * come from the page inside a user tap; this module never queues up "play
- * the next segment" on its own.
+ * This MODULE never auto-chains on its own — it has no internal timer or
+ * callback that queues up "play the next segment" by itself; every
+ * playSegment/replaySegment call is driven entirely by the caller (the
+ * page), one call per invocation, no exceptions in here.
+ *
+ * Corrected (Buffet review round, 2026-07-17 — A-F2): the PAGE, however,
+ * legitimately calls playSegment repeatedly without a fresh user tap for
+ * each one, to auto-advance through a run of consecutive shadow:false
+ * (watch-only) segments — there's nothing for the kid to do on those, so
+ * the page resumes playback on the already-engaged iframe session from the
+ * ONE tap that started the exercise, rather than demanding a tap per
+ * segment. That's a page-level policy choice, not something this module
+ * does — but it does mean "every call comes from a fresh user tap" is not
+ * literally true end to end, and autoplay continuing across that many
+ * segments without a new gesture is exactly the kind of thing that varies
+ * by browser/OS autoplay policy. Flagged for real-device verification, not
+ * yet confirmed on an actual phone/tablet.
  *
  * `win`/`doc` are always accepted as explicit params (never read off a
  * global) so both the loader and the player are testable with fakes.
