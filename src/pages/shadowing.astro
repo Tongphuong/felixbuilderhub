@@ -20,6 +20,67 @@
  * thrown. Zero valid videos -> the picker shows a friendly empty-state
  * (handled client-side once the (possibly empty) video list reaches the
  * page as JSON).
+ *
+ * ---------------------------------------------------------------------
+ * RECORDED MOCK DEVIATIONS (rule-20) -- from the build report to Elon/
+ * Phương, kept here verbatim so any reviewer can always find them in-repo
+ * (Buffet process finding, first review round). None of these are silent:
+ * ---------------------------------------------------------------------
+ * 1. Video posters: boards' t1-t4 cartoon-sky thumbnails are illustrated
+ *    mock placeholders; the build uses real YouTube thumbnails
+ *    (i.ytimg.com/vi/<id>/hqdefault.jpg) since real content varies per video.
+ * 2. "Tonight's featured" card: content schema has no featured flag, so the
+ *    first video in the sorted list is marked -- arbitrary, not
+ *    founder-specified.
+ * 3. In-frame cartoon artwork (cat/sun/clouds on boards 02/04/08) is mock
+ *    stand-in for "a video is playing here"; the build shows the actual
+ *    YouTube iframe instead -- expected, but the illustrated scene itself
+ *    never ships.
+ * 4. Boards 03/05/06 show no player at all (full Minny takeover); the
+ *    build keeps the paused player+overlay visible behind/above the state
+ *    panel throughout the session instead of tearing it down each phase,
+ *    for continuity and so "Nghe lại câu" replay never requires
+ *    remounting the iframe. Panel content below is otherwise faithful.
+ * 5. Board 07 "Xem trọn video": the board draws one static state; tapping
+ *    it plays the full video inline in the same player area (button
+ *    becomes "Đang phát video…") since no second screen is drawn for
+ *    during-playback.
+ * 6. 🔥 0 calm display: shown proactively in the HUD the moment
+ *    record_exhausted is reached (before the tap that triggers the
+ *    engine's actual streak reset), so the HUD never flashes a stale
+ *    higher number.
+ * 7. New copy needing review: the unplayable-video fallback --
+ *    "Phim này đang gặp sự cố, con chọn phim khác giúp Minny nhé!" -- is
+ *    not in the approved boards; needs founder/Elon sign-off before ship.
+ * 8. MAX_SECONDS recording cap -- originally a judgment call (10s); Elon
+ *    ruled 12s in the Buffet-A fix round (server-verified safe), see below.
+ * 9. Resume edge case: a browser refresh mid-retry-attempt loses the exact
+ *    lit/warm/off word pattern from the last graded attempt (only
+ *    stars/streak persist in the snapshot) -- resumed retry screens show
+ *    words reset to "off" rather than the last settled pattern. Live-
+ *    session flow is unaffected.
+ * 10. Content JSONs: src/data/shadowing/*.json may not exist yet on a given
+ *     branch (Mark's content-prep packet lands in parallel). The
+ *     empty-state path is implemented and structurally tested regardless.
+ * 11. Small duplication: shadowing-engine.mjs's internal questionForSegment()
+ *     lookup isn't exported, so the identical 3-line pure lookup is
+ *     replicated in this page (read-only, not a rules change) rather than
+ *     editing src/lib.
+ *
+ * Buffet-A fix round (applied, this pass):
+ *  - F1 (HIGH): the progress strip used to render one bulb per segment
+ *    (a 124-segment book wrapped to ~10 rows on 390px). Fixed to always
+ *    render exactly 12 milestone bulbs via milestoneBulbStates() below,
+ *    unit-tested in tests/shadowing-ui.test.mjs.
+ *  - F4: MAX_SECONDS raised 10 -> 12 (Elon ruling, Buffet-confirmed safe).
+ *  - Network-drop guard: a thrown fetch (res === null) now routes to the
+ *    same gentle "Nghỉ một chút nhé!" wait as a 429/asr_outage, instead of
+ *    silently scoring 0 and burning an attempt.
+ *  - Dev-draft ribbon: picker cards show a small "BẢN NHÁP" corner ribbon
+ *    when content_status !== 'approved' (a missing field defaults to
+ *    dev_draft -- safe default, never silently presented as approved).
+ *  - Honest comment (no behavior change) on the auto-advance-through-
+ *    consecutive-watch-segments path -- see showWatchAndPlay() below.
  */
 import SpeakUpAppLayout from '../layouts/SpeakUpAppLayout.astro';
 import { r2lRecorderScriptSrc } from '../scripts/r2l-recorder-script.mjs';
@@ -183,7 +244,7 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
     import { lightWords } from '../lib/shadowing-score.mjs';
     import { fireLessonPassConfetti, playKenney } from '../lib/lesson-juice';
 
-    const MAX_SECONDS = 10; // a shadowed sentence, not a single word (fixit's cap is 6s)
+    const MAX_SECONDS = 12; // Elon ruling (Buffet-confirmed server-side safe): 12-word segments at kid reading pace
 
     let videos = [];
     try {
@@ -388,10 +449,15 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
       els.pickerEmpty.classList.add('hidden');
       videos.forEach((video, idx) => {
         const stars = totalStarsFor(video.id);
+        // Mark's parallel content packet: a MISSING content_status is
+        // treated as 'dev_draft' (the safe default -- never silently
+        // present unreviewed content as approved).
+        const isDraft = video.content_status !== 'approved';
         const card = document.createElement('button');
         card.type = 'button';
         card.className = idx === 0 ? 'shd-card shd-card--tonight' : 'shd-card';
         card.innerHTML = `
+          ${isDraft ? '<span class="shd-ribbon">BẢN NHÁP</span>' : ''}
           <span class="shd-thumb"><img src="https://i.ytimg.com/vi/${encodeURIComponent(video.youtube_id)}/hqdefault.jpg" alt="" loading="lazy" /></span>
           <span class="shd-meta">
             <span class="shd-vtitle">${escapeHtml(video.title_vi)}</span>
@@ -495,20 +561,46 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
       els.streakCounter.classList.remove('shd-counter--zero');
     }
 
+    // Pure — maps overall segment progress onto a FIXED 12-bulb milestone
+    // strip (the approved board's dial), regardless of how many segments
+    // the actual video has (Buffet F1, HIGH: a 124-segment book must still
+    // show the sleek 12-bulb pill, not one wrapped row per segment). Bulb i
+    // is 'on' once progress has passed the (i+1)/12 mark of the video,
+    // 'now' on the first milestone not yet reached (pulses), 'off' after
+    // that; every milestone is 'on' once the video itself is complete.
+    // Unit-tested directly in tests/shadowing-ui.test.mjs (source-extracted,
+    // not imported from src/lib — this is page-local presentation math, not
+    // an engine decision).
+    function milestoneBulbStates(completedSegments, totalSegments, milestoneCount = 12) {
+      const total = Math.max(1, Math.floor(Number(totalSegments)) || 0);
+      const completed = Math.max(0, Math.min(Number(completedSegments) || 0, total));
+      const isComplete = completed >= total;
+      const states = new Array(milestoneCount).fill('off');
+      let currentSet = false;
+      for (let i = 0; i < milestoneCount; i += 1) {
+        const threshold = ((i + 1) / milestoneCount) * total;
+        if (isComplete || completed >= threshold) {
+          states[i] = 'on';
+        } else if (!currentSet) {
+          states[i] = 'now';
+          currentSet = true;
+        }
+      }
+      return states;
+    }
+
     function updateProgressBulbs() {
       const total = session.video.segments.length;
-      const idx = session.currentSegmentIndex;
       const complete = session.phase === 'complete';
+      const completed = complete ? total : session.currentSegmentIndex;
+      const states = milestoneBulbStates(completed, total);
       els.progress.classList.remove('hidden');
       els.progress.innerHTML = '';
-      for (let i = 0; i < total; i += 1) {
+      states.forEach((status) => {
         const b = document.createElement('span');
-        let cls = 'shd-bulb';
-        if (complete || i < idx) cls += ' shd-bulb--on';
-        else if (i === idx) cls += ' shd-bulb--now';
-        b.className = cls;
+        b.className = status === 'off' ? 'shd-bulb' : `shd-bulb shd-bulb--${status}`;
         els.progress.appendChild(b);
-      }
+      });
     }
 
     function onSegmentEnd() {
@@ -525,6 +617,18 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
       els.backBtn.classList.add('hidden');
       updateHud();
       updateProgressBulbs();
+      // NOTE (rule-20, flagged for real-device verification -- do NOT
+      // change this behavior on the strength of this comment alone): the
+      // FIRST call into showWatchAndPlay() per video always originates
+      // inside startVideo()'s picker-card click handler, a genuine user
+      // tap. Every later call -- a segment ending and auto-advancing into
+      // the next segment's watch phase, or a watch-only
+      // (segment.shadow === false) segment chaining straight into the
+      // next one via onSegmentEnd -- calls playSegment() here with NO new
+      // tap in between. This resumes the SAME already-engaged YT.Player
+      // session (never a cold autoplay on a fresh iframe), which is what
+      // mobile autoplay policies actually gate on in practice -- but that
+      // has not been confirmed on a real iPad/iOS Safari device yet.
       playerCtl.playSegment(currentSegment());
     }
 
@@ -870,7 +974,13 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
         data = null;
       }
 
-      if ((res && res.status === 429) || (data && data.ok === false && data.asr_outage)) {
+      // A totally-thrown fetch (res still null -- network dropped mid-
+      // request) is exactly the same kind of outage as a 429 or a
+      // server-mapped asr_outage: the kid DID speak, only the round-trip
+      // failed. Route it to the same gentle wait, never a scored/consumed
+      // attempt (Buffet finding: this used to fall through to scorePercent
+      // 0 and burn one of the 3 tries on a plain network drop).
+      if (!res || res.status === 429 || (data && data.ok === false && data.asr_outage)) {
         showWait();
         return;
       }

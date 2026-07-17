@@ -182,3 +182,114 @@ test('every kid-facing canonical string carries full Vietnamese diacritics (no s
     assert.match(str, VN_DIACRITIC_RE, `expected "${str}" to carry at least one Vietnamese diacritic`);
   }
 });
+
+// ---------------------------------------------------------------------------
+// 6. Buffet-A fix round (first review pass on ae6a104)
+// ---------------------------------------------------------------------------
+
+// Same source-extraction convention as tests/speakup-fixit-ui.test.mjs's
+// loadPureHelpers(): milestoneBulbStates() is page-local presentation math
+// (NOT engine logic, so it stays out of src/lib per the packet's file-set
+// boundary) but it's still pure and worth unit-testing directly rather than
+// trusting a string match alone.
+function extractFunctionSrc(source, name) {
+  const marker = `function ${name}(`;
+  const start = source.indexOf(marker);
+  assert.notEqual(start, -1, `function ${name} not found in shadowing.astro`);
+  const parenStart = source.indexOf('(', start);
+  let parenDepth = 0;
+  let parenEnd = -1;
+  for (let i = parenStart; i < source.length; i += 1) {
+    if (source[i] === '(') parenDepth += 1;
+    else if (source[i] === ')') {
+      parenDepth -= 1;
+      if (parenDepth === 0) {
+        parenEnd = i;
+        break;
+      }
+    }
+  }
+  assert.notEqual(parenEnd, -1, `could not find end of parameter list for function ${name}`);
+  const braceStart = source.indexOf('{', parenEnd);
+  let depth = 0;
+  let end = -1;
+  for (let i = braceStart; i < source.length; i += 1) {
+    if (source[i] === '{') depth += 1;
+    else if (source[i] === '}') {
+      depth -= 1;
+      if (depth === 0) {
+        end = i + 1;
+        break;
+      }
+    }
+  }
+  assert.notEqual(end, -1, `could not find closing brace of function ${name}`);
+  return source.slice(start, end);
+}
+
+function loadMilestoneBulbStates() {
+  const src = extractFunctionSrc(page, 'milestoneBulbStates');
+  const body = `${src}\n\nreturn milestoneBulbStates;`;
+  // eslint-disable-next-line no-new-func -- see file header: pure, DOM-free source extracted from the page itself
+  return new Function(body)();
+}
+
+const milestoneBulbStates = loadMilestoneBulbStates();
+
+test('milestoneBulbStates always returns exactly 12 entries, regardless of segment count', () => {
+  for (const total of [1, 7, 12, 18, 124]) {
+    const states = milestoneBulbStates(0, total);
+    assert.equal(states.length, 12, `expected 12 bulbs for a ${total}-segment video, got ${states.length}`);
+  }
+});
+
+test('milestoneBulbStates: a 12-segment video at segment 4 matches the approved board exactly (4 on, 1 now, 7 off)', () => {
+  assert.deepEqual(
+    milestoneBulbStates(4, 12),
+    ['on', 'on', 'on', 'on', 'now', 'off', 'off', 'off', 'off', 'off', 'off', 'off'],
+  );
+});
+
+test('milestoneBulbStates: a 124-segment book at segment 50 still yields a sane 12-bulb split', () => {
+  const states = milestoneBulbStates(50, 124);
+  const onCount = states.filter((s) => s === 'on').length;
+  const nowCount = states.filter((s) => s === 'now').length;
+  assert.equal(onCount, 4, 'expected 4 fully-passed milestones at 50/124');
+  assert.equal(nowCount, 1, 'expected exactly one pulsing "now" milestone');
+  assert.equal(states.slice(5).every((s) => s === 'off'), true, 'expected the remaining milestones off');
+});
+
+test('milestoneBulbStates: a 1-segment video is "now" until complete, then all 12 light', () => {
+  assert.deepEqual(milestoneBulbStates(0, 1), ['now', ...new Array(11).fill('off')]);
+  assert.deepEqual(milestoneBulbStates(1, 1), new Array(12).fill('on'), 'once completed>=total, every milestone is on');
+});
+
+test('MAX_SECONDS is 12 (Elon ruling, Buffet-confirmed) and is documented as such', () => {
+  assert.match(page, /const MAX_SECONDS = 12;/);
+});
+
+test('a thrown fetch (res === null) routes to the gentle-wait path, same as a 429/asr_outage, never a scored attempt', () => {
+  assert.match(
+    page,
+    /if\s*\(\s*!res\s*\|\|\s*res\.status === 429\s*\|\|\s*\(data && data\.ok === false && data\.asr_outage\)\s*\)\s*{\s*\n\s*showWait\(\);/,
+    'expected !res to short-circuit into showWait() before any scorePercent/reduce SPEECH_SCORED call',
+  );
+});
+
+test('dev-draft ribbon: the picker references content_status and renders the BẢN NHÁP ribbon string', () => {
+  assert.ok(page.includes('content_status'), 'expected the picker to read video.content_status');
+  assert.ok(page.includes('BẢN NHÁP'), 'expected the dev-draft ribbon copy "BẢN NHÁP" verbatim');
+  // Missing-field-defaults-to-draft is the safe default (never silently
+  // presented as approved) -- assert the comparison is the inclusive one,
+  // not an opt-in "=== 'dev_draft'" that would treat an absent field as approved.
+  assert.match(page, /content_status\s*!==\s*'approved'/, "expected a missing content_status to default to draft (checked via !== 'approved', not === 'dev_draft')");
+});
+
+test('the 11-item recorded-deviations list is retrievable as a comment block in shadowing.astro', () => {
+  assert.ok(page.includes('RECORDED MOCK DEVIATIONS'), 'expected the deviations block header comment');
+  assert.ok(page.includes('Buffet-A fix round'), 'expected the fix-round note appended to the deviations block');
+});
+
+test('the auto-advance-through-consecutive-watch-segments path carries an honest, non-behavior-changing comment', () => {
+  assert.ok(page.includes('flagged for real-device verification'), 'expected the rule-20 real-device-verification flag comment near showWatchAndPlay()');
+});
