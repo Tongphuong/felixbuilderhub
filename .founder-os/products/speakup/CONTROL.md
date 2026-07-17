@@ -132,6 +132,15 @@ assigns, commits, merges, deploys, or spends.
   `claude-bg/shadowing-design`, folder `design_handoff_speakup_shadowing_v2/`
   (v1 folder retained as rejected/functional reference; steve-shadowing-mock
   lane cleared).
+  ROUND-1 GATE (2026-07-17): both directions (A "Đêm sân khấu" night-arcade
+  marquee / B "Ngày nắng hình dán" sticker-sunshine, 98dc14a) passed Elon's
+  QA with zero fix rounds; FOUNDER PICKED **Direction A** for the full set,
+  and **L1–L5** level chips (overriding the Dễ/Vừa/Khó lean). Praise copy
+  "Tuyệt vời!"/"Giỏi quá!" Elon-approved. Transparency Q&A on the record
+  (AGENT_LOG 2026-07-17): founder asked whether Claude Design is external —
+  answered honestly (a dedicated Claude agent driven by Anthropic's
+  frontend-design skill inside Claude Code, not an external studio); founder
+  continued the arrangement. Round 2 (full 8-state set in A) in flight.
 - Lane: Mark worktree `mark-shadowing-core` → `claude-bg/shadowing-core`;
   design lane `claude-design-shadowing` → `claude-bg/shadowing-design`
   (Claude Design, see pivot above); Steve build packet after design approval;
