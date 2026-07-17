@@ -2583,10 +2583,15 @@
    overlapping/truncating the title column on both cards. Anchored to the
    THUMBNAIL's own corner instead (position:relative added on .shd-thumb
    above) so the title text keeps its full width -- unobtrusive per the
-   earlier ruling, small enough it never needs to overlap card content. */
+   earlier ruling, small enough it never needs to overlap card content.
+   r20 defect (round 3): negative offsets (top:-6px;right:-6px) placed the
+   badge PARTIALLY OUTSIDE .shd-thumb, which carries overflow:hidden (needed
+   for the rounded-corner image clip) -- the badge's own top-right corner
+   was getting sheared off by that clip. Offsets must stay non-negative so
+   the whole badge sits INSIDE the clipped box. */
 .shd-card { position: relative; }
 .shd-ribbon {
-  position: absolute; top: -6px; right: -6px; z-index: 3;
+  position: absolute; top: 6px; right: 6px; z-index: 3;
   background: rgba(23, 53, 74, 0.95); border: 1.5px solid rgba(242, 204, 126, 0.5);
   color: var(--gold-light); font-weight: 800; font-size: 9px; letter-spacing: 0.04em;
   border-radius: 999px; padding: 2px 7px; text-transform: uppercase;

@@ -323,6 +323,26 @@ test('r20 #2: the dev-draft ribbon is anchored to the thumbnail, not the card (t
   assert.match(page, /<img src="https:\/\/i\.ytimg\.com\/vi\/[^>]*>\s*\n\s*\$\{isDraft[^}]*shd-ribbon/, 'expected the ribbon markup nested inside the thumbnail, after its <img>');
 });
 
+test('r20 #2 round 3: the ribbon offsets stay non-negative so the badge never gets sheared by .shd-thumb\'s overflow:hidden clip', () => {
+  // Buffet's exact finding on b90b214: top:-6px;right:-6px placed the
+  // badge PARTIALLY OUTSIDE .shd-thumb, which still clips via
+  // overflow:hidden (needed for the rounded-corner image) -- the badge's
+  // own corner was sheared off by that clip. A negative top/right offset
+  // on .shd-ribbon combined with overflow:hidden on .shd-thumb is exactly
+  // the broken combination; this is a cheap tripwire for it recurring.
+  const thumbBlockMatch = css.match(/\.shd-thumb\s*{([^}]*)}/);
+  assert.ok(thumbBlockMatch, 'expected a .shd-thumb rule');
+  assert.match(thumbBlockMatch[1], /overflow:\s*hidden/, 'expected .shd-thumb to still clip (rounded-corner image) -- if this ever changes, re-check the offset requirement below');
+
+  const ribbonBlockMatch = css.match(/\.shd-ribbon\s*{([^}]*)}/s);
+  assert.ok(ribbonBlockMatch, 'expected a .shd-ribbon rule');
+  const topMatch = ribbonBlockMatch[1].match(/\btop:\s*(-?\d+(?:\.\d+)?)px/);
+  const rightMatch = ribbonBlockMatch[1].match(/\bright:\s*(-?\d+(?:\.\d+)?)px/);
+  assert.ok(topMatch && rightMatch, 'expected explicit top/right px offsets on .shd-ribbon');
+  assert.ok(Number(topMatch[1]) >= 0, `expected .shd-ribbon's top offset to be non-negative (inside the clipped thumbnail), got ${topMatch[1]}px`);
+  assert.ok(Number(rightMatch[1]) >= 0, `expected .shd-ribbon's right offset to be non-negative (inside the clipped thumbnail), got ${rightMatch[1]}px`);
+});
+
 test('r20 #3: the mic caption is state-truthful — idle copy is the markup default, recording copy only appears when the mic actually starts', () => {
   assert.ok(page.includes('Bấm micro rồi nói cả câu nhé!'), 'expected the idle/armed mic caption verbatim');
   assert.ok(page.includes('Đang ghi âm… nói cả câu nhé!'), 'expected the recording-in-progress mic caption verbatim (unchanged copy)');
