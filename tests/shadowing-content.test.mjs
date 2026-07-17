@@ -46,6 +46,7 @@ const VALID_VIDEO = {
   title_vi: 'Hạt Giống Nhỏ',
   title_en: 'The Tiny Seed',
   level: 'L2',
+  content_status: 'dev_draft',
   duration_s: 185.5,
   prepared_at: '2026-07-17T10:00:00.000Z',
   source: { caption_kind: 'manual' },
@@ -155,6 +156,38 @@ test('rejects an invalid level', () => {
   const video = clone(VALID_VIDEO);
   video.level = 'L6';
   expectError(video, /level must be one of/, 'level');
+});
+
+// ---------------------------------------------------------------------------
+// content_status (Buffet review round, 2026-07-17): required going forward --
+// exactly 'dev_draft' or 'approved', missing entirely is also an error. The
+// field flip to 'approved' is Phuong's own content-review sign-off artifact.
+// ---------------------------------------------------------------------------
+
+test('accepts content_status: dev_draft', () => {
+  const video = clone(VALID_VIDEO);
+  video.content_status = 'dev_draft';
+  const { ok, errors } = validateShadowingVideo(video);
+  assert.equal(ok, true, JSON.stringify(errors));
+});
+
+test('accepts content_status: approved', () => {
+  const video = clone(VALID_VIDEO);
+  video.content_status = 'approved';
+  const { ok, errors } = validateShadowingVideo(video);
+  assert.equal(ok, true, JSON.stringify(errors));
+});
+
+test('rejects a missing content_status', () => {
+  const video = clone(VALID_VIDEO);
+  delete video.content_status;
+  expectError(video, /content_status/, 'content_status missing');
+});
+
+test('rejects an invalid content_status value', () => {
+  const video = clone(VALID_VIDEO);
+  video.content_status = 'published';
+  expectError(video, /content_status/, 'content_status invalid value');
 });
 
 test('rejects a non-positive duration_s', () => {

@@ -6,12 +6,19 @@
  *
  * Schema (spec SPEC_SPEAKUP_SHADOWING.md):
  *   { schema_version: 1, id: slug, youtube_id: 11-char id, title_vi,
- *     title_en, level: 'L1'..'L5', duration_s: number, prepared_at: ISO
- *     string, source: { caption_kind: 'manual'|'auto' },
+ *     title_en, level: 'L1'..'L5', content_status: 'dev_draft'|'approved',
+ *     duration_s: number, prepared_at: ISO string,
+ *     source: { caption_kind: 'manual'|'auto' },
  *     segments: [{ i, start, end, text_en, text_vi?, shadow }],
  *     questions: [{ id, after_segment, type: 'yes_no'|'choice',
  *       question_en, question_vi, options_en?, options_vi?,
  *       correct_index?, answer? }] }
+ *
+ * `content_status` (added post-launch, Buffet review round 2026-07-17):
+ * REQUIRED on every video, exactly 'dev_draft' or 'approved' — no other
+ * value, and missing entirely is also an error. A new prep-script run always
+ * writes 'dev_draft'; flipping a file to 'approved' is Phuong's own content
+ * review sign-off, never set by a worker or a script.
  *
  * `validateShadowingVideo` collects EVERY error before returning (never
  * stops at the first) so a broken prep run or hand-edit gets one full
@@ -19,6 +26,7 @@
  */
 
 const LEVELS = new Set(['L1', 'L2', 'L3', 'L4', 'L5']);
+const CONTENT_STATUSES = new Set(['dev_draft', 'approved']);
 const CAPTION_KINDS = new Set(['manual', 'auto']);
 const QUESTION_TYPES = new Set(['yes_no', 'choice']);
 
@@ -67,6 +75,10 @@ export function validateShadowingVideo(json) {
 
   if (typeof src.level !== 'string' || !LEVELS.has(src.level)) {
     errors.push("level must be one of 'L1'..'L5'");
+  }
+
+  if (typeof src.content_status !== 'string' || !CONTENT_STATUSES.has(src.content_status)) {
+    errors.push("content_status must be one of 'dev_draft'|'approved' (required — missing is also an error)");
   }
 
   if (!isFiniteNumber(src.duration_s) || src.duration_s <= 0) {
@@ -209,6 +221,7 @@ export function validateShadowingVideo(json) {
     title_vi: src.title_vi,
     title_en: src.title_en,
     level: src.level,
+    content_status: src.content_status,
     duration_s: src.duration_s,
     prepared_at: src.prepared_at,
     source: isPlainObject(src.source) ? { ...src.source } : src.source,
