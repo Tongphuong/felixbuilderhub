@@ -1,0 +1,1011 @@
+---
+/**
+ * SpeakUp Shadowing — built to the APPROVED design of record:
+ * design_handoff_speakup_shadowing_v2/round2/*.dc.html (AS-DRAWN, bef74ce)
+ * + its README (rule-20 builder-must-match list is binding). Full-screen
+ * app shell (SpeakUpAppLayout), no marketing chrome — same convention as
+ * speak-up.astro.
+ *
+ * This page is the DOM/wiring layer only. All decision logic lives in the
+ * five shadowing-*.mjs modules under src/lib/ (read, never edited here):
+ *   - shadowing-engine.mjs   session state machine (phase/streak/stars)
+ *   - shadowing-player.mjs   YouTube IFrame API wrapper (segment playback)
+ *   - shadowing-speech.mjs   SpeechRecognition wrapper (live word-lighting)
+ *   - shadowing-score.mjs    lightWords() for karaoke chips + PASS_PERCENT
+ *   - shadowing-content.mjs  validateShadowingVideo() for content JSON
+ *
+ * Content: every src/data/shadowing/*.json is validated at BUILD time
+ * (Astro frontmatter runs on the server/CLI, so this never ships an
+ * unvalidated file); invalid files are skipped with a console.warn, never
+ * thrown. Zero valid videos -> the picker shows a friendly empty-state
+ * (handled client-side once the (possibly empty) video list reaches the
+ * page as JSON).
+ *
+ * ---------------------------------------------------------------------
+ * RECORDED MOCK DEVIATIONS (rule-20) -- from the build report to Elon/
+ * Phương, kept here verbatim so any reviewer can always find them in-repo
+ * (Buffet process finding, first review round). None of these are silent:
+ * ---------------------------------------------------------------------
+ * 1. Video posters: boards' t1-t4 cartoon-sky thumbnails are illustrated
+ *    mock placeholders; the build uses real YouTube thumbnails
+ *    (i.ytimg.com/vi/<id>/hqdefault.jpg) since real content varies per video.
+ * 2. "Tonight's featured" card: content schema has no featured flag, so the
+ *    first video in the sorted list is marked -- arbitrary, not
+ *    founder-specified.
+ * 3. In-frame cartoon artwork (cat/sun/clouds on boards 02/04/08) is mock
+ *    stand-in for "a video is playing here"; the build shows the actual
+ *    YouTube iframe instead -- expected, but the illustrated scene itself
+ *    never ships.
+ * 4. Boards 03/05/06 show no player at all (full Minny takeover); the
+ *    build keeps the paused player+overlay visible behind/above the state
+ *    panel throughout the session instead of tearing it down each phase,
+ *    for continuity and so "Nghe lại câu" replay never requires
+ *    remounting the iframe. Panel content below is otherwise faithful.
+ * 5. Board 07 "Xem trọn video": the board draws one static state; tapping
+ *    it plays the full video inline in the same player area (button
+ *    becomes "Đang phát video…") since no second screen is drawn for
+ *    during-playback.
+ * 6. 🔥 0 calm display: shown proactively in the HUD the moment
+ *    record_exhausted is reached (before the tap that triggers the
+ *    engine's actual streak reset), so the HUD never flashes a stale
+ *    higher number.
+ * 7. New copy needing review: the unplayable-video fallback --
+ *    "Phim này đang gặp sự cố, con chọn phim khác giúp Minny nhé!" -- is
+ *    not in the approved boards; needs founder/Elon sign-off before ship.
+ * 8. MAX_SECONDS recording cap -- originally a judgment call (10s); Elon
+ *    ruled 12s in the Buffet-A fix round (server-verified safe), see below.
+ * 9. Resume edge case: a browser refresh mid-retry-attempt loses the exact
+ *    lit/warm/off word pattern from the last graded attempt (only
+ *    stars/streak persist in the snapshot) -- resumed retry screens show
+ *    words reset to "off" rather than the last settled pattern. Live-
+ *    session flow is unaffected.
+ * 10. Content JSONs: src/data/shadowing/*.json may not exist yet on a given
+ *     branch (Mark's content-prep packet lands in parallel). The
+ *     empty-state path is implemented and structurally tested regardless.
+ * 11. Small duplication: shadowing-engine.mjs's internal questionForSegment()
+ *     lookup isn't exported, so the identical 3-line pure lookup is
+ *     replicated in this page (read-only, not a rules change) rather than
+ *     editing src/lib.
+ *
+ * Buffet-A fix round (applied, this pass):
+ *  - F1 (HIGH): the progress strip used to render one bulb per segment
+ *    (a 124-segment book wrapped to ~10 rows on 390px). Fixed to always
+ *    render exactly 12 milestone bulbs via milestoneBulbStates() below,
+ *    unit-tested in tests/shadowing-ui.test.mjs.
+ *  - F4: MAX_SECONDS raised 10 -> 12 (Elon ruling, Buffet-confirmed safe).
+ *  - Network-drop guard: a thrown fetch (res === null) now routes to the
+ *    same gentle "Nghỉ một chút nhé!" wait as a 429/asr_outage, instead of
+ *    silently scoring 0 and burning an attempt.
+ *  - Dev-draft ribbon: picker cards show a small "BẢN NHÁP" corner ribbon
+ *    when content_status !== 'approved' (a missing field defaults to
+ *    dev_draft -- safe default, never silently presented as approved).
+ *  - Honest comment (no behavior change) on the auto-advance-through-
+ *    consecutive-watch-segments path -- see showWatchAndPlay() below.
+ */
+import SpeakUpAppLayout from '../layouts/SpeakUpAppLayout.astro';
+import { r2lRecorderScriptSrc } from '../scripts/r2l-recorder-script.mjs';
+import { validateShadowingVideo } from '../lib/shadowing-content.mjs';
+
+const r2lRecorderSrc = r2lRecorderScriptSrc();
+
+const rawModules = import.meta.glob('../data/shadowing/*.json', { eager: true });
+const videos = [];
+for (const [path, mod] of Object.entries(rawModules)) {
+  const json = mod && typeof mod === 'object' && 'default' in mod ? mod.default : mod;
+  const { ok, errors, video } = validateShadowingVideo(json);
+  if (ok) {
+    videos.push(video);
+  } else {
+    // Mark's content-prep packet lands these files in parallel; a bad one
+    // must never break the build or block every other video, just itself.
+    console.warn(`[shadowing] skipping invalid content file ${path}: ${errors.join('; ')}`);
+  }
+}
+videos.sort((a, b) => String(a.title_vi).localeCompare(String(b.title_vi), 'vi'));
+
+// Server-rendered JSON payload for the client script below. `<` is escaped
+// so a title/text field can never prematurely close this script tag.
+const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
+---
+
+<SpeakUpAppLayout
+  title="Shadowing — Luyện nói cùng Minny | Felix Coaching"
+  robots="noindex, follow"
+>
+  <div class="shd-root" id="shd-root">
+
+    <!-- ============ 01a: ticket-booth gate (code entry) ============ -->
+    <section class="shd-screen" id="shd-gate-screen">
+      <div class="shd-gate" id="shd-code-card">
+        <div class="shd-minny shd-minny--gate shd-anim-sway">
+          <img src="/assets/minny/minny_idle.png" alt="Minny chờ con" width="96" height="96" />
+        </div>
+        <h1 class="shd-gatetitle">Mã của con là gì?</h1>
+        <input
+          class="shd-ticket-input"
+          id="shd-code-input"
+          type="text"
+          placeholder="VD: R2L-LINH-8F3KQ2"
+          autocomplete="off"
+          spellcheck="false"
+          maxlength="40"
+        />
+        <p class="shd-gate-error hidden" id="shd-gate-error" role="alert"></p>
+        <button class="shd-cta" id="shd-go-btn" type="button">Vào xem!</button>
+      </div>
+    </section>
+
+    <!-- ============ 01b: night poster picker ============ -->
+    <section class="shd-screen hidden" id="shd-picker-screen">
+      <p class="shd-pickhead"><span class="shd-spark">✦</span>Chọn phim cho hôm nay nhé!<span class="shd-spark">✦</span></p>
+      <div class="shd-cards" id="shd-video-picker"></div>
+      <p class="shd-empty hidden" id="shd-picker-empty">Phim đang được chuẩn bị… quay lại sau nhé!</p>
+      <p class="shd-notice hidden" id="shd-picker-notice"></p>
+    </section>
+
+    <!-- ============ 02-07: the stage (watch/question/record/celebrate/complete) ============ -->
+    <section class="shd-screen hidden" id="shd-stage-screen">
+      <div class="shd-hud" id="shd-hud">
+        <div class="shd-counter" id="shd-stars"><span class="shd-em">⭐</span><span id="shd-stars-value">0</span></div>
+        <div class="shd-counter" id="shd-streak"><span class="shd-em">🔥</span><span id="shd-streak-value">0</span></div>
+      </div>
+
+      <div class="shd-stage-cols">
+        <div class="shd-stage-left">
+          <div class="shd-stagezone" id="shd-stagezone">
+            <div class="shd-beam shd-beam--1"></div><div class="shd-beam shd-beam--2"></div>
+            <!-- YT.Player mounts via host: youtube-nocookie.com with playerVars.playsinline: 1
+                 (see shadowing-player.mjs's createSegmentPlayer/ensurePlayer) — no
+                 third-party-cookie embed, inline playback so iOS never forces fullscreen. -->
+            <div class="shd-player" id="shd-player-host">
+              <div id="shd-player-el"></div>
+              <!-- Shields the YouTube chrome from stray taps; a kid can only reach
+                   our own mic/replay/next controls, never YouTube's own UI. -->
+              <div class="shd-player-overlay" id="shd-player-overlay"></div>
+              <div class="shd-veil hidden" id="shd-player-veil"></div>
+              <div class="shd-pausebadge hidden" id="shd-player-pausebadge"><i></i><i></i></div>
+            </div>
+          </div>
+          <div class="shd-strip hidden" id="shd-progress"></div>
+        </div>
+
+        <div class="shd-stage-right">
+          <!-- 02: watch caption -->
+          <div class="shd-watchrow hidden" id="shd-watch-panel">
+            <p class="shd-instr"><span class="shd-spark">✦</span>Xem nhé… sắp đến lượt con!<span class="shd-spark">✦</span></p>
+            <div class="shd-minny shd-minny--watch shd-anim-bob"><img src="/assets/minny/minny_idle.png" alt="Minny cùng xem" width="118" height="118" /></div>
+            <p class="shd-subline">Minny cũng đang xem cùng con</p>
+          </div>
+
+          <!-- 03: question -->
+          <div class="shd-ask hidden" id="shd-question-panel">
+            <div class="shd-minny shd-minny--ask shd-anim-sway"><img src="/assets/minny/minny_idle.png" alt="Minny hỏi con" width="92" height="92" /></div>
+            <div class="shd-bubble" id="shd-question-text"></div>
+          </div>
+          <div class="shd-tickets hidden" id="shd-question-card"></div>
+
+          <!-- 04/06: record (fresh first attempt, or retry after a near-miss) -->
+          <div class="shd-record hidden" id="shd-record-panel">
+            <div class="shd-record-minny-solo hidden" id="shd-record-minny-solo">
+              <div class="shd-minny shd-minny--retry shd-anim-sway"><img src="/assets/minny/minny_encourage.png" alt="Minny động viên" width="150" height="150" /></div>
+              <p class="shd-cheer" id="shd-record-cheer">Gần đúng rồi!</p>
+              <p class="shd-sub" id="shd-record-sub">Thử lại lần nữa nhé!</p>
+            </div>
+            <p class="shd-prompt" id="shd-record-prompt"><span class="shd-spark">✦</span>Bây giờ đến lượt con nói!<span class="shd-spark">✦</span></p>
+            <div class="shd-words" id="shd-words"></div>
+            <div class="shd-stage-mic">
+              <div class="shd-micwrap" id="shd-micwrap">
+                <div class="shd-ring"></div><div class="shd-ring shd-ring--2"></div><div class="shd-ring shd-ring--3"></div>
+                <button class="shd-mic shd-mic--circle" id="shd-mic-btn" type="button" aria-label="Bắt đầu ghi âm">
+                  <span class="shd-recdot" id="shd-recdot"></span>
+                  <span class="shd-mic-icon" id="shd-mic-icon">🎤</span>
+                  <span class="shd-mic-label" id="shd-mic-label"></span>
+                </button>
+              </div>
+              <p class="shd-miccap" id="shd-miccap">Đang ghi âm… nói cả câu nhé!</p>
+            </div>
+            <button class="shd-replay" id="shd-replay-btn" type="button"><span aria-hidden="true">↻</span> Nghe lại câu</button>
+          </div>
+
+          <!-- grading in flight: "Minny đang nghe…" shimmer (board 05 inset) -->
+          <div class="shd-listen hidden" id="shd-listen-panel">
+            <div class="shd-listenwrap">
+              <div class="shd-lring"></div><div class="shd-lring shd-lring--2"></div><div class="shd-lring shd-lring--3"></div>
+              <div class="shd-minny shd-minny--listen shd-anim-sway"><img src="/assets/minny/minny_listen.png" alt="Minny đang nghe" width="104" height="104" /></div>
+            </div>
+            <p class="shd-listentext">Minny đang nghe<span class="shd-dot"></span><span class="shd-dot"></span><span class="shd-dot"></span></p>
+            <div class="shd-eq"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+
+          <!-- grading outage (429 / provider hiccup): gentle, never an error tone -->
+          <div class="shd-wait hidden" id="shd-wait-panel">
+            <p class="shd-wait-msg">Nghỉ một chút nhé!</p>
+          </div>
+
+          <!-- 05/06/07: celebrate / calm give-up / complete-tiles (same results panel) -->
+          <div class="shd-summary hidden" id="shd-summary"></div>
+
+          <button class="shd-cta hidden" id="shd-next-btn" type="button"></button>
+          <button class="shd-back hidden" id="shd-back-btn" type="button">← Chọn video khác</button>
+
+          <div class="shd-booth-minny" id="shd-booth-minny"><img src="/assets/minny/minny_listen.png" alt="Minny đang nghe con" width="84" height="84" /></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script type="application/json" id="shd-content-data" set:html={videosJson} />
+
+  <script>
+    import { createShadowingSession, reduce, toSnapshot, fromSnapshot } from '../lib/shadowing-engine.mjs';
+    import { loadYouTubeApi, createSegmentPlayer } from '../lib/shadowing-player.mjs';
+    import { speechSupport, createLighter } from '../lib/shadowing-speech.mjs';
+    import { lightWords } from '../lib/shadowing-score.mjs';
+    import { fireLessonPassConfetti, playKenney } from '../lib/lesson-juice';
+
+    const MAX_SECONDS = 12; // Elon ruling (Buffet-confirmed server-side safe): 12-word segments at kid reading pace
+
+    let videos = [];
+    try {
+      videos = JSON.parse(document.getElementById('shd-content-data')?.textContent || '[]');
+    } catch {
+      videos = [];
+    }
+
+    const els = {
+      gateScreen: document.getElementById('shd-gate-screen'),
+      pickerScreen: document.getElementById('shd-picker-screen'),
+      stageScreen: document.getElementById('shd-stage-screen'),
+      codeInput: document.getElementById('shd-code-input'),
+      gateError: document.getElementById('shd-gate-error'),
+      goBtn: document.getElementById('shd-go-btn'),
+      videoPicker: document.getElementById('shd-video-picker'),
+      pickerEmpty: document.getElementById('shd-picker-empty'),
+      pickerNotice: document.getElementById('shd-picker-notice'),
+      starsValue: document.getElementById('shd-stars-value'),
+      streakValue: document.getElementById('shd-streak-value'),
+      starsCounter: document.getElementById('shd-stars'),
+      streakCounter: document.getElementById('shd-streak'),
+      stagezone: document.getElementById('shd-stagezone'),
+      playerHost: document.getElementById('shd-player-host'),
+      playerVeil: document.getElementById('shd-player-veil'),
+      playerPausebadge: document.getElementById('shd-player-pausebadge'),
+      progress: document.getElementById('shd-progress'),
+      watchPanel: document.getElementById('shd-watch-panel'),
+      questionPanel: document.getElementById('shd-question-panel'),
+      questionText: document.getElementById('shd-question-text'),
+      questionCard: document.getElementById('shd-question-card'),
+      recordPanel: document.getElementById('shd-record-panel'),
+      recordMinnySolo: document.getElementById('shd-record-minny-solo'),
+      recordCheer: document.getElementById('shd-record-cheer'),
+      recordSub: document.getElementById('shd-record-sub'),
+      recordPrompt: document.getElementById('shd-record-prompt'),
+      words: document.getElementById('shd-words'),
+      micBtn: document.getElementById('shd-mic-btn'),
+      micIcon: document.getElementById('shd-mic-icon'),
+      micLabel: document.getElementById('shd-mic-label'),
+      recdot: document.getElementById('shd-recdot'),
+      miccap: document.getElementById('shd-miccap'),
+      replayBtn: document.getElementById('shd-replay-btn'),
+      listenPanel: document.getElementById('shd-listen-panel'),
+      waitPanel: document.getElementById('shd-wait-panel'),
+      summary: document.getElementById('shd-summary'),
+      nextBtn: document.getElementById('shd-next-btn'),
+      backBtn: document.getElementById('shd-back-btn'),
+      boothMinny: document.getElementById('shd-booth-minny'),
+    };
+
+    let accessCode = '';
+    let currentVideo = null;
+    let session = null; // engine state (see shadowing-engine.mjs)
+    let playerCtl = null;
+    let lighter = null;
+    let recording = null; // { stream, recorder, monitor, timerId }
+    let scoreLog = []; // raw score_percent per graded attempt, for the completion-log average
+    let loggedCompletionFor = null; // video.id already POSTed to minny-practice-log this page-load
+
+    // ---------------------------------------------------------------------
+    // localStorage snapshot (try/catch, in-memory fallback — house pattern,
+    // see src/lib/lesson-juice.ts's isMuted/setMuted).
+    // ---------------------------------------------------------------------
+    function loadSnapshot(videoId) {
+      try {
+        const raw = localStorage.getItem(`shd_progress_${videoId}`);
+        return raw ? JSON.parse(raw) : null;
+      } catch {
+        return null;
+      }
+    }
+    function saveSnapshot() {
+      if (!currentVideo || !session) return;
+      try {
+        localStorage.setItem(`shd_progress_${currentVideo.id}`, JSON.stringify(toSnapshot(session)));
+      } catch {
+        /* storage can be blocked (private mode, quota) — in-memory only, never fatal */
+      }
+    }
+    function totalStarsFor(videoId) {
+      const snap = loadSnapshot(videoId);
+      if (!snap || !Array.isArray(snap.results)) return 0;
+      return snap.results.reduce((sum, r) => sum + (r?.stars || 0), 0);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    function audioUploadFilename(blob) {
+      const type = String(blob?.type || '').toLowerCase();
+      if (type.includes('mp4') || type.includes('m4a') || type.includes('aac')) return 'audio.mp4';
+      if (type.includes('ogg')) return 'audio.ogg';
+      if (type.includes('wav')) return 'audio.wav';
+      return 'audio.webm';
+    }
+
+    // Pure lookup mirroring shadowing-engine.mjs's internal questionForSegment
+    // (not exported by that module) — needed here only to RENDER the question
+    // the engine has already decided to ask; the engine remains the sole
+    // decision-maker for whether/when a question fires.
+    function questionForSegment(video, segmentIndex, answeredIds) {
+      const qs = Array.isArray(video?.questions) ? video.questions : [];
+      return qs.find((q) => q?.after_segment === segmentIndex && !answeredIds.has(q?.id)) || null;
+    }
+
+    function currentSegment() {
+      return session.video.segments[session.currentSegmentIndex];
+    }
+
+    function computeTotals(state) {
+      let totalStars = 0;
+      (state.results || []).forEach((r) => {
+        if (r) totalStars += r.stars;
+      });
+      return totalStars;
+    }
+
+    // ---------------------------------------------------------------------
+    // Screen switching
+    // ---------------------------------------------------------------------
+    function switchScreen(name) {
+      els.gateScreen.classList.toggle('hidden', name !== 'gate');
+      els.pickerScreen.classList.toggle('hidden', name !== 'picker');
+      els.stageScreen.classList.toggle('hidden', name !== 'stage');
+    }
+
+    const SUBVIEWS = ['watch', 'question', 'record', 'listen', 'wait'];
+    function switchSubview(name) {
+      els.watchPanel.classList.toggle('hidden', name !== 'watch');
+      els.questionPanel.classList.toggle('hidden', name !== 'question');
+      els.questionCard.classList.toggle('hidden', name !== 'question');
+      els.recordPanel.classList.toggle('hidden', name !== 'record');
+      els.listenPanel.classList.toggle('hidden', name !== 'listen');
+      els.waitPanel.classList.toggle('hidden', name !== 'wait');
+      els.summary.classList.toggle('hidden', name !== 'summary');
+      els.summary.classList.remove('shd-summary--calm');
+    }
+
+    function setPlayerPaused(isPaused) {
+      els.playerVeil.classList.toggle('hidden', !isPaused);
+      els.playerPausebadge.classList.toggle('hidden', !isPaused);
+      els.stagezone.classList.toggle('shd-stagezone--live', !isPaused);
+    }
+
+    // ---------------------------------------------------------------------
+    // Gate (01a) — same GET /api/minny-speaking-context?code= pattern as
+    // speak-up.astro's loadSession(); copies its behavior, not its markup.
+    // ---------------------------------------------------------------------
+    function showGateError(msg) {
+      els.gateError.textContent = msg;
+      els.gateError.classList.remove('hidden');
+    }
+    function clearGateError() {
+      els.gateError.classList.add('hidden');
+    }
+
+    async function onGate() {
+      clearGateError();
+      const code = els.codeInput.value.trim().toUpperCase();
+      if (!code) {
+        showGateError('Vui lòng nhập mã học sinh.');
+        return;
+      }
+      els.goBtn.disabled = true;
+      try {
+        const res = await fetch(`/api/minny-speaking-context?code=${encodeURIComponent(code)}`);
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) {
+          showGateError(data.message || 'Không tìm thấy mã học sinh.');
+          return;
+        }
+        accessCode = code;
+        showPicker();
+      } catch {
+        showGateError('Mạng không ổn định. Vui lòng thử lại.');
+      } finally {
+        els.goBtn.disabled = false;
+      }
+    }
+    els.goBtn.addEventListener('click', onGate);
+    els.codeInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') onGate();
+    });
+
+    // ---------------------------------------------------------------------
+    // Picker (01b)
+    // ---------------------------------------------------------------------
+    function showPicker() {
+      switchScreen('picker');
+      renderPicker();
+    }
+
+    function renderPicker() {
+      els.videoPicker.innerHTML = '';
+      els.pickerNotice.classList.add('hidden');
+      if (videos.length === 0) {
+        els.pickerEmpty.classList.remove('hidden');
+        return;
+      }
+      els.pickerEmpty.classList.add('hidden');
+      videos.forEach((video, idx) => {
+        const stars = totalStarsFor(video.id);
+        // Mark's parallel content packet: a MISSING content_status is
+        // treated as 'dev_draft' (the safe default -- never silently
+        // present unreviewed content as approved).
+        const isDraft = video.content_status !== 'approved';
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = idx === 0 ? 'shd-card shd-card--tonight' : 'shd-card';
+        card.innerHTML = `
+          ${isDraft ? '<span class="shd-ribbon">BẢN NHÁP</span>' : ''}
+          <span class="shd-thumb"><img src="https://i.ytimg.com/vi/${encodeURIComponent(video.youtube_id)}/hqdefault.jpg" alt="" loading="lazy" /></span>
+          <span class="shd-meta">
+            <span class="shd-vtitle">${escapeHtml(video.title_vi)}</span>
+            <span class="shd-row">
+              <span class="shd-lchip">${escapeHtml(video.level)}</span>
+              ${stars > 0 ? `<span class="shd-vstars">⭐ ${stars}</span>` : '<span class="shd-fresh">Chưa luyện</span>'}
+            </span>
+          </span>
+        `;
+        card.addEventListener('click', () => startVideo(video));
+        els.videoPicker.appendChild(card);
+      });
+    }
+
+    // ---------------------------------------------------------------------
+    // Session bootstrap + player lifecycle
+    // ---------------------------------------------------------------------
+    async function startVideo(video) {
+      currentVideo = video;
+      const snap = loadSnapshot(video.id);
+      session = createShadowingSession(video, snap);
+      scoreLog = [];
+      switchScreen('stage');
+      els.backBtn.classList.add('hidden');
+      await ensurePlayer();
+      renderStage();
+    }
+
+    async function ensurePlayer() {
+      if (playerCtl) return;
+      const YT = await loadYouTubeApi(window, document);
+      playerCtl = createSegmentPlayer({
+        elId: 'shd-player-el',
+        youtubeId: currentVideo.youtube_id,
+        YT,
+        win: window,
+        callbacks: {
+          onSegmentEnd: onSegmentEnd,
+          onUnplayable: onUnplayable,
+        },
+      });
+    }
+
+    function teardownPlayer() {
+      try {
+        playerCtl?.destroy();
+      } catch {
+        /* best-effort */
+      }
+      playerCtl = null;
+      lighter?.stop();
+      lighter = null;
+      if (recording) {
+        if (recording.timerId) window.clearTimeout(recording.timerId);
+        try {
+          recording.recorder?.stop();
+        } catch {
+          /* never started */
+        }
+        recording.stream?.getTracks().forEach((t) => t.stop());
+        recording = null;
+      }
+      currentVideo = null;
+      session = null;
+    }
+
+    function goBackToPicker() {
+      teardownPlayer();
+      showPicker();
+    }
+    els.backBtn.addEventListener('click', goBackToPicker);
+
+    function onUnplayable() {
+      teardownPlayer();
+      switchScreen('picker');
+      renderPicker();
+      els.pickerNotice.textContent = 'Phim này đang gặp sự cố, con chọn phim khác giúp Minny nhé!';
+      els.pickerNotice.classList.remove('hidden');
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) playerCtl?.pauseForHidden();
+    });
+
+    // ---------------------------------------------------------------------
+    // Engine-driven rendering
+    // ---------------------------------------------------------------------
+    function renderStage() {
+      if (session.phase === 'watch') return showWatchAndPlay();
+      if (session.phase === 'question') return showQuestion();
+      if (session.phase === 'record') return showRecordPanel(null);
+      if (session.phase === 'record_exhausted') return showGiveUp();
+      if (session.phase === 'complete') return showComplete();
+      return undefined;
+    }
+
+    function updateHud() {
+      els.starsValue.textContent = String(computeTotals(session));
+      els.streakValue.textContent = String(session.streak);
+      els.starsCounter.classList.remove('shd-counter--zero');
+      els.streakCounter.classList.remove('shd-counter--zero');
+    }
+
+    // Pure — maps overall segment progress onto a FIXED 12-bulb milestone
+    // strip (the approved board's dial), regardless of how many segments
+    // the actual video has (Buffet F1, HIGH: a 124-segment book must still
+    // show the sleek 12-bulb pill, not one wrapped row per segment). Bulb i
+    // is 'on' once progress has passed the (i+1)/12 mark of the video,
+    // 'now' on the first milestone not yet reached (pulses), 'off' after
+    // that; every milestone is 'on' once the video itself is complete.
+    // Unit-tested directly in tests/shadowing-ui.test.mjs (source-extracted,
+    // not imported from src/lib — this is page-local presentation math, not
+    // an engine decision).
+    function milestoneBulbStates(completedSegments, totalSegments, milestoneCount = 12) {
+      const total = Math.max(1, Math.floor(Number(totalSegments)) || 0);
+      const completed = Math.max(0, Math.min(Number(completedSegments) || 0, total));
+      const isComplete = completed >= total;
+      const states = new Array(milestoneCount).fill('off');
+      let currentSet = false;
+      for (let i = 0; i < milestoneCount; i += 1) {
+        const threshold = ((i + 1) / milestoneCount) * total;
+        if (isComplete || completed >= threshold) {
+          states[i] = 'on';
+        } else if (!currentSet) {
+          states[i] = 'now';
+          currentSet = true;
+        }
+      }
+      return states;
+    }
+
+    function updateProgressBulbs() {
+      const total = session.video.segments.length;
+      const complete = session.phase === 'complete';
+      const completed = complete ? total : session.currentSegmentIndex;
+      const states = milestoneBulbStates(completed, total);
+      els.progress.classList.remove('hidden');
+      els.progress.innerHTML = '';
+      states.forEach((status) => {
+        const b = document.createElement('span');
+        b.className = status === 'off' ? 'shd-bulb' : `shd-bulb shd-bulb--${status}`;
+        els.progress.appendChild(b);
+      });
+    }
+
+    function onSegmentEnd() {
+      session = reduce(session, { type: 'SEGMENT_WATCHED' });
+      saveSnapshot();
+      if (session.phase === 'complete') logCompletionOnce();
+      renderStage();
+    }
+
+    function showWatchAndPlay() {
+      switchSubview('watch');
+      setPlayerPaused(false);
+      els.nextBtn.classList.add('hidden');
+      els.backBtn.classList.add('hidden');
+      updateHud();
+      updateProgressBulbs();
+      // NOTE (rule-20, flagged for real-device verification -- do NOT
+      // change this behavior on the strength of this comment alone): the
+      // FIRST call into showWatchAndPlay() per video always originates
+      // inside startVideo()'s picker-card click handler, a genuine user
+      // tap. Every later call -- a segment ending and auto-advancing into
+      // the next segment's watch phase, or a watch-only
+      // (segment.shadow === false) segment chaining straight into the
+      // next one via onSegmentEnd -- calls playSegment() here with NO new
+      // tap in between. This resumes the SAME already-engaged YT.Player
+      // session (never a cold autoplay on a fresh iframe), which is what
+      // mobile autoplay policies actually gate on in practice -- but that
+      // has not been confirmed on a real iPad/iOS Safari device yet.
+      playerCtl.playSegment(currentSegment());
+    }
+
+    function buildQuestionOptions(q) {
+      if (q.type === 'yes_no') {
+        return [
+          { label: 'Đúng rồi ✓', correct: q.answer === true },
+          { label: 'Sai rồi ✗', correct: q.answer === false },
+        ];
+      }
+      return (q.options_vi || []).map((label, i) => ({ label, correct: i === q.correct_index }));
+    }
+
+    function showQuestion() {
+      switchSubview('question');
+      setPlayerPaused(true);
+      els.nextBtn.classList.add('hidden');
+      els.backBtn.classList.add('hidden');
+      updateHud();
+      updateProgressBulbs();
+      const q = questionForSegment(session.video, session.currentSegmentIndex, session.answeredQuestionIds);
+      if (!q) {
+        // Defensive: engine only enters 'question' when one exists. If this
+        // ever drifts, never strand the kid on a blank screen.
+        session = reduce(session, { type: 'QUESTION_ANSWERED', correct: true });
+        renderStage();
+        return;
+      }
+      els.questionText.textContent = q.question_vi;
+      els.questionCard.innerHTML = '';
+      const options = buildQuestionOptions(q);
+      options.forEach((opt) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'shd-ticket';
+        btn.innerHTML = `<span class="shd-ticket-txt">${escapeHtml(opt.label)}</span><span class="shd-ticket-stub"></span>`;
+        btn.addEventListener('click', () => onAnswerQuestion(opt, options));
+        els.questionCard.appendChild(btn);
+      });
+    }
+
+    function onAnswerQuestion(chosen, allOptions) {
+      const buttons = Array.from(els.questionCard.children);
+      buttons.forEach((b, i) => {
+        b.disabled = true;
+        if (allOptions[i].correct) b.classList.add('shd-ticket--win');
+      });
+      session = reduce(session, { type: 'QUESTION_ANSWERED', correct: !!chosen.correct });
+      saveSnapshot();
+      // Never blocks/retries on a wrong answer (engine contract) — a brief
+      // pause just lets the kid see the winning ticket light up first.
+      window.setTimeout(() => {
+        renderStage();
+      }, 900);
+    }
+
+    function renderWords(text, statuses) {
+      els.words.innerHTML = '';
+      statuses.forEach((w) => {
+        const span = document.createElement('span');
+        span.className = 'shd-word';
+        span.dataset.status = w.status === 'exact' ? 'lit' : w.status === 'close' ? 'warm' : 'off';
+        span.textContent = w.raw;
+        els.words.appendChild(span);
+      });
+    }
+
+    function showRecordPanel(settledWords) {
+      switchSubview('record');
+      setPlayerPaused(true);
+      els.nextBtn.classList.add('hidden');
+      els.backBtn.classList.add('hidden');
+      updateHud();
+      updateProgressBulbs();
+      const seg = currentSegment();
+      const isRetry = session.attemptsForSegment > 0;
+      els.recordPanel.classList.toggle('shd-record--retry', isRetry);
+      els.recordMinnySolo.classList.toggle('hidden', !isRetry);
+      els.recordPrompt.classList.toggle('hidden', isRetry);
+      els.micBtn.className = isRetry ? 'shd-mic shd-mic--retry shd-cta' : 'shd-mic shd-mic--circle';
+      els.micLabel.textContent = isRetry ? 'Thử lại 🎤' : '';
+      els.micIcon.classList.toggle('hidden', isRetry);
+      els.recdot.classList.toggle('hidden', isRetry);
+      els.miccap.classList.toggle('hidden', isRetry);
+      els.micBtn.setAttribute('aria-label', isRetry ? 'Thử lại, bắt đầu ghi âm' : 'Bắt đầu ghi âm');
+      renderWords(seg.text_en, settledWords || lightWords(seg.text_en, ''));
+      els.replayBtn.classList.remove('hidden');
+    }
+
+    function showListening() {
+      switchSubview('listen');
+      els.nextBtn.classList.add('hidden');
+    }
+
+    function showWait() {
+      switchSubview('wait');
+      els.nextBtn.classList.add('hidden');
+      window.setTimeout(() => {
+        if (session && session.phase === 'record') showRecordPanel(null);
+      }, 1600);
+    }
+
+    function showCelebrate(state, segmentIndex) {
+      switchSubview('summary');
+      setPlayerPaused(true);
+      updateHud();
+      updateProgressBulbs();
+      const stars = state.results[segmentIndex]?.stars || 0;
+      els.summary.innerHTML = `
+        <div class="shd-confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="shd-minnywrap">
+          <div class="shd-halo"></div>
+          <div class="shd-starpop">⭐ +${stars}</div>
+          <div class="shd-minny shd-minny--celebrate shd-anim-bounce"><img src="/assets/minny/minny_celebrate.png" alt="Minny ăn mừng" width="178" height="178" /></div>
+        </div>
+        <p class="shd-cheer">Tuyệt vời!</p>
+        <div class="shd-streakchip"><span class="shd-fl">🔥</span> Chuỗi ${state.streak}!</div>
+      `;
+      els.nextBtn.classList.remove('hidden');
+      els.nextBtn.disabled = false;
+      els.nextBtn.textContent = 'Câu tiếp theo →';
+      els.nextBtn.onclick = onAdvanceAfterCelebrate;
+      els.backBtn.classList.add('hidden');
+
+      if (state.celebration) {
+        fireLessonPassConfetti();
+        playKenney('quest-complete');
+      }
+    }
+
+    function onAdvanceAfterCelebrate() {
+      if (session.phase === 'complete') logCompletionOnce();
+      renderStage();
+    }
+
+    function showGiveUp() {
+      switchSubview('summary');
+      setPlayerPaused(true);
+      updateHud();
+      updateProgressBulbs();
+      // Founder ruling: the streak resets to 0 the moment the kid moves on
+      // — shown as already-calm here so the HUD never flashes a stale
+      // higher number right before the reset takes effect.
+      els.streakValue.textContent = '0';
+      els.streakCounter.classList.add('shd-counter--zero');
+      els.summary.classList.add('shd-summary--calm');
+      els.summary.innerHTML = `
+        <div class="shd-minny shd-minny--encourage shd-anim-sway"><img src="/assets/minny/minny_encourage.png" alt="Minny an ủi" width="150" height="150" /></div>
+        <p class="shd-imsg">Nghe lại rồi mình qua câu tiếp nhé! 💛</p>
+      `;
+      els.nextBtn.classList.remove('hidden');
+      els.nextBtn.disabled = false;
+      els.nextBtn.textContent = 'Câu tiếp theo →';
+      els.nextBtn.onclick = onGiveUpNext;
+      els.backBtn.classList.add('hidden');
+    }
+
+    function onGiveUpNext() {
+      session = reduce(session, { type: 'GIVE_UP_ADVANCE' });
+      saveSnapshot();
+      if (session.phase === 'complete') logCompletionOnce();
+      renderStage();
+    }
+
+    function showComplete() {
+      switchSubview('summary');
+      setPlayerPaused(true);
+      updateHud();
+      updateProgressBulbs();
+      const summary = session.summary || { total_stars: 0, best_streak: 0 };
+      els.summary.innerHTML = `
+        <div class="shd-confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="shd-board">
+          <p class="shd-board-title">Con làm được rồi!</p>
+          <p class="shd-board-sub">${escapeHtml(currentVideo.title_vi)} · ${session.video.segments.length} câu</p>
+        </div>
+        <div class="shd-minnywrap">
+          <div class="shd-halo"></div>
+          <div class="shd-minny shd-minny--celebrate shd-anim-bounce"><img src="/assets/minny/minny_celebrate.png" alt="Minny ăn mừng" width="164" height="164" /></div>
+        </div>
+        <div class="shd-tiles">
+          <div class="shd-tile"><span class="shd-tile-big">⭐ ${summary.total_stars}</span><span class="shd-tile-lab">Tổng sao</span></div>
+          <div class="shd-tile"><span class="shd-tile-big">🔥 ${summary.best_streak}</span><span class="shd-tile-lab">Chuỗi dài nhất</span></div>
+        </div>
+      `;
+      els.nextBtn.classList.remove('hidden');
+      els.nextBtn.disabled = false;
+      els.nextBtn.innerHTML = '<span class="shd-watch-play" aria-hidden="true"></span> Xem trọn video';
+      els.nextBtn.onclick = onWatchFullVideo;
+      els.backBtn.classList.remove('hidden');
+    }
+
+    function onWatchFullVideo() {
+      els.nextBtn.disabled = true;
+      els.nextBtn.textContent = 'Đang phát video…';
+      setPlayerPaused(false);
+      playerCtl?.playFullVideo();
+    }
+
+    function logCompletionOnce() {
+      if (!currentVideo || loggedCompletionFor === currentVideo.id) return;
+      loggedCompletionFor = currentVideo.id;
+      const avg = scoreLog.length ? Math.round(scoreLog.reduce((a, b) => a + b, 0) / scoreLog.length) : null;
+      fetch('/api/minny-practice-log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_code: accessCode,
+          pack_id: 'general',
+          prompt_id: `shadow_${currentVideo.id}`,
+          score_percent: avg,
+          summary: {
+            stars: session.summary?.total_stars ?? 0,
+            best_streak: session.summary?.best_streak ?? 0,
+            video_id: currentVideo.id,
+          },
+        }),
+      }).catch(() => {
+        /* non-blocking, matches speak-up.astro's logPractice() */
+      });
+    }
+
+    // ---------------------------------------------------------------------
+    // Recording — mirrors speak-up.astro's fixitStartRecording/
+    // fixitStopRecording R2LRecorder sequence (getStream -> wav engine ->
+    // startMonitor), the recorder engine loaded via r2lRecorderScriptSrc()
+    // below.
+    // ---------------------------------------------------------------------
+    els.micBtn.addEventListener('click', () => {
+      if (recording) stopRecording();
+      else startRecording();
+    });
+    els.replayBtn.addEventListener('click', () => {
+      playerCtl?.replaySegment(currentSegment());
+      session = reduce(session, { type: 'REPLAY' });
+    });
+
+    async function startRecording() {
+      if (recording || !session || session.phase !== 'record') return;
+      const seg = currentSegment();
+      const rec = { stream: null, recorder: null, monitor: null, timerId: null };
+      recording = rec;
+      els.micBtn.classList.add('is-recording');
+      try {
+        const stream = window.R2LRecorder?.getStream
+          ? await window.R2LRecorder.getStream()
+          : await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
+        if (recording !== rec) {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        rec.stream = stream;
+        const recorder = window.R2LRecorder?.createRecorder ? window.R2LRecorder.createRecorder(stream, { engine: 'wav' }) : null;
+        if (!recorder) {
+          recording = null;
+          els.micBtn.classList.remove('is-recording');
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        rec.recorder = recorder;
+        rec.monitor = window.R2LRecorder?.startMonitor
+          ? await window.R2LRecorder.startMonitor(stream, {})
+          : { stop() {} };
+        if (recording !== rec) {
+          try {
+            rec.monitor?.stop();
+          } catch {
+            /* best-effort */
+          }
+          try {
+            recorder.stop();
+          } catch {
+            /* never started */
+          }
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        recorder.start();
+        // Live karaoke lighting only — cosmetic, never gates the flow.
+        // Grading is ALWAYS the server call in stopRecording()/submitRecording().
+        if (speechSupport(window) === 'native') {
+          lighter = createLighter(window);
+          lighter.start({
+            lang: 'en-US',
+            onInterim: (text) => renderWords(seg.text_en, lightWords(seg.text_en, text)),
+          });
+        }
+        rec.timerId = window.setTimeout(() => stopRecording(), MAX_SECONDS * 1000);
+      } catch {
+        recording = null;
+        els.micBtn.classList.remove('is-recording');
+      }
+    }
+
+    async function stopRecording() {
+      const rec = recording;
+      if (!rec) return;
+      recording = null;
+      if (rec.timerId) window.clearTimeout(rec.timerId);
+      els.micBtn.classList.remove('is-recording');
+      lighter?.stop();
+      let blob = null;
+      try {
+        blob = await rec.recorder?.stop();
+      } catch {
+        blob = null;
+      }
+      try {
+        rec.monitor?.stop();
+      } catch {
+        /* best-effort */
+      }
+      rec.stream?.getTracks().forEach((t) => t.stop());
+      if (!blob || blob.size === 0) return;
+      await submitRecording(blob);
+    }
+
+    // The ONE scoring path — read2lead-speaking-check.js's shadow_practice
+    // bypass (never touches Azure/homework bookkeeping). While waiting:
+    // board 05's "Minny đang nghe…" shimmer. A 429 (or an outage the server
+    // already mapped to asr_outage) is a gentle pause, never an error tone,
+    // and never consumes one of the 3 attempts.
+    async function submitRecording(blob) {
+      const seg = currentSegment();
+      showListening();
+      const formData = new FormData();
+      formData.append('access_code', accessCode);
+      formData.append('pack_id', 'general');
+      formData.append('practice_mode', '1');
+      formData.append('check_mode', 'read');
+      formData.append('expected_text', seg.text_en);
+      formData.append('shadow_practice', '1');
+      formData.append('max_seconds', String(MAX_SECONDS));
+      formData.append('audio', blob, audioUploadFilename(blob));
+
+      let res = null;
+      let data = null;
+      try {
+        res = await fetch('/api/read2lead-speaking-check', { method: 'POST', body: formData });
+        data = await res.json().catch(() => null);
+      } catch {
+        res = null;
+        data = null;
+      }
+
+      // A totally-thrown fetch (res still null -- network dropped mid-
+      // request) is exactly the same kind of outage as a 429 or a
+      // server-mapped asr_outage: the kid DID speak, only the round-trip
+      // failed. Route it to the same gentle wait, never a scored/consumed
+      // attempt (Buffet finding: this used to fall through to scorePercent
+      // 0 and burn one of the 3 tries on a plain network drop).
+      if (!res || res.status === 429 || (data && data.ok === false && data.asr_outage)) {
+        showWait();
+        return;
+      }
+
+      const scorePercent = data && data.ok ? Number(data.score_percent) || 0 : 0;
+      scoreLog.push(scorePercent);
+      const transcript = data && data.ok ? String(data.transcript || '') : '';
+      const settledWords = lightWords(seg.text_en, transcript);
+
+      const before = session;
+      const beforeSegmentIndex = before.currentSegmentIndex;
+      const after = reduce(before, { type: 'SPEECH_SCORED', scorePercent });
+      session = after;
+      saveSnapshot();
+
+      const passed = after.results[beforeSegmentIndex] != null;
+      if (passed) {
+        showCelebrate(after, beforeSegmentIndex);
+      } else if (after.phase === 'record_exhausted') {
+        showGiveUp();
+      } else {
+        showRecordPanel(settledWords);
+      }
+    }
+  </script>
+
+  <script src={r2lRecorderSrc} defer></script>
+</SpeakUpAppLayout>
