@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>B·04 Record + Karaoke — Sticker Sunshine</title>
+<style>
+  /* ============ Direction B — STICKER SUNSHINE (palette freed: daylight sticker-book) ============ */
+  :root{
+    --sky:#7ec8f5; --sky-hi:#b9e7ff; --ink:#20304f; --ink-soft:#5a6b8c;
+    --paper:#ffffff; --sun:#ffd166; --candy:#ff4757; --leaf:#31c96e; --tang:#ff9f2e;
+    --shadow:#1c3d6e;
+    --font:ui-rounded,"SF Pro Rounded","Comic Sans MS","Chalkboard SE","Segoe UI",system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#dff2ff;font-family:var(--font);display:flex;flex-direction:column;align-items:center;padding:28px 0 60px;color:#48627e}
+  .phone{width:390px;border-radius:34px;overflow:hidden;box-shadow:0 26px 60px -18px rgba(28,61,110,.45);flex:none}
+
+  .screen{
+    width:390px;min-height:820px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg,var(--sky-hi) 0%,var(--sky) 60%,#6dbcf0 100%);
+    display:flex;flex-direction:column;padding:18px 16px 26px;gap:14px;
+  }
+  /* floating cloud dots */
+  .screen::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.9;
+    background-image:
+      radial-gradient(28px 12px at 60px 90px, rgba(255,255,255,.85), transparent 70%),
+      radial-gradient(20px 9px at 330px 150px, rgba(255,255,255,.7), transparent 70%),
+      radial-gradient(24px 10px at 300px 60px, rgba(255,255,255,.8), transparent 70%),
+      radial-gradient(18px 8px at 40px 260px, rgba(255,255,255,.6), transparent 70%);
+  }
+
+  /* ---------- sticker base ---------- */
+  .stk{background:var(--paper);border:4px solid var(--paper);
+    box-shadow:0 0 0 2.5px rgba(32,48,79,.10), 5px 7px 0 rgba(28,61,110,.28)}
+
+  /* ---------- counters: sticker badges ---------- */
+  .hud{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:3}
+  .counter{display:flex;align-items:center;gap:6px;border-radius:999px;padding:8px 15px 8px 11px;
+    font-weight:800;font-size:19px;color:var(--ink)}
+  .counter.star{transform:rotate(-3deg);background:linear-gradient(180deg,#fff8e0,#ffedb0);}
+  .counter.flame{transform:rotate(2.5deg);background:linear-gradient(180deg,#ffe9d6,#ffd9b8);}
+  .counter .em{font-size:20px}
+
+  /* ---------- paused cartoon frame: a tilted sticker ---------- */
+  .playercard{position:relative;z-index:2;transform:rotate(-1.6deg);border-radius:24px;padding:0;overflow:visible}
+  .player{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:16/9}
+  .toon{position:absolute;inset:0;background:linear-gradient(180deg,#9adcff 0%,#d2f1ff 50%,#fff3c0 66%,#ffe08a 72%,#8fd97a 72%,#6cc767 100%)}
+  .toon .sun{position:absolute;top:12px;right:24px;width:46px;height:46px;border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, #fff7d0, #ffd166 70%);box-shadow:0 0 24px 8px rgba(255,209,102,.65)}
+  .toon .cloud{position:absolute;background:#fff;border-radius:999px}
+  .toon .c1{top:24px;left:30px;width:78px;height:22px}
+  .toon .c1::before{content:"";position:absolute;left:18px;top:-12px;width:36px;height:26px;border-radius:999px;background:#fff}
+  .toon .c2{top:54px;left:150px;width:54px;height:15px;opacity:.85}
+  .toon .mat{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);width:156px;height:16px;
+    border-radius:8px;background:#c99a5b;box-shadow:inset 0 -4px 0 rgba(0,0,0,.14)}
+  .toon .cat{position:absolute;bottom:26px;left:50%;margin-left:-26px;width:74px;height:32px;
+    background:#f59e42;border-radius:16px 20px 14px 14px}
+  .toon .cat::before{content:"";position:absolute;left:-22px;bottom:-2px;width:34px;height:32px;background:#f59e42;border-radius:50%}
+  .toon .cat .ear{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:11px solid #f59e42}
+  .toon .cat .e1{left:-20px;top:-9px}
+  .toon .cat .e2{left:-5px;top:-9px}
+  .toon .cat .eye{position:absolute;left:-15px;bottom:13px;width:11px;height:6px;
+    border-bottom:2.5px solid #7a4a12;border-radius:50%}
+  .toon .cat .tail{position:absolute;right:-17px;bottom:5px;width:26px;height:9px;background:#f59e42;
+    border-radius:8px;transform:rotate(-40deg)}
+  .toon .zzz{position:absolute;bottom:74px;left:50%;margin-left:-64px;color:#fff;font-weight:800;
+    font-size:13px;letter-spacing:3px;opacity:.95;transform:rotate(-12deg)}
+  .veil{position:absolute;inset:0;background:rgba(32,48,79,.16)}
+  .pausebadge{position:absolute;left:12px;bottom:10px;width:34px;height:34px;border-radius:50%;
+    background:var(--paper);display:flex;align-items:center;justify-content:center;gap:4px;
+    box-shadow:2px 3px 0 rgba(28,61,110,.3)}
+  .pausebadge i{width:5px;height:13px;border-radius:2px;background:var(--ink)}
+
+  /* ---------- prompt ---------- */
+  .prompt{position:relative;z-index:2;text-align:center;color:var(--ink);font-weight:800;font-size:22px}
+  .prompt .sun-ic{display:inline-block;margin:0 7px;font-size:16px;vertical-align:4px}
+
+  /* ---------- toy-block sentence (the signature) ---------- */
+  .words{position:relative;z-index:2;display:flex;flex-wrap:wrap;justify-content:center;gap:11px;padding:6px 2px}
+  .word{font-weight:800;font-size:23px;line-height:1;padding:13px 16px;border-radius:16px;border:4px solid var(--paper)}
+  .word:nth-child(odd){transform:rotate(-2.4deg)}
+  .word:nth-child(even){transform:rotate(2deg)}
+  .word.hit{ /* exact — green toy block, stamped */
+    background:linear-gradient(180deg,#4fe28c,var(--leaf));color:#fff;
+    box-shadow:0 0 0 2.5px rgba(24,120,64,.25), 4px 6px 0 rgba(28,61,110,.3)}
+  .word.hit::after{content:" ✓";font-size:17px}
+  .word.near{ /* close — tangerine block */
+    background:linear-gradient(180deg,#ffc169,var(--tang));color:#fff;
+    box-shadow:0 0 0 2.5px rgba(170,90,10,.22), 4px 6px 0 rgba(28,61,110,.26)}
+  .word.wait{ /* pending — blank sticker */
+    background:var(--paper);color:#9db1c9;
+    box-shadow:0 0 0 2.5px rgba(32,48,79,.08), 4px 6px 0 rgba(28,61,110,.18)}
+
+  /* ---------- the big red mic sticker ---------- */
+  .stage{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:2px;flex:1;justify-content:center}
+  .micwrap{position:relative;width:180px;height:170px;display:flex;align-items:center;justify-content:center}
+  /* sun rays behind the mic */
+  .rays{position:absolute;inset:-4px;border-radius:50%;
+    background:conic-gradient(from 8deg,
+      rgba(255,255,255,.55) 0 14deg, transparent 14deg 30deg,
+      rgba(255,255,255,.55) 30deg 44deg, transparent 44deg 60deg,
+      rgba(255,255,255,.55) 60deg 74deg, transparent 74deg 90deg,
+      rgba(255,255,255,.55) 90deg 104deg, transparent 104deg 120deg,
+      rgba(255,255,255,.55) 120deg 134deg, transparent 134deg 150deg,
+      rgba(255,255,255,.55) 150deg 164deg, transparent 164deg 180deg,
+      rgba(255,255,255,.55) 180deg 194deg, transparent 194deg 210deg,
+      rgba(255,255,255,.55) 210deg 224deg, transparent 224deg 240deg,
+      rgba(255,255,255,.55) 240deg 254deg, transparent 254deg 270deg,
+      rgba(255,255,255,.55) 270deg 284deg, transparent 284deg 300deg,
+      rgba(255,255,255,.55) 300deg 314deg, transparent 314deg 330deg,
+      rgba(255,255,255,.55) 330deg 344deg, transparent 344deg 360deg);
+    animation:spin 14s linear infinite;filter:blur(.5px)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .mic{
+    width:116px;height:116px;border-radius:50%;border:6px solid var(--paper);cursor:pointer;position:relative;z-index:2;
+    background:radial-gradient(circle at 50% 30%, #ff7b85, var(--candy) 60%, #e63946 100%);
+    box-shadow:0 0 0 2.5px rgba(180,30,45,.25), 6px 9px 0 rgba(28,61,110,.3);
+    display:flex;align-items:center;justify-content:center;
+    animation:squash 1.5s ease-in-out infinite}
+  @keyframes squash{0%,100%{transform:scale(1,1)}30%{transform:scale(1.06,.95)}60%{transform:scale(.97,1.05)}}
+  .mic svg{width:48px;height:48px;filter:drop-shadow(0 2px 0 rgba(0,0,0,.25))}
+  .recdot{position:absolute;top:8px;right:12px;width:13px;height:13px;border-radius:50%;background:#fff;
+    border:3px solid #ffd6d9;animation:blink 1s steps(2,start) infinite}
+  @keyframes blink{50%{opacity:.3}}
+  .miccap{font-weight:800;font-size:17px;color:var(--ink);background:rgba(255,255,255,.75);
+    border-radius:999px;padding:7px 16px}
+
+  /* ---------- replay: small sticker pill ---------- */
+  .replay{position:relative;z-index:2;align-self:center;display:inline-flex;align-items:center;gap:9px;
+    border-radius:999px;padding:13px 24px;min-height:48px;cursor:pointer;
+    font-family:var(--font);font-weight:800;font-size:16.5px;color:var(--ink);
+    transform:rotate(-1.2deg)}
+  .replay .ic{font-size:18px;color:var(--candy)}
+
+  /* ---------- board notes (OUTSIDE the artwork) ---------- */
+  .note{width:390px;margin-top:22px;font-size:13.5px;line-height:1.6;color:#41597a}
+  .note b{color:#20304f}
+  .legend{display:flex;gap:14px;margin-top:8px;flex-wrap:wrap}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .dot{width:11px;height:11px;border-radius:4px;display:inline-block}
+
+  @media (prefers-reduced-motion: reduce){
+    .rays,.mic,.recdot,.word.hit{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="screen">
+
+    <div class="hud">
+      <div class="counter star stk" id="shd-stars"><span class="em">⭐</span> 8</div>
+      <div class="counter flame stk" id="shd-streak"><span class="em">🔥</span> 3</div>
+    </div>
+
+    <div class="playercard stk" id="shd-player-host">
+      <div class="player">
+        <div class="toon">
+          <div class="sun"></div>
+          <div class="cloud c1"></div><div class="cloud c2"></div>
+          <div class="mat"></div>
+          <div class="cat"><i class="ear e1"></i><i class="ear e2"></i><span class="eye"></span><span class="tail"></span></div>
+          <span class="zzz">z z</span>
+        </div>
+        <div class="veil"></div>
+        <div class="pausebadge"><i></i><i></i></div>
+      </div>
+    </div>
+
+    <p class="prompt"><span class="sun-ic">☀️</span>Bây giờ đến lượt con nói!<span class="sun-ic">☀️</span></p>
+
+    <div class="words" id="shd-words">
+      <span class="word hit">The</span>
+      <span class="word hit">cat</span>
+      <span class="word near">is</span>
+      <span class="word wait">sleeping</span>
+      <span class="word wait">on</span>
+      <span class="word wait">the</span>
+      <span class="word wait">mat</span>
+    </div>
+
+    <div class="stage">
+      <div class="micwrap">
+        <div class="rays"></div>
+        <button class="mic" id="shd-mic-btn" aria-label="Đang ghi âm">
+          <span class="recdot"></span>
+          <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 15a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v5a4 4 0 0 0 4 4zm6-4a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.94V22h2v-3.06A8 8 0 0 0 20 11h-2z"/></svg>
+        </button>
+      </div>
+      <p class="miccap">Đang ghi âm… nói cả câu nhé!</p>
+    </div>
+
+    <button class="replay stk" id="shd-replay-btn"><span class="ic">↻</span> Nghe lại câu</button>
+
+  </div>
+</div>
+
+<div class="note">
+  <b>B·04 — Ngày nắng hình dán (Sticker Sunshine).</b> Mỗi chữ là một khối đồ chơi dán nghiêng nghiêng;
+  nói đúng là khối bật xanh kèm dấu ✓.
+  <div class="legend">
+    <span><i class="dot" style="background:#31c96e"></i> xanh = nói đúng</span>
+    <span><i class="dot" style="background:#ff9f2e"></i> cam = gần đúng</span>
+    <span><i class="dot" style="background:#fff;border:1px solid #9db1c9"></i> trắng = chưa nói tới</span>
+  </div>
+</div>
+
+</body>
+</html>
