@@ -183,11 +183,20 @@ assigns, commits, merges, deploys, or spends.
      grading intact (test + live check).
   3. Server micro-diff: shadowing-marked calls never touch Azure (bite test:
      a shadowing call that WOULD hit Azure fails CI) and clear the per-code
-     rate allowance at classroom pace; homework calls byte-identical
-     (regression fixtures).
+     rate allowance at classroom pace — ACCEPTED constants (Elon, 2026-07-17):
+     60s window / 20 calls per access_code (`shd-rl:` prefix; KV expirationTtl
+     has a hard 60s floor, so the 12s/burst-3 envelope was translated;
+     fixed-window RMW race accepted as a smoothing-throttle tradeoff, nothing
+     paid rides on it); homework calls byte-identical (regression fixtures).
   4. Economy fence: structural test proves the page never references
      `gradeRewards`/`submit-read2lead-lesson`/chest-quest paths; stars/streaks
      live in localStorage only (+ one practice-log write per completed video).
+     TIGHTENED 2026-07-17 after the speakup-rewards merge landed diamond
+     auto-awards INSIDE minny-practice-log.js (paid only for promptId
+     'homework_summary'/'free_talk_summary'): the fence test must ALSO assert
+     the shadowing page never sends either award-trigger promptId — its log
+     calls use 'shadow_<videoId>' only. Verified 2026-07-17: shadowing-shaped
+     calls cannot trigger a payout under the shipped award conditions.
   5. Scorer parity: client port == server `scoreTranscript` on ~30 fixture
      pairs incl. the 49/50 boundary; parity test imports the LIVE server
      module so drift breaks CI.
