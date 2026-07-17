@@ -86,6 +86,11 @@ test('voice-quota: missing READ2LEAD_CODES binding returns 500 config_error', as
   assert.equal(body.error, 'config_error');
 });
 
+test('voice-quota: no key AND missing READ2LEAD_CODES returns 404, not 500 (security-model: secret gate must run before the config guard, so a broken/partial deploy does not leak endpoint existence or internal config state to an unauthenticated caller)', async () => {
+  const res = await voiceQuota({ request: makeRequest(undefined), env: makeEnv(0, { kv: false }) });
+  assert.equal(res.status, 404);
+});
+
 test('voice-quota: no usage recorded yet defaults to 0', async () => {
   const env = { DEBUG_SPEAKING_KEY: SECRET, READ2LEAD_CODES: makeFakeKv({}) };
   const res = await voiceQuota({ request: makeRequest(SECRET), env });

@@ -10,17 +10,20 @@ import { azureUsageKey, AZURE_PA_MONTHLY_FREE_SECONDS } from './_azure-pronuncia
 export async function onRequestGet(context) {
   const { request, env } = context;
 
-  if (!env.READ2LEAD_CODES) {
-    return json({ error: 'config_error' }, 500);
-  }
-
   const url = new URL(request.url);
   const provided = url.searchParams.get('key') || '';
   const secret = env.DEBUG_SPEAKING_KEY || '';
 
-  // 404 (not 401) so the endpoint is invisible without the secret.
+  // 404 (not 401) so the endpoint is invisible without the secret — checked
+  // FIRST, before any config guard, so an unauthenticated caller can't
+  // distinguish "misconfigured" from "doesn't exist" (matches
+  // debug-speaking.js's ordering; a 500 here would leak both).
   if (!secret || provided !== secret) {
     return new Response('Not found', { status: 404 });
+  }
+
+  if (!env.READ2LEAD_CODES) {
+    return json({ error: 'config_error' }, 500);
   }
 
   const now = new Date();
@@ -29,7 +32,7 @@ export async function onRequestGet(context) {
 
   return json({
     ok: true,
-    month: usageKey.slice('azure-pa-secs:'.length),
+    month: usageKey.slice(usageKey.indexOf(':') + 1),
     used_seconds: used,
     cap_seconds: AZURE_PA_MONTHLY_FREE_SECONDS,
     pct: Math.round((used / AZURE_PA_MONTHLY_FREE_SECONDS) * 100),
