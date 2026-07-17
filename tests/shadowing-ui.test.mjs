@@ -293,3 +293,68 @@ test('the 11-item recorded-deviations list is retrievable as a comment block in 
 test('the auto-advance-through-consecutive-watch-segments path carries an honest, non-behavior-changing comment', () => {
   assert.ok(page.includes('flagged for real-device verification'), 'expected the rule-20 real-device-verification flag comment near showWatchAndPlay()');
 });
+
+// ---------------------------------------------------------------------------
+// 7. r20 round-2 defects (deployed-preview review on ae6a104/8db3580)
+// ---------------------------------------------------------------------------
+
+test('r20 #1: the stage screen gets its own widened max-width for the 1024px+ board-08 layout', () => {
+  // Root cause of the 1280 collapse: `.shd-screen` (shared by gate/picker/
+  // stage) caps at 460px unconditionally; #shd-stage-screen must override it
+  // specifically inside the 1024px+ media query, or .shd-stage-cols's own
+  // max-width:1180px has no real containing block to grow into.
+  assert.match(css, /@media \(min-width: 1024px\)\s*{[^}]*#shd-stage-screen\s*{\s*max-width:\s*1180px/s);
+});
+
+test('r20 #1: the player host has an explicit width (not just aspect-ratio) so it cannot shrink-to-fit to ~0', () => {
+  assert.match(css, /\.shd-player\s*{[^}]*width:\s*100%[^}]*aspect-ratio/s, 'expected .shd-player to set width:100% alongside aspect-ratio');
+  assert.match(css, /\.shd-stagezone\s*{[^}]*width:\s*100%/s, 'expected .shd-stagezone to also carry an explicit width:100%');
+});
+
+test('r20 #1: the booth-corner Minny carries the circular mask/crop recipe (was rendering as an uncropped rectangle)', () => {
+  assert.match(css, /\.shd-booth-minny\s*{[^}]*border-radius:\s*50%/s);
+  assert.match(css, /\.shd-booth-minny img\s*{[^}]*height:\s*190%/s);
+});
+
+test('r20 #2: the dev-draft ribbon is anchored to the thumbnail, not the card (title column must keep full width)', () => {
+  assert.match(css, /\.shd-thumb\s*{\s*position:\s*relative/, 'expected .shd-thumb to establish its own positioning context for the ribbon');
+  // The ribbon markup must live INSIDE the thumbnail span, after the <img>,
+  // not as a sibling of .shd-thumb/.shd-meta on the card.
+  assert.match(page, /<img src="https:\/\/i\.ytimg\.com\/vi\/[^>]*>\s*\n\s*\$\{isDraft[^}]*shd-ribbon/, 'expected the ribbon markup nested inside the thumbnail, after its <img>');
+});
+
+test('r20 #2 round 3: the ribbon offsets stay non-negative so the badge never gets sheared by .shd-thumb\'s overflow:hidden clip', () => {
+  // Buffet's exact finding on b90b214: top:-6px;right:-6px placed the
+  // badge PARTIALLY OUTSIDE .shd-thumb, which still clips via
+  // overflow:hidden (needed for the rounded-corner image) -- the badge's
+  // own corner was sheared off by that clip. A negative top/right offset
+  // on .shd-ribbon combined with overflow:hidden on .shd-thumb is exactly
+  // the broken combination; this is a cheap tripwire for it recurring.
+  const thumbBlockMatch = css.match(/\.shd-thumb\s*{([^}]*)}/);
+  assert.ok(thumbBlockMatch, 'expected a .shd-thumb rule');
+  assert.match(thumbBlockMatch[1], /overflow:\s*hidden/, 'expected .shd-thumb to still clip (rounded-corner image) -- if this ever changes, re-check the offset requirement below');
+
+  const ribbonBlockMatch = css.match(/\.shd-ribbon\s*{([^}]*)}/s);
+  assert.ok(ribbonBlockMatch, 'expected a .shd-ribbon rule');
+  const topMatch = ribbonBlockMatch[1].match(/\btop:\s*(-?\d+(?:\.\d+)?)px/);
+  const rightMatch = ribbonBlockMatch[1].match(/\bright:\s*(-?\d+(?:\.\d+)?)px/);
+  assert.ok(topMatch && rightMatch, 'expected explicit top/right px offsets on .shd-ribbon');
+  assert.ok(Number(topMatch[1]) >= 0, `expected .shd-ribbon's top offset to be non-negative (inside the clipped thumbnail), got ${topMatch[1]}px`);
+  assert.ok(Number(rightMatch[1]) >= 0, `expected .shd-ribbon's right offset to be non-negative (inside the clipped thumbnail), got ${rightMatch[1]}px`);
+});
+
+test('r20 #3: the mic caption is state-truthful — idle copy is the markup default, recording copy only appears when the mic actually starts', () => {
+  assert.ok(page.includes('Bấm micro rồi nói cả câu nhé!'), 'expected the idle/armed mic caption verbatim');
+  assert.ok(page.includes('Đang ghi âm… nói cả câu nhé!'), 'expected the recording-in-progress mic caption verbatim (unchanged copy)');
+  // The markup's initial #shd-miccap text must be the IDLE string, not the
+  // recording one — this is the exact bug (idle mic claiming it was
+  // recording) that r20 caught.
+  assert.match(page, /id="shd-miccap">Bấm micro rồi nói cả câu nhé!<\/p>/, 'expected the idle caption to be the DEFAULT text in the markup, not set only via JS');
+  // And the recording string must only be assigned after recorder.start(),
+  // not anywhere earlier in startRecording().
+  const startFnMatch = page.match(/async function startRecording\(\)\s*{[\s\S]*?\n {4}}\n/);
+  assert.ok(startFnMatch, 'expected to locate startRecording()');
+  const recorderStartIdx = startFnMatch[0].indexOf('recorder.start();');
+  const captionSetIdx = startFnMatch[0].indexOf('MIC_CAPTION_RECORDING');
+  assert.ok(recorderStartIdx !== -1 && captionSetIdx !== -1 && captionSetIdx > recorderStartIdx, 'expected MIC_CAPTION_RECORDING to be assigned AFTER recorder.start(), never before');
+});

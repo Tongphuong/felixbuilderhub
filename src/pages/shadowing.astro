@@ -202,7 +202,7 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
                   <span class="shd-mic-label" id="shd-mic-label"></span>
                 </button>
               </div>
-              <p class="shd-miccap" id="shd-miccap">Đang ghi âm… nói cả câu nhé!</p>
+              <p class="shd-miccap" id="shd-miccap">Bấm micro rồi nói cả câu nhé!</p>
             </div>
             <button class="shd-replay" id="shd-replay-btn" type="button"><span aria-hidden="true">↻</span> Nghe lại câu</button>
           </div>
@@ -245,6 +245,15 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
     import { fireLessonPassConfetti, playKenney } from '../lib/lesson-juice';
 
     const MAX_SECONDS = 12; // Elon ruling (Buffet-confirmed server-side safe): 12-word segments at kid reading pace
+
+    // r20 (round 2): #shd-miccap used to hardcode the recording-in-progress
+    // copy in the markup itself, so it read "Đang ghi âm…" (recording) while
+    // the mic was still idle -- a kid-facing honesty bug, not just cosmetic.
+    // State-driven now: idle/armed until the mic actually starts, recording
+    // copy only while it truly is. The idle string is the default in the
+    // markup above.
+    const MIC_CAPTION_IDLE = 'Bấm micro rồi nói cả câu nhé!';
+    const MIC_CAPTION_RECORDING = 'Đang ghi âm… nói cả câu nhé!';
 
     let videos = [];
     try {
@@ -457,8 +466,10 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
         card.type = 'button';
         card.className = idx === 0 ? 'shd-card shd-card--tonight' : 'shd-card';
         card.innerHTML = `
-          ${isDraft ? '<span class="shd-ribbon">BẢN NHÁP</span>' : ''}
-          <span class="shd-thumb"><img src="https://i.ytimg.com/vi/${encodeURIComponent(video.youtube_id)}/hqdefault.jpg" alt="" loading="lazy" /></span>
+          <span class="shd-thumb">
+            <img src="https://i.ytimg.com/vi/${encodeURIComponent(video.youtube_id)}/hqdefault.jpg" alt="" loading="lazy" />
+            ${isDraft ? '<span class="shd-ribbon">BẢN NHÁP</span>' : ''}
+          </span>
           <span class="shd-meta">
             <span class="shd-vtitle">${escapeHtml(video.title_vi)}</span>
             <span class="shd-row">
@@ -713,6 +724,9 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
       els.micIcon.classList.toggle('hidden', isRetry);
       els.recdot.classList.toggle('hidden', isRetry);
       els.miccap.classList.toggle('hidden', isRetry);
+      // Every (re)entry into the fresh-attempt view starts truthfully idle
+      // -- the mic has NOT started recording yet at this point.
+      els.miccap.textContent = MIC_CAPTION_IDLE;
       els.micBtn.setAttribute('aria-label', isRetry ? 'Thử lại, bắt đầu ghi âm' : 'Bắt đầu ghi âm');
       renderWords(seg.text_en, settledWords || lightWords(seg.text_en, ''));
       els.replayBtn.classList.remove('hidden');
@@ -907,6 +921,10 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
           return;
         }
         recorder.start();
+        // Only NOW is the mic truly recording -- flip the caption here, not
+        // before (r20 kid-facing-honesty fix: it used to say "Đang ghi âm…"
+        // while still idle).
+        els.miccap.textContent = MIC_CAPTION_RECORDING;
         // Live karaoke lighting only — cosmetic, never gates the flow.
         // Grading is ALWAYS the server call in stopRecording()/submitRecording().
         if (speechSupport(window) === 'native') {
@@ -929,6 +947,7 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
       recording = null;
       if (rec.timerId) window.clearTimeout(rec.timerId);
       els.micBtn.classList.remove('is-recording');
+      els.miccap.textContent = MIC_CAPTION_IDLE; // truthful the instant recording actually stops
       lighter?.stop();
       let blob = null;
       try {
