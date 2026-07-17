@@ -223,6 +223,119 @@ assigns, commits, merges, deploys, or spends.
 - Founder handoff: pending — plain-language report at each phase gate; Phương
   QA on preview with a test code before merge.
 
+## Prior task (complete): speakup-rewards-tracker
+
+- Status: complete
+- Task ID: speakup-rewards-tracker
+- Shipped: 2026-07-17 — merged to main (1d0fa62, ff) and LIVE ON PRODUCTION
+  (felixbuilderhub.com/speak-up/ bundle carries completion_id/diamonds_awarded),
+  on Phương's explicit merge approval.
+- Owner: Elon plans/reviews/integrates (hard-locked out of source); Mark (bg
+  worker, backend) + Steve (bg worker, UI) build; Buffet gates every diff.
+- Lane: `claude-bg/speakup-rewards` (backend, tip f0705b0) + `claude-bg/speakup-ui`
+  (UI on top, tip 5dae02f) → integrated on `claude/speakup-diamonds` (1d0fa62,
+  merged main's concurrent docs commits, no source conflict) → main. Branches +
+  worktrees cleaned up post-merge.
+- Problem (founder ask): (1) kids earn diamonds for practising SpeakUp, mirroring
+  R2L; (2) a teacher view of which students practise vs not, for BOTH R2L and
+  SpeakUp; (3) MCP-server strategy + harness for Elon and the workers.
+- Approach — REUSE, not rebuild: SpeakUp/R2L already share one KV, one child
+  identity (access code), one `progress:<CODE>` state with `diamonds`, and a
+  manual coach-diamond mechanism (`applyManualReward`/`rewardStudent` in
+  `functions/api/admin/_classes.js`). The feature auto-fires that same primitive
+  from the practice-completion hook `functions/api/minny-practice-log.js`:
+  homework `homework_summary` → +10💎, `free_talk_summary` → +20💎, diamonds
+  isolated from coins/XP/rank (unchanged guarantee). Tracker extends
+  `enrichClass` (already joins each child's progress) with practice signals; UI
+  adds a kid diamond HUD + reused canvas-confetti (`src/lib/lesson-juice.ts`) and
+  a 🟢/🟡/🔴 practice column on `src/pages/admin/classes.astro`.
+- Anti-farming (the hard part — 3 backend review rounds): daily caps (homework
+  2/day, Free Talk 1/day) + 100💎/week backstop, made atomic under concurrency
+  by a per-STUDENT async mutex (`acquireStudentAwardLock`, serializes all of one
+  kid's awards within an isolate, re-reads fresh KV) + a client-supplied stable
+  `completion_id` (one UUID per finished session, reused on retries) deduped via
+  a `paid_ids` ledger. Buffet reproduced and closed: (R1) non-atomic caps paying
+  60-70💎 vs 20/day under an identical-POST burst; (R2-F1) a pack-based fallback
+  key (Elon plan error) that collapsed genuine same-day homework to one payout
+  because `pack_id` is hardcoded 'general'; (R2-F2) concurrent distinct-id
+  requests corrupting the persisted counters.
+- Reuse survey (rule 21): ADOPTED — `rewardStudent`/`applyManualReward` (diamond
+  write, XP-isolated), `enrichClass` (tracker join), `canvas-confetti` via the
+  existing `lesson-juice.ts` (`window.__r2lJuice`) so SpeakUp's celebration
+  matches R2L with zero new dependency, `_rate-limit.js`. REJECTED — a Durable
+  Object for a true cross-isolate atomic counter (disproportionate for low-value
+  currency; see Tradeoff watch), a second confetti library.
+- Cost ceiling: Claude team (Max plan, not metered); runtime $0 marginal on the
+  kid path (diamond write rides the existing KV put); the only paid runtime is
+  unchanged upstream grading.
+- Acceptance criteria (met): homework +10 / Free Talk +20 with caps enforced
+  atomically under concurrency (mutex harness + repros green); diamonds never
+  touch coins/XP/rank (Buffet-traced + tested); tracker shows practice_status +
+  SpeakUp/R2L weekly counts per child, both apps, one glance; kid HUD + celebration
+  responsive at 390/768/1024/1280 (12 screenshots); 1767/1767 node --test; astro
+  build clean; prod bundle verified carrying the logic.
+- State inventory: student KV `progress:<CODE>` gains diamonds via the reused
+  isolated path (coins/XP/rank untouched); `progress.minny_practice` gains a
+  `diamond_awards` ledger `{day_key, homework_count, freetalk_count, week_key,
+  week_total, paid_ids}`, VN-day/ISO-week keyed, resets on boundary. No migration
+  of past records; the ledger is created lazily on first award. Review ledger +
+  dispatch-active.json are runtime state (cleaned post-merge).
+- Operational reality: diamonds are REAL-GIFT currency (redeemed by the coach for
+  physical gifts via the R2L gifts screen, which already advertised "Kim cương
+  đến từ lớp học VÀ SpeakUp"). The teacher tracker's two "weekly" numbers use
+  DIFFERENT windows on purpose — SpeakUp `sessions_this_week` is Mon–Sun, R2L
+  `r2l_weekly_completed` is a rolling 7 days — labelled "tuần này" vs "7 ngày" so
+  a teacher isn't misled. The kid HUD reads its balance from the SAME
+  `progress:<CODE>` the R2L gifts screen reads (Buffet surface-traced to
+  Header.astro — no divergent path).
+- Tradeoff watch (rule 29): the per-student mutex is in-process, so it serializes
+  awards only WITHIN one Cloudflare Workers isolate. RESIDUAL: a determined kid
+  firing many DISTINCT `completion_id`s from two devices/tabs in the same
+  sub-write-latency instant, landing on different isolates, can still race the
+  cap (Mark reproduced ~50💎 vs 20/day with 5 forged distinct ids). Fully closing
+  it needs a Durable Object — deliberately deferred as disproportionate for
+  10-20�8-per-award currency against 1000-30000💎 gifts. WATCH: if a child's
+  weekly SpeakUp diamonds exceed ~100 (the backstop) or diamond balances climb
+  implausibly faster than practice counts, revisit with a DO or a server-side
+  hard weekly ledger. Founder informed at handoff; not blocking.
+- Known follow-ups (bounded, not blockers):
+  * Add a COMMITTED regression test for the shared-id combination (per-step
+    `logPractice` pings + the `homework_summary` sharing one `completion_id` →
+    summary still pays exactly once). Buffet verified this LIVE by running the
+    real handler, but no committed test locks the exact interaction — a future
+    refactor reordering the `paid_ids` bookkeeping could silently reintroduce it.
+    (Buffet's non-blocking recommendation at UI review.)
+  * MCP infra servers (Cloudflare observability+bindings, Render) NOT connected —
+    rule 32 (`_ops/AGENTS.md`) + `~/.claude/rules/mcp-infra-use.md` written
+    (reads free, writes Elon-gated); Phương runs the one-time OAuth/API-key
+    connect commands when ready. Guard-hook enforcement is a ratified follow-up.
+  * Reward amounts (10 homework / 20 Free Talk) and caps are single constants in
+    `minny-practice-log.js` — trivial to tune on Phương's word.
+- Design self-verification: responsive verified at 390/768/1024/1280 for both new
+  surfaces via astro-dev + Playwright route-stubbing (Cloudflare Functions don't
+  run under astro dev), 12 screenshots in `_ops/.playwright-mcp/screens/`
+  (`speakup-hud-*`, `classes-tracker-*`); Elon eyeballed phone+laptop. Honest
+  caveat: the celebration ticker screenshot is DOM-simulated (the function is
+  module-scoped, not on window) — the wiring is unit-tested and Buffet
+  code+pixel-verified the sim is faithful, but a real-completion celebration on
+  the deployed build was left for Phương's own preview QA. Deployed-build rule-20:
+  pages 200, CSS 200 (no deploy-race), prod JS bundle carries
+  completion_id/diamonds_awarded/randomUUID.
+- Founder handoff: preview link given first
+  (claude-speakup-diamonds.felixbuilderhub.pages.dev), plain-language report of
+  all three asks + the anti-farming saga (7 review rounds, Buffet caught 3 real
+  problems incl. one Elon plan error) + the accepted residual + the MCP connect
+  commands. Phương approved the merge ("i approve"); merged + prod-verified +
+  cleaned up.
+- Verified commit: 1d0fa62 (origin/main, production-verified live). Constituent
+  Buffet ledger approvals: f0705b0 (backend), 5dae02f (UI), 1d0fa62 (integration
+  tip, source byte-identical to 5dae02f).
+- Review trail: Mark backend ×3 rounds (race → idempotency → per-student mutex),
+  Steve UI ×1, Buffet ×4 (backend R1 blocker, R2 F1+F2, R3 APPROVED, UI APPROVED),
+  Elon plan-error owned in R2. Full suite 1767/1767 on the merged tree.
+- Started: 2026-07-17
+- Completed: 2026-07-17
+
 ## Prior task (complete): speakup-grading-honesty
 
 - Status: complete
