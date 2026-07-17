@@ -149,6 +149,57 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       `;
     }
 
+    // Teacher practice-tracker line (Task 3, SpeakUp diamond/tracker packet,
+    // 2026-07-17): one glance = who practises, who's gone quiet, across BOTH
+    // apps. The two counts use DIFFERENT windows and must say so plainly —
+    // SpeakUp's sessions_this_week is a Mon-Sun calendar week
+    // (minny_practice.sessions_this_week, minny-practice-log.js), R2L's
+    // r2l_weekly_completed is a rolling 7 days (weeklyCompletedCount() in
+    // admin/_classes.js) — a teacher reading "tuần này" vs "7 ngày" is never
+    // misled into thinking they're the same window.
+    const PRACTICE_STATUS_DOT = { today: '🟢', recent: '🟡', inactive: '🔴' };
+
+    function practiceStatusDot(status) {
+      return PRACTICE_STATUS_DOT[status] || PRACTICE_STATUS_DOT.inactive;
+    }
+
+    // VN calendar-day buckets (UTC+7), matching enrichClass's own
+    // practiceStatus() day math in admin/_classes.js — "hôm nay"/"hôm qua"
+    // reads naturally to a teacher; a bare timestamp or hour count does not.
+    function humanizeLastActive(iso, nowIso = new Date().toISOString()) {
+      const ts = Date.parse(String(iso || ''));
+      if (!Number.isFinite(ts)) return 'chưa luyện';
+      const VN_OFFSET_MS = 7 * 60 * 60 * 1000;
+      const dayKey = (ms) => new Date(ms + VN_OFFSET_MS).toISOString().slice(0, 10);
+      const today = dayKey(Date.parse(nowIso));
+      const lastDay = dayKey(ts);
+      if (lastDay === today) return 'hôm nay';
+      const diffDays = Math.round((Date.parse(today) - Date.parse(lastDay)) / 86400000);
+      // Clock-skew guard: a "future" timestamp (diffDays <= 0 here since
+      // lastDay !== today was already handled above) never reads as a
+      // negative day count to the teacher.
+      if (diffDays <= 0) return 'hôm nay';
+      if (diffDays === 1) return 'hôm qua';
+      return `${diffDays} ngày trước`;
+    }
+
+    function renderPracticeTracker(student) {
+      const dot = practiceStatusDot(student.practice_status);
+      const sessions = Number(student.minny_practice?.sessions_this_week) || 0;
+      const r2lWeekly = Number(student.r2l_weekly_completed) || 0;
+      const activeText = humanizeLastActive(student.last_activity_at);
+      return `
+        <div class="col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 rounded-lg border border-cream-dim/15 bg-navy-900/80 p-3 text-xs text-cream">
+          <span aria-hidden="true">${dot}</span>
+          <span>SpeakUp: <strong>${sessions}</strong> tuần này</span>
+          <span aria-hidden="true" class="text-cream-dim">·</span>
+          <span>R2L: <strong>${r2lWeekly}</strong> (7 ngày)</span>
+          <span aria-hidden="true" class="text-cream-dim">·</span>
+          <span>hoạt động: ${escapeHtml(activeText)}</span>
+        </div>
+      `;
+    }
+
     function renderStudentCard(student, klass) {
       const state = student.read2lead_state || {};
       const ladder = state.rank_ladder || {};
@@ -203,6 +254,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
                 </div>
                 <div class="rounded-lg border border-cream-dim/15 bg-navy-900/80 p-3 text-cream"><span class="block text-xs text-cream-muted">Read2Lead streak</span><strong>${Number(state.streak_days || 0)} ngày</strong></div>
                 <div class="rounded-lg border border-cream-dim/15 bg-navy-900/80 p-3 text-cream"><span class="block text-xs text-cream-muted">Điểm danh lớp</span><strong>${attendance === 'present' ? '✅ Có mặt' : attendance === 'absent' ? '❌ Vắng' : 'Chưa chọn'}</strong></div>
+                ${renderPracticeTracker(student)}
               </div>
             </div>
           </div>

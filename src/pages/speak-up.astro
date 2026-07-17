@@ -44,6 +44,10 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       <span class="spk-appbar__student-name" id="appbar-student-name"></span>
       <span class="spk-appbar__avatar" id="appbar-student-avatar" aria-hidden="true"></span>
     </div>
+    <div class="spk-appbar__diamonds hidden" id="appbar-diamonds" role="status" aria-label="Số kim cương của con">
+      <span class="spk-appbar__diamonds-icon" aria-hidden="true">💎</span>
+      <span class="spk-appbar__diamonds-value" id="appbar-diamonds-value">0</span>
+    </div>
   </header>
 
   <main id="main" class="spk-main">
@@ -397,6 +401,14 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
   </main>
 
   <script>
+    // Diamond celebration (SpeakUp reward hook, 2026-07-17): REUSE the R2L
+    // confetti juice (canvas-confetti under the hood, already a dependency —
+    // see src/lib/lesson-juice.ts, the same helper lesson.astro exposes as
+    // window.__r2lJuice) rather than adding a second confetti dependency.
+    // Imported directly (not via window.__r2lJuice, which only exists on
+    // pages that mount it) so it works standalone on this page.
+    import { fireLessonPassConfetti, fireStreakConfetti } from '../lib/lesson-juice';
+
     const params = new URLSearchParams(window.location.search);
     const codeInput = document.getElementById('speaking-code');
     const loadBtn = document.getElementById('speaking-load');
@@ -434,6 +446,14 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       micGateReady: false,
       homeworkResults: [],
       homeworkComplete: false,
+      // Stable per-session completion id (anti-farming, minny-practice-log.js
+      // idempotency guard): ONE id for this homework session's completion,
+      // shared by every per-step log ping AND the final homework_summary
+      // POST so a network retry of the exact same completion reuses it —
+      // see getOrCreateCompletionId(). Reset to null wherever a NEW homework
+      // session starts (enterPracticeMode, and the "done -> back to modes"
+      // handler) so the NEXT session gets a fresh id.
+      homeworkCompletionId: null,
       fixit: null,
       // build task_type (schema v3): one tap per column, keyed by column id;
       // buildArmed only flips true once every column has a pick -- gates the
@@ -546,6 +566,58 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       if (sub) sub.innerHTML = html;
     }
 
+    // Stable per-session completion id (Task 1, anti-farming dedup on
+    // minny-practice-log.js): pure + tiny so it's unit-testable without a
+    // DOM/fetch harness. `store` is `state` (homework) or `ft` (free talk),
+    // `key` is the property name holding the id. Generates ONCE, on first
+    // call for a given session; every later call for the SAME session
+    // (per-step pings, a retried summary POST) reuses the same value. A new
+    // session gets a fresh id only because the caller resets store[key] to
+    // null first (enterPracticeMode/"done" handler for homework, ftReset()
+    // for free talk) — this function itself never regenerates an existing id.
+    function getOrCreateCompletionId(store, key) {
+      if (!store[key]) store[key] = crypto.randomUUID();
+      return store[key];
+    }
+
+    // Kid diamond HUD (Task 2): seeded once from minny-speaking-context's
+    // diamond_balance (loadSession()), bumped whenever a practice-log
+    // response reports a real award. Defensive by design — every field is
+    // read with a fallback so a missing/malformed response never throws;
+    // the two call sites that use this remain fire-and-forget.
+    function updateDiamondPill(balance) {
+      const valueEl = document.getElementById('appbar-diamonds-value');
+      const n = Number(balance);
+      if (valueEl && Number.isFinite(n)) valueEl.textContent = String(Math.max(0, Math.round(n)));
+    }
+
+    function showDiamondTicker(amount) {
+      const anchor = document.getElementById('appbar-diamonds');
+      if (!anchor || !Number.isFinite(amount) || amount <= 0) return;
+      const ticker = document.createElement('span');
+      ticker.className = 'spk-diamond-ticker';
+      ticker.textContent = `+${Math.round(amount)} 💎`;
+      ticker.setAttribute('role', 'status');
+      ticker.dataset.visible = 'false';
+      anchor.appendChild(ticker);
+      requestAnimationFrame(() => { ticker.dataset.visible = 'true'; });
+      window.setTimeout(() => ticker.remove(), 2400);
+    }
+
+    // Called from a practice-log response (homework_summary / free_talk_summary
+    // completions only — per-step logs always report diamonds_awarded: 0, so
+    // this is a harmless no-op there). A bigger award gets the bigger R2L
+    // "lesson pass" burst, matching how R2L scales its own celebration by
+    // significance (streak vs. full pack pass) — reused, not reinvented.
+    function celebrateDiamonds(payload) {
+      updateDiamondPill(payload?.diamond_balance);
+      const awarded = Number(payload?.diamonds_awarded);
+      if (!Number.isFinite(awarded) || awarded <= 0) return;
+      showDiamondTicker(awarded);
+      const burst = awarded >= 20 ? fireLessonPassConfetti() : fireStreakConfetti();
+      Promise.resolve(burst).catch(() => {});
+    }
+
     function showModePicker() {
       state.modePicked = false;
       practiceScreen?.classList.remove('is-frame-layout');
@@ -566,6 +638,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       state.modePicked = true;
       state.homeworkResults = [];
       state.homeworkComplete = false;
+      state.homeworkCompletionId = null;
       stopPlayback();
       modesScreen?.classList.add('hidden');
       practiceScreen?.classList.remove('hidden');
@@ -1111,6 +1184,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             pack_id: state.packId,
             prompt_id: 'homework_summary',
             mode_id: 'homework',
+            completion_id: getOrCreateCompletionId(state, 'homeworkCompletionId'),
             summary: {
               mode: 'homework',
               turns: state.homeworkResults.length,
@@ -1118,7 +1192,10 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
               homework_note_vi: (activeMode() && activeMode().homework_note_vi) || null,
             },
           }),
-        }).catch(() => {});
+        })
+          .then((res) => res.json())
+          .then((data) => { if (data?.ok) celebrateDiamonds(data); })
+          .catch(() => {});
       }
     }
 
@@ -1721,6 +1798,16 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     async function logPractice(result, readyForClass = false) {
       const step = currentStep();
       if (!state.accessCode || !state.packId) return;
+      // Per-step log, never a diamond-paying completion on its own (backend
+      // only pays on prompt_id 'homework_summary'/'free_talk_summary' — see
+      // minny-practice-log.js). In homework mode this shares the SAME id as
+      // the session's eventual homework_summary POST (one id per homework
+      // completion, per Task 1); outside homework mode there's no shared
+      // per-session id to reuse, so a fresh one is sent per call (harmless —
+      // the backend never dedups a non-summary prompt_id against it).
+      const completionId = state.activeModeId === 'homework'
+        ? getOrCreateCompletionId(state, 'homeworkCompletionId')
+        : crypto.randomUUID();
       try {
         await fetch('/api/minny-practice-log', {
           method: 'POST',
@@ -1732,6 +1819,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             mode_id: state.activeModeId,
             score_percent: result?.score_percent,
             ready_for_class: readyForClass,
+            completion_id: completionId,
           }),
         });
       } catch {
@@ -2195,6 +2283,14 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           studentWrap.classList.remove('hidden');
         }
 
+        // Diamond HUD (Task 2): seed from minny-speaking-context's
+        // diamond_balance; bumped later by celebrateDiamonds() on a real award.
+        const diamondsWrap = document.getElementById('appbar-diamonds');
+        if (diamondsWrap) {
+          updateDiamondPill(data.diamond_balance);
+          diamondsWrap.classList.remove('hidden');
+        }
+
         codeCard.classList.add('hidden');
         shell.classList.remove('hidden');
         mountSpeakingMicCheck();
@@ -2244,6 +2340,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       if (state.activeModeId === 'homework' && state.homeworkComplete) {
         state.homeworkComplete = false;
         state.homeworkResults = [];
+        state.homeworkCompletionId = null;
         showModePicker();
         return;
       }
@@ -2277,6 +2374,12 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       awaitingReply: false,
       sentenceCount: 0,
       turnsUsed: 0,
+      // Stable per-session completion id (anti-farming, minny-practice-log.js
+      // idempotency guard): ONE id for this free-talk session's completion,
+      // used on the free_talk_summary POST; a retry of that exact same
+      // summary reuses it. Reset to null in ftReset() so the NEXT free-talk
+      // session gets a fresh id — see getOrCreateCompletionId().
+      completionId: null,
       flaggedSession: false,
       lastKidChip: null,
       lastKidChipSeconds: null,
@@ -3113,6 +3216,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ft.awaitingReply = false;
       ft.sentenceCount = 0;
       ft.turnsUsed = 0;
+      ft.completionId = null;
       ft.flaggedSession = false;
       ft.lastKidChip = null;
       ft.lastKidChipSeconds = null;
@@ -3786,6 +3890,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             pack_id: state.packId,
             prompt_id: 'free_talk_summary',
             mode_id: 'free_talk',
+            completion_id: getOrCreateCompletionId(ft, 'completionId'),
             summary: {
               mode: 'free_talk',
               turns: ft.turnsUsed,
@@ -3796,7 +3901,10 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
               latency_turns: ft.turnTimings.length,
             },
           }),
-        }).catch(() => {});
+        })
+          .then((res) => res.json())
+          .then((data) => { if (data?.ok) celebrateDiamonds(data); })
+          .catch(() => {});
       }
     }
 

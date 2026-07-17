@@ -107,6 +107,55 @@
   .spk-appbar__sub { display: none; }
 }
 
+/* Kid diamond HUD (Task 2, 2026-07-17): seeded on load from minny-speaking-
+   context's diamond_balance, bumped on a real practice-log award. Kept
+   visible at 390px (unlike .spk-appbar__sub above) — a kid's own balance is
+   the one appbar bit that should never disappear on a small screen. */
+.spk-appbar__diamonds {
+  position: relative; /* anchors the +N celebration ticker below */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--border-accent);
+  background: rgba(200, 143, 56, 0.14);
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--gold-light);
+  white-space: nowrap;
+}
+.spk-appbar__diamonds.hidden { display: none; }
+.spk-appbar__diamonds-icon { font-size: 15px; line-height: 1; }
+
+.spk-diamond-ticker {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-top: 4px;
+  pointer-events: none;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--gold-light);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+  z-index: 20;
+  opacity: 0;
+  transform: translate(-50%, 0);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.spk-diamond-ticker[data-visible="true"] {
+  opacity: 1;
+  transform: translate(-50%, 6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spk-diamond-ticker { transition: opacity 0.25s ease; }
+  .spk-diamond-ticker[data-visible="true"] { transform: translate(-50%, 0); }
+}
+
 /* ===================== Page main ===================== */
 
 /* Flex column so the visible screen centers vertically in the leftover
