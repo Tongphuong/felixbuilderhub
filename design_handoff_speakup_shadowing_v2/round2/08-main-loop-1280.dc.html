@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>08 Main Loop 1280 — Đêm sân khấu</title>
+<style>
+  :root{
+    --night:#0a1b2b; --navy-900:#17354a; --navy-850:#1d3f58;
+    --gold:#c88f38; --gold-light:#f2cc7e; --gold-hot:#ffe9a8;
+    --cream:#f5e6c8; --cream-muted:#d9c7a4; --cream-dim:#aa9673; --rec:#ff6b5e; --ember:#ef9b4a;
+    --font:ui-rounded,"SF Pro Rounded","Nunito","Varela Round","Segoe UI",system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#06121f;font-family:var(--font);display:flex;flex-direction:column;align-items:center;padding:28px 0 60px;color:#8fa6b8}
+  .frame{width:1280px;border-radius:26px;overflow:hidden;box-shadow:0 30px 80px -20px rgba(0,0,0,.8);flex:none}
+  .screen{width:1280px;min-height:800px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(70% 55% at 28% 110%, rgba(200,143,56,.22), transparent 60%),
+      radial-gradient(60% 40% at 50% -10%, #1d3f58, transparent 70%),
+      linear-gradient(180deg,#0e2436 0%, #0a1b2b 55%, #081724 100%);
+    display:flex;flex-direction:column;padding:26px 34px 34px;gap:20px}
+  .screen::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:
+      radial-gradient(2px 2px at 140px 90px, rgba(245,230,200,.5), transparent 60%),
+      radial-gradient(1.5px 1.5px at 1080px 70px, rgba(245,230,200,.4), transparent 60%),
+      radial-gradient(2px 2px at 860px 140px, rgba(242,204,126,.45), transparent 60%),
+      radial-gradient(1.5px 1.5px at 420px 50px, rgba(245,230,200,.35), transparent 60%),
+      radial-gradient(1.5px 1.5px at 1180px 300px, rgba(245,230,200,.3), transparent 60%),
+      radial-gradient(2px 2px at 90px 420px, rgba(242,204,126,.3), transparent 60%),
+      radial-gradient(1.5px 1.5px at 640px 100px, rgba(245,230,200,.3), transparent 60%)}
+
+  /* top bar: title left, counters right */
+  .top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}
+  .vtitle{color:var(--cream);font-weight:800;font-size:22px;display:flex;align-items:center;gap:12px}
+  .vtitle .lchip{font-weight:800;font-size:14px;color:#10273a;border-radius:9px;padding:4px 10px;
+    background:linear-gradient(180deg,var(--gold-hot),var(--gold-light));box-shadow:0 0 10px rgba(242,204,126,.4)}
+  .huds{display:flex;gap:14px}
+  .counter{display:flex;align-items:center;gap:7px;background:rgba(23,53,74,.85);
+    border:2px solid rgba(242,204,126,.35);border-radius:999px;padding:9px 18px 9px 13px;
+    font-weight:800;font-size:20px;color:var(--gold-light);
+    box-shadow:0 0 18px rgba(242,204,126,.15), inset 0 1px 0 rgba(245,230,200,.12)}
+  .counter .em{font-size:21px;filter:drop-shadow(0 0 6px rgba(242,204,126,.8))}
+
+  .cols{display:flex;gap:30px;position:relative;z-index:2;flex:1}
+
+  /* ---------- left: the stage ---------- */
+  .left{flex:1.5;display:flex;flex-direction:column;gap:16px;min-width:0}
+  .player{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:16/9;
+    border:4px solid rgba(242,204,126,.45);
+    box-shadow:0 18px 44px -14px rgba(0,0,0,.75), 0 0 40px rgba(242,204,126,.16)}
+  .toon{position:absolute;inset:0;background:linear-gradient(180deg,#8fd3ff 0%,#c6ecff 52%,#ffe9b0 68%,#ffd98c 74%,#7ac96f 74%,#5cb85f 100%)}
+  .toon .sun{position:absolute;top:26px;right:52px;width:74px;height:74px;border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, #fff3c4, #ffd166 70%);box-shadow:0 0 40px 14px rgba(255,209,102,.55)}
+  .toon .cloud{position:absolute;background:#fff;border-radius:999px;opacity:.95}
+  .toon .c1{top:46px;left:64px;width:130px;height:38px}
+  .toon .c1::before{content:"";position:absolute;left:28px;top:-22px;width:60px;height:46px;border-radius:999px;background:#fff}
+  .toon .c2{top:100px;left:290px;width:92px;height:28px;opacity:.8}
+  .toon .hill{position:absolute;bottom:-50px;border-radius:50%}
+  .toon .h1{left:-110px;width:480px;height:200px;background:#69c26a}
+  .toon .h2{right:-120px;width:520px;height:180px;background:#55b158}
+  .toon .mat{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);width:280px;height:28px;
+    border-radius:14px;background:#c99a5b;box-shadow:inset 0 -7px 0 rgba(0,0,0,.14)}
+  .toon .cat{position:absolute;bottom:52px;left:50%;margin-left:-46px;width:132px;height:58px;
+    background:#f59e42;border-radius:28px 36px 24px 24px}
+  .toon .cat::before{content:"";position:absolute;left:-40px;bottom:-4px;width:62px;height:58px;background:#f59e42;border-radius:50%}
+  .toon .cat .ear{position:absolute;width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;border-bottom:20px solid #f59e42}
+  .toon .cat .e1{left:-36px;top:-16px}
+  .toon .cat .e2{left:-9px;top:-16px}
+  .toon .cat .eye{position:absolute;left:-27px;bottom:24px;width:20px;height:11px;
+    border-bottom:4.5px solid #7a4a12;border-radius:50%}
+  .toon .cat .tail{position:absolute;right:-30px;bottom:9px;width:47px;height:16px;background:#f59e42;
+    border-radius:14px;transform:rotate(-40deg)}
+  .toon .zzz{position:absolute;bottom:150px;left:50%;margin-left:-118px;color:#fff;font-weight:800;
+    font-size:24px;letter-spacing:5px;opacity:.95;transform:rotate(-12deg)}
+  .veil{position:absolute;inset:0;background:rgba(10,27,43,.32)}
+  .pausebadge{position:absolute;left:20px;bottom:16px;width:52px;height:52px;border-radius:18px;
+    background:rgba(10,27,43,.75);display:flex;align-items:center;justify-content:center;gap:7px}
+  .pausebadge i{width:8px;height:22px;border-radius:3px;background:var(--cream)}
+
+  .strip{display:flex;justify-content:center;gap:13px;background:rgba(23,53,74,.7);
+    border:2px solid rgba(170,150,115,.25);border-radius:999px;padding:14px 22px;align-self:center}
+  .bulb{width:20px;height:20px;border-radius:50%;background:#152f44;
+    border:2px solid rgba(170,150,115,.3);box-shadow:inset 0 2px 4px rgba(0,0,0,.4)}
+  .bulb.on{background:radial-gradient(circle at 40% 35%, var(--gold-hot), var(--gold-light) 70%);
+    border-color:var(--gold-hot);box-shadow:0 0 14px rgba(255,233,168,.8)}
+  .bulb.now{background:radial-gradient(circle at 40% 35%, #fff, var(--gold-hot) 70%);
+    border-color:#fff;animation:now 1.1s ease-in-out infinite}
+  @keyframes now{0%,100%{box-shadow:0 0 12px rgba(255,233,168,.7)}50%{box-shadow:0 0 26px rgba(255,233,168,1)}}
+
+  /* ---------- right: the practice booth ---------- */
+  .right{flex:1;display:flex;flex-direction:column;align-items:center;gap:18px;
+    background:rgba(23,53,74,.45);border:2.5px solid rgba(242,204,126,.25);border-radius:28px;
+    padding:30px 26px 26px;min-width:430px}
+  .prompt{text-align:center;color:var(--cream);font-weight:800;font-size:24px}
+  .prompt .spark{color:var(--gold-light);font-size:16px;vertical-align:7px;margin:0 8px;text-shadow:0 0 10px rgba(242,204,126,.9)}
+  .words{display:flex;flex-wrap:wrap;justify-content:center;gap:11px;padding:4px 2px}
+  .word{font-weight:800;font-size:24px;padding:13px 17px;border-radius:16px;line-height:1}
+  .word.lit{background:linear-gradient(180deg,var(--gold-hot),var(--gold-light) 55%,var(--gold));
+    color:#10273a;border:2px solid #ffe9a8;transform:translateY(-3px);
+    box-shadow:0 0 22px rgba(255,233,168,.65), 0 0 46px rgba(242,204,126,.35), 0 6px 14px -6px rgba(0,0,0,.6);
+    animation:bulbw 2.4s ease-in-out infinite}
+  @keyframes bulbw{0%,100%{box-shadow:0 0 22px rgba(255,233,168,.65),0 0 46px rgba(242,204,126,.35),0 6px 14px -6px rgba(0,0,0,.6)}
+    50%{box-shadow:0 0 30px rgba(255,233,168,.9),0 0 60px rgba(242,204,126,.5),0 6px 14px -6px rgba(0,0,0,.6)}}
+  .word.warm{background:rgba(239,155,74,.16);color:var(--ember);border:2px solid rgba(239,155,74,.75);
+    box-shadow:0 0 14px rgba(239,155,74,.28), inset 0 0 12px rgba(239,155,74,.12)}
+  .word.off{background:#152f44;color:rgba(217,199,164,.6);border:2px solid rgba(170,150,115,.22);
+    box-shadow:inset 0 2px 6px rgba(0,0,0,.35)}
+
+  .micwrap{position:relative;width:190px;height:190px;display:flex;align-items:center;justify-content:center;margin-top:4px}
+  .ring{position:absolute;border-radius:50%;border:3px solid rgba(242,204,126,.5);inset:0;animation:pulse 1.8s ease-out infinite}
+  .ring.r2{animation-delay:.6s}
+  .ring.r3{animation-delay:1.2s}
+  @keyframes pulse{0%{transform:scale(.62);opacity:.9}100%{transform:scale(1.08);opacity:0}}
+  .mic{width:126px;height:126px;border-radius:50%;border:none;cursor:pointer;position:relative;
+    background:radial-gradient(circle at 50% 32%, #ff8d7e, var(--rec) 62%, #d94b3f 100%);
+    box-shadow:0 0 0 9px rgba(242,204,126,.9), 0 0 0 14px rgba(242,204,126,.25),
+               0 0 44px rgba(255,107,94,.55), 0 16px 30px -10px rgba(0,0,0,.7);
+    display:flex;align-items:center;justify-content:center;animation:breathe 1.8s ease-in-out infinite}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  .mic svg{width:52px;height:52px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}
+  .recdot{position:absolute;top:12px;right:16px;width:13px;height:13px;border-radius:50%;background:#fff;
+    animation:blink 1s steps(2,start) infinite}
+  @keyframes blink{50%{opacity:.25}}
+  .miccap{color:var(--cream-muted);font-weight:700;font-size:17px;text-align:center}
+  .replay{display:inline-flex;align-items:center;gap:9px;
+    background:rgba(23,53,74,.9);border:2px solid rgba(242,204,126,.45);color:var(--gold-light);
+    font-family:var(--font);font-weight:800;font-size:17px;border-radius:999px;padding:13px 26px;cursor:pointer;min-height:48px}
+  .replay .ic{font-size:18px}
+  .booth-minny{position:absolute;right:26px;bottom:22px;width:84px;height:84px;border-radius:50%;overflow:hidden;
+    border:3.5px solid var(--gold-light);box-shadow:0 0 20px rgba(242,204,126,.4);z-index:3;
+    animation:sway 3s ease-in-out infinite}
+  @keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+  .booth-minny img{width:100%;height:190%;object-fit:cover;transform:translateY(-27%)}
+
+  .note{width:1280px;margin-top:22px;font-size:13.5px;line-height:1.6}
+  .note b{color:#c9d8e4}
+
+  @media (prefers-reduced-motion: reduce){
+    .bulb.now,.word.lit,.ring,.mic,.recdot,.booth-minny{animation:none}
+    .ring{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="frame">
+  <div class="screen">
+
+    <div class="top">
+      <div class="vtitle">Chú mèo lười biếng <span class="lchip">L2</span></div>
+      <div class="huds">
+        <div class="counter" id="shd-stars"><span class="em">⭐</span> 8</div>
+        <div class="counter" id="shd-streak"><span class="em">🔥</span> 3</div>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="left">
+        <div class="player" id="shd-player-host">
+          <div class="toon">
+            <div class="sun"></div>
+            <div class="cloud c1"></div><div class="cloud c2"></div>
+            <div class="hill h1"></div><div class="hill h2"></div>
+            <div class="mat"></div>
+            <div class="cat"><i class="ear e1"></i><i class="ear e2"></i><span class="eye"></span><span class="tail"></span></div>
+            <span class="zzz">z z</span>
+          </div>
+          <div class="veil"></div>
+          <div class="pausebadge"><i></i><i></i></div>
+        </div>
+        <div class="strip" id="shd-progress">
+          <span class="bulb on"></span><span class="bulb on"></span><span class="bulb on"></span><span class="bulb on"></span>
+          <span class="bulb now"></span>
+          <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+          <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+        </div>
+      </div>
+
+      <div class="right">
+        <p class="prompt"><span class="spark">✦</span>Bây giờ đến lượt con nói!<span class="spark">✦</span></p>
+        <div class="words" id="shd-words">
+          <span class="word lit">The</span>
+          <span class="word lit">cat</span>
+          <span class="word warm">is</span>
+          <span class="word off">sleeping</span>
+          <span class="word off">on</span>
+          <span class="word off">the</span>
+          <span class="word off">mat</span>
+        </div>
+        <div class="micwrap">
+          <div class="ring"></div><div class="ring r2"></div><div class="ring r3"></div>
+          <button class="mic" id="shd-mic-btn" aria-label="Đang ghi âm">
+            <span class="recdot"></span>
+            <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 15a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v5a4 4 0 0 0 4 4zm6-4a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.94V22h2v-3.06A8 8 0 0 0 20 11h-2z"/></svg>
+          </button>
+        </div>
+        <p class="miccap">Đang ghi âm… nói cả câu nhé!</p>
+        <button class="replay" id="shd-replay-btn"><span class="ic">↻</span> Nghe lại câu</button>
+      </div>
+    </div>
+
+    <div class="booth-minny"><img src="../../public/assets/minny/minny_listen.png" alt="Minny đang nghe con"></div>
+
+  </div>
+</div>
+
+<div class="note">
+  <b>08 — Màn hình lớn (1280).</b> Sân khấu bên trái (khung phim + dải 12 bóng đèn tiến độ), buồng luyện nói
+  bên phải (câu marquee + nút mic lớn — vẫn là thứ duy nhất nổi bật). Minny nghe ở góc phải. Cùng vùng, cùng
+  tên gọi với bản điện thoại — chỉ xếp lại chỗ.
+</div>
+
+</body>
+</html>
