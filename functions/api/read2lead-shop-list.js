@@ -39,7 +39,7 @@ export async function onRequestPost(context) {
   return json({
     ok: true,
     items: buildShopView(shopState),
-    coins: shopState.coins || 0,
+    diamonds: shopState.diamonds || 0,
   });
 }
 

@@ -298,20 +298,55 @@ test('a single sentence over 24 words remains a valid indivisible shadow chunk',
   });
 });
 
-test('three low scores complete the book without rewards', async () => {
+// R2L-REWARDS-REDESIGN founder ruling (2026-07-18): page-based diamonds are
+// decoupled from the pass gate. A mic-skipped page still ends the book as
+// "completed without reward" (no grade bonus, no XP) — but the OTHER pages
+// the kid genuinely passed before the skip still pay 5💎 each. The screen
+// must never claw back a "+5💎" it already showed the kid in real time.
+test('three low scores complete the book without a grade bonus, but still pay for the 2 passed pages', async () => {
   const fixture = makeFixture([]);
   const response = await submit(bookReader({ skip: 1 }), fixture);
   const payload = await response.json();
   assert.equal(payload.completed_without_reward, true);
-  assert.deepEqual(payload.rewards_earned, { coins: 0, xp: 0 });
+  assert.equal(payload.passed, false);
+  assert.deepEqual(payload.rewards_earned, { diamonds: 10, xp: 0 }, '2 passed pages (0 and 2) × 5💎 = 10, 0 grade bonus');
+  assert.equal(payload.read2lead_state.diamonds, 10);
   assert.deepEqual(fixture.store.get(ACCESS_CODE).completed_books, ['book_123']);
 });
 
-test('two technical failures allow explicit no-reward completion without pronunciation attempts', async () => {
+test('two technical failures allow explicit no-reward completion, still paying for the 2 pages passed before the technical skip', async () => {
   const fixture = makeFixture([]);
   const response = await submit(bookReader({ skip: 2, technical: true }), fixture);
   const payload = await response.json();
   assert.equal(payload.completed_without_reward, true);
-  assert.deepEqual(payload.rewards_earned, { coins: 0, xp: 0 });
+  assert.deepEqual(payload.rewards_earned, { diamonds: 10, xp: 0 }, '2 passed pages (0 and 1) × 5💎 = 10, 0 grade bonus');
+  assert.equal(payload.read2lead_state.diamonds, 10);
   assert.deepEqual(fixture.store.get(ACCESS_CODE).completed_books, ['book_123']);
+});
+
+test('a book with ALL pages skipped (0 passed) pays exactly 0 diamonds', async () => {
+  const fixture = makeFixture([]);
+  // Force every page to 'skipped' by requesting skip on an out-of-range index
+  // is not supported by the helper, so build a fully-skipped reader directly.
+  const context = bookContext();
+  const reader = {
+    pages: context.story.paragraphs_en.map((_, pageIndex) => ({
+      page_index: pageIndex,
+      audio_completed: true,
+      question_results: selectBookQuestions(context.guided_listening, context.story.sentences, pageIndex)
+        .map((question) => ({ question_id: question.id, correct: true })),
+      shadow_chunks: buildBookShadowChunks(context.story.sentences, pageIndex).map((chunk) => ({
+        chunk_id: chunk.chunk_id,
+        sentence_indexes: chunk.sentence_indexes,
+        attempts: 3,
+        status: 'skipped',
+        score_percent: 20,
+        technical_failures: 0,
+      })),
+    })),
+  };
+  const response = await submit(reader, fixture);
+  const payload = await response.json();
+  assert.equal(payload.completed_without_reward, true);
+  assert.deepEqual(payload.rewards_earned, { diamonds: 0, xp: 0 });
 });

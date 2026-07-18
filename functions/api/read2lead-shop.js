@@ -10,6 +10,14 @@ import {
   unequipSlot,
 } from './_read2lead-v2-state.js';
 
+// R2L-REWARDS-REDESIGN (2026-07-18): the old coin-priced inventory shop this
+// endpoint served (list/buy/equip/unequip over SHOP_CATALOG) is retired —
+// superseded by the monster part shop (read2lead-shop-buy.js /
+// read2lead-shop-list.js). publicShopCatalog()/purchaseItem()/equipItem()/
+// unequipSlot() now resolve to empty/item_not_found so this endpoint keeps
+// responding cleanly instead of erroring; the 'avatar' action (monster
+// customization) is untouched. See _read2lead-v2-state.js's SHOP_CATALOG
+// removal note.
 export async function onRequestPost(context) {
   const { request, env } = context;
   if (!env.READ2LEAD_CODES) {

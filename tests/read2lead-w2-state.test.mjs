@@ -59,7 +59,10 @@ test('normalizeProgressState fills W2 defaults for V3-only record without crash'
     equipped: { hat: 'hat_star' },
   });
   assert.equal(state.current_level, 'L2');
-  assert.deepEqual(state.inventory, ['hat_star']);
+  // R2L-REWARDS-REDESIGN: the old coin-priced inventory shop is retired —
+  // getShopItem() always returns null now, so a legacy 'hat_star' id no
+  // longer resolves and is filtered out of inventory.
+  assert.deepEqual(state.inventory, []);
   assert.equal(state.daily_quests.date, DATE_KEY);
 });
 
@@ -107,7 +110,7 @@ test('normalizeProgressState trims and sanitizes W2 persisted fields', () => {
   const history = Array.from({ length: 55 }, (_, index) => ({
     opened_at: `2026-06-${String((index % 28) + 1).padStart(2, '0')}T00:00:00.000Z`,
     rarity: index === 0 ? 'invalid' : 'common',
-    reward: { coins: index, part_id: null },
+    reward: { diamonds: index, part_id: null },
     duplicate: false,
   }));
   const state = baseState({
@@ -132,7 +135,7 @@ test('getDailyQuestsView returns 3 quests with target progress claimed and compl
       { id: 'q6', progress: 2, claimed: false, complete: true },
     ],
   );
-  assert.ok(view.quests.every((quest) => quest.target > 0 && quest.reward_coins > 0));
+  assert.ok(view.quests.every((quest) => quest.target > 0 && quest.reward_diamonds > 0));
 });
 
 test('getDailyQuestsView includes pending chest preview text', () => {
@@ -140,7 +143,7 @@ test('getDailyQuestsView includes pending chest preview text', () => {
     ...withQuests(['q1', 'q2', 'q3']),
     pending_chest: {
       rarity: 'common',
-      reward: { coins: 12, part_id: null },
+      reward: { diamonds: 12, part_id: null },
       duplicate: false,
       awarded_at: NOW_ISO,
     },
@@ -175,12 +178,12 @@ test('applyQuestProgress clamps at target', () => {
   assert.equal(next.daily_quests.progress.q6, 2);
 });
 
-test('claimQuestReward adds coins and claimed flag', () => {
+test('claimQuestReward adds diamonds and claimed flag', () => {
   const state = withQuests(['q1', 'q3', 'q5'], { q1: 1 });
   const result = claimQuestReward(state, 'q1', DATE_KEY, CODE);
-  assert.equal(result.state.coins, state.coins + 10);
+  assert.equal(result.state.diamonds, state.diamonds + 5);
   assert.equal(result.state.daily_quests.claimed.q1, true);
-  assert.deepEqual(result.reward, { coins: 10, rp: 0 });
+  assert.deepEqual(result.reward, { diamonds: 5, rp: 0 });
 });
 
 test('claimQuestReward rejects already_claimed', () => {
@@ -212,7 +215,8 @@ test('awardPendingChest sets pending_chest with deterministic Z3 reward', () => 
   const state = baseState();
   const next = awardPendingChest(state, { passed: true, score: 90 }, () => 0.5);
   assert.equal(next.pending_chest.rarity, 'common');
-  assert.equal(next.pending_chest.reward.coins, 15);
+  // common diamonds_min=5, diamonds_max=10: 5 + floor(0.5*(10-5+1)) = 8
+  assert.equal(next.pending_chest.reward.diamonds, 8);
   assert.equal(next.pending_chest.duplicate, false);
 });
 
@@ -221,7 +225,7 @@ test('awardPendingChest does not overwrite an existing pending chest', () => {
     ...baseState(),
     pending_chest: {
       rarity: 'epic',
-      reward: { coins: 50, part_id: null },
+      reward: { diamonds: 25, part_id: null },
       duplicate: false,
       awarded_at: NOW_ISO,
     },
@@ -234,29 +238,29 @@ test('awardPendingChest no-ops when pack did not pass', () => {
   assert.equal(awardPendingChest(state, { passed: false }, () => 0.5), state);
 });
 
-test('consumePendingChest adds coins and part to unlocked_parts', () => {
+test('consumePendingChest adds diamonds and part to unlocked_parts', () => {
   const state = {
     ...withQuests(['q1', 'q3', 'q5']),
     pending_chest: {
       rarity: 'rare',
-      reward: { coins: 30, part_id: 'part-rare' },
+      reward: { diamonds: 15, part_id: 'part-rare' },
       duplicate: false,
       awarded_at: NOW_ISO,
     },
   };
   const result = consumePendingChest(state, DATE_KEY, CODE);
-  assert.equal(result.state.coins, state.coins + 30);
+  assert.equal(result.state.diamonds, state.diamonds + 15);
   assert.deepEqual(result.state.unlocked_parts, ['part-rare']);
   assert.equal(result.state.pending_chest, null);
 });
 
-test('consumePendingChest duplicate path adds coins only', () => {
+test('consumePendingChest duplicate path adds diamonds only', () => {
   const state = {
     ...withQuests(['q1', 'q3', 'q5']),
     unlocked_parts: ['part-owned'],
     pending_chest: {
       rarity: 'rare',
-      reward: { coins: 60, part_id: null },
+      reward: { diamonds: 30, part_id: null },
       duplicate: true,
       awarded_at: NOW_ISO,
     },
@@ -272,7 +276,7 @@ test('consumePendingChest triggers chest_opened quest event', () => {
     ...withQuests(['q1', 'q3', 'q5']),
     pending_chest: {
       rarity: 'common',
-      reward: { coins: 10, part_id: null },
+      reward: { diamonds: 5, part_id: null },
       duplicate: false,
       awarded_at: NOW_ISO,
     },
@@ -285,7 +289,7 @@ test('consumePendingChest trims chest_history at 50', () => {
   const chestHistory = Array.from({ length: 50 }, (_, index) => ({
     opened_at: `old-${index}`,
     rarity: 'common',
-    reward: { coins: 10, part_id: null },
+    reward: { diamonds: 5, part_id: null },
     duplicate: false,
   }));
   const state = {
@@ -293,7 +297,7 @@ test('consumePendingChest trims chest_history at 50', () => {
     chest_history: chestHistory,
     pending_chest: {
       rarity: 'common',
-      reward: { coins: 10, part_id: null },
+      reward: { diamonds: 5, part_id: null },
       duplicate: false,
       awarded_at: NOW_ISO,
     },
@@ -303,11 +307,14 @@ test('consumePendingChest trims chest_history at 50', () => {
   assert.equal(result.state.chest_history[0].opened_at, 'old-1');
 });
 
-test('claimDailyLoginChest formula uses 5 + 2 times streak', () => {
+// R2L-REWARDS-REDESIGN: base 5 coins -> 3💎, per_streak 2 coins -> 1💎;
+// MAX_STREAK stays 10 days (Elon/Phương ruling 2026-07-18 — a day count,
+// not a currency amount, only the coin->diamond amounts convert).
+test('claimDailyLoginChest formula uses 3 + 1 times streak', () => {
   const state = { ...baseState(), streak_days: 4 };
   const result = claimDailyLoginChest(state, DATE_KEY);
-  assert.equal(result.reward.coins, 13);
-  assert.equal(result.state.coins, state.coins + 13);
+  assert.equal(result.reward.diamonds, 7);
+  assert.equal(result.state.diamonds, state.diamonds + 7);
 });
 
 test('claimDailyLoginChest is idempotent on the same day', () => {
@@ -318,31 +325,31 @@ test('claimDailyLoginChest is idempotent on the same day', () => {
   assert.equal(claimDailyLoginChest(state, DATE_KEY).error, 'already_claimed_today');
 });
 
-test('claimDailyLoginChest at streak zero returns 5 coins', () => {
-  assert.equal(claimDailyLoginChest({ ...baseState(), streak_days: 0 }, DATE_KEY).reward.coins, 5);
+test('claimDailyLoginChest at streak zero returns 3 diamonds', () => {
+  assert.equal(claimDailyLoginChest({ ...baseState(), streak_days: 0 }, DATE_KEY).reward.diamonds, 3);
 });
 
-test('claimDailyLoginChest caps streak 15 reward at 25 coins', () => {
+test('claimDailyLoginChest caps streak 15 reward at 13 diamonds (10-day cap unchanged)', () => {
   const result = claimDailyLoginChest({ ...baseState(), streak_days: 15 }, DATE_KEY);
-  assert.equal(result.reward.coins, 25);
+  assert.equal(result.reward.diamonds, 13);
   assert.equal(result.reward.formula.streak_used, 10);
 });
 
 test('previewDailyLoginChest returns availability and next claim date', () => {
   const available = previewDailyLoginChest({ ...baseState(), streak_days: 3 }, DATE_KEY);
-  assert.deepEqual(available, { available: true, coins: 11, next_claim_date: null });
+  assert.deepEqual(available, { available: true, diamonds: 6, next_claim_date: null });
   const claimed = previewDailyLoginChest({
     ...baseState(),
     streak_days: 3,
     daily_login_chest: { last_claim_date: DATE_KEY },
   }, DATE_KEY);
-  assert.deepEqual(claimed, { available: false, coins: 11, next_claim_date: '2026-06-14' });
+  assert.deepEqual(claimed, { available: false, diamonds: 6, next_claim_date: '2026-06-14' });
 });
 
-test('recordComboBonus caps each pack at five xu', () => {
+test('recordComboBonus caps each pack at three diamonds', () => {
   const state = baseState();
   const next = recordComboBonus(state, 10);
-  assert.equal(next.coins, state.coins + 5);
+  assert.equal(next.diamonds, state.diamonds + 3);
 });
 
 test('recordComboBonus increments combo_lifetime_xu', () => {

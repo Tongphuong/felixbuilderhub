@@ -47,7 +47,7 @@ test('streak increments, holds same day, and resets after a gap', () => {
   assert.equal(nextStreakDays('2026-06-05', '2026-06-07', 4), 1);
 });
 
-test('pack completion increments coins and XP once', () => {
+test('pack completion increments diamonds and XP once', () => {
   const base = normalizeProgressState(null, {
     accessCode: 'R2L-TEST-1234',
     codeData: { student_profile: { student_name: 'Bin', level: 'L2' } },
@@ -58,22 +58,22 @@ test('pack completion increments coins and XP once', () => {
   const first = applyPackCompletion(base, {
     packId: 'pack-1',
     completedAt: '2026-06-05T02:00:00.000Z',
-    rewardsEarned: { coins: 23, xp: 20 },
+    rewardsEarned: { diamonds: 23, xp: 20 },
     activityResults: [{ type: 'listen_and_speak', attempted: true }],
   });
   const duplicate = applyPackCompletion(first.state, {
     packId: 'pack-1',
     completedAt: '2026-06-05T03:00:00.000Z',
-    rewardsEarned: { coins: 23, xp: 20 },
+    rewardsEarned: { diamonds: 23, xp: 20 },
   });
 
-  assert.equal(first.state.coins, 23);
+  assert.equal(first.state.diamonds, 23);
   assert.equal(first.state.total_xp, 20);
   assert.equal(first.state.completed_packs, 1);
   assert.equal(first.state.voice_attempts, 1);
   assert.equal(first.state.badges.find((badge) => badge.id === 'level_climber').unlocked, false);
   assert.equal(duplicate.already_counted, true);
-  assert.equal(duplicate.state.coins, 23);
+  assert.equal(duplicate.state.diamonds, 23);
 });
 
 test('fifth L0 pack triggers level-up and resets level XP', () => {
@@ -87,13 +87,13 @@ test('fifth L0 pack triggers level-up and resets level XP', () => {
     state = applyPackCompletion(state, {
       packId,
       completedAt: '2026-06-05T02:00:00.000Z',
-      rewardsEarned: { coins: 20, xp: 20 },
+      rewardsEarned: { diamonds: 20, xp: 20 },
     }).state;
   }
   const fifth = applyPackCompletion(state, {
     packId: 'pack-5',
     completedAt: '2026-06-06T02:00:00.000Z',
-    rewardsEarned: { coins: 20, xp: 20 },
+    rewardsEarned: { diamonds: 20, xp: 20 },
   });
   const publicState = publicProgressState(fifth.state);
 
@@ -128,7 +128,7 @@ test('L2 needs 15 passed packs to unlock L3', () => {
     state = applyPackCompletion(state, {
       packId: `l2-pack-${i}`,
       completedAt: '2026-06-05T02:00:00.000Z',
-      rewardsEarned: { coins: 20, xp: 20 },
+      rewardsEarned: { diamonds: 20, xp: 20 },
     }).state;
   }
   assert.equal(publicProgressState(state).current_level, 'L2');
@@ -137,7 +137,7 @@ test('L2 needs 15 passed packs to unlock L3', () => {
   const fifteenth = applyPackCompletion(state, {
     packId: 'l2-pack-15',
     completedAt: '2026-06-06T02:00:00.000Z',
-    rewardsEarned: { coins: 20, xp: 20 },
+    rewardsEarned: { diamonds: 20, xp: 20 },
   });
   assert.equal(fifteenth.level_up.to_level, 'L3');
   assert.equal(publicProgressState(fifteenth.state).current_level, 'L3');
@@ -165,7 +165,7 @@ test('L3 and L4 use the longer V2 level-up ladder', () => {
     l3State = applyPackCompletion(l3State, {
       packId: `l3-pack-${i}`,
       completedAt: '2026-06-05T02:00:00.000Z',
-      rewardsEarned: { coins: 20, xp: 20 },
+      rewardsEarned: { diamonds: 20, xp: 20 },
     }).state;
   }
   assert.equal(publicProgressState(l3State).current_level, 'L3');
@@ -174,7 +174,7 @@ test('L3 and L4 use the longer V2 level-up ladder', () => {
   const l4Unlock = applyPackCompletion(l3State, {
     packId: 'l3-pack-25',
     completedAt: '2026-06-06T02:00:00.000Z',
-    rewardsEarned: { coins: 20, xp: 20 },
+    rewardsEarned: { diamonds: 20, xp: 20 },
   });
   assert.equal(l4Unlock.level_up.to_level, 'L4');
   assert.equal(publicProgressState(l4Unlock.state).packs_until_level_up, 35);
@@ -184,13 +184,13 @@ test('L3 and L4 use the longer V2 level-up ladder', () => {
     l4State = applyPackCompletion(l4State, {
       packId: `l4-pack-${i}`,
       completedAt: '2026-06-07T02:00:00.000Z',
-      rewardsEarned: { coins: 20, xp: 20 },
+      rewardsEarned: { diamonds: 20, xp: 20 },
     }).state;
   }
   const l5Unlock = applyPackCompletion(l4State, {
     packId: 'l4-pack-35',
     completedAt: '2026-06-08T02:00:00.000Z',
-    rewardsEarned: { coins: 20, xp: 20 },
+    rewardsEarned: { diamonds: 20, xp: 20 },
   });
   assert.equal(l5Unlock.level_up.to_level, 'L5');
   assert.equal(publicProgressState(l5Unlock.state).packs_until_level_up, 0);
@@ -226,6 +226,49 @@ test('below-threshold attempt records penalty but does not subtract XP (penalty 
   assert.equal(first.already_penalized, false);
   assert.equal(duplicate.state.xp_in_level, 40);
   assert.equal(duplicate.already_penalized, true);
+});
+
+// R2L-REWARDS-REDESIGN founder ruling (2026-07-18): page-based diamonds
+// (book lessons) are decoupled from the pass gate — a failed pack still
+// pays for the individually-passed pages, only the grade bonus is withheld.
+test('applyPackPenalty credits diamondsEarned (page diamonds) even though the pack failed', () => {
+  const base = normalizeProgressState(null, {
+    accessCode: 'R2L-TEST-PENALTY-DIAMONDS',
+    codeData: { student_profile: { student_name: 'Bin' } },
+    nowIso: '2026-06-05T01:00:00.000Z',
+  });
+  assert.equal(base.diamonds, 0);
+
+  const result = applyPackPenalty(base, {
+    packId: 'book-pack-failed',
+    completedAt: '2026-06-05T02:00:00.000Z',
+    diamondsEarned: 15, // e.g. 3 pages passed × 5💎
+  });
+
+  assert.equal(result.state.diamonds, 15, 'page diamonds land even though the pack failed');
+  assert.equal(result.state.pack_history[0].diamonds, 15);
+  assert.equal(result.state.pack_history[0].passed, false);
+});
+
+test('applyPackPenalty defaults diamondsEarned to 0 when omitted (standard-pack failures unaffected)', () => {
+  const base = normalizeProgressState(null, {
+    accessCode: 'R2L-TEST-PENALTY-NODIAMONDS',
+    codeData: { student_profile: { student_name: 'Bin' } },
+  });
+  const result = applyPackPenalty(base, { packId: 'std-pack-failed' });
+  assert.equal(result.state.diamonds, 0);
+});
+
+test('applyPackPenalty does not re-credit diamondsEarned on a duplicate (already-penalized) submit', () => {
+  const base = normalizeProgressState(null, {
+    accessCode: 'R2L-TEST-PENALTY-DEDUPE',
+    codeData: { student_profile: { student_name: 'Bin' } },
+  });
+  const first = applyPackPenalty(base, { packId: 'book-pack-x', diamondsEarned: 10 });
+  const duplicate = applyPackPenalty(first.state, { packId: 'book-pack-x', diamondsEarned: 10 });
+  assert.equal(first.state.diamonds, 10);
+  assert.equal(duplicate.already_penalized, true);
+  assert.equal(duplicate.state.diamonds, 10, 'a duplicate penalty submit must not double-pay page diamonds');
 });
 
 test('rank ladder math matches progressive tier costs', () => {
@@ -296,7 +339,7 @@ test('pack #51 low score after 50 high-score packs does not lower rank_points', 
     state = applyPackCompletion(state, {
       packId: `high-pack-${i}`,
       completedAt: '2026-06-05T02:00:00.000Z',
-      rewardsEarned: { coins: 20, xp: 20 },
+      rewardsEarned: { diamonds: 20, xp: 20 },
       scorePercent: 90,
     }).state;
     state = awardRankPoints(state, {
@@ -313,7 +356,7 @@ test('pack #51 low score after 50 high-score packs does not lower rank_points', 
   const pack51 = applyPackCompletion(state, {
     packId: 'low-pack-51',
     completedAt: '2026-06-06T02:00:00.000Z',
-    rewardsEarned: { coins: 20, xp: 20 },
+    rewardsEarned: { diamonds: 20, xp: 20 },
     scorePercent: 50,
   });
 
@@ -329,7 +372,7 @@ test('pack #51 low score after 50 high-score packs does not lower rank_points', 
   const duplicate = applyPackCompletion(pack51.state, {
     packId: 'low-pack-51',
     completedAt: '2026-06-06T03:00:00.000Z',
-    rewardsEarned: { coins: 20, xp: 20 },
+    rewardsEarned: { diamonds: 20, xp: 20 },
     scorePercent: 50,
   });
   assert.equal(duplicate.already_counted, true);

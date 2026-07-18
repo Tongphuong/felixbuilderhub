@@ -281,9 +281,20 @@ export async function submitV2Lesson({
     && speakingGate.passed
     && scorePercent >= PASS_THRESHOLD_PERCENT;
   const graded = gradeRewards(scorePercent);
+  // R2L-REWARDS-REDESIGN: book lessons pay 5💎 per page-read passed
+  // (bookFlowValidation.summary.chunks_passed), ALONGSIDE the grade-based
+  // diamond reward — spec §5 Phase 2. Standard packs are grade-based only.
+  //
+  // Founder ruling (2026-07-18): pageDiamonds are decoupled from the overall
+  // `passed` gate — the frontend celebrates "+5💎" per page in real time as
+  // pages are read, so a book that fails its overall average must still pay
+  // out for the individual pages it DID pass. Only the grade-based bonus
+  // (S/A/B) stays gated on `passed`. See applyPackPenalty's diamondsEarned
+  // param for how this lands when the pack doesn't pass.
+  const pageDiamonds = isBookFlowV2 ? numberOrZero(bookFlowValidation.summary.chunks_passed) * 5 : 0;
   const rewardsEarned = passed
-    ? { coins: graded.coins, xp: graded.xp }
-    : { coins: 0, xp: 0 };
+    ? { diamonds: graded.diamonds + pageDiamonds, xp: graded.xp }
+    : { diamonds: pageDiamonds, xp: 0 };
   const attempt = {
     schema_version: 2,
     submitted_at: submittedAt,
@@ -331,6 +342,7 @@ export async function submitV2Lesson({
       scorePercent,
       correctCount,
       totalCount,
+      pageDiamonds,
     });
   }
 
@@ -340,6 +352,7 @@ export async function submitV2Lesson({
       packId: currentPack.pack_id,
       completedAt: submittedAt,
       penaltyXp: XP_PENALTY_BELOW_THRESHOLD,
+      diamondsEarned: pageDiamonds,
     });
     const savedProgressState = await saveProgressState(env, accessCode, penaltyResult.state);
     const updatedPack = {
@@ -600,9 +613,24 @@ async function finalizeWithoutReward({
   scorePercent,
   correctCount,
   totalCount,
+  pageDiamonds = 0,
 }) {
   const progressState = await loadProgressState(env, accessCode, codeData);
-  const rewardsEarned = { coins: 0, xp: 0 };
+  // R2L-REWARDS-REDESIGN founder ruling (2026-07-18): page-based diamonds are
+  // decoupled from the pass gate — "completed without reward" (mic-skip
+  // partway through a book) still pays for the individual pages that DID
+  // pass before the skip. Standard packs have pageDiamonds=0, so this is a
+  // no-op for them. Only the book pages themselves are saved here — this
+  // path intentionally does NOT run the full pack-completion or pack-
+  // failure reward flows (no XP, no pack_history entry, no completed/
+  // penalized tracking) — same as before this change.
+  const rewardsEarned = { diamonds: numberOrZero(pageDiamonds), xp: 0 };
+  const savedProgressState = rewardsEarned.diamonds > 0
+    ? await saveProgressState(env, accessCode, {
+        ...progressState,
+        diamonds: numberOrZero(progressState.diamonds) + rewardsEarned.diamonds,
+      })
+    : progressState;
   const reviewedPack = {
     ...withoutSessionCheckpoint(currentPack),
     status: 'reviewed_pass_web_v2',
@@ -642,7 +670,7 @@ async function finalizeWithoutReward({
     correct_count: correctCount,
     total_count: totalCount,
     rewards_earned: rewardsEarned,
-    read2lead_state: publicProgressState(progressState),
+    read2lead_state: publicProgressState(savedProgressState),
     message: 'Bai da ket thuc khong thuong. Con co the tao bai moi.',
     review: reviewedPack.review_summary,
     progress: publicProgress(nextProgress),
@@ -680,7 +708,7 @@ async function respondFromCachedAttempt({
     score_percent: attempt?.score_percent ?? null,
     correct_count: attempt?.correct_count ?? null,
     total_count: attempt?.total_count ?? null,
-    rewards_earned: attempt?.rewards_earned || { coins: 0, xp: 0 },
+    rewards_earned: attempt?.rewards_earned || { diamonds: 0, xp: 0 },
     message: passed
       ? 'Con da hoan thanh nhiem vu V2 hom nay.'
       : completedWithoutReward

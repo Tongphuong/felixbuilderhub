@@ -8,7 +8,7 @@ import {
   currentSeason,
   rankApexThreshold,
   seasonById,
-  seasonRewardCoins,
+  seasonRewardDiamonds,
   tierStartRp,
 } from './_read2lead-seasons.js';
 import {
@@ -42,11 +42,15 @@ export const XP_PER_PASSED_PACK = 20;
 export const XP_PENALTY_BELOW_THRESHOLD = 0;
 export const PASS_THRESHOLD_PERCENT = 50;
 
+// R2L-REWARDS-REDESIGN (SPEC_R2L_REWARDS_REDESIGN.md, 2026-07-18): coin rewards
+// retired, diamonds are the only earned currency. 1💎 = 2🪙 was the conversion
+// rate used to pick these (S: 25 coins -> 10, A: 15 -> 8, B: 8 -> 4), not a
+// strict floor(coins/2) — the spec hand-picked these standard-pack values.
 export const GRADE_TIERS = [
-  { min_percent: 85, grade: 'S', label_vi: 'Xuất sắc', xp: 20, coins: 25 },
-  { min_percent: 70, grade: 'A', label_vi: 'Tốt',      xp: 20, coins: 15 },
-  { min_percent: 50, grade: 'B', label_vi: 'Đạt',      xp: 10, coins: 8  },
-  { min_percent: 0,  grade: 'F', label_vi: 'Chưa đạt', xp: 0,  coins: 0  },
+  { min_percent: 85, grade: 'S', label_vi: 'Xuất sắc', xp: 20, diamonds: 10 },
+  { min_percent: 70, grade: 'A', label_vi: 'Tốt',      xp: 20, diamonds: 8  },
+  { min_percent: 50, grade: 'B', label_vi: 'Đạt',      xp: 10, diamonds: 4  },
+  { min_percent: 0,  grade: 'F', label_vi: 'Chưa đạt', xp: 0,  diamonds: 0  },
 ];
 
 export function gradeRewards(scorePercent) {
@@ -77,7 +81,6 @@ export function spendUse(codeData) {
 
 export const LEVEL_RESET_VERSION = 20260606;
 export const START_LEVEL = 'L0';
-export const COINS_TOOLTIP = 'Tiết kiệm xu cho cửa hàng sắp mở! 🛒';
 export const SHOP_SLOTS = ['hat', 'pet', 'frame', 'name_color'];
 
 const PURCHASED_COSMETIC_SLOTS = ['effects', 'frame', 'hat', 'pet', 'wings'];
@@ -95,16 +98,13 @@ export const BASIC_MONSTER_CONFIG = Object.freeze({
   color: 'mint',
 });
 
-export const SHOP_CATALOG = [
-  { id: 'hat_star', slot: 'hat', name_vi: 'Mũ sao', emoji: '⭐', price_coins: 30, css_class: 'r2l-shop-hat-star' },
-  { id: 'hat_crown', slot: 'hat', name_vi: 'Vương miện', emoji: '👑', price_coins: 80, css_class: 'r2l-shop-hat-crown' },
-  { id: 'pet_bunny', slot: 'pet', name_vi: 'Thỏ con', emoji: '🐰', price_coins: 50, css_class: 'r2l-shop-pet-bunny' },
-  { id: 'pet_cat', slot: 'pet', name_vi: 'Mèo con', emoji: '🐱', price_coins: 50, css_class: 'r2l-shop-pet-cat' },
-  { id: 'frame_gold', slot: 'frame', name_vi: 'Khung vàng', emoji: '🖼️', price_coins: 40, css_class: 'r2l-shop-frame-gold' },
-  { id: 'frame_rainbow', slot: 'frame', name_vi: 'Khung cầu vồng', emoji: '🌈', price_coins: 70, css_class: 'r2l-shop-frame-rainbow' },
-  { id: 'name_gold', slot: 'name_color', name_vi: 'Tên vàng', emoji: '✨', price_coins: 35, css_class: 'r2l-shop-name-gold' },
-  { id: 'name_ocean', slot: 'name_color', name_vi: 'Tên xanh biển', emoji: '💎', price_coins: 35, css_class: 'r2l-shop-name-ocean' },
-];
+// R2L-REWARDS-REDESIGN: the old coin-priced inventory shop (8 items, 30-80
+// coins — hat/pet/frame/name_color) is retired, superseded by the monster
+// part shop (_read2lead-shop-v2.js, paid in diamonds). getShopItem() below
+// now always returns null so read2lead-shop.js's list/buy/equip/unequip
+// actions keep working (existing UI already renders an empty-cosmetics
+// state — src/lib/monster-builder.ts renderCosmetics()) instead of a new
+// dead-endpoint error path.
 export const STREAK_FREEZE_MILESTONE_DAYS = 7;
 export const STREAK_FREEZE_TOKEN_CAP = 5;
 export const STREAK_FREEZE_HINT_VI =
@@ -168,7 +168,7 @@ const LEARNING_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 const ATTENTION_EVENT_WINDOW_MS = 10000;
 export const SUSPECT_PACK_TIME_MS = 30000;
 export const SUSPECT_PACK_SCORE_PERCENT = 50;
-const COMBO_XU_CAP_PER_PACK = 5;
+const COMBO_DIAMOND_CAP_PER_PACK = 3;
 
 /** V2.1 activity types (pack schema 2.1). V2.0 legacy names remain accepted on submit. */
 export const ACTIVITY_TYPES_V21 = [
@@ -396,8 +396,11 @@ export function mergeLessonActivityProgress(state, rawProgress, schemaVersion = 
   };
 }
 
-const DAILY_LOGIN_CHEST_BASE = 5;
-const DAILY_LOGIN_CHEST_PER_STREAK = 2;
+const DAILY_LOGIN_CHEST_BASE = 3;
+const DAILY_LOGIN_CHEST_PER_STREAK = 1;
+// MAX_STREAK is a DAY COUNT, not a currency amount — it stays at 10 days.
+// Only the coin->diamond amounts (BASE, PER_STREAK) convert. (Elon/Phương
+// ruling 2026-07-18: the spec's "MAX_STREAK = 10 -> 5💎" was a drafting slip.)
 const DAILY_LOGIN_CHEST_MAX_STREAK = 10;
 
 export function rankRpFromScore(scorePercent) {
@@ -649,7 +652,7 @@ function normalizeMedals(raw) {
       emoji: entry.emoji || '',
       peak_label_vi: entry.peak_label_vi || '',
       peak_tier_index: Number.isFinite(Number(entry.peak_tier_index)) ? Number(entry.peak_tier_index) : 0,
-      reward_coins: numberOrZero(entry.reward_coins),
+      reward_diamonds: numberOrZero(entry.reward_diamonds),
       ts: entry.ts || null,
     }));
 }
@@ -663,7 +666,7 @@ function rolloverSeasonState(state, nowIso = new Date().toISOString()) {
   const previousSeason = seasonById(season.id);
   const peakTierIndex = Number.isFinite(Number(season.peak_tier_index)) ? Number(season.peak_tier_index) : 0;
   const peakRp = Number.isFinite(Number(season.rp)) ? Number(season.rp) : 0;
-  let coins = numberOrZero(state.coins);
+  let diamonds = numberOrZero(state.diamonds);
   if (!(peakTierIndex === 0 && peakRp === 0)) {
     medals.push({
       season_id: previousSeason.id,
@@ -671,17 +674,17 @@ function rolloverSeasonState(state, nowIso = new Date().toISOString()) {
       emoji: previousSeason.emoji,
       peak_label_vi: season.peak_label_vi || buildRankLadderFromPoints(peakRp).label_vi,
       peak_tier_index: peakTierIndex,
-      reward_coins: seasonRewardCoins(peakTierIndex),
+      reward_diamonds: seasonRewardDiamonds(peakTierIndex),
       ts: nowIso,
     });
-    coins += seasonRewardCoins(peakTierIndex);
+    diamonds += seasonRewardDiamonds(peakTierIndex);
   }
 
   const resetRp = cumulativeStartRP(Math.max(0, peakTierIndex - 1));
   const resetLadder = buildRankLadderFromPoints(resetRp);
   return {
     ...state,
-    coins,
+    diamonds,
     medals,
     season: {
       id: activeSeason.id,
@@ -917,7 +920,7 @@ function normalizePendingChest(raw) {
   return {
     rarity: raw.rarity,
     reward: {
-      coins: numberOrZero(raw.reward?.coins),
+      diamonds: numberOrZero(raw.reward?.diamonds),
       part_id: raw.reward?.part_id ? String(raw.reward.part_id) : null,
       ...(raw.reward?.part_name ? { part_name: String(raw.reward.part_name) } : {}),
     },
@@ -935,7 +938,7 @@ function normalizeChestHistory(raw) {
       opened_at: entry.opened_at || null,
       rarity: entry.rarity,
       reward: {
-        coins: numberOrZero(entry.reward?.coins),
+        diamonds: numberOrZero(entry.reward?.diamonds),
         part_id: entry.reward?.part_id || null,
       },
       duplicate: Boolean(entry.duplicate),
@@ -1260,7 +1263,7 @@ export function getDailyQuestsView(state, dateKey, accessCode) {
       label_vi: QUEST_DEFS[id].label_vi,
       target: QUEST_DEFS[id].target,
       progress: dailyQuests.progress[id] || 0,
-      reward_coins: QUEST_DEFS[id].reward.coins,
+      reward_diamonds: QUEST_DEFS[id].reward.diamonds,
       reward_rp: QUEST_DEFS[id].reward.rp || 0,
       claimed: Boolean(dailyQuests.claimed[id]),
       complete: questCompleted(id, dailyQuests.progress[id] || 0),
@@ -1303,7 +1306,7 @@ export function claimQuestReward(state, questId, dateKey, accessCode) {
   const reward = questReward(questId);
   let nextState = {
     ...state,
-    coins: numberOrZero(state?.coins) + reward.coins,
+    diamonds: numberOrZero(state?.diamonds) + reward.diamonds,
     daily_quests: {
       ...dailyQuests,
       claimed: {
@@ -1365,7 +1368,7 @@ export function consumePendingChest(state, dateKey, accessCode) {
     opened_at: new Date().toISOString(),
     rarity: chest.rarity,
     reward: {
-      coins: chest.reward.coins,
+      diamonds: chest.reward.diamonds,
       part_id: chest.duplicate ? null : chest.reward.part_id,
     },
     duplicate: chest.duplicate,
@@ -1376,7 +1379,7 @@ export function consumePendingChest(state, dateKey, accessCode) {
   ].slice(-CHEST_HISTORY_LIMIT);
   let nextState = {
     ...state,
-    coins: numberOrZero(state.coins) + chest.reward.coins,
+    diamonds: numberOrZero(state.diamonds) + chest.reward.diamonds,
     unlocked_parts: unlockedParts,
     chest_history: chestHistory,
     pending_chest: null,
@@ -1385,7 +1388,7 @@ export function consumePendingChest(state, dateKey, accessCode) {
   return {
     state: nextState,
     reward: {
-      coins: chest.reward.coins,
+      diamonds: chest.reward.diamonds,
       part_id: chest.duplicate ? null : chest.reward.part_id,
       duplicate: chest.duplicate,
       rarity: chest.rarity,
@@ -1400,15 +1403,15 @@ export function claimDailyLoginChest(state, dateKey) {
   }
   const streak = clampInt(state?.streak_days, 0, 999);
   const cappedStreak = Math.min(streak, DAILY_LOGIN_CHEST_MAX_STREAK);
-  const coins = DAILY_LOGIN_CHEST_BASE + DAILY_LOGIN_CHEST_PER_STREAK * cappedStreak;
+  const diamonds = DAILY_LOGIN_CHEST_BASE + DAILY_LOGIN_CHEST_PER_STREAK * cappedStreak;
   return {
     state: {
       ...state,
-      coins: numberOrZero(state?.coins) + coins,
+      diamonds: numberOrZero(state?.diamonds) + diamonds,
       daily_login_chest: { last_claim_date: dateKey },
     },
     reward: {
-      coins,
+      diamonds,
       formula: {
         base: DAILY_LOGIN_CHEST_BASE,
         per_streak: DAILY_LOGIN_CHEST_PER_STREAK,
@@ -1419,11 +1422,11 @@ export function claimDailyLoginChest(state, dateKey) {
 }
 
 export function recordComboBonus(state, comboXuRequested) {
-  const capped = clampInt(comboXuRequested, 0, COMBO_XU_CAP_PER_PACK);
+  const capped = clampInt(comboXuRequested, 0, COMBO_DIAMOND_CAP_PER_PACK);
   if (capped === 0) return state;
   return {
     ...state,
-    coins: numberOrZero(state?.coins) + capped,
+    diamonds: numberOrZero(state?.diamonds) + capped,
     combo_lifetime_xu: numberOrZero(state?.combo_lifetime_xu) + capped,
   };
 }
@@ -1435,7 +1438,7 @@ export function previewDailyLoginChest(state, dateKey) {
   const cappedStreak = Math.min(streak, DAILY_LOGIN_CHEST_MAX_STREAK);
   return {
     available,
-    coins: DAILY_LOGIN_CHEST_BASE + DAILY_LOGIN_CHEST_PER_STREAK * cappedStreak,
+    diamonds: DAILY_LOGIN_CHEST_BASE + DAILY_LOGIN_CHEST_PER_STREAK * cappedStreak,
     next_claim_date: available ? null : addDaysToDateKey(dailyLoginChest.last_claim_date, 1),
   };
 }
@@ -1491,7 +1494,7 @@ export function applyPackCompletion(
       pack_id: id,
       completed_at: completedAt,
       level: currentLevel,
-      coins: numberOrZero(rewardsEarned.coins),
+      diamonds: numberOrZero(rewardsEarned.diamonds),
       xp: earnedXp,
       ...(scorePercent !== null && scorePercent !== undefined
         ? { score_percent: Number(scorePercent) }
@@ -1527,7 +1530,7 @@ export function applyPackCompletion(
     unlocked_levels: Array.from(new Set([...state.unlocked_levels, nextCurrentLevel])),
     rank_title: RANK_TITLES[nextCurrentLevel] || state.rank_title,
     rank_asset_url: RANK_ASSETS[nextCurrentLevel] || state.rank_asset_url || RANK_ASSETS[START_LEVEL],
-    coins: state.coins + numberOrZero(rewardsEarned.coins),
+    diamonds: state.diamonds + numberOrZero(rewardsEarned.diamonds),
     total_xp: state.total_xp + earnedXp,
     xp_in_level: xpInLevel,
     xp_to_next_level: xpToNextLevel(nextCurrentLevel),
@@ -1559,6 +1562,15 @@ export function applyPackPenalty(
     packId,
     completedAt = new Date().toISOString(),
     penaltyXp = XP_PENALTY_BELOW_THRESHOLD,
+    // R2L-REWARDS-REDESIGN founder ruling (2026-07-18): page-based diamonds
+    // (book lessons, 5💎 per page-read passed) are decoupled from the
+    // overall pass/fail gate — a book that fails its average still pays out
+    // for the individual pages the kid DID pass. The frontend celebrates
+    // "+5💎" per page in real time as the pages happen; that must never be
+    // silently clawed back when the book's final grade misses the bar.
+    // Grade-based diamonds (S/A/B) stay gated on `passed` — only the caller
+    // passes diamondsEarned here, never a grade reward.
+    diamondsEarned = 0,
   } = {},
 ) {
   const id = String(packId || '').trim();
@@ -1571,12 +1583,14 @@ export function applyPackPenalty(
   const currentLevel = safeLevel(state.current_level);
   const currentDateKey = vietnamDateKey(completedAt);
   const loss = Math.max(0, numberOrZero(penaltyXp));
+  const diamonds = numberOrZero(diamondsEarned);
   const streakUpdate = computeStreakAdvance(state, currentDateKey);
   const nextState = {
     ...state,
     current_level: currentLevel,
     rank_title: RANK_TITLES[currentLevel] || state.rank_title,
     rank_asset_url: RANK_ASSETS[currentLevel] || state.rank_asset_url || RANK_ASSETS[START_LEVEL],
+    diamonds: numberOrZero(state.diamonds) + diamonds,
     total_xp: Math.max(0, state.total_xp - loss),
     xp_in_level: Math.max(0, state.xp_in_level - loss),
     xp_to_next_level: xpToNextLevel(currentLevel),
@@ -1589,7 +1603,7 @@ export function applyPackPenalty(
         pack_id: id,
         completed_at: completedAt,
         level: currentLevel,
-        coins: 0,
+        diamonds,
         xp: -loss,
         passed: false,
       },
@@ -1706,9 +1720,9 @@ export function publicMonsterManifest(manifest = MONSTER_MANIFEST) {
   }, {});
 }
 
-export function getShopItem(itemId) {
-  const id = String(itemId || '').trim();
-  return SHOP_CATALOG.find((item) => item.id === id) || null;
+export function getShopItem(_itemId) {
+  // Old coin-priced inventory shop retired — see the SHOP_CATALOG removal note above.
+  return null;
 }
 
 export function normalizeInventory(raw) {
@@ -1734,14 +1748,8 @@ export function normalizeEquipped(raw) {
 }
 
 export function publicShopCatalog() {
-  return SHOP_CATALOG.map(({ id, slot, name_vi, emoji, price_coins, css_class }) => ({
-    id,
-    slot,
-    name_vi,
-    emoji,
-    price_coins,
-    css_class,
-  }));
+  // Old coin-priced inventory shop retired — see the SHOP_CATALOG removal note above.
+  return [];
 }
 
 export function equippedDisplay(state) {
@@ -1817,7 +1825,6 @@ export function publicProgressState(state) {
     rank_title: state.rank_title,
     rank_asset_url: state.rank_asset_url || RANK_ASSETS[currentLevel] || RANK_ASSETS[START_LEVEL],
     coins: state.coins,
-    coins_tooltip: COINS_TOOLTIP,
     diamonds: numberOrZero(state.diamonds),
     total_xp: state.total_xp,
     xp: state.xp_in_level,

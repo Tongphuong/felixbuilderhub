@@ -1,12 +1,14 @@
+// R2L-REWARDS-REDESIGN (2026-07-18): rewards converted coins -> diamonds at
+// 1💎 = 2🪙 (floor), per SPEC_R2L_REWARDS_REDESIGN.md §3.3/§5.
 export const QUEST_DEFS = {
-  q1: { label_vi: 'Xong 1 bài học hôm nay', target: 1, reward: { coins: 10, rp: 0 }, trigger: 'pack_passed' },
-  q2: { label_vi: 'Trên 80% chính xác trong 1 bài', target: 1, reward: { coins: 15, rp: 1 }, trigger: 'pack_passed_high_score' },
-  q3: { label_vi: 'Làm phần Nói lại trong 1 bài', target: 1, reward: { coins: 12, rp: 0 }, trigger: 'speak_completed' },
-  q4: { label_vi: 'Đúng 5 câu liên tiếp trong 1 bài', target: 1, reward: { coins: 10, rp: 0 }, trigger: 'combo_reached_5' },
-  q5: { label_vi: 'Mở 1 rương', target: 1, reward: { coins: 5, rp: 0 }, trigger: 'chest_opened' },
-  q6: { label_vi: 'Xong 2 bài học hôm nay', target: 2, reward: { coins: 20, rp: 1 }, trigger: 'pack_passed' },
-  q7: { label_vi: 'Hoàn thành 1 hoạt động không sai', target: 1, reward: { coins: 15, rp: 0 }, trigger: 'activity_perfect' },
-  q8: { label_vi: 'Học liên tục 3 ngày (streak)', target: 1, reward: { coins: 25, rp: 0 }, trigger: 'streak_day_3' },
+  q1: { label_vi: 'Xong 1 bài học hôm nay', target: 1, reward: { diamonds: 5, rp: 0 }, trigger: 'pack_passed' },
+  q2: { label_vi: 'Trên 80% chính xác trong 1 bài', target: 1, reward: { diamonds: 7, rp: 1 }, trigger: 'pack_passed_high_score' },
+  q3: { label_vi: 'Làm phần Nói lại trong 1 bài', target: 1, reward: { diamonds: 6, rp: 0 }, trigger: 'speak_completed' },
+  q4: { label_vi: 'Đúng 5 câu liên tiếp trong 1 bài', target: 1, reward: { diamonds: 5, rp: 0 }, trigger: 'combo_reached_5' },
+  q5: { label_vi: 'Mở 1 rương', target: 1, reward: { diamonds: 2, rp: 0 }, trigger: 'chest_opened' },
+  q6: { label_vi: 'Xong 2 bài học hôm nay', target: 2, reward: { diamonds: 10, rp: 1 }, trigger: 'pack_passed' },
+  q7: { label_vi: 'Hoàn thành 1 hoạt động không sai', target: 1, reward: { diamonds: 7, rp: 0 }, trigger: 'activity_perfect' },
+  q8: { label_vi: 'Học liên tục 3 ngày (streak)', target: 1, reward: { diamonds: 12, rp: 0 }, trigger: 'streak_day_3' },
 };
 
 export const QUEST_IDS = Object.keys(QUEST_DEFS);
@@ -52,11 +54,11 @@ export function questCompleted(questId, progressValue) {
 /**
  * Get reward for a quest. Used by Z1 on claim.
  * @param {string} questId
- * @returns {{coins: number, rp: number}}
+ * @returns {{diamonds: number, rp: number}}
  */
 export function questReward(questId) {
   const def = QUEST_DEFS[questId];
-  if (!def) return { coins: 0, rp: 0 };
+  if (!def) return { diamonds: 0, rp: 0 };
   return { ...def.reward };
 }
 
