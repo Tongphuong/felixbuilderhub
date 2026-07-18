@@ -271,6 +271,107 @@ test('applyPackPenalty does not re-credit diamondsEarned on a duplicate (already
   assert.equal(duplicate.state.diamonds, 10, 'a duplicate penalty submit must not double-pay page diamonds');
 });
 
+// Buffet fix round (2026-07-18, spec §11.8) — the retry double-pay bug Buffet
+// reproduced against 624c2f6: a book fails (5 of 10 pages passed -> 25💎 via
+// applyPackPenalty), the kid retries the SAME pack_id and this time passes
+// all 10 pages (-> 50💎 recomputed from scratch by applyPackCompletion).
+// Without page_diamonds_paid, the 25💎 already paid on the failed attempt
+// gets paid AGAIN on top of the full 50💎 (75💎 total — WRONG). The fix:
+// completion only pays the remainder (50 - 25 = 25 more), landing on
+// exactly 50💎 total + the grade bonus, never 75+.
+test('retry double-pay repro: fail pays 25💎 (5 pages), retry-pass recomputes 50💎 total (10 pages) — NOT 75+', () => {
+  const base = normalizeProgressState(null, {
+    accessCode: 'R2L-RETRY-DOUBLEPAY',
+    codeData: { student_profile: { student_name: 'Bin' } },
+    nowIso: '2026-06-05T01:00:00.000Z',
+  });
+
+  // First attempt: 5 of 10 pages pass, overall average fails the pack.
+  const failed = applyPackPenalty(base, {
+    packId: 'book-pack-retry',
+    completedAt: '2026-06-05T02:00:00.000Z',
+    diamondsEarned: 25, // 5 pages * 5💎
+  });
+  assert.equal(failed.state.diamonds, 25, 'fail pays exactly 25💎 for the 5 pages passed');
+  assert.equal(failed.state.page_diamonds_paid['book-pack-retry'], 25);
+
+  // Retry: this time all 10 pages pass. applyPackCompletion recomputes the
+  // FULL page-diamonds figure from scratch (50 = 10 pages * 5💎) and must
+  // subtract the 25 already paid, landing on +25 more (not +50 more).
+  const gradeDiamonds = 10; // e.g. grade S on the retry
+  const passed = applyPackCompletion(failed.state, {
+    packId: 'book-pack-retry',
+    completedAt: '2026-06-05T03:00:00.000Z',
+    rewardsEarned: { diamonds: gradeDiamonds, xp: 20 },
+    pageDiamonds: 50, // 10 pages * 5💎, recomputed fresh on the retry
+  });
+
+  assert.equal(
+    passed.diamonds_credited,
+    gradeDiamonds + 25,
+    'completion credits only the REMAINDER of page diamonds (50 - 25 already paid = 25), plus the grade bonus',
+  );
+  assert.equal(
+    passed.state.diamonds,
+    25 /* already paid on the failed attempt */ + gradeDiamonds + 25 /* remainder */,
+    'total across both attempts is 25 (fail) + 25 (remainder) + grade = 50💎 + grade, never 75+',
+  );
+  assert.equal(passed.state.diamonds, 25 + gradeDiamonds + 25);
+  assert.equal(
+    'book-pack-retry' in passed.state.page_diamonds_paid,
+    false,
+    'the ledger entry is cleared once the pack completes — it can never be retried again',
+  );
+});
+
+test('retry double-pay ledger: idempotent — a second failed attempt at the same pack_id still pays only once', () => {
+  const base = normalizeProgressState(null, {
+    accessCode: 'R2L-RETRY-IDEMPOTENT',
+    codeData: { student_profile: { student_name: 'Bin' } },
+  });
+  const firstFail = applyPackPenalty(base, { packId: 'book-pack-y', diamondsEarned: 25 });
+  const secondFail = applyPackPenalty(firstFail.state, { packId: 'book-pack-y', diamondsEarned: 25 });
+
+  assert.equal(firstFail.state.diamonds, 25);
+  assert.equal(secondFail.already_penalized, true);
+  assert.equal(secondFail.state.diamonds, 25, 'a second failed submit of the same pack_id must not pay a second 25💎');
+  assert.equal(secondFail.state.page_diamonds_paid['book-pack-y'], 25, 'ledger entry unchanged by the blocked duplicate');
+});
+
+test('applyPackCompletion pays the FULL pageDiamonds when nothing was paid before (no prior failed attempt)', () => {
+  const base = normalizeProgressState(null, {
+    accessCode: 'R2L-FRESH-PASS',
+    codeData: { student_profile: { student_name: 'Bin' } },
+  });
+  const result = applyPackCompletion(base, {
+    packId: 'book-pack-fresh',
+    rewardsEarned: { diamonds: 8, xp: 20 },
+    pageDiamonds: 30,
+  });
+  assert.equal(result.diamonds_credited, 38);
+  assert.equal(result.state.diamonds, 38);
+});
+
+test('applyPackCompletion on an already-counted duplicate credits 0 diamonds', () => {
+  let state = normalizeProgressState(null, {
+    accessCode: 'R2L-ALREADY-COUNTED',
+    codeData: { student_profile: { student_name: 'Bin' } },
+  });
+  const first = applyPackCompletion(state, {
+    packId: 'book-pack-once',
+    rewardsEarned: { diamonds: 8, xp: 20 },
+    pageDiamonds: 30,
+  });
+  const duplicate = applyPackCompletion(first.state, {
+    packId: 'book-pack-once',
+    rewardsEarned: { diamonds: 8, xp: 20 },
+    pageDiamonds: 30,
+  });
+  assert.equal(duplicate.already_counted, true);
+  assert.equal(duplicate.diamonds_credited, 0);
+  assert.equal(duplicate.state.diamonds, first.state.diamonds, 'a duplicate completion must not add diamonds again');
+});
+
 test('rank ladder math matches progressive tier costs', () => {
   const cases = [
     [0, 'Đồng III', 0, false],

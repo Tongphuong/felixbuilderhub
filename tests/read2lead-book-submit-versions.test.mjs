@@ -105,6 +105,12 @@ test('a v3 (page reads) book payload is accepted end-to-end through the submit e
   assert.equal(payload.ok, true, JSON.stringify(payload));
   assert.equal(payload.passed, true);
   assert.deepEqual(fixture.store.get(ACCESS_CODE).completed_books, ['book_42']);
+  // R2L-REWARDS-REDESIGN (Buffet fix round, spec §11.7): 2 pages, each with a
+  // single passed page_read (short sentences, well under the 60-word split
+  // cap) -> 2 pages * 5💎 = 10 page-diamonds, plus the grade-S bonus (10💎)
+  // for the 90% score makeBookReaderState uses -> 20💎 total, wired
+  // end-to-end through countPagesWithPassedReadUnit, not a per-unit count.
+  assert.equal(payload.rewards_earned.diamonds, 20);
 });
 
 test('a v3 payload validated as v2 (or vice versa) is rejected as invalid, not silently accepted', async () => {

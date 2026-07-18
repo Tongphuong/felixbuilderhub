@@ -5,7 +5,7 @@ import {
   buildV2LessonPayload,
   isValidBookPack,
 } from '../functions/api/read2lead-lesson.js';
-import { onRequestPost } from '../functions/api/submit-read2lead-lesson.js';
+import { countPagesWithPassedReadUnit, onRequestPost } from '../functions/api/submit-read2lead-lesson.js';
 import { progressKey } from '../functions/api/_read2lead-v2-state.js';
 import {
   buildBookShadowChunks,
@@ -349,4 +349,81 @@ test('a book with ALL pages skipped (0 passed) pays exactly 0 diamonds', async (
   const payload = await response.json();
   assert.equal(payload.completed_without_reward, true);
   assert.deepEqual(payload.rewards_earned, { diamonds: 0, xp: 0 });
+});
+
+// Buffet fix round (2026-07-18, spec §11.7): page-diamonds pay per DISTINCT
+// PAGE with >=1 passed read unit, NOT per chunk/page_read — a v3 long page
+// can carry 2 page_reads, a legacy v2 page up to 9 shadow_chunks, and paying
+// per-unit overpaid those pages up to 9x. This mirrors Steve's shipped
+// celebration gate (page_reads.some(status === 'passed')).
+test('countPagesWithPassedReadUnit: a v3 page with 2 read units, both passed, pays for 1 page (5💎), not 2 (10💎)', () => {
+  const bookReader = {
+    pages: [
+      {
+        page_index: 0,
+        page_reads: [
+          { read_id: 'p0_r0', status: 'passed', score_percent: 90 },
+          { read_id: 'p0_r1', status: 'passed', score_percent: 85 },
+        ],
+      },
+    ],
+  };
+  assert.equal(countPagesWithPassedReadUnit(bookReader), 1);
+});
+
+test('countPagesWithPassedReadUnit: a page with 1 of 2 read units passed still pays for 1 page (5💎)', () => {
+  const bookReader = {
+    pages: [
+      {
+        page_index: 0,
+        page_reads: [
+          { read_id: 'p0_r0', status: 'passed', score_percent: 90 },
+          { read_id: 'p0_r1', status: 'skipped', attempts: 3 },
+        ],
+      },
+    ],
+  };
+  assert.equal(countPagesWithPassedReadUnit(bookReader), 1);
+});
+
+test('countPagesWithPassedReadUnit: a page with 0 of 2 read units passed pays nothing', () => {
+  const bookReader = {
+    pages: [
+      {
+        page_index: 0,
+        page_reads: [
+          { read_id: 'p0_r0', status: 'skipped', attempts: 3 },
+          { read_id: 'p0_r1', status: 'skipped', attempts: 3 },
+        ],
+      },
+    ],
+  };
+  assert.equal(countPagesWithPassedReadUnit(bookReader), 0);
+});
+
+test('countPagesWithPassedReadUnit sums across pages, mixing single- and multi-unit pages', () => {
+  const bookReader = {
+    pages: [
+      { page_index: 0, page_reads: [{ status: 'passed' }] }, // 1 unit, passed -> pays
+      { page_index: 1, page_reads: [{ status: 'passed' }, { status: 'passed' }] }, // 2 units, both passed -> pays once
+      { page_index: 2, page_reads: [{ status: 'skipped' }] }, // not passed -> 0
+    ],
+  };
+  assert.equal(countPagesWithPassedReadUnit(bookReader), 2, '2 of 3 pages have >=1 passed unit -> 10💎 total, not per-unit 15💎');
+});
+
+test('countPagesWithPassedReadUnit falls back to shadow_chunks (v2) when page_reads is absent — a legacy page with up to 9 chunks still pays once', () => {
+  const bookReader = {
+    pages: [
+      {
+        page_index: 0,
+        shadow_chunks: [
+          { status: 'passed' }, { status: 'passed' }, { status: 'passed' },
+          { status: 'passed' }, { status: 'passed' }, { status: 'passed' },
+          { status: 'passed' }, { status: 'passed' }, { status: 'passed' },
+        ],
+      },
+    ],
+  };
+  assert.equal(countPagesWithPassedReadUnit(bookReader), 1, '9 passed chunks on one page pays 5💎, not 45💎');
 });

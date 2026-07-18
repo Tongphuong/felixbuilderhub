@@ -147,7 +147,7 @@ test('mic-skip source completes without reward', async () => {
   const lastAttempt = pack.web_attempts.at(-1);
   assert.equal(lastAttempt.passed, false);
   assert.equal(lastAttempt.completed_without_reward, true);
-  assert.deepEqual(lastAttempt.rewards_earned, { coins: 0, xp: 0 });
+  assert.deepEqual(lastAttempt.rewards_earned, { diamonds: 0, xp: 0 });
 });
 
 test('genuinely failing work is left byte-identical — a passive read never penalizes', async () => {

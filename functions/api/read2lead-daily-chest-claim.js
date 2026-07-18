@@ -32,7 +32,7 @@ export async function onRequestPost(context) {
     return json({
       ok: true,
       reward: result.reward,
-      coins: result.state.coins,
+      diamonds: result.state.diamonds,
       preview: previewDailyLoginChest(result.state, dateKey),
     });
   } catch (err) {

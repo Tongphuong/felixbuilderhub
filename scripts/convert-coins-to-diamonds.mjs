@@ -25,9 +25,15 @@
  * separate binding (this repo's wrangler config does not define one).
  *
  * Usage:
- *   node scripts/convert-coins-to-diamonds.mjs              # dry run (default)
- *   node scripts/convert-coins-to-diamonds.mjs --apply       # live write
+ *   node scripts/convert-coins-to-diamonds.mjs --namespace-id <id>            # dry run (default)
+ *   node scripts/convert-coins-to-diamonds.mjs --namespace-id <id> --apply    # live write
  *   READ2LEAD_KV_NAMESPACE_ID=<id> node scripts/convert-coins-to-diamonds.mjs --apply
+ *
+ * The KV namespace ID is REQUIRED and must come explicitly from --namespace-id
+ * or the READ2LEAD_KV_NAMESPACE_ID env var — there is no hardcoded default.
+ * A hardcoded namespace ID is exactly the kind of thing that silently survives
+ * a copy-paste into the wrong environment and rewrites the wrong namespace's
+ * currency; the script refuses to run at all without one supplied explicitly.
  */
 import { execSync } from 'node:child_process';
 import { writeFileSync, unlinkSync } from 'node:fs';
@@ -40,8 +46,16 @@ import {
   saveProgressState,
 } from '../functions/api/_read2lead-v2-state.js';
 
-const KV_NAMESPACE_ID = process.env.READ2LEAD_KV_NAMESPACE_ID || 'c630107ee28148de901455d35ce35e67';
-const APPLY = process.argv.includes('--apply');
+/**
+ * Resolve the KV namespace ID from --namespace-id or READ2LEAD_KV_NAMESPACE_ID
+ * only — no hardcoded fallback. Returns null (never throws) so callers can
+ * decide how to report the refusal.
+ */
+export function resolveKvNamespaceId({ argv = process.argv, env = process.env } = {}) {
+  const flagIndex = argv.indexOf('--namespace-id');
+  if (flagIndex !== -1 && argv[flagIndex + 1]) return argv[flagIndex + 1];
+  return env.READ2LEAD_KV_NAMESPACE_ID || null;
+}
 
 function wrangler(args) {
   const cmd = ['npx', 'wrangler@latest', ...args].join(' ');
@@ -52,11 +66,11 @@ function wrangler(args) {
   });
 }
 
-function kvGet(key) {
+function kvGet(namespaceId, key) {
   try {
     const raw = wrangler([
       'kv', 'key', 'get', JSON.stringify(key),
-      '--namespace-id', KV_NAMESPACE_ID,
+      '--namespace-id', namespaceId,
       '--remote',
     ]).trim();
     if (!raw || raw === 'Value not found') return null;
@@ -68,13 +82,13 @@ function kvGet(key) {
   }
 }
 
-function kvPut(key, value) {
+function kvPut(namespaceId, key, value) {
   const file = join(tmpdir(), `r2l-kv-${Date.now()}-${Math.random().toString(36).slice(2)}.json`);
   writeFileSync(file, JSON.stringify(value));
   try {
     wrangler([
       'kv', 'key', 'put', JSON.stringify(key),
-      '--namespace-id', KV_NAMESPACE_ID,
+      '--namespace-id', namespaceId,
       '--remote',
       '--path', JSON.stringify(file),
     ]);
@@ -83,25 +97,27 @@ function kvPut(key, value) {
   }
 }
 
-function kvListAllKeys() {
-  const raw = wrangler(['kv', 'key', 'list', '--namespace-id', KV_NAMESPACE_ID, '--remote']);
+function kvListAllKeys(namespaceId) {
+  const raw = wrangler(['kv', 'key', 'list', '--namespace-id', namespaceId, '--remote']);
   return JSON.parse(raw).map((entry) => entry.name);
 }
 
 /** Real Cloudflare KV, driven through `wrangler kv` (mirrors apply-leaderboard-bots.mjs). */
-const remoteKv = {
-  async get(key, options) {
-    const value = kvGet(key);
-    if (value == null) return null;
-    return options?.type === 'json' ? value : JSON.stringify(value);
-  },
-  async put(key, value) {
-    await kvPut(key, typeof value === 'string' ? JSON.parse(value) : value);
-  },
-  async list() {
-    return { keys: kvListAllKeys().map((name) => ({ name })), list_complete: true, cursor: null };
-  },
-};
+function makeRemoteKv(namespaceId) {
+  return {
+    async get(key, options) {
+      const value = kvGet(namespaceId, key);
+      if (value == null) return null;
+      return options?.type === 'json' ? value : JSON.stringify(value);
+    },
+    async put(key, value) {
+      await kvPut(namespaceId, key, typeof value === 'string' ? JSON.parse(value) : value);
+    },
+    async list() {
+      return { keys: kvListAllKeys(namespaceId).map((name) => ({ name })), list_complete: true, cursor: null };
+    },
+  };
+}
 
 /**
  * Core migration logic — takes a Workers-`env`-shaped object exposing
@@ -169,11 +185,37 @@ export async function convertCoinsToDiamonds(env, { apply = false } = {}) {
   };
 }
 
-async function main() {
-  const env = { READ2LEAD_CODES: remoteKv };
-  const result = await convertCoinsToDiamonds(env, { apply: APPLY });
+/**
+ * CLI entry point, split out from main() so the namespace-ID refusal is
+ * testable without touching real wrangler or process.exit — returns a result
+ * object instead of exiting directly.
+ */
+export async function runCli({ argv = process.argv, env = process.env } = {}) {
+  const namespaceId = resolveKvNamespaceId({ argv, env });
+  if (!namespaceId) {
+    return {
+      ok: false,
+      error: 'missing_namespace_id',
+      message: 'Refusing to run: no KV namespace ID provided. Pass --namespace-id <id> or set READ2LEAD_KV_NAMESPACE_ID.',
+    };
+  }
+  const apply = argv.includes('--apply');
+  const cliEnv = { READ2LEAD_CODES: makeRemoteKv(namespaceId) };
+  const result = await convertCoinsToDiamonds(cliEnv, { apply });
+  return { ok: true, namespace_id: namespaceId, result };
+}
 
-  console.log(APPLY ? 'LIVE RUN — writes applied.' : 'DRY RUN — no writes made. Pass --apply to write for real.');
+async function main() {
+  const outcome = await runCli();
+  if (!outcome.ok) {
+    console.error('FAILED:', outcome.message);
+    process.exitCode = 1;
+    return;
+  }
+  const { result } = outcome;
+
+  console.log(result.apply ? 'LIVE RUN — writes applied.' : 'DRY RUN — no writes made. Pass --apply to write for real.');
+  console.log(`Namespace: ${outcome.namespace_id}`);
   console.log(`Scanned ${result.records_scanned} access-code records.`);
   console.log(`Records with coins to convert: ${result.records_touched}`);
   console.log(`Total coins converted: ${result.total_coins_converted}`);

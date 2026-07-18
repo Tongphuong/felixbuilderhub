@@ -1,7 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { convertCoinsToDiamonds } from '../scripts/convert-coins-to-diamonds.mjs';
+import {
+  convertCoinsToDiamonds,
+  resolveKvNamespaceId,
+  runCli,
+} from '../scripts/convert-coins-to-diamonds.mjs';
 import { progressKey } from '../functions/api/_read2lead-v2-state.js';
 
 /**
@@ -161,4 +165,51 @@ test('multiple kids: totals sum correctly and each per-code row is reported', as
   assert.equal(kid1.diamonds, 5);
   assert.equal(kid2.diamonds, 3 + 12);
   assert.equal(kid3.diamonds, 8, 'kid with 0 coins keeps their existing diamonds untouched');
+});
+
+/**
+ * Buffet fix round (2026-07-18, spec §11.10): the KV namespace ID must be
+ * supplied explicitly — no hardcoded default. A hardcoded namespace ID is
+ * exactly the kind of thing that silently survives a copy-paste into the
+ * wrong environment and rewrites the wrong namespace's currency.
+ */
+test('resolveKvNamespaceId returns null when neither --namespace-id nor the env var is set', () => {
+  assert.equal(resolveKvNamespaceId({ argv: ['node', 'script.mjs'], env: {} }), null);
+});
+
+test('resolveKvNamespaceId reads --namespace-id from argv', () => {
+  assert.equal(
+    resolveKvNamespaceId({ argv: ['node', 'script.mjs', '--namespace-id', 'abc123'], env: {} }),
+    'abc123',
+  );
+});
+
+test('resolveKvNamespaceId falls back to READ2LEAD_KV_NAMESPACE_ID env var', () => {
+  assert.equal(
+    resolveKvNamespaceId({ argv: ['node', 'script.mjs'], env: { READ2LEAD_KV_NAMESPACE_ID: 'env-ns-id' } }),
+    'env-ns-id',
+  );
+});
+
+test('--namespace-id argv takes priority over the env var', () => {
+  assert.equal(
+    resolveKvNamespaceId({
+      argv: ['node', 'script.mjs', '--namespace-id', 'flag-wins'],
+      env: { READ2LEAD_KV_NAMESPACE_ID: 'env-loses' },
+    }),
+    'flag-wins',
+  );
+});
+
+test('runCli REFUSES to run (no wrangler call, no write) when no namespace ID is supplied', async () => {
+  const outcome = await runCli({ argv: ['node', 'script.mjs'], env: {} });
+  assert.equal(outcome.ok, false);
+  assert.equal(outcome.error, 'missing_namespace_id');
+  assert.match(outcome.message, /Refusing to run/);
+});
+
+test('runCli REFUSES even with --apply when no namespace ID is supplied (never silently no-ops into a write)', async () => {
+  const outcome = await runCli({ argv: ['node', 'script.mjs', '--apply'], env: {} });
+  assert.equal(outcome.ok, false);
+  assert.equal(outcome.error, 'missing_namespace_id');
 });

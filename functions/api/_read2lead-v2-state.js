@@ -950,6 +950,55 @@ function normalizeDailyLoginChest(raw) {
   return { last_claim_date: raw.last_claim_date || null };
 }
 
+// R2L-REWARDS-REDESIGN Buffet fix round (2026-07-18, spec §11.8): a book that
+// fails its overall average, or gets mic-skipped partway through, still pays
+// page-diamonds for the pages it DID pass (applyPackPenalty's diamondsEarned,
+// finalizeWithoutReward's own credit in submit-read2lead-lesson.js). If the
+// kid then retries the SAME pack_id and passes, applyPackCompletion
+// recomputes the FULL page-diamonds total from scratch — without this
+// ledger, the pages already paid on the failed attempt get paid AGAIN. This
+// small per-pack_id map records what's already been paid via a non-
+// completion path so the completion path only pays the remainder, then
+// clears its own entry (a pack_id that has completed can never be retried
+// again — the pack is marked reviewed).
+const PAGE_DIAMONDS_PAID_LIMIT = 100;
+
+function normalizePageDiamondsPaid(raw) {
+  if (!raw || typeof raw !== 'object') return {};
+  const entries = Object.entries(raw)
+    .filter(([key, value]) => key && Number.isFinite(Number(value)) && Number(value) > 0)
+    .slice(-PAGE_DIAMONDS_PAID_LIMIT);
+  return Object.fromEntries(entries);
+}
+
+/**
+ * Record that `amount` page-diamonds have been paid for `packId` via a
+ * non-completion path (penalty or completed-without-reward). Additive rather
+ * than overwrite, purely as a defensive measure if a caller ever recorded
+ * twice for the same id — normal flow only calls this once per pack_id ever,
+ * guarded by the caller's own dedup (penalized_pack_ids, or the
+ * isV2PackReviewed status flip for completed-without-reward).
+ */
+export function recordPageDiamondsPaid(pageDiamondsPaid, packId, amount) {
+  const id = String(packId || '').trim();
+  const value = Math.max(0, numberOrZero(amount));
+  const current = normalizePageDiamondsPaid(pageDiamondsPaid);
+  if (!id || value <= 0) return current;
+  const next = { ...current, [id]: numberOrZero(current[id]) + value };
+  const keys = Object.keys(next);
+  if (keys.length > PAGE_DIAMONDS_PAID_LIMIT) delete next[keys[0]];
+  return next;
+}
+
+function clearPageDiamondsPaid(pageDiamondsPaid, packId) {
+  const id = String(packId || '').trim();
+  const current = normalizePageDiamondsPaid(pageDiamondsPaid);
+  if (!id || !(id in current)) return current;
+  const next = { ...current };
+  delete next[id];
+  return next;
+}
+
 export function normalizeAvatarStage(raw, state = {}) {
   const unlockedParts = Array.isArray(state?.unlocked_parts) ? state.unlocked_parts : [];
   const computedLadder = state?.rank_ladder || computeRankLadder(state);
@@ -1229,6 +1278,7 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     daily_login_chest: normalizeDailyLoginChest(raw?.daily_login_chest),
     learning_metrics: normalizeLearningMetrics(raw?.learning_metrics, nowIso),
     combo_lifetime_xu: numberOrZero(raw?.combo_lifetime_xu),
+    page_diamonds_paid: normalizePageDiamondsPaid(raw?.page_diamonds_paid),
     unlocked_parts: unlockedParts,
     // Real-gift shop. These MUST stay on the whitelist: every endpoint that
     // loads, mutates and saves state would otherwise write the object back
@@ -1459,6 +1509,13 @@ export function applyPackCompletion(
     activityResults = [],
     scorePercent = null,
     learningMetric = null,
+    // R2L-REWARDS-REDESIGN Buffet fix round (2026-07-18, spec §11.8): the
+    // page-diamonds portion, kept SEPARATE from rewardsEarned.diamonds (which
+    // is grade-based only) so it can be checked against page_diamonds_paid —
+    // a retry-then-pass of a pack that previously failed (and already paid
+    // page-diamonds via applyPackPenalty) must only pay the remainder, never
+    // the full amount again.
+    pageDiamonds = 0,
   } = {},
 ) {
   const id = String(packId || '').trim();
@@ -1469,6 +1526,7 @@ export function applyPackCompletion(
       level_up: null,
       level_gate_hint_vi: null,
       already_counted: true,
+      diamonds_credited: 0,
     };
   }
 
@@ -1478,6 +1536,9 @@ export function applyPackCompletion(
   const currentDateKey = vietnamDateKey(completedAt);
   const voiceAttempts = hasVoiceAttempt(activityResults) ? state.voice_attempts + 1 : state.voice_attempts;
   const earnedXp = numberOrZero(rewardsEarned.xp);
+  const alreadyPaidPageDiamonds = numberOrZero(state.page_diamonds_paid?.[id]);
+  const effectivePageDiamonds = Math.max(0, numberOrZero(pageDiamonds) - alreadyPaidPageDiamonds);
+  const earnedDiamonds = numberOrZero(rewardsEarned.diamonds) + effectivePageDiamonds;
   const streakUpdate = computeStreakAdvance(state, currentDateKey);
   const nextCompleted = state.completed_packs + 1;
   const nextCompletedIds = [...state.completed_pack_ids, id].slice(-100);
@@ -1494,7 +1555,7 @@ export function applyPackCompletion(
       pack_id: id,
       completed_at: completedAt,
       level: currentLevel,
-      diamonds: numberOrZero(rewardsEarned.diamonds),
+      diamonds: earnedDiamonds,
       xp: earnedXp,
       ...(scorePercent !== null && scorePercent !== undefined
         ? { score_percent: Number(scorePercent) }
@@ -1530,7 +1591,11 @@ export function applyPackCompletion(
     unlocked_levels: Array.from(new Set([...state.unlocked_levels, nextCurrentLevel])),
     rank_title: RANK_TITLES[nextCurrentLevel] || state.rank_title,
     rank_asset_url: RANK_ASSETS[nextCurrentLevel] || state.rank_asset_url || RANK_ASSETS[START_LEVEL],
-    diamonds: state.diamonds + numberOrZero(rewardsEarned.diamonds),
+    diamonds: state.diamonds + earnedDiamonds,
+    // The pack just completed — it can never be retried again (marked in
+    // completed_pack_ids above), so any page-diamonds ledger entry for it is
+    // now dead weight. Clear it.
+    page_diamonds_paid: clearPageDiamondsPaid(state.page_diamonds_paid, id),
     total_xp: state.total_xp + earnedXp,
     xp_in_level: xpInLevel,
     xp_to_next_level: xpToNextLevel(nextCurrentLevel),
@@ -1553,6 +1618,7 @@ export function applyPackCompletion(
     level_up: levelUp,
     level_gate_hint_vi: levelGateHintVi,
     already_counted: false,
+    diamonds_credited: earnedDiamonds,
   };
 }
 
@@ -1591,6 +1657,9 @@ export function applyPackPenalty(
     rank_title: RANK_TITLES[currentLevel] || state.rank_title,
     rank_asset_url: RANK_ASSETS[currentLevel] || state.rank_asset_url || RANK_ASSETS[START_LEVEL],
     diamonds: numberOrZero(state.diamonds) + diamonds,
+    // Record what was paid so a later retry-then-pass of this exact pack_id
+    // (applyPackCompletion) doesn't pay the same pages' diamonds again.
+    page_diamonds_paid: recordPageDiamondsPaid(state.page_diamonds_paid, id, diamonds),
     total_xp: Math.max(0, state.total_xp - loss),
     xp_in_level: Math.max(0, state.xp_in_level - loss),
     xp_to_next_level: xpToNextLevel(currentLevel),

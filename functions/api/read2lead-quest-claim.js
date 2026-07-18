@@ -33,7 +33,7 @@ export async function onRequestPost(context) {
       ok: true,
       reward: result.reward,
       daily_quests: result.state.daily_quests,
-      coins: result.state.coins,
+      diamonds: result.state.diamonds,
     });
   } catch (err) {
     return jsonError(`server_error: ${err?.message || 'unknown'}`, 500);
