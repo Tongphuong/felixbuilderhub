@@ -26,7 +26,7 @@ export const MEDALS_FIXTURE = [
     emoji: '🌱',
     peak_label_vi: 'Vàng II',
     peak_tier_index: 2,
-    reward_coins: 35,
+    reward_diamonds: 35,
     ts: '2026-05-31T12:00:00.000Z',
   },
 ];
@@ -99,7 +99,7 @@ export function renderMedalCabinetHtml(medals) {
                 <span class="r2l-medal-card__emoji" aria-hidden="true">${escapeHtml(medal.emoji)}</span>
                 <p class="r2l-medal-card__name">${escapeHtml(medal.name_vi)}</p>
                 <p class="r2l-medal-card__rank">${escapeHtml(medal.peak_label_vi)}</p>
-                <p class="r2l-medal-card__coins">🪙 ${Number(medal.reward_coins || 0)}</p>
+                <p class="r2l-medal-card__diamonds">💎 ${Number(medal.reward_diamonds || 0)}</p>
               </article>`,
             )
             .join('')}
@@ -113,7 +113,7 @@ export function renderMedalCabinetHtml(medals) {
 
 export function renderMedalCongratsHtml(medal) {
   return `<div class="r2l-medal-congrats" data-r2l-medal-congrats role="status">
-    <p>Mùa ${escapeHtml(medal.name_vi)} khép lại — con đạt ${escapeHtml(medal.peak_label_vi)}, nhận ${Number(medal.reward_coins || 0)} xu! 🎉</p>
+    <p>Mùa ${escapeHtml(medal.name_vi)} khép lại — con đạt ${escapeHtml(medal.peak_label_vi)}, nhận ${Number(medal.reward_diamonds || 0)} 💎! 🎉</p>
     <button type="button" class="r2l-kid-btn r2l-kid-btn--primary r2l-kid-btn--md" data-r2l-medal-congrats-dismiss>Tuyệt lắm!</button>
   </div>`;
 }

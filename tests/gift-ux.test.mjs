@@ -520,6 +520,13 @@ test('gifts.astro page shell has no ?v3=1 gate (the diamond price is the only ga
   assert.doesNotMatch(giftsPage, /isV3Enabled/);
 });
 
+// Linking work (founder decision, 2026-07-18, narrow authorization on
+// gifts.astro — this single link element only): kids must be able to find
+// the monster shop from the gift shop too.
+test('gifts.astro cross-links to the monster shop', () => {
+  assert.match(giftsPage, /href="\/read2lead\/shop"/);
+});
+
 test('gifts.astro reuses fx-* primitives and bans r2l-kid-* classes / Baloo 2', () => {
   assert.match(giftsPage, /fx-btn/);
   assert.match(giftsPage, /fx-field/);

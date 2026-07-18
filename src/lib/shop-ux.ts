@@ -81,7 +81,7 @@ export function partThumbnailUrl(partId: string, itemSlot = ''): string | undefi
 export async function buyPart(
   partId: string,
   code: string,
-): Promise<{ ok: boolean; reward?: { part_id: string; price: number }; coins?: number; error?: string; message?: string }> {
+): Promise<{ ok: boolean; reward?: { part_id: string; price: number }; diamonds?: number; coins?: number; error?: string; message?: string }> {
   try {
     const res = await fetch('/api/read2lead-shop-buy', {
       method: 'POST',
@@ -123,7 +123,7 @@ export function showInsufficient(needed: number, current: number): void {
   if (!dialog) return;
   const deficit = Math.max(0, needed - current);
   const title = dialog.querySelector('.insufficient-title') as HTMLElement | null;
-  if (title) title.textContent = `Còn thiếu ${deficit} xu`;
+  if (title) title.textContent = `Còn thiếu ${deficit} 💎`;
   dialog.dataset.deficit = String(deficit);
   if (typeof dialog.showModal === 'function') dialog.showModal();
 }
@@ -168,11 +168,19 @@ function renderShopItem(item: ShopRow): string {
   const art = thumb
     ? `<img src="${escapeHtml(thumb)}" alt="${escapeHtml(item.name)}" loading="lazy" width="72" height="72" />`
     : '<div class="shop-item-placeholder" aria-hidden="true">🎨</div>';
+  // Founder decision #5 (SPEC_R2L_REWARDS_REDESIGN §3.2): Silver+ kids see
+  // every item at price 0 from the backend (buildShopView) — render that as
+  // an always-enabled "Nhận miễn phí" button instead of a 0💎 buy button.
+  // Below-Silver kids keep the normal 💎 price + can_afford gate.
+  const isFree = item.price === 0;
+  const priceLabel = isFree
+    ? '<span class="shop-item-free-label">Nhận miễn phí</span>'
+    : `<span class="shop-item-diamond" aria-hidden="true">💎</span><span class="shop-item-price">${item.price}</span>`;
   const action = item.owned
     ? '<span class="shop-item-owned"><span aria-hidden="true">✓</span> Có rồi</span>'
-    : `<button class="shop-item-buy" type="button" data-part-id="${escapeHtml(item.id)}" data-price="${item.price}" ${item.can_afford ? '' : 'disabled'}><span class="shop-item-coin" aria-hidden="true">🪙</span><span class="shop-item-price">${item.price}</span></button>`;
+    : `<button class="shop-item-buy" type="button" data-part-id="${escapeHtml(item.id)}" data-price="${item.price}" ${item.can_afford ? '' : 'disabled'}>${priceLabel}</button>`;
   return `
-    <article class="shop-item" data-slot="${escapeHtml(item.slot)}" data-rarity="${escapeHtml(item.rarity)}" data-owned="${item.owned}" data-can-afford="${item.can_afford}">
+    <article class="shop-item" data-slot="${escapeHtml(item.slot)}" data-rarity="${escapeHtml(item.rarity)}" data-owned="${item.owned}" data-can-afford="${item.can_afford}" data-free="${isFree}">
       <div class="shop-item-art">${art}${tierBadgeHtml(item.rarity)}</div>
       <h3 class="shop-item-name">${escapeHtml(item.name)}</h3>
       <div class="shop-item-action">${action}</div>
@@ -222,16 +230,16 @@ function renderSection(tier: ShopRarity, title: string, items: ShopRow[]): strin
 export function initShopPage(hooks: ShopPageHooks): void {
   let accessCode = '';
   let shopItems: ShopRow[] = [];
-  let shopCoins = 0;
+  let shopDiamonds = 0;
   let profileHref = '/ho-so';
   let activeSlot = 'all';
 
   const qs = (sel: string) => document.querySelector(sel);
 
-  const setShopCoins = (value: number) => {
-    shopCoins = Number(value) || 0;
-    const coins = qs('#shop-coins');
-    if (coins) coins.textContent = String(shopCoins);
+  const setShopDiamonds = (value: number) => {
+    shopDiamonds = Number(value) || 0;
+    const diamonds = qs('#shop-diamonds');
+    if (diamonds) diamonds.textContent = String(shopDiamonds);
   };
 
   const bindShopActions = () => {
@@ -244,7 +252,7 @@ export function initShopPage(hooks: ShopPageHooks): void {
         const price = Number(button.dataset.price || 0);
         if (button.disabled) {
           void playDisabledBuzz();
-          showInsufficient(price, shopCoins);
+          showInsufficient(price, shopDiamonds);
           return;
         }
         if (!(await hooks.confirmBuy())) return;
@@ -258,11 +266,11 @@ export function initShopPage(hooks: ShopPageHooks): void {
           hooks.onError(payload.message || 'Không thể mua.');
           return;
         }
-        setShopCoins(payload.coins || 0);
+        setShopDiamonds(payload.diamonds ?? payload.coins ?? 0);
         const bought = shopItems.find((item) => item.id === partId);
         shopItems = shopItems.map((item) => {
           if (item.id !== partId) {
-            return { ...item, can_afford: !item.owned && shopCoins >= item.price };
+            return { ...item, can_afford: !item.owned && (item.price === 0 || shopDiamonds >= item.price) };
           }
           return { ...item, owned: true, can_afford: false };
         });
@@ -325,7 +333,7 @@ export function initShopPage(hooks: ShopPageHooks): void {
     if (!payload.ok) throw new Error(payload.message || 'Không thể mở cửa hàng.');
 
     shopItems = visibleShopItems(payload.items || []);
-    setShopCoins(payload.coins || 0);
+    setShopDiamonds(payload.diamonds ?? payload.coins ?? 0);
     qs('#shop-shell')?.classList.remove('hidden');
     profileHref = `/ho-so?code=${encodeURIComponent(accessCode)}&v3=1`;
     const profileLink = qs('#shop-profile-link') as HTMLAnchorElement | null;

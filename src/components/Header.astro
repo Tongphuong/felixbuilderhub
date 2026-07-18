@@ -62,14 +62,25 @@ const progressHref = '/ho-so';
           <div class="absolute right-0 top-12 z-50 w-64 overflow-hidden rounded-lg border border-cream-dim/20 bg-navy-950 shadow-2xl">
             <div class="border-b border-cream-dim/15 p-3">
               <p class="mb-2 text-[11px] font-semibold uppercase tracking-wide text-cream-dim">Thành tích</p>
-              <div class="grid grid-cols-3 gap-2">
-                <span class="rounded-md bg-cream/5 px-3 py-2 font-bold text-gold" data-r2l-coins>🪙 0</span>
-                <span class="rounded-md bg-cream/5 px-3 py-2 font-bold text-cyan-300" data-r2l-diamonds>💎 0</span>
+              <!-- R2L Rewards Redesign (founder decision #5): the coin badge
+                   is removed — diamonds are the only currency now, no
+                   secondary display. Grid drops to 2 columns for the
+                   remaining diamonds + streak badges. -->
+              <div class="grid grid-cols-2 gap-2">
+                <!-- "One diamond language" (founder-ratified): gold, matching
+                     the shops (shop.astro/gifts.astro/GiftConfirmModal/
+                     GiftSuccessModal all use var(--gold)/var(--gold-light))
+                     — this pill sits on every page next to both shops now. -->
+                <span class="rounded-md bg-cream/5 px-3 py-2 font-bold text-gold" data-r2l-diamonds>💎 0</span>
                 <span class="rounded-md bg-cream/5 px-3 py-2 font-bold text-cream" data-r2l-streak>0 ngày</span>
               </div>
             </div>
             <nav class="flex flex-col p-2 text-sm font-semibold text-cream-muted" aria-label="Liên kết khác">
               <a href={progressHref} class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Xem tiến độ con</a>
+              <!-- Linking work (founder decision): kids must be able to find
+                   the monster shop — a matching entry next to the gift-shop
+                   one, same runtime code-injection pattern (see script below). -->
+              <a href="/read2lead/shop" data-r2l-shop-link class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">🛒 Cửa hàng Minny · đổi kim cương</a>
               <a href="/read2lead/gifts" data-r2l-gifts-link class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">🎁 Quà thật · đổi kim cương</a>
               <a href="/read2lead" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Read2Lead · Luyện đọc</a>
               <a href="/coaching" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Coaching</a>
@@ -156,6 +167,12 @@ const progressHref = '/ho-so';
         giftsLink.href = `/read2lead/gifts?code=${encodeURIComponent(code)}`;
       }
 
+      // Same pattern for the monster shop (linking work, founder decision).
+      const shopLink = stateHeader.querySelector('[data-r2l-shop-link]');
+      if (shopLink instanceof HTMLAnchorElement) {
+        shopLink.href = `/read2lead/shop?code=${encodeURIComponent(code)}`;
+      }
+
       fetch(`/api/read2lead-progress?code=${encodeURIComponent(code)}`)
         .then((response) => response.json())
         .then((data) => {
@@ -173,7 +190,6 @@ const progressHref = '/ho-so';
             applyHeaderMonsterAvatar(state, stateHeader);
           }
           setText('[data-r2l-xp-label]', `⭐ ${state.xp_in_level ?? 0}/${state.xp_to_next_level ?? 60} XP`);
-          setText('[data-r2l-coins]', `🪙 ${state.coins || 0}`);
           setText('[data-r2l-diamonds]', `💎 ${state.diamonds || 0}`);
           setText('[data-r2l-streak]', `${state.streak_days || 0} ngày`);
           const xpFill = stateHeader.querySelector('[data-r2l-xp-fill]');

@@ -44,10 +44,37 @@ test('lesson header keeps achievement context compact and moves site links into 
   assert.match(header, /r2l-lesson-focus/);
   assert.match(header, /data-r2l-lesson-menu/);
   assert.match(header, /Mở thành tích và liên kết khác/);
-  assert.match(header, /data-r2l-coins/);
+  assert.match(header, /data-r2l-diamonds/);
   assert.match(header, /data-r2l-streak/);
   assert.match(header, /read2LeadState \? \(/);
   assert.match(header, /\) : \(\s*<header/);
+});
+
+// R2L Rewards Redesign (founder decision #5, 2026-07-18): the 🪙 coin badge
+// is removed everywhere — diamonds are the only currency, no secondary
+// display. This locks the removal in so it can't silently regress.
+test('lesson header no longer renders a coin badge — diamonds are the only currency', () => {
+  assert.doesNotMatch(header, /data-r2l-coins/);
+  assert.doesNotMatch(header, /🪙/);
+});
+
+// Linking work (founder decision, 2026-07-18): kids must be able to find the
+// monster shop — a dropdown entry next to the gift-shop one, with the same
+// runtime ?code= injection so it opens directly to their own shop.
+// "One diamond language" (founder-ratified): the header's diamond pill sits
+// on every page next to both now-gold shops, so it must match, not clash.
+test('header diamond pill uses the gold token, not the old cyan', () => {
+  assert.match(header, /text-gold" data-r2l-diamonds/);
+  assert.doesNotMatch(header, /cyan/);
+});
+
+test('header dropdown links to the monster shop next to the gift shop, both code-injected at runtime', () => {
+  assert.match(header, /href="\/read2lead\/shop" data-r2l-shop-link/);
+  assert.match(header, /href="\/read2lead\/gifts" data-r2l-gifts-link/);
+  const scriptStart = header.indexOf('const shopLink');
+  assert.ok(scriptStart > -1, 'shop link runtime code-injection block must exist');
+  const scriptBody = header.slice(scriptStart, scriptStart + 200);
+  assert.match(scriptBody, /shopLink\.href = `\/read2lead\/shop\?code=\$\{encodeURIComponent\(code\)\}`/);
 });
 
 test('unified profile page supports code entry and role switching', () => {

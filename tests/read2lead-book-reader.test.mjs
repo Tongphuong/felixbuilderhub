@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const lesson = readFileSync('src/pages/read2lead/lesson.astro', 'utf8');
+const w2DynamicCss = readFileSync('src/styles/r2l-w2-dynamic.css', 'utf8');
 
 test('book page audio must end before the page unlocks its own questions', () => {
   assert.match(lesson, /state\.lesson\.book_page_audio\[pageIndex\]/);
@@ -264,6 +265,67 @@ test('responsive rules match phone tablet and laptop reader compositions', () =>
   assert.match(redesign, /@media \(min-width: 1360px\), \(min-width: 1280px\) and \(max-height: 850px\)/);
   assert.match(redesign, /grid-template-columns: 220px minmax\(0, 1fr\)/);
   assert.match(redesign, /min-height: 44px/);
+});
+
+// R2L Rewards Redesign (SPEC_R2L_REWARDS_REDESIGN.md §3.1/§3.4, approved
+// 2026-07-18): +5💎 page-complete celebration — a floating ticker, a light
+// confetti burst, and a chime, all non-blocking so nothing gates the next
+// page turn (the packet's explicit stop condition).
+
+test('a dedicated diamond chime SFX exists and is preloaded alongside the other core sounds', () => {
+  assert.match(lesson, /diamondChime: '\/sfx\/r2l\/diamond-chime\.mp3'/);
+  assert.match(lesson, /SFX\.correctCommon, SFX\.wrong, SFX\.activityComplete, SFX\.packComplete, SFX\.diamondChime/);
+});
+
+test('showDiamondTicker mirrors the existing XP ticker pattern: floating, auto-removing, non-blocking', () => {
+  const start = lesson.indexOf('function showDiamondTicker');
+  const end = lesson.indexOf('function celebrateDiamondReward');
+  assert.ok(start > -1 && end > start);
+  const body = lesson.slice(start, end);
+  assert.match(body, /ticker\.className = 'w2-diamond-ticker'/);
+  // Space-separated "N 💎", matching the live gift shop's convention.
+  assert.match(body, /\+\$\{Math\.round\(amount\)\} 💎/);
+  assert.match(body, /window\.setTimeout\(\(\) => ticker\.remove\(\), 1800\)/);
+});
+
+test('celebrateDiamondReward always shows the ticker but debounces confetti+chime to 1.5s', () => {
+  assert.match(lesson, /const PAGE_DIAMOND_REWARD = 5;/);
+  assert.match(lesson, /const DIAMOND_CELEBRATION_DEBOUNCE_MS = 1500;/);
+  const start = lesson.indexOf('function celebrateDiamondReward');
+  const end = lesson.indexOf('function setSfxMuted');
+  assert.ok(start > -1 && end > start);
+  const body = lesson.slice(start, end);
+  const tickerCallIdx = body.indexOf('showDiamondTicker(amount, anchorSelector);');
+  const debounceCheckIdx = body.indexOf('if (now - _r2lLastDiamondCelebrationAt < DIAMOND_CELEBRATION_DEBOUNCE_MS) return;');
+  assert.ok(tickerCallIdx > -1 && debounceCheckIdx > tickerCallIdx, 'ticker must show before the debounce early-return');
+  assert.match(body, /window\.__r2lJuice\?\.fireStreakConfetti\?\.\(\)/);
+  assert.match(body, /playSfx\(SFX\.diamondChime, \{ volume: 0\.7 \}\)/);
+});
+
+test('per-page diamond celebration requires an actual pass and fires only after the reward panel unhides', () => {
+  const start = lesson.indexOf('function bookCompleteShadowChunk');
+  const end = lesson.indexOf('function bookUpdateNavigation');
+  assert.ok(start > -1 && end > start);
+  const body = lesson.slice(start, end);
+  // Skipped/exhausted chunks must not earn the celebration (spec edge case:
+  // mic-skip = completed_without_reward = 0 diamonds). Zero-read pages never
+  // reach this function at all (bookPracticeStageForPage routes them
+  // straight to 'next'), so they're excluded without any extra check here.
+  assert.match(body, /const pagePassed = page\.page_reads\.some\(\(read\) => read\.status === 'passed'\);/);
+  const stageIdx = body.indexOf("bookSetStage('next');");
+  const celebrateIdx = body.indexOf('celebrateDiamondReward(PAGE_DIAMOND_REWARD');
+  assert.ok(stageIdx > -1 && celebrateIdx > stageIdx, 'bookSetStage must unhide the reward panel before the ticker is appended to it');
+  assert.match(body, /if \(pagePassed\) \{\s*celebrateDiamondReward\(PAGE_DIAMOND_REWARD, \{ anchorSelector: '#book-reader-next-stage' \}\);/);
+});
+
+test('the static per-page reward panel shows +5 💎, not the old +5 xu', () => {
+  assert.match(lesson, /r2l-book-reward__pills"><span>\+25 XP<\/span><span>\+5 💎<\/span>/);
+  assert.doesNotMatch(lesson, /\+5 xu/);
+});
+
+test('the diamond ticker CSS reuses the design system\'s gold token, not an invented color', () => {
+  assert.match(w2DynamicCss, /\.w2-diamond-ticker \{[^}]*color: var\(--gold-light, #f2cc7e\);/s);
+  assert.doesNotMatch(w2DynamicCss, /#22d3ee/);
 });
 
 test('book reader keeps complete mixed-aspect illustrations clear of its caption band', () => {

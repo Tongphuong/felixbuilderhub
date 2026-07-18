@@ -45,7 +45,7 @@ export type MedalPayload = {
   emoji: string;
   peak_label_vi: string;
   peak_tier_index: number;
-  reward_coins: number;
+  reward_diamonds: number;
   ts: string;
 };
 
