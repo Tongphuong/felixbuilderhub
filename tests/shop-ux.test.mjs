@@ -92,7 +92,9 @@ test('InsufficientCoinsModal opens with correct deficit number', async () => {
     coins_needed: 80,
     current_coins: 20,
   });
-  assert.match(html, /Còn thiếu 60 xu/);
+  // R2L Rewards Redesign (founder decision #5): 🪙 xu wording replaced by 💎.
+  assert.match(html, /Còn thiếu 60💎/);
+  assert.doesNotMatch(html, /\bxu\b/);
   assert.match(html, /data-deficit="?60"?/);
   assert.match(html, /Đi học/);
 });
@@ -105,4 +107,65 @@ test('UnlockCelebration includes Vietnamese rarity label', async () => {
   assert.match(html, /Mới có Sử Thi!/);
   assert.match(html, /Sừng xanh lớn/);
   assert.match(html, /Đeo ngay/);
+});
+
+// R2L Rewards Redesign (SPEC_R2L_REWARDS_REDESIGN.md, approved 2026-07-18) —
+// diamonds are now the only shop currency; the 🪙 coin badge is gone.
+
+test('shop page shows a diamond balance, not a coin balance', () => {
+  assert.match(shopPage, /id="shop-diamonds"/);
+  assert.match(shopPage, /💎 <span id="shop-diamonds">0<\/span>/);
+  assert.doesNotMatch(shopPage, /id="shop-coins"/);
+  assert.doesNotMatch(shopPage, /🪙/);
+  assert.doesNotMatch(shopPage, /\bxu\b/);
+});
+
+// Reuse-first convergence: the monster shop's 💎 display must match the
+// live "Quà thật" gift shop's established convention (gold, "Kim cương của
+// con"), not invent a second diamond visual language.
+test('shop balance box reuses the gift shop\'s label wording and gold emphasis', () => {
+  assert.match(shopPage, /Kim cương của con/);
+  assert.doesNotMatch(shopPage, /Số dư của con/);
+  assert.match(shopPage, /border-gold\/30 bg-gold\/10/);
+  assert.match(shopPage, /text-gold">💎/);
+  assert.doesNotMatch(shopPage, /cyan/);
+});
+
+// Linking work (founder decision): kids must be able to find the shop —
+// the ?v3=1 preview gate is gone, and each diamond shop links to the other.
+test('shop page has no v3 preview gate and cross-links to the gift shop', () => {
+  assert.doesNotMatch(shopPage, /shop-gate/);
+  assert.doesNotMatch(shopPage, /isV3Enabled/);
+  assert.doesNotMatch(shopPage, /v3 preview/);
+  assert.match(shopPage, /href="\/read2lead\/gifts"/);
+});
+
+test('shop-ux tracks a diamond balance and falls back to the legacy coins field during rollout', () => {
+  assert.match(shopUxSource, /let shopDiamonds = 0;/);
+  assert.match(shopUxSource, /const setShopDiamonds = /);
+  assert.match(shopUxSource, /qs\('#shop-diamonds'\)/);
+  assert.match(shopUxSource, /setShopDiamonds\(payload\.diamonds \?\? payload\.coins \?\? 0\)/);
+  assert.doesNotMatch(shopUxSource, /shop-item-coin\b/);
+  assert.doesNotMatch(shopUxSource, /🪙/);
+});
+
+test('renderShopItem shows Silver+ free items as an always-visible "Nhận miễn phí" pill, backend can_afford still gates the button', () => {
+  const start = shopUxSource.indexOf('function renderShopItem');
+  const end = shopUxSource.indexOf('const SHOP_FILTERS');
+  assert.ok(start > -1 && end > start);
+  const body = shopUxSource.slice(start, end);
+  assert.match(body, /const isFree = item\.price === 0;/);
+  assert.match(body, /Nhận miễn phí/);
+  // Unchanged from before this redesign — buildShopView (backend) already
+  // sends can_afford: true whenever price is 0, so the button-disabled
+  // logic itself doesn't need an extra isFree check (SPEC §3.2/§5).
+  assert.match(body, /item\.can_afford \? '' : 'disabled'/);
+});
+
+test('showInsufficient reports the diamond deficit, not a coin deficit', () => {
+  const start = shopUxSource.indexOf('export function showInsufficient');
+  const end = shopUxSource.indexOf('export function wireShopModals');
+  assert.ok(start > -1 && end > start);
+  const body = shopUxSource.slice(start, end);
+  assert.match(body, /Còn thiếu \$\{deficit\} 💎/);
 });

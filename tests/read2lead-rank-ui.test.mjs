@@ -48,7 +48,9 @@ test('medal cabinet renders cards newest-first and empty state copy', () => {
   assert.match(withMedals, /Tủ huy chương/);
   assert.match(withMedals, /Mùa Khởi Đầu/);
   assert.match(withMedals, /Vàng II/);
-  assert.match(withMedals, /🪙 35/);
+  // R2L Rewards Redesign: season/medal rewards pay out in diamonds, not coins.
+  assert.match(withMedals, /💎 35/);
+  assert.doesNotMatch(withMedals, /🪙/);
 
   const empty = renderMedalCabinetHtml([]);
   assert.match(empty, /Mùa đầu tiên của con đang diễn ra/);
@@ -65,7 +67,8 @@ test('medal congrats uses localStorage last-seen guard', () => {
   const html = renderMedalCongratsHtml(medal);
   assert.match(html, /data-r2l-medal-congrats/);
   assert.match(html, /khép lại/);
-  assert.match(html, /35 xu/);
+  assert.match(html, /35 💎/);
+  assert.doesNotMatch(html, /\bxu\b/);
 
   const original = globalThis.localStorage;
   const store = new Map();

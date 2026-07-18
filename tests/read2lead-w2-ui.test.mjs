@@ -45,7 +45,7 @@ const COMPLETE_QUEST = {
   label_vi: 'Xong 1 bài',
   target: 1,
   progress: 1,
-  reward_coins: 10,
+  reward_diamonds: 10,
   reward_rp: 0,
   claimed: false,
 };
@@ -67,6 +67,15 @@ test('QuestCard renders label + progress + claim button when complete', async ()
   assert.match(html, /Xong 1 bài/);
   assert.match(html, /w2-quest-claim/);
   assert.match(html, /data-complete="?true"?/);
+});
+
+// R2L Rewards Redesign: quest rewards pay out in diamonds, not coins.
+test('QuestCard shows the diamond reward, not a coin reward', async () => {
+  const html = await renderComponent('/src/components/read2lead/v4/QuestCard.astro', {
+    quest: COMPLETE_QUEST,
+  });
+  assert.match(html, /💎 \+10/);
+  assert.doesNotMatch(html, /🪙/);
 });
 
 test('QuestCard hides claim button when not complete', async () => {

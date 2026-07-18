@@ -5,7 +5,7 @@ export interface Props {
     label_vi: string;
     target: number;
     progress: number;
-    reward_coins: number;
+    reward_diamonds: number;
     reward_rp: number;
     claimed: boolean;
   };
@@ -27,7 +27,7 @@ const pct = Math.min(100, Math.round((quest.progress / quest.target) * 100));
     <div class="w2-quest-progress-fill" style={`width: ${pct}%`} />
   </div>
   <footer class="w2-quest-reward">
-    <span class="w2-coin">🪙 +{quest.reward_coins}</span>
+    <span class="w2-diamond">💎 +{quest.reward_diamonds}</span>
     {quest.reward_rp > 0 && <span class="w2-rp">⭐ +{quest.reward_rp} RP</span>}
   </footer>
   {complete && !quest.claimed && (
@@ -81,7 +81,7 @@ const pct = Math.min(100, Math.round((quest.progress / quest.target) * 100));
     gap: 0.5rem;
   }
 
-  .w2-coin {
+  .w2-diamond {
     color: var(--r2l-sun, #ffc83d);
     font-weight: 700;
   }
