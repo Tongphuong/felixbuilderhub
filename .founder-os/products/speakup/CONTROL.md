@@ -93,8 +93,10 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Started: 2026-07-17
+- Completed: 2026-07-19 (founder merge order; shipped to main with videos as
+  labeled BẢN NHÁP drafts pending his content review)
 - Task ID: speakup-shadowing-v1
 - Spec: `_ops/specs/SPEC_SPEAKUP_SHADOWING.md` (approved 2026-07-17); plan of
   record `~/.claude/plans/zippy-gathering-matsumoto.md` (Phương plan-mode
@@ -282,10 +284,45 @@ assigns, commits, merges, deploys, or spends.
   confirmed).
 - Verified commit: 59441e0 (origin/claude/speakup-shadowing, deployed preview
   verified live).
-- Founder handoff: IN PROGRESS — remaining founder gates: (1) content review
-  of both DEV-DRAFT videos (flip `content_status` → `approved` per video =
-  the sign-off artifact), (2) hands-on QA on the preview with a test code,
-  (3) merge ack to main.
+- Founder handoff: DONE — plain-language reports at every gate this session;
+  founder gave the explicit merge order 2026-07-19 ("Merge, log then cleanup")
+  which is the merge ack. OPEN FOUNDER FOLLOW-UP: content review of both
+  videos is still pending — they ship as visibly-labeled BẢN NHÁP drafts
+  (content_status: dev_draft; ribbon on the picker); founder flips to
+  'approved' per video on his review. QA code R2L-QAPHUONG-QPSD valid to
+  2026-07-21 (works on production too).
+- Actual spend: Claude tiers on the Max plan (not metered); one-time content
+  prep ≈ $0.02 (LLM drafting avoided — questions hand-authored); runtime
+  verified ≈ $0 marginal (Whisper in free allocation, Azure bypassed).
+- TRUE E2E (2026-07-19, founder-requested): real login → watch-only
+  auto-advance → q1 answered → REAL fake-mic recording → REAL Whisper grade →
+  celebrate ×2 (⭐4/🔥2) → q2 answered → wrong-audio → warm retry ×2 →
+  back-exit → picker persisted ⭐4. One 422 on a silent retry capture handled
+  kid-safely. Evidence `_ops/e2e-*.png`.
+
+## Acceptance criteria reconciliation (speakup-shadowing-v1, 2026-07-19)
+
+1. Kid flow on deployed preview — PASS (true E2E above; the 3rd-miss give-up
+   TRANSITION and full-video completion + practice-log write are covered by
+   unit tests and rendered states, not a live run — SKIPPED-live, disclosed).
+2. Whisper grades every device / SR lights only — PASS (E2E grading real;
+   live SR word-lighting not testable headless — real-device note for the
+   founder; grading provably independent of SR).
+3. Server micro-diff — PASS (live burst probe 2026-07-17: 10/10 at classroom
+   pace, azure evidence absent from every response, limiter 429 at call #21
+   with Retry-After; CI bite tests).
+4. Economy fence — PASS (structural tests bite-verified; Buffet traced to the
+   paying surface: award prompt-ids unreachable from shadowing).
+5. Scorer parity — PASS (~30 fixtures incl. 49/50 boundary, imports the LIVE
+   server module; mutation-bite proven).
+6. Content JSONs validate + founder approval — PARTIAL: CI validation PASS;
+   founder CONTENT approval PENDING (see handoff) — shipped as labeled drafts
+   per the founder's explicit merge order.
+7. Suite + build — PASS (merged tree 1999/2000; the 1 failure is the
+   pre-existing date-fixture in the rewards-tracker lane, reproduced on clean
+   main, ticketed 2026-07-19; astro build clean, 28 pages).
+8. Rule 20 — PASS (MATCH at 390+820+1280 on the deployed preview, SHA
+   12020d2, vs the founder's Claude Design screenshots; renders in _ops).
 
 ## Prior task (complete): speakup-rewards-tracker
 
