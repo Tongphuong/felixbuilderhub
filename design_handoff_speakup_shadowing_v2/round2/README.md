@@ -57,3 +57,10 @@ Hướng thắng vòng 1 (Night Arcade) phủ đủ 8 trạng thái. Hai màn 04
 - Font nhúng: KHÔNG dùng (đã cân nhắc quyền nhúng 1 woff2 — subset tiếng Việt đủ dấu quá nặng để lặp
   trong 8 file tự chứa; hệ chữ tròn đậm system-ui đã được duyệt ở vòng 1). Nếu sau này build bằng
   webfont thật (1 lần tải cho cả app), gợi ý: Baloo 2 hoặc Fredoka (đều OFL) — quyết ở vòng build.
+
+---
+
+> **SUPERSEDED 2026-07-19.** This internally-produced set served as the working
+> prototype skin. The design of record is now the founder's own Claude Design
+> (claude.ai/design) export at `design_handoff_speakup_shadowing/` — the build
+> follows THAT bundle and its screenshots. Kept for honest lineage.
