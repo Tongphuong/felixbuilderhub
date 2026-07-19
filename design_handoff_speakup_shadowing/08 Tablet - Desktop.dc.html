@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&amp;family=Manrope:wght@700;800&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:radial-gradient(1600px 800px at 50% -10%, rgba(200,143,56,0.07), transparent 60%), #0b1c30;font-family:Inter,system-ui,sans-serif}
+a{color:#c88f38}a:hover{color:#f2cc7e}
+@keyframes micPulse{0%{box-shadow:0 10px 0 #7a4f16, 0 0 0 0 rgba(242,204,126,0.55)}70%{box-shadow:0 10px 0 #7a4f16, 0 0 0 28px rgba(242,204,126,0)}100%{box-shadow:0 10px 0 #7a4f16, 0 0 0 0 rgba(242,204,126,0)}}
+@keyframes recDot{0%,100%{opacity:1}50%{opacity:0.25}}
+@keyframes wordGlow{0%,100%{box-shadow:0 0 14px rgba(200,143,56,0.25)}50%{box-shadow:0 0 22px rgba(200,143,56,0.5)}}
+@keyframes bulbPulse{0%,100%{box-shadow:0 0 10px 2px rgba(242,204,126,0.5);transform:scale(1)}50%{box-shadow:0 0 16px 6px rgba(242,204,126,0.85);transform:scale(1.15)}}
+@keyframes minnyBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes twinkle{0%,100%{opacity:0.2;transform:scale(0.8)}50%{opacity:1;transform:scale(1)}}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div style="display:flex;flex-direction:column;gap:64px;align-items:center;padding:64px 48px 96px">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="font:600 11px ui-monospace,Menlo,monospace;color:rgba(200,183,150,0.65);letter-spacing:0.08em;text-transform:uppercase">Màn 8 · Desktop 1280 — xem + ghi âm cạnh nhau</div>
+    <div style="position:relative;isolation:isolate;width:1280px;border-radius:18px;border:1px solid rgba(200,183,150,0.25);background:#12293e;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,0.75)"><div style="position:absolute;inset:0;pointer-events:none;z-index:-1"><div style="position:absolute;top:13%;left:35%;width:3px;height:3px;border-radius:50%;background:#fff3d6;box-shadow:0 0 6px rgba(255,240,200,0.8);animation:twinkle 2.4s ease-in-out 0.00s infinite"></div><div style="position:absolute;top:16%;left:7%;width:2px;height:2px;border-radius:50%;background:#ffe9b8;animation:twinkle 2.6s ease-in-out 0.17s infinite"></div><div style="position:absolute;top:21%;left:68%;width:2px;height:2px;border-radius:50%;background:#fff3d6;animation:twinkle 2.8s ease-in-out 0.34s infinite"></div><div style="position:absolute;top:25%;left:19%;width:3px;height:3px;border-radius:50%;background:#ffe9b8;box-shadow:0 0 6px rgba(255,240,200,0.8);animation:twinkle 3.0s ease-in-out 0.51s infinite"></div><div style="position:absolute;top:33%;left:29%;width:2px;height:2px;border-radius:50%;background:#fff3d6;animation:twinkle 3.2s ease-in-out 0.68s infinite"></div><div style="position:absolute;top:47%;left:21%;width:2px;height:2px;border-radius:50%;background:#ffe9b8;animation:twinkle 3.4s ease-in-out 0.85s infinite"></div><div style="position:absolute;top:56%;left:37%;width:3px;height:3px;border-radius:50%;background:#fff3d6;box-shadow:0 0 6px rgba(255,240,200,0.8);animation:twinkle 2.4s ease-in-out 1.02s infinite"></div><div style="position:absolute;top:53%;left:17%;width:2px;height:2px;border-radius:50%;background:#ffe9b8;animation:twinkle 2.6s ease-in-out 1.19s infinite"></div><div style="position:absolute;top:65%;left:73%;width:2px;height:2px;border-radius:50%;background:#fff3d6;animation:twinkle 2.8s ease-in-out 1.36s infinite"></div><div style="position:absolute;top:73%;left:31%;width:3px;height:3px;border-radius:50%;background:#ffe9b8;box-shadow:0 0 6px rgba(255,240,200,0.8);animation:twinkle 3.0s ease-in-out 1.53s infinite"></div><div style="position:absolute;top:77%;left:11%;width:2px;height:2px;border-radius:50%;background:#fff3d6;animation:twinkle 3.2s ease-in-out 1.70s infinite"></div><div style="position:absolute;top:93%;left:43%;width:2px;height:2px;border-radius:50%;background:#ffe9b8;animation:twinkle 3.4s ease-in-out 1.87s infinite"></div><div style="position:absolute;top:3%;left:89%;width:3px;height:3px;border-radius:50%;background:#fff3d6;box-shadow:0 0 6px rgba(255,240,200,0.8);animation:twinkle 2.4s ease-in-out 2.04s infinite"></div><div style="position:absolute;top:39%;left:83%;width:2px;height:2px;border-radius:50%;background:#ffe9b8;animation:twinkle 2.6s ease-in-out 2.21s infinite"></div></div>
+      <div style="display:flex;align-items:center;gap:14px;padding:12px 18px;border-bottom:1px solid rgba(170,150,115,0.15)">
+        <div style="display:flex;gap:7px">
+          <div style="width:12px;height:12px;border-radius:50%;background:#f87171"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:#f2cc7e"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:#6fcf97"></div>
+        </div>
+        <div style="flex:1;max-width:520px;margin:0 auto;background:#143050;border:1px solid rgba(170,150,115,0.2);border-radius:8px;padding:7px 14px;font:400 13px Inter,sans-serif;color:#aa9673;text-align:center">speakup.thayphuong.vn/shadowing/chu-soi-nho-di-hoc</div>
+        <div style="width:54px"></div>
+      </div>
+      <div style="position:relative;isolation:isolate;background:#143050;padding:0 0 44px"><div style="position:absolute;inset:0;pointer-events:none;z-index:-1"><div style="position:absolute;top:9%;left:23%;width:3px;height:3px;border-radius:50%;background:#fff3d6;box-shadow:0 0 6px rgba(255,240,200,0.8);animation:twinkle 2.4s ease-in-out 0.00s infinite"></div><div style="position:absolute;top:12%;left:89%;width:2px;height:2px;border-radius:50%;background:#ffe9b8;animation:twinkle 2.6s ease-in-out 0.17s infinite"></div><div style="position:absolute;top:17%;left:56%;width:2px;height:2px;border-radius:50%;background:#fff3d6;animation:twinkle 2.8s ease-in-out 0.34s infinite"></div><div style="position:absolute;top:21%;left:7%;width:3px;height:3px;border-radius:50%;background:#ffe9b8;box-shadow:0 0 6px rgba(255,240,200,0.8);animation:twinkle 3.0s ease-in-out 0.51s infinite"></div><div style="position:absolute;top:29%;left:17%;width:2px;height:2px;border-radius:50%;background:#fff3d6;animation:twinkle 3.2s ease-in-out 0.68s infinite"></div><div style="position:absolute;top:43%;left:9%;width:2px;height:2px;border-radius:50%;background:#ffe9b8;animation:twinkle 3.4s ease-in-out 0.85s infinite"></div><div style="position:absolute;top:52%;left:25%;width:3px;height:3px;border-radius:50%;background:#fff3d6;box-shadow:0 0 6px rgba(255,240,200,0.8);animation:twinkle 2.4s ease-in-out 1.02s infinite"></div><div style="position:absolute;top:49%;left:5%;width:2px;height:2px;border-radius:50%;background:#ffe9b8;animation:twinkle 2.6s ease-in-out 1.19s infinite"></div><div style="position:absolute;top:61%;left:61%;width:2px;height:2px;border-radius:50%;background:#fff3d6;animation:twinkle 2.8s ease-in-out 1.36s infinite"></div><div style="position:absolute;top:69%;left:19%;width:3px;height:3px;border-radius:50%;background:#ffe9b8;box-shadow:0 0 6px rgba(255,240,200,0.8);animation:twinkle 3.0s ease-in-out 1.53s infinite"></div><div style="position:absolute;top:73%;left:93%;width:2px;height:2px;border-radius:50%;background:#fff3d6;animation:twinkle 3.2s ease-in-out 1.70s infinite"></div><div style="position:absolute;top:89%;left:31%;width:2px;height:2px;border-radius:50%;background:#ffe9b8;animation:twinkle 3.4s ease-in-out 1.87s infinite"></div><div style="position:absolute;top:95%;left:77%;width:3px;height:3px;border-radius:50%;background:#fff3d6;box-shadow:0 0 6px rgba(255,240,200,0.8);animation:twinkle 2.4s ease-in-out 2.04s infinite"></div><div style="position:absolute;top:35%;left:71%;width:2px;height:2px;border-radius:50%;background:#ffe9b8;animation:twinkle 2.6s ease-in-out 2.21s infinite"></div></div>
+        <div style="display:flex;align-items:center;gap:12px;padding:18px 40px;border-bottom:1px solid rgba(170,150,115,0.12)">
+          <img src="assets/logo-mark.svg" alt="" style="width:26px;height:26px">
+          <div style="font:800 18px 'Baloo 2',sans-serif;color:#f5e6c8">SpeakUp</div>
+          <div style="font:400 14px Inter,sans-serif;color:#aa9673">· Shadowing · thầy Phương</div>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <div id="shd-stars" style="background:rgba(35,72,102,0.8);border:1px solid rgba(170,150,115,0.25);border-radius:999px;padding:8px 16px;font:700 16px 'Baloo 2',sans-serif;color:#f5e6c8">⭐ 12</div>
+            <div id="shd-streak" style="background:rgba(35,72,102,0.8);border:1px solid rgba(200,143,56,0.45);border-radius:999px;padding:8px 16px;font:700 16px 'Baloo 2',sans-serif;color:#f2cc7e">🔥 3</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 430px;gap:32px;padding:32px 40px 0;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div id="shd-player-host" style="position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;border:1px solid rgba(200,143,56,0.4);box-shadow:0 0 44px rgba(200,143,56,0.12);background:repeating-linear-gradient(135deg,#1d4062 0 14px,#183654 14px 28px)">
+              <div id="shd-player-overlay" style="position:absolute;inset:0;background:rgba(6,13,20,0.5);display:flex;align-items:center;justify-content:center">
+                <div style="display:flex;gap:8px"><div style="width:11px;height:36px;border-radius:4px;background:rgba(245,230,200,0.8)"></div><div style="width:11px;height:36px;border-radius:4px;background:rgba(245,230,200,0.8)"></div></div>
+              </div>
+            </div>
+            <div id="shd-progress" style="display:flex;justify-content:center;gap:11px">
+              <div style="width:14px;height:14px;border-radius:50%;background:#f2cc7e;box-shadow:0 0 10px 2px rgba(242,204,126,0.5)"></div>
+              <div style="width:14px;height:14px;border-radius:50%;background:#f2cc7e;box-shadow:0 0 10px 2px rgba(242,204,126,0.5)"></div>
+              <div style="width:14px;height:14px;border-radius:50%;background:#f2cc7e;box-shadow:0 0 10px 2px rgba(242,204,126,0.5)"></div>
+              <div style="width:14px;height:14px;border-radius:50%;background:#f2cc7e;box-shadow:0 0 10px 2px rgba(242,204,126,0.5)"></div>
+              <div style="width:14px;height:14px;border-radius:50%;background:#f2cc7e;animation:bulbPulse 1.3s ease-in-out infinite"></div>
+              <div style="width:14px;height:14px;border-radius:50%;background:#1b3a57;border:1px solid rgba(170,150,115,0.2);box-shadow:inset 0 2px 4px rgba(0,0,0,0.5)"></div>
+              <div style="width:14px;height:14px;border-radius:50%;background:#1b3a57;border:1px solid rgba(170,150,115,0.2);box-shadow:inset 0 2px 4px rgba(0,0,0,0.5)"></div>
+              <div style="width:14px;height:14px;border-radius:50%;background:#1b3a57;border:1px solid rgba(170,150,115,0.2);box-shadow:inset 0 2px 4px rgba(0,0,0,0.5)"></div>
+              <div style="width:14px;height:14px;border-radius:50%;background:#1b3a57;border:1px solid rgba(170,150,115,0.2);box-shadow:inset 0 2px 4px rgba(0,0,0,0.5)"></div>
+              <div style="width:14px;height:14px;border-radius:50%;background:#1b3a57;border:1px solid rgba(170,150,115,0.2);box-shadow:inset 0 2px 4px rgba(0,0,0,0.5)"></div>
+              <div style="width:14px;height:14px;border-radius:50%;background:#1b3a57;border:1px solid rgba(170,150,115,0.2);box-shadow:inset 0 2px 4px rgba(0,0,0,0.5)"></div>
+              <div style="width:14px;height:14px;border-radius:50%;background:#1b3a57;border:1px solid rgba(170,150,115,0.2);box-shadow:inset 0 2px 4px rgba(0,0,0,0.5)"></div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:12px">
+              <img src="assets/minny_face.png" alt="Minny" style="width:52px;height:52px;border-radius:50%;border:2px solid rgba(200,143,56,0.5);animation:minnyBob 3s ease-in-out infinite">
+              <div style="font:400 15px Inter,sans-serif;color:#d9c7a4">Minny cũng đang xem cùng con</div>
+            </div>
+          </div>
+          <div style="background:linear-gradient(180deg,#1d4468,#1b3a57);border:1px solid rgba(200,143,56,0.4);border-radius:26px;padding:30px 28px 34px;display:flex;flex-direction:column;align-items:center;gap:22px;box-shadow:0 0 40px rgba(200,143,56,0.08)">
+            <div style="font:800 12px Manrope,sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#c88f38">Đến lượt con</div>
+            <div id="shd-words" style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px">
+              <div style="padding:10px 15px;border-radius:14px;font:700 22px 'Baloo 2',sans-serif;background:linear-gradient(180deg,#f8d98f,#dfae52);color:#132c42;border:1px solid #f2cc7e;box-shadow:0 0 18px rgba(242,204,126,0.45), 0 3px 0 #8f5f1d">The</div>
+              <div style="padding:10px 15px;border-radius:14px;font:700 22px 'Baloo 2',sans-serif;background:linear-gradient(180deg,#f8d98f,#dfae52);color:#132c42;border:1px solid #f2cc7e;box-shadow:0 0 18px rgba(242,204,126,0.45), 0 3px 0 #8f5f1d">little</div>
+              <div style="padding:10px 15px;border-radius:14px;font:700 22px 'Baloo 2',sans-serif;background:rgba(200,143,56,0.22);color:#f2cc7e;border:1px solid rgba(200,143,56,0.55);animation:wordGlow 1.4s ease-in-out infinite">wolf</div>
+              <div style="padding:10px 15px;border-radius:14px;font:700 22px 'Baloo 2',sans-serif;background:#1b3a57;color:rgba(217,199,164,0.6);border:1px solid rgba(200,183,150,0.25);box-shadow:inset 0 2px 5px rgba(0,0,0,0.35)">goes</div>
+              <div style="padding:10px 15px;border-radius:14px;font:700 22px 'Baloo 2',sans-serif;background:#1b3a57;color:rgba(217,199,164,0.6);border:1px solid rgba(200,183,150,0.25);box-shadow:inset 0 2px 5px rgba(0,0,0,0.35)">to</div>
+              <div style="padding:10px 15px;border-radius:14px;font:700 22px 'Baloo 2',sans-serif;background:#1b3a57;color:rgba(217,199,164,0.6);border:1px solid rgba(200,183,150,0.25);box-shadow:inset 0 2px 5px rgba(0,0,0,0.35)">school.</div>
+            </div>
+            <button id="shd-mic-btn" style="width:120px;height:120px;border-radius:50%;border:3px solid #8f5f1d;background:radial-gradient(circle at 35% 28%, #ffe9b0, #f2cc7e 38%, #d9a247 66%, #a9752a 100%);box-shadow:0 10px 0 #7a4f16, 0 0 0 0 rgba(242,204,126,0.55);cursor:pointer;display:flex;align-items:center;justify-content:center;animation:micPulse 1.6s ease-out infinite">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10273a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><line x1="12" y1="18" x2="12" y2="21.5"></line></svg>
+            </button>
+            <div style="display:flex;align-items:center;gap:9px;font:700 18px 'Baloo 2',sans-serif;color:#f5e6c8">
+              <span style="width:9px;height:9px;border-radius:50%;background:#f87171;box-shadow:0 0 10px rgba(248,113,113,0.7);animation:recDot 1.2s ease-in-out infinite"></span>
+              Đang ghi âm… nói cả câu nhé!
+            </div>
+            <button id="shd-replay-btn" style="min-height:46px;border-radius:999px;border:2px solid rgba(217,199,164,0.32);background:transparent;color:#d9c7a4;font:600 15px Inter,sans-serif;padding:10px 22px;cursor:pointer">🔊 Nghe lại câu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="font:600 11px ui-monospace,Menlo,monospace;color:rgba(200,183,150,0.65);letter-spacing:0.08em;text-transform:uppercase">Tablet 820 — cùng bố cục, chạm là chính</div>
+    <div style="position:relative;isolation:isolate;width:820px;border-radius:32px;border:1px solid rgba(200,183,150,0.25);background:#143050;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,0.75);padding:0 0 40px"><div style="position:absolute;inset:0;pointer-events:none;z-index:-1"><div style="position:absolute;top:20%;left:56%;width:3px;height:3px;border-radius:50%;background:#fff3d6;box-shadow:0 0 6px rgba(255,240,200,0.8);animation:twinkle 2.4s ease-in-out 0.00s infinite"></div><div style="position:absolute;top:23%;left:28%;width:2px;height:2px;border-radius:50%;background:#ffe9b8;animation:twinkle 2.6s ease-in-out 0.17s infinite"></div><div style="position:absolute;top:28%;left:89%;width:2px;height:2px;border-radius:50%;background:#fff3d6;animation:twinkle 2.8s ease-in-out 0.34s infinite"></div><div style="position:absolute;top:32%;left:40%;width:3px;height:3px;border-radius:50%;background:#ffe9b8;box-shadow:0 0 6px rgba(255,240,200,0.8);animation:twinkle 3.0s ease-in-out 0.51s infinite"></div><div style="position:absolute;top:40%;left:50%;width:2px;height:2px;border-radius:50%;background:#fff3d6;animation:twinkle 3.2s ease-in-out 0.68s infinite"></div><div style="position:absolute;top:54%;left:42%;width:2px;height:2px;border-radius:50%;background:#ffe9b8;animation:twinkle 3.4s ease-in-out 0.85s infinite"></div><div style="position:absolute;top:63%;left:58%;width:3px;height:3px;border-radius:50%;background:#fff3d6;box-shadow:0 0 6px rgba(255,240,200,0.8);animation:twinkle 2.4s ease-in-out 1.02s infinite"></div><div style="position:absolute;top:60%;left:38%;width:2px;height:2px;border-radius:50%;background:#ffe9b8;animation:twinkle 2.6s ease-in-out 1.19s infinite"></div><div style="position:absolute;top:72%;left:94%;width:2px;height:2px;border-radius:50%;background:#fff3d6;animation:twinkle 2.8s ease-in-out 1.36s infinite"></div><div style="position:absolute;top:80%;left:52%;width:3px;height:3px;border-radius:50%;background:#ffe9b8;box-shadow:0 0 6px rgba(255,240,200,0.8);animation:twinkle 3.0s ease-in-out 1.53s infinite"></div><div style="position:absolute;top:84%;left:32%;width:2px;height:2px;border-radius:50%;background:#fff3d6;animation:twinkle 3.2s ease-in-out 1.70s infinite"></div><div style="position:absolute;top:4%;left:64%;width:2px;height:2px;border-radius:50%;background:#ffe9b8;animation:twinkle 3.4s ease-in-out 1.87s infinite"></div><div style="position:absolute;top:10%;left:16%;width:3px;height:3px;border-radius:50%;background:#fff3d6;box-shadow:0 0 6px rgba(255,240,200,0.8);animation:twinkle 2.4s ease-in-out 2.04s infinite"></div><div style="position:absolute;top:46%;left:10%;width:2px;height:2px;border-radius:50%;background:#ffe9b8;animation:twinkle 2.6s ease-in-out 2.21s infinite"></div></div>
+      <div style="display:flex;align-items:center;gap:12px;padding:20px 28px;border-bottom:1px solid rgba(170,150,115,0.12)">
+        <button style="min-height:44px;border-radius:999px;border:1px solid rgba(170,150,115,0.25);background:rgba(35,72,102,0.8);color:#d9c7a4;font:600 15px Inter,sans-serif;padding:0 18px;cursor:pointer">‹ Quay lại</button>
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <div style="background:rgba(35,72,102,0.8);border:1px solid rgba(170,150,115,0.25);border-radius:999px;padding:8px 16px;font:700 16px 'Baloo 2',sans-serif;color:#f5e6c8">⭐ 12</div>
+          <div style="background:rgba(35,72,102,0.8);border:1px solid rgba(200,143,56,0.45);border-radius:999px;padding:8px 16px;font:700 16px 'Baloo 2',sans-serif;color:#f2cc7e">🔥 3</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:24px;padding:26px 28px 0;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="position:relative;aspect-ratio:16/9;border-radius:20px;overflow:hidden;border:1px solid rgba(200,143,56,0.4);box-shadow:0 0 36px rgba(200,143,56,0.12);background:repeating-linear-gradient(135deg,#1d4062 0 12px,#183654 12px 24px)">
+            <div style="position:absolute;inset:0;background:rgba(6,13,20,0.5);display:flex;align-items:center;justify-content:center">
+              <div style="display:flex;gap:7px"><div style="width:9px;height:30px;border-radius:3px;background:rgba(245,230,200,0.8)"></div><div style="width:9px;height:30px;border-radius:3px;background:rgba(245,230,200,0.8)"></div></div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:center;gap:9px">
+            <div style="width:12px;height:12px;border-radius:50%;background:#f2cc7e;box-shadow:0 0 9px 2px rgba(242,204,126,0.5)"></div>
+            <div style="width:12px;height:12px;border-radius:50%;background:#f2cc7e;box-shadow:0 0 9px 2px rgba(242,204,126,0.5)"></div>
+            <div style="width:12px;height:12px;border-radius:50%;background:#f2cc7e;box-shadow:0 0 9px 2px rgba(242,204,126,0.5)"></div>
+            <div style="width:12px;height:12px;border-radius:50%;background:#f2cc7e;box-shadow:0 0 9px 2px rgba(242,204,126,0.5)"></div>
+            <div style="width:12px;height:12px;border-radius:50%;background:#f2cc7e;animation:bulbPulse 1.3s ease-in-out infinite"></div>
+            <div style="width:12px;height:12px;border-radius:50%;background:#1b3a57;border:1px solid rgba(170,150,115,0.2);box-shadow:inset 0 2px 4px rgba(0,0,0,0.5)"></div>
+            <div style="width:12px;height:12px;border-radius:50%;background:#1b3a57;border:1px solid rgba(170,150,115,0.2);box-shadow:inset 0 2px 4px rgba(0,0,0,0.5)"></div>
+            <div style="width:12px;height:12px;border-radius:50%;background:#1b3a57;border:1px solid rgba(170,150,115,0.2);box-shadow:inset 0 2px 4px rgba(0,0,0,0.5)"></div>
+            <div style="width:12px;height:12px;border-radius:50%;background:#1b3a57;border:1px solid rgba(170,150,115,0.2);box-shadow:inset 0 2px 4px rgba(0,0,0,0.5)"></div>
+            <div style="width:12px;height:12px;border-radius:50%;background:#1b3a57;border:1px solid rgba(170,150,115,0.2);box-shadow:inset 0 2px 4px rgba(0,0,0,0.5)"></div>
+            <div style="width:12px;height:12px;border-radius:50%;background:#1b3a57;border:1px solid rgba(170,150,115,0.2);box-shadow:inset 0 2px 4px rgba(0,0,0,0.5)"></div>
+            <div style="width:12px;height:12px;border-radius:50%;background:#1b3a57;border:1px solid rgba(170,150,115,0.2);box-shadow:inset 0 2px 4px rgba(0,0,0,0.5)"></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:10px">
+            <img src="assets/minny_face.png" alt="Minny" style="width:44px;height:44px;border-radius:50%;border:2px solid rgba(200,143,56,0.5)">
+            <div style="font:400 14px Inter,sans-serif;color:#d9c7a4">Minny cũng đang xem cùng con</div>
+          </div>
+        </div>
+        <div style="background:linear-gradient(180deg,#1d4468,#1b3a57);border:1px solid rgba(200,143,56,0.4);border-radius:22px;padding:24px 20px 26px;display:flex;flex-direction:column;align-items:center;gap:18px">
+          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px">
+            <div style="padding:8px 12px;border-radius:12px;font:700 18px 'Baloo 2',sans-serif;background:linear-gradient(180deg,#f8d98f,#dfae52);color:#132c42;border:1px solid #f2cc7e;box-shadow:0 0 14px rgba(242,204,126,0.4), 0 2px 0 #8f5f1d">The</div>
+            <div style="padding:8px 12px;border-radius:12px;font:700 18px 'Baloo 2',sans-serif;background:linear-gradient(180deg,#f8d98f,#dfae52);color:#132c42;border:1px solid #f2cc7e;box-shadow:0 0 14px rgba(242,204,126,0.4), 0 2px 0 #8f5f1d">little</div>
+            <div style="padding:8px 12px;border-radius:12px;font:700 18px 'Baloo 2',sans-serif;background:rgba(200,143,56,0.22);color:#f2cc7e;border:1px solid rgba(200,143,56,0.55);animation:wordGlow 1.4s ease-in-out infinite">wolf</div>
+            <div style="padding:8px 12px;border-radius:12px;font:700 18px 'Baloo 2',sans-serif;background:#1b3a57;color:rgba(217,199,164,0.6);border:1px solid rgba(200,183,150,0.25);box-shadow:inset 0 2px 5px rgba(0,0,0,0.35)">goes</div>
+            <div style="padding:8px 12px;border-radius:12px;font:700 18px 'Baloo 2',sans-serif;background:#1b3a57;color:rgba(217,199,164,0.6);border:1px solid rgba(200,183,150,0.25);box-shadow:inset 0 2px 5px rgba(0,0,0,0.35)">to</div>
+            <div style="padding:8px 12px;border-radius:12px;font:700 18px 'Baloo 2',sans-serif;background:#1b3a57;color:rgba(217,199,164,0.6);border:1px solid rgba(200,183,150,0.25);box-shadow:inset 0 2px 5px rgba(0,0,0,0.35)">school.</div>
+          </div>
+          <button style="width:104px;height:104px;border-radius:50%;border:3px solid #8f5f1d;background:radial-gradient(circle at 35% 28%, #ffe9b0, #f2cc7e 38%, #d9a247 66%, #a9752a 100%);box-shadow:0 9px 0 #7a4f16, 0 0 0 0 rgba(242,204,126,0.55);cursor:pointer;display:flex;align-items:center;justify-content:center;animation:micPulse 1.6s ease-out infinite">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#10273a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><line x1="12" y1="18" x2="12" y2="21.5"></line></svg>
+          </button>
+          <div style="display:flex;align-items:center;gap:8px;font:700 16px 'Baloo 2',sans-serif;color:#f5e6c8;text-align:center">
+            <span style="width:8px;height:8px;border-radius:50%;background:#f87171;box-shadow:0 0 10px rgba(248,113,113,0.7);animation:recDot 1.2s ease-in-out infinite"></span>
+            Đang ghi âm… nói cả câu nhé!
+          </div>
+          <button style="min-height:44px;border-radius:999px;border:2px solid rgba(217,199,164,0.32);background:transparent;color:#d9c7a4;font:600 14px Inter,sans-serif;padding:8px 18px;cursor:pointer">🔊 Nghe lại câu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
