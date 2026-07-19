@@ -91,13 +91,10 @@
  *     cũng đang xem cùng con"), and the "🔊 Nghe lại câu" replay pill now
  *     use the boards' exact --shd-cream-soft #e8d9b8 instead of the darker
  *     --cream-muted #d9c7a4 that was substituted in undisclosed. Gap
- *     closed. NOTE: the boards also draw a round 44px back-circle "‹"
- *     nav glyph in this same #e8d9b8 on the stage header (screens
- *     02/03/04/06) — this build has never had an equivalent element (no
- *     back nav exists on the stage screen at any breakpoint, recorded
- *     nowhere above either), so there was no rule to recolor. Not
- *     fabricated here — flagged to Elon as a separate, unrecorded gap
- *     rather than guessed at.
+ *     closed (Elon ruling: flat #e8d9b8 wins where a board's own phone
+ *     frame disagrees with its tablet/desktop frames). The round 44px
+ *     back-circle "‹" nav glyph this same fix flagged as missing is now
+ *     built — see #17.
  * 16. (p6 item 2) Board 01's tablet/desktop frames draw the code card and
  *     video picker COMBINED in one view; this build keeps them as the
  *     existing sequential two-screen flow instead of merging (the real
@@ -114,6 +111,34 @@
  *     whether to merge gate+picker into one desktop view is a real product
  *     decision (it would mean previewing/bypassing the code step), not a
  *     styling call.
+ * 17. (p6 final item, Elon ruling: this was a real functional gap, not a
+ *     recolor) Added the round 44px back-circle "‹" nav button
+ *     (#shd-stage-back-btn) to the stage HUD, per boards 02/03/04/06 —
+ *     recipe copied from file 04's shipped :root{--shd-*} script (the
+ *     established source-of-truth precedent from deviation #9), since
+ *     files 02/03/06's own phone frames disagree with file 04 and with
+ *     their own tablet/desktop frames on this glyph's border/bg (same
+ *     family of drift as #15). It reuses the existing goBackToPicker()
+ *     path (teardownPlayer() + showPicker()), now with an explicit
+ *     saveSnapshot() call FIRST (teardownPlayer() nulls the session/video
+ *     saveSnapshot() reads) so stars are always current on the picker
+ *     regardless of which phase the kid exited from. Disabled (not
+ *     hidden, so the header doesn't jump) during the 'listen' subview —
+ *     the same signal switchSubview() already blurs the HUD on — and
+ *     hidden entirely on the video-complete screen, which draws no such
+ *     glyph in board 07 (the existing quiet "← Chọn video khác" link
+ *     stays that screen's only back affordance).
+ *
+ *     Adding a real mid-session exit made three previously-unreachable
+ *     async races reachable (a fetch/timeout resolving after the kid has
+ *     already left resumes into a null session) -- all three are now
+ *     guarded, mirroring the `if (session && session.phase === 'record')`
+ *     shape showWait()'s own resume timeout already used: the correct-
+ *     answer 900ms auto-advance timeout, submitRecording()'s entry (called
+ *     from stopRecording(), which can resolve after a torn-down session)
+ *     and its post-fetch resume, and startVideo()'s post-ensurePlayer()
+ *     resume (which also destroys the just-created orphan YouTube player
+ *     so the next video picked doesn't inherit it).
  *
  * v2-era items now resolved by this reskin (no longer deviations):
  *  - The picker is now the boards' 2-column poster grid (16:10 thumbnail
@@ -236,8 +261,11 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
     <!-- ============ 02-07: the stage (watch/question/record/celebrate/complete) ============ -->
     <section class="shd-screen hidden" id="shd-stage-screen">
       <div class="shd-hud" id="shd-hud">
-        <div class="shd-counter" id="shd-stars"><span class="shd-em">⭐</span><span id="shd-stars-value">0</span></div>
-        <div class="shd-counter" id="shd-streak"><span class="shd-em">🔥</span><span id="shd-streak-value">0</span></div>
+        <button class="shd-stage-back" id="shd-stage-back-btn" type="button" aria-label="Quay lại chọn phim">‹</button>
+        <div class="shd-hud-counters">
+          <div class="shd-counter" id="shd-stars"><span class="shd-em">⭐</span><span id="shd-stars-value">0</span></div>
+          <div class="shd-counter" id="shd-streak"><span class="shd-em">🔥</span><span id="shd-streak-value">0</span></div>
+        </div>
       </div>
 
       <div class="shd-stage-cols" id="shd-stage-cols">
@@ -376,6 +404,7 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
       starsCounter: document.getElementById('shd-stars'),
       streakCounter: document.getElementById('shd-streak'),
       hud: document.getElementById('shd-hud'),
+      stageBackBtn: document.getElementById('shd-stage-back-btn'),
       stageCols: document.getElementById('shd-stage-cols'),
       stagezone: document.getElementById('shd-stagezone'),
       playerHost: document.getElementById('shd-player-host'),
@@ -501,6 +530,13 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
       els.summary.classList.remove('shd-summary--calm');
       els.hud.classList.toggle('shd-blurred', listening);
       els.stageCols.classList.toggle('shd-blurred', listening);
+      // p6: the header back-circle is tappable in every stage phase EXCEPT
+      // the 1-3s grading wait (board's "Minny đang nghe…" overlay) -- same
+      // signal this function already blurs the HUD on (`listening` above),
+      // so a grade in flight can never land after the kid has already left
+      // for the picker (see the matching session-torn-down guards in
+      // submitRecording/onAnswerQuestion/startVideo).
+      els.stageBackBtn.disabled = listening;
     }
 
     function setPlayerPaused(isPaused) {
@@ -608,7 +644,21 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
       scoreLog = [];
       switchScreen('stage');
       els.backBtn.classList.add('hidden');
+      els.stageBackBtn.classList.remove('hidden');
+      els.stageBackBtn.disabled = false;
       await ensurePlayer();
+      if (!session) {
+        // p6: the kid tapped the header back button while ensurePlayer()
+        // was still awaiting the YouTube API -- teardownPlayer() already
+        // ran (and found playerCtl still null then), so the player
+        // ensurePlayer() just created above is an orphan for an abandoned
+        // session. Destroy it now so the NEXT video picked doesn't inherit
+        // a wrong-video player via ensurePlayer()'s own `if (playerCtl)
+        // return;` guard.
+        playerCtl?.destroy();
+        playerCtl = null;
+        return;
+      }
       renderStage();
     }
 
@@ -651,10 +701,17 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
     }
 
     function goBackToPicker() {
+      // p6: write the snapshot BEFORE teardownPlayer() nulls session/
+      // currentVideo (saveSnapshot() reads both) -- explicit exit-time save
+      // rather than relying on the last in-session reduce() having already
+      // called it, so stars are always current on the picker the kid lands
+      // back on, from every exit path (mid-watch, mid-question, mid-record).
+      saveSnapshot();
       teardownPlayer();
       showPicker();
     }
     els.backBtn.addEventListener('click', goBackToPicker);
+    els.stageBackBtn.addEventListener('click', goBackToPicker);
 
     function onUnplayable() {
       teardownPlayer();
@@ -813,7 +870,10 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
           if (allOptions[i].correct) b.classList.add('shd-ticket--win');
         });
         window.setTimeout(() => {
-          renderStage();
+          // p6: the kid can tap the header back button during this 900ms
+          // pause (session is torn down by then) -- same guard shape as
+          // showWait()'s own resume timeout just below.
+          if (session) renderStage();
         }, 900);
         return;
       }
@@ -1003,6 +1063,11 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
       els.nextBtn.innerHTML = '<span class="shd-watch-play" aria-hidden="true"></span> Xem trọn video';
       els.nextBtn.onclick = onWatchFullVideo;
       els.backBtn.classList.remove('hidden');
+      // Board 07 draws no round header back-circle (confirmed: absent from
+      // its inline styles, unlike boards 02/03/04/06) -- the existing quiet
+      // "← Chọn video khác" text link (els.backBtn above) is this screen's
+      // only back affordance.
+      els.stageBackBtn.classList.add('hidden');
     }
 
     function onWatchFullVideo() {
@@ -1138,6 +1203,11 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
       }
       rec.stream?.getTracks().forEach((t) => t.stop());
       if (!blob || blob.size === 0) return;
+      // p6: the header back button can teardownPlayer() (nulls session)
+      // while rec.recorder.stop() above was still resolving -- submitRecording
+      // -> currentSegment() reads session.video unconditionally as its very
+      // first statement, so this must be checked before calling it at all.
+      if (!session) return;
       await submitRecording(blob);
     }
 
@@ -1150,6 +1220,7 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
     // back to 3s only if the header is missing/unparseable).
     async function submitRecording(blob) {
       const seg = currentSegment();
+      const videoAtStart = currentVideo; // p6: detect an exit mid-request below
       showListening();
       const formData = new FormData();
       formData.append('access_code', accessCode);
@@ -1170,6 +1241,14 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
         res = null;
         data = null;
       }
+
+      // p6: the header back button is tappable during 'record' (this
+      // request is already in flight by the time it becomes 'listen' and
+      // gets disabled -- see switchSubview) -- teardownPlayer() nulls
+      // session/currentVideo on exit, so a grade must never resume onto an
+      // unmounted stage screen (showWait/showCelebrate/showGiveUp all
+      // assume a live session).
+      if (!session || currentVideo !== videoAtStart) return;
 
       // A totally-thrown fetch (res still null -- network dropped mid-
       // request) is exactly the same kind of outage as a 429 or a

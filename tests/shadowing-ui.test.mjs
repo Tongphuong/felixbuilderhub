@@ -260,7 +260,10 @@ test('wrong-reveal is a held state: the correct-answer branch still auto-advance
   // its own short timer, matching the board's "no CTA" correct-selected frame).
   const onAnswerFn = page.match(/function onAnswerQuestion\([\s\S]*?\n {4}}\n/);
   assert.ok(onAnswerFn, 'expected to locate onAnswerQuestion()');
-  assert.match(onAnswerFn[0], /if \(isCorrect\) {[\s\S]*?window\.setTimeout\(\(\) => {\s*renderStage\(\);\s*}, 900\);\s*return;\s*}/, 'expected the correct branch to keep the short auto-advance timer, unchanged');
+  // (p6) window.setTimeout's body now guards `if (session) renderStage();`
+  // -- the header back-circle button can tear down the session during this
+  // 900ms pause, so the callback must not resume into a null session.
+  assert.match(onAnswerFn[0], /if \(isCorrect\) {[\s\S]*?window\.setTimeout\(\(\) => {[\s\S]*?if \(session\) renderStage\(\);[\s\S]*?}, 900\);\s*return;\s*}/, 'expected the correct branch to keep the short auto-advance timer (now session-guarded)');
 });
 
 test('no CSS rule styles .shd-ticket with red — the wrong-reveal states use gold/dim treatments only', () => {
@@ -519,4 +522,70 @@ test('the boards\' exact --shd-cream-soft (#e8d9b8) is defined and used on the g
   const replayMatch = shdSection.match(/\n\.shd-replay\s*{([^}]*)}/);
   assert.ok(replayMatch, 'expected a .shd-replay rule');
   assert.ok(/var\(--shd-cream-soft\)/.test(replayMatch[1]), 'expected .shd-replay ("🔊 Nghe lại câu") to use var(--shd-cream-soft), not --cream-muted');
+});
+
+// ---------------------------------------------------------------------------
+// p6 final item: the stage-header round back-circle button (boards 02/03/04/06)
+// ---------------------------------------------------------------------------
+
+test('the round 44px back-circle button exists in the stage HUD with the boards\' "‹" glyph, aria-label, and --shd-cream-soft color', () => {
+  const hudMatch = page.match(/<div class="shd-hud" id="shd-hud">[\s\S]*?<\/div>\s*<\/div>/);
+  assert.ok(hudMatch, 'expected to locate the #shd-hud block');
+  assert.match(hudMatch[0], /<button class="shd-stage-back" id="shd-stage-back-btn" type="button" aria-label="[^"]+">‹<\/button>/, 'expected #shd-stage-back-btn as a round back button carrying the literal "‹" glyph, inside #shd-hud');
+
+  const marker = '===== Shadowing (shd-) =====';
+  const shdSection = css.slice(css.indexOf(marker));
+  const backRuleMatch = shdSection.match(/\n\.shd-stage-back\s*{([^}]*)}/);
+  assert.ok(backRuleMatch, 'expected a .shd-stage-back rule');
+  assert.ok(/width:\s*44px/.test(backRuleMatch[1]) && /height:\s*44px/.test(backRuleMatch[1]), 'expected the back-circle to be 44px (kid-facing touch-target minimum)');
+  assert.ok(/border-radius:\s*50%/.test(backRuleMatch[1]), 'expected the back-circle to be round, per the boards');
+  assert.ok(/var\(--shd-cream-soft\)/.test(backRuleMatch[1]), 'expected the "‹" glyph to use var(--shd-cream-soft), matching file 04\'s shipped recipe');
+});
+
+test('the back-circle is disabled during the grading-wait ("listen") subview, the same signal that already blurs the HUD', () => {
+  const switchSubviewMatch = page.match(/function switchSubview\(name\)\s*{[\s\S]*?\n {4}}\n/);
+  assert.ok(switchSubviewMatch, 'expected to locate switchSubview()');
+  const body = switchSubviewMatch[0];
+  assert.match(body, /els\.hud\.classList\.toggle\('shd-blurred',\s*listening\)/, 'expected the existing HUD-blur-during-listen line (the pattern to match)');
+  assert.match(body, /els\.stageBackBtn\.disabled\s*=\s*listening/, 'expected els.stageBackBtn.disabled to be driven by the same `listening` flag as the HUD blur');
+});
+
+test('the back-circle is wired to goBackToPicker(), which saves the snapshot BEFORE teardownPlayer() nulls the session it reads', () => {
+  assert.match(page, /els\.stageBackBtn\.addEventListener\('click',\s*goBackToPicker\)/, 'expected #shd-stage-back-btn to reuse the existing goBackToPicker() exit path');
+
+  const fnMatch = page.match(/function goBackToPicker\(\)\s*{[\s\S]*?\n {4}}\n/);
+  assert.ok(fnMatch, 'expected to locate goBackToPicker()');
+  const body = fnMatch[0];
+  const saveIdx = body.indexOf('saveSnapshot();');
+  const teardownIdx = body.indexOf('teardownPlayer();');
+  assert.ok(saveIdx !== -1, 'expected goBackToPicker() to call saveSnapshot()');
+  assert.ok(teardownIdx !== -1 && saveIdx < teardownIdx, 'expected saveSnapshot() BEFORE teardownPlayer() -- teardownPlayer() nulls session/currentVideo, which saveSnapshot() reads');
+});
+
+test('showComplete() hides the back-circle (board 07 draws no such glyph); startVideo() resets it visible+enabled for a fresh video', () => {
+  const completeMatch = page.match(/function showComplete\(\)\s*{[\s\S]*?\n {4}}\n/);
+  assert.ok(completeMatch, 'expected to locate showComplete()');
+  assert.match(completeMatch[0], /els\.stageBackBtn\.classList\.add\('hidden'\)/, 'expected showComplete() to hide the round back-circle');
+
+  const startMatch = page.match(/async function startVideo\(video\)\s*{[\s\S]*?\n {4}}\n/);
+  assert.ok(startMatch, 'expected to locate startVideo()');
+  assert.match(startMatch[0], /els\.stageBackBtn\.classList\.remove\('hidden'\)/, 'expected startVideo() to unhide the round back-circle for a fresh video');
+  assert.match(startMatch[0], /els\.stageBackBtn\.disabled\s*=\s*false/, 'expected startVideo() to re-enable the round back-circle for a fresh video');
+});
+
+test('the three async race points a mid-session back-tap makes reachable all check for a torn-down session before touching it (never lands a grade on an unmounted screen)', () => {
+  const correctAdvanceMatch = page.match(/if \(isCorrect\) {[\s\S]*?window\.setTimeout\(\(\) => {[\s\S]*?}, 900\);/);
+  assert.ok(correctAdvanceMatch, 'expected to locate the correct-answer 900ms auto-advance timeout');
+  assert.match(correctAdvanceMatch[0], /if \(session\) renderStage\(\);/, 'expected the 900ms auto-advance timeout to check session before calling renderStage(), mirroring showWait()\'s own resume guard');
+
+  const stopRecordingMatch = page.match(/async function stopRecording\(\)\s*{[\s\S]*?\n {4}}\n/);
+  assert.ok(stopRecordingMatch, 'expected to locate stopRecording()');
+  const stopBody = stopRecordingMatch[0];
+  const sessionGuardIdx = stopBody.lastIndexOf('if (!session) return;');
+  const submitCallIdx = stopBody.indexOf('await submitRecording(blob);');
+  assert.ok(sessionGuardIdx !== -1 && submitCallIdx !== -1 && sessionGuardIdx < submitCallIdx, 'expected stopRecording() to check session is still live BEFORE calling submitRecording() (which reads session unconditionally as its first statement)');
+
+  const submitMatch = page.match(/async function submitRecording\(blob\)\s*{[\s\S]*$/);
+  assert.ok(submitMatch, 'expected to locate submitRecording()');
+  assert.match(submitMatch[0], /if \(!session \|\| currentVideo !== videoAtStart\) return;/, 'expected submitRecording() to bail out if the kid exited while its fetch was in flight, before showWait/showCelebrate/showGiveUp can run on a null session');
 });
