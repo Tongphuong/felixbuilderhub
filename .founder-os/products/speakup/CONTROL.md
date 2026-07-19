@@ -253,7 +253,7 @@ assigns, commits, merges, deploys, or spends.
   ability, and re-check with Phương before tuning any threshold. WATCH:
   Workers AI neuron usage — if shadowing pushes past the included allocation,
   bring numbers to Phương before any degrade.
-- Design self-verification (UPDATED 2026-07-19, new design of record): **rule
+- Design self-verification: (updated 2026-07-19, new design of record) **rule
   20 MATCH on the DEPLOYED preview at 390 + 820 + 1280** (SHA 12020d2) vs the
   founder's real Claude Design export (`design_handoff_speakup_shadowing/`
   screenshots/01–08) — record/karaoke, picker with app header + 3-col grid,
