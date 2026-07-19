@@ -25,3 +25,21 @@ test('trivia remains isolated from the active activity instructions', () => {
   const commandBody = lessonPage.slice(commandStart, commandEnd);
   assert.doesNotMatch(commandBody, /trivia_vi/);
 });
+
+// R2L Rewards Redesign (SPEC_R2L_REWARDS_REDESIGN.md, approved 2026-07-18):
+// _r2lShowCompletionAfterTrivia is the single terminal completion path for
+// both book lessons and standard packs — it must read the new
+// rewards.diamonds field (submit-read2lead-lesson.js response) and show 💎,
+// not the retired rewards.coins/🪙 xu wording.
+test('lesson completion reads rewards.diamonds (falling back to legacy coins) and celebrates with 💎', () => {
+  const start = lessonPage.indexOf('function _r2lShowCompletionAfterTrivia');
+  const end = lessonPage.indexOf("qs('#trivia-reveal-continue')");
+  assert.ok(start > -1 && end > start);
+  const body = lessonPage.slice(start, end);
+  assert.match(body, /const rewardDiamonds = Number\(rewards\.diamonds \?\? rewards\.coins \?\? 0\);/);
+  assert.match(body, /Con nhận 💎 \$\{rewardDiamonds\} và ⭐ \$\{rewards\.xp \|\| 0\} XP cho nhiệm vụ này\./);
+  assert.match(body, /playSfx\(SFX\.diamondChime, \{ volume: 0\.6 \}\);/);
+  assert.match(body, /showDiamondTicker\(rewardDiamonds, '#completion-card'\);/);
+  assert.doesNotMatch(body, /🪙/);
+  assert.doesNotMatch(body, /playSynthTone\?\.\('coin'/);
+});

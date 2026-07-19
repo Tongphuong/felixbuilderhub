@@ -3,7 +3,12 @@ import type { RankLadderView } from './rank-ladder-ui';
 type RankUpPayload = { changed: boolean; from_label: string; to_label: string; tier_changed: boolean };
 type RankUpContext = {
   kidName?: string;
-  rewards?: { coins?: number; avatars?: number; unlock?: string };
+  // R2L Rewards Redesign: coins → diamonds (matching Mark's backend field
+  // rename). The DOM hookup key stays 'coins' below (see setReward) because
+  // RankUpModal.astro's data-rank-reward="coins" attribute + its 🪙/"xu
+  // thưởng" markup are outside this file's authorized edit set — only the
+  // VALUE now comes from the renamed field. Flagged in the packet report.
+  rewards?: { diamonds?: number; avatars?: number; unlock?: string };
   shareText?: string;
   onDismiss?: () => void;
 };
@@ -104,7 +109,7 @@ export function showRankUpModal(rankUp: RankUpPayload, ladder?: RankLadderView, 
   setRankPill(document.getElementById('rank-up-old'), rankUp.from_label);
   setRankPill(document.getElementById('rank-up-new'), rankUp.to_label);
   const hasRewards = [
-    setReward('coins', context.rewards?.coins),
+    setReward('coins', context.rewards?.diamonds),
     setReward('avatars', context.rewards?.avatars),
     setReward('unlock', context.rewards?.unlock),
   ].some(Boolean);

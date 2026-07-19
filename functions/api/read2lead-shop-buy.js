@@ -3,7 +3,6 @@ import {
   BASIC_MONSTER_CONFIG,
   MONSTER_MANIFEST,
   MONSTER_SLOTS,
-  computeRankLadder,
   loadProgressState,
   progressKey,
   progressNamespace,
@@ -11,13 +10,15 @@ import {
 } from './_read2lead-v2-state.js';
 import { executeBuy, getPartRarity, hydrateShopState } from './_read2lead-shop-v2.js';
 
+// R2L-REWARDS-REDESIGN (2026-07-18): the tier_index < 1 rank gate is REMOVED —
+// below Silver the shop is accessible at normal diamond prices; at Silver
+// (executeBuy's isSilverOrAbove) everything is free. See spec §3.2/§5.
 const ERROR_MESSAGES = {
   already_owned: 'Con da so huu phan nay roi.',
-  insufficient_coins: 'Chua du xu. Con hoc them de tich luy nhe!',
+  insufficient_diamonds: 'Chua du 💎. Con hoc them de tich luy nhe!',
   common_parts_are_free: 'Phan nay mien phi, khong can mua.',
   missing_code: 'Thieu ma hoc sinh.',
   missing_part_id: 'Thieu ma phan trang bi.',
-  rank_too_low: 'Con đạt hạng Bạc rồi mới mua được nhé.',
 };
 
 export async function onRequestPost(context) {
@@ -55,12 +56,6 @@ export async function onRequestPost(context) {
   }
 
   const state = await loadProgressState(env, accessCode, codeData);
-  if (computeRankLadder(state).tier_index < 1) {
-    return json(
-      { ok: false, error: 'rank_too_low', message: ERROR_MESSAGES.rank_too_low },
-      403,
-    );
-  }
 
   const slot = MONSTER_SLOTS.find((candidate) =>
     (MONSTER_MANIFEST[candidate] || []).some((part) => part.id === partId));
@@ -129,7 +124,7 @@ export async function onRequestPost(context) {
   return json({
     ok: true,
     reward: result.reward,
-    coins: saved.coins || 0,
+    diamonds: saved.diamonds || 0,
     unlocked_parts: saved.unlocked_parts || result.state.unlocked_parts || [],
     avatar_stage: saved.avatar_stage,
     avatar: saved.avatar,

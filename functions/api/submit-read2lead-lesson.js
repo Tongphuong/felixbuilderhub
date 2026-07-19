@@ -15,6 +15,7 @@ import {
   loadProgressState,
   PASS_THRESHOLD_PERCENT,
   recordComboBonus,
+  recordPageDiamondsPaid,
   vietnamDateKey,
   XP_PENALTY_BELOW_THRESHOLD,
   XP_PER_PASSED_PACK,
@@ -133,6 +134,29 @@ export function isBookLessonContext(context) {
     && Array.isArray(context.activities)
     && context.activities.some((activity) => activity?.type === 'read_aloud')
   );
+}
+
+/**
+ * R2L-REWARDS-REDESIGN (Buffet fix round, 2026-07-18, spec §11.7): page
+ * diamonds pay per DISTINCT PAGE with >=1 passed read unit, not per chunk /
+ * page_read — a v3 long page can carry 2 page_reads, a legacy v2 page up to
+ * 9 shadow_chunks, and paying per-unit overpaid those pages up to 9x. This
+ * deliberately mirrors Steve's shipped celebration gate
+ * (page_reads.some(status === 'passed')) so the on-screen "+5💎" and the
+ * actual balance always agree on the same truth. Reads page_reads (v3)
+ * first, falling back to shadow_chunks (v2) — same precedence
+ * summarizeBookFlow() in read2lead-book-flow.mjs already uses. Called only
+ * after bookFlowValidation.ok === true, so book_reader.pages is already
+ * structurally validated (right page count, right unit ids/coverage).
+ */
+export function countPagesWithPassedReadUnit(bookReader) {
+  const pages = Array.isArray(bookReader?.pages) ? bookReader.pages : [];
+  return pages.filter((page) => {
+    const units = Array.isArray(page?.page_reads)
+      ? page.page_reads
+      : (Array.isArray(page?.shadow_chunks) ? page.shadow_chunks : []);
+    return units.some((unit) => unit?.status === 'passed');
+  }).length;
 }
 
 function withCompletedBook(codeData, lessonContext) {
@@ -281,9 +305,27 @@ export async function submitV2Lesson({
     && speakingGate.passed
     && scorePercent >= PASS_THRESHOLD_PERCENT;
   const graded = gradeRewards(scorePercent);
-  const rewardsEarned = passed
-    ? { coins: graded.coins, xp: graded.xp }
-    : { coins: 0, xp: 0 };
+  // R2L-REWARDS-REDESIGN: book lessons pay 5💎 per PAGE with a passed read
+  // unit (countPagesWithPassedReadUnit, NOT bookFlowValidation.summary's
+  // per-unit chunks_passed — that overpays multi-unit pages), ALONGSIDE the
+  // grade-based diamond reward — spec §5 Phase 2 / §11.7.
+  //
+  // Founder ruling (2026-07-18): pageDiamonds are decoupled from the overall
+  // `passed` gate — the frontend celebrates "+5💎" per page in real time as
+  // pages are read, so a book that fails its overall average must still pay
+  // out for the individual pages it DID pass. Only the grade-based bonus
+  // (S/A/B) stays gated on `passed`. See applyPackPenalty's diamondsEarned
+  // param for how this lands when the pack doesn't pass.
+  const pageDiamonds = isBookFlowV2
+    ? countPagesWithPassedReadUnit(submittedAnswers.book_reader) * 5
+    : 0;
+  // Naive total — corrected below (passed branch only) to reflect what
+  // applyPackCompletion actually credits once already-paid page-diamonds
+  // (from an earlier failed/no-reward attempt at this exact pack_id) are
+  // subtracted. See page_diamonds_paid / diamonds_credited.
+  let rewardsEarned = passed
+    ? { diamonds: graded.diamonds + pageDiamonds, xp: graded.xp }
+    : { diamonds: pageDiamonds, xp: 0 };
   const attempt = {
     schema_version: 2,
     submitted_at: submittedAt,
@@ -331,6 +373,7 @@ export async function submitV2Lesson({
       scorePercent,
       correctCount,
       totalCount,
+      pageDiamonds,
     });
   }
 
@@ -340,6 +383,7 @@ export async function submitV2Lesson({
       packId: currentPack.pack_id,
       completedAt: submittedAt,
       penaltyXp: XP_PENALTY_BELOW_THRESHOLD,
+      diamondsEarned: pageDiamonds,
     });
     const savedProgressState = await saveProgressState(env, accessCode, penaltyResult.state);
     const updatedPack = {
@@ -377,11 +421,21 @@ export async function submitV2Lesson({
   const stateResult = applyPackCompletion(progressState, {
     packId: currentPack.pack_id,
     completedAt: submittedAt,
-    rewardsEarned,
+    // Grade-only here — pageDiamonds goes in its own param so
+    // applyPackCompletion can subtract what was already paid via an earlier
+    // failed/no-reward attempt at this exact pack_id (page_diamonds_paid).
+    rewardsEarned: { diamonds: graded.diamonds, xp: graded.xp },
+    pageDiamonds,
     activityResults,
     scorePercent,
     learningMetric,
   });
+  // Correct rewardsEarned (and the attempt record already built with the
+  // naive pre-computed value) to reflect what was ACTUALLY credited —
+  // applyPackCompletion may have paid less pageDiamonds than the naive
+  // total if some of it was already paid on an earlier attempt.
+  rewardsEarned = { diamonds: stateResult.diamonds_credited, xp: graded.xp };
+  attempt.rewards_earned = rewardsEarned;
   const rankAward = stateResult.already_counted
     ? { state: stateResult.state, awarded: 0 }
     : awardRankPoints(stateResult.state, {
@@ -600,9 +654,34 @@ async function finalizeWithoutReward({
   scorePercent,
   correctCount,
   totalCount,
+  pageDiamonds = 0,
 }) {
   const progressState = await loadProgressState(env, accessCode, codeData);
-  const rewardsEarned = { coins: 0, xp: 0 };
+  // R2L-REWARDS-REDESIGN founder ruling (2026-07-18): page-based diamonds are
+  // decoupled from the pass gate — "completed without reward" (mic-skip
+  // partway through a book) still pays for the individual pages that DID
+  // pass before the skip. Standard packs have pageDiamonds=0, so this is a
+  // no-op for them. Only the book pages themselves are saved here — this
+  // path intentionally does NOT run the full pack-completion or pack-
+  // failure reward flows (no XP, no pack_history entry, no completed/
+  // penalized tracking) — same as before this change.
+  const rewardsEarned = { diamonds: numberOrZero(pageDiamonds), xp: 0 };
+  const savedProgressState = rewardsEarned.diamonds > 0
+    ? await saveProgressState(env, accessCode, {
+        ...progressState,
+        diamonds: numberOrZero(progressState.diamonds) + rewardsEarned.diamonds,
+        // This pack_id can never reach a full pack-completion again (this
+        // path marks the pack reviewed, terminal — no retry possible), but
+        // the ledger stays the single source of truth for page-diamonds
+        // paid via a non-completion path, matching the penalty flow's
+        // bookkeeping.
+        page_diamonds_paid: recordPageDiamondsPaid(
+          progressState.page_diamonds_paid,
+          currentPack.pack_id,
+          rewardsEarned.diamonds,
+        ),
+      })
+    : progressState;
   const reviewedPack = {
     ...withoutSessionCheckpoint(currentPack),
     status: 'reviewed_pass_web_v2',
@@ -642,7 +721,7 @@ async function finalizeWithoutReward({
     correct_count: correctCount,
     total_count: totalCount,
     rewards_earned: rewardsEarned,
-    read2lead_state: publicProgressState(progressState),
+    read2lead_state: publicProgressState(savedProgressState),
     message: 'Bai da ket thuc khong thuong. Con co the tao bai moi.',
     review: reviewedPack.review_summary,
     progress: publicProgress(nextProgress),
@@ -680,7 +759,7 @@ async function respondFromCachedAttempt({
     score_percent: attempt?.score_percent ?? null,
     correct_count: attempt?.correct_count ?? null,
     total_count: attempt?.total_count ?? null,
-    rewards_earned: attempt?.rewards_earned || { coins: 0, xp: 0 },
+    rewards_earned: attempt?.rewards_earned || { diamonds: 0, xp: 0 },
     message: passed
       ? 'Con da hoan thanh nhiem vu V2 hom nay.'
       : completedWithoutReward

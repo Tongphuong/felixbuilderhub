@@ -6,16 +6,18 @@ export const CHEST_ODDS = {
   epic: 0.05,
 };
 
+// R2L-REWARDS-REDESIGN (2026-07-18): rewards converted coins -> diamonds at
+// 1💎 = 2🪙 (floor), per SPEC_R2L_REWARDS_REDESIGN.md §3.3/§5.
 export const CHEST_REWARDS = {
-  common: { coins_min: 10, coins_max: 20, part_pool: null },
-  rare: { coins_min: 25, coins_max: 40, part_pool: 'rare_or_higher' },
-  epic: { coins_min: 50, coins_max: 50, part_pool: 'rare_only' },
+  common: { diamonds_min: 5, diamonds_max: 10, part_pool: null },
+  rare: { diamonds_min: 12, diamonds_max: 20, part_pool: 'rare_or_higher' },
+  epic: { diamonds_min: 25, diamonds_max: 25, part_pool: 'rare_only' },
 };
 
 export const DUPLICATE_CONVERSION = {
-  common: 18,
-  rare: 30,
-  epic: 60,
+  common: 9,
+  rare: 15,
+  epic: 30,
 };
 
 /**
@@ -78,10 +80,10 @@ export function rollRarity(rngFn = Math.random) {
 
 export function buildReward(rarity, rngFn = Math.random) {
   const def = CHEST_REWARDS[rarity];
-  if (!def) return { coins: 0, part_id: null };
-  const coins = randInt(def.coins_min, def.coins_max, rngFn);
+  if (!def) return { diamonds: 0, part_id: null };
+  const diamonds = randInt(def.diamonds_min, def.diamonds_max, rngFn);
   const part_id = def.part_pool ? pickPartFromPool(def.part_pool, rngFn) : null;
-  return { coins, part_id };
+  return { diamonds, part_id };
 }
 
 export function rollChest(rngFn = Math.random) {
@@ -98,7 +100,7 @@ export function autoConvertDuplicate(chest, ownedPartIds) {
   const bonus = DUPLICATE_CONVERSION[chest.rarity] || 0;
   return {
     rarity: chest.rarity,
-    reward: { coins: chest.reward.coins + bonus, part_id: null },
+    reward: { diamonds: chest.reward.diamonds + bonus, part_id: null },
     duplicate: true,
   };
 }
@@ -107,9 +109,9 @@ export function chestPreviewText(rarity) {
   const def = CHEST_REWARDS[rarity];
   if (!def) return '';
   const label = rarityLabelVi(rarity);
-  const range = def.coins_min === def.coins_max
-    ? `${def.coins_min}`
-    : `${def.coins_min}–${def.coins_max}`;
+  const range = def.diamonds_min === def.diamonds_max
+    ? `${def.diamonds_min}`
+    : `${def.diamonds_min}–${def.diamonds_max}`;
   const part = def.part_pool ? ' + 1 phần thưởng' : '';
-  return `Hộp ${label}: ${range} xu${part}.`;
+  return `Hộp ${label}: ${range}💎${part}.`;
 }

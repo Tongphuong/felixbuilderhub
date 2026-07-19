@@ -61,7 +61,7 @@ async function payload(response) {
   return response.json();
 }
 
-test('POST /read2lead-quest-claim claims complete quest and adds coins', async () => {
+test('POST /read2lead-quest-claim claims complete quest and adds diamonds', async () => {
   const state = stateWithQuests(['q1', 'q3', 'q5'], { q1: 1 });
   const kv = createKv({ [`progress:${CODE}`]: state });
   const response = await claimQuest({
@@ -73,8 +73,8 @@ test('POST /read2lead-quest-claim claims complete quest and adds coins', async (
 
   assert.equal(response.status, 200);
   assert.equal(body.ok, true);
-  assert.equal(body.reward.coins, 10);
-  assert.equal(body.coins, state.coins + 10);
+  assert.equal(body.reward.diamonds, 5);
+  assert.equal(body.diamonds, state.diamonds + 5);
   assert.equal(saved.daily_quests.claimed.q1, true);
 });
 
@@ -115,13 +115,13 @@ test('POST /read2lead-quest-claim already claimed quest returns already_claimed'
   assert.equal(body.error, 'already_claimed');
 });
 
-test('POST /read2lead-chest-open opens pending chest and adds coins plus part', async () => {
+test('POST /read2lead-chest-open opens pending chest and adds diamonds plus part', async () => {
   const state = {
     ...stateWithQuests(['q1', 'q3', 'q5']),
-    coins: 4,
+    diamonds: 4,
     pending_chest: {
       rarity: 'rare',
-      reward: { coins: 30, part_id: 'part-rare' },
+      reward: { diamonds: 15, part_id: 'part-rare' },
       duplicate: false,
       awarded_at: new Date().toISOString(),
     },
@@ -135,7 +135,7 @@ test('POST /read2lead-chest-open opens pending chest and adds coins plus part', 
   const saved = JSON.parse(kv.store.get(`progress:${CODE}`));
 
   assert.equal(response.status, 200);
-  assert.equal(body.coins, 34);
+  assert.equal(body.diamonds, 19);
   assert.deepEqual(body.unlocked_parts, ['part-rare']);
   assert.equal(saved.pending_chest, null);
   assert.equal(saved.daily_quests.progress.q5, 1);
@@ -153,10 +153,10 @@ test('POST /read2lead-chest-open with no pending chest returns 400', async () =>
   assert.equal(body.error, 'no_pending_chest');
 });
 
-test('POST /read2lead-daily-chest-claim adds streak-scaled coins', async () => {
+test('POST /read2lead-daily-chest-claim adds streak-scaled diamonds', async () => {
   const state = {
     ...stateWithQuests(['q1', 'q3', 'q5']),
-    coins: 2,
+    diamonds: 2,
     streak_days: 4,
   };
   const kv = createKv({ [`progress:${CODE}`]: state });
@@ -168,8 +168,8 @@ test('POST /read2lead-daily-chest-claim adds streak-scaled coins', async () => {
   const saved = JSON.parse(kv.store.get(`progress:${CODE}`));
 
   assert.equal(response.status, 200);
-  assert.equal(body.reward.coins, 13);
-  assert.equal(body.coins, 15);
+  assert.equal(body.reward.diamonds, 7);
+  assert.equal(body.diamonds, 9);
   assert.equal(body.preview.available, false);
   assert.equal(saved.daily_login_chest.last_claim_date, DATE_KEY);
 });

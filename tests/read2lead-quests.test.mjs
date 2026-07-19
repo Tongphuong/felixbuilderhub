@@ -24,7 +24,7 @@ test('QUEST_DEFS has exactly 8 quests with valid shape', () => {
     assert.ok(def.label_vi.length > 0);
     assert.equal(typeof def.target, 'number');
     assert.ok(def.target >= 1);
-    assert.equal(typeof def.reward.coins, 'number');
+    assert.equal(typeof def.reward.diamonds, 'number');
     assert.equal(typeof def.reward.rp, 'number');
     assert.equal(typeof def.trigger, 'string');
   }
@@ -75,14 +75,14 @@ test('questCompleted returns true at target', () => {
 
 test('questReward returns shallow copy (cannot mutate def)', () => {
   const reward = questReward('q2');
-  assert.deepEqual(reward, { coins: 15, rp: 1 });
-  reward.coins = 999;
+  assert.deepEqual(reward, { diamonds: 7, rp: 1 });
+  reward.diamonds = 999;
   reward.rp = 999;
-  assert.deepEqual(QUEST_DEFS.q2.reward, { coins: 15, rp: 1 });
+  assert.deepEqual(QUEST_DEFS.q2.reward, { diamonds: 7, rp: 1 });
 });
 
 test('questReward returns zeros for unknown quest', () => {
-  assert.deepEqual(questReward('q99'), { coins: 0, rp: 0 });
+  assert.deepEqual(questReward('q99'), { diamonds: 0, rp: 0 });
 });
 
 test('questDeltasForEvent pack_passed increments q1+q6 if active', () => {

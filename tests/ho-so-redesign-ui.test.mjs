@@ -52,6 +52,18 @@ test('parent redesign keeps real data and persistence interactions', () => {
   assert.match(parent, /data-ho-so-print/);
 });
 
+// R2L Rewards Redesign (founder decision #5): coins no longer exist — the
+// parent stats view drops the separate "🪙 Xu thưởng" card and states the
+// diamond card's sources/uses plainly and truthfully (no celebration copy;
+// parents read this).
+test('parent stats view has no coin card — diamonds state their sources and uses plainly', () => {
+  assert.doesNotMatch(parent, /🪙/);
+  assert.doesNotMatch(parent, /Xu thưởng/);
+  assert.doesNotMatch(parent, /\bxu\b/);
+  assert.match(parent, /Kim cương/);
+  assert.match(parent, /Kiếm khi đọc bài & buổi coaching, dùng để trang trí quái vật & đổi quà thật/);
+});
+
 test('rank modal keeps lesson contract and adds truthful optional context', () => {
   for (const id of ['rank-up-modal', 'rank-up-title', 'rank-up-label', 'rank-up-minny-copy', 'rank-up-close']) {
     assert.match(modal, new RegExp(`id="${id}"`));
@@ -59,5 +71,10 @@ test('rank modal keeps lesson contract and adds truthful optional context', () =
   assert.match(modalController, /showRankUpModal\(rankUp: RankUpPayload, ladder\?: RankLadderView, context: RankUpContext = \{\}\)/);
   assert.match(modalController, /navigator\.share/);
   assert.match(modalController, /navigator\.clipboard/);
-  assert.match(modalController, /rewards\?\.coins/);
+  // R2L Rewards Redesign: the rank-up reward now sources rewards.diamonds
+  // (Mark's renamed backend field) — the DOM hookup key stays 'coins'
+  // (RankUpModal.astro's data-rank-reward attribute is outside this packet's
+  // file set), only the value field changed.
+  assert.match(modalController, /rewards\?\.diamonds/);
+  assert.doesNotMatch(modalController, /rewards\?\.coins/);
 });

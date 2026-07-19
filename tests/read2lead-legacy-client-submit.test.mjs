@@ -114,7 +114,7 @@ test('a real 4-type client submit with mic-skip completes without reward', async
   assert.equal(payload.completed_without_reward, true);
   assert.equal(payload.next_pack_unlocked, true);
   assert.equal(payload.current_pack.status, 'reviewed_pass_web_v2');
-  assert.deepEqual(payload.rewards_earned, { coins: 0, xp: 0 });
+  assert.deepEqual(payload.rewards_earned, { diamonds: 0, xp: 0 });
   assert.equal(fixture.store.has(progressKey(ACCESS_CODE)), false, 'no reward state may be created');
 });
 

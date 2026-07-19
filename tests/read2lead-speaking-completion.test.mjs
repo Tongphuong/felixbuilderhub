@@ -151,9 +151,14 @@ test('mic skip unlocks a new pack while preserving every reward state', async ()
   assert.equal(payload.completed_without_reward, true);
   assert.equal(payload.passed, false);
   assert.equal(payload.next_pack_unlocked, true);
-  assert.deepEqual(payload.rewards_earned, { coins: 0, xp: 0 });
+  assert.deepEqual(payload.rewards_earned, { diamonds: 0, xp: 0 });
   assert.equal(payload.current_pack.status, 'reviewed_pass_web_v2');
   assert.deepEqual(fixture.store.get(progressKey(ACCESS_CODE)), rewardBefore);
+  // Standard packs (this fixture, not a book) always have pageDiamonds=0, so
+  // finalizeWithoutReward's conditional saveProgressState() never fires here
+  // — the "no write on mic-skip" invariant still holds for standard packs.
+  // Book-flow mic-skips DO write now (R2L-REWARDS-REDESIGN founder ruling,
+  // 2026-07-18) — see read2lead-book-payload-completion.test.mjs for that.
   assert.equal(fixture.puts.includes(progressKey(ACCESS_CODE)), false);
 });
 
@@ -177,20 +182,24 @@ test('mic and ASR errors retry before the explicit no-reward escape hatch', () =
   assert.doesNotMatch(read2LeadPage, /tự đánh giá/);
 });
 
-test('no-reward finalizer bypasses all gamification award hooks', () => {
+test('no-reward finalizer bypasses all gamification award hooks except the page-diamonds save', () => {
   const start = submitSource.indexOf('async function finalizeWithoutReward');
   const end = submitSource.indexOf('async function respondFromCachedAttempt', start);
   const body = submitSource.slice(start, end);
+  // R2L-REWARDS-REDESIGN founder ruling (2026-07-18): saveProgressState is no
+  // longer categorically forbidden here — it's called, but ONLY to credit
+  // page-based diamonds (conditional on pageDiamonds > 0), never for XP,
+  // levels, rank, quests, or chests. Those five hooks stay hard-forbidden.
   for (const forbidden of [
     'applyPackCompletion',
     'awardRankPoints',
     'applyQuestProgress',
     'awardPendingChest',
     'recordComboBonus',
-    'saveProgressState',
   ]) {
     assert.doesNotMatch(body, new RegExp(forbidden));
   }
+  assert.match(body, /saveProgressState/, 'saveProgressState IS now used here, gated on rewardsEarned.diamonds > 0');
 });
 
 test('legacy reviewed packs without a summary remain safely completed', async () => {

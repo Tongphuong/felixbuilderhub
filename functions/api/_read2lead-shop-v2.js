@@ -1,20 +1,22 @@
 import geometryManifest from './_monster-parts-data.mjs';
 
+// R2L-REWARDS-REDESIGN (2026-07-18): prices converted coins -> diamonds at
+// 1💎 = 2🪙 (floor), per SPEC_R2L_REWARDS_REDESIGN.md §3.3/§5.
 export const SHOP_PRICES = {
   common: 0,
-  rare: 80,
-  epic: 200,
+  rare: 40,
+  epic: 100,
 };
 
 export const DECORATION_PRICES = {
-  effects: { common: 50, rare: 150, epic: 300 },
-  frame: { common: 100, rare: 250, epic: 500 },
+  effects: { common: 25, rare: 75, epic: 150 },
+  frame: { common: 50, rare: 125, epic: 250 },
 };
 
 export const COSMETIC_PRICES = {
-  hat: { common: 80, rare: 200, epic: 400 },
-  pet: { common: 120, rare: 280, epic: 500 },
-  wings: { common: 200, rare: 400, epic: 800 },
+  hat: { common: 40, rare: 100, epic: 200 },
+  pet: { common: 60, rare: 140, epic: 250 },
+  wings: { common: 100, rare: 200, epic: 400 },
 };
 
 const SLOT_PRICES = { ...DECORATION_PRICES, ...COSMETIC_PRICES };
@@ -318,14 +320,26 @@ export function buildShopCatalog({ includeDecorations = false } = {}) {
   return items;
 }
 
+// Silver rank (Level L2 "Bạc") and above shop for free — founder decision
+// (SPEC_R2L_REWARDS_REDESIGN.md §3.2/§7#1): the visible kid-facing LEVEL,
+// not the ladder tier_index.
+export function isSilverOrAbove(state) {
+  return ['L2', 'L3', 'L4', 'L5'].includes(state?.current_level);
+}
+
 export function buildShopView(state) {
   const owned = new Set(state?.unlocked_parts || []);
-  const coins = numberOrZero(state?.coins);
-  return buildShopCatalog({ includeDecorations: true }).map((item) => ({
-    ...item,
-    owned: owned.has(item.id),
-    can_afford: !owned.has(item.id) && coins >= item.price,
-  }));
+  const diamonds = numberOrZero(state?.diamonds);
+  const free = isSilverOrAbove(state);
+  return buildShopCatalog({ includeDecorations: true }).map((item) => {
+    const price = free ? 0 : item.price;
+    return {
+      ...item,
+      price,
+      owned: owned.has(item.id),
+      can_afford: owned.has(item.id) ? false : (free || diamonds >= price),
+    };
+  });
 }
 
 export function executeBuy(state, partId) {
@@ -341,13 +355,14 @@ export function executeBuy(state, partId) {
   }
 
   const priceOverride = getPartPriceOverride(id);
-  const price = priceOverride ?? SLOT_PRICES[slot]?.[rarity] ?? SHOP_PRICES[rarity] ?? 0;
-  if (numberOrZero(state?.coins) < price) return { state, error: 'insufficient_coins' };
+  const fullPrice = priceOverride ?? SLOT_PRICES[slot]?.[rarity] ?? SHOP_PRICES[rarity] ?? 0;
+  const price = isSilverOrAbove(state) ? 0 : fullPrice;
+  if (numberOrZero(state?.diamonds) < price) return { state, error: 'insufficient_diamonds' };
 
   return {
     state: {
       ...state,
-      coins: numberOrZero(state.coins) - price,
+      diamonds: numberOrZero(state.diamonds) - price,
       unlocked_parts: [...(state.unlocked_parts || []), id],
     },
     reward: { part_id: id, price },

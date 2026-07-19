@@ -8,11 +8,15 @@ import { progressKey } from '../functions/api/_read2lead-v2-state.js';
 
 const ACCESS_CODE = 'R2L-SHOP-W4';
 const RARE_PART = 'png-default-detail-blue-horn-small';
+const EPIC_PART = 'png-default-detail-blue-horn-large';
 
 function makeEnv({ codeExists = true, progress = null } = {}) {
   const store = new Map();
   if (progress) {
     store.set(progressKey(ACCESS_CODE), JSON.stringify({
+      // Below Silver by default so pre-existing tests exercise the PRICED
+      // path; Silver+ free-shop behavior gets its own explicit tests below.
+      current_level: 'L1',
       ...progress,
       rank_points: progress.rank_points ?? 9,
     }));
@@ -47,9 +51,9 @@ function makeEnv({ codeExists = true, progress = null } = {}) {
   };
 }
 
-test('POST /shop-list returns items + coins', async () => {
+test('POST /shop-list returns items + diamonds', async () => {
   const env = makeEnv({
-    progress: { schema_version: 2, level_reset_version: 20260606, coins: 120, unlocked_parts: [] },
+    progress: { schema_version: 2, level_reset_version: 20260606, diamonds: 120, unlocked_parts: [] },
   });
   const response = await shopList({
     request: new Request('https://example.com/api/read2lead-shop-list', {
@@ -62,14 +66,17 @@ test('POST /shop-list returns items + coins', async () => {
   const payload = await response.json();
   assert.equal(response.status, 200);
   assert.equal(payload.ok, true);
-  assert.equal(payload.coins, 120);
+  assert.equal(payload.diamonds, 120);
   assert.ok(Array.isArray(payload.items));
   assert.ok(payload.items.length > 0);
+  const epicItem = payload.items.find((item) => item.id === EPIC_PART);
+  assert.equal(epicItem?.price, 100);
+  assert.equal(epicItem?.can_afford, true, 'below-Silver kid with 120 diamonds can afford epic (price 100)');
 });
 
-test('POST /shop-buy success returns ok + reward + new coin balance', async () => {
+test('POST /shop-buy success returns ok + reward + new diamond balance', async () => {
   const env = makeEnv({
-    progress: { schema_version: 2, level_reset_version: 20260606, coins: 200, unlocked_parts: [] },
+    progress: { schema_version: 2, level_reset_version: 20260606, diamonds: 200, unlocked_parts: [] },
   });
   const response = await shopBuy({
     request: new Request('https://example.com/api/read2lead-shop-buy', {
@@ -82,8 +89,8 @@ test('POST /shop-buy success returns ok + reward + new coin balance', async () =
   const payload = await response.json();
   assert.equal(response.status, 200);
   assert.equal(payload.ok, true);
-  assert.equal(payload.coins, 120);
-  assert.deepEqual(payload.reward, { part_id: RARE_PART, price: 80 });
+  assert.equal(payload.diamonds, 160);
+  assert.deepEqual(payload.reward, { part_id: RARE_PART, price: 40 });
   assert.deepEqual(payload.unlocked_parts, [RARE_PART]);
   assert.equal(payload.avatar_stage, 'custom');
   assert.equal(payload.avatar.monster.detail, RARE_PART);
@@ -94,7 +101,7 @@ test('POST /shop-buy success returns ok + reward + new coin balance', async () =
 
 test('POST /shop-buy 400 already_owned', async () => {
   const env = makeEnv({
-    progress: { schema_version: 2, level_reset_version: 20260606, coins: 200, unlocked_parts: [] },
+    progress: { schema_version: 2, level_reset_version: 20260606, diamonds: 200, unlocked_parts: [] },
   });
   const request = () => new Request('https://example.com/api/read2lead-shop-buy', {
     method: 'POST',
@@ -109,9 +116,9 @@ test('POST /shop-buy 400 already_owned', async () => {
   assert.equal(payload.error, 'already_owned');
 });
 
-test('POST /shop-buy 400 insufficient_coins', async () => {
+test('POST /shop-buy 400 insufficient_diamonds', async () => {
   const env = makeEnv({
-    progress: { schema_version: 2, level_reset_version: 20260606, coins: 5, unlocked_parts: [] },
+    progress: { schema_version: 2, level_reset_version: 20260606, diamonds: 5, unlocked_parts: [] },
   });
   const response = await shopBuy({
     request: new Request('https://example.com/api/read2lead-shop-buy', {
@@ -122,7 +129,8 @@ test('POST /shop-buy 400 insufficient_coins', async () => {
   });
   const payload = await response.json();
   assert.equal(response.status, 400);
-  assert.equal(payload.error, 'insufficient_coins');
+  assert.equal(payload.error, 'insufficient_diamonds');
+  assert.equal(payload.message, 'Chua du 💎. Con hoc them de tich luy nhe!');
 });
 
 test('POST /shop-buy 400 missing code', async () => {
@@ -153,11 +161,15 @@ test('POST /shop-buy 404 code not found', async () => {
   assert.equal(payload.error, 'code_not_found');
 });
 
-test('POST /shop-buy blocks Bronze and leaves state unchanged', async () => {
+// R2L-REWARDS-REDESIGN (2026-07-18): the tier_index < 1 rank gate is REMOVED.
+// Below Silver the shop is now reachable at normal diamond prices (replaces
+// the old "blocks Bronze" 403 test).
+test('POST /shop-buy below Silver (L0) succeeds at the full diamond price — no rank gate', async () => {
   const initial = {
     schema_version: 2,
     level_reset_version: 20260606,
-    coins: 200,
+    current_level: 'L0',
+    diamonds: 200,
     rank_points: 0,
     unlocked_parts: [],
   };
@@ -170,21 +182,39 @@ test('POST /shop-buy blocks Bronze and leaves state unchanged', async () => {
     env,
   });
   const payload = await response.json();
-  assert.equal(response.status, 403);
-  assert.deepEqual(payload, {
-    ok: false,
-    error: 'rank_too_low',
-    message: 'Con đạt hạng Bạc rồi mới mua được nhé.',
+  assert.equal(response.status, 200);
+  assert.equal(payload.ok, true);
+  assert.deepEqual(payload.reward, { part_id: RARE_PART, price: 40 });
+  assert.equal(payload.diamonds, 160);
+});
+
+test('POST /shop-buy at Silver (L2) is free — price 0, no diamonds deducted', async () => {
+  const initial = {
+    schema_version: 2,
+    level_reset_version: 20260606,
+    current_level: 'L2',
+    diamonds: 0,
+    unlocked_parts: [],
+  };
+  const env = makeEnv({ progress: initial });
+  const response = await shopBuy({
+    request: new Request('https://example.com/api/read2lead-shop-buy', {
+      method: 'POST',
+      body: JSON.stringify({ code: ACCESS_CODE, part_id: EPIC_PART }),
+    }),
+    env,
   });
-  assert.deepEqual(
-    JSON.parse(env.__store.get(progressKey(ACCESS_CODE))),
-    initial,
-  );
+  const payload = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(payload.ok, true);
+  assert.deepEqual(payload.reward, { part_id: EPIC_PART, price: 0 });
+  assert.equal(payload.diamonds, 0, 'a Silver+ kid with 0 diamonds still gets the item free');
+  assert.deepEqual(payload.unlocked_parts, [EPIC_PART]);
 });
 
 test('POST /shop-buy persists to KV (mock)', async () => {
   const env = makeEnv({
-    progress: { schema_version: 2, level_reset_version: 20260606, coins: 200, unlocked_parts: [] },
+    progress: { schema_version: 2, level_reset_version: 20260606, diamonds: 200, unlocked_parts: [] },
   });
   await shopBuy({
     request: new Request('https://example.com/api/read2lead-shop-buy', {
@@ -194,7 +224,7 @@ test('POST /shop-buy persists to KV (mock)', async () => {
     env,
   });
   const saved = JSON.parse(env.__store.get(progressKey(ACCESS_CODE)));
-  assert.equal(saved.coins, 120);
+  assert.equal(saved.diamonds, 160);
   assert.deepEqual(saved.unlocked_parts, [RARE_PART]);
   assert.equal(saved.avatar_stage, 'custom');
   assert.equal(saved.avatar.monster.detail, RARE_PART);
@@ -203,7 +233,7 @@ test('POST /shop-buy persists to KV (mock)', async () => {
 
 test('POST /ceremony-ack clears the matching pending ceremony', async () => {
   const env = makeEnv({
-    progress: { schema_version: 2, level_reset_version: 20260606, coins: 200, unlocked_parts: [] },
+    progress: { schema_version: 2, level_reset_version: 20260606, diamonds: 200, unlocked_parts: [] },
   });
   await shopBuy({
     request: new Request('https://example.com/api/read2lead-shop-buy', {
