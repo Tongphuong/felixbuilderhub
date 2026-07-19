@@ -1,6 +1,13 @@
-import { play as playAudio } from './r2l-audio';
-
-const W7_BUILD_ENABLED = import.meta.env.PUBLIC_R2L_W7 === '1';
+// r2l-audio is dynamically imported at each call site below (not a static
+// top-level import) — same pattern as lesson-juice.ts's playKenney(), and
+// required so this module stays live-importable from a plain Node test
+// (see tests/shop-ux.test.mjs's real-click regression test): a static
+// import of a browser-only Howler dependency can't resolve outside Vite.
+//
+// import.meta.env is Vite's own extension (undefined outside a Vite build,
+// e.g. under plain `node --test`) — optional-chained so this module doesn't
+// throw at evaluation time there; identical behavior inside the real app.
+const W7_BUILD_ENABLED = import.meta.env?.PUBLIC_R2L_W7 === '1';
 
 export type ShopRarity = 'common' | 'rare' | 'epic';
 
@@ -78,6 +85,18 @@ export function partThumbnailUrl(partId: string, itemSlot = ''): string | undefi
   return `/assets/monsters/raw/PNG/Default/${fileName}`;
 }
 
+async function playR2lAudio(name: string): Promise<void> {
+  // Matches lesson-juice.ts's playKenney() exactly: audio is optional, so a
+  // resolution/playback failure here must never surface as an unhandled
+  // rejection (several call sites below fire this with `void`, not awaited).
+  try {
+    const { play } = await import('./r2l-audio');
+    await play(name);
+  } catch {
+    /* optional audio */
+  }
+}
+
 export async function buyPart(
   partId: string,
   code: string,
@@ -89,7 +108,7 @@ export async function buyPart(
       body: JSON.stringify({ code, part_id: partId }),
     });
     const data = await res.json();
-    if (data.ok) await playAudio('coin-clink');
+    if (data.ok) await playR2lAudio('coin-clink');
     return data;
   } catch {
     return { ok: false, error: 'network' };
@@ -97,11 +116,11 @@ export async function buyPart(
 }
 
 export async function playDisabledBuzz(): Promise<void> {
-  await playAudio('near-miss');
+  await playR2lAudio('near-miss');
 }
 
 export async function showUnlock(partName: string, rarity: string): Promise<void> {
-  await playAudio('quest-complete');
+  await playR2lAudio('quest-complete');
   const dialog = document.querySelector('.unlock-celebration') as HTMLDialogElement | null;
   if (!dialog) return;
   dialog.dataset.rarity = rarity;
@@ -176,9 +195,18 @@ function renderShopItem(item: ShopRow): string {
   const priceLabel = isFree
     ? '<span class="shop-item-free-label">Nhận miễn phí</span>'
     : `<span class="shop-item-diamond" aria-hidden="true">💎</span><span class="shop-item-price">${item.price}</span>`;
+  // Bug fix (founder-confirmed live, pre-existing before this packet): a
+  // NATIVE `disabled` attribute makes browsers refuse to dispatch click
+  // events to the button at all — a real kid tapping an unaffordable item
+  // got no buzz, no modal, nothing. aria-disabled is purely semantic/visual
+  // (styled via [aria-disabled='true'] in shop.astro) and does NOT block
+  // event dispatch, so the click handler below can still catch the tap and
+  // show the correct insufficient-diamonds modal. The button stays focusable
+  // and keyboard-activatable too, which is the accessible-correct behavior
+  // for "disabled with an explanation on click".
   const action = item.owned
     ? '<span class="shop-item-owned"><span aria-hidden="true">✓</span> Có rồi</span>'
-    : `<button class="shop-item-buy" type="button" data-part-id="${escapeHtml(item.id)}" data-price="${item.price}" ${item.can_afford ? '' : 'disabled'}>${priceLabel}</button>`;
+    : `<button class="shop-item-buy" type="button" data-part-id="${escapeHtml(item.id)}" data-price="${item.price}" aria-disabled="${item.can_afford ? 'false' : 'true'}">${priceLabel}</button>`;
   return `
     <article class="shop-item" data-slot="${escapeHtml(item.slot)}" data-rarity="${escapeHtml(item.rarity)}" data-owned="${item.owned}" data-can-afford="${item.can_afford}" data-free="${isFree}">
       <div class="shop-item-art">${art}${tierBadgeHtml(item.rarity)}</div>
@@ -250,7 +278,10 @@ export function initShopPage(hooks: ShopPageHooks): void {
       button.addEventListener('click', async () => {
         const partId = button.dataset.partId || '';
         const price = Number(button.dataset.price || 0);
-        if (button.disabled) {
+        // See renderShopItem's comment: this reads aria-disabled, not the
+        // native disabled property — a real tap must reach this handler so
+        // the kid gets the "Còn thiếu N💎" modal instead of silence.
+        if (button.getAttribute('aria-disabled') === 'true') {
           void playDisabledBuzz();
           showInsufficient(price, shopDiamonds);
           return;

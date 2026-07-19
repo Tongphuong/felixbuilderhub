@@ -207,7 +207,17 @@ import '../../styles/r2l-w6-tiers.css';
     padding: 0.55rem 1rem;
   }
 
-  .shop-host :global(.shop-item-buy:disabled) {
+  /* Bug fix: the "can't afford this" look is now driven by aria-disabled
+     (semantic/visual only), not the native `disabled` attribute — a
+     native-disabled button never receives real tap events, which silently
+     ate the insufficient-diamonds flow. The button stays focusable/
+     clickable so its click handler can show the modal. `:disabled` stays in
+     the selector too, purely for the brief in-flight "processing…" lock
+     during an actual purchase (bindShopActions still sets the native
+     property there on purpose, to block a double-tap mid-request) — same
+     dimmed look, parity with before this fix. */
+  .shop-host :global(.shop-item-buy:disabled),
+  .shop-host :global(.shop-item-buy[aria-disabled='true']) {
     background: rgb(255 255 255 / 0.12);
     color: #f87171;
     cursor: not-allowed;
