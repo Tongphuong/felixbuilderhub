@@ -251,7 +251,22 @@ assigns, commits, merges, deploys, or spends.
   ability, and re-check with Phương before tuning any threshold. WATCH:
   Workers AI neuron usage — if shadowing pushes past the included allocation,
   bring numbers to Phương before any degrade.
-- Design self-verification: **DONE 2026-07-17 — rule 20 MATCH on the DEPLOYED
+- Design self-verification (UPDATED 2026-07-19, new design of record): **rule
+  20 MATCH on the DEPLOYED preview at 390 + 820 + 1280** (SHA 12020d2) vs the
+  founder's real Claude Design export (`design_handoff_speakup_shadowing/`
+  screenshots/01–08) — record/karaoke, picker with app header + 3-col grid,
+  and the desktop split-view all verified live by Elon (renders at
+  `_ops/shadowing-r20-*.png`); Steve's per-screen diffs + Buffet's verdict
+  chain (final: session-identity guard closes the phantom-grade repro,
+  tip-12020d2 ledgered) on the record. Two recorded deviations for founder
+  QA: gate/picker stay sequential (widened) at desktop rather than the
+  board's merged view; back-circle recipe follows file 04's tokens where
+  the boards disagree among themselves.
+- Verified commit (current): 12020d2 (origin/claude/speakup-shadowing,
+  deployed preview verified live 2026-07-19).
+- Founder QA code: R2L-QAPHUONG-QPSD (is_test, expires 2026-07-21).
+- v2-era self-verification kept for lineage: **DONE 2026-07-17 — rule 20
+  MATCH on the DEPLOYED
   preview** (claude-speakup-shadowing.felixbuilderhub.pages.dev, SHA 59441e0)
   at 390 AND 1280 vs the approved Night Arcade boards, via a routed harness
   (stubbed identity only, real bundle + real content). Pass #1 caught 3
