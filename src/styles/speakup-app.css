@@ -2307,6 +2307,7 @@
 
 .shd-root {
   --shd-backdrop: #0b1c30;
+  --shd-cream-soft: #e8d9b8;
   --shd-frame: #143050;
   --shd-card: #1d4468;
   --shd-card-2: #1b3a57;
@@ -2405,7 +2406,7 @@
 .shd-gate-bulb--pulse:nth-child(4) { animation-delay: 0.5s; }
 @keyframes shd-bulb-pulse { 0%, 100% { box-shadow: 0 0 10px 2px rgba(242, 204, 126, 0.5); transform: scale(1); } 50% { box-shadow: 0 0 16px 6px rgba(242, 204, 126, 0.85); transform: scale(1.15); } }
 .shd-gatetitle { font-family: 'Baloo 2', 'Manrope', sans-serif; color: var(--cream); font-weight: 800; font-size: 26px; text-align: center; }
-.shd-gatesub { color: var(--cream-muted); font-size: 14px; text-align: center; }
+.shd-gatesub { color: var(--shd-cream-soft); font-size: 14px; text-align: center; }
 .shd-minny--gate { margin: 0 auto; }
 .shd-ticket-input {
   width: 100%; box-sizing: border-box; min-height: 58px; border-radius: 16px; text-align: center;
@@ -2462,6 +2463,29 @@
 .shd-notice-msg { font-family: 'Baloo 2', 'Manrope', sans-serif; color: var(--cream); font-weight: 700; font-size: 16px; line-height: 1.4; text-align: left; }
 .shd-notice-cta { margin-top: 0; }
 
+/* ---- 01: tablet-820 / desktop-1280 widening (p6 item 2) ----
+   Boards 01's own tablet/desktop frames draw the code card and video picker
+   COMBINED in one composite view (gate beside/above the picker) rather than
+   as this build's sequential two-screen flow (#shd-gate-screen then
+   #shd-picker-screen) -- kept sequential because the real per-class video
+   list only exists once a code has validated, so showing the picker before
+   that point has no real content to show. Each screen is therefore widened
+   independently here instead of merged into the boards' literal split view
+   (recorded in the deviations block above). At 768px this is a close match
+   regardless: the board's own tablet-820 frame ALSO stacks the code card
+   above the picker in a single column, so the only real difference from the
+   board is whether the two live in one view or two. Pattern-copies the
+   #shd-stage-screen max-width override below. */
+@media (min-width: 768px) {
+  #shd-gate-screen, #shd-picker-screen { max-width: 780px; }
+  #shd-gate-screen .shd-gate { max-width: 520px; align-self: center; }
+  .shd-cards { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  #shd-gate-screen, #shd-picker-screen { max-width: 960px; }
+}
+
 /* ---- stage: HUD ---- */
 .shd-hud { position: relative; z-index: 1; display: flex; justify-content: flex-end; align-items: center; gap: 8px; width: 100%; max-width: 460px; margin: 0 auto; }
 .shd-counter { display: flex; align-items: center; gap: 6px; background: var(--shd-pill); border: 1px solid var(--border-subtle); border-radius: 999px; padding: 8px 14px; font-family: 'Baloo 2', 'Manrope', sans-serif; font-weight: 700; font-size: 16px; color: var(--cream); }
@@ -2496,7 +2520,7 @@
 /* ---- 02: watch caption ---- */
 .shd-watchrow { display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 8px; }
 .shd-instr { font-family: 'Baloo 2', 'Manrope', sans-serif; color: var(--cream); font-weight: 800; font-size: 24px; text-align: center; line-height: 1.3; }
-.shd-subline { color: var(--cream-muted); font-weight: 400; font-size: 15px; }
+.shd-subline { color: var(--shd-cream-soft); font-weight: 400; font-size: 15px; }
 
 /* ---- 03: question ---- */
 .shd-ask { display: flex; align-items: flex-start; gap: 12px; padding-top: 6px; }
@@ -2562,7 +2586,7 @@
 .shd-mic-label { font-family: 'Baloo 2', 'Manrope', sans-serif; }
 .shd-mic-icon svg { display: block; }
 
-.shd-replay { align-self: center; display: inline-flex; align-items: center; gap: 8px; background: transparent; border: 2px solid rgba(232, 217, 184, 0.35); color: var(--cream-muted); font-family: 'Inter', sans-serif; font-weight: 600; font-size: 15px; border-radius: 999px; padding: 10px 20px; cursor: pointer; min-height: 46px; }
+.shd-replay { align-self: center; display: inline-flex; align-items: center; gap: 8px; background: transparent; border: 2px solid rgba(232, 217, 184, 0.35); color: var(--shd-cream-soft); font-family: 'Inter', sans-serif; font-weight: 600; font-size: 15px; border-radius: 999px; padding: 10px 20px; cursor: pointer; min-height: 46px; }
 .shd-replay:disabled { opacity: 0.55; cursor: default; }
 
 /* ---- grading in flight: blurred record screen under a centered card

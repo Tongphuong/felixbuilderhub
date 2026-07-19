@@ -47,14 +47,17 @@
  *    timing) behind every screen instead of a bespoke pattern per frame —
  *    a deliberate, visually-equivalent simplification, not a fidelity gap
  *    in color/motion.
- * 7. Tablet 820 / bespoke desktop layouts: only the STAGE screen (02-07)
- *    widens at 1024px+ into the boards' video-left/interaction-right
- *    two-column layout (the existing r20 responsive scaffold, colors
- *    refreshed to the new tokens). The gate/picker screen (board 01) does
- *    NOT get the boards' bespoke tablet-820 3-column grid or desktop
- *    code-card-beside-picker split view — it stays the mobile 2-column
- *    poster grid at every width. Recorded, not silent: this is a real gap
- *    against board 01's tablet/desktop frames, not implemented this pass.
+ * 7. Tablet 820 / bespoke desktop layouts: the STAGE screen (02-07) widens
+ *    at 1024px+ into the boards' video-left/interaction-right two-column
+ *    layout (the existing r20 responsive scaffold, colors refreshed to the
+ *    new tokens). The gate/picker screen (board 01) NOW gets a tablet-768
+ *    3-column poster grid + a widened, centered 520px code card (p6 item 2)
+ *    — close to exact, since the board's own tablet-820 frame ALSO stacks
+ *    the code card above the picker in one column, same as this build's
+ *    sequential #shd-gate-screen / #shd-picker-screen. What is still NOT
+ *    reproduced: the board's desktop-1280 code-card-beside-picker SPLIT
+ *    view — see #16 below for why, and what ships instead. Gap narrowed,
+ *    not fully closed.
  * 8. Board 08's fake browser chrome (traffic-light dots + URL bar) is
  *    correctly NOT reproduced — presentation device for the design deck,
  *    not real product chrome (same category as the illustrated video art).
@@ -83,6 +86,34 @@
  *     frame): dismisses the notice card back to the (already-fresh) picker
  *     grid rather than a distinct navigation — we're already on the picker
  *     screen when it fires, so there is nowhere else to route it.
+ * 15. Cream-soft fix (p6, Buffet finding): the gate subtitle
+ *     ("Tấm vé vào rạp của Minny đây!"), the watch-screen caption ("Minny
+ *     cũng đang xem cùng con"), and the "🔊 Nghe lại câu" replay pill now
+ *     use the boards' exact --shd-cream-soft #e8d9b8 instead of the darker
+ *     --cream-muted #d9c7a4 that was substituted in undisclosed. Gap
+ *     closed. NOTE: the boards also draw a round 44px back-circle "‹"
+ *     nav glyph in this same #e8d9b8 on the stage header (screens
+ *     02/03/04/06) — this build has never had an equivalent element (no
+ *     back nav exists on the stage screen at any breakpoint, recorded
+ *     nowhere above either), so there was no rule to recolor. Not
+ *     fabricated here — flagged to Elon as a separate, unrecorded gap
+ *     rather than guessed at.
+ * 16. (p6 item 2) Board 01's tablet/desktop frames draw the code card and
+ *     video picker COMBINED in one view; this build keeps them as the
+ *     existing sequential two-screen flow instead of merging (the real
+ *     per-class video list only exists once a code has validated — showing
+ *     the picker before that has nothing real to render, and merging would
+ *     mean bypassing the code gate at wide widths, a behavior change no one
+ *     asked for). Each screen is widened independently instead: 768px+ gets
+ *     the board's literal 520px-wide centered code card and 3-column poster
+ *     grid (a near-exact match, since the board's own tablet frame stacks
+ *     rather than splits); 1024px+ only grows the shared container further
+ *     (960px) — the board's literal 440px-code-card / 2-column-picker split
+ *     numbers are not reproduced because they were sized for the merged
+ *     layout this build doesn't have. Flagged to Elon rather than guessed:
+ *     whether to merge gate+picker into one desktop view is a real product
+ *     decision (it would mean previewing/bypassing the code step), not a
+ *     styling call.
  *
  * v2-era items now resolved by this reskin (no longer deviations):
  *  - The picker is now the boards' 2-column poster grid (16:10 thumbnail

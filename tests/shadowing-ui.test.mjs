@@ -502,3 +502,21 @@ test('the mic coin is gold in every state — no red/orange tint on the idle or 
   assert.ok(micRuleMatch, 'expected a .shd-mic rule');
   assert.ok(!/#f87171|--shd-rec\b/.test(micRuleMatch[1]), 'expected the base .shd-mic coin to carry no red/danger tone');
 });
+
+test('the boards\' exact --shd-cream-soft (#e8d9b8) is defined and used on the gate subtitle, watch caption, and replay pill (p6 Buffet finding)', () => {
+  const marker = '===== Shadowing (shd-) =====';
+  const shdSection = css.slice(css.indexOf(marker));
+  assert.ok(/--shd-cream-soft:\s*#e8d9b8;/.test(shdSection), 'expected a --shd-cream-soft: #e8d9b8; token in the shd- section');
+
+  const gatesubMatch = shdSection.match(/\n\.shd-gatesub\s*{([^}]*)}/);
+  assert.ok(gatesubMatch, 'expected a .shd-gatesub rule');
+  assert.ok(/var\(--shd-cream-soft\)/.test(gatesubMatch[1]), 'expected .shd-gatesub ("Tấm vé vào rạp của Minny đây!") to use var(--shd-cream-soft), not --cream-muted');
+
+  const sublineMatch = shdSection.match(/\n\.shd-subline\s*{([^}]*)}/);
+  assert.ok(sublineMatch, 'expected a .shd-subline rule');
+  assert.ok(/var\(--shd-cream-soft\)/.test(sublineMatch[1]), 'expected .shd-subline ("Minny cũng đang xem cùng con") to use var(--shd-cream-soft), not --cream-muted');
+
+  const replayMatch = shdSection.match(/\n\.shd-replay\s*{([^}]*)}/);
+  assert.ok(replayMatch, 'expected a .shd-replay rule');
+  assert.ok(/var\(--shd-cream-soft\)/.test(replayMatch[1]), 'expected .shd-replay ("🔊 Nghe lại câu") to use var(--shd-cream-soft), not --cream-muted');
+});
