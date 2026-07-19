@@ -93,10 +93,10 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: complete
+- Status: active
 - Started: 2026-07-17
-- Completed: 2026-07-19 (founder merge order; shipped to main with videos as
-  labeled BẢN NHÁP drafts pending his content review)
+- Completing: 2026-07-19 (founder merge order; release gate in progress — block
+  demotes to Prior on merge)
 - Task ID: speakup-shadowing-v1
 - Spec: `_ops/specs/SPEC_SPEAKUP_SHADOWING.md` (approved 2026-07-17); plan of
   record `~/.claude/plans/zippy-gathering-matsumoto.md` (Phương plan-mode
