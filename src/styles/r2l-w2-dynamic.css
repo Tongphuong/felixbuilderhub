@@ -21,6 +21,37 @@
   100% { opacity: 0; transform: translateY(-100px) scale(1); }
 }
 
+/* === Diamond Ticker (R2L Rewards Redesign — page/pack-complete +N💎) ===
+ * Same pattern as the XP ticker above: a fixed, pointer-events-none badge
+ * that appends to an anchor element and rises+fades. Created dynamically by
+ * lesson.astro's showDiamondTicker(); no Astro component owns this markup.
+ * Color is var(--gold-light) (design-system.css), matching every other
+ * diamond surface in the app (gifts.astro, GiftConfirmModal, GiftSuccessModal,
+ * gift-goal-card.ts, shop.astro) — one 💎 visual language, not a second one.
+ */
+.w2-diamond-ticker {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--gold-light, #f2cc7e);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  animation: w2-diamond-rise 1.8s ease-out forwards;
+}
+@keyframes w2-diamond-rise {
+  0% { opacity: 0; transform: translateY(0) scale(0.8); }
+  20% { opacity: 1; transform: translateY(-20px) scale(1.1); }
+  80% { opacity: 1; transform: translateY(-60px) scale(1); }
+  100% { opacity: 0; transform: translateY(-100px) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .w2-diamond-ticker {
+    animation: none;
+    opacity: 1;
+  }
+}
+
 /* === Combo Counter === */
 .w2-combo-counter {
   position: fixed;

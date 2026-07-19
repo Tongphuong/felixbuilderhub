@@ -5,7 +5,8 @@ import {
   cumulativeStartRP,
   currentSeason,
   PRE_SEASON,
-  seasonRewardCoins,
+  SEASON_REWARD_DIAMONDS,
+  seasonRewardDiamonds,
   tierStartRp,
 } from '../functions/api/_read2lead-seasons.js';
 import {
@@ -16,6 +17,13 @@ import {
 test('currentSeason returns pre-season before July 2026', () => {
   const season = currentSeason(new Date('2026-06-15T10:00:00.000Z'));
   assert.equal(season.id, PRE_SEASON.id);
+});
+
+test('SEASON_REWARD_DIAMONDS matches spec conversion [5..75] (1💎 = 2🪙, floor)', () => {
+  assert.deepEqual(SEASON_REWARD_DIAMONDS, [5, 10, 17, 25, 35, 45, 60, 75]);
+  assert.equal(seasonRewardDiamonds(0), 5);
+  assert.equal(seasonRewardDiamonds(7), 75);
+  assert.equal(seasonRewardDiamonds(99), 75, 'tier index above 7 clamps to the top reward, same as before the rename');
 });
 
 test('currentSeason returns active season inside its window', () => {
@@ -31,12 +39,12 @@ test('cumulativeStartRP matches progressive tier thresholds', () => {
   assert.equal(tierStartRp(4), 42);
 });
 
-test('season rollover freezes medal, grants coins, and soft-resets one tier', () => {
+test('season rollover freezes medal, grants diamonds, and soft-resets one tier', () => {
   const beforeRollover = normalizeProgressState(
     {
       schema_version: 2,
       level_reset_version: 20260606,
-      coins: 20,
+      diamonds: 20,
       season: {
         id: '2026-S1',
         rp: 50,
@@ -58,10 +66,10 @@ test('season rollover freezes medal, grants coins, and soft-resets one tier', ()
   assert.equal(beforeRollover.season.rp, cumulativeStartRP(3));
   assert.equal(beforeRollover.medals.length, 1);
   assert.equal(beforeRollover.medals[0].season_id, '2026-S1');
-  assert.equal(beforeRollover.medals[0].reward_coins, seasonRewardCoins(4));
+  assert.equal(beforeRollover.medals[0].reward_diamonds, seasonRewardDiamonds(4));
   assert.equal(
-    beforeRollover.coins,
-    20 + seasonRewardCoins(4),
+    beforeRollover.diamonds,
+    20 + seasonRewardDiamonds(4),
   );
   assert.equal(beforeRollover.season.rp, cumulativeStartRP(3));
   assert.match(buildRankLadderFromPoints(beforeRollover.season.rp).label_vi, /Bạch Kim/);

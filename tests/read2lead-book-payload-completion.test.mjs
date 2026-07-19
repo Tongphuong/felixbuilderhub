@@ -5,7 +5,7 @@ import {
   buildV2LessonPayload,
   isValidBookPack,
 } from '../functions/api/read2lead-lesson.js';
-import { onRequestPost } from '../functions/api/submit-read2lead-lesson.js';
+import { countPagesWithPassedReadUnit, onRequestPost } from '../functions/api/submit-read2lead-lesson.js';
 import { progressKey } from '../functions/api/_read2lead-v2-state.js';
 import {
   buildBookShadowChunks,
@@ -298,20 +298,132 @@ test('a single sentence over 24 words remains a valid indivisible shadow chunk',
   });
 });
 
-test('three low scores complete the book without rewards', async () => {
+// R2L-REWARDS-REDESIGN founder ruling (2026-07-18): page-based diamonds are
+// decoupled from the pass gate. A mic-skipped page still ends the book as
+// "completed without reward" (no grade bonus, no XP) — but the OTHER pages
+// the kid genuinely passed before the skip still pay 5💎 each. The screen
+// must never claw back a "+5💎" it already showed the kid in real time.
+test('three low scores complete the book without a grade bonus, but still pay for the 2 passed pages', async () => {
   const fixture = makeFixture([]);
   const response = await submit(bookReader({ skip: 1 }), fixture);
   const payload = await response.json();
   assert.equal(payload.completed_without_reward, true);
-  assert.deepEqual(payload.rewards_earned, { coins: 0, xp: 0 });
+  assert.equal(payload.passed, false);
+  assert.deepEqual(payload.rewards_earned, { diamonds: 10, xp: 0 }, '2 passed pages (0 and 2) × 5💎 = 10, 0 grade bonus');
+  assert.equal(payload.read2lead_state.diamonds, 10);
   assert.deepEqual(fixture.store.get(ACCESS_CODE).completed_books, ['book_123']);
 });
 
-test('two technical failures allow explicit no-reward completion without pronunciation attempts', async () => {
+test('two technical failures allow explicit no-reward completion, still paying for the 2 pages passed before the technical skip', async () => {
   const fixture = makeFixture([]);
   const response = await submit(bookReader({ skip: 2, technical: true }), fixture);
   const payload = await response.json();
   assert.equal(payload.completed_without_reward, true);
-  assert.deepEqual(payload.rewards_earned, { coins: 0, xp: 0 });
+  assert.deepEqual(payload.rewards_earned, { diamonds: 10, xp: 0 }, '2 passed pages (0 and 1) × 5💎 = 10, 0 grade bonus');
+  assert.equal(payload.read2lead_state.diamonds, 10);
   assert.deepEqual(fixture.store.get(ACCESS_CODE).completed_books, ['book_123']);
+});
+
+test('a book with ALL pages skipped (0 passed) pays exactly 0 diamonds', async () => {
+  const fixture = makeFixture([]);
+  // Force every page to 'skipped' by requesting skip on an out-of-range index
+  // is not supported by the helper, so build a fully-skipped reader directly.
+  const context = bookContext();
+  const reader = {
+    pages: context.story.paragraphs_en.map((_, pageIndex) => ({
+      page_index: pageIndex,
+      audio_completed: true,
+      question_results: selectBookQuestions(context.guided_listening, context.story.sentences, pageIndex)
+        .map((question) => ({ question_id: question.id, correct: true })),
+      shadow_chunks: buildBookShadowChunks(context.story.sentences, pageIndex).map((chunk) => ({
+        chunk_id: chunk.chunk_id,
+        sentence_indexes: chunk.sentence_indexes,
+        attempts: 3,
+        status: 'skipped',
+        score_percent: 20,
+        technical_failures: 0,
+      })),
+    })),
+  };
+  const response = await submit(reader, fixture);
+  const payload = await response.json();
+  assert.equal(payload.completed_without_reward, true);
+  assert.deepEqual(payload.rewards_earned, { diamonds: 0, xp: 0 });
+});
+
+// Buffet fix round (2026-07-18, spec §11.7): page-diamonds pay per DISTINCT
+// PAGE with >=1 passed read unit, NOT per chunk/page_read — a v3 long page
+// can carry 2 page_reads, a legacy v2 page up to 9 shadow_chunks, and paying
+// per-unit overpaid those pages up to 9x. This mirrors Steve's shipped
+// celebration gate (page_reads.some(status === 'passed')).
+test('countPagesWithPassedReadUnit: a v3 page with 2 read units, both passed, pays for 1 page (5💎), not 2 (10💎)', () => {
+  const bookReader = {
+    pages: [
+      {
+        page_index: 0,
+        page_reads: [
+          { read_id: 'p0_r0', status: 'passed', score_percent: 90 },
+          { read_id: 'p0_r1', status: 'passed', score_percent: 85 },
+        ],
+      },
+    ],
+  };
+  assert.equal(countPagesWithPassedReadUnit(bookReader), 1);
+});
+
+test('countPagesWithPassedReadUnit: a page with 1 of 2 read units passed still pays for 1 page (5💎)', () => {
+  const bookReader = {
+    pages: [
+      {
+        page_index: 0,
+        page_reads: [
+          { read_id: 'p0_r0', status: 'passed', score_percent: 90 },
+          { read_id: 'p0_r1', status: 'skipped', attempts: 3 },
+        ],
+      },
+    ],
+  };
+  assert.equal(countPagesWithPassedReadUnit(bookReader), 1);
+});
+
+test('countPagesWithPassedReadUnit: a page with 0 of 2 read units passed pays nothing', () => {
+  const bookReader = {
+    pages: [
+      {
+        page_index: 0,
+        page_reads: [
+          { read_id: 'p0_r0', status: 'skipped', attempts: 3 },
+          { read_id: 'p0_r1', status: 'skipped', attempts: 3 },
+        ],
+      },
+    ],
+  };
+  assert.equal(countPagesWithPassedReadUnit(bookReader), 0);
+});
+
+test('countPagesWithPassedReadUnit sums across pages, mixing single- and multi-unit pages', () => {
+  const bookReader = {
+    pages: [
+      { page_index: 0, page_reads: [{ status: 'passed' }] }, // 1 unit, passed -> pays
+      { page_index: 1, page_reads: [{ status: 'passed' }, { status: 'passed' }] }, // 2 units, both passed -> pays once
+      { page_index: 2, page_reads: [{ status: 'skipped' }] }, // not passed -> 0
+    ],
+  };
+  assert.equal(countPagesWithPassedReadUnit(bookReader), 2, '2 of 3 pages have >=1 passed unit -> 10💎 total, not per-unit 15💎');
+});
+
+test('countPagesWithPassedReadUnit falls back to shadow_chunks (v2) when page_reads is absent — a legacy page with up to 9 chunks still pays once', () => {
+  const bookReader = {
+    pages: [
+      {
+        page_index: 0,
+        shadow_chunks: [
+          { status: 'passed' }, { status: 'passed' }, { status: 'passed' },
+          { status: 'passed' }, { status: 'passed' }, { status: 'passed' },
+          { status: 'passed' }, { status: 'passed' }, { status: 'passed' },
+        ],
+      },
+    ],
+  };
+  assert.equal(countPagesWithPassedReadUnit(bookReader), 1, '9 passed chunks on one page pays 5💎, not 45💎');
 });

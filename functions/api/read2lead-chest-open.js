@@ -31,7 +31,7 @@ export async function onRequestPost(context) {
     return json({
       ok: true,
       reward: result.reward,
-      coins: result.state.coins,
+      diamonds: result.state.diamonds,
       unlocked_parts: result.state.unlocked_parts,
     });
   } catch (err) {

@@ -48,7 +48,12 @@ function renderStats(data: ProgressPayload) {
   const progress = (data.progress || {}) as Record<string, unknown>;
   const state = (data.read2lead_state || {}) as Record<string, unknown>;
   const growth = (data.weekly_growth || {}) as Record<string, unknown>;
-  return `<article class="fx-card ho-so-p-stat"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">📦</span>Bài đã hoàn thành</div><strong>${Number(progress.completed_packs || 0)}</strong><small>${Number(growth.this_week_packs || 0)} bài trong tuần này</small></article><article class="fx-card ho-so-p-stat"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">🔥</span>Chuỗi ngày</div><strong>${Number(state.streak_days || 0)} <small>ngày liên tiếp</small></strong><small>${Number(state.streak_freeze_tokens || 0)} lượt giữ chuỗi</small></article><article class="fx-card ho-so-p-stat ho-so-p-stat--coins"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">🪙</span>Xu thưởng</div><strong>${Number(state.coins || 0)} <small>xu</small></strong><small>Dùng để trang trí quái vật</small></article><article class="fx-card ho-so-p-stat"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">💎</span>Kim cương</div><strong>${Number(state.diamonds || 0)} <small>kim cương</small></strong><small>Thưởng từ buổi coaching</small></article>`;
+  // R2L Rewards Redesign (founder decision #5): coins no longer exist, so
+  // the separate coin-badge "Xu thuong" stat card is removed. Parent-facing
+  // wording stays plain and truthful (no celebration copy) — the Kim cuong
+  // caption now states both real sources (reading + coaching) and both uses
+  // (decoration + real gifts), since diamonds now cover what coins used to.
+  return `<article class="fx-card ho-so-p-stat"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">📦</span>Bài đã hoàn thành</div><strong>${Number(progress.completed_packs || 0)}</strong><small>${Number(growth.this_week_packs || 0)} bài trong tuần này</small></article><article class="fx-card ho-so-p-stat"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">🔥</span>Chuỗi ngày</div><strong>${Number(state.streak_days || 0)} <small>ngày liên tiếp</small></strong><small>${Number(state.streak_freeze_tokens || 0)} lượt giữ chuỗi</small></article><article class="fx-card ho-so-p-stat"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">💎</span>Kim cương</div><strong>${Number(state.diamonds || 0)} <small>kim cương</small></strong><small>Kiếm khi đọc bài & buổi coaching, dùng để trang trí quái vật & đổi quà thật</small></article>`;
 }
 
 /**

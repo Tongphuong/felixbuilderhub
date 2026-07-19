@@ -46,7 +46,7 @@ function completePackWithW2(
   const completion = applyPackCompletion(state, {
     packId,
     completedAt: COMPLETED_AT,
-    rewardsEarned: { coins: 15, xp: 20 },
+    rewardsEarned: { diamonds: 15, xp: 20 },
     activityResults,
     scorePercent,
   });
@@ -141,17 +141,17 @@ test('submit perfect activity increments q7', () => {
   assert.equal(next.daily_quests.progress.q7, 1);
 });
 
-test('submit combo_xu ten is capped to five on server', () => {
+test('submit combo_xu ten is capped to three diamonds on server', () => {
   const state = stateWithQuests(['q1', 'q2', 'q6']);
   const next = completePackWithW2(state, { comboXu: 10 });
-  assert.equal(next.combo_lifetime_xu, 5);
-  assert.equal(next.coins, state.coins + 15 + 5);
+  assert.equal(next.combo_lifetime_xu, 3);
+  assert.equal(next.diamonds, state.diamonds + 15 + 3);
 });
 
 test('submit with chest already pending does not overwrite it', () => {
   const pending = {
     rarity: 'epic',
-    reward: { coins: 50, part_id: null },
+    reward: { diamonds: 25, part_id: null },
     duplicate: false,
     awarded_at: COMPLETED_AT,
   };

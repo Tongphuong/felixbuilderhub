@@ -122,7 +122,7 @@ function nearMissLine(read2LeadState: Record<string, unknown>) {
 
 type W2QuestRow = {
   id: string; label_vi: string; target: number; progress: number;
-  reward_coins: number; reward_rp: number; claimed: boolean; complete: boolean;
+  reward_diamonds: number; reward_rp: number; claimed: boolean; complete: boolean;
 };
 
 function renderW2DailyQuestsHtml(state: Record<string, unknown>): string {
@@ -141,7 +141,7 @@ function renderW2DailyQuestsHtml(state: Record<string, unknown>): string {
         <p class="r2l-w2-quest-label">${escapeHtml(q.label_vi)}</p>
         <div class="r2l-w2-quest-bar"><div class="r2l-w2-quest-bar-fill" style="width:${pct}%"></div></div>
         <div class="r2l-w2-quest-foot">
-          <span class="r2l-w2-quest-reward">🪙 +${q.reward_coins}${q.reward_rp > 0 ? ` · ⭐ +${q.reward_rp}` : ''}</span>
+          <span class="r2l-w2-quest-reward">💎 +${q.reward_diamonds}${q.reward_rp > 0 ? ` · ⭐ +${q.reward_rp}` : ''}</span>
           ${action}
         </div>
       </article>`;
@@ -154,13 +154,13 @@ function renderW2DailyQuestsHtml(state: Record<string, unknown>): string {
 }
 
 function renderW2DailyChestHtml(state: Record<string, unknown>): string {
-  const chest = state?.daily_login_chest as { available?: boolean; coins?: number } | undefined;
+  const chest = state?.daily_login_chest as { available?: boolean; diamonds?: number } | undefined;
   if (!chest) return '';
   if (chest.available) {
     return `
       <button type="button" class="r2l-w2-daily-chest" data-w2-daily-chest>
         <span class="r2l-w2-daily-chest-icon" aria-hidden="true">🎁</span>
-        <span>Quà hôm nay: +${Number(chest.coins) || 0} 🪙</span>
+        <span>Quà hôm nay: +${Number(chest.diamonds) || 0} 💎</span>
       </button>`;
   }
   return `
@@ -503,10 +503,10 @@ function renderDailyExtras(state: Record<string, unknown>, pack: Record<string, 
   const questHtml = quests.map((quest) => {
     const percent = quest.target > 0 ? Math.min(100, Math.round((quest.progress / quest.target) * 100)) : 0;
     const action = quest.claimed ? '<span>✓ Đã nhận</span>' : quest.complete ? `<button class="fx-btn fx-btn--secondary fx-btn--sm" type="button" data-w2-quest-claim="${escapeHtml(quest.id)}">Nhận thưởng</button>` : `<span>${quest.progress}/${quest.target}</span>`;
-    return `<article class="ho-so-quest"><div class="ho-so-card-head"><strong>${escapeHtml(quest.label_vi)}</strong>${action}</div><div class="ho-so-quest__bar"><span style="width:${percent}%"></span></div><small>🪙 +${quest.reward_coins}${quest.reward_rp ? ` · ⭐ +${quest.reward_rp}` : ''}</small></article>`;
+    return `<article class="ho-so-quest"><div class="ho-so-card-head"><strong>${escapeHtml(quest.label_vi)}</strong>${action}</div><div class="ho-so-quest__bar"><span style="width:${percent}%"></span></div><small>💎 +${quest.reward_diamonds}${quest.reward_rp ? ` · ⭐ +${quest.reward_rp}` : ''}</small></article>`;
   }).join('');
-  const chest = state.daily_login_chest as { available?: boolean; coins?: number } | undefined;
-  const chestHtml = chest?.available ? `<button class="fx-btn fx-btn--secondary" type="button" data-w2-daily-chest>🎁 Nhận +${Number(chest.coins) || 0} xu hôm nay</button>` : chest ? '<span class="fx-badge fx-badge--neutral">🎁 Đã nhận quà hôm nay</span>' : '';
+  const chest = state.daily_login_chest as { available?: boolean; diamonds?: number } | undefined;
+  const chestHtml = chest?.available ? `<button class="fx-btn fx-btn--secondary" type="button" data-w2-daily-chest>🎁 Nhận +${Number(chest.diamonds) || 0} 💎 hôm nay</button>` : chest ? '<span class="fx-badge fx-badge--neutral">🎁 Đã nhận quà hôm nay</span>' : '';
   const status = statusMeta(data.state || '', pack);
   const v3 = isV3Enabled();
   const avatarStage = String(state.avatar_stage || 'basic');
@@ -569,7 +569,9 @@ export function renderKidView(_container: Element, data: ProgressPayload, access
   const first = firstName(name);
   const ladder = (state.rank_ladder || {}) as Record<string, unknown>;
   const cta = buildHeroCta(pack, data, accessCode);
-  const shopHref = `/read2lead/shop?code=${encodeURIComponent(accessCode)}&v3=1`;
+  // Linking work (founder decision): the monster shop's ?v3=1 preview gate is
+  // gone (kids must be able to find the shop), so this link no longer needs it.
+  const shopHref = `/read2lead/shop?code=${encodeURIComponent(accessCode)}`;
 
   const sessionHost = qs<HTMLElement>('#ho-so-kid-session');
   const heroHost = qs<HTMLElement>('#ho-so-kid-hero');
@@ -584,7 +586,11 @@ export function renderKidView(_container: Element, data: ProgressPayload, access
   renderSession(sessionHost, name, accessCode);
   heroHost.className = 'fx-card ho-so-hero-card';
   heroHost.innerHTML = `<div class="ho-so-hero"><div class="ho-so-hero__avatar" data-hub-monster>${defaultMonsterSvg()}</div><div><p class="fx-eyebrow">Hồ sơ của con</p><h1>${escapeHtml(name)}</h1><p>Đã đọc xong <strong>${Number(progress.completed_packs || state.completed_packs || 0)} truyện</strong> và giữ chuỗi <strong>${Number(state.streak_days || 0)} ngày</strong>.</p><div class="ho-so-pill-row"><span class="fx-rank fx-rank--${PROFILE_TIERS[Math.min(7, Number(ladder.tier_index) || 0)][2]}"><span class="fx-rank__dot"></span>${escapeHtml(ladder.label_vi || state.rank_title || 'Đồng')}</span><span class="fx-badge fx-badge--neutral">${escapeHtml((state.season as Record<string, unknown> | undefined)?.name_vi || 'Mùa hiện tại')}</span></div></div></div>`;
-  statsHost.innerHTML = `<article class="fx-card ho-so-stat"><span class="fx-eyebrow">⭐ XP tổng</span><strong>${Number(state.total_xp || 0).toLocaleString('vi-VN')}</strong><small>${Number(state.xp_in_level || 0)} / ${Number(state.xp_to_next_level || 0)} XP cấp hiện tại</small></article><article class="fx-card ho-so-stat ho-so-stat--coins"><span class="fx-eyebrow">🪙 Xu</span><strong>${Number(state.coins || 0)}</strong><small>Dùng để trang trí quái vật</small></article><article class="fx-card ho-so-stat"><span class="fx-eyebrow">💎 Kim cương</span><strong>${Number(state.diamonds || 0)}</strong><small>Dùng để đổi quà thật</small></article><article class="fx-card ho-so-stat"><span class="fx-eyebrow">Chuỗi ngày</span><strong>🔥 ${Number(state.streak_days || 0)}</strong><small>Học thêm một bài để giữ nhịp</small></article>`;
+  // R2L Rewards Redesign (founder decision #5): coins no longer exist, so the
+  // separate "🪙 Xu" stat card is removed — the one-currency story means 💎
+  // now spends on BOTH monster decorations and real gifts, folded into a
+  // single "Kim cương" card instead of two.
+  statsHost.innerHTML = `<article class="fx-card ho-so-stat"><span class="fx-eyebrow">⭐ XP tổng</span><strong>${Number(state.total_xp || 0).toLocaleString('vi-VN')}</strong><small>${Number(state.xp_in_level || 0)} / ${Number(state.xp_to_next_level || 0)} XP cấp hiện tại</small></article><article class="fx-card ho-so-stat"><span class="fx-eyebrow">💎 Kim cương</span><strong>${Number(state.diamonds || 0)}</strong><small>Dùng để trang trí quái vật & đổi quà thật</small></article><article class="fx-card ho-so-stat"><span class="fx-eyebrow">Chuỗi ngày</span><strong>🔥 ${Number(state.streak_days || 0)}</strong><small>Học thêm một bài để giữ nhịp</small></article>`;
   renderRankBoard(rankHost, state);
   renderBadges(badgesHost, state);
   renderSeason(seasonHost, state);

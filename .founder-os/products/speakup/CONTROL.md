@@ -132,6 +132,15 @@ assigns, commits, merges, deploys, or spends.
   `claude-bg/shadowing-design`, folder `design_handoff_speakup_shadowing_v2/`
   (v1 folder retained as rejected/functional reference; steve-shadowing-mock
   lane cleared).
+  **DESIGN OF RECORD SWAP (2026-07-19):** the founder ran the REAL Claude
+  Design (claude.ai/design) himself with Elon's brief and exported the bundle
+  — landed byte-for-byte at `design_handoff_speakup_shadowing/` on the
+  integration branch (7cc0338). It preserves the full `shd-*` contract +
+  canonical copy; direction "night arcade on brighter starry navy" + Baloo 2
+  display font; per-screen screenshots are the rule-20 target. The internal
+  v2 set is marked superseded-prototype (honest lineage kept). Steve re-skin
+  packet dispatched (`claude-bg/shadowing-reskin`); engine/server/content
+  untouched by design. Historical record of the earlier internal rounds:
   ROUND-1 GATE (2026-07-17): both directions (A "Đêm sân khấu" night-arcade
   marquee / B "Ngày nắng hình dán" sticker-sunshine, 98dc14a) passed Elon's
   QA with zero fix rounds; FOUNDER PICKED **Direction A** for the full set,
@@ -242,10 +251,41 @@ assigns, commits, merges, deploys, or spends.
   ability, and re-check with Phương before tuning any threshold. WATCH:
   Workers AI neuron usage — if shadowing pushes past the included allocation,
   bring numbers to Phương before any degrade.
-- Design self-verification: pending — rule 20 at Phase 4 (deployed preview vs
-  approved mock, 390 + 1280, SHA recorded).
-- Founder handoff: pending — plain-language report at each phase gate; Phương
-  QA on preview with a test code before merge.
+- Design self-verification (UPDATED 2026-07-19, new design of record): **rule
+  20 MATCH on the DEPLOYED preview at 390 + 820 + 1280** (SHA 12020d2) vs the
+  founder's real Claude Design export (`design_handoff_speakup_shadowing/`
+  screenshots/01–08) — record/karaoke, picker with app header + 3-col grid,
+  and the desktop split-view all verified live by Elon (renders at
+  `_ops/shadowing-r20-*.png`); Steve's per-screen diffs + Buffet's verdict
+  chain (final: session-identity guard closes the phantom-grade repro,
+  tip-12020d2 ledgered) on the record. Two recorded deviations for founder
+  QA: gate/picker stay sequential (widened) at desktop rather than the
+  board's merged view; back-circle recipe follows file 04's tokens where
+  the boards disagree among themselves.
+- Verified commit (current): 12020d2 (origin/claude/speakup-shadowing,
+  deployed preview verified live 2026-07-19).
+- Founder QA code: R2L-QAPHUONG-QPSD (is_test, expires 2026-07-21).
+- v2-era self-verification kept for lineage: **DONE 2026-07-17 — rule 20
+  MATCH on the DEPLOYED
+  preview** (claude-speakup-shadowing.felixbuilderhub.pages.dev, SHA 59441e0)
+  at 390 AND 1280 vs the approved Night Arcade boards, via a routed harness
+  (stubbed identity only, real bundle + real content). Pass #1 caught 3
+  defects (1280 stage collapse, ribbon crowding, hardcoded "Đang ghi âm"
+  while idle) — all fixed (Steve rounds 3–4, Buffet reject→approve cycle
+  incl. the overflow-clip shear catch) and re-verified live in pass #2.
+  Screenshots `_ops/shadowing-r20-*.png`.
+- Capacity/burst verification: **DONE 2026-07-17 live on the preview**
+  (throwaway is_test code R2L-SHADOWPROB-6HBV, synth voice, 1-day expiry):
+  classroom pace 10/10 HTTP 200, score 100, 1.3–2.1s latency, azure evidence
+  ABSENT from every response (bypass verified live); hammer phase tripped the
+  per-code limiter at exactly call #21/60s with Retry-After (20/60s design
+  confirmed).
+- Verified commit: 59441e0 (origin/claude/speakup-shadowing, deployed preview
+  verified live).
+- Founder handoff: IN PROGRESS — remaining founder gates: (1) content review
+  of both DEV-DRAFT videos (flip `content_status` → `approved` per video =
+  the sign-off artifact), (2) hands-on QA on the preview with a test code,
+  (3) merge ack to main.
 
 ## Prior task (complete): speakup-rewards-tracker
 

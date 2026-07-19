@@ -15,10 +15,10 @@ import {
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-test('COSMETIC_PRICES match spec tier table', () => {
-  assert.deepEqual(COSMETIC_PRICES.hat, { common: 80, rare: 200, epic: 400 });
-  assert.deepEqual(COSMETIC_PRICES.pet, { common: 120, rare: 280, epic: 500 });
-  assert.deepEqual(COSMETIC_PRICES.wings, { common: 200, rare: 400, epic: 800 });
+test('COSMETIC_PRICES match spec tier table (diamonds, 1💎 = 2🪙)', () => {
+  assert.deepEqual(COSMETIC_PRICES.hat, { common: 40, rare: 100, epic: 200 });
+  assert.deepEqual(COSMETIC_PRICES.pet, { common: 60, rare: 140, epic: 250 });
+  assert.deepEqual(COSMETIC_PRICES.wings, { common: 100, rare: 200, epic: 400 });
 });
 
 // V5 Track B disabled — art style conflict với Kenney monster cartoon.
@@ -41,10 +41,10 @@ test('humanizePartId returns Vietnamese labels for cosmetics', () => {
 });
 
 test('executeBuy purchases hat common part', () => {
-  const result = executeBuy({ coins: 200, unlocked_parts: [] }, 'hat-crown-mint');
+  const result = executeBuy({ current_level: 'L1', diamonds: 200, unlocked_parts: [] }, 'hat-crown-mint');
   assert.equal(result.error, undefined);
-  assert.equal(result.state.coins, 120);
-  assert.deepEqual(result.reward, { part_id: 'hat-crown-mint', price: 80 });
+  assert.equal(result.state.diamonds, 160);
+  assert.deepEqual(result.reward, { part_id: 'hat-crown-mint', price: 40 });
 });
 
 test('getPartSlot resolves cosmetic ids', () => {

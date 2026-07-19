@@ -13,7 +13,9 @@ export const SEASONS = [
   { id: '2027-S1', name_vi: 'Mùa Xuân Mới', emoji: '🌸', starts: '2027-01-01', ends: '2027-02-28' },
 ];
 
-export const SEASON_REWARD_COINS = [10, 20, 35, 50, 70, 90, 120, 150];
+// R2L-REWARDS-REDESIGN (2026-07-18): converted coins -> diamonds at 1💎 = 2🪙
+// (floor), per SPEC_R2L_REWARDS_REDESIGN.md §3.3/§5 ([10..150] -> [5..75]).
+export const SEASON_REWARD_DIAMONDS = [5, 10, 17, 25, 35, 45, 60, 75];
 
 export const RANK_TIER_COSTS = [9, 9, 12, 12, 15, 15, 15];
 
@@ -60,7 +62,7 @@ export function seasonById(seasonId) {
   return found ? { ...found } : { ...PRE_SEASON };
 }
 
-export function seasonRewardCoins(peakTierIndex) {
+export function seasonRewardDiamonds(peakTierIndex) {
   const index = Math.max(0, Math.min(7, Math.floor(Number(peakTierIndex) || 0)));
-  return SEASON_REWARD_COINS[index] || 0;
+  return SEASON_REWARD_DIAMONDS[index] || 0;
 }

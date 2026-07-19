@@ -207,7 +207,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
                   <p class="r2l-book-eyebrow">Trang hoàn thành</p>
                   <h3>Con được 1 ngôi sao!</h3>
                   <p>Minny: “Con bỏ túi một sao! Sang trang tiếp theo nhé.”</p>
-                  <div class="r2l-book-reward__pills"><span>+25 XP</span><span>+5 xu</span></div>
+                  <div class="r2l-book-reward__pills"><span>+25 XP</span><span>+5 💎</span></div>
                   <button id="book-reader-next" class="r2l-book-next-cta" type="button" disabled>Trang tiếp →</button>
                 </section>
               </div>
@@ -2544,6 +2544,10 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     activityComplete: '/sfx/r2l/page-complete.mp3',
     packComplete: '/sfx/r2l/final-reward.mp3',
     levelUp: '/sfx/r2l/voice-xuatsac.mp3',
+    // R2L Rewards Redesign (SPEC_R2L_REWARDS_REDESIGN §3.4/Phase 5): short
+    // celebratory chime for the +N💎 reward — NOT Minny's voice (founder
+    // decision #3). Small CC0 asset, see public/audio/kenney/CREDITS.md.
+    diamondChime: '/sfx/r2l/diamond-chime.mp3',
   };
 
   const VOICE_POOL = [
@@ -2602,6 +2606,41 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     window.setTimeout(() => playSfx(pickVoiceClip(), { volume: 0.95 }), delayMs);
   }
 
+  /* ----- R2L Rewards Redesign: diamond reward ticker + celebration -----
+   * SPEC_R2L_REWARDS_REDESIGN.md §3.1/§3.4. A floating "+N💎" badge (same
+   * DOM/CSS pattern as the existing XP ticker, see showXpTicker in
+   * lesson-juice.ts and .w2-xp-ticker in r2l-w2-dynamic.css) plus a
+   * lightweight confetti burst and a chime. Deliberately NOT the
+   * UnlockCelebration modal: that <dialog> blocks interaction until
+   * dismissed, and firing it on every page turn in a book would gate the
+   * kid's reading flow (forbidden by the packet's stop condition). Confetti
+   * + sound are debounced to a 1.5s minimum interval (spec edge case: very
+   * short pages completing back-to-back); the ticker itself always shows.
+   */
+  const PAGE_DIAMOND_REWARD = 5;
+  const DIAMOND_CELEBRATION_DEBOUNCE_MS = 1500;
+  let _r2lLastDiamondCelebrationAt = 0;
+
+  function showDiamondTicker(amount, anchorSelector = 'body') {
+    if (typeof document === 'undefined' || !Number.isFinite(amount) || amount <= 0) return;
+    const anchor = qs(anchorSelector) || document.body;
+    const ticker = document.createElement('span');
+    ticker.className = 'w2-diamond-ticker';
+    ticker.textContent = `+${Math.round(amount)} 💎`;
+    ticker.setAttribute('role', 'status');
+    anchor.appendChild(ticker);
+    window.setTimeout(() => ticker.remove(), 1800);
+  }
+
+  function celebrateDiamondReward(amount, { anchorSelector = 'body' } = {}) {
+    showDiamondTicker(amount, anchorSelector);
+    const now = Date.now();
+    if (now - _r2lLastDiamondCelebrationAt < DIAMOND_CELEBRATION_DEBOUNCE_MS) return;
+    _r2lLastDiamondCelebrationAt = now;
+    window.__r2lJuice?.fireStreakConfetti?.();
+    playSfx(SFX.diamondChime, { volume: 0.7 });
+  }
+
   function setSfxMuted(muted) {
     _r2lSfxState.muted = !!muted;
     try {
@@ -2615,7 +2654,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   function preloadSfxOnce() {
     if (_r2lSfxPreloaded) return;
     _r2lSfxPreloaded = true;
-    [SFX.correctCommon, SFX.wrong, SFX.activityComplete, SFX.packComplete].forEach((src) => {
+    [SFX.correctCommon, SFX.wrong, SFX.activityComplete, SFX.packComplete, SFX.diamondChime].forEach((src) => {
       try { _r2lGetAudio(src).load(); } catch {}
     });
   }
@@ -4198,22 +4237,27 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     if (isW1() && !isBookLesson()) w1ShowResultRecap();
     const rewards = _r2lTriviaState.pendingRewards || data.rewards_earned || {};
     const completedWithoutReward = data.completed_without_reward === true;
+    // R2L Rewards Redesign: rewards.coins was replaced by rewards.diamonds in
+    // the submit response (SPEC_R2L_REWARDS_REDESIGN §5 Phase 2/3) — read the
+    // new field, falling back to the old one in case the backend deploy
+    // hasn't landed yet (avoids "Con nhận 0💎" on a stale/mixed rollout).
+    const rewardDiamonds = Number(rewards.diamonds ?? rewards.coins ?? 0);
     qs('#completion-copy').textContent = completedWithoutReward
       ? 'Bài đã kết thúc. Phần nói được bỏ qua nên con không nhận sao hay điểm, nhưng vẫn có thể tạo bài mới.'
-      : `Con nhận 🪙 ${rewards.coins || 0} xu và ⭐ ${rewards.xp || 0} XP cho nhiệm vụ này.`;
+      : `Con nhận 💎 ${rewardDiamonds} và ⭐ ${rewards.xp || 0} XP cho nhiệm vụ này.`;
     qs('#completion-card').classList.remove('hidden');
     if (state.accessCode) {
       qs('#completion-new-pack').href = `/read2lead?code=${encodeURIComponent(state.accessCode)}#form`;
       qs('#completion-gift-shop').href = `/read2lead/gifts?code=${encodeURIComponent(state.accessCode)}`;
     }
     // Celebrate the reading FIRST (completion-copy above already shows the
-    // 🪙 xu just earned) — THEN, regardless of whether this particular
-    // submission earned a reward, gently surface the diamond goal so the
-    // reading never reads as pointless just because it earned zero 💎
-    // (diamonds only ever come from live class / SpeakUp). Rendering is
-    // handled by a real ES module (see the plain <script> block near the
-    // end of this file) so it can import the shared GiftGoalCard component
-    // instead of re-deriving its markup inline here.
+    // 💎 just earned) — THEN surface the running diamond goal (the gift-goal
+    // progress bar tracks the cumulative balance, not this lesson's delta)
+    // so the reading never reads as pointless just because this particular
+    // submission earned zero 💎. Rendering is handled by a real ES module
+    // (see the plain <script> block near the end of this file) so it can
+    // import the shared GiftGoalCard component instead of re-deriving its
+    // markup inline here.
     const goalState = _r2lTriviaState.pendingState || data.read2lead_state || null;
     if (state.accessCode) {
       document.dispatchEvent(new CustomEvent('r2l:gift-goal', {
@@ -4226,9 +4270,10 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
       }));
     }
     if (completedWithoutReward) return;
-    window.__r2lJuice?.playSynthTone?.('coin', _r2lSfxState.muted);
+    playSfx(SFX.diamondChime, { volume: 0.6 });
     window.__r2lJuice?.fireLessonPassConfetti?.();
     window.__r2lJuice?.showXpTicker?.(Number(rewards.xp || 0), '#completion-card');
+    showDiamondTicker(rewardDiamonds, '#completion-card');
     if (_r2lTriviaState.pendingLevelUp) {
       window.__r2lJuice?.playSynthTone?.('level-up', _r2lSfxState.muted);
       playSfxSequence([SFX.packComplete, SFX.levelUp], 700);
@@ -6191,13 +6236,24 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
       bookSetStage('shadow');
       return;
     }
-    if (state.bookReader.pageIndex >= state.lesson.book_images.length - 1) {
-      playSfx(SFX.levelUp, { volume: 0.6 });
-      bookSetStage('next');
-      return;
-    }
     playSfx(SFX.levelUp, { volume: 0.6 });
+    // R2L Rewards Redesign (SPEC_R2L_REWARDS_REDESIGN §3.1): this page's
+    // read-aloud unit is fully settled (every chunk passed or was skipped).
+    // Award the +5💎 celebration only if at least one chunk on this page
+    // actually PASSED — a page where every chunk was mic-skipped or
+    // exhausted its 3 attempts earns 0 diamonds (matches the
+    // completed_without_reward pattern), so no ticker/confetti/chime fires.
+    // Zero-read (image-only) pages never reach this function at all — they
+    // go straight to 'next' via bookPracticeStageForPage — so they're
+    // naturally excluded too (spec edge case: no read unit, no reward).
+    const pagePassed = page.page_reads.some((read) => read.status === 'passed');
+    // bookSetStage('next') unhides #book-reader-next-stage synchronously —
+    // call it BEFORE celebrateDiamondReward so the ticker's CSS animation
+    // starts on a visible element instead of one still under display:none.
     bookSetStage('next');
+    if (pagePassed) {
+      celebrateDiamondReward(PAGE_DIAMOND_REWARD, { anchorSelector: '#book-reader-next-stage' });
+    }
   }
 
   function bookUpdateNavigation() {
@@ -8424,13 +8480,12 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     }
     header.querySelector('[data-r2l-xp-label]').textContent = `⭐ ${read2LeadState.xp_in_level ?? 0}/${read2LeadState.xp_to_next_level ?? 60} XP`;
     header.querySelector('[data-r2l-xp-fill]').style.width = `${read2LeadState.xp_percent ?? 0}%`;
-    header.querySelector('[data-r2l-coins]').textContent = `🪙 ${read2LeadState.coins || 0} xu`;
-    // Bug fix: this function only ever set [data-r2l-coins], never
-    // [data-r2l-diamonds] — the header badge (see Header.astro) exists and
-    // is populated correctly on first page load, but stayed frozen at
-    // "💎 0" for the rest of the lesson because a live post-submit refresh
-    // never touched it. Format matches Header.astro's own live-set version
-    // (no trailing unit word — the badge is too narrow for one).
+    // R2L Rewards Redesign (founder decision #5): the header's 🪙 coin badge
+    // is removed (Header.astro no longer renders [data-r2l-coins] — see that
+    // file's own diff), so this function no longer writes to it. Diamonds
+    // remain the only currency badge; format matches Header.astro's own
+    // live-set version (no trailing unit word — the badge is too narrow for
+    // one).
     header.querySelector('[data-r2l-diamonds]').textContent = `💎 ${read2LeadState.diamonds || 0}`;
     header.querySelector('[data-r2l-streak]').textContent = `${read2LeadState.streak_days || 0} ngày`;
   }

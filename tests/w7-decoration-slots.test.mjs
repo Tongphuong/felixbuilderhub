@@ -31,7 +31,7 @@ function makeProgress(overrides = {}) {
   return {
     schema_version: 2,
     level_reset_version: 20260606,
-    coins: 2000,
+    diamonds: 2000,
     avatar_stage: 'custom',
     unlocked_parts: [],
     rank_points: 9,
@@ -122,7 +122,7 @@ test('normalizeAvatarMonster accepts valid decoration fields', () => {
 });
 
 test('shop view exposes all decoration tiers and exact slot pricing', () => {
-  const items = buildShopView({ coins: 2000, unlocked_parts: [] });
+  const items = buildShopView({ diamonds: 2000, unlocked_parts: [] });
   for (const slot of ['effects', 'frame']) {
     for (const rarity of ['common', 'rare', 'epic']) {
       const item = items.find((candidate) =>
@@ -147,12 +147,12 @@ test('Vietnamese labels cover effects, frames, and cầu vồng', () => {
 });
 
 test('executeBuy accepts a common effect but still rejects a common body', () => {
-  const effectResult = executeBuy({ coins: 100, unlocked_parts: [] }, COMMON_EFFECT);
+  const effectResult = executeBuy({ diamonds: 100, unlocked_parts: [] }, COMMON_EFFECT);
   assert.equal(effectResult.error, undefined);
-  assert.equal(effectResult.state.coins, 50);
-  assert.equal(effectResult.reward.price, 50);
+  assert.equal(effectResult.state.diamonds, 75);
+  assert.equal(effectResult.reward.price, 25);
 
-  const bodyResult = executeBuy({ coins: 100, unlocked_parts: [] }, COMMON_BODY);
+  const bodyResult = executeBuy({ diamonds: 100, unlocked_parts: [] }, COMMON_BODY);
   assert.equal(bodyResult.error, 'common_parts_are_free');
 });
 

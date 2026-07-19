@@ -1,6 +1,13 @@
-import { play as playAudio } from './r2l-audio';
-
-const W7_BUILD_ENABLED = import.meta.env.PUBLIC_R2L_W7 === '1';
+// r2l-audio is dynamically imported at each call site below (not a static
+// top-level import) — same pattern as lesson-juice.ts's playKenney(), and
+// required so this module stays live-importable from a plain Node test
+// (see tests/shop-ux.test.mjs's real-click regression test): a static
+// import of a browser-only Howler dependency can't resolve outside Vite.
+//
+// import.meta.env is Vite's own extension (undefined outside a Vite build,
+// e.g. under plain `node --test`) — optional-chained so this module doesn't
+// throw at evaluation time there; identical behavior inside the real app.
+const W7_BUILD_ENABLED = import.meta.env?.PUBLIC_R2L_W7 === '1';
 
 export type ShopRarity = 'common' | 'rare' | 'epic';
 
@@ -78,10 +85,22 @@ export function partThumbnailUrl(partId: string, itemSlot = ''): string | undefi
   return `/assets/monsters/raw/PNG/Default/${fileName}`;
 }
 
+async function playR2lAudio(name: string): Promise<void> {
+  // Matches lesson-juice.ts's playKenney() exactly: audio is optional, so a
+  // resolution/playback failure here must never surface as an unhandled
+  // rejection (several call sites below fire this with `void`, not awaited).
+  try {
+    const { play } = await import('./r2l-audio');
+    await play(name);
+  } catch {
+    /* optional audio */
+  }
+}
+
 export async function buyPart(
   partId: string,
   code: string,
-): Promise<{ ok: boolean; reward?: { part_id: string; price: number }; coins?: number; error?: string; message?: string }> {
+): Promise<{ ok: boolean; reward?: { part_id: string; price: number }; diamonds?: number; coins?: number; error?: string; message?: string }> {
   try {
     const res = await fetch('/api/read2lead-shop-buy', {
       method: 'POST',
@@ -89,7 +108,7 @@ export async function buyPart(
       body: JSON.stringify({ code, part_id: partId }),
     });
     const data = await res.json();
-    if (data.ok) await playAudio('coin-clink');
+    if (data.ok) await playR2lAudio('coin-clink');
     return data;
   } catch {
     return { ok: false, error: 'network' };
@@ -97,11 +116,11 @@ export async function buyPart(
 }
 
 export async function playDisabledBuzz(): Promise<void> {
-  await playAudio('near-miss');
+  await playR2lAudio('near-miss');
 }
 
 export async function showUnlock(partName: string, rarity: string): Promise<void> {
-  await playAudio('quest-complete');
+  await playR2lAudio('quest-complete');
   const dialog = document.querySelector('.unlock-celebration') as HTMLDialogElement | null;
   if (!dialog) return;
   dialog.dataset.rarity = rarity;
@@ -123,7 +142,7 @@ export function showInsufficient(needed: number, current: number): void {
   if (!dialog) return;
   const deficit = Math.max(0, needed - current);
   const title = dialog.querySelector('.insufficient-title') as HTMLElement | null;
-  if (title) title.textContent = `Còn thiếu ${deficit} xu`;
+  if (title) title.textContent = `Còn thiếu ${deficit} 💎`;
   dialog.dataset.deficit = String(deficit);
   if (typeof dialog.showModal === 'function') dialog.showModal();
 }
@@ -168,11 +187,28 @@ function renderShopItem(item: ShopRow): string {
   const art = thumb
     ? `<img src="${escapeHtml(thumb)}" alt="${escapeHtml(item.name)}" loading="lazy" width="72" height="72" />`
     : '<div class="shop-item-placeholder" aria-hidden="true">🎨</div>';
+  // Founder decision #5 (SPEC_R2L_REWARDS_REDESIGN §3.2): Silver+ kids see
+  // every item at price 0 from the backend (buildShopView) — render that as
+  // an always-enabled "Nhận miễn phí" button instead of a 0💎 buy button.
+  // Below-Silver kids keep the normal 💎 price + can_afford gate.
+  const isFree = item.price === 0;
+  const priceLabel = isFree
+    ? '<span class="shop-item-free-label">Nhận miễn phí</span>'
+    : `<span class="shop-item-diamond" aria-hidden="true">💎</span><span class="shop-item-price">${item.price}</span>`;
+  // Bug fix (founder-confirmed live, pre-existing before this packet): a
+  // NATIVE `disabled` attribute makes browsers refuse to dispatch click
+  // events to the button at all — a real kid tapping an unaffordable item
+  // got no buzz, no modal, nothing. aria-disabled is purely semantic/visual
+  // (styled via [aria-disabled='true'] in shop.astro) and does NOT block
+  // event dispatch, so the click handler below can still catch the tap and
+  // show the correct insufficient-diamonds modal. The button stays focusable
+  // and keyboard-activatable too, which is the accessible-correct behavior
+  // for "disabled with an explanation on click".
   const action = item.owned
     ? '<span class="shop-item-owned"><span aria-hidden="true">✓</span> Có rồi</span>'
-    : `<button class="shop-item-buy" type="button" data-part-id="${escapeHtml(item.id)}" data-price="${item.price}" ${item.can_afford ? '' : 'disabled'}><span class="shop-item-coin" aria-hidden="true">🪙</span><span class="shop-item-price">${item.price}</span></button>`;
+    : `<button class="shop-item-buy" type="button" data-part-id="${escapeHtml(item.id)}" data-price="${item.price}" aria-disabled="${item.can_afford ? 'false' : 'true'}">${priceLabel}</button>`;
   return `
-    <article class="shop-item" data-slot="${escapeHtml(item.slot)}" data-rarity="${escapeHtml(item.rarity)}" data-owned="${item.owned}" data-can-afford="${item.can_afford}">
+    <article class="shop-item" data-slot="${escapeHtml(item.slot)}" data-rarity="${escapeHtml(item.rarity)}" data-owned="${item.owned}" data-can-afford="${item.can_afford}" data-free="${isFree}">
       <div class="shop-item-art">${art}${tierBadgeHtml(item.rarity)}</div>
       <h3 class="shop-item-name">${escapeHtml(item.name)}</h3>
       <div class="shop-item-action">${action}</div>
@@ -222,16 +258,16 @@ function renderSection(tier: ShopRarity, title: string, items: ShopRow[]): strin
 export function initShopPage(hooks: ShopPageHooks): void {
   let accessCode = '';
   let shopItems: ShopRow[] = [];
-  let shopCoins = 0;
+  let shopDiamonds = 0;
   let profileHref = '/ho-so';
   let activeSlot = 'all';
 
   const qs = (sel: string) => document.querySelector(sel);
 
-  const setShopCoins = (value: number) => {
-    shopCoins = Number(value) || 0;
-    const coins = qs('#shop-coins');
-    if (coins) coins.textContent = String(shopCoins);
+  const setShopDiamonds = (value: number) => {
+    shopDiamonds = Number(value) || 0;
+    const diamonds = qs('#shop-diamonds');
+    if (diamonds) diamonds.textContent = String(shopDiamonds);
   };
 
   const bindShopActions = () => {
@@ -242,9 +278,12 @@ export function initShopPage(hooks: ShopPageHooks): void {
       button.addEventListener('click', async () => {
         const partId = button.dataset.partId || '';
         const price = Number(button.dataset.price || 0);
-        if (button.disabled) {
+        // See renderShopItem's comment: this reads aria-disabled, not the
+        // native disabled property — a real tap must reach this handler so
+        // the kid gets the "Còn thiếu N💎" modal instead of silence.
+        if (button.getAttribute('aria-disabled') === 'true') {
           void playDisabledBuzz();
-          showInsufficient(price, shopCoins);
+          showInsufficient(price, shopDiamonds);
           return;
         }
         if (!(await hooks.confirmBuy())) return;
@@ -258,11 +297,11 @@ export function initShopPage(hooks: ShopPageHooks): void {
           hooks.onError(payload.message || 'Không thể mua.');
           return;
         }
-        setShopCoins(payload.coins || 0);
+        setShopDiamonds(payload.diamonds ?? payload.coins ?? 0);
         const bought = shopItems.find((item) => item.id === partId);
         shopItems = shopItems.map((item) => {
           if (item.id !== partId) {
-            return { ...item, can_afford: !item.owned && shopCoins >= item.price };
+            return { ...item, can_afford: !item.owned && (item.price === 0 || shopDiamonds >= item.price) };
           }
           return { ...item, owned: true, can_afford: false };
         });
@@ -325,7 +364,7 @@ export function initShopPage(hooks: ShopPageHooks): void {
     if (!payload.ok) throw new Error(payload.message || 'Không thể mở cửa hàng.');
 
     shopItems = visibleShopItems(payload.items || []);
-    setShopCoins(payload.coins || 0);
+    setShopDiamonds(payload.diamonds ?? payload.coins ?? 0);
     qs('#shop-shell')?.classList.remove('hidden');
     profileHref = `/ho-so?code=${encodeURIComponent(accessCode)}&v3=1`;
     const profileLink = qs('#shop-profile-link') as HTMLAnchorElement | null;
