@@ -132,6 +132,15 @@ assigns, commits, merges, deploys, or spends.
   `claude-bg/shadowing-design`, folder `design_handoff_speakup_shadowing_v2/`
   (v1 folder retained as rejected/functional reference; steve-shadowing-mock
   lane cleared).
+  **DESIGN OF RECORD SWAP (2026-07-19):** the founder ran the REAL Claude
+  Design (claude.ai/design) himself with Elon's brief and exported the bundle
+  — landed byte-for-byte at `design_handoff_speakup_shadowing/` on the
+  integration branch (7cc0338). It preserves the full `shd-*` contract +
+  canonical copy; direction "night arcade on brighter starry navy" + Baloo 2
+  display font; per-screen screenshots are the rule-20 target. The internal
+  v2 set is marked superseded-prototype (honest lineage kept). Steve re-skin
+  packet dispatched (`claude-bg/shadowing-reskin`); engine/server/content
+  untouched by design. Historical record of the earlier internal rounds:
   ROUND-1 GATE (2026-07-17): both directions (A "Đêm sân khấu" night-arcade
   marquee / B "Ngày nắng hình dán" sticker-sunshine, 98dc14a) passed Elon's
   QA with zero fix rounds; FOUNDER PICKED **Direction A** for the full set,
