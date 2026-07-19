@@ -123,8 +123,9 @@
  *     saveSnapshot() call FIRST (teardownPlayer() nulls the session/video
  *     saveSnapshot() reads) so stars are always current on the picker
  *     regardless of which phase the kid exited from. Disabled (not
- *     hidden, so the header doesn't jump) during the 'listen' subview —
- *     the same signal switchSubview() already blurs the HUD on — and
+ *     hidden, so the header doesn't jump) during the 'listen' AND 'wait'
+ *     subviews (both grading-pipeline states, board 06's 429/outage side
+ *     card included, not just the visually-blurred 'listen' one) — and
  *     hidden entirely on the video-complete screen, which draws no such
  *     glyph in board 07 (the existing quiet "← Chọn video khác" link
  *     stays that screen's only back affordance).
@@ -139,6 +140,26 @@
  *     and its post-fetch resume, and startVideo()'s post-ensurePlayer()
  *     resume (which also destroys the just-created orphan YouTube player
  *     so the next video picked doesn't inherit it).
+ *
+ *     Buffet's closing review on the first cut (9c34ef7) constructed a real
+ *     HIGH against the submitRecording() guard: it compared currentVideo,
+ *     but `videos` is parsed once at page load, so a picker card for the
+ *     SAME video closes over the same stable object -- exiting via
+ *     onUnplayable() (a teardown path that, unlike goBackToPicker(), is NOT
+ *     click-gated) or the header button, then re-picking that identical
+ *     video, left `currentVideo === videoAtStart` true even though session
+ *     was a brand-new object, so the stale fetch could write a phantom
+ *     SPEECH_SCORED into the fresh session. Fixed by capturing the SESSION
+ *     OBJECT itself (`sessionAtStart`) and guarding on identity
+ *     (`session !== sessionAtStart`) -- reduce() always returns a new
+ *     object, so this is the only correct proxy for "still this exact
+ *     attempt," including across a same-video re-entry; a video/session-id
+ *     comparison would NOT catch this (ids are equal; only the object
+ *     identity changes). onUnplayable() also gained its own saveSnapshot()
+ *     call (it bypasses goBackToPicker() entirely, so it needed the same
+ *     fix independently) -- the "stars always current regardless of exit
+ *     path" claim above is now literally true for every exit, not just the
+ *     goBackToPicker() ones.
  *
  * v2-era items now resolved by this reskin (no longer deviations):
  *  - The picker is now the boards' 2-column poster grid (16:10 thumbnail
@@ -518,6 +539,7 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
     const SUBVIEWS = ['watch', 'question', 'record', 'listen', 'wait'];
     function switchSubview(name) {
       const listening = name === 'listen';
+      const waiting = name === 'wait';
       els.watchPanel.classList.toggle('hidden', name !== 'watch');
       els.questionPanel.classList.toggle('hidden', name !== 'question');
       els.questionCard.classList.toggle('hidden', name !== 'question');
@@ -525,18 +547,18 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
       // overlay — board 05's "waiting" state, not a screen swap.
       els.recordPanel.classList.toggle('hidden', !(name === 'record' || listening));
       els.listenPanel.classList.toggle('hidden', !listening);
-      els.waitPanel.classList.toggle('hidden', name !== 'wait');
+      els.waitPanel.classList.toggle('hidden', !waiting);
       els.summary.classList.toggle('hidden', name !== 'summary');
       els.summary.classList.remove('shd-summary--calm');
       els.hud.classList.toggle('shd-blurred', listening);
       els.stageCols.classList.toggle('shd-blurred', listening);
-      // p6: the header back-circle is tappable in every stage phase EXCEPT
-      // the 1-3s grading wait (board's "Minny đang nghe…" overlay) -- same
-      // signal this function already blurs the HUD on (`listening` above),
-      // so a grade in flight can never land after the kid has already left
-      // for the picker (see the matching session-torn-down guards in
+      // p6 (Buffet review): the header back-circle is disabled during
+      // 'listen' (grading in flight) AND 'wait' (429/outage backoff card,
+      // board 06 side frame) -- both are grading-pipeline states, not just
+      // the visually-blurred 'listen' one, so exiting mid-either must be
+      // blocked the same way (see the matching session-identity guards in
       // submitRecording/onAnswerQuestion/startVideo).
-      els.stageBackBtn.disabled = listening;
+      els.stageBackBtn.disabled = listening || waiting;
     }
 
     function setPlayerPaused(isPaused) {
@@ -714,6 +736,13 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
     els.stageBackBtn.addEventListener('click', goBackToPicker);
 
     function onUnplayable() {
+      // p6 (Buffet review): this exit path bypasses goBackToPicker() (it
+      // renders the unplayable-notice card, not a plain showPicker()), so it
+      // needs its OWN saveSnapshot() before teardownPlayer() nulls the
+      // session/currentVideo it reads -- without this, the "stars always
+      // current on the picker regardless of exit path" claim was false for
+      // exactly this path.
+      saveSnapshot();
       teardownPlayer();
       switchScreen('picker');
       renderPicker();
@@ -1220,7 +1249,18 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
     // back to 3s only if the header is missing/unparseable).
     async function submitRecording(blob) {
       const seg = currentSegment();
-      const videoAtStart = currentVideo; // p6: detect an exit mid-request below
+      // p6 (Buffet review, HIGH): capture the SESSION OBJECT, not the video.
+      // `videos` is parsed once at page load, so the same-video picker card
+      // closes over the same stable object -- comparing currentVideo (or
+      // any video id) cannot tell "still this attempt" from "kid backed out
+      // via onUnplayable()/the header button, then re-picked the SAME
+      // video": currentVideo would read equal again even though session is
+      // a brand-new object from the fresh createShadowingSession() call.
+      // Session identity is the only correct proxy for "this exact attempt
+      // is still live" -- reduce() always returns a new session object, so
+      // a fresh session from ANY re-entry (same video or not) never ===
+      // the one captured here.
+      const sessionAtStart = session;
       showListening();
       const formData = new FormData();
       formData.append('access_code', accessCode);
@@ -1242,13 +1282,16 @@ const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
         data = null;
       }
 
-      // p6: the header back button is tappable during 'record' (this
-      // request is already in flight by the time it becomes 'listen' and
-      // gets disabled -- see switchSubview) -- teardownPlayer() nulls
-      // session/currentVideo on exit, so a grade must never resume onto an
-      // unmounted stage screen (showWait/showCelebrate/showGiveUp all
-      // assume a live session).
-      if (!session || currentVideo !== videoAtStart) return;
+      // p6 (Buffet review, HIGH): the header back button is tappable during
+      // 'record' (this request is already in flight by the time it becomes
+      // 'listen' and gets disabled -- see switchSubview) -- teardownPlayer()
+      // nulls session on exit, and a fresh re-pick (even of the SAME video)
+      // assigns session a brand-new object, so `session !== sessionAtStart`
+      // catches both "exited, never came back" and "exited, then re-entered"
+      // — a grade must never resume onto an unmounted OR a since-replaced
+      // stage screen (showWait/showCelebrate/showGiveUp all assume the
+      // live session is the one this fetch was graded for).
+      if (!session || session !== sessionAtStart) return;
 
       // A totally-thrown fetch (res still null -- network dropped mid-
       // request) is exactly the same kind of outage as a 429 or a

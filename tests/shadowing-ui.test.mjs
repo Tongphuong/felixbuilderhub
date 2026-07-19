@@ -542,12 +542,14 @@ test('the round 44px back-circle button exists in the stage HUD with the boards\
   assert.ok(/var\(--shd-cream-soft\)/.test(backRuleMatch[1]), 'expected the "‹" glyph to use var(--shd-cream-soft), matching file 04\'s shipped recipe');
 });
 
-test('the back-circle is disabled during the grading-wait ("listen") subview, the same signal that already blurs the HUD', () => {
+test('the back-circle is disabled during BOTH grading-pipeline subviews -- "listen" (grading in flight) and "wait" (429/outage backoff) -- not just the visually-blurred one (Buffet review)', () => {
   const switchSubviewMatch = page.match(/function switchSubview\(name\)\s*{[\s\S]*?\n {4}}\n/);
   assert.ok(switchSubviewMatch, 'expected to locate switchSubview()');
   const body = switchSubviewMatch[0];
-  assert.match(body, /els\.hud\.classList\.toggle\('shd-blurred',\s*listening\)/, 'expected the existing HUD-blur-during-listen line (the pattern to match)');
-  assert.match(body, /els\.stageBackBtn\.disabled\s*=\s*listening/, 'expected els.stageBackBtn.disabled to be driven by the same `listening` flag as the HUD blur');
+  assert.match(body, /const listening = name === 'listen';/, 'expected the `listening` flag definition');
+  assert.match(body, /const waiting = name === 'wait';/, 'expected a `waiting` flag definition, sibling to `listening`');
+  assert.match(body, /els\.hud\.classList\.toggle\('shd-blurred',\s*listening\)/, 'expected the HUD blur to stay listen-only (board 06\'s wait card is its own visible panel, not a blur)');
+  assert.match(body, /els\.stageBackBtn\.disabled\s*=\s*listening\s*\|\|\s*waiting/, 'expected els.stageBackBtn.disabled to be driven by listening OR waiting, not listening alone');
 });
 
 test('the back-circle is wired to goBackToPicker(), which saves the snapshot BEFORE teardownPlayer() nulls the session it reads', () => {
@@ -560,6 +562,16 @@ test('the back-circle is wired to goBackToPicker(), which saves the snapshot BEF
   const teardownIdx = body.indexOf('teardownPlayer();');
   assert.ok(saveIdx !== -1, 'expected goBackToPicker() to call saveSnapshot()');
   assert.ok(teardownIdx !== -1 && saveIdx < teardownIdx, 'expected saveSnapshot() BEFORE teardownPlayer() -- teardownPlayer() nulls session/currentVideo, which saveSnapshot() reads');
+});
+
+test('onUnplayable() also saves the snapshot BEFORE teardownPlayer(), independently of goBackToPicker() (Buffet review: this exit path bypasses it entirely)', () => {
+  const fnMatch = page.match(/function onUnplayable\(\)\s*{[\s\S]*?\n {4}}\n/);
+  assert.ok(fnMatch, 'expected to locate onUnplayable()');
+  const body = fnMatch[0];
+  const saveIdx = body.indexOf('saveSnapshot();');
+  const teardownIdx = body.indexOf('teardownPlayer();');
+  assert.ok(saveIdx !== -1, 'expected onUnplayable() to call saveSnapshot()');
+  assert.ok(teardownIdx !== -1 && saveIdx < teardownIdx, 'expected saveSnapshot() BEFORE teardownPlayer() in onUnplayable(), same ordering requirement as goBackToPicker()');
 });
 
 test('showComplete() hides the back-circle (board 07 draws no such glyph); startVideo() resets it visible+enabled for a fresh video', () => {
@@ -585,7 +597,30 @@ test('the three async race points a mid-session back-tap makes reachable all che
   const submitCallIdx = stopBody.indexOf('await submitRecording(blob);');
   assert.ok(sessionGuardIdx !== -1 && submitCallIdx !== -1 && sessionGuardIdx < submitCallIdx, 'expected stopRecording() to check session is still live BEFORE calling submitRecording() (which reads session unconditionally as its first statement)');
 
+  // (Buffet review, HIGH) `videos` is parsed once at page load, so a picker
+  // card for the SAME video closes over the same stable object -- comparing
+  // currentVideo cannot distinguish "still this attempt" from "exited (e.g.
+  // via the NOT click-gated onUnplayable() path) then re-picked the
+  // identical video," which left currentVideo === videoAtStart true even
+  // though session was a brand-new object, letting a stale fetch write a
+  // phantom SPEECH_SCORED into the fresh session. Session OBJECT identity
+  // is the only correct proxy (reduce() always returns a new object) -- so
+  // this asserts the capture-then-guard SHAPE and ORDERING inside the
+  // function body, not just that some matching string appears anywhere in
+  // the file (a source-text-only assertion is exactly the blind spot that
+  // let the videoAtStart bug through green).
   const submitMatch = page.match(/async function submitRecording\(blob\)\s*{[\s\S]*$/);
   assert.ok(submitMatch, 'expected to locate submitRecording()');
-  assert.match(submitMatch[0], /if \(!session \|\| currentVideo !== videoAtStart\) return;/, 'expected submitRecording() to bail out if the kid exited while its fetch was in flight, before showWait/showCelebrate/showGiveUp can run on a null session');
+  const submitBody = submitMatch[0];
+  const captureIdx = submitBody.indexOf('const sessionAtStart = session;');
+  const fetchIdx = submitBody.indexOf("await fetch('/api/read2lead-speaking-check'");
+  const guardIdx = submitBody.indexOf('if (!session || session !== sessionAtStart) return;');
+  const waitCallIdx = submitBody.indexOf('showWait(');
+  assert.ok(captureIdx !== -1, 'expected submitRecording() to capture `const sessionAtStart = session;`');
+  assert.ok(guardIdx !== -1, 'expected the `if (!session || session !== sessionAtStart) return;` identity guard');
+  assert.ok(
+    captureIdx < fetchIdx && fetchIdx < guardIdx && guardIdx < waitCallIdx,
+    'expected the ORDER: capture sessionAtStart -> await the grading fetch -> guard on session identity -> only then may showWait()/scoring run -- not just that these strings exist somewhere in the function'
+  );
+  assert.ok(!/currentVideo\s*!==\s*videoAtStart/.test(submitBody), 'expected the video-identity comparison to be fully replaced by session-identity (Buffet: video/id comparison would NOT catch the same-video re-entry bug)');
 });
