@@ -14,7 +14,7 @@
 - Privacy and cost checked: yes
 - Screenshot or video proof ready: yes
 - Founder production approval: yes
-- Production smoke test passed: no
+- Production smoke test passed: yes
 
 ## Notes
 

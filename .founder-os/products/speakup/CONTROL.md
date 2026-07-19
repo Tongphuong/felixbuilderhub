@@ -91,12 +91,14 @@ assigns, commits, merges, deploys, or spends.
 | V1.5–V1.7 | Error profile / teacher digest / tenant-readiness config | — | HELD | pilot-evidence review (~2 weeks of pilot) |
 | S2S spike | Speech-to-speech cost comparison (already approved) | own session | queued | own gate; recommended after V1.1 |
 
-## Current task
+## Prior task (complete): speakup-shadowing-v1
 
-- Status: active
+- Status: complete
 - Started: 2026-07-17
-- Completing: 2026-07-19 (founder merge order; release gate in progress — block
-  demotes to Prior on merge)
+- Completed: 2026-07-19 — SHIPPED TO PRODUCTION (main c1cba03; complete +
+  release gates PASS; production smoke PASS: /shadowing live with all assets).
+  Open founder follow-ups: content review of both BẢN NHÁP videos
+  (content_status flips) + device pass (QA code R2L-QAPHUONG-QPSD to 07-21).
 - Task ID: speakup-shadowing-v1
 - Spec: `_ops/specs/SPEC_SPEAKUP_SHADOWING.md` (approved 2026-07-17); plan of
   record `~/.claude/plans/zippy-gathering-matsumoto.md` (Phương plan-mode
