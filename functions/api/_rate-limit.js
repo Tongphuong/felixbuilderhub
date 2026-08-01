@@ -70,52 +70,75 @@ export async function recordCodeFailure(kv, ip) {
 // Signup abuse fence (R2L-OPEN-ACCESS) — a SEPARATE limiter from the one
 // above. checkCodeRateLimit/recordCodeFailure guard code LOOKUPS and are
 // deliberately fail-OPEN (a storage hiccup must never lock out a legitimate
-// parent typing a code). This one guards code MINTING: every signup fence
-// must fail CLOSED (spec: "every fence fails closed"), because an open
-// failure mode here means unmetered self-serve code creation, not just a
-// slower lookup. Reuses the READ2LEAD_CODES KV binding with its own `rl-signup:`
-// key prefix — no new infra.
+// parent typing a code). This one guards code MINTING, and on a KV read/write
+// ERROR it fails CLOSED (refuses) rather than open.
+//
+// It is NOT atomic against a concurrent burst, and this file does not claim
+// otherwise (Buffet review round 2, 2026-08-01 — HIGH finding, repro'd with a
+// latencied-KV harness: get→compare→put has no compare-and-swap, so two
+// concurrent requests can both read the same pre-increment count and both
+// proceed). See SPEC_R2L_OPEN_ACCESS.md "Accepted risk 2" for the full bound
+// analysis — a Cloudflare edge Rate Limiting rule (atomic, unlike KV) is a
+// hard precondition before `config:signup_enabled` ever goes live; the true
+// fix is a D1 atomic upsert, deferred to Phase 3.
+//
+// reserveSignupIp() below is called BEFORE the (slower) code+link mint work,
+// not after, so the reservation write lands as early as possible — this
+// SHRINKS the race window, it does not close it. signup.js pairs it with
+// readSignupIpCount() called AGAIN after the mint completes, and rolls the
+// mint back if the recheck shows the counter landed over the limit. Reuses
+// the READ2LEAD_CODES KV binding with its own `rl-signup:` key prefix — no
+// new infra.
 
-const SIGNUP_IP_LIMIT = 3; // max self-serve signups per IP per rolling day
+export const SIGNUP_IP_LIMIT = 3; // max self-serve signups per IP per rolling day
 const SIGNUP_IP_WINDOW_SECONDS = 24 * 60 * 60;
 
 export function signupIpKey(ip) {
   return `rl-signup:${ip}`;
 }
 
-// Returns { blocked: boolean, reason?: string }. Call BEFORE minting a code.
-// Fail-closed: a missing binding or a KV read error blocks the signup.
-export async function checkSignupIpLimit(kv, ip) {
-  if (!kv) return { blocked: true, reason: 'kv_missing' };
-  try {
-    const record = await kv.get(signupIpKey(ip), { type: 'json' });
-    if (!record) return { blocked: false };
-    const now = Math.floor(Date.now() / 1000);
-    if (now - record.first_at < SIGNUP_IP_WINDOW_SECONDS && record.count >= SIGNUP_IP_LIMIT) {
-      return { blocked: true, reason: 'ip_daily_limit' };
-    }
-    return { blocked: false };
-  } catch {
-    return { blocked: true, reason: 'kv_error' };
-  }
+function isLiveWindow(record, now) {
+  return !!record && now - record.first_at < SIGNUP_IP_WINDOW_SECONDS;
 }
 
-// Call AFTER a successful signup (never on a refused/failed attempt, so a
-// bad request never burns a legitimate parent's daily allowance). Best-effort;
-// never throws — a write hiccup here just means the window doesn't advance.
-export async function recordSignupIp(kv, ip) {
-  if (!kv) return;
+// Reserve-then-mint: read the counter and, if under the limit, immediately
+// write the incremented value back — before doing anything else (Turnstile
+// already passed by the time this is called; the code+link mint has not
+// started yet). Returns { blocked, reason?, count }. A missing binding or a
+// read/write error blocks (fails closed on the error, not a claim about the
+// race). Call BEFORE minting a code.
+export async function reserveSignupIp(kv, ip) {
+  if (!kv) return { blocked: true, reason: 'kv_missing', count: null };
   const key = signupIpKey(ip);
   const now = Math.floor(Date.now() / 1000);
   try {
     let record = await kv.get(key, { type: 'json' });
-    if (!record || now - record.first_at >= SIGNUP_IP_WINDOW_SECONDS) {
-      record = { count: 0, first_at: now };
+    if (!isLiveWindow(record, now)) record = { count: 0, first_at: now };
+    if (record.count >= SIGNUP_IP_LIMIT) {
+      return { blocked: true, reason: 'ip_daily_limit', count: record.count };
     }
     record.count += 1;
     await kv.put(key, JSON.stringify(record), { expirationTtl: SIGNUP_IP_WINDOW_SECONDS });
+    return { blocked: false, count: record.count };
   } catch {
-    // swallow — best-effort bookkeeping, never blocks the response
+    return { blocked: true, reason: 'kv_error', count: null };
+  }
+}
+
+// Post-mint recheck: re-read the counter to see whether concurrent siblings
+// pushed it over the limit during this request's own in-flight window (the
+// code+link mint work that ran between this request's own reservation and
+// this call). Returns the current count, or null on a read error — signup.js
+// treats null as "can't confirm, refuse" (conservative, not a claim of
+// atomicity). Call AFTER the code+link are written.
+export async function readSignupIpCount(kv, ip) {
+  if (!kv) return null;
+  try {
+    const now = Math.floor(Date.now() / 1000);
+    const record = await kv.get(signupIpKey(ip), { type: 'json' });
+    return isLiveWindow(record, now) ? record.count : 0;
+  } catch {
+    return null;
   }
 }
 

@@ -110,6 +110,15 @@ test('BITE: missing turnstile_token → 400, refused before minting', async () =
   assert.equal(body.error, 'turnstile_required');
 });
 
+test('accepts the cf-turnstile-response field (the literal Cloudflare widget form field name), not just turnstile_token (Buffet low-sev)', async () => {
+  const kv = makeKv({ 'config:signup_enabled': true });
+  const body = requestBody({ turnstile_token: undefined, 'cf-turnstile-response': GOOD_TOKEN });
+  const { res, body: respBody } = await callSignup({ kv, body, fetchImpl: passingFetch() });
+  assert.equal(res.status, 200);
+  assert.equal(respBody.ok, true);
+  assert.match(respBody.code, /^R2L-/);
+});
+
 test('BITE: siteverify returns success:false → 403, refused, no code minted', async () => {
   const kv = makeKv({ 'config:signup_enabled': true });
   const { res, body, kv: usedKv } = await callSignup({ kv, fetchImpl: failingFetch() });
@@ -316,6 +325,16 @@ test('resolving the signup magic link does not spend uses_remaining on the code'
   assert.equal(stored.uses_remaining, 3, 'opening the magic link must never spend a use');
 });
 
+test('the magic link expiry matches the code\'s 90-day expiry (links.js already accepts expiry_days in its POST body, judgment call 2 follow-up)', async () => {
+  const kv = makeKv({ 'config:signup_enabled': true });
+  const { body } = await callSignup({ kv, fetchImpl: passingFetch() });
+
+  const token = new URL(body.link).searchParams.get('t');
+  const linkRecord = JSON.parse(kv.store.get(`r2l_link:${token}`));
+  const linkDays = (Date.parse(linkRecord.expires_at) - Date.parse(linkRecord.created_at)) / (24 * 60 * 60 * 1000);
+  assert.ok(Math.abs(linkDays - 90) <= 1, `link expiry must match the code's 90-day expiry, got ${linkDays} days`);
+});
+
 test('kv_missing binding → 500, never proceeds', async () => {
   const res = await signup({ request: makeRequest(requestBody()), env: {} });
   const body = await res.json();
@@ -335,4 +354,164 @@ test('invalid JSON body → 400', async () => {
   const body = await res.json();
   assert.equal(res.status, 400);
   assert.equal(body.error, 'invalid_json');
+});
+
+// ---------------------------------------------------------------------------
+// Buffet review round 2 (HIGH finding): reserveSignupIp/reserveGlobalCount in
+// signup.js are a plain KV get→compare→put, with no compare-and-swap. A
+// CONCURRENT burst can race past a cap (repro'd with a latencied-KV harness —
+// see /tmp/.../scratchpad/race-check.mjs and race-check-global.mjs). The
+// mitigation (reserve BEFORE minting, then RE-READ both counters after the
+// code+link are written and roll the mint back if either landed over its
+// limit) shrinks the race window to the in-flight duration of one mint — it
+// does NOT close it. SPEC_R2L_OPEN_ACCESS.md "Accepted risk 2" records this
+// explicitly. The tests below first pin the fully DETERMINISTIC half (once a
+// counter is already, visibly over its cap, every request is refused, no
+// race required to observe that), then measure the actual racy half across
+// repeated concurrent trials with a latencied KV double — a sequential-await
+// test can never exercise this, per Elon's instruction.
+// ---------------------------------------------------------------------------
+
+test('once the per-IP counter is already visibly OVER its limit, every request is refused deterministically (no code minted)', async () => {
+  const ip = '4.4.4.4';
+  const kv = makeKv({
+    'config:signup_enabled': true,
+    [`rl-signup:${ip}`]: { count: 5, first_at: Math.floor(Date.now() / 1000) }, // already past the limit of 3
+  });
+  const env = { READ2LEAD_CODES: kv, TURNSTILE_SECRET_KEY: 'test-secret' };
+  const res = await signup({ request: makeRequest(requestBody(), { ip }), env, fetchImpl: passingFetch() });
+  const body = await res.json();
+  assert.equal(res.status, 429);
+  assert.equal(body.error, 'rate_limited');
+  assert.equal([...kv.store.keys()].filter(isAccessCodeKey).length, 0);
+});
+
+test('once the global counter is already visibly OVER its cap, every request is refused deterministically (no code minted)', async () => {
+  const today = new Date().toISOString().slice(0, 10);
+  const kv = makeKv({
+    'config:signup_enabled': true,
+    'config:signup_daily_cap': 2,
+    [`signup-global:${today}`]: 9, // already well past the cap of 2
+  });
+  const { res, body, kv: usedKv } = await callSignup({ kv, fetchImpl: passingFetch() });
+  assert.equal(res.status, 429);
+  assert.equal(body.error, 'global_cap');
+  assert.equal([...usedKv.store.keys()].filter(isAccessCodeKey).length, 0);
+});
+
+// A KV double with real async latency on every op (adapted from Buffet's
+// race-check.mjs/race-check-global.mjs harness) — required to force
+// concurrent requests to overlap in-flight, unlike the synchronous-resolving
+// mocks used everywhere else in this file.
+function makeLatencyKv(initial = {}) {
+  const store = new Map(Object.entries(initial).map(([k, v]) => [k, JSON.stringify(v)]));
+  const jitterMs = () => 2 + Math.floor(Math.random() * 8); // ~2-9ms, "~5ms" per the repro harness
+  const delay = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
+  return {
+    store,
+    async get(key, options) {
+      await delay(jitterMs());
+      const raw = store.get(key);
+      if (raw === undefined) return null;
+      return options?.type === 'json' ? JSON.parse(raw) : raw;
+    },
+    async put(key, value) {
+      await delay(jitterMs());
+      store.set(key, value);
+    },
+    async delete(key) {
+      await delay(jitterMs());
+      store.delete(key);
+    },
+  };
+}
+
+test('CONCURRENCY (per-IP fence): N requests over the cap never leave an orphaned code, and the recheck measurably catches some (not all) of the race', async () => {
+  const TRIALS = 12;
+  const N = 3; // Buffet's exact race-check.mjs shape: limit 3, 2 already used, 3 concurrent
+  const successCounts = [];
+
+  for (let trial = 0; trial < TRIALS; trial += 1) {
+    const ip = `7.7.7.${trial}`; // isolate each trial's counter
+    const kv = makeLatencyKv({
+      'config:signup_enabled': true,
+      [`rl-signup:${ip}`]: { count: 2, first_at: Math.floor(Date.now() / 1000) }, // 1 slot remaining
+    });
+    const env = { READ2LEAD_CODES: kv, TURNSTILE_SECRET_KEY: 'test-secret' };
+    const bodies = Array.from({ length: N }, (_, i) => requestBody({ student_name: `Race${trial}x${i}` }));
+
+    // eslint-disable-next-line no-await-in-loop
+    const results = await Promise.all(bodies.map((b) => signup({
+      request: makeRequest(b, { ip }),
+      env,
+      fetchImpl: passingFetch(),
+    })));
+    // eslint-disable-next-line no-await-in-loop
+    const statuses = await Promise.all(results.map((r) => r.json().then((b) => ({ status: r.status, body: b }))));
+
+    const successes = statuses.filter((s) => s.status === 200).length;
+    successCounts.push(successes);
+
+    // HARD invariant, every trial regardless of how the race resolved: a 200
+    // response's code must exist; a rolled-back mint must leave nothing behind.
+    const survivingCodes = [...kv.store.keys()].filter(isAccessCodeKey);
+    assert.equal(
+      survivingCodes.length, successes,
+      `trial ${trial}: surviving codes (${survivingCodes.length}) must equal 200-responses (${successes}) — no orphans either direction`,
+    );
+  }
+
+  const max = Math.max(...successCounts);
+  const mean = successCounts.reduce((a, b) => a + b, 0) / TRIALS;
+  console.log(`[measured] IP-fence concurrency (N=${N}, 1 slot remaining) successes per trial: ${JSON.stringify(successCounts)} — max=${max} mean=${mean.toFixed(2)} (uncontrolled baseline would be ${N} every trial)`);
+
+  assert.ok(max <= N, 'successes can never exceed the number of concurrent requests fired');
+  // NOT an atomicity claim (KV races still exist — see the header comment
+  // above and SPEC_R2L_OPEN_ACCESS.md Accepted risk 2). This asserts the
+  // mitigation is demonstrably not a no-op: across TRIALS repeated bursts,
+  // the post-mint recheck must catch the race at least once. Statistically
+  // safe at this trial count without the recheck ever being disabled.
+  assert.ok(successCounts.some((s) => s < N), `expected the recheck to catch at least one over-cap mint across ${TRIALS} trials; got ${JSON.stringify(successCounts)}`);
+});
+
+test('CONCURRENCY (global fence): N requests from N different IPs over the cap never leave an orphaned code, and the recheck measurably catches some (not all) of the race', async () => {
+  const TRIALS = 10;
+  const N = 5; // Buffet's exact race-check-global.mjs shape: cap 2, 1 already used, 5 concurrent from 5 IPs
+  const successCounts = [];
+
+  for (let trial = 0; trial < TRIALS; trial += 1) {
+    const today = new Date().toISOString().slice(0, 10);
+    const kv = makeLatencyKv({
+      'config:signup_enabled': true,
+      'config:signup_daily_cap': 2,
+      [`signup-global:${today}`]: 1, // 1 slot remaining
+    });
+    const env = { READ2LEAD_CODES: kv, TURNSTILE_SECRET_KEY: 'test-secret' };
+    const bodies = Array.from({ length: N }, (_, i) => requestBody({ student_name: `Global${trial}x${i}` }));
+
+    // eslint-disable-next-line no-await-in-loop
+    const results = await Promise.all(bodies.map((b, i) => signup({
+      request: makeRequest(b, { ip: `9.${trial}.0.${i}` }), // different IP per request — isolates the global fence
+      env,
+      fetchImpl: passingFetch(),
+    })));
+    // eslint-disable-next-line no-await-in-loop
+    const statuses = await Promise.all(results.map((r) => r.json().then((b) => ({ status: r.status, body: b }))));
+
+    const successes = statuses.filter((s) => s.status === 200).length;
+    successCounts.push(successes);
+
+    const survivingCodes = [...kv.store.keys()].filter(isAccessCodeKey);
+    assert.equal(
+      survivingCodes.length, successes,
+      `trial ${trial}: surviving codes (${survivingCodes.length}) must equal 200-responses (${successes}) — no orphans either direction`,
+    );
+  }
+
+  const max = Math.max(...successCounts);
+  const mean = successCounts.reduce((a, b) => a + b, 0) / TRIALS;
+  console.log(`[measured] Global-fence concurrency (N=${N}, 1 slot remaining) successes per trial: ${JSON.stringify(successCounts)} — max=${max} mean=${mean.toFixed(2)} (uncontrolled baseline would be ${N} every trial)`);
+
+  assert.ok(max <= N, 'successes can never exceed the number of concurrent requests fired');
+  assert.ok(successCounts.some((s) => s < N), `expected the recheck to catch at least one over-cap mint across ${TRIALS} trials; got ${JSON.stringify(successCounts)}`);
 });
