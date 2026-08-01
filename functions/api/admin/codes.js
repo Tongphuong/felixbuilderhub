@@ -3,57 +3,7 @@
 // GET  /api/admin/codes  → list all codes (sorted by issued_at desc)
 
 import { isAccessCodeKey, loadProgressState } from '../_read2lead-v2-state.js';
-
-const CODE_CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
-const MONTH_CODES = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-
-function randomChars(n) {
-  let s = '';
-  for (let i = 0; i < n; i++) {
-    s += CODE_CHARS[Math.floor(Math.random() * CODE_CHARS.length)];
-  }
-  return s;
-}
-
-async function generateUniqueCode(kv) {
-  return generateUniqueCodeForName(kv, '');
-}
-
-function codeNamePart(studentName) {
-  const ascii = studentName
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[Đđ]/g, 'D')
-    .toUpperCase()
-    .replace(/[^A-Z0-9]+/g, '');
-
-  return ascii.slice(0, 10);
-}
-
-async function generateUniqueCodeForName(kv, studentName) {
-  const month = MONTH_CODES[new Date().getUTCMonth()];
-  const namePart = codeNamePart(studentName) || month;
-  for (let attempt = 0; attempt < 6; attempt++) {
-    const code = `R2L-${namePart}-${randomChars(4)}`;
-    const exists = await kv.get(code);
-    if (!exists) return code;
-  }
-  throw new Error('Could not generate unique code after 6 attempts');
-}
-
-function todayISO() {
-  return new Date().toISOString().slice(0, 10);
-}
-
-function addDaysISO(days) {
-  const d = new Date();
-  d.setUTCDate(d.getUTCDate() + Number(days));
-  return d.toISOString().slice(0, 10);
-}
-
-function boolFromFormValue(value) {
-  return value === true || value === 'true' || value === 'on' || value === '1';
-}
+import { generateUniqueCodeForName, buildCodeRecord, boolFromFormValue } from '../_code-factory.js';
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -103,36 +53,18 @@ export async function onRequestPost(context) {
   }
 
   const code = await generateUniqueCodeForName(env.READ2LEAD_CODES, student_name);
-  const record = {
+  const record = buildCodeRecord({
     parent_name,
     parent_zalo,
     notes,
-    student_profile: {
-      student_name,
-      age: student_age,
-      level: 'L1',
-      child_gender,
-    },
-    progress: {
-      student_name,
-      age: student_age,
-      child_gender,
-      current_level: 'L1',
-      rank_title: 'Đồng',
-      rank_asset_url: '/assets/r2l/ranks/rank-l1-bronze.svg',
-      badges: [],
-      packs_created: 0,
-      current_pack: null,
-      review_history: [],
-    },
-    issued_at: todayISO(),
-    expires_at: addDaysISO(expiry_days),
+    student_name,
+    student_age,
+    child_gender,
     uses_total: uses,
-    uses_remaining: uses,
-    last_used_at: null,
+    expiry_days,
     is_test,
     is_shared,
-  };
+  });
   await env.READ2LEAD_CODES.put(code, JSON.stringify(record));
   return json({ ok: true, code, record });
 }
