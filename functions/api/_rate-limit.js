@@ -66,6 +66,59 @@ export async function recordCodeFailure(kv, ip) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Signup abuse fence (R2L-OPEN-ACCESS) — a SEPARATE limiter from the one
+// above. checkCodeRateLimit/recordCodeFailure guard code LOOKUPS and are
+// deliberately fail-OPEN (a storage hiccup must never lock out a legitimate
+// parent typing a code). This one guards code MINTING: every signup fence
+// must fail CLOSED (spec: "every fence fails closed"), because an open
+// failure mode here means unmetered self-serve code creation, not just a
+// slower lookup. Reuses the READ2LEAD_CODES KV binding with its own `rl-signup:`
+// key prefix — no new infra.
+
+const SIGNUP_IP_LIMIT = 3; // max self-serve signups per IP per rolling day
+const SIGNUP_IP_WINDOW_SECONDS = 24 * 60 * 60;
+
+export function signupIpKey(ip) {
+  return `rl-signup:${ip}`;
+}
+
+// Returns { blocked: boolean, reason?: string }. Call BEFORE minting a code.
+// Fail-closed: a missing binding or a KV read error blocks the signup.
+export async function checkSignupIpLimit(kv, ip) {
+  if (!kv) return { blocked: true, reason: 'kv_missing' };
+  try {
+    const record = await kv.get(signupIpKey(ip), { type: 'json' });
+    if (!record) return { blocked: false };
+    const now = Math.floor(Date.now() / 1000);
+    if (now - record.first_at < SIGNUP_IP_WINDOW_SECONDS && record.count >= SIGNUP_IP_LIMIT) {
+      return { blocked: true, reason: 'ip_daily_limit' };
+    }
+    return { blocked: false };
+  } catch {
+    return { blocked: true, reason: 'kv_error' };
+  }
+}
+
+// Call AFTER a successful signup (never on a refused/failed attempt, so a
+// bad request never burns a legitimate parent's daily allowance). Best-effort;
+// never throws — a write hiccup here just means the window doesn't advance.
+export async function recordSignupIp(kv, ip) {
+  if (!kv) return;
+  const key = signupIpKey(ip);
+  const now = Math.floor(Date.now() / 1000);
+  try {
+    let record = await kv.get(key, { type: 'json' });
+    if (!record || now - record.first_at >= SIGNUP_IP_WINDOW_SECONDS) {
+      record = { count: 0, first_at: now };
+    }
+    record.count += 1;
+    await kv.put(key, JSON.stringify(record), { expirationTtl: SIGNUP_IP_WINDOW_SECONDS });
+  } catch {
+    // swallow — best-effort bookkeeping, never blocks the response
+  }
+}
+
 export function rateLimitedResponse(retryAfter) {
   return new Response(
     JSON.stringify({
