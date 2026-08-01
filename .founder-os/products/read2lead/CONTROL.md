@@ -1,10 +1,10 @@
 # Control — Read2Lead
 
 - Product: Read2Lead
-- Current goal: R2L-REWARDS-REDESIGN — Diamond currency, free Silver shop, page-based rewards. See `_ops/specs/SPEC_R2L_REWARDS_REDESIGN.md`. Approved by Phuong 2026-07-18.
-- Latest staging URL: PRODUCTION — https://felixbuilderhub.com/read2lead/shop (merged 2026-07-19, dbb65bd)
-- Active workers: 0 (all packets delivered, all tips Buffet-approved, lanes cleared)
-- Last updated: 2026-07-19 (R2L-REWARDS-REDESIGN MERGED TO MAIN on Phương's GO; coin→diamond balance migration still pending Phương's separate OK)
+- Current goal: R2L-OPEN-ACCESS — self-serve free signup, first phase of the approved growth plan (Bigger / Free for everyone / Cheap / Monetize later). Spec: `_ops/specs/SPEC_R2L_OPEN_ACCESS.md`. Plan approved by Phương 2026-08-01.
+- Latest staging URL: PRODUCTION — https://felixbuilderhub.com (rewards merged 2026-07-19, dbb65bd)
+- Active workers: 0 (all lanes cleared)
+- Last updated: 2026-08-01 (R2L-OPEN-ACCESS backend MERGED TO PRODUCTION on Phương's "merge GO" — abb34a8; prod smoke PASS: /api/signup live and DARK, 503 signup_disabled. Going live gated by the spec's launch checklist: welcome page + Turnstile keys + CF edge rate-limit rule + Phương flips config:signup_enabled. Voice decision = Aura-2 luna + loudnorm, awaiting founder ear-check of louder samples; coin→diamond balance migration STILL pending Phương's separate OK)
 
 ## Operating team
 
@@ -23,6 +23,26 @@ stale until 2026-07-05.
 ## Current task
 
 - Status: active
+- Started: 2026-08-01
+- Task ID: R2L-OPEN-ACCESS
+- Lane: product (growth — self-serve free signup; removes the founder-as-signup-endpoint bottleneck)
+- Spec: `_ops/specs/SPEC_R2L_OPEN_ACCESS.md` — approved via the growth plan, Phương "proceed" 2026-08-01. Founder decisions recorded there: everything free for now (3-pack allowance as the cost fuse), 1-book TTS test only, grow-first-charge-later.
+- Owner: Mark (backend packet, worktree `mark-signup`). Buffet reviews the diff. Elon integrates. Steve's welcome-page UI is a SEPARATE later packet, blocked on a founder-approved Claude Design mock (design-first rule).
+- Problem: access is 100% manual — a parent messages Phương on Zalo and he hand-creates a code in `/admin/codes`. That human bottleneck, not cost, is what stops "free for everyone": marginal cost per reader is near zero (book audio pre-generated in R2; the one expensive path, pack generation, is already metered by `uses_remaining`).
+- Approach: reuse the code-record model wholesale — extract `functions/api/_code-factory.js` from `admin/codes.js`; new public `functions/api/signup.js` (name/age/gender only, optional parent-Zalo; creates `origin:'self_serve'` code with `uses_total:3`, `expiry_days:90`; returns code + magic link via the existing `r2l_link` pattern; SHIPS DARK behind `config:signup_enabled`); abuse fences (Turnstile siteverify fail-closed, `rl-signup:<ip>` 3/day, `config:signup_daily_cap` default 50 + daily counter, mirroring the Free Talk cap pattern); `scripts/cleanup-dormant-codes.mjs` (dry-run default). Full detail in the spec.
+- Acceptance criteria: (1) valid signup (flag on, Turnstile pass) → unique code + working magic link, record byte-compatible with admin-created codes; (2) admin creation unchanged after the factory extraction; (3) bite tests all FAIL CLOSED — flag off→503, secret missing→refused, bad token→refused, 4th same-IP same-day→refused, global cap→refused, age out of 5–14→refused; (4) magic link resolves without burning anything; (5) cleanup dry-run lists only dormant self-serve codes, never admin codes or active kids; (6) `node --test` green, no new deps.
+- Files owned: Mark — `functions/api/_code-factory.js` (NEW), `functions/api/signup.js` (NEW), `functions/api/admin/codes.js` (refactor to factory only), `functions/api/_rate-limit.js` (additive signup limiter), `scripts/cleanup-dormant-codes.mjs` (NEW), tests under `tests/`. Elon — this CONTROL.md + the spec. No other files.
+- Non-goals: no welcome page UI (Steve, later, design-first); no admin `codes.astro` changes; no change to pack-generation metering, Free Talk caps, or any kid-facing surface; no Turnstile widget creation (founder/authed session); flag stays OFF — flipping `config:signup_enabled` is Phương's launch call.
+- Stop condition: acceptance criteria pass + Buffet SHIP + founder gates PASS. The endpoint ships dark; going live = welcome page shipped + Turnstile keys set + Phương flips the flag.
+- Cost ceiling: Claude team (Max plan, not metered). Runtime $0 — KV within plan, Turnstile free.
+- Reuse survey (rule 21): (1) existing admin code-creation logic — ADOPTED via extraction, not duplication; (2) existing `r2l_link` magic-link mint — ADOPTED; (3) `_rate-limit.js` IP-limit pattern — ADOPTED additively; (4) Free Talk's KV-config global-cap pattern — ADOPTED for the signup tap; (5) Cloudflare Turnstile (free, native) — ADOPTED over hand-rolled captcha/email verification (REJECTED: PII + friction for kids); (6) a separate accounts/auth system — REJECTED, the code IS the account.
+- State inventory: signup states — flag off (503); flag on + fences pass (code minted); Turnstile missing-secret / bad-token (refused); IP over 3/day (refused); global cap hit (refused); invalid age/name (refused); KV write failure mid-mint (no partial record — code write is the last step). Cleanup states — dormant self-serve (deleted on --apply), self-serve with progress (never touched), admin-created (never touched), dry-run (writes nothing).
+- Operational reality: every record this endpoint mints is a potential real child on a Vietnamese phone; a bot flood is founder VND (gift budget) and namespace pollution, which is why every fence fails closed and the whole endpoint ships dark until Phương flips the flag. Self-serve codes mix into the same KV namespace the leaderboard scans — cleanup keeps the dormant tail short until the Phase-3 hardening lands.
+- Runtime bindings/secrets: existing `READ2LEAD_CODES` KV only. NEW env `TURNSTILE_SECRET_KEY` (+ site key for the later UI) — created by Phương in dashboard, needed in Production AND Preview before flag-on; endpoint refuses signups if flag is on without it.
+
+## Previous task — R2L-REWARDS-REDESIGN
+
+- Status: complete (merged 2026-07-19; coin→diamond migration still pending Phương's OK)
 - Started: 2026-07-18
 - Task ID: R2L-REWARDS-REDESIGN
 - Lane: product (reward economy redesign — diamond currency, free Silver shop, page-based diamond rewards)
