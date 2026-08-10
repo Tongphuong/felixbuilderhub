@@ -39,6 +39,8 @@ test('each HARD defect is caught and marks the pack unfinishable', () => {
     ['page_audio_empty', 'page_audio_empty'],
     ['sentence_out_of_range', 'sentence_page_out_of_range'],
     ['no_read_aloud', 'no_read_aloud'],
+    ['non_english_page', 'non_english_page'],
+    ['non_latin_script', 'non_latin_script'],
   ];
   for (const [kind, expectedCode] of cases) {
     const result = assessBookHealth(makeBrokenBookPack(kind));
@@ -97,6 +99,53 @@ test('a pack that passes the health gate is runtime-finishable under version 3',
   const reader = makeBookReaderState(pack, { version: 3 });
   const result = validateBookFlowSubmission(reader, pack, { version: 3 });
   assert.equal(result.ok, true, JSON.stringify(result.errors));
+});
+
+// R2L-PHUC-7TZV incident (2026-08-09): a Vietnamese kid was assigned a page of
+// romanized Hindi (book_178669 p15, scored 14%, unpassable) and a Devanagari
+// page (book_158997 p2) would suffer the same fate via a different mechanism —
+// normalizeWord in read2lead-speaking-check.js strips everything outside
+// [a-z], so a non-Latin page scores 0/0 "từ đúng" no matter what the child
+// reads aloud. These two HARD checks close both holes. Both run over
+// paragraphs_en only (NOT story.sentences[], which is where nearly all the
+// false-positive noise lived when validated against the full 394-book,
+// 11,253-unit live corpus).
+test('non-English / non-Latin detection: known-BAD pages are caught', () => {
+  const hindi = assessBookHealth(makeBrokenBookPack('non_english_page'));
+  assert.equal(hindi.hardOk, false, JSON.stringify(hindi.reasons));
+  assert.ok(codesOf(hindi).includes('non_english_page'), JSON.stringify(hindi.reasons));
+
+  const devanagari = assessBookHealth(makeBrokenBookPack('non_latin_script'));
+  assert.equal(devanagari.hardOk, false, JSON.stringify(devanagari.reasons));
+  assert.ok(codesOf(devanagari).includes('non_latin_script'), JSON.stringify(devanagari.reasons));
+});
+
+// Known-GOOD pages that must NOT trip either new reason code — these are the
+// exact shapes that produced 31 false positives across 29 books under the
+// packet author's FIRST (rejected) rule, or are named explicitly in the
+// corrected packet as required non-flagging cases.
+test('non-English / non-Latin detection: known-GOOD pages produce neither reason code', () => {
+  const goodPages = [
+    // 3. ordinary English story prose
+    'The little rabbit hopped across the meadow, looking for her family before the sun went down.',
+    // 4. short page under the 10-token floor
+    'Vroom Vroom Vroom !! Vehicles. Vehicles Author Vihaan',
+    // 5. contraction-heavy (also under the floor once split: i, d, like, one, more, banana, said, first, monkey)
+    '"I\'d like one more banana", said first monkey .',
+    // 6. onomatopoeia
+    'Ta-dhump, ta-dhump, ta-dhump dhump dhumppp!',
+    // 7. real English that fooled the first (rejected) rule
+    'Things make bigger things. Bigger things make huge ones. Huge things make ginormous ones.',
+    // 8. accented Latin must not trip Check A (non_latin_script)
+    "In Mexico, the sun is not over Yaretzi's head anymore. Madhav calls his friend señor Muñoz.",
+  ];
+  for (const text of goodPages) {
+    const pack = makeStoredBookPack('book_good');
+    pack.story.paragraphs_en[0] = text;
+    const result = assessBookHealth(pack);
+    assert.ok(!codesOf(result).includes('non_english_page'), `should not flag non_english_page: "${text}" -> ${codesOf(result)}`);
+    assert.ok(!codesOf(result).includes('non_latin_script'), `should not flag non_latin_script: "${text}" -> ${codesOf(result)}`);
+  }
 });
 
 test('a legitimately hard but correct order sentence still passes (no false positive)', () => {

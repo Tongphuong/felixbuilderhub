@@ -171,6 +171,86 @@ function checkBookFlow(pack, reasons) {
   }
 }
 
+// HARD — non-Latin script (Devanagari/Cyrillic/CJK/etc — the live example is
+// book_158997 p2 at 15.0%, a known-bad book; the R2L-PHUC-7TZV incident
+// itself, book_178669 p15, is romanized Hindi in Latin letters and is caught
+// by Check B below, not this one). Needed because Check B cannot see a
+// non-Latin page on its own: its tokenizer (`.split(/[^a-z]+/)`) strips
+// everything outside [a-z] first, so a non-Latin page would otherwise
+// silently fall under the 10-token floor and never get evaluated. This is a
+// real kid-facing hazard on its own: `normalizeWord` in
+// read2lead-speaking-check.js strips everything outside [a-z], so a
+// non-Latin page scores 0/0 "từ đúng" and is unpassable no matter what the
+// child reads.
+//
+// Threshold picked empirically against the full live corpus (394 books,
+// 11,253 text units): exactly one page has ANY non-Latin content at all —
+// book_158997 p2 at 15.0% (a known-bad book) — every other page is 0.0%, so
+// >= 5% has an enormous margin either way it could have been drawn.
+const NON_LATIN_LETTER_RATIO = 0.05;
+const NON_LATIN_MIN_LETTERS = 10;
+const LATIN_CODEPOINT_MAX = 0x24f; // Basic Latin + Latin-1 Supplement + Latin Extended-A/B.
+const LETTER_RE = /\p{L}/u;
+
+function checkNonLatinScript(pack, reasons) {
+  const paragraphs = Array.isArray(pack?.story?.paragraphs_en) ? pack.story.paragraphs_en : [];
+  paragraphs.forEach((text, index) => {
+    const letters = [...String(text || '')].filter((ch) => LETTER_RE.test(ch));
+    if (letters.length < NON_LATIN_MIN_LETTERS) return;
+    const nonLatin = letters.filter((ch) => ch.codePointAt(0) > LATIN_CODEPOINT_MAX);
+    const ratio = nonLatin.length / letters.length;
+    if (ratio >= NON_LATIN_LETTER_RATIO) {
+      reasons.push({
+        level: 'hard',
+        code: 'non_latin_script',
+        detail: `paragraphs_en[${index}] is ${(ratio * 100).toFixed(1)}% non-Latin script (${nonLatin.length}/${letters.length} letters)`,
+      });
+    }
+  });
+}
+
+// HARD — romanized non-English text (the R2L-PHUC-7TZV incident itself:
+// romanized Hindi reads as Latin-alphabet tokens, so it needs its own check
+// separate from Check A above). Dependency-free word-set heuristic, not a
+// dictionary/spell-check: a real English page always contains at least one
+// function/common word from this list; a page with zero hits after >= 10
+// tokens is not English. Word list intentionally wide (function words + very
+// common content words) — narrower lists produced 31 false positives across
+// 29 books on the full live corpus (real English pages like "Mr. Berger
+// walked slowly, measuring every step judiciously.", onomatopoeia, and
+// numbered lists all lack "small" function words but do contain something
+// from this broader set). Verified against the full live corpus (3,936 page
+// units): catches book_178669 p15 (28 tokens, 0 matches) with zero false
+// positives at floors 10, 12, and 15.
+const ENGLISH_WORD_SET = new Set(`
+the a an is was were are am and or to of in on at it he she they we you i his her their my your
+that this with for but so as had have has do did does not no all be been being from by there here
+what when then them him us me d s t ll re ve m will would can could should may might must if into
+out up down over under again very just now too also more most some any one two three
+said say says go goes went going get got come came see saw look looked make made take took know
+knew think thought want wanted like liked little big small good great new old day night time back
+man boy girl mother father friend home house tree water food eat ate run ran play played work help
+thing things way long after before well still even much many every
+`.trim().split(/\s+/));
+
+const ENGLISH_TOKEN_MIN = 10;
+
+function checkNonEnglishPage(pack, reasons) {
+  const paragraphs = Array.isArray(pack?.story?.paragraphs_en) ? pack.story.paragraphs_en : [];
+  paragraphs.forEach((text, index) => {
+    const tokens = String(text || '').toLowerCase().split(/[^a-z]+/).filter(Boolean);
+    if (tokens.length < ENGLISH_TOKEN_MIN) return;
+    const hasEnglishWord = tokens.some((token) => ENGLISH_WORD_SET.has(token));
+    if (!hasEnglishWord) {
+      reasons.push({
+        level: 'hard',
+        code: 'non_english_page',
+        detail: `paragraphs_en[${index}] has ${tokens.length} tokens and none match a common English word`,
+      });
+    }
+  });
+}
+
 // SOFT — cosmetic text hygiene. High-precision mechanical signals only; NO
 // dictionary spell-check (avoids false positives on character names / kid words).
 // These never hard-block: a book with a typo is annoying but finishable.
@@ -216,6 +296,8 @@ export function assessBookHealth(pack, options = {}) {
   checkCountParity(pack, reasons, options.expectedSlug);
   checkListenAndOrder(pack, reasons);
   checkBookFlow(pack, reasons);
+  checkNonLatinScript(pack, reasons);
+  checkNonEnglishPage(pack, reasons);
   checkTextHygiene(pack, reasons);
   const hardReasons = reasons.filter((reason) => reason.level === 'hard');
   return {

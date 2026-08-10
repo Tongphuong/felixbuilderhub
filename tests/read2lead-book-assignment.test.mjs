@@ -347,8 +347,13 @@ test('inactive levels preserve backend configuration fallback before locking', a
 function denseBook(slug, title) {
   const book = storedBook(slug, title);
   // 3 pages x 70 words = 210 words at 70 a page: the shape of the real offender (a short book
-  // that is a wall of text), so it grades far above the L1 shelf it is sitting on.
-  const page = Array.from({ length: 70 }, (_, i) => `word${i}`).join(' ');
+  // that is a wall of text), so it grades far above the L1 shelf it is sitting on. Real English
+  // words (not synthetic "word0 word1 ..." placeholders) — density grading only cares about word
+  // COUNT (readingLoadOf splits on whitespace), but the placeholder tokens have no real English
+  // word among them and used to trip the language guard in src/lib/read2lead-book-health.mjs,
+  // which is testing something orthogonal to this fixture's purpose.
+  const words = ['the', 'little', 'cat', 'ran', 'home', 'and', 'played', 'with', 'her', 'friend'];
+  const page = Array.from({ length: 70 }, (_, i) => words[i % words.length]).join(' ');
   book.story.paragraphs_en = [page, page, page];
   return book;
 }

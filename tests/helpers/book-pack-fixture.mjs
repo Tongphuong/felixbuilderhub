@@ -137,6 +137,14 @@ export function makeBrokenBookPack(kind, slug = 'book_broken', opts = {}) {
     case 'doubled_word': // SOFT
       pack.story.paragraphs_en[0] = 'The the tree stood tall.';
       return pack;
+    case 'non_english_page': // HARD — the R2L-PHUC-7TZV incident itself (romanized Hindi)
+      pack.story.paragraphs_en[0] = 'Shanti ko chillate dekha , Krursingh khada tha chup chap , '
+        + 'Nayansukh ke nen nahi , Kali nam rakhe hai aap , Rani mang rahi hai bhikh , Namo ki hai kaisi seekh ,';
+      return pack;
+    case 'non_latin_script': // HARD — Devanagari page
+      pack.story.paragraphs_en[0] = "And on priyanshi's way home she heard advit telling that "
+        + 'जभी आकजत दनबभ मलह आकजत दनबभ मलह';
+      return pack;
     default:
       throw new Error(`unknown broken pack kind: ${kind}`);
   }
