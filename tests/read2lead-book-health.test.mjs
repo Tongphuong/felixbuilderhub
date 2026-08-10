@@ -120,6 +120,27 @@ test('non-English / non-Latin detection: known-BAD pages are caught', () => {
   assert.ok(codesOf(devanagari).includes('non_latin_script'), JSON.stringify(devanagari.reasons));
 });
 
+// Added in review (2026-08-10, Buffet's independent review of cda9fa8): pins the Check A
+// range-allowlist so a future "just widen the ceiling" change can never quietly swallow other
+// scripts again — Cyrillic and CJK sit BELOW the Vietnamese Latin Extended Additional range
+// (0x1E00-0x1EFF), so a naive single-ceiling fix for Vietnamese would have made these read as
+// Latin and stopped flagging entirely.
+test('non-Latin detection: Cyrillic and CJK scripts are still caught after the Vietnamese allowlist fix', () => {
+  const cyrillicPack = makeStoredBookPack('book_cyrillic');
+  cyrillicPack.story.paragraphs_en[0] =
+    'Мама читает книгу интересную историю про котёнка который гуляет по саду каждый день.';
+  const cyrillic = assessBookHealth(cyrillicPack);
+  assert.equal(cyrillic.hardOk, false, JSON.stringify(cyrillic.reasons));
+  assert.ok(codesOf(cyrillic).includes('non_latin_script'), JSON.stringify(cyrillic.reasons));
+
+  const cjkPack = makeStoredBookPack('book_cjk');
+  cjkPack.story.paragraphs_en[0] =
+    '从前有一只小猫喜欢在花园里玩耍它每天都很开心地跑来跑去和它的朋友们一起玩耍。';
+  const cjk = assessBookHealth(cjkPack);
+  assert.equal(cjk.hardOk, false, JSON.stringify(cjk.reasons));
+  assert.ok(codesOf(cjk).includes('non_latin_script'), JSON.stringify(cjk.reasons));
+});
+
 // Known-GOOD pages that must NOT trip either new reason code — these are the
 // exact shapes that produced 31 false positives across 29 books under the
 // packet author's FIRST (rejected) rule, or are named explicitly in the
@@ -138,6 +159,24 @@ test('non-English / non-Latin detection: known-GOOD pages produce neither reason
     'Things make bigger things. Bigger things make huge ones. Huge things make ginormous ones.',
     // 8. accented Latin must not trip Check A (non_latin_script)
     "In Mexico, the sun is not over Yaretzi's head anymore. Madhav calls his friend señor Muñoz.",
+    // 9. review addition (2026-08-10) — the Vietnamese false positive Buffet found: precomposed
+    // Vietnamese tone marks (Latin Extended Additional, U+1E00-U+1EFF) were reading as
+    // "non-Latin" under the original single-ceiling check and would have auto-quarantined a
+    // perfectly good page. Our own audience's language must never trip this.
+    'Nguyễn Thị Việt walked to school with her friend Diễm every morning before the sun rose high.',
+    // 10. Vietnamese-heavy — a denser cluster of diacritic names, stress-testing the ratio
+    // threshold itself (not just presence of one accented letter).
+    'Nguyễn Thị Diễm Hương, Đặng Thị Mỹ Duyên, and Trịnh Văn Đức walked to school together with '
+      + 'their friend Phương every single morning before the sun rose over the village.',
+    // 11. vocabulary/fruit list — 11 tokens, clears the ENGLISH_TOKEN_MIN=20 floor untouched;
+    // no function word among them, would have false-flagged at the old floor of 10.
+    'Apple. Banana. Cherry. Durian. Eggplant. Fig. Grape. Honeydew. Ivy gourd. Jackfruit.',
+    // 12. name roster (Indian) — 10 tokens, same floor-clears-it shape.
+    'Arjuna, Bhima, Nakula, Sahadeva, Yudhishthira, Draupadi, Kunti, Karna, Krishna, Duryodhana.',
+    // 13. name roster (Vietnamese surnames) — 10 tokens, plain ASCII (no diacritics), same shape.
+    'Nguyen, Tran, Le, Pham, Hoang, Vu, Vo, Dang, Bui, Dao.',
+    // 14. counting page — 10 tokens; also now literally in ENGLISH_WORD_SET, belt and suspenders.
+    'Four. Five. Six. Seven. Eight. Nine. Ten. Eleven. Twelve. Thirteen.',
   ];
   for (const text of goodPages) {
     const pack = makeStoredBookPack('book_good');

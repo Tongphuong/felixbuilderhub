@@ -189,15 +189,37 @@ function checkBookFlow(pack, reasons) {
 // >= 5% has an enormous margin either way it could have been drawn.
 const NON_LATIN_LETTER_RATIO = 0.05;
 const NON_LATIN_MIN_LETTERS = 10;
-const LATIN_CODEPOINT_MAX = 0x24f; // Basic Latin + Latin-1 Supplement + Latin Extended-A/B.
 const LETTER_RE = /\p{L}/u;
+
+// "Latin" is a RANGE ALLOWLIST, not a single ceiling — two disjoint blocks,
+// deliberately not merged into one wide range:
+//   - 0x0000-0x024F: Basic Latin + Latin-1 Supplement + Latin Extended-A/B
+//     (plain ASCII plus é/ñ/ü-style accents).
+//   - 0x1E00-0x1EFF: Latin Extended Additional, where every precomposed
+//     Vietnamese tone-marked vowel lives (ệ=U+1EC7, ễ=U+1EC5, ố, ắ, ữ, ợ...).
+//     Our audience is Vietnamese children — without this range, a perfectly
+//     good English page with a Vietnamese name in it (e.g. "Nguyễn Thị Việt")
+//     read >=5% non-Latin and auto-quarantined, the exact silent-corpus-
+//     erosion failure this check exists to prevent, inverted onto our own
+//     users. Found in review (2026-08-10) before it ever shipped.
+//   A single widened ceiling would NOT work: the Devanagari we must catch
+//   sits at U+0900-U+097F (e.g. ज = 0x91C), which is BELOW 0x1EFF, so raising
+//   one ceiling to cover Vietnamese would make Hindi script read as "Latin"
+//   and destroy the check entirely. The two ranges must stay separate.
+const LATIN_BASIC_MAX = 0x24f;
+const LATIN_EXT_ADDITIONAL_MIN = 0x1e00;
+const LATIN_EXT_ADDITIONAL_MAX = 0x1eff;
+
+function isLatinCodepoint(cp) {
+  return cp <= LATIN_BASIC_MAX || (cp >= LATIN_EXT_ADDITIONAL_MIN && cp <= LATIN_EXT_ADDITIONAL_MAX);
+}
 
 function checkNonLatinScript(pack, reasons) {
   const paragraphs = Array.isArray(pack?.story?.paragraphs_en) ? pack.story.paragraphs_en : [];
   paragraphs.forEach((text, index) => {
     const letters = [...String(text || '')].filter((ch) => LETTER_RE.test(ch));
     if (letters.length < NON_LATIN_MIN_LETTERS) return;
-    const nonLatin = letters.filter((ch) => ch.codePointAt(0) > LATIN_CODEPOINT_MAX);
+    const nonLatin = letters.filter((ch) => !isLatinCodepoint(ch.codePointAt(0)));
     const ratio = nonLatin.length / letters.length;
     if (ratio >= NON_LATIN_LETTER_RATIO) {
       reasons.push({
@@ -213,15 +235,24 @@ function checkNonLatinScript(pack, reasons) {
 // romanized Hindi reads as Latin-alphabet tokens, so it needs its own check
 // separate from Check A above). Dependency-free word-set heuristic, not a
 // dictionary/spell-check: a real English page always contains at least one
-// function/common word from this list; a page with zero hits after >= 10
-// tokens is not English. Word list intentionally wide (function words + very
-// common content words) — narrower lists produced 31 false positives across
-// 29 books on the full live corpus (real English pages like "Mr. Berger
-// walked slowly, measuring every step judiciously.", onomatopoeia, and
-// numbered lists all lack "small" function words but do contain something
-// from this broader set). Verified against the full live corpus (3,936 page
-// units): catches book_178669 p15 (28 tokens, 0 matches) with zero false
-// positives at floors 10, 12, and 15.
+// function/common word from this list; a page with zero hits after the token
+// floor is not English. Word list intentionally wide (function words + very
+// common content words, plus a vocab/counting/colour top-up added in review)
+// — narrower lists produced 31 false positives across 29 books on the full
+// live corpus (real English pages like "Mr. Berger walked slowly, measuring
+// every step judiciously.", onomatopoeia, and numbered lists all lack
+// "small" function words but do contain something from this broader set).
+//
+// Floor raised 10 -> 20 in review (2026-08-10): at 10, legitimate
+// vocabulary/roster page shapes false-flagged — fruit lists ("Apple. Banana.
+// Cherry. Durian. Eggplant. Fig. Grape. Honeydew. Ivy gourd. Jackfruit."),
+// name rosters (Indian: "Arjuna, Bhima, Nakula, ..."; Vietnamese surnames:
+// "Nguyen, Tran, Le, Pham, ..."), and counting pages ("Four. Five. Six.
+// Seven. ...") — all 10-13 tokens with no function word among them, all
+// legitimate children's-book content. The incident page (book_178669 p15) is
+// 28 tokens, so it is still caught with a comfortable margin at floor 20.
+// Verified against the full live corpus (3,936 page units): zero false
+// positives at floors 10, 15, AND 20.
 const ENGLISH_WORD_SET = new Set(`
 the a an is was were are am and or to of in on at it he she they we you i his her their my your
 that this with for but so as had have has do did does not no all be been being from by there here
@@ -231,10 +262,26 @@ said say says go goes went going get got come came see saw look looked make made
 knew think thought want wanted like liked little big small good great new old day night time back
 man boy girl mother father friend home house tree water food eat ate run ran play played work help
 thing things way long after before well still even much many every
+four five six seven eight nine ten eleven twelve thirteen fourteen fifteen twenty hundred
+red blue green yellow black white brown pink orange purple
+apple banana cherry grape mango fruit fruits cat dog bird fish cow bee ant hen egg milk rice
+school book books ball sun moon star rain sky bus car train road city village farm garden flower
+number numbers colour color colours colors name names animal animals
 `.trim().split(/\s+/));
 
-const ENGLISH_TOKEN_MIN = 10;
+const ENGLISH_TOKEN_MIN = 20;
 
+// Known limitation (accepted in review, 2026-08-10): this is a word-set
+// heuristic, not a language model — it cannot be airtight. A French page
+// ("On a vu un petit chat...") or Spanish page ("...fue a la escuela...")
+// can slip through on a single common-word collision (French "on", Spanish
+// "a" both happen to be English words too); a genuinely non-English passage
+// under ENGLISH_TOKEN_MIN tokens is never evaluated at all. We accept this
+// trade deliberately: a false POSITIVE here silently removes a good book
+// from the shelf with no human in the loop, while a false NEGATIVE is still
+// caught downstream — the child's 3-attempt auto-skip on an unreadable page,
+// and the periodic book QA audit. Do not try to close this gap by adding a
+// dictionary/langdetect dependency; see the module header for why.
 function checkNonEnglishPage(pack, reasons) {
   const paragraphs = Array.isArray(pack?.story?.paragraphs_en) ? pack.story.paragraphs_en : [];
   paragraphs.forEach((text, index) => {
