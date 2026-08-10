@@ -272,16 +272,40 @@ number numbers colour color colours colors name names animal animals
 const ENGLISH_TOKEN_MIN = 20;
 
 // Known limitation (accepted in review, 2026-08-10): this is a word-set
-// heuristic, not a language model — it cannot be airtight. A French page
-// ("On a vu un petit chat...") or Spanish page ("...fue a la escuela...")
-// can slip through on a single common-word collision (French "on", Spanish
-// "a" both happen to be English words too); a genuinely non-English passage
-// under ENGLISH_TOKEN_MIN tokens is never evaluated at all. We accept this
-// trade deliberately: a false POSITIVE here silently removes a good book
-// from the shelf with no human in the loop, while a false NEGATIVE is still
-// caught downstream — the child's 3-attempt auto-skip on an unreadable page,
-// and the periodic book QA audit. Do not try to close this gap by adding a
-// dictionary/langdetect dependency; see the module header for why.
+// heuristic, not a language model — it cannot be airtight.
+//
+// 1. A single common-word collision defeats detection at ANY length. A
+//    French page ("On a vu un petit chat...") or Spanish page ("...fue a la
+//    escuela...") can slip through because French "on" / Spanish "a" both
+//    happen to be English words too. This is not just a generic caveat —
+//    it is a LIVE RECURRENCE PATH for the founding incident: romanized
+//    Hindi commonly transliterates था/थे ("was"/"were") as "tha"/"the", and
+//    "the" is both the single most common English word and the first entry
+//    in ENGLISH_WORD_SET. book_178669 (the incident book) is Hindi-derived
+//    StoryWeaver content, so a future page from that same source using that
+//    exact transliteration would pass this check clean.
+// 2. A genuinely non-English passage under ENGLISH_TOKEN_MIN (20) tokens is
+//    never evaluated at all. The floor was raised from 10 to 20 specifically
+//    to kill vocab/roster/counting-page false positives (fruit lists, name
+//    rosters, counting pages — see the floor's own comment above); the cost
+//    is that shorter non-English passages go unjudged, including a slice of
+//    the founding incident's own text that the floor of 10 used to catch.
+// 3. Requiring >= 2 DISTINCT word-set matches (instead of >= 1) was measured
+//    against the live corpus and REJECTED, not merely unconsidered: over all
+//    2,418 real pages of >= 20 tokens, the distinct-match distribution is
+//    0 matches: 1 page (book_178669 p15, the target), 1 match: 1 page
+//    (book_103458 p18, a real English proper-noun folklore list —
+//    "Skondhokata - West Bengal, Baak - Assam, Rantas - Kashmir..."), 2
+//    matches: 2 pages, 3+: 2,414 pages. So >= 2 WOULD close the "the"
+//    collision above — at the cost of false-flagging that one legitimate
+//    page, on a margin of exactly one. Do not "improve" this threshold
+//    without re-measuring: we accept the trade deliberately, because a false
+//    POSITIVE here silently removes a good book from the shelf with no
+//    human in the loop, while a false NEGATIVE is backstopped downstream —
+//    the child's 3-attempt auto-skip on an unreadable page (lesson.astro
+//    ~6157-6224, which advances the child at 0💎 rather than trapping them),
+//    plus the periodic book QA audit. Do not try to close this gap by adding
+//    a dictionary/langdetect dependency; see the module header for why.
 function checkNonEnglishPage(pack, reasons) {
   const paragraphs = Array.isArray(pack?.story?.paragraphs_en) ? pack.story.paragraphs_en : [];
   paragraphs.forEach((text, index) => {
