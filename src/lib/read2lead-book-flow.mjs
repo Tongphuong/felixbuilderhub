@@ -266,7 +266,16 @@ function validateBookFlowV2(bookReader, lessonContext) {
       } else if (submitted.status === 'skipped') {
         const technicalSkip = submitted.technical_skip === true
           && Number(submitted.technical_failures) >= 2;
-        if (attempts < 3 && !technicalSkip) {
+        // r2l-micgate round 2: a mic-less child can never accrue
+        // technical_failures (that counter only increments inside the
+        // recording/upload pipeline, which the mic gate makes unreachable).
+        // mic_skip is a distinct, explicit skip reason — accepted alongside,
+        // never instead of, the technical-failure rule above. See
+        // _r2lSkipBookReaderChunkForMicGate in src/pages/read2lead/lesson.astro
+        // for why this is a separate field rather than an overloaded
+        // technical_failures value.
+        const micSkip = submitted.mic_skip === true;
+        if (attempts < 3 && !technicalSkip && !micSkip) {
           errors.push(`book_reader.pages[${pageIndex}].shadow_chunks[${chunkIndex}] was skipped too early`);
         }
       } else {
@@ -351,7 +360,11 @@ function validateBookFlowV3(bookReader, lessonContext) {
       } else if (submitted.status === 'skipped') {
         const technicalSkip = submitted.technical_skip === true
           && Number(submitted.technical_failures) >= 2;
-        if (attempts < 3 && !technicalSkip) {
+        // r2l-micgate round 2: same mic_skip acceptance as validateBookFlowV2
+        // above — a distinct, explicit skip reason, additive to (never a
+        // replacement for) the technical-failure rule.
+        const micSkip = submitted.mic_skip === true;
+        if (attempts < 3 && !technicalSkip && !micSkip) {
           errors.push(`book_reader.pages[${pageIndex}].page_reads[${readIndex}] was skipped too early`);
         }
       } else {

@@ -156,6 +156,14 @@ test('r2l-micgate Fix 1b: clicking the skip button on a stuck book-reader page s
   const chunk = state.bookReader.pages[0].page_reads[0];
   assert.equal(chunk.status, 'skipped', 'chunk must be settled, not left pending');
   assert.equal(chunk.technical_skip, true, 'settled via the technical-skip path, same as the existing 2-failure flow');
+  // r2l-micgate round 2: technical_skip=true alone is NOT enough — Buffet
+  // rejected round 1 because technical_failures stays 0 for a mic-less child
+  // (that counter only increments inside the recording/upload pipeline the
+  // mic gate makes unreachable), which the real validator's
+  // `technical_skip && technical_failures >= 2` rule rejects. mic_skip is
+  // the new explicit field the validator now also accepts.
+  assert.equal(chunk.mic_skip, true, 'mic_skip must be set — technical_skip alone cannot pass the real server validator with technical_failures still 0');
+  assert.equal(chunk.technical_failures, 0, 'a mic-less child never reaches the recording pipeline that increments this — it must NOT be faked to 2');
   assert.equal(chunk.score_percent, 0, 'a skipped read earns 0, never a phantom score');
   assert.deepEqual(calls.bookSetStage, ['next'], 'a single-chunk page must land the child on the forward-navigation stage');
   assert.equal(calls.celebrateDiamondReward.length, 0, 'founder-approved trade: 0 diamonds for a mic-skipped page, no ticker/confetti');

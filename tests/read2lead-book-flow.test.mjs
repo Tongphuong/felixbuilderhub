@@ -10,7 +10,12 @@ import {
   BOOK_QUESTION_LIMIT_V3,
   BOOK_PAGE_READ_WORD_CAP,
 } from '../src/lib/read2lead-book-flow.mjs';
-import { makeBookPackLesson, makeBookReaderState } from './helpers/book-pack-fixture.mjs';
+import { makeBookPackLesson, makeBookReaderState, makeStoredBookPack } from './helpers/book-pack-fixture.mjs';
+// r2l-micgate round 2: the missing cross-boundary test — runs the client's
+// exact mic-skip payload shape through the REAL submit endpoint, not a
+// re-implementation. See the test near the bottom of this file.
+import { onRequestPost } from '../functions/api/submit-read2lead-lesson.js';
+import { progressKey } from '../functions/api/_read2lead-v2-state.js';
 
 function context() {
   const sentences = [
@@ -322,4 +327,192 @@ test('summarizeBookFlow counts page_reads under the chunks_* keys for v3 readers
     chunks_skipped: 0,
     average_pronunciation_score: 70,
   });
+});
+
+// ── r2l-micgate round 2: mic_skip ──────────────────────────────────────────
+//
+// Buffet rejected round 1 (commit 97b8d7f): the client set status='skipped'
+// + technical_skip=true but left technical_failures=0 and attempts=0 — a
+// shape the REAL validator rejects (`technical_skip && technical_failures
+// >= 2` was never satisfiable, because a mic-less child never reaches the
+// recording/upload pipeline that increments technical_failures). Elon's
+// ruling: add a NEW explicit `mic_skip` field rather than writing
+// technical_failures=2 for zero real failures, so a mic-blocked child stays
+// distinguishable from one with flaky uploads. mic_skip is ADDITIVE to the
+// existing technical-failure rule, never a replacement for it.
+
+test('r2l-micgate v2: EVERY shadow chunk mic-skipped (0 attempts, 0 technical_failures) is accepted by the REAL validator', () => {
+  const lesson = context();
+  const submission = validSubmission(lesson);
+  submission.pages[0].shadow_chunks.forEach((chunk) => {
+    chunk.status = 'skipped';
+    chunk.attempts = 0;
+    chunk.technical_failures = 0;
+    chunk.technical_skip = true;
+    chunk.mic_skip = true;
+    chunk.score_percent = 0;
+  });
+  const result = validateBookFlowSubmission(submission, lesson, { version: 2 });
+  assert.equal(result.ok, true, JSON.stringify(result.errors));
+  assert.equal(result.summary.chunks_skipped, submission.pages[0].shadow_chunks.length);
+  assert.equal(result.summary.chunks_passed, 0);
+});
+
+test('r2l-micgate v2: the OLD invariant still holds — technical_skip:true, technical_failures:1, no mic_skip stays REJECTED', () => {
+  const lesson = context();
+  const submission = validSubmission(lesson);
+  Object.assign(submission.pages[0].shadow_chunks[0], {
+    status: 'skipped',
+    attempts: 0,
+    technical_failures: 1,
+    technical_skip: true,
+  });
+  const result = validateBookFlowSubmission(submission, lesson, { version: 2 });
+  assert.equal(result.ok, false, 'a fix that quietly opens the gate for everyone would pass this');
+  assert.match(result.errors.join('\n'), /was skipped too early/);
+});
+
+// v3 — this is the shape lesson.astro's bookSubmissionState() actually
+// produces (page_reads, not shadow_chunks — the book reader has run on v3
+// exclusively since R2L-PAGE-LOOP). Reuses makeBookPackLesson /
+// makeBookReaderState (the same production selection/chunking functions the
+// client and server both run) across MULTIPLE pages, proving a fully
+// mic-blocked child can submit an entire book, not just one page.
+test('r2l-micgate v3: EVERY page_read mic-skipped across a multi-page book is accepted by the REAL validator', () => {
+  const lesson = makeBookPackLesson({ pages: 3, sentencesPerPage: 2, questionsPerPage: 2 });
+  const reader = makeBookReaderState(lesson, { version: 3 });
+  reader.pages.forEach((page) => {
+    page.page_reads.forEach((read) => {
+      read.status = 'skipped';
+      read.attempts = 0;
+      read.technical_failures = 0;
+      read.technical_skip = true;
+      read.mic_skip = true;
+      read.score_percent = 0;
+    });
+  });
+  const result = validateBookFlowSubmission(reader, lesson, { version: 3 });
+  assert.equal(result.ok, true, JSON.stringify(result.errors));
+  assert.equal(result.summary.chunks_passed, 0);
+  assert.ok(result.summary.chunks_skipped >= 3, 'every page contributed at least one skipped read');
+});
+
+test('r2l-micgate v3: the OLD invariant still holds — technical_skip:true, technical_failures:1, no mic_skip stays REJECTED', () => {
+  const lesson = makeBookPackLesson({ pages: 1, sentencesPerPage: 2, questionsPerPage: 2 });
+  const reader = makeBookReaderState(lesson, { version: 3 });
+  Object.assign(reader.pages[0].page_reads[0], {
+    status: 'skipped',
+    attempts: 0,
+    technical_failures: 1,
+    technical_skip: true,
+  });
+  const result = validateBookFlowSubmission(reader, lesson, { version: 3 });
+  assert.equal(result.ok, false, 'a fix that quietly opens the gate for everyone would pass this');
+  assert.match(result.errors.join('\n'), /was skipped too early/);
+});
+
+// ── r2l-micgate round 2: the test that was missing ─────────────────────────
+//
+// Round 1's 35 tests all passed while the feature was broken because none of
+// them crossed the client/server boundary — they asserted the client's
+// in-memory chunk shape, never fed it to the real submit endpoint. This test
+// does: builds the exact payload bookSubmissionState() constructs for a
+// mic-less child across a full 12-page book (page_reads, mic_skip +
+// technical_skip true, technical_failures/attempts left at their true value
+// of 0) and posts it through the REAL onRequestPost — asserting a 200, not
+// round 1's permanent 400 retry-loop — then reports the four reward figures
+// Elon needs for the founder.
+test('r2l-micgate: a fully mic-skipped 12-page book submits successfully end-to-end and pays the honest reward numbers', async () => {
+  const pack = makeStoredBookPack('book_9001', { pages: 12, sentencesPerPage: 1, questionsPerPage: 1 });
+  const ACCESS_CODE = 'R2L-MICGATE-R2';
+  const PACK_ID = 'book-pack-micgate';
+  const codeData = {
+    completed_books: [],
+    student_profile: { student_name: 'Test', level: 'L1' },
+    progress: {
+      current_pack: {
+        pack_id: PACK_ID,
+        status: 'ready',
+        schema_version: 2,
+        review_context: pack,
+      },
+    },
+  };
+  const progressState = {
+    schema_version: 2,
+    access_code: ACCESS_CODE,
+    student_name: 'Test',
+    current_level: 'L1',
+    initial_level: 'L1',
+    unlocked_levels: ['L1'],
+    coins: 0,
+    total_xp: 0,
+    xp_in_level: 0,
+    completed_packs: 0,
+    rank_points: 0,
+    level_progress: { L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 },
+    streak_days: 0,
+  };
+  const store = new Map([
+    [ACCESS_CODE, structuredClone(codeData)],
+    [progressKey(ACCESS_CODE), structuredClone(progressState)],
+  ]);
+  const env = {
+    RNG: () => 0,
+    READ2LEAD_CODES: {
+      async get(key) {
+        const value = store.get(key);
+        return value == null ? null : structuredClone(value);
+      },
+      async put(key, value) {
+        store.set(key, typeof value === 'string' ? JSON.parse(value) : structuredClone(value));
+      },
+    },
+  };
+
+  const reader = makeBookReaderState(pack, { version: 3 });
+  reader.pages.forEach((page) => {
+    page.page_reads.forEach((read) => {
+      read.status = 'skipped';
+      read.attempts = 0;
+      read.technical_failures = 0;
+      read.technical_skip = true;
+      read.mic_skip = true;
+      read.score_percent = 0;
+    });
+  });
+
+  const response = await onRequestPost({
+    request: new Request('https://example.com/api/submit-read2lead-lesson', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': '127.0.0.1' },
+      body: JSON.stringify({
+        access_code: ACCESS_CODE,
+        pack_id: PACK_ID,
+        answers: {
+          book_flow_version: 3,
+          book_reader: reader,
+          activity_results: [],
+        },
+      }),
+    }),
+    env,
+  });
+
+  assert.equal(response.status, 200, 'a fully mic-skipped book must not 400 — that was round 1s bug');
+  const payload = await response.json();
+  assert.equal(payload.ok, true, JSON.stringify(payload));
+  assert.equal(payload.completed_without_reward, true);
+
+  // The four figures Elon needs for the founder: a mic-less child who
+  // page-loops through all 12 pages with zero working microphone earns
+  // NOTHING. This is the honest outcome of the EXISTING reward rules —
+  // page diamonds require >=1 PASSED read per page (countPagesWithPassedReadUnit),
+  // the grade bonus and rank points require the overall `passed` gate, and
+  // mic_skip fails that gate by design (evaluateSpeakingGate's
+  // skipped_due_to_mic branch) — not a gap this packet is scoped to close.
+  assert.equal(payload.rewards_earned.diamonds, 0, 'page diamonds + grade diamonds: 0 (no page has a passed read unit, and finalizeWithoutReward never runs the grade bonus)');
+  assert.equal(payload.rewards_earned.xp, 0, 'XP: 0 (finalizeWithoutReward never awards XP)');
+  assert.equal(payload.rank_up, undefined, 'no rank_up key at all: awardRankPoints only runs on the full-pass branch, never reached here');
+  assert.equal(payload.read2lead_state.season.rp, 0, 'rank (season RP) points: 0 (awardRankPoints never runs on this path)');
 });

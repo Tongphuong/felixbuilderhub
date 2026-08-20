@@ -3728,16 +3728,28 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     }
   }
 
-  // r2l-micgate Fix 1: settle the current pending book-reader read-aloud
-  // chunk the same way a persistent technical failure already does
-  // (bookSkipCurrentChunkForTechnicalFailure, below) — status='skipped' +
-  // technical_skip=true, then hand off to the existing bookCompleteShadowChunk
-  // settle/advance logic. Reuses that logic rather than inventing a new path.
+  // r2l-micgate Fix 1 (round 2): settle the current pending book-reader
+  // read-aloud chunk the same way a persistent technical failure already
+  // does (bookSkipCurrentChunkForTechnicalFailure, below) — status='skipped'
+  // + technical_skip=true — then hand off to the existing
+  // bookCompleteShadowChunk settle/advance logic. Reuses that logic rather
+  // than inventing a new path.
+  //
+  // Round-2 fix: also set mic_skip=true, a NEW explicit field distinct from
+  // technical_skip. technical_failures stays at its true value (0 — a
+  // mic-less child never reaches the recording/upload pipeline that
+  // increments it, so overloading technical_failures to make the OLD
+  // "technical_skip && technical_failures >= 2" rule pass would make a
+  // mic-blocked child indistinguishable from one with flaky uploads — Elon's
+  // ruling, r2l-micgate-r2). The validator (read2lead-book-flow.mjs) accepts
+  // mic_skip === true as an independent skip reason alongside, not instead
+  // of, the existing technical-failure rule.
   function _r2lSkipBookReaderChunkForMicGate() {
     const chunk = bookCurrentChunk();
     if (!chunk || chunk.status !== 'pending') return;
     chunk.status = 'skipped';
     chunk.technical_skip = true;
+    chunk.mic_skip = true;
     chunk.score_percent = Number(chunk.score_percent) || 0;
     scheduleSaveLessonSession();
     bookCompleteShadowChunk(chunk.read_id);
@@ -5583,6 +5595,11 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
             : 0,
           ...(previous.latest_feedback ? { latest_feedback: previous.latest_feedback } : {}),
           ...(previous.technical_skip === true ? { technical_skip: true } : {}),
+          // r2l-micgate round 2: mic_skip must survive a session reload the
+          // same way technical_skip does above, or a mic-less child who
+          // refreshes mid-book loses the explicit marker and resubmits a
+          // shape the validator rejects (technical_failures stays 0).
+          ...(previous.mic_skip === true ? { mic_skip: true } : {}),
         };
       });
       return {
@@ -6381,6 +6398,10 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
           score_percent: read.score_percent,
           technical_failures: read.technical_failures,
           ...(read.technical_skip === true ? { technical_skip: true } : {}),
+          // r2l-micgate round 2: distinct from technical_skip — see
+          // _r2lSkipBookReaderChunkForMicGate above for why this is a
+          // separate field rather than a technical_failures overload.
+          ...(read.mic_skip === true ? { mic_skip: true } : {}),
         })),
       })),
     };
