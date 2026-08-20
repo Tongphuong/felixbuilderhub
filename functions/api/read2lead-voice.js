@@ -51,6 +51,28 @@ export function deriveR2lPackAllowlist(pack) {
     }
   }
 
+  // r2l-micgate Fix 2: book-lesson guided-listening question stems + options.
+  // These live at lesson.guided_listening[].questions[], sibling to
+  // lesson.activities[] handled below, not inside it — without this, Minny
+  // cannot read a listening question aloud on any book lesson (403 on every
+  // one of Danny's 68 questions).
+  if (Array.isArray(lesson.guided_listening)) {
+    for (const entry of lesson.guided_listening) {
+      if (!entry || typeof entry !== 'object') continue;
+      for (const q of entry.questions || []) {
+        if (!q) continue;
+        addSentence(q.question_en);
+        // Real book packs store options as options_en: string[] (see
+        // src/lib/read2lead-book-flow.mjs); the object{text_en} shape used
+        // by activities[] is also accepted defensively — opt.text_en is
+        // undefined on a plain string, so `opt.text_en || opt` covers both.
+        for (const opt of q.options_en || q.options || []) {
+          addSentence(opt.text_en || opt);
+        }
+      }
+    }
+  }
+
   // Activities
   for (const activity of lesson.activities || []) {
     if (!activity || typeof activity !== 'object') continue;

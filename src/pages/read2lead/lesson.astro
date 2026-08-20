@@ -3712,12 +3712,36 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   }
 
   function _r2lSkipMicSpeakingProgress() {
+    // r2l-micgate: the book-reader page-loop has its own settle path — a
+    // book-reader chunk is not an "activity", so it never matches
+    // SPEAKING_ACTIVITY_TYPES below and would otherwise make this a no-op,
+    // leaving the child stuck even with the skip button visible.
+    if (state.w1Phase === 'book_reader') {
+      _r2lSkipBookReaderChunkForMicGate();
+      return;
+    }
     const activities = state.lesson?.activities || [];
     const current = activities[state.activityIndex];
     if (SPEAKING_ACTIVITY_TYPES.has(current?.type)) {
       _r2lCompleteSpeakActivityOnMicSkip(current);
       showToast('Mình sang phần tiếp nhé. Phần nói này không nhận thưởng.');
     }
+  }
+
+  // r2l-micgate Fix 1: settle the current pending book-reader read-aloud
+  // chunk the same way a persistent technical failure already does
+  // (bookSkipCurrentChunkForTechnicalFailure, below) — status='skipped' +
+  // technical_skip=true, then hand off to the existing bookCompleteShadowChunk
+  // settle/advance logic. Reuses that logic rather than inventing a new path.
+  function _r2lSkipBookReaderChunkForMicGate() {
+    const chunk = bookCurrentChunk();
+    if (!chunk || chunk.status !== 'pending') return;
+    chunk.status = 'skipped';
+    chunk.technical_skip = true;
+    chunk.score_percent = Number(chunk.score_percent) || 0;
+    scheduleSaveLessonSession();
+    bookCompleteShadowChunk(chunk.read_id);
+    showToast('Mình sang trang tiếp nhé. Phần đọc này không nhận thưởng.');
   }
 
   function _r2lMaybeOfferSpeakSkip() {
@@ -4988,28 +5012,54 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   }
 
   async function pollDeferredFullStoryAudio(button) {
+    // r2l-micgate Fix 3: fail honestly and stop. This already bounded the
+    // *count* of attempts (maxAttempts), but not each attempt's wall-clock
+    // time — a single hung fetch() (no AbortController) could stall the
+    // whole loop indefinitely, which is what "Đang tạo audio truyện..."
+    // forever looks like from the outside. A dataset re-entrancy guard also
+    // stops a second caller from stacking an overlapping poll on the same
+    // button. Never generates the audio itself — only stops asking for it.
+    if (button.dataset.audioPolling === 'true') return;
+    button.dataset.audioPolling = 'true';
     button.textContent = 'Đang tạo audio truyện...';
     button.disabled = true;
     const maxAttempts = 12;
     const intervalMs = 3000;
-    for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
-      await new Promise((resolve) => window.setTimeout(resolve, intervalMs));
-      try {
-        const res = await fetch(
-          `/api/read2lead-lesson?code=${encodeURIComponent(state.accessCode)}&pack_id=${encodeURIComponent(state.packId)}`,
-        );
-        const data = await safeJson(res);
-        const mergedUrl = data.lesson?.story?.full_audio_url || '';
-        if (res.ok && data.ok && mergedUrl) {
-          state.lesson.story.full_audio_url = mergedUrl;
-          setStoryAudioButtonState(button, mergedUrl);
-          return;
+    const attemptTimeoutMs = 8000;
+    try {
+      for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+        await new Promise((resolve) => window.setTimeout(resolve, intervalMs));
+        try {
+          const controller = new AbortController();
+          const timer = window.setTimeout(() => controller.abort(), attemptTimeoutMs);
+          let res;
+          try {
+            res = await fetch(
+              `/api/read2lead-lesson?code=${encodeURIComponent(state.accessCode)}&pack_id=${encodeURIComponent(state.packId)}`,
+              { signal: controller.signal },
+            );
+          } finally {
+            window.clearTimeout(timer);
+          }
+          const data = await safeJson(res);
+          const mergedUrl = data.lesson?.story?.full_audio_url || '';
+          if (res.ok && data.ok && mergedUrl) {
+            state.lesson.story.full_audio_url = mergedUrl;
+            setStoryAudioButtonState(button, mergedUrl);
+            return;
+          }
+        } catch {
+          // Network error, timeout, or abort — keep polling until attempts
+          // exhausted; never let one bad attempt hang the loop.
         }
-      } catch {
-        // keep polling until attempts exhausted
       }
+      // Polling exhausted (or the pack never got audio): settle honestly on
+      // the disabled "Chưa có audio" state instead of leaving the button
+      // reading "Đang tạo audio truyện..." with nothing left retrying it.
+      setStoryAudioButtonState(button, '');
+    } finally {
+      button.dataset.audioPolling = 'false';
     }
-    setStoryAudioButtonState(button, '');
   }
 
   function ensureLessonActivities(lesson) {
@@ -5568,7 +5618,11 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     bookInitializeState();
     bookRenderAttribution();
     bookShowPage();
-    _r2lMountMicCheck(qs('#w1-book-reader-phase'), 0, false);
+    // r2l-micgate P1: a mic-less child must never be trapped on the book
+    // page-loop. allowLessonSkip=true surfaces [data-mic-skip-lesson] after
+    // 2 failed mic tests (SKIP_AFTER_FAILURES in r2l-mic-check.js); the
+    // click is wired to _r2lSkipBookReaderChunkForMicGate below.
+    _r2lMountMicCheck(qs('#w1-book-reader-phase'), 0, true);
 
     if (_bookReaderBound) return;
     _bookReaderBound = true;

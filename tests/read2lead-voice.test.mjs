@@ -82,6 +82,43 @@ function makeLessonPack(overrides = {}) {
   };
 }
 
+// r2l-micgate Fix 2: a book lesson (Danny's "There Must be a Rainbow" and
+// friends) stores its Q&A at lesson.guided_listening[].questions[], a
+// sibling of lesson.activities[] — NOT inside it. Options are plain strings
+// under options_en (see src/lib/read2lead-book-flow.mjs), not the
+// {text_en}-object shape activities[] questions use.
+function makeBookLessonPack(overrides = {}) {
+  return {
+    pack: {
+      schema_version: 2,
+      story: {
+        title: 'There Must be a Rainbow',
+        sentences: [
+          { paragraph_index: 0, text_en: 'It was a rainy day.' },
+          { paragraph_index: 0, text_en: 'The sun came out.' },
+        ],
+      },
+      guided_listening: [
+        {
+          paragraph_index: 0,
+          questions: [
+            {
+              id: 'q1',
+              question_en: 'Why did the rain stop?',
+              options_en: ['Because the sun came out', 'Because it was night'],
+              correct_index: 0,
+            },
+          ],
+        },
+      ],
+      activities: [],
+    },
+    pack_id: 'test-book-pack-001',
+    status: 'awaiting_review',
+    ...overrides,
+  };
+}
+
 // ── deriveR2lPackAllowlist tests ──
 
 test('deriveR2lPackAllowlist: extracts sentences and words from a v2 pack', () => {
@@ -99,6 +136,17 @@ test('deriveR2lPackAllowlist: extracts sentences and words from a v2 pack', () =
   assert.ok(words.has('park'), 'word from story');
   assert.ok(words.has('tree'), 'word from qa option');
   assert.ok(words.has('big'), 'word from vocabulary');
+});
+
+test('deriveR2lPackAllowlist: extracts guided_listening question stems and options (r2l-micgate Fix 2)', () => {
+  const pack = makeBookLessonPack();
+  const { sentences, words } = deriveR2lPackAllowlist(pack);
+
+  assert.ok(sentences.has('Why did the rain stop?'), 'guided_listening question stem');
+  assert.ok(sentences.has('Because the sun came out'), 'guided_listening option (options_en string)');
+  assert.ok(sentences.has('Because it was night'), 'guided_listening distractor option');
+  assert.equal(words.has('rainbow'), false, 'sanity: unrelated word not present');
+  assert.ok(words.has('sun'), 'word tokenized from a guided_listening option');
 });
 
 test('deriveR2lPackAllowlist: handles empty/missing pack gracefully', () => {
@@ -186,6 +234,29 @@ test('onRequestPost: allows individual word from the pack', async () => {
   const body = await res.json();
   assert.equal(body.ok, true);
   assert.ok(body.audio_b64, 'has audio base64');
+});
+
+test('onRequestPost: allows a guided_listening question stem from a book pack (r2l-micgate Fix 2)', async () => {
+  const kv = makeFakeKv({ 'R2L-TEST-0001': JSON.stringify({ progress: { current_pack: makeBookLessonPack() } }) });
+  const res = await onRequestPost({
+    request: makeRequest({ access_code: 'r2l-test-0001', text: 'Why did the rain stop?' }),
+    env: { READ2LEAD_CODES: kv, AI: fakeAi },
+  });
+  assert.equal(res.status, 200);
+  const body = await res.json();
+  assert.equal(body.ok, true);
+  assert.ok(body.audio_b64, 'has audio base64');
+});
+
+test('onRequestPost: still 403s off-pack text on a book pack (allowlist stays pack-scoped, not an open proxy)', async () => {
+  const kv = makeFakeKv({ 'R2L-TEST-0001': JSON.stringify({ progress: { current_pack: makeBookLessonPack() } }) });
+  const res = await onRequestPost({
+    request: makeRequest({ access_code: 'r2l-test-0001', text: 'Read this arbitrary sentence please.' }),
+    env: { READ2LEAD_CODES: kv, AI: fakeAi },
+  });
+  assert.equal(res.status, 403);
+  const body = await res.json();
+  assert.equal(body.error, 'not_allowed');
 });
 
 test('onRequestPost: rejects code_not_found', async () => {
