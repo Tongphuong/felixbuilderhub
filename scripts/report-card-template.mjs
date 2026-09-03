@@ -206,15 +206,29 @@ function buildRibbonSvg(rank) {
         <stop offset="1" stop-color="${c.dark}" />
       </linearGradient>
     </defs>
-    <path d="M46 96 L46 186 L76 166 L106 186 L106 96 Z" fill="url(#ribbonTail)" stroke="${c.dark}" stroke-width="1.5" />
-    <path d="M46 186 L60 150 L46 150 Z" fill="${c.dark}" />
-    <path d="M106 186 L92 150 L106 150 Z" fill="${c.dark}" />
+    <path d="M34 96 L34 186 L76 166 L118 186 L118 96 Z" fill="url(#ribbonTail)" stroke="${c.dark}" stroke-width="1.5" />
+    <path d="M34 186 L54 150 L34 150 Z" fill="${c.dark}" />
+    <path d="M118 186 L98 150 L118 150 Z" fill="${c.dark}" />
     <circle cx="76" cy="66" r="58" fill="url(#ribbonBody)" stroke="${c.dark}" stroke-width="3" />
     <circle cx="76" cy="66" r="48" fill="none" stroke="${c.ink}" stroke-width="1.4" opacity="0.55" />
     <text x="76" y="72" text-anchor="middle" font-family="'Manrope', sans-serif" font-weight="800"
           font-size="40" fill="${c.ink}">${rank}</text>
-    <text x="76" y="140" text-anchor="middle" font-family="'Manrope', sans-serif" font-weight="700"
-          font-size="13" letter-spacing="1.5" fill="${c.dark}">${escapeHtml(label)}</text>
+    <!-- Dark "name-plate" behind the rank label (fixes the founder-flagged
+         defect: HẠNG NHẤT at the old font-size/13 + letter-spacing/1.5 was
+         88 SVG units wide against a 60-unit tail — it spilled off both
+         edges onto the cream page, and where it did sit on the ribbon it
+         was gold text on gold, near-zero contrast. Widths below are
+         headless-Chrome getBBox() measurements at the new font-size/10,
+         letter-spacing/0.6: HẠNG NHẤT 63u, HẠNG NHÌ 52u, HẠNG BA 48u — all
+         fit inside this 80-unit plate (also widened the tail itself to
+         34-118 to give the plate room within the medallion's existing
+         horizontal footprint; the viewBox didn't need to grow). The plate
+         uses the rank's own darkest "ink" tone and the label uses the
+         rank's own palest "light" tone, so contrast holds for every rank
+         family (gold/silver/bronze) without a new color token. -->
+    <rect x="36" y="131" width="80" height="19" rx="3.5" fill="${c.ink}" />
+    <text x="76" y="144" text-anchor="middle" font-family="'Manrope', sans-serif" font-weight="700"
+          font-size="10" letter-spacing="0.6" fill="${c.light}">${escapeHtml(label)}</text>
   </svg>`;
 }
 

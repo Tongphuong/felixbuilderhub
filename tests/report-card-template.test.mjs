@@ -146,6 +146,24 @@ test('the top-3 ribbon appears ONLY for a real honorsRank 1/2/3, never implies r
   assert.doesNotMatch(noRank, /HẠNG/);
 });
 
+test('BITE: the rank label sits on its own contrast plate for ranks 1-3, and no plate/label exists otherwise', () => {
+  const noRank = renderCertificateHtml(fullData({ honorsRank: null }));
+  const cases = [
+    { html: renderCertificateHtml(fullData({ honorsRank: 1 })), label: 'HẠNG NHẤT' },
+    { html: renderCertificateHtml(fullData({ honorsRank: 2 })), label: 'HẠNG NHÌ' },
+    { html: renderCertificateHtml(fullData({ honorsRank: 3 })), label: 'HẠNG BA' },
+  ];
+  for (const { html, label } of cases) {
+    // The label must be drawn on a filled plate immediately before it (a
+    // <rect> right before the <text>), not directly on the ribbon body —
+    // that plate is what fixes the gold-on-gold contrast defect.
+    const platePattern = new RegExp(`<rect[^>]*rx="3.5"[^>]*/>\\s*<text[^>]*>${label}</text>`);
+    assert.match(html, platePattern, `${label} must render on its contrast plate`);
+  }
+  assert.doesNotMatch(noRank, /HẠNG/);
+  assert.doesNotMatch(noRank, /rx="3.5"/);
+});
+
 test('an invalid/out-of-range honorsRank (e.g. 4, 0, negative) is treated as no rank', () => {
   for (const bad of [0, 4, -1, 'first', undefined]) {
     const html = renderCertificateHtml(fullData({ honorsRank: bad }));
