@@ -153,6 +153,55 @@ test('an invalid/out-of-range honorsRank (e.g. 4, 0, negative) is treated as no 
   }
 });
 
+test('BITE: a streak under 3 days is omitted — a one-day streak is faint praise that undercuts the certificate', () => {
+  const html = renderCertificateHtml(fullData({ stats: { ...fullData().stats, streakDays: 1 } }));
+  assert.doesNotMatch(html, /Chuỗi ngày/);
+});
+
+test('a streak of 3+ days still renders the chip (boundary: exactly 3 shows, 12 shows)', () => {
+  const atThreshold = renderCertificateHtml(fullData({ stats: { ...fullData().stats, streakDays: 3 } }));
+  assert.match(atThreshold, /Chuỗi ngày/);
+  assert.match(atThreshold, />3 ngày</);
+
+  const html = renderCertificateHtml(fullData({ stats: { ...fullData().stats, streakDays: 12 } }));
+  assert.match(html, /Chuỗi ngày/);
+  assert.match(html, />12 ngày</);
+});
+
+test('stat chips render as pre-balanced rows: 3, 5, and 7 chips each produce no lone-orphan row', () => {
+  // 3 chips: pronunciation + 2 stats (books, packs); streak/level/diamonds/xp all zero/absent.
+  const three = renderCertificateHtml(
+    fullData({
+      stats: { completedBooks: 4, completedPacks: 2, diamonds: 0, totalXp: 0, streakDays: 0, currentLevelLabel: null },
+    }),
+  );
+  const threeRows = three.match(/<div class="fx-stats-row">/g) || [];
+  assert.equal(threeRows.length, 1, '3 chips must fit a single row');
+
+  // 5 chips: pronunciation + books + packs + level + streak(>=3); diamonds/xp zero.
+  const five = renderCertificateHtml(
+    fullData({
+      stats: { completedBooks: 4, completedPacks: 2, diamonds: 0, totalXp: 0, streakDays: 5, currentLevelLabel: 'Vàng' },
+    }),
+  );
+  const fiveRows = five.match(/<div class="fx-stats-row">/g) || [];
+  assert.equal(fiveRows.length, 2, '5 chips must split across two rows, not overflow one row raggedly');
+
+  // 7 chips: every stat populated (the full fullData() set) -> pronunciation + 6.
+  const seven = renderCertificateHtml(fullData());
+  const sevenRows = seven.match(/<div class="fx-stats-row">/g) || [];
+  assert.equal(sevenRows.length, 2, '7 chips must split 4+3, never strand a 6th chip alone on its own row');
+});
+
+test('pronunciation is the lead ("hero") chip, styled distinctly and listed first', () => {
+  const html = renderCertificateHtml(fullData());
+  assert.match(html, /class="fx-chip fx-chip--hero"/, 'a hero chip must be rendered');
+  // The first chip div in document order must be the hero (pronunciation) chip.
+  const firstChipDiv = html.match(/<div class="fx-chip[^"]*"/);
+  assert.ok(firstChipDiv, 'at least one chip must render');
+  assert.match(firstChipDiv[0], /fx-chip--hero/, 'pronunciation must be the first chip rendered, not the last');
+});
+
 test('escapes HTML-significant characters in the student name (defensive, even though names are trusted KV data)', () => {
   const html = renderCertificateHtml(fullData({ studentName: '<b>Ánh</b> & "Con"' }));
   assert.doesNotMatch(html, /<b>Ánh<\/b>/);

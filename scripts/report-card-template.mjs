@@ -24,12 +24,51 @@
  * (scripts/build-report-cards.mjs) is responsible for sourcing every field
  * from functions/api/_read2lead-v2-state.js / _read2lead-honors.js and
  * handing this function a plain, pre-shaped data object.
+ *
+ * Revision round (founder review of v1): palette is CREAM page / NAVY text /
+ * GOLD frame+accents, not the v1 navy-slab design — a full-bleed dark page
+ * renders as a black slab in a Zalo thumbnail and drains a home printer's
+ * cartridge. Four gold tones do different jobs (see the color block below);
+ * gold text/hairlines directly on cream lose contrast fast, so only the
+ * darkest gold (`GOLD_INK`) is ever used for actual text, and the deepest
+ * structural gold (`GOLD_FRAME`) for anything thin (borders, hairlines,
+ * flourish strokes). The lighter golds stay reserved for shapes that sit on
+ * top of a navy fill (the crest's medallion core, the rank ribbon), where
+ * they always had strong contrast and still do.
+ *
+ * Also new this round: a weak streak (< 3 days) is omitted like any other
+ * zero stat — see the streakDays gate below — and the stat band renders as
+ * pre-balanced JS-computed rows (splitChipRows) instead of relying on CSS
+ * flex-wrap, so 3-7 chips never strand an orphan on its own row. The
+ * pronunciation chip leads the list and gets a distinct "hero" treatment —
+ * it is the most meaningful number on the page for a parent.
  */
 
 // Exported so the bite test (and any future caller) can assert against the
 // exact same string this module renders, rather than a hand-typed copy that
 // could silently drift from the real headline.
 export const STARTER_HEADLINE_VI = 'Thẻ khởi động';
+
+// Cream/navy/gold palette (founder-confirmed revision). Four gold tones,
+// each with a distinct job — do not use them interchangeably:
+//   GOLD        #c88f38  larger fills/strokes with enough area to carry the
+//                         lighter tone (corner-flourish main lines, crest
+//                         leaf gradient start, chip border wash)
+//   GOLD_FRAME  #9c6d24  anything thin sitting directly on cream — the page
+//                         frame, the inner hairline, the signoff rule, small
+//                         flourish dots. Thin + light gold disappears on
+//                         cream; this is the deepened tone that doesn't.
+//   GOLD_LIGHT  #f2cc7e  ONLY for shapes drawn on top of a navy fill (the
+//                         crest medallion's core lines/star, the rank-1
+//                         ribbon's light gradient stop) — contrast there was
+//                         always fine and still is.
+//   GOLD_INK    #7c531c  actual gold TEXT (eyebrow kicker, season line,
+//                         signoff captions, chip labels, seal lettering) —
+//                         darkest of the four so 8-12pt text still clears
+//                         AA contrast against cream.
+// NAVY_INK    #10273a    primary text (name, chip values, signature)
+// NAVY_SOFT   #33485c    secondary text (subtitle, season/date lines)
+// CREAM       #f5e6c8 / #f7ecd3  page ground (see .fx-page background)
 
 const RANK_RIBBON_LABEL_VI = { 1: 'HẠNG NHẤT', 2: 'HẠNG NHÌ', 3: 'HẠNG BA' };
 
@@ -106,8 +145,8 @@ function buildCrestSvg({ size = 132 } = {}) {
        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
       <linearGradient id="crestLeaf" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#f2cc7e" />
-        <stop offset="1" stop-color="#c88f38" />
+        <stop offset="0" stop-color="#c88f38" />
+        <stop offset="1" stop-color="#9c6d24" />
       </linearGradient>
       <radialGradient id="crestCore" cx="0.35" cy="0.3" r="0.8">
         <stop offset="0" stop-color="#2a4a63" />
@@ -138,14 +177,14 @@ function buildCornerFlourishSvg() {
   <svg class="fx-corner-svg" width="100%" height="100%" viewBox="0 0 120 120"
        preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M4 4 C 4 46, 4 74, 4 116 M4 4 C 46 4, 74 4, 116 4"
-          fill="none" stroke="#c88f38" stroke-width="2.4" />
-    <path d="M4 4 C 30 4, 4 30, 4 4 Z" fill="#c88f38" opacity="0" />
-    <path d="M18 4 C 18 22, 22 30, 40 30" fill="none" stroke="#f2cc7e" stroke-width="1.6" />
-    <path d="M4 18 C 22 18, 30 22, 30 40" fill="none" stroke="#f2cc7e" stroke-width="1.6" />
-    <circle cx="4" cy="4" r="5" fill="#f2cc7e" />
-    <circle cx="4" cy="4" r="2.1" fill="#152c3f" />
-    <circle cx="30" cy="4" r="2.4" fill="#c88f38" />
-    <circle cx="4" cy="30" r="2.4" fill="#c88f38" />
+          fill="none" stroke="#9c6d24" stroke-width="2.4" />
+    <path d="M4 4 C 30 4, 4 30, 4 4 Z" fill="#9c6d24" opacity="0" />
+    <path d="M18 4 C 18 22, 22 30, 40 30" fill="none" stroke="#9c6d24" stroke-width="1.6" />
+    <path d="M4 18 C 22 18, 30 22, 30 40" fill="none" stroke="#9c6d24" stroke-width="1.6" />
+    <circle cx="4" cy="4" r="5" fill="#9c6d24" />
+    <circle cx="4" cy="4" r="2.1" fill="#10273a" />
+    <circle cx="30" cy="4" r="2.4" fill="#9c6d24" />
+    <circle cx="4" cy="30" r="2.4" fill="#9c6d24" />
   </svg>`;
 }
 
@@ -184,13 +223,13 @@ function buildSealSvg() {
   return `
   <svg class="fx-seal-svg" width="86" height="86" viewBox="0 0 86 86"
        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <circle cx="43" cy="43" r="40" fill="none" stroke="#c88f38" stroke-width="2" />
-    <circle cx="43" cy="43" r="34" fill="none" stroke="#c88f38" stroke-width="1" stroke-dasharray="2 3" />
+    <circle cx="43" cy="43" r="40" fill="none" stroke="#9c6d24" stroke-width="2" />
+    <circle cx="43" cy="43" r="34" fill="none" stroke="#9c6d24" stroke-width="1" stroke-dasharray="2 3" />
     <text x="43" y="30" text-anchor="middle" font-family="'Manrope', sans-serif" font-weight="700"
-          font-size="9" letter-spacing="1.2" fill="#c88f38">READ2LEAD</text>
-    <path d="M43 36 l2.6 5.6 6 0.7 -4.4 4.1 1.1 6 -5.3 -3 -5.3 3 1.1 -6 -4.4 -4.1 6 -0.7 Z" fill="#c88f38" />
+          font-size="9" letter-spacing="1.2" fill="#7c531c">READ2LEAD</text>
+    <path d="M43 36 l2.6 5.6 6 0.7 -4.4 4.1 1.1 6 -5.3 -3 -5.3 3 1.1 -6 -4.4 -4.1 6 -0.7 Z" fill="#9c6d24" />
     <text x="43" y="62" text-anchor="middle" font-family="'Manrope', sans-serif" font-weight="700"
-          font-size="8" letter-spacing="1" fill="#c88f38">MÙA HÈ 2026</text>
+          font-size="8" letter-spacing="1" fill="#7c531c">MÙA HÈ 2026</text>
   </svg>`;
 }
 
@@ -213,6 +252,19 @@ function buildSealSvg() {
  * @property {CertificateStats} [stats]
  * @property {{percent: number|null, sample_count: number}} [pronunciation]
  */
+
+/**
+ * Split stat chips into 1-2 display rows that are always deliberately
+ * balanced, for any chip count from 1 to 7 (the observed range: pronunciation
+ * alone up to all six other stats populated). Up to 4 chips is one row (a
+ * landscape page has room). 5+ splits into two rows via ceil/floor so
+ * neither row is ever a lone stranded chip: 5 -> 3+2, 6 -> 3+3, 7 -> 4+3.
+ */
+function splitChipRows(chips) {
+  if (chips.length <= 4) return [chips];
+  const firstRowCount = Math.ceil(chips.length / 2);
+  return [chips.slice(0, firstRowCount), chips.slice(firstRowCount)];
+}
 
 /**
  * Render one certificate as a complete, self-contained HTML document string.
@@ -250,25 +302,36 @@ export function renderCertificateHtml(data, { orientation = 'landscape' } = {}) 
 
   const eyebrow = isStarter ? 'THẺ KHỞI ĐỘNG' : (honorsRank ? 'GIẤY KHEN' : 'PHIẾU KHEN THƯỞNG');
 
+  // Pronunciation leads the list (visual priority — it's the most
+  // meaningful number here for a parent) and carries the "hero" chip style.
+  // A streak under 3 days is omitted like any other zero stat: congratulating
+  // a one-day streak (a season-end reset artifact) is faint praise that
+  // undercuts the certificate.
   const statChips = [];
+  statChips.push(
+    hasPronunciationSignal
+      ? { label: 'Phát âm trung bình', value: `${formatInt(pronunciationPercent)}%`, isHero: true }
+      : { label: 'Phát âm trung bình', value: 'Cần thêm bài để đo chính xác', isText: true, isHero: true },
+  );
   if (completedBooks) statChips.push({ label: 'Sách đã đọc', value: `${formatInt(completedBooks)} cuốn` });
   if (completedPacks) statChips.push({ label: 'Bài học hoàn thành', value: `${formatInt(completedPacks)} bài` });
   if (currentLevelLabel) statChips.push({ label: 'Cấp độ hiện tại', value: currentLevelLabel });
-  if (streakDays) statChips.push({ label: 'Chuỗi ngày học', value: `${formatInt(streakDays)} ngày` });
+  if (streakDays && streakDays >= 3) statChips.push({ label: 'Chuỗi ngày học', value: `${formatInt(streakDays)} ngày` });
   if (diamonds) statChips.push({ label: 'Kim cương tích lũy', value: `${formatInt(diamonds)} 💎` });
   if (totalXp) statChips.push({ label: 'Điểm kinh nghiệm', value: `${formatInt(totalXp)} XP` });
-  if (hasPronunciationSignal) {
-    statChips.push({ label: 'Phát âm trung bình', value: `${formatInt(pronunciationPercent)}%` });
-  } else {
-    statChips.push({ label: 'Phát âm trung bình', value: 'Cần thêm bài để đo chính xác', isText: true });
-  }
 
-  const chipsHtml = statChips
+  const chipsHtml = splitChipRows(statChips)
     .map(
-      (chip) => `
-      <div class="fx-chip${chip.isText ? ' fx-chip--text' : ''}">
-        <span class="fx-chip-value">${escapeHtml(chip.value)}</span>
-        <span class="fx-chip-label">${escapeHtml(chip.label)}</span>
+      (row) => `
+      <div class="fx-stats-row">${row
+        .map(
+          (chip) => `
+        <div class="fx-chip${chip.isText ? ' fx-chip--text' : ''}${chip.isHero ? ' fx-chip--hero' : ''}">
+          <span class="fx-chip-value">${escapeHtml(chip.value)}</span>
+          <span class="fx-chip-label">${escapeHtml(chip.label)}</span>
+        </div>`,
+        )
+        .join('')}
       </div>`,
     )
     .join('');
@@ -314,10 +377,13 @@ export function renderCertificateHtml(data, { orientation = 'landscape' } = {}) 
     width: ${dims.w}mm;
     height: ${dims.h}mm;
     overflow: hidden;
+    /* Cream ground (founder-confirmed): a full-bleed dark page is a black
+       slab in a Zalo thumbnail and drains a home printer's cartridge. A
+       faint radial lift gives it paper depth without becoming a color band. */
     background:
-      radial-gradient(120% 100% at 50% -10%, #1d3f58 0%, #10273a 60%),
-      linear-gradient(180deg, #10273a 0%, #0d2032 100%);
-    color: #f5e6c8;
+      radial-gradient(120% 100% at 50% -10%, #fbf4e0 0%, #f5e6c8 60%),
+      linear-gradient(180deg, #f5e6c8 0%, #efdcac 100%);
+    color: #10273a;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -326,7 +392,7 @@ export function renderCertificateHtml(data, { orientation = 'landscape' } = {}) 
     position: relative;
     width: calc(100% - 20mm);
     height: calc(100% - 20mm);
-    border: 1.4pt solid #c88f38;
+    border: 1.4pt solid #9c6d24;
     border-radius: 6mm;
     padding: ${orientation === 'landscape' ? '10mm 16mm' : '12mm 12mm'};
     display: flex;
@@ -334,15 +400,14 @@ export function renderCertificateHtml(data, { orientation = 'landscape' } = {}) 
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: color-mix(in srgb, #17354a 55%, transparent);
   }
   .fx-inner::before {
     content: '';
     position: absolute;
     inset: 4mm;
-    border: 0.6pt solid #f2cc7e;
+    border: 0.6pt solid #9c6d24;
     border-radius: 4mm;
-    opacity: 0.6;
+    opacity: 0.75;
     pointer-events: none;
   }
   .fx-corner {
@@ -362,7 +427,7 @@ export function renderCertificateHtml(data, { orientation = 'landscape' } = {}) 
     font-weight: 700;
     letter-spacing: 0.35em;
     font-size: 12pt;
-    color: #f2cc7e;
+    color: #7c531c;
     margin: 0 0 3mm;
   }
   .fx-name {
@@ -370,20 +435,20 @@ export function renderCertificateHtml(data, { orientation = 'landscape' } = {}) 
     font-weight: 800;
     font-size: ${orientation === 'landscape' ? '34pt' : '30pt'};
     line-height: 1.12;
-    color: #f5e6c8;
+    color: #10273a;
     margin: 0 0 4mm;
     max-width: 90%;
   }
   .fx-subtitle {
     font-size: 12.5pt;
-    color: #d9c7a4;
+    color: #33485c;
     max-width: 78%;
     line-height: 1.55;
     margin: 0 0 6mm;
   }
   .fx-starter-copy {
     font-size: 12pt;
-    color: #d9c7a4;
+    color: #33485c;
     max-width: 72%;
     line-height: 1.7;
     margin: 0;
@@ -391,43 +456,61 @@ export function renderCertificateHtml(data, { orientation = 'landscape' } = {}) 
   .fx-season {
     font-size: 11pt;
     letter-spacing: 0.04em;
-    color: #f2cc7e;
+    color: #7c531c;
     margin: 0 0 5mm;
   }
   .fx-stats {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.6mm;
+    max-width: 100%;
+    margin-bottom: 2mm;
+  }
+  .fx-stats-row {
+    display: flex;
+    flex-wrap: nowrap;
     align-items: stretch;
     justify-content: center;
     gap: 3mm;
-    max-width: 100%;
-    margin-bottom: 2mm;
   }
   .fx-chip {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-width: 30mm;
+    min-width: 28mm;
     padding: 3mm 4mm;
-    border: 0.6pt solid rgba(242, 204, 126, 0.45);
+    border: 0.6pt solid rgba(156, 109, 36, 0.5);
     border-radius: 3mm;
-    background: rgba(16, 39, 58, 0.35);
+    background: rgba(16, 39, 58, 0.05);
+  }
+  .fx-chip--hero {
+    min-width: 32mm;
+    padding: 3.4mm 5mm;
+    border: 1pt solid #9c6d24;
+    background: rgba(200, 143, 56, 0.16);
   }
   .fx-chip-value {
     font-family: 'Manrope', sans-serif;
     font-weight: 800;
     font-size: 13pt;
-    color: #f2cc7e;
+    color: #10273a;
+  }
+  .fx-chip--hero .fx-chip-value {
+    font-size: 15pt;
   }
   .fx-chip--text .fx-chip-value {
     font-size: 9.5pt;
     font-weight: 600;
-    color: #d9c7a4;
+    color: #33485c;
+  }
+  .fx-chip--hero.fx-chip--text .fx-chip-value {
+    font-size: 10.5pt;
   }
   .fx-chip-label {
     font-size: 8pt;
-    color: #aa9673;
+    color: #7c531c;
     margin-top: 1mm;
     letter-spacing: 0.02em;
   }
@@ -450,10 +533,10 @@ export function renderCertificateHtml(data, { orientation = 'landscape' } = {}) 
   }
   .fx-signoff-seal { display: flex; flex-direction: column; align-items: center; gap: 1.5mm; }
   .fx-seal-svg { width: 18mm; height: 18mm; }
-  .fx-signoff-caption { font-size: 7.5pt; color: #aa9673; }
+  .fx-signoff-caption { font-size: 7.5pt; color: #7c531c; }
   .fx-signoff-date {
     font-size: 9.5pt;
-    color: #d9c7a4;
+    color: #33485c;
     align-self: center;
   }
   .fx-signoff-sign { display: flex; flex-direction: column; align-items: center; }
@@ -461,16 +544,16 @@ export function renderCertificateHtml(data, { orientation = 'landscape' } = {}) 
     font-family: 'Manrope', sans-serif;
     font-weight: 700;
     font-size: 16pt;
-    color: #f5e6c8;
+    color: #10273a;
     transform: skewX(-8deg);
     letter-spacing: 0.02em;
   }
   .fx-signoff-line {
     width: 34mm;
-    border-top: 0.8pt solid #c88f38;
+    border-top: 0.8pt solid #9c6d24;
     margin: 1.5mm 0 1mm;
   }
-  .fx-signoff-title { font-size: 7.5pt; letter-spacing: 0.06em; color: #aa9673; }
+  .fx-signoff-title { font-size: 7.5pt; letter-spacing: 0.06em; color: #7c531c; }
 </style>
 </head>
 <body>
