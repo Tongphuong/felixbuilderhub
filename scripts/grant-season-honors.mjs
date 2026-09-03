@@ -34,7 +34,21 @@
  *   node scripts/grant-season-honors.mjs --namespace-id <id> --apply      # live pay
  *   node scripts/grant-season-honors.mjs --namespace-id <id> --force --apply   # re-freeze (only if nothing paid yet)
  *   node scripts/grant-season-honors.mjs --namespace-id <id> --revoke --apply  # exact inverse of a payment
+ *   node scripts/grant-season-honors.mjs --namespace-id <id> --podium <code1,code2,code3> --apply
+ *     # founder-confirmed podium override (see PODIUM OVERRIDE below) — only
+ *     # takes effect while freezing a NEW snapshot; ignored once one exists.
  *   READ2LEAD_KV_NAMESPACE_ID=<id> node scripts/grant-season-honors.mjs
+ *
+ * PODIUM OVERRIDE (added 2026-09-03): buildHonorsRanking() ranks by all-time
+ * lifetime_rp, but the founder's actual instruction was "use the [app's own]
+ * ranking" — the leaderboard the site already shows publicly, which orders
+ * Percy/Hoang/Hieuenzo differently (see PODIUM_OVERRIDE_BASIS_NOTE below for
+ * the full record). `--podium <code1,code2,code3>` (comma-separated, order
+ * significant) freezes the snapshot's top-3 in that exact order instead,
+ * still subject to the same KV-existence and exclusion checks
+ * buildHonorsRanking() itself applies — see resolvePodiumOverride().
+ * honor_roll and excluded are always computed from buildHonorsRanking() and
+ * are unaffected by this flag. Without --podium, behaviour is unchanged.
  *
  * The KV namespace ID is REQUIRED and must come explicitly from
  * --namespace-id or the READ2LEAD_KV_NAMESPACE_ID env var — no hardcoded
@@ -46,7 +60,7 @@ import {
   saveProgressState,
   progressNamespace,
 } from '../functions/api/_read2lead-v2-state.js';
-import { buildHonorsRanking } from '../functions/api/_read2lead-honors.js';
+import { buildHonorsRanking, honorsExclusionReason, HONORS_PRIZES } from '../functions/api/_read2lead-honors.js';
 import { scanSeasonEntries, SEASON_WINDOW } from './season-census.mjs';
 import {
   makeRemoteKv,
@@ -59,6 +73,27 @@ export const SEASON_EMOJI = '🌞';
 export const HONORS_KV_KEY = `honors:${SEASON_ID}`;
 export const HONORS_BASIS = 'lifetime_rp';
 export const HONORS_BASIS_LABEL_VI = 'Điểm xếp hạng toàn thời gian';
+
+// Basis fields written to the snapshot when a podiumOverride is supplied —
+// see grantSeasonHonors's podiumOverride option below. buildHonorsRanking()
+// still computes honor_roll/excluded as always; only the top-3 podium order
+// and its provenance fields differ from the default lifetime_rp-ranked path.
+export const PODIUM_OVERRIDE_BASIS = 'app_leaderboard_order';
+export const PODIUM_OVERRIDE_BASIS_LABEL_VI = 'Thứ hạng trên bảng xếp hạng';
+export const PODIUM_OVERRIDE_BASIS_NOTE = 'Founder-confirmed 2026-09-03 against the app\'s '
+  + 'displayed leaderboard order (Percy 1st, Hoang 2nd, Hieuenzo 3rd) — the site already shows '
+  + 'this same trio as the Amazing Summer podium publicly. buildHonorsRanking()\'s all-time '
+  + 'lifetime_rp order was NOT used to pick this podium: all three finished the season at the '
+  + 'identical tier (Kim Cương III), and the ranking\'s own tiebreak among them (reward_coins) is '
+  + 'dead code that normalizeMedals() no longer emits. See _ops/AGENT_LOG.md and the R2L Season '
+  + 'Honors podium-override packet for the record.';
+
+const PODIUM_ERROR_CODES = new Set([
+  'podium_wrong_length',
+  'podium_duplicate_code',
+  'podium_code_not_found',
+  'podium_code_excluded',
+]);
 
 export function resolveKvNamespaceId({ argv = process.argv, env = process.env } = {}) {
   return resolveKvNamespaceIdFor('READ2LEAD_KV_NAMESPACE_ID', { argv, env });
@@ -75,23 +110,101 @@ function honorsError(code) {
   return err;
 }
 
+/** Same shape as honorsError(), but carries the offending podium code/reason
+ * for the caller to report — "refuse loudly, name the code", never a bare
+ * boolean failure. */
+function podiumError(code, { podiumCode = null, reason = null } = {}) {
+  const detail = [podiumCode, reason ? `(${reason})` : null].filter(Boolean).join(' ');
+  const err = new Error(detail ? `${code}: ${detail}` : code);
+  err.code = code;
+  if (podiumCode) err.podiumCode = podiumCode;
+  if (reason) err.reason = reason;
+  return err;
+}
+
+/**
+ * Validate + resolve a founder-confirmed podiumOverride (an ordered array of
+ * access codes) into podium rows carrying the exact same computed fields
+ * buildHonorsRanking() itself produces (lifetime_rp, completed_packs,
+ * completed_books, pronunciation_percent, ...) — but ordered and prized by
+ * the override list's position instead of buildHonorsRanking()'s own
+ * lifetime_rp sort. buildHonorsRanking()'s exclusion rules (bot/test/
+ * shared/no-name) still apply: the founder confirming an order does not
+ * bypass them.
+ *
+ * Refuses loudly on: wrong length, a duplicate code, a code with no
+ * matching KV access-code record, or a code that fails
+ * honorsExclusionReason(). Never silently drops or truncates the list.
+ *
+ * @param {string[]} podiumOverride
+ * @param {{access_code: string, codeData: object, state: object}[]} entries
+ * @param {{honor_roll: object[]}} ranking - buildHonorsRanking()'s result
+ *   over the same `entries`, reused so the override's rows carry identical
+ *   computed fields to the default ranked path.
+ * @throws {Error} code one of podium_wrong_length / podium_duplicate_code /
+ *   podium_code_not_found / podium_code_excluded (err.podiumCode / err.reason
+ *   name the offending code/reason where applicable).
+ */
+function resolvePodiumOverride(podiumOverride, entries, ranking) {
+  if (!Array.isArray(podiumOverride) || podiumOverride.length !== HONORS_PRIZES.length) {
+    throw podiumError('podium_wrong_length');
+  }
+
+  const normalized = podiumOverride.map((code) => String(code || '').trim().toUpperCase());
+  const seen = new Set();
+  for (const code of normalized) {
+    if (seen.has(code)) throw podiumError('podium_duplicate_code', { podiumCode: code });
+    seen.add(code);
+  }
+
+  const entryByCode = new Map(
+    entries.map((entry) => [String(entry.access_code || '').trim().toUpperCase(), entry]),
+  );
+  const honorRollByCode = new Map(ranking.honor_roll.map((row) => [row.access_code, row]));
+
+  return normalized.map((code, index) => {
+    const entry = entryByCode.get(code);
+    if (!entry) throw podiumError('podium_code_not_found', { podiumCode: code });
+
+    const reason = honorsExclusionReason(entry.codeData, entry.state);
+    if (reason) throw podiumError('podium_code_excluded', { podiumCode: code, reason });
+
+    // Not excluded, so buildHonorsRanking() must have this code in
+    // honor_roll — pull its computed row rather than recomputing it.
+    const row = honorRollByCode.get(code);
+    return { ...row, rank: index + 1, prize_diamonds: HONORS_PRIZES[index] };
+  });
+}
+
 /**
  * Pure: turn a buildHonorsRanking() result into the frozen-snapshot shape
  * written to KV. Each podium row gets the payment-tracking fields
  * (paid_at/diamonds_before/diamonds_after) initialized to null — payFlow()
  * below is the only thing that fills them in.
+ *
+ * `overridePodium`, when supplied (already-validated rows from
+ * resolvePodiumOverride(), in founder-confirmed order), REPLACES
+ * ranking.podium as the snapshot's podium and switches the basis/
+ * basis_label_vi/basis_note provenance fields to the override values —
+ * honor_roll and excluded still come from `ranking` unchanged either way.
  */
-export function buildHonorsSnapshot(ranking, { seasonWindow = SEASON_WINDOW, nowIso = new Date().toISOString() } = {}) {
+export function buildHonorsSnapshot(ranking, {
+  seasonWindow = SEASON_WINDOW,
+  nowIso = new Date().toISOString(),
+  overridePodium = null,
+} = {}) {
+  const podiumRows = overridePodium ?? ranking.podium;
   return {
     season_id: SEASON_ID,
     season_name_vi: SEASON_NAME_VI,
     emoji: SEASON_EMOJI,
     window: { from: seasonWindow?.from ?? null, to: seasonWindow?.to ?? null },
-    basis: HONORS_BASIS,
-    basis_label_vi: HONORS_BASIS_LABEL_VI,
+    basis: overridePodium ? PODIUM_OVERRIDE_BASIS : HONORS_BASIS,
+    basis_label_vi: overridePodium ? PODIUM_OVERRIDE_BASIS_LABEL_VI : HONORS_BASIS_LABEL_VI,
+    ...(overridePodium ? { basis_note: PODIUM_OVERRIDE_BASIS_NOTE } : {}),
     frozen_at: nowIso,
     published: false,
-    podium: ranking.podium.map((row) => ({ ...row, paid_at: null, diamonds_before: null, diamonds_after: null })),
+    podium: podiumRows.map((row) => ({ ...row, paid_at: null, diamonds_before: null, diamonds_after: null })),
     honor_roll: ranking.honor_roll,
     excluded: ranking.excluded,
     participants_count: ranking.participants_count,
@@ -111,15 +224,25 @@ export function buildHonorsSnapshot(ranking, { seasonWindow = SEASON_WINDOW, now
  * frozen, but never calls kv.put — used for the dry-run report when no
  * snapshot exists yet.
  *
+ * `podiumOverride`, when supplied, only takes effect for THIS freeze — an
+ * ordered array of access codes (length must equal HONORS_PRIZES.length)
+ * that replaces buildHonorsRanking()'s own top-3 order; see
+ * resolvePodiumOverride() for the validation it goes through first (never
+ * silently dropped). It has no effect when an existing snapshot is reused
+ * (the honors_already_frozen path below) — once frozen, a podium is fixed.
+ *
  * @throws {Error} code 'honors_already_frozen' — snapshot exists, no force.
  * @throws {Error} code 'honors_already_paid' — force requested, but the
  *   existing snapshot has at least one podium[].paid_at set.
+ * @throws {Error} code one of podium_wrong_length / podium_duplicate_code /
+ *   podium_code_not_found / podium_code_excluded — see resolvePodiumOverride().
  */
 export async function freezeSeasonHonors(env, {
   seasonWindow = SEASON_WINDOW,
   nowIso = new Date().toISOString(),
   force = false,
   apply = true,
+  podiumOverride = null,
 } = {}) {
   const kv = progressNamespace(env);
   if (!kv) throw new Error('READ2LEAD_PROGRESS or READ2LEAD_CODES binding missing');
@@ -137,7 +260,10 @@ export async function freezeSeasonHonors(env, {
 
   const entries = await scanSeasonEntries(env);
   const ranking = buildHonorsRanking(entries, { seasonWindow });
-  const snapshot = buildHonorsSnapshot(ranking, { seasonWindow, nowIso });
+  const overridePodium = podiumOverride
+    ? resolvePodiumOverride(podiumOverride, entries, ranking)
+    : null;
+  const snapshot = buildHonorsSnapshot(ranking, { seasonWindow, nowIso, overridePodium });
 
   if (apply) {
     await kv.put(HONORS_KV_KEY, JSON.stringify(snapshot));
@@ -323,9 +449,16 @@ async function revokeFlow(env, snapshot, { apply }) {
  * swallowed here) and the existing frozen podium is reused as-is, which is
  * what makes running this twice with --apply safe (see BAD-2).
  *
+ * `podiumOverride` (an ordered array of access codes, see
+ * resolvePodiumOverride()/freezeSeasonHonors() above) is refused loudly and
+ * returned as `{ ok: false, error: <podium_*>, podium_code, reason }` —
+ * never thrown past this function and never lets a single bad code in the
+ * list silently drop or reorder the rest. It only affects freezing a NEW
+ * snapshot; a run that reuses an already-frozen one ignores it.
+ *
  * @param {object} env - {READ2LEAD_CODES} (or READ2LEAD_PROGRESS), same
  *   shape loadProgressState/saveProgressState expect.
- * @param {{apply?: boolean, force?: boolean, revoke?: boolean, seasonWindow?: object, nowIso?: string}} [options]
+ * @param {{apply?: boolean, force?: boolean, revoke?: boolean, seasonWindow?: object, nowIso?: string, podiumOverride?: string[]}} [options]
  */
 export async function grantSeasonHonors(env, {
   apply = false,
@@ -333,6 +466,7 @@ export async function grantSeasonHonors(env, {
   revoke = false,
   seasonWindow = SEASON_WINDOW,
   nowIso = new Date().toISOString(),
+  podiumOverride = null,
 } = {}) {
   const kv = progressNamespace(env);
   if (!kv) throw new Error('READ2LEAD_PROGRESS or READ2LEAD_CODES binding missing');
@@ -346,7 +480,7 @@ export async function grantSeasonHonors(env, {
   let snapshot;
   let freezeNote = 'frozen_now';
   try {
-    snapshot = await freezeSeasonHonors(env, { seasonWindow, nowIso, force, apply });
+    snapshot = await freezeSeasonHonors(env, { seasonWindow, nowIso, force, apply, podiumOverride });
   } catch (err) {
     if (err.code === 'honors_already_paid') {
       return { ok: false, error: 'honors_already_paid' };
@@ -357,6 +491,13 @@ export async function grantSeasonHonors(env, {
       // called again once a snapshot exists — it reads live, drifting data).
       snapshot = await kv.get(HONORS_KV_KEY, { type: 'json' });
       freezeNote = 'honors_already_frozen';
+    } else if (PODIUM_ERROR_CODES.has(err.code)) {
+      return {
+        ok: false,
+        error: err.code,
+        podium_code: err.podiumCode ?? null,
+        reason: err.reason ?? null,
+      };
     } else {
       throw err;
     }
@@ -381,8 +522,14 @@ export async function runCli({ argv = process.argv, env = process.env } = {}) {
   const apply = argv.includes('--apply');
   const force = argv.includes('--force');
   const revoke = argv.includes('--revoke');
+  const podiumFlagIndex = argv.indexOf('--podium');
+  const podiumOverride = podiumFlagIndex !== -1 && argv[podiumFlagIndex + 1]
+    ? argv[podiumFlagIndex + 1].split(',').map((code) => code.trim())
+    : null;
   const cliEnv = { READ2LEAD_CODES: makeRemoteKv(namespaceId) };
-  const result = await grantSeasonHonors(cliEnv, { apply, force, revoke, seasonWindow: SEASON_WINDOW });
+  const result = await grantSeasonHonors(cliEnv, {
+    apply, force, revoke, seasonWindow: SEASON_WINDOW, podiumOverride,
+  });
   return { ok: true, namespace_id: namespaceId, result };
 }
 
@@ -400,6 +547,14 @@ async function main() {
       console.error('--force cannot re-freeze: at least one podium member has already been paid this season.');
     } else if (result.error === 'honors_not_frozen') {
       console.error('--revoke has nothing to undo: no honors:2026-S1 snapshot exists yet.');
+    } else if (result.error === 'podium_wrong_length') {
+      console.error(`--podium must name exactly ${HONORS_PRIZES.length} codes, in order.`);
+    } else if (result.error === 'podium_duplicate_code') {
+      console.error(`--podium has a duplicate code: ${result.podium_code}`);
+    } else if (result.error === 'podium_code_not_found') {
+      console.error(`--podium named a code with no matching KV record: ${result.podium_code}`);
+    } else if (result.error === 'podium_code_excluded') {
+      console.error(`--podium named an excluded code: ${result.podium_code} (${result.reason})`);
     }
     process.exitCode = 1;
     return;

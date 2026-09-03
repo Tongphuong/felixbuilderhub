@@ -344,3 +344,160 @@ test('dry run report reads the way a non-technical founder can follow: per-winne
   }
   assert.equal(result.written, false);
 });
+
+// --- podiumOverride (founder-confirmed podium, 2026-09-03 packet) ---------
+
+test('BAD-8 (podium override refuses an excluded code): naming a bot/test/shared code is refused with exact podium_code_excluded and nothing is written', async () => {
+  const kv = makeThrowingPutKv();
+  seedPodium(kv); // R2L-BOT-9999 is seeded with is_test: true
+  const env = { READ2LEAD_CODES: kv };
+
+  const result = await grantSeasonHonors(env, {
+    apply: true,
+    seasonWindow: SEASON_WINDOW,
+    podiumOverride: ['R2L-BOT-9999', 'R2L-GOLD-0001', 'R2L-SILVER-0002'],
+  });
+
+  assert.equal(result.ok, false);
+  assert.equal(result.error, 'podium_code_excluded');
+  assert.equal(result.podium_code, 'R2L-BOT-9999');
+  assert.equal(result.reason, 'is_test');
+  // makeThrowingPutKv() proves this: if grantSeasonHonors had called put()
+  // anywhere before refusing, this test would already have thrown.
+});
+
+test('BAD-9 (podium override refuses a nonexistent code): a code with no matching KV record is refused with exact podium_code_not_found', async () => {
+  const kv = makeThrowingPutKv();
+  seedPodium(kv);
+  const env = { READ2LEAD_CODES: kv };
+
+  const result = await grantSeasonHonors(env, {
+    apply: true,
+    seasonWindow: SEASON_WINDOW,
+    podiumOverride: ['R2L-GHOST-0000', 'R2L-GOLD-0001', 'R2L-SILVER-0002'],
+  });
+
+  assert.equal(result.ok, false);
+  assert.equal(result.error, 'podium_code_not_found');
+  assert.equal(result.podium_code, 'R2L-GHOST-0000');
+});
+
+test('BAD-10 (podium override length/duplicate guards): wrong length is refused with exact podium_wrong_length; a duplicated code with exact podium_duplicate_code', async () => {
+  const kv = makeThrowingPutKv();
+  seedPodium(kv);
+  const env = { READ2LEAD_CODES: kv };
+
+  const tooShort = await grantSeasonHonors(env, {
+    apply: true,
+    seasonWindow: SEASON_WINDOW,
+    podiumOverride: ['R2L-GOLD-0001', 'R2L-SILVER-0002'],
+  });
+  assert.equal(tooShort.ok, false);
+  assert.equal(tooShort.error, 'podium_wrong_length');
+
+  const tooLong = await grantSeasonHonors(env, {
+    apply: true,
+    seasonWindow: SEASON_WINDOW,
+    podiumOverride: ['R2L-GOLD-0001', 'R2L-SILVER-0002', 'R2L-BRONZE-0003', 'R2L-BOT-9999'],
+  });
+  assert.equal(tooLong.ok, false);
+  assert.equal(tooLong.error, 'podium_wrong_length');
+
+  const duplicated = await grantSeasonHonors(env, {
+    apply: true,
+    seasonWindow: SEASON_WINDOW,
+    podiumOverride: ['R2L-GOLD-0001', 'R2L-GOLD-0001', 'R2L-SILVER-0002'],
+  });
+  assert.equal(duplicated.ok, false);
+  assert.equal(duplicated.error, 'podium_duplicate_code');
+  assert.equal(duplicated.podium_code, 'R2L-GOLD-0001');
+});
+
+test('BAD-11 (the point of the packet): a valid override whose order DIFFERS from buildHonorsRanking\'s own order wins — podium follows the override, prizes map 10000/5000/2000 to positions 1/2/3', async () => {
+  const kv = makeMockKv();
+  seedPodium(kv); // natural lifetime_rp order is Gold(90) > Silver(60) > Bronze(30)
+  const env = { READ2LEAD_CODES: kv };
+
+  // Deliberately NOT the natural rp order — Bronze first, Gold second, Silver third.
+  const result = await grantSeasonHonors(env, {
+    apply: true,
+    seasonWindow: SEASON_WINDOW,
+    podiumOverride: ['R2L-BRONZE-0003', 'R2L-GOLD-0001', 'R2L-SILVER-0002'],
+  });
+
+  assert.equal(result.ok, true);
+  assert.deepEqual(
+    result.rows.map((r) => [r.masked_code, r.prize_diamonds]),
+    [
+      ['R2L-***0003', 10000],
+      ['R2L-***0001', 5000],
+      ['R2L-***0002', 2000],
+    ],
+    'podium must follow the override order, not the lifetime_rp order',
+  );
+  assert.deepEqual(result.rows.map((r) => r.rank), [1, 2, 3]);
+
+  // The paid balances/medals must match the override prizes, not the
+  // default ranked prizes (which would have paid Gold 10000, not 5000).
+  const gold = JSON.parse(kv.__store.get(progressKey('R2L-GOLD-0001')));
+  assert.equal(gold.diamonds, 10 + 5000);
+  assert.equal(gold.medals[0].honors_rank, 2);
+  const bronze = JSON.parse(kv.__store.get(progressKey('R2L-BRONZE-0003')));
+  assert.equal(bronze.diamonds, 0 + 10000);
+  assert.equal(bronze.medals[0].honors_rank, 1);
+
+  // Snapshot provenance is auditable: basis switches to the override value,
+  // and honor_roll/excluded are still buildHonorsRanking()'s own output.
+  const snapshot = JSON.parse(kv.__store.get(HONORS_KV_KEY));
+  assert.equal(snapshot.basis, 'app_leaderboard_order');
+  assert.equal(snapshot.basis_label_vi, 'Thứ hạng trên bảng xếp hạng');
+  assert.ok(snapshot.basis_note && snapshot.basis_note.length > 0, 'basis_note must explain the override');
+  assert.equal(snapshot.honor_roll.length, 3, 'honor_roll still comes from buildHonorsRanking() (3 real kids — the excluded bot is NOT in honor_roll)');
+  assert.equal(snapshot.excluded.length, 1, 'excluded still comes from buildHonorsRanking() unchanged');
+  // Each podium row still carries the computed fields for the record.
+  for (const row of snapshot.podium) {
+    assert.equal(typeof row.lifetime_rp, 'number');
+    assert.equal(typeof row.completed_packs, 'number');
+    assert.equal(typeof row.completed_books, 'number');
+    assert.ok('pronunciation_percent' in row);
+  }
+});
+
+test('BAD-12 (podium override dry run writes nothing): a valid override with apply:false still writes nothing (put throws if called)', async () => {
+  const kv = makeThrowingPutKv();
+  seedPodium(kv);
+  const env = { READ2LEAD_CODES: kv };
+
+  const result = await grantSeasonHonors(env, {
+    seasonWindow: SEASON_WINDOW, // apply defaults to false
+    podiumOverride: ['R2L-BRONZE-0003', 'R2L-GOLD-0001', 'R2L-SILVER-0002'],
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(result.apply, false);
+  assert.equal(result.written, false);
+  assert.deepEqual(
+    result.rows.map((r) => [r.masked_code, r.prize_diamonds]),
+    [
+      ['R2L-***0003', 10000],
+      ['R2L-***0001', 5000],
+      ['R2L-***0002', 2000],
+    ],
+  );
+});
+
+test('without podiumOverride, behaviour is exactly as today: ranked by buildHonorsRanking, default basis fields, no basis_note', async () => {
+  const kv = makeMockKv();
+  seedPodium(kv);
+  const env = { READ2LEAD_CODES: kv };
+
+  const result = await grantSeasonHonors(env, { apply: true, seasonWindow: SEASON_WINDOW });
+  assert.equal(result.ok, true);
+  assert.deepEqual(result.rows.map((r) => r.masked_code), ['R2L-***0001', 'R2L-***0002', 'R2L-***0003']);
+  assert.deepEqual(result.rows.map((r) => r.prize_diamonds), [10000, 5000, 2000]);
+
+  const snapshot = JSON.parse(kv.__store.get(HONORS_KV_KEY));
+  assert.equal(snapshot.basis, 'lifetime_rp');
+  assert.equal(snapshot.basis_label_vi, 'Điểm xếp hạng toàn thời gian');
+  assert.equal('basis_note' in snapshot, false, 'the default path must not gain a basis_note field');
+});
