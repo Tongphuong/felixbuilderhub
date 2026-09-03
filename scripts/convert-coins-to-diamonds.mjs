@@ -35,88 +35,25 @@
  * a copy-paste into the wrong environment and rewrites the wrong namespace's
  * currency; the script refuses to run at all without one supplied explicitly.
  */
-import { execSync } from 'node:child_process';
-import { writeFileSync, unlinkSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-
 import {
   isAccessCodeKey,
   loadProgressState,
   saveProgressState,
 } from '../functions/api/_read2lead-v2-state.js';
+import {
+  makeRemoteKv,
+  resolveKvNamespaceId as resolveKvNamespaceIdFor,
+} from './_kv-remote.mjs';
 
 /**
  * Resolve the KV namespace ID from --namespace-id or READ2LEAD_KV_NAMESPACE_ID
  * only — no hardcoded fallback. Returns null (never throws) so callers can
- * decide how to report the refusal.
+ * decide how to report the refusal. Thin wrapper over the shared
+ * _kv-remote.mjs resolver, fixed to this script's env var name so the
+ * existing ({ argv, env }) call shape and tests are unaffected.
  */
 export function resolveKvNamespaceId({ argv = process.argv, env = process.env } = {}) {
-  const flagIndex = argv.indexOf('--namespace-id');
-  if (flagIndex !== -1 && argv[flagIndex + 1]) return argv[flagIndex + 1];
-  return env.READ2LEAD_KV_NAMESPACE_ID || null;
-}
-
-function wrangler(args) {
-  const cmd = ['npx', 'wrangler@latest', ...args].join(' ');
-  return execSync(cmd, {
-    encoding: 'utf8',
-    stdio: ['ignore', 'pipe', 'pipe'],
-    shell: true,
-  });
-}
-
-function kvGet(namespaceId, key) {
-  try {
-    const raw = wrangler([
-      'kv', 'key', 'get', JSON.stringify(key),
-      '--namespace-id', namespaceId,
-      '--remote',
-    ]).trim();
-    if (!raw || raw === 'Value not found') return null;
-    return JSON.parse(raw);
-  } catch (error) {
-    const message = String(error.stderr || error.stdout || error.message || '');
-    if (message.includes('not found') || message.includes('404')) return null;
-    throw error;
-  }
-}
-
-function kvPut(namespaceId, key, value) {
-  const file = join(tmpdir(), `r2l-kv-${Date.now()}-${Math.random().toString(36).slice(2)}.json`);
-  writeFileSync(file, JSON.stringify(value));
-  try {
-    wrangler([
-      'kv', 'key', 'put', JSON.stringify(key),
-      '--namespace-id', namespaceId,
-      '--remote',
-      '--path', JSON.stringify(file),
-    ]);
-  } finally {
-    unlinkSync(file);
-  }
-}
-
-function kvListAllKeys(namespaceId) {
-  const raw = wrangler(['kv', 'key', 'list', '--namespace-id', namespaceId, '--remote']);
-  return JSON.parse(raw).map((entry) => entry.name);
-}
-
-/** Real Cloudflare KV, driven through `wrangler kv` (mirrors apply-leaderboard-bots.mjs). */
-function makeRemoteKv(namespaceId) {
-  return {
-    async get(key, options) {
-      const value = kvGet(namespaceId, key);
-      if (value == null) return null;
-      return options?.type === 'json' ? value : JSON.stringify(value);
-    },
-    async put(key, value) {
-      await kvPut(namespaceId, key, typeof value === 'string' ? JSON.parse(value) : value);
-    },
-    async list() {
-      return { keys: kvListAllKeys(namespaceId).map((name) => ({ name })), list_complete: true, cursor: null };
-    },
-  };
+  return resolveKvNamespaceIdFor('READ2LEAD_KV_NAMESPACE_ID', { argv, env });
 }
 
 /**
