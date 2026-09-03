@@ -654,6 +654,11 @@ function normalizeMedals(raw) {
       peak_tier_index: Number.isFinite(Number(entry.peak_tier_index)) ? Number(entry.peak_tier_index) : 0,
       reward_diamonds: numberOrZero(entry.reward_diamonds),
       ts: entry.ts || null,
+      // Season Honors marker (additive, absent by default) — without these
+      // two passthroughs, normalizeProgressState() silently strips the
+      // honors medal's kind/honors_rank on the very next save.
+      ...(entry.kind === 'honors' ? { kind: 'honors' } : {}),
+      ...(Number.isFinite(Number(entry.honors_rank)) ? { honors_rank: Number(entry.honors_rank) } : {}),
     }));
 }
 
