@@ -147,23 +147,61 @@ export function seasonRpForLeader(season, publicState, rawState) {
 export function buildPreviousSeasonPodium(rows, previousSeasonId) {
   if (!previousSeasonId) return [];
   const latestByStudent = new Map();
+  // A `kind === 'honors'` medal is a PAID-PRIZE record appended after the
+  // season closed, not a season-rank medal — it must never win the
+  // latest-per-student contest (it would replace the real tier/label with
+  // its blank tier-0 placeholder) or be sorted into the podium's tier logic.
+  // We still need its honors_rank as the tiebreak below, so capture it per
+  // student before dropping the row.
+  const honorsRankByStudent = new Map();
 
   for (const row of rows) {
     if (!row || row.season_id !== previousSeasonId) continue;
     const studentKey = row.masked_code || row.display_name;
     if (!studentKey) continue;
+
+    if (row.kind === 'honors') {
+      if (Number.isFinite(Number(row.honors_rank))) {
+        honorsRankByStudent.set(studentKey, Number(row.honors_rank));
+      }
+      continue;
+    }
+
     const existing = latestByStudent.get(studentKey);
     if (!existing || Date.parse(row.ts || 0) > Date.parse(existing.ts || 0)) {
       latestByStudent.set(studentKey, row);
     }
   }
 
-  return Array.from(latestByStudent.values())
+  return Array.from(latestByStudent.entries())
+    .map(([studentKey, row]) => {
+      const honorsRank = honorsRankByStudent.get(studentKey);
+      return Number.isFinite(honorsRank) ? { ...row, honors_rank: honorsRank } : row;
+    })
     .sort((a, b) => {
       const tierDifference =
         numberOrZero(b.peak_tier_index) - numberOrZero(a.peak_tier_index);
       if (tierDifference !== 0) return tierDifference;
-      return numberOrZero(b.reward_coins) - numberOrZero(a.reward_coins);
+
+      // Paid honors order is the founder-confirmed tiebreak: lowest
+      // honors_rank (1st/2nd/3rd) sorts first. A student with an honors
+      // medal outranks a tied student without one. Only once neither has an
+      // honors medal do we fall back to reward_diamonds (the field
+      // normalizeMedals() actually emits — the old `reward_coins` tiebreak
+      // was dead code that always compared 0 - 0), then masked_code so the
+      // result never depends on KV scan order.
+      const aHonorsRank = Number.isFinite(a.honors_rank) ? a.honors_rank : null;
+      const bHonorsRank = Number.isFinite(b.honors_rank) ? b.honors_rank : null;
+      if (aHonorsRank !== null && bHonorsRank !== null && aHonorsRank !== bHonorsRank) {
+        return aHonorsRank - bHonorsRank;
+      }
+      if (aHonorsRank !== null && bHonorsRank === null) return -1;
+      if (bHonorsRank !== null && aHonorsRank === null) return 1;
+
+      const diamondsDifference = numberOrZero(b.reward_diamonds) - numberOrZero(a.reward_diamonds);
+      if (diamondsDifference !== 0) return diamondsDifference;
+
+      return String(a.masked_code || '').localeCompare(String(b.masked_code || ''));
     })
     .slice(0, 3)
     .map((row, index) => ({

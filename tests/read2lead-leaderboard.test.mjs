@@ -133,6 +133,114 @@ test('buildPreviousSeasonPodium returns empty when no previous-season medals', (
   );
 });
 
+// BAD-A — the live regression: grant-season-honors.mjs appends a SECOND
+// medal (kind:'honors', tier 0, blank label) with a NEWER ts than the
+// student's real season medal. The old "latest ts wins" logic let that
+// blank placeholder replace the real tier-4 medal. Must never happen.
+test('buildPreviousSeasonPodium ignores honors medals in latest-per-student/tier selection (BAD-A)', () => {
+  const rows = [
+    {
+      season_id: '2026-S1',
+      display_name: 'Percy',
+      masked_code: 'R2L-***PERCY',
+      peak_label_vi: 'Kim Cương III',
+      peak_tier_index: 4,
+      reward_diamonds: 35,
+      season_name_vi: 'Amazing Summer',
+      emoji: '🧭',
+      ts: '2026-09-02T09:26:40.863Z',
+    },
+    {
+      season_id: '2026-S1',
+      display_name: 'Percy',
+      masked_code: 'R2L-***PERCY',
+      kind: 'honors',
+      honors_rank: 1,
+      peak_label_vi: '',
+      peak_tier_index: 0,
+      reward_diamonds: 35,
+      season_name_vi: 'Amazing Summer',
+      emoji: '🧭',
+      ts: '2026-09-03T09:52:54.185Z',
+    },
+  ];
+
+  const podium = buildPreviousSeasonPodium(rows, '2026-S1');
+  assert.equal(podium.length, 1);
+  assert.equal(podium[0].display_name, 'Percy');
+  assert.equal(podium[0].peak_tier_index, 4);
+  assert.equal(podium[0].peak_label_vi, 'Kim Cương III');
+});
+
+// BAD-B — once the honors row is filtered out of tier logic, tied students
+// (same tier, same reward_diamonds) must be ordered by the PAID honors_rank
+// (founder-confirmed order), not by array/scan position.
+test('buildPreviousSeasonPodium orders tied students by honors_rank, not scan order (BAD-B)', () => {
+  const rows = [
+    // Deliberately fed out of rank order: Hieuenzo (rank 3) first, Percy
+    // (rank 1) last, so a passing test proves honors_rank drives the order.
+    { season_id: '2026-S1', display_name: 'Hieuenzo', masked_code: 'R2L-***HIEU', peak_label_vi: 'Kim Cương III', peak_tier_index: 4, reward_diamonds: 35, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-03T09:53:00.370Z' },
+    { season_id: '2026-S1', display_name: 'Hieuenzo', masked_code: 'R2L-***HIEU', kind: 'honors', honors_rank: 3, peak_label_vi: '', peak_tier_index: 0, reward_diamonds: 35, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-03T09:53:02.342Z' },
+    { season_id: '2026-S1', display_name: 'Hoang', masked_code: 'R2L-***HOANG', peak_label_vi: 'Kim Cương III', peak_tier_index: 4, reward_diamonds: 35, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-03T09:52:56.567Z' },
+    { season_id: '2026-S1', display_name: 'Hoang', masked_code: 'R2L-***HOANG', kind: 'honors', honors_rank: 2, peak_label_vi: '', peak_tier_index: 0, reward_diamonds: 35, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-03T09:52:58.244Z' },
+    { season_id: '2026-S1', display_name: 'Percy', masked_code: 'R2L-***PERCY', peak_label_vi: 'Kim Cương III', peak_tier_index: 4, reward_diamonds: 35, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-02T09:26:40.863Z' },
+    { season_id: '2026-S1', display_name: 'Percy', masked_code: 'R2L-***PERCY', kind: 'honors', honors_rank: 1, peak_label_vi: '', peak_tier_index: 0, reward_diamonds: 35, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-03T09:52:54.185Z' },
+  ];
+
+  const podium = buildPreviousSeasonPodium(rows, '2026-S1');
+  assert.deepEqual(podium.map((row) => row.display_name), ['Percy', 'Hoang', 'Hieuenzo']);
+  assert.deepEqual(podium.map((row) => row.medal_emoji), ['🥇', '🥈', '🥉']);
+});
+
+// BAD-C — no honors medal at all: two students tied on tier and diamonds
+// must fall back to masked_code ascending, and that result must not depend
+// on which order they're fed in (determinism, not KV scan order).
+test('buildPreviousSeasonPodium is deterministic for ties with no honors medal (BAD-C)', () => {
+  const rowA = { season_id: '2026-S1', display_name: 'Aaron', masked_code: 'R2L-***AAAA', peak_label_vi: 'Bạc II', peak_tier_index: 1, reward_diamonds: 10, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-08-01T00:00:00.000Z' };
+  const rowB = { season_id: '2026-S1', display_name: 'Bao', masked_code: 'R2L-***BBBB', peak_label_vi: 'Bạc II', peak_tier_index: 1, reward_diamonds: 10, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-08-02T00:00:00.000Z' };
+
+  const podiumForward = buildPreviousSeasonPodium([rowA, rowB], '2026-S1');
+  const podiumReversed = buildPreviousSeasonPodium([rowB, rowA], '2026-S1');
+
+  assert.deepEqual(podiumForward.map((row) => row.masked_code), ['R2L-***AAAA', 'R2L-***BBBB']);
+  assert.deepEqual(podiumReversed.map((row) => row.masked_code), ['R2L-***AAAA', 'R2L-***BBBB']);
+});
+
+// BAD-D — no regression: a student with only a normal season medal (no
+// honors medal at all) still appears on the podium exactly as before.
+test('buildPreviousSeasonPodium still shows a student with no honors medal (BAD-D)', () => {
+  const rows = [
+    { season_id: '2026-S1', display_name: 'DangNemo', masked_code: 'R2L-***DANG', peak_label_vi: 'Đồng III', peak_tier_index: 3, reward_diamonds: 20, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-04T12:56:34.240Z' },
+  ];
+
+  const podium = buildPreviousSeasonPodium(rows, '2026-S1');
+  assert.equal(podium.length, 1);
+  assert.equal(podium[0].display_name, 'DangNemo');
+  assert.equal(podium[0].peak_tier_index, 3);
+  assert.equal(podium[0].medal_emoji, '🥇');
+});
+
+// Real-data sanity check against the fixture in the incident packet: the
+// paid Amazing Summer winners (Percy/Hoang/Hieuenzo) must outrank
+// DangNemo/Danny/Phuc, in the founder-confirmed 1/2/3 order.
+test('buildPreviousSeasonPodium reproduces the paid Amazing Summer podium from the live-data fixture', () => {
+  const rows = [
+    { season_id: '2026-S1', display_name: 'Percy', masked_code: 'R2L-***PERCY', peak_label_vi: 'Kim Cương III', peak_tier_index: 4, reward_diamonds: 35, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-02T09:26:40.863Z' },
+    { season_id: '2026-S1', display_name: 'Percy', masked_code: 'R2L-***PERCY', kind: 'honors', honors_rank: 1, peak_label_vi: '', peak_tier_index: 0, reward_diamonds: 35, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-03T09:52:54.185Z' },
+    { season_id: '2026-S1', display_name: 'Hoang', masked_code: 'R2L-***HOANG', peak_label_vi: 'Kim Cương III', peak_tier_index: 4, reward_diamonds: 35, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-03T09:52:56.567Z' },
+    { season_id: '2026-S1', display_name: 'Hoang', masked_code: 'R2L-***HOANG', kind: 'honors', honors_rank: 2, peak_label_vi: '', peak_tier_index: 0, reward_diamonds: 35, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-03T09:52:58.244Z' },
+    { season_id: '2026-S1', display_name: 'Hieuenzo', masked_code: 'R2L-***HIEU', peak_label_vi: 'Kim Cương III', peak_tier_index: 4, reward_diamonds: 35, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-03T09:53:00.370Z' },
+    { season_id: '2026-S1', display_name: 'Hieuenzo', masked_code: 'R2L-***HIEU', kind: 'honors', honors_rank: 3, peak_label_vi: '', peak_tier_index: 0, reward_diamonds: 35, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-03T09:53:02.342Z' },
+    { season_id: '2026-S1', display_name: 'DangNemo', masked_code: 'R2L-***DANG', peak_label_vi: 'Đồng III', peak_tier_index: 3, reward_diamonds: 20, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-04T12:56:34.240Z' },
+    { season_id: '2026-S1', display_name: 'Danny', masked_code: 'R2L-***DANNY', peak_label_vi: 'Đồng I', peak_tier_index: 2, reward_diamonds: 10, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-01T00:00:00.000Z' },
+    { season_id: '2026-S1', display_name: 'Phuc', masked_code: 'R2L-***PHUC', peak_label_vi: 'Đồng I', peak_tier_index: 2, reward_diamonds: 10, season_name_vi: 'Amazing Summer', emoji: '🧭', ts: '2026-09-01T00:00:00.000Z' },
+  ];
+
+  const podium = buildPreviousSeasonPodium(rows, '2026-S1');
+  assert.deepEqual(podium.map((row) => row.display_name), ['Percy', 'Hoang', 'Hieuenzo']);
+  assert.deepEqual(podium.map((row) => row.medal_emoji), ['🥇', '🥈', '🥉']);
+});
+
 test('leaderboard API sorts mixed season + legacy records and includes season cache fields', async () => {
   const records = new Map([
     [
