@@ -1,0 +1,123 @@
+---
+/**
+ * Season Honors broadcast — a one-time, site-wide popup announcing the
+ * frozen "Amazing Summer" season's results (top-3 podium + a group
+ * thank-you). Mounted once in BaseLayout.astro; all gating (once-per-visitor,
+ * save-data, surface, publish state) lives in the paired client script —
+ * this component ships with NO season-specific content baked in, so turning
+ * the celebration on/off is a KV publish-flag flip with no rebuild.
+ *
+ * Native <dialog> + showModal(): free focus trap, Escape-to-close, and a
+ * real ::backdrop — no hand-rolled trap.
+ */
+---
+
+<dialog id="honors-broadcast" class="honors-broadcast" aria-labelledby="honors-broadcast-title">
+  <div class="honors-broadcast__card fx-card">
+    <p class="fx-eyebrow honors-broadcast__eyebrow" id="honors-broadcast-season"></p>
+    <h2 id="honors-broadcast-title" class="honors-broadcast__title"></h2>
+    <p class="honors-broadcast__lead">Ba bạn đọc xuất sắc nhất mùa này:</p>
+    <p class="honors-broadcast__podium" id="honors-broadcast-podium" aria-live="off"></p>
+    <p class="honors-broadcast__note">Mỗi bạn tham gia mùa này đều có một giấy khen riêng — bố mẹ sẽ nhận trên Zalo. Cảm ơn tất cả các con 💛</p>
+    <div class="honors-broadcast__actions">
+      <a href="/read2lead/vinh-danh" id="honors-broadcast-view" class="fx-btn fx-btn--primary fx-btn--lg fx-btn--block">Xem Bục Vinh Danh</a>
+      <button type="button" id="honors-broadcast-close" class="fx-btn fx-btn--ghost">Đóng</button>
+    </div>
+    <p class="honors-broadcast__forward">Mùa Phiêu Lưu 🗺️ đã bắt đầu</p>
+  </div>
+</dialog>
+
+<style>
+  .honors-broadcast {
+    border: 0;
+    padding: 0;
+    margin: auto;
+    width: min(92vw, 30rem);
+    max-width: 30rem;
+    background: transparent;
+    color: inherit;
+    overflow: visible;
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.25s ease, transform 0.25s ease, display 0.25s allow-discrete, overlay 0.25s allow-discrete;
+  }
+  .honors-broadcast:not([open]) {
+    pointer-events: none;
+  }
+  @starting-style {
+    .honors-broadcast[open] {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+  :global(#honors-broadcast::backdrop) {
+    background:
+      radial-gradient(ellipse at 50% 30%, color-mix(in srgb, var(--gold) 18%, transparent), transparent 55%),
+      color-mix(in srgb, var(--navy-950) 88%, transparent);
+  }
+
+  .honors-broadcast__card {
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 32px 28px;
+    text-align: center;
+    border-color: var(--accent-border);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--navy-850) 92%, transparent), color-mix(in srgb, var(--navy-900) 95%, transparent));
+    box-shadow: var(--shadow-2xl), 0 0 60px color-mix(in srgb, var(--gold) 25%, transparent);
+  }
+  .honors-broadcast__eyebrow { color: var(--gold-light); }
+  .honors-broadcast__title {
+    margin: 14px 0 0;
+    color: var(--cream);
+    font-family: var(--font-display);
+    font-size: clamp(24px, 5vw, 30px);
+    font-weight: 800;
+    line-height: 1.3;
+    text-wrap: balance;
+  }
+  .honors-broadcast__lead {
+    margin: 18px 0 0;
+    color: var(--cream-muted);
+    font-size: 14px;
+  }
+  .honors-broadcast__podium {
+    margin: 10px 0 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(17px, 4vw, 20px);
+    color: var(--gold-light);
+    line-height: 1.6;
+  }
+  .honors-broadcast__note {
+    margin: 20px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+    color: var(--cream-muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .honors-broadcast__actions {
+    margin-top: 24px;
+    display: grid;
+    gap: 10px;
+  }
+  .honors-broadcast__actions .fx-btn {
+    min-height: 48px;
+  }
+  .honors-broadcast__forward {
+    margin: 16px 0 0;
+    color: var(--cream-dim);
+    font-size: 13px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .honors-broadcast {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import '../scripts/honors-broadcast.client';
+</script>

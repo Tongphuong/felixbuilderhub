@@ -1,0 +1,204 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import '../ho-so/ho-so.css';
+---
+
+<BaseLayout
+  title="Bục Vinh Danh - Read2Lead"
+  description="Vinh danh những bạn đọc xuất sắc nhất mỗi mùa tại Read2Lead — cảm ơn tất cả các bạn đã cùng nhau luyện đọc, luyện nói."
+>
+  <Header />
+
+  <main id="main" class="flex-1">
+    <section class="bg-navy-900 px-6 py-10 md:py-14">
+      <div class="mx-auto max-w-5xl">
+        <div id="vd-loading" class="rounded-xl border border-cream-dim/20 bg-navy-950/70 p-8 text-center">
+          <div class="mx-auto h-14 w-14 animate-pulse rounded-full bg-gold/30"></div>
+          <p class="mt-5 text-cream-muted">Đang tải Bục Vinh Danh...</p>
+        </div>
+
+        <div id="vd-error" class="hidden rounded-xl border border-gold/30 bg-gold/10 p-8 text-center">
+          <p class="text-cream-muted">Không tải được Bục Vinh Danh. Vui lòng thử lại sau ít phút.</p>
+          <a href="/read2lead/leaderboard" class="mt-5 inline-flex min-h-11 items-center rounded-lg bg-accent px-5 font-semibold text-navy-950 transition hover:bg-accent-hover">Về Bảng xếp hạng</a>
+        </div>
+
+        <div id="vd-unpublished" class="hidden rounded-xl border border-gold/30 bg-gold/10 p-8 text-center">
+          <p class="text-4xl" aria-hidden="true">🌤️</p>
+          <h1 class="mt-4 font-display text-2xl font-bold leading-snug text-cream md:text-3xl">Bục vinh danh mùa này sẽ có sớm</h1>
+          <p class="mx-auto mt-3 max-w-xl leading-relaxed text-cream-muted">Khi mùa hiện tại kết thúc, các bạn đọc xuất sắc nhất sẽ được vinh danh ở đây. Trong lúc chờ, cùng xem bảng xếp hạng đang cập nhật mỗi ngày nhé.</p>
+          <a href="/read2lead/leaderboard" class="mt-6 inline-flex min-h-11 items-center rounded-lg bg-accent px-5 font-semibold text-navy-950 transition hover:bg-accent-hover">Xem Bảng xếp hạng hiện tại</a>
+        </div>
+
+        <div id="vd-content" class="hidden">
+          <div class="mb-10 text-center">
+            <p id="vd-season-eyebrow" class="inline-block rounded-md bg-gold/20 px-3 py-1 text-sm font-semibold text-gold-light"></p>
+            <h1 id="vd-title" class="mt-4 font-display text-3xl font-extrabold leading-snug text-cream md:text-5xl">Bục Vinh Danh</h1>
+            <p id="vd-subtitle" class="mx-auto mt-3 max-w-2xl leading-relaxed text-cream-muted"></p>
+          </div>
+
+          <section aria-labelledby="vd-podium-title" class="mb-12">
+            <h2 id="vd-podium-title" class="mb-5 text-center font-display text-2xl font-bold leading-snug text-cream md:text-3xl">Bục vinh danh</h2>
+            <div id="vd-podium" class="grid gap-5 md:grid-cols-3 md:items-end"></div>
+          </section>
+
+          <section aria-labelledby="vd-roll-title" class="mb-12">
+            <h2 id="vd-roll-title" class="mb-2 text-center font-display text-2xl font-bold leading-snug text-cream md:text-3xl">Các bạn đọc tham gia mùa này</h2>
+            <p class="mb-5 text-center text-sm text-cream-dim">Xếp theo tên, không phân hạng — mỗi bạn đều đáng được cảm ơn.</p>
+            <ul id="vd-honor-roll" role="list" class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"></ul>
+          </section>
+
+          <section aria-labelledby="vd-forward-title">
+            <h2 id="vd-forward-title" class="sr-only">Mùa tiếp theo</h2>
+            <div class="fx-card ho-so-season mx-auto max-w-3xl">
+              <div class="ho-so-season__icon" aria-hidden="true">🗺️</div>
+              <div class="ho-so-season__copy">
+                <p class="fx-eyebrow ho-so-accent-eyebrow">Mùa mới</p>
+                <h3>Mùa Phiêu Lưu đã bắt đầu</h3>
+                <p>Cùng nhau bắt đầu hành trình đọc sách mới — mỗi bài hoàn thành đều giúp con tiến thêm một bước.</p>
+              </div>
+              <a href="/read2lead/leaderboard" class="fx-btn fx-btn--primary fx-btn--lg">Xem Bảng xếp hạng hiện tại</a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script>
+    const loading = document.getElementById('vd-loading');
+    const errorState = document.getElementById('vd-error');
+    const unpublishedState = document.getElementById('vd-unpublished');
+    const content = document.getElementById('vd-content');
+    const seasonEyebrow = document.getElementById('vd-season-eyebrow');
+    const titleEl = document.getElementById('vd-title');
+    const subtitleEl = document.getElementById('vd-subtitle');
+    const podiumEl = document.getElementById('vd-podium');
+    const honorRollEl = document.getElementById('vd-honor-roll');
+
+    const podiumStyles = [
+      'border-gold/70 bg-gold/20 md:pb-12',
+      'border-cream-dim/40 bg-cream-dim/10 md:pb-7',
+      'border-blue-300/40 bg-blue-300/10 md:pb-4',
+    ];
+    const cardShell = 'rounded-2xl border p-6 text-center shadow-2xl';
+    const titleFont = 'font-display font-bold text-cream';
+    const statBoxGold = 'rounded-lg bg-gold/15 px-3 py-2';
+    const statBoxDark = 'rounded-lg bg-navy-950 px-3 py-2';
+    const inkDim = 'text-cream-dim';
+    const MEDALS = ['🥇', '🥈', '🥉'];
+
+    load();
+
+    async function load() {
+      try {
+        const res = await fetch('/api/read2lead-honors');
+        const data = await res.json();
+        loading.classList.add('hidden');
+        if (!res.ok || !data.ok) throw new Error('fetch failed');
+        if (data.published !== true) {
+          unpublishedState.classList.remove('hidden');
+          return;
+        }
+        render(data);
+      } catch {
+        loading.classList.add('hidden');
+        errorState.classList.remove('hidden');
+      }
+    }
+
+    function render(data) {
+      const season = data.season || {};
+      const emoji = season.emoji || '🌞';
+      const nameVi = season.name_vi || 'Mùa này';
+      seasonEyebrow.textContent = `${emoji} ${nameVi}`;
+      titleEl.textContent = `Bục Vinh Danh — ${nameVi}`;
+      subtitleEl.textContent = buildSubtitle(season, data.participants_count);
+
+      const podium = [...(data.podium || [])].sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99)).slice(0, 3);
+      podiumEl.innerHTML = podium.map(podiumCard).join('');
+
+      const roll = Array.isArray(data.honor_roll) ? data.honor_roll : [];
+      honorRollEl.innerHTML = roll.map(rollCard).join('');
+
+      content.classList.remove('hidden');
+    }
+
+    function buildSubtitle(season, participantsCount) {
+      const window = season.window;
+      const range = window && window.from && window.to ? ` (${formatDate(window.from)} – ${formatDate(window.to)})` : '';
+      const count = Number(participantsCount) || 0;
+      return `Mùa đã khép lại${range}. Cảm ơn ${count} bạn đọc đã cùng nhau luyện đọc, luyện nói suốt mùa này.`;
+    }
+
+    function podiumCard(row, index) {
+      const borderPart = 'border ' + podiumStyles[index];
+      return `
+        <article class="${cardShell} ${borderPart}">
+          <p class="text-4xl" aria-hidden="true">${MEDALS[index] || '🏅'}</p>
+          <p class="mt-2 text-sm font-semibold uppercase tracking-wide text-gold-light">Hạng ${escapeHtml(row.rank ?? index + 1)}</p>
+          <h3 class="mt-2 text-3xl ${titleFont} leading-snug">${escapeHtml(row.student_name)}</h3>
+          <p class="mt-1 text-sm ${inkDim}">${escapeHtml(row.masked_code)}</p>
+          <div class="mt-5 grid grid-cols-3 gap-3">
+            <div class="${statBoxGold}">
+              <p class="text-xs ${inkDim}">💎 Thưởng</p>
+              <p class="text-xl font-bold font-display text-gold-light">${escapeHtml(row.prize_diamonds ?? 0)}</p>
+            </div>
+            <div class="${statBoxDark}">
+              <p class="text-xs ${inkDim}">📚 Sách</p>
+              <p class="text-xl font-bold ${titleFont.split(' ')[0]} text-cream">${escapeHtml(row.completed_books ?? 0)}</p>
+            </div>
+            <div class="${statBoxDark}">
+              <p class="text-xs ${inkDim}">Bài</p>
+              <p class="text-xl font-bold ${titleFont.split(' ')[0]} text-cream">${escapeHtml(row.completed_packs ?? 0)}</p>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function rollCard(row) {
+      // Never publish a zero on a shared page: a child with no books or lessons
+      // yet is present and thanked, not measured. Pronunciation is deliberately
+      // NOT shown here — a public per-child skill score invites comparison
+      // between children; it belongs on the private certificate only.
+      const chips = [];
+      if (Number(row.completed_books) > 0) {
+        chips.push(`<span class="fx-badge fx-badge--neutral">📚 ${escapeHtml(row.completed_books)} sách</span>`);
+      }
+      if (Number(row.completed_packs) > 0) {
+        chips.push(`<span class="fx-badge fx-badge--neutral">✅ ${escapeHtml(row.completed_packs)} bài</span>`);
+      }
+      const chipRow = chips.length
+        ? `<div class="mt-1 flex flex-wrap items-center justify-center gap-2">${chips.join('')}</div>`
+        : '';
+      return `
+        <li class="fx-card flex flex-col gap-2 text-center">
+          <h3 class="text-lg ${titleFont} leading-snug">${escapeHtml(row.student_name)}</h3>
+          <p class="text-xs ${inkDim}">${escapeHtml(row.masked_code)}</p>
+          ${chipRow}
+        </li>
+      `;
+    }
+
+    function formatDate(value) {
+      try {
+        return new Intl.DateTimeFormat('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(`${value}T00:00:00`));
+      } catch {
+        return value;
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+  </script>
+</BaseLayout>
