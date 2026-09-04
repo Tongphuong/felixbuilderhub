@@ -9,8 +9,11 @@
 //   1. The frozen snapshot's podium/honor_roll rows carry `access_code` —
 //      the child's login credential — plus payment-internal fields
 //      (diamonds_before/diamonds_after/paid_at/lifetime_rp/
-//      tiebreak_confidence) and the whole `excluded[]` list (bot/test
-//      accounts, internal only). None of that may ever reach this response.
+//      tiebreak_confidence), per-child skill data (`pronunciation_percent`,
+//      `pronunciation_sample_count` — belongs on the private certificate
+//      only, never a public wire payload), and the whole `excluded[]` list
+//      (bot/test accounts, internal only). None of that may ever reach this
+//      response — not the DOM, not the JSON body itself.
 //   2. `honor_roll` is frozen in the OLD all-time lifetime_rp order, which
 //      does not match the founder-confirmed, already-paid `podium` order
 //      (see scripts/grant-season-honors.mjs's PODIUM_OVERRIDE_BASIS_NOTE).
@@ -92,6 +95,10 @@ export function buildPublicHonorsPayload(snapshot) {
 // A future field added to the snapshot (podium or honor_roll) is invisible
 // here by default; it must be deliberately added to one of these two
 // functions to ever reach the public response.
+// pronunciation_percent is deliberately NOT copied here — it belongs on the
+// private certificate only (Trap 1, module doc comment above). A per-child
+// skill assessment must never reach an unauthenticated public wire payload,
+// even for the three podium children.
 function buildPublicPodiumRow(row) {
   return {
     student_name: row?.student_name ?? '',
@@ -100,19 +107,18 @@ function buildPublicPodiumRow(row) {
     prize_diamonds: row?.prize_diamonds ?? null,
     completed_books: numberOrZero(row?.completed_books),
     completed_packs: numberOrZero(row?.completed_packs),
-    pronunciation_percent: row?.pronunciation_percent ?? null,
   };
 }
 
 // Same allow-list shape as buildPublicPodiumRow, minus rank/prize_diamonds —
 // honor_roll never carries a ranking publicly (see module doc comment, Trap 2).
+// pronunciation_percent excluded for the same reason as buildPublicPodiumRow.
 function buildPublicHonorRollRow(row) {
   return {
     student_name: row?.student_name ?? '',
     masked_code: row?.masked_code ?? '',
     completed_books: numberOrZero(row?.completed_books),
     completed_packs: numberOrZero(row?.completed_packs),
-    pronunciation_percent: row?.pronunciation_percent ?? null,
   };
 }
 

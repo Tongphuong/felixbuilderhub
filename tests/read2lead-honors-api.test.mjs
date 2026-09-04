@@ -139,6 +139,27 @@ test('BAD-allowlist: the public payload never contains the raw access_code, "acc
   assert.ok(!serialized.includes('paid_at'), 'paid_at leaked');
   assert.ok(!serialized.includes('lifetime_rp'), 'lifetime_rp leaked');
   assert.ok(!serialized.includes('tiebreak_confidence'), 'tiebreak_confidence leaked');
+  assert.ok(!serialized.includes('pronunciation_percent'), 'pronunciation_percent leaked (per-child skill data, private-certificate only)');
+  assert.ok(!serialized.includes('pronunciation_sample_count'), 'pronunciation_sample_count leaked');
+});
+
+// Buffet finding (pre-publish blocker): the UI stopped *rendering*
+// pronunciation_percent, but the wire payload still carried it — a test
+// that only inspected the DOM would never have caught that gap. This test
+// asserts on the serialized JSON string itself, not on any rendered markup,
+// so a future field re-added to the allow-list fails here even if no page
+// ever displays it.
+test('BAD-wire-leak: serialized public payload contains neither the key nor the value of pronunciation_percent, for every podium and honor_roll row', () => {
+  const snapshot = makeFrozenSnapshot({ published: true });
+  // Every row in the fixture already carries pronunciation_percent (91/88/85
+  // on podium, 88/91/85/75/70 on honor_roll). 91 is a distinctive value that
+  // appears nowhere else in the fixture (not a rank, prize, count, or year),
+  // so its presence in the serialized payload can only mean the field leaked.
+  const payload = buildPublicHonorsPayload(snapshot);
+  const serialized = JSON.stringify(payload);
+
+  assert.ok(!serialized.includes('pronunciation_percent'), 'pronunciation_percent key leaked into the wire payload');
+  assert.ok(!serialized.includes('91'), 'the distinctive pronunciation_percent value (91) leaked into the wire payload');
 });
 
 test('BAD-allowlist-2: an unexpected extra field on a snapshot row does NOT reach the public payload (proves the shaper is an allow-list, not a strip-list)', () => {
@@ -187,14 +208,14 @@ test('public podium row contains exactly the allow-listed fields', () => {
   const payload = buildPublicHonorsPayload(makeFrozenSnapshot({ published: true }));
   assert.deepEqual(Object.keys(payload.podium[0]).sort(), [
     'completed_books', 'completed_packs', 'masked_code', 'prize_diamonds',
-    'pronunciation_percent', 'rank', 'student_name',
+    'rank', 'student_name',
   ].sort());
 });
 
 test('public honor_roll row contains exactly the allow-listed fields (no rank, no prize_diamonds)', () => {
   const payload = buildPublicHonorsPayload(makeFrozenSnapshot({ published: true }));
   assert.deepEqual(Object.keys(payload.honor_roll[0]).sort(), [
-    'completed_books', 'completed_packs', 'masked_code', 'pronunciation_percent', 'student_name',
+    'completed_books', 'completed_packs', 'masked_code', 'student_name',
   ].sort());
 });
 
