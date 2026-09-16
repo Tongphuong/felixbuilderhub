@@ -9,7 +9,9 @@
 
 ## 0. Read order before any task
 
-1. `_ops/LEAD.md` — Claude Lead entry point
+1. **Your own entry point** — Elon (Claude Lead): `_ops/LEAD.md`. **Codex: `_ops/CODEX.md`**
+   (your boundaries, the branch lane, and the commit gate that applies to you).
+   Mark/Steve/Buffet: your agent definition plus the dispatch packet.
 2. `_ops/AGENT_LOG.md` — last 10 lines for session context
 3. `_ops/AGENTS.md` — canonical roles and behavior rules
 4. `_ops/PRODUCT_CONTEXT.md` and `_ops/DESIGN_SYSTEM.md`
