@@ -1,0 +1,23 @@
+{
+  "format": 1,
+  "purpose": "read2lead-local-synthetic-legacy-game",
+  "child_id": "synthetic-an",
+  "snapshot": {
+    "schema_version": 2,
+    "current_level": "L2",
+    "total_xp": 920,
+    "xp_in_level": 80,
+    "rank_points": 123,
+    "lifetime_rp": 123,
+    "season": {"id":"2026-S1","rp":27,"peak_tier_index":2,"peak_label_vi":"Bậc lịch sử","private_note":"synthetic-secret-season"},
+    "diamonds": 35,
+    "coins": 19,
+    "completed_pack_ids": ["synthetic-old-1","synthetic-old-2"],
+    "pack_history": [{"pack_id":"synthetic-old-1","passed":true,"score_percent":86},{"pack_id":"synthetic-old-2","passed":true,"score_percent":70}],
+    "medals": [{"season_id":"2026-S0","name_vi":"Vinh danh mẫu","emoji":"🏅","peak_label_vi":"Bậc lịch sử","peak_tier_index":2,"reward_diamonds":17,"kind":"honors","honors_rank":3,"ts":"2026-07-01T00:00:00.000Z","secret":"synthetic-secret-medal"}],
+    "access_code": "synthetic-secret-code",
+    "recording": "synthetic-secret-audio",
+    "private_scores": {"secret":"synthetic-secret-score"},
+    "unknown_future_record": {"preserve":"synthetic-opaque-value"}
+  }
+}

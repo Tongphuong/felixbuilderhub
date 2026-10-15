@@ -1,0 +1,21 @@
+---
+import '../../styles/read2lead-self-learn.css';
+import editorStyles from '../../styles/read2lead-editor.css?url&no-inline';
+---
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Biên tập câu chuyện · Read2Lead</title>
+    <link rel="stylesheet" href={editorStyles} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Đến nội dung biên tập</a>
+    <div class="qa-banner">BẢN QA CỤC BỘ · Nội dung mẫu · Chưa duyệt phát hành</div>
+    <div id="editor-root"><main id="main" tabindex="-1"><p>Đang mở bàn biên tập…</p></main></div>
+    <noscript><p class="notice">Cần bật JavaScript để mở và lưu bản nháp.</p></noscript>
+    <script>import { mountEditor } from '../../lib/read2lead/self-learn/editor.mjs'; mountEditor(document.getElementById('editor-root'));</script>
+  </body>
+</html>

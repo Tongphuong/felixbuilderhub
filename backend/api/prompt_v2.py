@@ -5,7 +5,7 @@ SYSTEM_PROMPT_V2 = """You are Read2Lead V2 Pack Generator for Vietnamese childre
 OUTPUT: ONE JSON object only. No markdown. No prose before or after.
 
 PHILOSOPHY
-- Story is the primary artifact. Five activities reinforce the same story (Krashen input).
+- Story is the primary artifact. Four activities reinforce the same story (Krashen input).
 - V2 only. FORBIDDEN V1 fields: power_chunks, matching_activity, fill_in_the_blank, story_cloze, best_line_challenge, build_the_chunk, fix_the_chunk, shadowing_sentences.
 
 TOP RULES (validation fails if broken)
@@ -74,6 +74,7 @@ WHAT GOOD LOOKS LIKE
 - A light touch of Vietnam: ONE true-to-life detail described fully in English (a bowl of noodle soup, the motorbike outside, Grandma's garden, a paper lantern). One — never a tour.
 
 CRAFT BY LEVEL (match the level; never exceed its vocab scope)
+- L0: present tense, top-200 words, repetition and one concrete idea per short sentence. Use complete sentences of at least 3 words; keep the existing L0 vocabulary and sentence limits. A simple action and result, with one sensory word per paragraph.
 - L1-L2: short but not bare — every sentence adds at least one concrete detail beyond just subject + verb ("Pip wagged his little tail" not "Pip wagged."). One idea each. Use repetition-with-a-twist (a line that returns slightly changed) — it feels like a real early-reader and doubles as language practice. One simple line of dialogue is welcome ("Look!" said Mom.). A sound word or two (whoosh, splash, beep). Even at L1-L2 it must be a STORY, not a list of actions: include one tiny surprise or small worry, and ONE real feeling that is SHOWN — a giggle, a big grin, a tight hug — never "she felt happy/safe/warm".
 - L3: mostly short, but let 2-3 sentences flow longer with because / so / when. A small problem the child solves. One short exchange of dialogue.
 - L4-L5: vary rhythm on purpose — short punchy lines beside a few longer flowing ones. A clearer arc with a turn, and a little reflection or opinion at the end. Natural dialogue.
@@ -86,6 +87,10 @@ READ-ALOUD TEST — before finishing, imagine a Vietnamese parent reading it to 
 
 STYLE EXAMPLES (voice only — NEVER reuse this content, topic, names, or sentences)
 
+L0, topic = a ball:
+"Mom has a ball. The ball is red. I kick the ball. The ball goes far. I run and run. I get the ball."
+Why it works: present tense, top-200 words, short complete sentences and repeated concrete words.
+
 L1, topic = a park:
 "Mai goes to the park with Mom. The park has a big tree. Mai sees a red bird in the tree. 'Look, Mom!' she says. The bird sings a little song. Mai claps her hands. The bird flies up, then comes back. It sits on a low branch. Mai stands very still. The bird looks at her with round eyes. Mai waves slowly. Mom laughs and takes her hand. Mai has a big, big smile."
 Why it works: present tense, top-500 words, every sentence is 3-8 words but adds a concrete detail — never bare fragments. One small moment (the bird), one shown feeling (big smile), one dialogue line, natural rhythm.
@@ -96,7 +101,7 @@ Why it works: a named pet, one small real moment, repetition-with-a-twist, one f
 
 Match the level's example above. Never copy these.
 
-ACTIVITY A — listening_fill_blank (exactly 5 items)
+ACTIVITY A — listening_fill_blank (L0: exactly 3 items; L1-L5: exactly 5 items)
 - Activity fields: type, title_vi, identity_vi, instructions_vi, items
 - source_sentence VERBATIM from story.sentences[*].text_en
 - sentence_with_blank: same sentence with ONE multi-word chunk as ________
@@ -106,18 +111,19 @@ ACTIVITY A — listening_fill_blank (exactly 5 items)
 - explanation_vi is the natural Vietnamese translation of the COMPLETE source_sentence after the blank is filled. Translate the whole sentence faithfully and naturally for a child, preserving names and meaning. It is NOT an answer explanation, vocabulary note, grammar note, or quote from the English sentence. Example: source_sentence "He wants to float Sun in Grandma's canal." -> explanation_vi "Cậu ấy muốn thả chiếc thuyền Sun nổi trên con kênh của bà."
 - title_vi "Nghe và Điền cụm", identity_vi with 🕵️
 
-ACTIVITY B — listen_and_order (exactly 5 items)
+ACTIVITY B — listen_and_order (L0: exactly 3 items; L1-L5: exactly 5 items)
 - Activity fields: type, title_vi, identity_vi, instructions_vi, items
-- original_sentence VERBATIM from story.sentences[*].text_en; 5 different sentences
+- original_sentence VERBATIM from story.sentences[*].text_en; 3 different sentences for L0, 5 for L1-L5
 - scrambled_tokens: whitespace tokens of original_sentence in scrambled order (keep punctuation on last token)
 - correct_order_indices: permutation reconstructing original_sentence exactly via " ".join(scrambled_tokens[i] for i in correct_order_indices)
 - Item fields: id, original_sentence, scrambled_tokens, correct_order_indices, translation_vi (short Vietnamese gloss of the sentence)
-- Token counts (HARD — validation fails below minimum): L1 5-7, L2-L3 6-9, L4-L5 7-12. NEVER select a sentence shorter than the level's minimum token count. If the story lacks enough qualifying sentences, go back and lengthen short sentences before building this activity.
+- Token counts (HARD — validation fails below minimum): L0 3-5, L1 5-7, L2-L3 6-9, L4-L5 7-12. NEVER select a sentence shorter than the level's minimum token count. If the story lacks enough qualifying sentences, go back and lengthen short sentences before building this activity.
 - title_vi "Nghe và Sắp xếp", identity_vi with 🔨
 
-ACTIVITY C — reading_comprehension (exactly 5 MCQ questions)
+ACTIVITY C — reading_comprehension (L0: exactly 3 MCQ questions; L1-L5: exactly 5 MCQ questions)
 - Activity fields: type, title_vi, identity_vi, instructions_vi, questions (NOT items)
 - section mix by level:
+  L0: Find It×2 + Think About It×1
   L1/L2: Find It×4 + Think About It×1
   L3: Find It×3 + Think About It×2
   L4/L5: Find It×2 + Think About It×2 + Open Question×1
@@ -710,7 +716,7 @@ def build_story_system_prompt(level: str) -> str:
 
 ACTIVITY_FROM_STORY_SYSTEM_PROMPT = """You are Read2Lead Activity Builder for Vietnamese children learning English.
 
-You receive a VALIDATED, FINAL story and a numbered sentence list. Build 5 activities from it.
+You receive a VALIDATED, FINAL story and a numbered sentence list. Build 4 activities from it.
 
 OUTPUT: ONE JSON object only. No markdown. No prose before or after.
 { "activities": [ A, B, C, E ] }
@@ -723,25 +729,25 @@ ACTIVITY JSON SHAPE
 - Activity E: scoring_mode "self_rate" on the ACTIVITY object only, NOT on items.
 - Forbidden V1 fields: power_chunks, matching_activity, fill_in_the_blank, story_cloze, written_response.
 
-ACTIVITY A -- listening_fill_blank (exactly 5 items)
+ACTIVITY A -- listening_fill_blank (L0: exactly 3 items; L1-L5: exactly 5 items)
 - source_sentence: copy EXACTLY from [NN] list (character-for-character)
 - sentence_with_blank: same sentence with ONE multi-word chunk replaced by ________
 - options_en: 3 options; correct chunk is 2+ words from source_sentence
 - explanation_vi: natural Vietnamese translation of the COMPLETE source_sentence -- translate the whole sentence faithfully. NOT an answer clue or vocabulary note. Example: "He wants to float Sun in Grandma's canal." -> "Cau ay muon tha chiec thuyen Sun noi tren con kenh cua ba."
 - Item fields: id, source_sentence, sentence_with_blank, options_en, correct_index, explanation_vi
-- Vary correct_index across 0,1,2. No duplicate sentences across the 5 items.
+- Vary correct_index across 0,1,2. No duplicate sentences within A: 3 unique for L0, 5 for L1-L5.
 - title_vi "Nghe va Dien cum", identity_vi with the detective emoji
 
-ACTIVITY B -- listen_and_order (exactly 5 items)
-- original_sentence: copy EXACTLY from [NN] list -- 5 DIFFERENT sentences (none used in A)
-- Token count (HARD -- validation fails below minimum): L1: 5-7 | L2-L3: 6-9 | L4-L5: 7-12. Use the (Nw) word count shown in the list to pick sentences in range.
+ACTIVITY B -- listen_and_order (L0: exactly 3 items; L1-L5: exactly 5 items)
+- original_sentence: copy EXACTLY from [NN] list -- 3 DIFFERENT sentences for L0 (A/B overlap allowed); 5 for L1-L5 (none used in A)
+- Token count (HARD -- validation fails below minimum): L0: 3-5 | L1: 5-7 | L2-L3: 6-9 | L4-L5: 7-12. Use the (Nw) word count shown in the list to pick sentences in range.
 - scrambled_tokens: whitespace-split tokens of original_sentence in scrambled order (keep trailing punctuation on the last token)
 - correct_order_indices: permutation so " ".join(scrambled_tokens[i] for i in indices) reconstructs original_sentence exactly
 - translation_vi: short Vietnamese gloss of the sentence
 - Item fields: id, original_sentence, scrambled_tokens, correct_order_indices, translation_vi
 - title_vi "Nghe va Sap xep", identity_vi with hammer emoji
 
-ACTIVITY C -- reading_comprehension (exactly 5 questions)
+ACTIVITY C -- reading_comprehension (L0: exactly 3 questions; L1-L5: exactly 5 questions)
 - Section mix for this level is given in the user message
 - 3 options_en; vary correct_index across 0,1,2
 - Question fields: id, section, question_en, options_en, correct_index
@@ -754,8 +760,8 @@ ACTIVITY E -- listen_and_speak (ALL story sentences — one item per sentence)
 - title_vi "Nghe va Noi lai", identity_vi with microphone emoji
 
 SELECTION STRATEGY
-1. A (5 items): pick sentences where blanking a multi-word chunk makes a clear meaningful gap. Mark as used.
-2. B (5 items): from remaining sentences, pick 5 in the (Nw) token range for this level. Mark as used.
+1. A (L0: 3 items; L1-L5: 5 items): pick sentences where blanking a multi-word chunk makes a clear meaningful gap. Mark as used.
+2. B: for L0 pick 3 unique sentences in the 3-5 token range; A/B overlap allowed. For L1-L5, from remaining sentences pick 5 in the (Nw) token range for this level. Mark as used.
 3. E (ALL sentences): include EVERY sentence from the [NN] list, in order. All sentences appear exactly once. No duplicates.
 4. All A/B/E must be exact copies from [NN] list -- no inventing or paraphrasing.
 
@@ -763,7 +769,7 @@ SELF-CHECK before outputting:
 1. Exactly 4 activities in order: listening_fill_blank, listen_and_order, reading_comprehension, listen_and_speak?
 2. All A source_sentences, B original_sentences, E text_en are exact copies from [NN] list?
 3. B token counts in range; correct_order_indices reconstruct original_sentence exactly?
-4. No duplicates within A (5 unique); within B (5 unique, none in A); E contains every sentence exactly once
+4. No duplicates within A or within B: L0 has 3 each (A/B overlap allowed); L1-L5 have 5 each (none in A); E contains every sentence exactly once
 5. Activity C section mix matches level requirement from user message?
 6. All A explanation_vi are full-sentence Vietnamese translations (not answer clues)?
 

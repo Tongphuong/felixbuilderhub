@@ -1,23 +1,9 @@
 import geometryManifest from './_monster-parts-data.mjs';
 
-// R2L-REWARDS-REDESIGN (2026-07-18): prices converted coins -> diamonds at
-// 1💎 = 2🪙 (floor), per SPEC_R2L_REWARDS_REDESIGN.md §3.3/§5.
-export const SHOP_PRICES = {
-  common: 0,
-  rare: 40,
-  epic: 100,
-};
-
-export const DECORATION_PRICES = {
-  effects: { common: 25, rare: 75, epic: 150 },
-  frame: { common: 50, rare: 125, epic: 250 },
-};
-
-export const COSMETIC_PRICES = {
-  hat: { common: 40, rare: 100, epic: 200 },
-  pet: { common: 60, rare: 140, epic: 250 },
-  wings: { common: 100, rare: 200, epic: 400 },
-};
+// Retained exports for old clients: every cosmetic is now free.
+export const SHOP_PRICES = { common: 0, rare: 0, epic: 0 };
+export const DECORATION_PRICES = { effects: SHOP_PRICES, frame: SHOP_PRICES };
+export const COSMETIC_PRICES = { hat: SHOP_PRICES, pet: SHOP_PRICES, wings: SHOP_PRICES };
 
 const SLOT_PRICES = { ...DECORATION_PRICES, ...COSMETIC_PRICES };
 
@@ -275,7 +261,7 @@ function buildCatalogItem(partId) {
   const rarity = getPartRarity(partId);
   const slot = getPartSlot(partId);
   const priceOverride = getPartPriceOverride(partId);
-  const price = priceOverride ?? SLOT_PRICES[slot]?.[rarity] ?? SHOP_PRICES[rarity] ?? 0;
+  const price = 0;
   return {
     id: partId,
     slot,
@@ -295,29 +281,8 @@ function isV5CosmeticSlot(slot) {
   return slot === 'hat' || slot === 'pet' || slot === 'wings';
 }
 
-export function buildShopCatalog({ includeDecorations = false } = {}) {
-  const items = [];
-  for (const partId of listPartsByRarity('rare')) {
-    if (isV5CosmeticSlot(getPartSlot(partId))) continue;
-    if (includeDecorations || !isPurchasableCosmeticSlot(getPartSlot(partId))) {
-      items.push(buildCatalogItem(partId));
-    }
-  }
-  for (const partId of listPartsByRarity('epic')) {
-    if (isV5CosmeticSlot(getPartSlot(partId))) continue;
-    if (includeDecorations || !isPurchasableCosmeticSlot(getPartSlot(partId))) {
-      items.push(buildCatalogItem(partId));
-    }
-  }
-  if (includeDecorations) {
-    for (const partId of listPartsByRarity('common')) {
-      if (isV5CosmeticSlot(getPartSlot(partId))) continue;
-      if (isPurchasableCosmeticSlot(getPartSlot(partId))) {
-        items.push(buildCatalogItem(partId));
-      }
-    }
-  }
-  return items;
+export function buildShopCatalog() {
+  return [...buildIndex().keys()].map(buildCatalogItem);
 }
 
 // Silver rank (Level L2 "Bạc") and above shop for free — founder decision
@@ -327,44 +292,13 @@ export function isSilverOrAbove(state) {
   return ['L2', 'L3', 'L4', 'L5'].includes(state?.current_level);
 }
 
-export function buildShopView(state) {
-  const owned = new Set(state?.unlocked_parts || []);
-  const diamonds = numberOrZero(state?.diamonds);
-  const free = isSilverOrAbove(state);
-  return buildShopCatalog({ includeDecorations: true }).map((item) => {
-    const price = free ? 0 : item.price;
-    return {
-      ...item,
-      price,
-      owned: owned.has(item.id),
-      can_afford: owned.has(item.id) ? false : (free || diamonds >= price),
-    };
-  });
+export function buildShopView(_state) {
+  return buildShopCatalog().map(item => ({ ...item, price: 0, owned: true, can_afford: true }));
 }
 
 export function executeBuy(state, partId) {
   const id = String(partId || '').trim();
-  const owned = new Set(state?.unlocked_parts || []);
-  if (owned.has(id)) return { state, error: 'already_owned' };
-
-  const rarity = getPartRarity(id);
-  const slot = getPartSlot(id);
-  if (!slot) return { state, error: 'part_not_found' };
-  if (rarity === 'common' && !isPurchasableCosmeticSlot(slot)) {
-    return { state, error: 'common_parts_are_free' };
-  }
-
-  const priceOverride = getPartPriceOverride(id);
-  const fullPrice = priceOverride ?? SLOT_PRICES[slot]?.[rarity] ?? SHOP_PRICES[rarity] ?? 0;
-  const price = isSilverOrAbove(state) ? 0 : fullPrice;
-  if (numberOrZero(state?.diamonds) < price) return { state, error: 'insufficient_diamonds' };
-
-  return {
-    state: {
-      ...state,
-      diamonds: numberOrZero(state.diamonds) - price,
-      unlocked_parts: [...(state.unlocked_parts || []), id],
-    },
-    reward: { part_id: id, price },
-  };
+  if (!getPartSlot(id)) return { state, error: 'part_not_found' };
+  // Compatibility only: selection is free and does not rewrite purchase history.
+  return { state: { ...state }, reward: { part_id: id, price: 0 } };
 }

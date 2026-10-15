@@ -315,7 +315,7 @@ test('per-page diamond celebration requires an actual pass and fires only after 
   const stageIdx = body.indexOf("bookSetStage('next');");
   const celebrateIdx = body.indexOf('celebrateDiamondReward(PAGE_DIAMOND_REWARD');
   assert.ok(stageIdx > -1 && celebrateIdx > stageIdx, 'bookSetStage must unhide the reward panel before the ticker is appended to it');
-  assert.match(body, /if \(pagePassed\) \{\s*celebrateDiamondReward\(PAGE_DIAMOND_REWARD, \{ anchorSelector: '#book-reader-next-stage' \}\);/);
+  assert.match(body, /if \(pagePassed && !state\.lesson\?\.review_only\) \{\s*celebrateDiamondReward\(PAGE_DIAMOND_REWARD, \{ anchorSelector: '#book-reader-next-stage' \}\);/);
 });
 
 test('the static per-page reward panel shows +5 💎, not the old +5 xu', () => {

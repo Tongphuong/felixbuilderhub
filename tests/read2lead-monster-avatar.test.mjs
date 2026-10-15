@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import {
   defaultMonsterForCode,
+  BASIC_MONSTER_CONFIG,
   normalizeAvatarMonster,
   normalizeProgressState,
   publicProgressState,
@@ -56,7 +57,7 @@ test('old record without avatar.monster gets default monster without crash', () 
   assert.equal(legacy.avatar.enabled, true);
   assert.ok(legacy.avatar.monster);
   assert.equal(typeof legacy.avatar.monster.body, 'string');
-  assert.deepEqual(legacy.avatar.monster, defaultMonsterForCode('R2L-LEGACY-MONSTER'));
+  assert.deepEqual(legacy.avatar.monster, BASIC_MONSTER_CONFIG);
   assert.ok(pub.monster_parts);
   assert.deepEqual(pub.avatar.monster, legacy.avatar.monster);
 });
@@ -64,11 +65,7 @@ test('old record without avatar.monster gets default monster without crash', () 
 test('saveAvatarMonster validates and persists normalized monster', () => {
   const base = normalizeProgressState(null, { accessCode: 'R2L-SAVE-MON' });
   const saved = saveAvatarMonster(base, {
-    body: 'default',
-    eyes: 'default',
-    mouth: 'default',
-    arms: 'default',
-    detail: 'default',
+    ...base.avatar.monster,
     color: 'sky',
   }, 'R2L-SAVE-MON');
   assert.equal(saved.ok, true);

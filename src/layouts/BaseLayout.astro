@@ -3,12 +3,13 @@ import '../styles/global.css';
 import { ZALO_URL } from '../config/contact';
 import HonorsBroadcast from '../components/HonorsBroadcast.astro';
 
-export interface Props { title: string; description?: string; ogImage?: string; robots?: string; }
+export interface Props { title: string; description?: string; ogImage?: string; robots?: string; childHome?: boolean; }
 const {
   title,
-  description = 'Felix Coaching — Coach huấn luyện kĩ năng nói, rèn tự tin cho trẻ em online. Đặt lịch tư vấn miễn phí. Có thêm Read2Lead và SpeakUp — công cụ luyện đọc và luyện nói cho trẻ em.',
+  description = 'Felix Coaching — Coach huấn luyện kĩ năng nói, rèn tự tin cho trẻ em online. Đặt lịch tư vấn miễn phí. Có Read2Lead — con đọc truyện và luyện nói cùng Minny.',
   ogImage = '/logo/og-card.png',
   robots,
+  childHome = false,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://felixbuilderhub.com').toString();
 const ogImageUrl = new URL(ogImage, Astro.site ?? 'https://felixbuilderhub.com').toString();
@@ -60,12 +61,12 @@ const ogImageUrl = new URL(ogImage, Astro.site ?? 'https://felixbuilderhub.com')
               sendDefaultPii: false,
               tracesSampleRate: 0.1,
               beforeSend: function(event){
-                var scrub=function(u){return typeof u==='string'?u.replace(/([?&](code|access_code)=)[^&]+/gi,'$1***'):u;};
+                var scrub=function(u){return typeof u==='string'?u.replace(/([?&](code|access_code|t|token)=)[^&]+/gi,'$1***'):u;};
                 if(event.request){ event.request.url=scrub(event.request.url); event.request.query_string=scrub(event.request.query_string); }
                 return event;
               },
               beforeBreadcrumb: function(crumb){
-                if(crumb&&crumb.data&&crumb.data.url){ crumb.data.url=String(crumb.data.url).replace(/([?&](code|access_code)=)[^&]+/gi,'$1***'); }
+                if(crumb&&crumb.data&&crumb.data.url){ crumb.data.url=String(crumb.data.url).replace(/([?&](code|access_code|t|token)=)[^&]+/gi,'$1***'); }
                 return crumb;
               }
             });
@@ -77,9 +78,9 @@ const ogImageUrl = new URL(ogImage, Astro.site ?? 'https://felixbuilderhub.com')
   </head>
   <body class="star-field font-sans bg-navy-950 text-cream min-h-screen flex flex-col antialiased">
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:font-semibold focus:text-navy-950">Bỏ qua tới nội dung chính</a>
-    <HonorsBroadcast />
+    {!childHome && <HonorsBroadcast />}
     <slot />
-    <a
+    {!childHome && <a
       data-sticky-zalo
       href={ZALO_URL}
       target="_blank"
@@ -91,7 +92,7 @@ const ogImageUrl = new URL(ogImage, Astro.site ?? 'https://felixbuilderhub.com')
         <path fill="currentColor" d="M12 2a10 10 0 1 0 5.4 18.4l3.6 1.1-1.1-3.5A10 10 0 0 0 12 2Zm-4.1 8.5h2v.8c.5-.6 1.2-1 2.1-1 1.6 0 2.5 1 2.5 2.7v3.5h-2v-3.2c0-.9-.4-1.4-1.2-1.4-.8 0-1.4.6-1.4 1.5v3.1h-2v-6Zm-2.4 0h2v6h-2v-6Zm9.9 0h4.8v1.3l-3 3h3v1.7h-5v-1.3l3-3h-2.8v-1.7Z"/>
       </svg>
       <span class="hidden text-sm sm:inline">Nhắn Zalo</span>
-    </a>
+    </a>}
     <script>
       const stickyZalo = document.querySelector('[data-sticky-zalo]');
       const forms = document.querySelectorAll('form');

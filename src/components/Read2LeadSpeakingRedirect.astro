@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Luyện nói trong truyện | Read2Lead" robots="noindex, nofollow" childHome>
+  <main id="main" class="mx-auto w-full max-w-xl p-8">
+    <h1 class="text-2xl font-bold">Minny luyện nói cùng con trong mỗi câu chuyện.</h1>
+    <p class="mt-4">Mình về góc đọc sách nhé. Bài đã lưu của con vẫn còn.</p>
+    <a id="speaking-reading-home" class="mt-6 inline-flex min-h-[48px] items-center rounded-xl bg-accent px-5 font-bold text-navy-950" href="/read2lead?from=speaking">Về đọc sách →</a>
+  </main>
+</BaseLayout>
+<script>
+  import { speakingReturnPath } from '../scripts/read2lead-speaking-redirect.mjs';
+  let stored = '';
+  try { stored = sessionStorage.getItem('r2l_access_code') || ''; } catch { /* optional */ }
+  const target = speakingReturnPath(location.search, stored);
+  (document.getElementById('speaking-reading-home') as HTMLAnchorElement).href = target;
+  location.replace(target);
+</script>

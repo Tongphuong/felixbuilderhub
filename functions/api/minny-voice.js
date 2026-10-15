@@ -60,7 +60,9 @@ export function deriveHomeworkTapAllowlist(homeworkRaw) {
   return { words, sentences };
 }
 
-export async function onRequestPost(context) {
+// Separate authorization from the external speech call for hosts with atomic
+// account storage. The ordinary Pages endpoint still runs both in order.
+export async function prepareMinnyVoice(context) {
   const { request, env } = context;
   if (!env.READ2LEAD_CODES) {
     return json({ ok: false, error: 'config_error', message: 'Hệ thống chưa cấu hình mã học sinh.' }, 500);
@@ -148,6 +150,10 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'config_error', message: 'Hệ thống chưa cấu hình giọng nói.' }, 500);
   }
 
+  return { accessCode, text: textToSynthesize };
+}
+
+export async function renderMinnyVoice(env, textToSynthesize) {
   try {
     const result = await getOrSynthesize(env, textToSynthesize);
     return json({ ok: true, audio_b64: result.audio_b64, content_type: result.content_type });
@@ -155,6 +161,12 @@ export async function onRequestPost(context) {
     console.error('[minny-voice] tts failed:', err?.message || err);
     return json({ ok: false, error: 'tts_failed', message: 'Minny chưa đọc được câu này, con bật loa điện thoại nhé!' }, 502);
   }
+}
+
+export async function onRequestPost(context) {
+  const prepared = await prepareMinnyVoice(context);
+  if (prepared instanceof Response) return prepared;
+  return renderMinnyVoice(context.env, prepared.text);
 }
 
 function json(body, status = 200) {

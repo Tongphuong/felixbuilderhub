@@ -1,4 +1,3 @@
-import { isV3Enabled } from '../config/flags';
 import {
   MONSTER_MANIFEST,
   MONSTER_SLOTS,
@@ -65,52 +64,8 @@ function partsForSlot(state: Read2LeadState, slot: MonsterSlot): MonsterPartEntr
     : parts;
 }
 
-export function getAvailablePartsForSlot(
-  slot: MonsterSlot,
-  state: Read2LeadState,
-): MonsterPartEntry[] {
-  const basicIds: Record<MonsterSlot, string> = {
-    body: 'png-default-body-whitea',
-    eyes: 'png-default-eye-blue',
-    mouth: 'png-default-moutha',
-    arms: 'png-default-arm-whitea',
-    detail: '',
-    effects: '',
-    frame: '',
-    hat: '',
-    pet: '',
-    wings: '',
-  };
-  const defaultId = state.monster_basic_defaults?.[slot] ?? basicIds[slot];
-  const allParts = partsForSlot(state, slot);
-  const basicPart = allParts.find((part) => part.id === defaultId)
-    || { id: defaultId, file: '' };
-  if (state.avatar_stage !== 'custom') return [basicPart];
-
-  const unlocked = new Set(state.unlocked_parts || []);
-  const isDecoration = ['effects', 'frame'].includes(slot);
-  const isV5Cosmetic = ['hat', 'pet', 'wings'].includes(slot);
-  return [
-    basicPart,
-    ...allParts.filter((part) =>
-      part.id !== defaultId
-      && part.id
-      && (isV5Cosmetic || (isDecoration || getPartRarity(part.id) !== 'common'))
-      && unlocked.has(part.id)),
-  ];
-}
-
-function hasLockedPartsForSlot(slot: MonsterSlot, state: Read2LeadState): boolean {
-  const unlocked = new Set(state.unlocked_parts || []);
-  const isDecoration = ['effects', 'frame'].includes(slot);
-  const isV5Cosmetic = ['hat', 'pet', 'wings'].includes(slot);
-  return partsForSlot(state, slot).some(
-    (part) => part.id && (
-      isDecoration || isV5Cosmetic
-        ? !unlocked.has(part.id)
-        : getPartRarity(part.id) !== 'common' && !isPartUnlocked(state, part.id)
-    ),
-  );
+export function getAvailablePartsForSlot(slot: MonsterSlot, state: Read2LeadState): MonsterPartEntry[] {
+  return partsForSlot(state, slot);
 }
 
 function partNameVi(slot: MonsterSlot, partId: string): string {
@@ -199,7 +154,7 @@ function defaultDraft(state: Read2LeadState): MonsterConfig {
     hat: getAvailablePartsForSlot('hat', state)[0]?.id || '',
     pet: getAvailablePartsForSlot('pet', state)[0]?.id || '',
     wings: getAvailablePartsForSlot('wings', state)[0]?.id || '',
-    color: state.monster_basic_defaults?.color || 'mint',
+    color: monster?.color || state.monster_basic_defaults?.color || 'mint',
   };
   if (!monster) return draft;
   for (const slot of MONSTER_SLOTS) {
@@ -227,240 +182,60 @@ function cyclePart(
 }
 
 export function mountMonsterBuilder(
-  root: HTMLElement,
-  accessCode: string,
-  state: Read2LeadState,
+  root: HTMLElement, accessCode: string, state: Read2LeadState,
   onSaved?: (nextState: Read2LeadState) => void,
 ) {
-  if (!isV3Enabled()) {
-    root.classList.add('hidden');
-    return;
-  }
-
   let draft = defaultDraft(state);
-  let shopState = state;
-  const equippedPartIds = new Set(
-    Object.values(state.avatar?.monster || {}).filter((value): value is string => Boolean(value)),
-  );
-  let ceremonyTimer: ReturnType<typeof setTimeout> | null = null;
-  const preview = root.querySelector('[data-monster-preview]') as HTMLElement | null;
-  const status = root.querySelector('[data-monster-status]') as HTMLElement | null;
-  const saveBtn = root.querySelector('[data-monster-save]') as HTMLButtonElement | null;
-
-  const renderPreview = () => {
-    if (!preview) return;
-    const renderDraft = draft.detail
-      ? draft
-      : {
-          ...draft,
-          detail: partsForSlot(shopState, 'detail').find((part) => part.id)?.id || 'default',
-        };
-    renderMonster(preview, renderDraft, {
-      size: 'large',
-      withCosmetics: true,
-      equipped: shopState.equipped,
-      equippedDisplay: shopState.equipped_display,
-    });
-    if (!draft.detail) {
-      preview.querySelectorAll('[data-slot="detail"]').forEach((layer) => layer.remove());
-    }
-    const nameEl = root.querySelector('[data-monster-name]');
-    if (nameEl) {
-      const colorClass = nameColorClassFromEquipped(shopState.equipped, shopState.equipped_display);
-      nameEl.className = `font-display text-lg font-extrabold text-cream ${colorClass}`.trim();
-    }
+  let selectedSlot: MonsterSlot = 'body';
+  let busy = false;
+  const preview = root.querySelector<HTMLElement>('[data-monster-preview]')!;
+  const status = root.querySelector<HTMLElement>('[data-monster-status]')!;
+  const save = root.querySelector<HTMLButtonElement>('[data-monster-save]')!;
+  const choice = root.querySelector<HTMLSelectElement>('[data-monster-category]')!;
+  const value = root.querySelector<HTMLElement>('[data-monster-choice]')!;
+  const count = root.querySelector<HTMLElement>('[data-monster-count]')!;
+  const render = () => {
+    // Empty optional detail must not trigger the renderer's whole-monster fallback.
+    const config = draft.detail ? draft : { ...draft, detail: partsForSlot(state, 'detail').find(p => p.id)?.id || '' };
+    renderMonster(preview, config, { size: 'large', animate: false, withCosmetics: true });
+    if (!draft.detail) preview.querySelectorAll('[data-slot="detail"]').forEach(layer => layer.remove());
+    const parts = getAvailablePartsForSlot(selectedSlot, state);
+    value.textContent = partNameVi(selectedSlot, draft[selectedSlot] || '');
+    count.textContent = `${Math.max(0, parts.findIndex(p => p.id === draft[selectedSlot])) + 1} / ${parts.length}`;
+    root.querySelectorAll<HTMLButtonElement>('[data-monster-prev], [data-monster-next]').forEach(b => b.disabled = busy || parts.length < 2);
   };
-
-  const renderSlotRow = (slot: MonsterSlot) => {
-    const row = root.querySelector(`[data-monster-slot="${slot}"]`);
-    if (!row) return;
-    const label = row.querySelector('[data-monster-slot-label]');
-    const value = row.querySelector('[data-monster-slot-value]');
-    const available = getAvailablePartsForSlot(slot, shopState);
-    const disabled = available.length <= 1;
-    if (label) label.textContent = SLOT_LABELS_VI[slot];
-    if (value) value.textContent = partNameVi(slot, String(draft[slot] || ''));
-    row.querySelectorAll<HTMLButtonElement>('[data-monster-prev], [data-monster-next]').forEach((button) => {
-      button.disabled = disabled;
-      button.setAttribute('aria-disabled', String(disabled));
+  choice.addEventListener('change', () => { selectedSlot = choice.value as MonsterSlot; render(); });
+  for (const [selector, direction] of [['[data-monster-prev]', -1], ['[data-monster-next]', 1]] as const) {
+    root.querySelector(selector)?.addEventListener('click', () => {
+      if (busy) return;
+      draft[selectedSlot] = cyclePart(selectedSlot, draft[selectedSlot] || '', direction, state);
+      status.textContent = 'Chưa lưu · Bấm Lưu khi con ưng ý.';
+      render();
     });
-    row.querySelector('[data-monster-lock-card]')?.classList.toggle(
-      'hidden',
-      !hasLockedPartsForSlot(slot, shopState),
-    );
-  };
-
-  const renderAll = () => {
-    for (const slot of MONSTER_SLOTS) {
-    if (['hat', 'pet', 'wings'].includes(slot)) continue;
-    renderSlotRow(slot);
   }
-    renderPreview();
-    renderCosmetics();
-    root.querySelector('[data-monster-basic-hint]')?.classList.toggle(
-      'hidden',
-      shopState.avatar_stage !== 'basic',
-    );
-  };
-
-  const showEquipCeremony = (slot: MonsterSlot, partId: string, rarity: PartRarity) => {
-    const dialog = document.querySelector('.r2l-equip-ceremony') as HTMLDialogElement | null;
-    if (!dialog) return;
-    dialog.dataset.rarity = rarity;
-    const name = dialog.querySelector('[data-ceremony-part-name]');
-    if (name) name.textContent = partNameVi(slot, partId);
-    if (dialog.open) dialog.close();
-    if (typeof dialog.showModal === 'function') dialog.showModal();
-    else dialog.setAttribute('open', '');
-    preview?.classList.remove('r2l-equip-preview-flash');
-    void preview?.offsetWidth;
-    preview?.classList.add('r2l-equip-preview-flash');
-    try {
-      const juiceWindow = window as Window & {
-        __r2lJuice?: { playKenney?: (name: string) => unknown };
-      };
-      Promise.resolve(juiceWindow.__r2lJuice?.playKenney?.('quest-complete')).catch(() => {});
-    } catch {
-      // Audio is optional; the visual ceremony still completes.
-    }
-    if (ceremonyTimer) window.clearTimeout(ceremonyTimer);
-    ceremonyTimer = window.setTimeout(() => {
-      if (dialog.open && typeof dialog.close === 'function') dialog.close();
-      else dialog.removeAttribute('open');
-      preview?.classList.remove('r2l-equip-preview-flash');
-      ceremonyTimer = null;
-    }, 3000);
-  };
-
-  const choosePart = (slot: MonsterSlot, direction: -1 | 1) => {
-    const currentId = String(draft[slot] || '');
-    const nextId = cyclePart(slot, currentId, direction, shopState);
-    if (nextId === currentId) return;
-    draft[slot] = nextId;
-    shopState = { ...shopState, avatar_stage: 'custom' };
-    const rarity = getPartRarity(nextId);
-    if (nextId && rarity !== 'common' && !equippedPartIds.has(nextId)) {
-      equippedPartIds.add(nextId);
-      showEquipCeremony(slot, nextId, rarity);
-    }
-    renderAll();
-  };
-
-  const renderCosmetics = () => {
-    const grid = root.querySelector('[data-monster-cosmetics]');
-    if (!grid) return;
-    const inventory = new Set(shopState.inventory || []);
-    const equipped = shopState.equipped || {};
-    const catalog = shopState.shop_catalog || [];
-    const owned = catalog.filter((item) => inventory.has(item.id));
-    grid.innerHTML = owned.length
-      ? owned.map((item) => {
-          const isEquipped = equipped[item.slot] === item.id;
-          return `
-            <div class="rounded-xl border border-cream/15 bg-navy-950/80 p-3">
-              <p class="text-2xl">${item.emoji}</p>
-              <p class="mt-1 text-sm font-bold text-cream">${item.name_vi}</p>
-              <div class="mt-2 flex flex-wrap gap-2">
-                <button type="button" data-cosmetic-equip="${item.id}" class="rounded-lg border border-accent px-2 py-1 text-xs font-bold text-accent">${isEquipped ? 'Đang dùng' : 'Trang bị'}</button>
-                ${isEquipped ? `<button type="button" data-cosmetic-unequip="${item.slot}" class="rounded-lg border border-cream/20 px-2 py-1 text-xs font-bold text-cream">Gỡ</button>` : ''}
-              </div>
-            </div>
-          `;
-        }).join('')
-      : '<p class="text-sm text-cream-muted">Chưa có đồ trang trí — vào cửa hàng mua nhé!</p>';
-
-    grid.querySelectorAll('[data-cosmetic-equip]').forEach((button) => {
-      button.addEventListener('click', async () => {
-        try {
-          await shopRequest('equip', { item_id: button.getAttribute('data-cosmetic-equip') });
-        } catch (error) {
-          if (status) status.textContent = error instanceof Error ? error.message : 'Không trang bị được.';
-        }
-      });
-    });
-    grid.querySelectorAll('[data-cosmetic-unequip]').forEach((button) => {
-      button.addEventListener('click', async () => {
-        try {
-          await shopRequest('unequip', { slot: button.getAttribute('data-cosmetic-unequip') });
-        } catch (error) {
-          if (status) status.textContent = error instanceof Error ? error.message : 'Không gỡ được.';
-        }
-      });
-    });
-  };
-
-  async function shopRequest(action: string, extra: Record<string, string | null> = {}) {
-    const response = await fetch('/api/read2lead-shop', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ access_code: accessCode, action, ...extra }),
-    });
-    const payload = await response.json();
-    if (!payload.ok) throw new Error(payload.message || 'Không thể thực hiện.');
-    shopState = payload.read2lead_state;
-    onSaved?.(shopState);
-    renderAll();
-    return payload;
-  }
-
-  root.querySelectorAll('[data-monster-prev]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const slot = button.getAttribute('data-monster-prev') as MonsterSlot;
-      choosePart(slot, -1);
-    });
-  });
-
-  root.querySelectorAll('[data-monster-next]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const slot = button.getAttribute('data-monster-next') as MonsterSlot;
-      choosePart(slot, 1);
-    });
-  });
-
-  saveBtn?.addEventListener('click', async () => {
-    if (saveBtn.disabled) return;
-    saveBtn.disabled = true;
-    if (status) status.textContent = 'Đang lưu...';
+  save.addEventListener('click', async () => {
+    if (busy) return;
+    busy = true; save.disabled = true; choice.disabled = true; render(); status.textContent = 'Đang lưu…';
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
     try {
       const response = await fetch('/api/read2lead-shop', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: controller.signal,
         body: JSON.stringify({ access_code: accessCode, action: 'avatar', monster: draft }),
       });
       const payload = await response.json();
-      if (!payload.ok) throw new Error(payload.message || 'Không lưu được quái.');
-      shopState = payload.read2lead_state;
-      draft = { ...shopState.avatar?.monster || draft };
-      onSaved?.(shopState);
-      if (status) status.textContent = 'Đã lưu quái của con!';
+      if (!response.ok || !payload.ok) throw new Error(payload.message || 'Chưa lưu được. Con thử lại nhé.');
+      state = payload.read2lead_state; draft = defaultDraft(state);
+      onSaved?.(state); status.textContent = 'Đã lưu! Bạn đồng hành sẵn sàng đọc cùng con.';
     } catch (error) {
-      if (status) status.textContent = error instanceof Error ? error.message : 'Không lưu được.';
+      status.textContent = error instanceof TypeError || (error instanceof Error && error.name === 'AbortError')
+        ? 'Mất kết nối. Lựa chọn vẫn ở đây; con thử lưu lại nhé.'
+        : error instanceof Error ? error.message : 'Chưa lưu được. Con thử lại nhé.';
     } finally {
-      saveBtn.disabled = false;
+      window.clearTimeout(timeout); busy = false; save.disabled = false; choice.disabled = false; render();
     }
   });
-
-  root.classList.remove('hidden');
-  renderAll();
-
-  const pending = shopState.pending_ceremony;
-  if (pending) {
-    const slot = MONSTER_SLOTS.find((candidate) =>
-      partsForSlot(shopState, candidate).some((part) => part.id === pending.part_id));
-    if (slot) {
-      showEquipCeremony(slot, pending.part_id, pending.rarity);
-      shopState = { ...shopState, pending_ceremony: null };
-      void fetch('/api/read2lead-ceremony-ack', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_code: accessCode,
-          part_id: pending.part_id,
-          ts: pending.ts,
-        }),
-      }).catch(() => {});
-    }
-  }
+  root.classList.remove('hidden'); render();
 }
 
 function escapeHtml(value: string) {
@@ -471,49 +246,21 @@ function escapeHtml(value: string) {
     .replace(/"/g, '&quot;');
 }
 
-export function monsterBuilderHtml(studentName: string, shopHref: string): string {
-  const slotRows = MONSTER_SLOTS.filter((s) => !['hat', 'pet', 'wings'].includes(s)).map((slot) => `
-    <div class="flex flex-wrap items-center gap-2 rounded-xl border border-cream/10 bg-navy-950/60 px-3 py-2" data-monster-slot="${slot}">
-      <button type="button" data-monster-prev="${slot}" class="min-h-[44px] min-w-[44px] rounded-lg border border-cream/20 text-lg font-bold text-cream" aria-label="Trước">‹</button>
-      <div class="min-w-0 flex-1 text-center">
-        <p class="text-xs font-bold uppercase tracking-wide text-cream-muted" data-monster-slot-label></p>
-        <p class="truncate text-sm font-semibold text-cream" data-monster-slot-value></p>
+export function monsterBuilderHtml(studentName: string, _shopHref = ''): string {
+  return `<section class="companion-editor" aria-label="Chọn bạn đồng hành" data-r2l-monster-builder-root>
+    <div class="companion-preview"><div data-monster-preview aria-hidden="true"></div></div>
+    <div class="companion-controls">
+      <p class="companion-kicker" data-clarity-mask="true">Bạn đồng hành của ${escapeHtml(studentName)}</p>
+      <label for="monster-category">Con muốn đổi phần nào?</label>
+      <select id="monster-category" data-monster-category>${MONSTER_SLOTS.map(slot => `<option value="${slot}">${SLOT_LABELS_VI[slot]}</option>`).join('')}</select>
+      <div class="companion-picker">
+        <button type="button" data-monster-prev aria-label="Lựa chọn trước">←</button>
+        <div aria-live="polite"><strong data-monster-choice></strong><small data-monster-count></small></div>
+        <button type="button" data-monster-next aria-label="Lựa chọn tiếp">→</button>
       </div>
-      <button type="button" data-monster-next="${slot}" class="min-h-[44px] min-w-[44px] rounded-lg border border-cream/20 text-lg font-bold text-cream" aria-label="Sau">›</button>
-      <a
-        href="${shopHref}"
-        data-monster-lock-card
-        class="w-full rounded-lg border border-gold/25 bg-gold/10 px-3 py-2 text-center text-xs font-bold text-gold"
-      >🔒 Mua thêm ở Cửa hàng</a>
+      <p class="companion-free">Mọi lựa chọn đều miễn phí.</p>
+      <button type="button" data-monster-save>Lưu bạn đồng hành</button>
+      <p data-monster-status role="status">Chọn phần con thích rồi bấm Lưu nhé.</p>
     </div>
-  `).join('');
-
-  return `
-    <section class="profile-lesson-card border-accent/30 bg-accent/5" aria-label="Tạo quái của con" data-r2l-monster-builder-root>
-      <div class="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <p class="text-sm font-extrabold uppercase tracking-wide text-accent">Tạo quái của con</p>
-          <p class="mt-1 text-sm text-cream-muted">Chọn từng bộ phận và màu — bấm Lưu khi ưng ý nhé.</p>
-        </div>
-        <a href="${shopHref}" class="rounded-lg border border-gold/35 px-3 py-2 text-xs font-bold text-gold">🛒 Cửa hàng</a>
-      </div>
-      <div class="mt-4 flex flex-col items-center gap-4 sm:flex-row sm:items-start">
-        <div data-monster-preview class="shrink-0" aria-hidden="true"></div>
-        <div class="min-w-0 flex-1">
-          <p class="text-sm text-cream-muted">Hồ sơ</p>
-          <p data-monster-name class="font-display text-lg font-extrabold text-cream">${escapeHtml(studentName)}</p>
-        </div>
-      </div>
-      <p data-monster-basic-hint class="mt-3 rounded-xl bg-gold/10 px-3 py-2 text-sm font-bold text-gold">Chạm mũi tên để tạo quái riêng của con.</p>
-      <div class="mt-4 grid gap-2 sm:grid-cols-2">${slotRows}</div>
-      <div class="mt-4 flex flex-wrap items-center gap-3">
-        <button type="button" data-monster-save class="min-h-[48px] rounded-xl bg-accent px-6 font-extrabold text-navy-950">Lưu</button>
-        <p data-monster-status class="text-sm font-semibold text-cream-muted"></p>
-      </div>
-      <div class="mt-5">
-        <p class="text-sm font-bold text-cream">Đồ đã mua</p>
-        <div class="mt-2 grid gap-2 sm:grid-cols-2" data-monster-cosmetics></div>
-      </div>
-    </section>
-  `;
+  </section>`;
 }

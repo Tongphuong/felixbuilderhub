@@ -1,4 +1,6 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
+import { withStoryRetellRequirement } from '../lib/read2lead/story-catalogue.mjs';
+import { buildParentSummary } from '../lib/read2lead/parent-summary.mjs';
 import { buildStoryProgressForProfile } from './_read2lead-library.js';
 import { buildWeeklyGrowthForProfile } from './_read2lead-growth.js';
 import { buildSkillQuality } from './_read2lead-profile-quality.js';
@@ -48,6 +50,7 @@ export async function onRequestGet(context) {
     student_name: v2State.student_name || legacyProgress.student_name,
     current_level: v2State.current_level,
   };
+  progress.current_pack = await withStoryRetellRequirement(env, codeData, progress.current_pack);
   const requireReviewBeforeNextPack = shouldRequireReviewBeforeNextPack(codeData);
   const nextPackLocked = currentPackBlocksGeneration(progress.current_pack, requireReviewBeforeNextPack);
   const state = dashboardState(progress.current_pack);
@@ -67,6 +70,7 @@ export async function onRequestGet(context) {
     last_level_recommendation: progress.last_level_recommendation,
     is_test: codeData.is_test === true,
     is_shared: codeData.is_shared === true,
+    parent_summary: buildParentSummary(codeData, v2State, progress.current_pack),
     story_progress: buildStoryProgressForProfile({
       reviewHistory: progress.review_history,
       studentName: progress.student_name,
@@ -190,6 +194,8 @@ function publicPack(pack) {
   if (!pack) return null;
   return {
     pack_id: pack.pack_id,
+    review_only:pack.review_only===true,
+    ...(pack.schema_version === 'story-mission-v1' ? { schema_version: pack.schema_version, picture_retell_required: pack.picture_retell_required === true, story_session: pack.story_session ? {stage:pack.story_session.stage,complete:pack.story_session.complete===true,picture_retell_complete:pack.story_session.picture_retell_complete===true,question_count:pack.story_session.question_count||0} : null } : {}),
     status: pack.status,
     topic: pack.topic,
     story_title: pack.story_title,

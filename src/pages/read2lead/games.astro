@@ -56,15 +56,15 @@ import Footer from '../../components/Footer.astro';
 <script>
   import { isV3Enabled } from '../../config/flags';
 
-  const qs = (sel) => document.querySelector(sel);
+  const qs = <T extends HTMLElement = HTMLElement>(sel: string) => document.querySelector<T>(sel)!;
 
-  function setGamesCoins(value) {
+  function setGamesCoins(value: unknown) {
     const coins = qs('#games-coins');
     if (coins) coins.textContent = String(value);
   }
 
   async function loadGames() {
-    const code = (qs('#games-code').value || '').trim().toUpperCase();
+    const code = (qs<HTMLInputElement>('#games-code').value || '').trim().toUpperCase();
     if (!code) return;
     const res = await fetch(`/api/read2lead-progress?code=${encodeURIComponent(code)}`);
     const data = await res.json();
@@ -81,7 +81,7 @@ import Footer from '../../components/Footer.astro';
     const params = new URLSearchParams(window.location.search);
     const code = (params.get('code') || '').trim().toUpperCase();
     if (code) {
-      qs('#games-code').value = code;
+      qs<HTMLInputElement>('#games-code').value = code;
       loadGames().catch(() => {});
     }
   }

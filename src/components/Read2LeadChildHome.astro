@@ -1,0 +1,37 @@
+---
+import { defaultMonsterSvg } from '../lib/r2l-hero';
+import { ZALO_URL } from '../config/contact';
+import '../styles/read2lead-child-home.css';
+---
+<main id="main" data-child-home class="reading-home" aria-busy="true">
+  <header class="reading-home__header">
+    <a href="/read2lead" aria-label="Read2Lead — Trang đọc sách" class="reading-home__brand"><span aria-hidden="true">▤</span> Read2Lead</a>
+    <span id="home-wallet" class="reading-home__wallet" hidden><span aria-hidden="true">◆</span> <span id="home-diamonds">0</span><span class="sr-only"> kim cương</span></span>
+  </header>
+  <p id="home-speaking-note" class="reading-home__speaking-note" hidden>Minny luyện nói cùng con trong mỗi câu chuyện. Bài đã lưu của con vẫn còn.</p>
+  <section id="home-loading" class="reading-home__notice" role="status">Đang mở góc đọc sách của con…</section>
+  <section id="home-error" class="reading-home__notice" hidden>
+    <h1>Mình cùng mở góc đọc sách nhé</h1><p id="home-error-message" role="alert"></p>
+    <button id="home-retry" class="reading-home__primary" type="button" hidden>Thử lại</button>
+    <a class="reading-home__help" href={ZALO_URL}>Nhắn Coach Felix để nhận link của con</a>
+  </section>
+  <section id="home-ready" class="reading-home__desk" hidden>
+    <div class="reading-home__greeting"><p>GÓC ĐỌC SÁCH CỦA CON</p><h1>Chào <span id="home-name" data-clarity-mask="true">con</span>!</h1></div>
+    <div id="home-pet" class="reading-home__pet" set:html={defaultMonsterSvg()}></div>
+    <section class="reading-home__lesson" aria-labelledby="home-heading">
+      <span class="reading-home__book" aria-hidden="true">📖</span><h2 id="home-heading">Hôm nay mình đọc nhé!</h2>
+      <p id="home-instruction">Một câu chuyện đang chờ con.</p>
+      <button id="home-open" class="reading-home__primary" type="button">Mở truyện <span aria-hidden="true">→</span></button>
+      <p id="home-action-status" role="status" aria-live="polite"></p>
+      <ol id="home-steps" class="reading-home__steps" aria-label="Các bước đọc truyện"><li>1 <span>Đọc</span></li><li>2 <span id="home-step-two">Trả lời Minny</span></li><li>3 <span id="home-step-three">Kể qua tranh</span></li></ol>
+    </section>
+    <p id="home-personal-progress" class="reading-home__progress">Mỗi câu chuyện là một bước nhỏ.</p>
+    <nav class="reading-home__secondary" aria-label="Góc của con">
+      <a id="home-companion" href="/ho-so"><span aria-hidden="true">☺</span> Đổi bạn đồng hành</a>
+      <a id="home-rankings" href="/read2lead/leaderboard"><span aria-hidden="true">☆</span> Bảng thành tích</a>
+    </nav>
+    <a id="home-parent" class="reading-home__parent" href="/ho-so">Dành cho ba mẹ</a>
+  </section>
+  <noscript><p>Con bật JavaScript trong trình duyệt để mở truyện, hoặc nhờ ba mẹ giúp nhé.</p></noscript>
+</main>
+<script>import '../scripts/read2lead-child-home';</script>

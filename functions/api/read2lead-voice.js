@@ -121,7 +121,9 @@ function isV2Lesson(context) {
   );
 }
 
-export async function onRequestPost(context) {
+// Atomic account hosts reuse these two phases without holding a save open
+// during external synthesis. The original Pages endpoint still calls both.
+export async function prepareRead2LeadVoice(context) {
   const { request, env } = context;
   if (!env.READ2LEAD_CODES) {
     return json({ ok: false, error: 'config_error', message: 'Hệ thống chưa cấu hình mã học sinh.' }, 500);
@@ -175,6 +177,10 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'config_error', message: 'Hệ thống chưa cấu hình giọng nói.' }, 500);
   }
 
+  return { accessCode, text };
+}
+
+export async function renderRead2LeadVoice(env, text) {
   try {
     const result = await getOrSynthesize(env, text);
     return json({ ok: true, audio_b64: result.audio_b64, content_type: result.content_type });
@@ -182,6 +188,12 @@ export async function onRequestPost(context) {
     console.error('[read2lead-voice] tts failed:', err?.message || err);
     return json({ ok: false, error: 'tts_failed', message: 'Minny chưa đọc được câu này, con bật loa điện thoại nhé!' }, 502);
   }
+}
+
+export async function onRequestPost(context) {
+  const prepared = await prepareRead2LeadVoice(context);
+  if (prepared instanceof Response) return prepared;
+  return renderRead2LeadVoice(context.env, prepared.text);
 }
 
 function json(body, status = 200) {

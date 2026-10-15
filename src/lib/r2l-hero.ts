@@ -19,38 +19,53 @@ export function statusMeta(state: string, pack: Record<string, unknown> | null |
   if (!pack) return { label: 'Chưa có bài', completed: false, step: 0 };
   if (state === 'generation_in_progress' || pack.status === 'generation_in_progress')
     return { label: 'Đang tạo', completed: false, step: 0 };
+  const session = (pack.story_session || {}) as Record<string, unknown>;
+  if (pack.picture_retell_required === true && session.picture_retell_complete !== true && session.complete === true)
+    return { label: 'Con kể lại câu chuyện qua tranh nhé.', completed: false, step: 2 };
   if (
     state === 'reviewed' ||
     pack.status === 'reviewed_pass' ||
     pack.status === 'reviewed_pass_web' ||
     pack.status === 'reviewed_pass_web_v2'
   ) return { label: 'Đã xong', completed: true, step: 3 };
+  if(pack.schema_version==='story-mission-v1') {
+    const story=(pack.story_session||{}) as Record<string,unknown>;
+    if(story.complete===true)return {label:'Đã xong',completed:true,step:3};
+    if(story.stage==='understand')return {label:'Tìm hiểu truyện',completed:false,step:1};
+    if(story.stage==='retell'||story.stage==='reward')return {label:'Luyện kể lại',completed:false,step:2};
+    return {label:'Đang đọc',completed:false,step:0};
+  }
   const steps = (pack.web_lesson_steps as Record<string, unknown>) || {};
   if (steps.read_completed_at) return { label: 'Làm bài', completed: false, step: 2 };
   if (steps.listen_completed_at) return { label: 'Đang nghe', completed: false, step: 1 };
   return { label: 'Sẵn sàng', completed: false, step: 1 };
 }
 
-/** Continue the open book, create a new one, or wait for one being generated. */
+/** Continue, create, wait, or honour an explicit stop after a completed story. */
 export function buildHeroCta(
   pack: Record<string, unknown> | null | undefined,
   data: ProgressPayload,
   code: string,
+  doneForToday = false,
 ) {
   const encoded = encodeURIComponent(code);
-  if (!pack) return { label: 'Tạo bài đọc mới ✨', action: 'create' as const, href: null };
+  if (!pack) return { label: 'Mở truyện', action: 'create' as const, href: null };
   if (data.state === 'generation_in_progress' || pack.status === 'generation_in_progress')
     return { label: 'Minny đang chuẩn bị...', action: 'wait' as const, href: null };
-  if (
+  const pendingRetell = pack.picture_retell_required === true &&
+    ((pack.story_session || {}) as Record<string, unknown>).picture_retell_complete !== true;
+  if (!pendingRetell && (
     data.state === 'reviewed' ||
     pack.status === 'reviewed_pass' ||
     pack.status === 'reviewed_pass_web' ||
     pack.status === 'reviewed_pass_web_v2'
-  ) return { label: 'Tạo bài đọc mới ✨', action: 'create' as const, href: null };
+  )) return doneForToday
+    ? { label: 'Đã xong hôm nay', action: 'rest' as const, href: null }
+    : { label: 'Mở truyện', action: 'create' as const, href: null };
   return {
     label: 'Đọc tiếp 📖',
     action: 'lesson' as const,
-    href: `/read2lead/lesson?code=${encoded}&pack_id=${encodeURIComponent(String(pack.pack_id || ''))}`,
+    href: `/read2lead/lesson?code=${encoded}&pack_id=${encodeURIComponent(String(pack.pack_id || ''))}${pack.schema_version === 'story-mission-v1' ? '&mission=story-mission-v1' : ''}`,
   };
 }
 

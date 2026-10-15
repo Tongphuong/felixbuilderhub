@@ -7,6 +7,7 @@ import {
   progressKey,
   progressNamespace,
   saveProgressState,
+  saveAvatarMonster,
 } from './_read2lead-v2-state.js';
 import { executeBuy, getPartRarity, hydrateShopState } from './_read2lead-shop-v2.js';
 
@@ -57,21 +58,6 @@ export async function onRequestPost(context) {
 
   const state = await loadProgressState(env, accessCode, codeData);
 
-  const slot = MONSTER_SLOTS.find((candidate) =>
-    (MONSTER_MANIFEST[candidate] || []).some((part) => part.id === partId));
-  if (['effects', 'frame'].includes(slot) && env.PUBLIC_R2L_W7 !== '1') {
-    return json(
-      { ok: false, error: 'w7_disabled', message: 'Tạm thời chưa mở' },
-      400,
-    );
-  }
-  if (['hat', 'pet', 'wings'].includes(slot)) {
-    return json(
-      { ok: false, error: 'v5_cosmetic_disabled', message: 'Tạm thời chưa mở' },
-      400,
-    );
-  }
-
   const kv = progressNamespace(env);
   const raw = kv ? await kv.get(progressKey(accessCode), { type: 'json' }) : null;
   const shopState = hydrateShopState(state, raw);
@@ -87,39 +73,11 @@ export async function onRequestPost(context) {
     );
   }
 
-  const rarity = getPartRarity(partId);
-  const unlocked = new Set(result.state.unlocked_parts || []);
-  const currentMonster = result.state.avatar?.monster || {};
-  const monster = { ...BASIC_MONSTER_CONFIG };
-  for (const candidate of MONSTER_SLOTS) {
-    const equippedPart = String(currentMonster[candidate] || '').trim();
-    if (
-      equippedPart
-      && (
-        getPartRarity(equippedPart) !== 'common'
-        || ['effects', 'frame'].includes(candidate)
-      )
-      && unlocked.has(equippedPart)
-    ) {
-      monster[candidate] = equippedPart;
-    }
-  }
-  if (slot) monster[slot] = partId;
-
-  const nextState = {
-    ...result.state,
-    avatar_stage: 'custom',
-    avatar: {
-      ...result.state.avatar,
-      enabled: true,
-      monster,
-    },
-    pending_ceremony: {
-      part_id: partId,
-      rarity,
-      ts: new Date().toISOString(),
-    },
-  };
+  const slot = MONSTER_SLOTS.find(candidate => (MONSTER_MANIFEST[candidate] || []).some(part => part.id === partId));
+  if (!slot) return json({ ok: false, error: 'part_not_found' }, 400);
+  const selection = saveAvatarMonster(result.state, { [slot]: partId }, accessCode);
+  if (!selection.ok) return json({ ok: false, error: selection.error }, 400);
+  const nextState = selection.state;
   const saved = await saveProgressState(env, accessCode, nextState);
   return json({
     ok: true,

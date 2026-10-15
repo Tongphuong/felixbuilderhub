@@ -1,0 +1,23 @@
+{
+  "format": 1,
+  "purpose": "read2lead-local-synthetic-access",
+  "families": [
+    {
+      "id": "synthetic-family-a",
+      "access_code": "DEMO-FAMILY-A",
+      "label_vi": "Gia đình mẫu A",
+      "children": [
+        { "id": "synthetic-an", "label_vi": "An mẫu", "level": "L2" },
+        { "id": "synthetic-binh", "label_vi": "Bình mẫu", "level": "L0" }
+      ]
+    },
+    {
+      "id": "synthetic-family-b",
+      "access_code": "DEMO-FAMILY-B",
+      "label_vi": "Gia đình mẫu B",
+      "children": [
+        { "id": "synthetic-chi", "label_vi": "Chi mẫu", "level": "L5" }
+      ]
+    }
+  ]
+}

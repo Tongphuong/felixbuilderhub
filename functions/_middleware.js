@@ -1,6 +1,9 @@
 // Basic Auth gate for /admin/* and /api/admin/* paths.
 // Requires ADMIN_PASSWORD env var set in Cloudflare Pages dashboard.
 // Username field is ignored — only the password is checked.
+import { maintenanceGateway } from './lib/read2lead/maintenance-gateway.mjs';
+import { existingTestAccountGateway } from './lib/read2lead/account-gateway.mjs';
+import { unifiedAccountGateway } from './lib/read2lead/account-unified-gateway.mjs';
 
 function unauthorized() {
   return new Response('Authentication required.', {
@@ -28,6 +31,13 @@ function checkBasicAuth(header, expectedPassword) {
 export async function onRequest(context) {
   const { request, env, next } = context;
   const path = new URL(request.url).pathname;
+  const finish = response => {
+    if (!context.data?.clearRead2LeadTestCookie && !context.data?.clearRead2LeadAccountCookies) return response;
+    const headers = new Headers(response.headers);
+    headers.append('Set-Cookie', '__Host-r2l_student_test=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0');
+    if (context.data?.clearRead2LeadAccountCookies) headers.append('Set-Cookie', '__Host-r2l_account=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0');
+    return new Response(response.body, { status: response.status, headers });
+  };
   const needsAuth = path.startsWith('/admin') || path.startsWith('/api/admin');
 
   if (needsAuth) {
@@ -42,5 +52,15 @@ export async function onRequest(context) {
     }
   }
 
-  return next();
+  try {
+    const account = env.R2L_ACCOUNT_MODE ? await unifiedAccountGateway(context) : await existingTestAccountGateway(context);
+    if (account) return finish(account);
+    const maintenance = !env.R2L_ACCOUNT_MODE || path === '/private-rehearsal/login' ? await maintenanceGateway(request, env) : null;
+    return finish(maintenance || await next());
+  } catch (error) {
+    if (error?.message === 'legacy_account_fenced' || error?.message === 'invalid_legacy_account_fence') {
+      return finish(Response.json({ code: env.R2L_ACCOUNT_MODE ? 'account_host_unavailable' : 'test_account_unavailable' }, { status: 503, headers: { 'Cache-Control': 'no-store' } }));
+    }
+    throw error;
+  }
 }

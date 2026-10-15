@@ -1,3 +1,4 @@
+import { astroJavaScriptSource } from './helpers/astro-javascript-source.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -8,58 +9,17 @@ import {
 } from '../functions/api/minny-speaking-context.js';
 import { canAccessPackForPractice } from '../functions/api/_read2lead-pack-access.js';
 
-const speakingPage = readFileSync('src/pages/speak-up.astro', 'utf-8');
 const parentPortal = readFileSync('src/pages/ho-so/index.astro', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so.ts', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so-parent-view.ts', 'utf-8');
 
-test('speak-up app page exists with coaching-first copy and no AI marketing', () => {
-  assert.match(speakingPage, /SpeakUp/);
-  assert.match(speakingPage, /minny-speaking-context/);
-  assert.match(speakingPage, /read2lead-speaking-check/);
-  assert.match(speakingPage, /practice_mode/);
-  assert.match(speakingPage, /data\.modes/);
-  assert.doesNotMatch(speakingPage, /tăng cường bởi AI/i);
-  assert.doesNotMatch(speakingPage, /\bAI\b/);
-});
 
-test('speak-up page has kid-friendly mode cards and video fallback', () => {
-  assert.match(speakingPage, /spk-mode-card/);
-  assert.match(speakingPage, /mode-picker/);
-  assert.match(speakingPage, /practice-screen/);
-  assert.match(speakingPage, /no-homework-note/);
-  assert.match(speakingPage, /id="minny-video"/);
-  assert.match(speakingPage, /id="minny-fallback"/);
-  assert.match(speakingPage, /tryPlay\('mp4'\)/);
-  assert.match(speakingPage, /\.webm/);
-  assert.match(speakingPage, /showMinnyPng/);
-  assert.match(speakingPage, /back-to-modes/);
-  assert.match(speakingPage, /progress-dots/);
-});
 
-test('speak-up page carries no Read2Lead activity (products share codes, not activities)', () => {
-  assert.doesNotMatch(speakingPage, /Kể lại truyện/);
-  assert.doesNotMatch(speakingPage, /Minny hỏi — con trả lời/);
-});
 
-test('speak-up page wires hands-free turn-taking with escape hatch and safety rails', () => {
-  // Silence-pause auto-send + auto re-arm (Stage A). The VAD polls the
-  // conversation monitor's voicedMs() — no change to r2l-recorder.js.
-  assert.ok(speakingPage.includes('FT_VAD_PAUSE_MS'), 'VAD pause constant present');
-  assert.ok(speakingPage.includes('FT_VAD_MIN_VOICED_MS'), 'min-voiced guard present');
-  assert.ok(speakingPage.includes('FT_VAD_MAX_WAIT_MS'), 'silent auto-arm timeout present');
-  assert.ok(speakingPage.includes("localStorage.getItem('r2l_ft_handsfree')"), 'hands-free escape hatch present');
-  assert.ok(speakingPage.includes('ftMaybeAutoArm'), 'auto re-arm after Minny speaks');
-  assert.ok(speakingPage.includes('ftStartVad(session, monitor, finishRecording'), 'VAD armed on recording start');
-  // Auto re-arm must stay behind the gesture-created monitor and a live tab.
-  assert.ok(speakingPage.includes('ft.micMonitor?.available'), 'auto-arm requires the gesture-created monitor');
-  assert.ok(speakingPage.includes('ftCancelAutoArm();'), 'hidden tab cancels pending auto-arm');
-});
 
-test('speak-up page plays thinking filler and records turn latency', () => {
-  assert.ok(speakingPage.includes("['thinking_1', 'thinking_2']"), 'prefetches both filler phrases');
-  assert.ok(speakingPage.includes('FT_FILLER_DELAY_MS'), 'filler waits for a genuinely slow reply');
-  assert.ok(speakingPage.includes('latency_p50_ms'), 'session summary carries latency p50');
-  assert.ok(speakingPage.includes('stt_ms'), 'per-turn timing split captured');
-});
+
+
+
+
+
 
 test('unified profile renders parent view with portfolio and dashboard', () => {
   assert.match(parentPortal, /renderParentView/);
@@ -343,12 +303,7 @@ test('buildHomeworkSteps: v2 record with photo exposes only the photo id', () =>
   assert.equal(JSON.stringify(mode).includes('r2_key'), false, 'r2_key must never reach the client');
 });
 
-test('speak-up page has the homework photo thumb, lightbox, and authorized endpoint URL', () => {
-  assert.ok(speakingPage.includes('hw-photo-thumb-btn'), 'photo thumb button in story card');
-  assert.ok(speakingPage.includes('hw-photo-lightbox'), 'lightbox dialog present');
-  assert.ok(speakingPage.includes('/api/speakup-homework-photo?code='), 'photo fetched through the code-authorized endpoint');
-  assert.ok(speakingPage.includes('spk-mode-card__badge'), 'mode card attachment badge');
-});
+
 
 test('buildHomeworkSteps: photo-only record yields one open photo-talk step', () => {
   const codeData = {
@@ -556,21 +511,7 @@ test('kid path: buildHomeworkSteps/buildSpeakingModes never call fetch, for any 
   }
 });
 
-test('minny-speaking-context response carries the code level (V1.2 packet 2: topic picker gates on it pre-start)', async () => {
-  const { onRequestGet } = await import('../functions/api/minny-speaking-context.js');
-  const kv = {
-    async get(key, opts) {
-      if (key === 'R2L-LVL-TEST') return { student_name: 'Lvl', progress: { current_level: 'L4' } };
-      return null;
-    },
-    async put() {},
-  };
-  const request = new Request('http://x/api/minny-speaking-context?code=R2L-LVL-TEST');
-  const res = await onRequestGet({ request, env: { READ2LEAD_CODES: kv } });
-  const data = await res.json();
-  assert.equal(data.ok, true);
-  assert.equal(data.level, 'L4');
-});
+
 
 // --- Elon review fix (2026-07-13): step-id collision across same-type tasks ---
 // Mark flagged this: item/card ids restart at s1/q1 inside every task and

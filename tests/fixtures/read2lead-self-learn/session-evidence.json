@@ -1,0 +1,103 @@
+{
+  "session": {
+    "schema_version": "1.0.0",
+    "session_id": "synthetic-session-L2",
+    "child_id": "synthetic-child-A",
+    "lesson_id": "r2l-a-dry-place-for-the-map",
+    "content_version": "1.0.0",
+    "content_sha256": "d58819250a6364f6a3e866483db13a84b11076649273c4fd8b9ba48dc2ca67c1",
+    "rubric_version": "practice-rubric-1",
+    "engine_version": "self-learn-1",
+    "revision": 3,
+    "stage": "comprehension",
+    "input_mode": "independent_reading",
+    "status": "active",
+    "created_at": "2026-09-18T10:00:00Z",
+    "updated_at": "2026-09-18T10:03:00Z",
+    "acknowledged_request_ids": [
+      "synthetic-request-1",
+      "synthetic-request-2",
+      "synthetic-request-3"
+    ],
+    "evidence_ids": []
+  },
+  "submission": {
+    "schema_version": "1.0.0",
+    "request_id": "synthetic-request-4",
+    "session_id": "synthetic-session-L2",
+    "child_id": "synthetic-child-A",
+    "expected_revision": 3,
+    "event": "answer",
+    "item_id": "r2l-a-dry-place-for-the-map-q1",
+    "answer": {
+      "choice_index": 2,
+      "text": null,
+      "evidence_sentence_ids": [
+        "s6",
+        "s7"
+      ]
+    },
+    "support_used": [],
+    "capture_status": "valid"
+  },
+  "reading_evidence": {
+    "schema_version": "1.0.0",
+    "evidence_id": "synthetic-evidence-reading",
+    "child_id": "synthetic-child-A",
+    "session_id": "synthetic-session-L2",
+    "request_id": "synthetic-request-4",
+    "item_id": "r2l-a-dry-place-for-the-map-q1",
+    "item_version": "1.0.0",
+    "content_version": "1.0.0",
+    "rubric_version": "practice-rubric-1",
+    "input_mode": "independent_reading",
+    "capture_status": "valid",
+    "state": "provisional",
+    "dimensions": {
+      "meaning": 2,
+      "evidence": null,
+      "transfer": null
+    },
+    "retell": {
+      "essential_facts": null,
+      "order_causality": null,
+      "language_intelligibility": "not_assessed",
+      "support_used": []
+    },
+    "support_used": [],
+    "assessment_source": "deterministic_choice",
+    "automatic_mastery": false,
+    "level_change": null,
+    "created_at": "2026-09-18T10:03:01Z"
+  },
+  "missing_speech_evidence": {
+    "schema_version": "1.0.0",
+    "evidence_id": "synthetic-evidence-missing-mic",
+    "child_id": "synthetic-child-A",
+    "session_id": "synthetic-session-L2",
+    "request_id": "synthetic-request-5",
+    "item_id": "r2l-a-dry-place-for-the-map-retell",
+    "item_version": "1.0.0",
+    "content_version": "1.0.0",
+    "rubric_version": "practice-rubric-1",
+    "input_mode": "independent_reading",
+    "capture_status": "missing",
+    "state": "unassessable",
+    "dimensions": {
+      "meaning": null,
+      "evidence": null,
+      "transfer": null
+    },
+    "retell": {
+      "essential_facts": null,
+      "order_causality": null,
+      "language_intelligibility": "unassessable",
+      "support_used": []
+    },
+    "support_used": [],
+    "assessment_source": "pending_validated_assessor",
+    "automatic_mastery": false,
+    "level_change": null,
+    "created_at": "2026-09-18T10:03:01Z"
+  }
+}

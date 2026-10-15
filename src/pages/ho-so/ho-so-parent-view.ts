@@ -152,7 +152,7 @@ function renderMinnyPractice(data: ProgressPayload) {
     const dateText = formatDate(entry.at);
     return `<div class="ho-so-story"><span class="ho-so-story__icon" aria-hidden="true">🎤</span><span class="ho-so-story__copy"><strong>${escapeHtml(modeLabel)}</strong><small>${escapeHtml(dateText)}</small></span><span class="ho-so-story__score">${escapeHtml(statText)}</span></div>`;
   }).join('');
-  const body = rows || `<div class="ho-so-empty">Con chưa luyện nói tuần này — <a class="fx-btn fx-btn--primary" href="/read2lead/speaking">mở Luyện nói với Minny nhé →</a></div>`;
+  const body = rows || `<div class="ho-so-empty">Con chưa luyện nói tuần này — <a class="fx-btn fx-btn--primary" href="/read2lead?code=${encodeURIComponent(String((data.read2lead_state || {}).access_code || ''))}">mở truyện để luyện nói cùng Minny →</a></div>`;
   return `<div class="ho-so-card-head"><h3>🎤 Luyện nói cùng Minny</h3></div>${body}`;
 }
 
@@ -218,7 +218,42 @@ function renderAll(data: ProgressPayload, code: string, lesson: Lesson | null, p
   attachPortfolioInteractions(portfolioHost, code);
 }
 
+function renderSavedParentSummary(container: Element, data: ProgressPayload, code: string) {
+  const summary = data.parent_summary!;
+  const progress = data.progress || {}, state = data.read2lead_state || {};
+  const number = (value: unknown) => new Intl.NumberFormat('vi-VN').format(Math.max(0, Number(value) || 0));
+  const home = '/read2lead?code=' + encodeURIComponent(code);
+  const stages: Record<string, string> = { opened: 'Đã mở truyện', questions_in_progress: 'Đang trả lời câu hỏi', questions_completed: 'Đã hoàn thành câu hỏi', retelling_completed: 'Đã hoàn thành kể qua tranh', lesson_completed: 'Đã hoàn thành bài đọc' };
+  const retelling: Record<string, string> = { complete: 'Đã hoàn thành', needs_practice: 'Còn ý cần luyện thêm', unassessed: 'Chưa đánh giá được', pending: 'Chưa hoàn thành', unknown: 'Chưa có kết quả được lưu', not_applicable: 'Không có mục kể qua tranh trong bài này' };
+  const cards = summary.entries.map(entry => {
+    const points = Array.isArray(entry.content_points) ? entry.content_points : [];
+    const questionText = entry.kind === 'original'
+      ? entry.stage === 'lesson_completed' ? 'Đã hoàn thành các hoạt động của bài.' : 'Chưa có kết quả hoàn thành được lưu.'
+      : entry.question_count != null ? `Đã lưu ${number(entry.question_count)}${entry.question_total != null ? '/' + number(entry.question_total) : ''} câu trả lời.` : 'Chưa có số câu trả lời được lưu.';
+    return `<article class="parent-reading-card">
+      <div class="parent-reading-card-head"><div><p class="parent-eyebrow">${entry.current ? 'TRUYỆN GẦN NHẤT' : 'ĐÃ LƯU'}${entry.review_only ? ' · ÔN LẠI' : ''}</p><h3>${escapeHtml(entry.title)}</h3></div><time>${escapeHtml(formatDate(entry.date, true) || 'Chưa có ngày được lưu')}</time></div>
+      <p class="parent-stage" data-stage="${escapeHtml(entry.stage)}">${escapeHtml(stages[entry.stage] || 'Chưa đánh giá')}</p>
+      <dl><div><dt>${entry.kind === 'story' ? 'Câu hỏi' : 'Hoạt động đọc'}</dt><dd>${escapeHtml(questionText)}${entry.question_score != null ? ` Kết quả đã lưu: ${number(entry.question_score)}%.` : ' Chưa có điểm đánh giá được lưu.'}</dd></div>
+      <div><dt>Kể qua tranh</dt><dd>${escapeHtml(retelling[entry.retell] || retelling.unknown)}</dd></div>
+      <div><dt>Phát âm</dt><dd>${entry.pronunciation ? `Độ chính xác đã được đánh giá: ${number(entry.pronunciation.accuracy_percent)}%.` : 'Chưa được đánh giá. Bản chép lời không phải điểm phát âm.'}</dd></div></dl>
+      ${points.length ? `<details class="parent-feedback"><summary>Nội dung kể lại đã được đánh giá</summary><ul>${points.map((p: any) => `<li>${p.met ? '✓ Đã nhắc đến' : 'Cần luyện thêm'}: ${escapeHtml(p.label)}</li>`).join('')}</ul></details>` : ''}
+    </article>`;
+  }).join('');
+  container.classList.add('parent-summary-shell');
+  container.innerHTML = `<div class="parent-summary-page">
+    <a class="parent-back" href="${home}">← Về góc đọc sách của con</a>
+    <header><p class="parent-eyebrow">DÀNH CHO BA MẸ</p><h1>Con đã học gì?</h1><p data-clarity-mask="true">Kết quả đã lưu của <strong>${escapeHtml(progress.student_name || state.student_name || 'con')}</strong>.</p></header>
+    <div class="parent-saved-stats"><p><strong>${number(summary.completed_count)}</strong> bài đã hoàn thành</p><p><strong>◆ ${number(state.diamonds)}</strong> kim cương đang có</p></div>
+    <section class="parent-next"><h2>Bước tiếp theo</h2><p>${escapeHtml(summary.next_step.text)}</p><a href="${home}">Cùng con tiếp tục →</a></section>
+    <section class="parent-recent"><h2>Những truyện gần đây</h2>${cards || '<p class="parent-empty">Chưa có truyện được mở. Sau khi con bắt đầu, kết quả đã lưu sẽ hiện ở đây.</p>'}</section>
+    <p class="parent-evidence-note">Mở truyện hoặc ghi âm chưa có nghĩa là con đã hiểu bài. Báo cáo chỉ hiển thị kết quả đã được lưu.</p>
+    <nav class="parent-secondary" aria-label="Thông tin khác"><a href="/read2lead/gifts?code=${encodeURIComponent(code)}">Quà thật của con</a><button type="button" data-ho-so-change-code>Đổi mã học sinh</button></nav>
+  </div>`;
+
+}
+
 export async function renderParentView(_container: Element, data: ProgressPayload, accessCode: string) {
+  if (data.parent_summary?.version === 1) { renderSavedParentSummary(_container, data, accessCode); return; }
   if (lastFetchCode === accessCode) { renderAll(data, accessCode, cachedLesson, cachedPortfolio, new Set(cachedTasks), cachedPortfolioFailed, cachedGiftItem); return; }
   const progress = (data.progress || {}) as Record<string, unknown>;
   const pack = progress.current_pack as Record<string, unknown> | undefined;

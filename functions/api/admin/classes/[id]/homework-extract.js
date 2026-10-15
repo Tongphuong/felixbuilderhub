@@ -20,7 +20,7 @@ import {
   parseFrameStems,
 } from '../../../_homework.js';
 import { VISION_MODEL, VISION_PROMPT, parseVisionReply, buildDraft as buildVisionDraft, extractWithOpenAI } from './homework-photo-extract.js';
-import { resolveOpenAIApiKey } from '../../../read2lead-speaking-check.js';
+import { resolveOpenAIApiKey } from '../../../../lib/read2lead/provider-config.mjs';
 
 const LESSON_TEXT_MAX_CHARS = 20000;
 const MAX_DRAFT_TASKS = 8;

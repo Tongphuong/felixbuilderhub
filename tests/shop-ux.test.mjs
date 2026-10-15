@@ -18,7 +18,7 @@ async function ensureHarness() {
   const config = await configFn({ command: 'serve', mode: 'development' });
   viteServer = await createServer({
     ...config,
-    server: { middlewareMode: true },
+    server: { watch: null, middlewareMode: true },
     appType: 'custom',
   });
   await viteServer.pluginContainer.buildStart({});
@@ -326,10 +326,9 @@ test('active shop renderer groups epic, rare, then common and hides empty sectio
   assert.match(shopUxSource, /if \(!items\.length\) return \x27\x27/);
 });
 
-test('dark shop styles apply W6 rarity borders and reduced motion', () => {
-  assert.match(shopPage, /var\(--w6-rare\)/);
-  assert.match(shopPage, /var\(--w6-epic\)/);
-  assert.match(shopPage, /prefers-reduced-motion: reduce/);
+test('legacy shop page redirects only to the free companion', () => {
+ const source=readFileSync('src/pages/read2lead/shop.astro','utf8');
+ assert.match(source,/location.replace/);assert.match(source,/\/read2lead\/companion/);assert.doesNotMatch(source,/initShopPage/);
 });
 
 test('InsufficientCoinsModal opens with correct deficit number', async () => {
@@ -357,33 +356,16 @@ test('UnlockCelebration includes Vietnamese rarity label', async () => {
 // R2L Rewards Redesign (SPEC_R2L_REWARDS_REDESIGN.md, approved 2026-07-18) —
 // diamonds are now the only shop currency; the 🪙 coin badge is gone.
 
-test('shop page shows a diamond balance, not a coin balance', () => {
-  assert.match(shopPage, /id="shop-diamonds"/);
-  assert.match(shopPage, /💎 <span id="shop-diamonds">0<\/span>/);
-  assert.doesNotMatch(shopPage, /id="shop-coins"/);
-  assert.doesNotMatch(shopPage, /🪙/);
-  assert.doesNotMatch(shopPage, /\bxu\b/);
-});
+
 
 // Reuse-first convergence: the monster shop's 💎 display must match the
 // live "Quà thật" gift shop's established convention (gold, "Kim cương của
 // con"), not invent a second diamond visual language.
-test('shop balance box reuses the gift shop\'s label wording and gold emphasis', () => {
-  assert.match(shopPage, /Kim cương của con/);
-  assert.doesNotMatch(shopPage, /Số dư của con/);
-  assert.match(shopPage, /border-gold\/30 bg-gold\/10/);
-  assert.match(shopPage, /text-gold">💎/);
-  assert.doesNotMatch(shopPage, /cyan/);
-});
+
 
 // Linking work (founder decision): kids must be able to find the shop —
 // the ?v3=1 preview gate is gone, and each diamond shop links to the other.
-test('shop page has no v3 preview gate and cross-links to the gift shop', () => {
-  assert.doesNotMatch(shopPage, /shop-gate/);
-  assert.doesNotMatch(shopPage, /isV3Enabled/);
-  assert.doesNotMatch(shopPage, /v3 preview/);
-  assert.match(shopPage, /href="\/read2lead\/gifts"/);
-});
+
 
 test('shop-ux tracks a diamond balance and falls back to the legacy coins field during rollout', () => {
   assert.match(shopUxSource, /let shopDiamonds = 0;/);

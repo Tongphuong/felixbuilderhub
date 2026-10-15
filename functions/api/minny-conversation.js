@@ -1,3 +1,4 @@
+import { speakingRetiredResponse } from '../lib/read2lead/speaking-retired.mjs';
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import {
   buildSystemPrompt, parseModelReply, coerceReply, sessionCapsExceeded, nextSession, pickStarterTopic,
@@ -15,17 +16,7 @@ import { screenTranscript, validateReplyShape, detectCharacterBreak, scanBannedT
 import { transcribeAudio, wordSimilarity } from './read2lead-speaking-check.js';
 import { isVietnamese, isLowContent, matchesExpected, nextRepairStep } from './_minny-repair.js';
 
-// Conversation brain: Llama-3.3-70B via OpenRouter, routed to the fastest
-// provider (Groq/Cerebras) — see CONVO_PROVIDER below. Swapped 2026-07-10 from
-// deepseek-v4-pro: a live test measured ~24s/turn and DeepSeek (esp. pro) was
-// the bottleneck. Groq/Cerebras answer this in ~0.5-1s and Llama-3.3-70B is
-// warm enough for kids. Bonus: our Workers-AI fallback is the SAME model, so a
-// provider blip degrades to identical wording on slower infra, not a worse model.
-const CONVO_MODEL = 'meta-llama/llama-3.3-70b-instruct';
-// OpenRouter provider preference: pick the highest-throughput host that still
-// supports our JSON response_format. Keeps us on Groq/Cerebras/SambaNova-class
-// infra without pinning a single provider (allow_fallbacks stays on by default).
-const CONVO_PROVIDER = { sort: 'throughput', require_parameters: true };
+import { requestMinnyReply, CONVO_MODEL } from './_minny-provider.js';
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -174,19 +165,7 @@ async function handleGuardrailFlag(env, apiKey, session, sessionKey, accessCode,
 // accumulating audio blobs (the TTS cache proper lives under tts:* keys).
 const PENDING_AUDIO_TTL_S = 120;
 
-export async function onRequestPost(context) {
-  const { request, env } = context;
-  // Pages Functions gives us waitUntil to finish work after the response is
-  // sent (background TTS below). Plain node tests call this handler without
-  // it — fall back to fire-and-forget so the promise still runs to completion.
-  const waitUntil = typeof context.waitUntil === 'function'
-    ? context.waitUntil.bind(context)
-    : (p) => { Promise.resolve(p).catch(() => {}); };
-
-  if (!env.READ2LEAD_CODES) {
-    return json({ ok: false, error: 'config_error', message: 'Hệ thống chưa cấu hình mã học sinh.' }, 500);
-  }
-
+export async function parseMinnyConversationRequest(request) {
   // Body is JSON for `start` (and legacy JSON `turn` with a client-supplied
   // transcript), OR multipart/form-data for the merged voice turn (audio upload).
   let body = {};
@@ -213,6 +192,20 @@ export async function onRequestPost(context) {
       return json({ ok: false, error: 'bad_request', message: 'Yêu cầu không hợp lệ.' }, 400);
     }
   }
+
+  return { body, audioBlob };
+}
+
+export async function prepareMinnyConversation(context) {
+  const { request, env } = context;
+
+  if (!env.READ2LEAD_CODES) {
+    return json({ ok: false, error: 'config_error', message: 'Hệ thống chưa cấu hình mã học sinh.' }, 500);
+  }
+
+  const parsed = context.parsedConversation ?? await parseMinnyConversationRequest(request);
+  if (parsed instanceof Response) return parsed;
+  const { body, audioBlob } = parsed;
 
   const accessCode = String(body.access_code || '').trim().toUpperCase();
   if (!accessCode) {
@@ -384,24 +377,7 @@ export async function onRequestPost(context) {
       }
     }
 
-    const greeting = findPhrase('greeting');
-    const greetingAudio = await synthesizeOrNull(env, apiKey, greeting.text_en);
-    return json({
-      ok: true,
-      session_id: sessionId,
-      level,
-      // V1.2 packet 2 (2026-07-12): the debate banner (approved Wave D2 C2
-      // state) shows Minny's playful position — server-picked from the
-      // allowlist, echoed here so the client never invents it.
-      ...(debateTopic ? { debate_topic: debateTopic } : {}),
-      greeting: {
-        text_en: greeting.text_en,
-        subtitle_vi: greeting.subtitle_vi,
-        ...(greetingAudio ? { audio_b64: greetingAudio.audio_b64, content_type: greetingAudio.content_type } : {}),
-      },
-      turns_left: 12,
-      seconds_left: 300,
-    });
+    return { action, accessCode, apiKey, level, sessionId, debateTopic };
   }
 
   /* ─────────────── action = 'turn' ─────────────── */
@@ -420,6 +396,40 @@ export async function onRequestPost(context) {
 
   if (!session || session.code !== accessCode) {
     return json({ ok: true, ended: true, message_vi: 'Phiên trò chuyện đã kết thúc rồi. Con bắt đầu phiên mới nhé!' });
+  }
+
+  return { action, accessCode, apiKey, level, body, audioBlob, sessionId, sessionKey, session };
+}
+
+export async function completeMinnyConversation(context, prepared) {
+  const { request, env } = context;
+  const { action, accessCode, apiKey, level, body, audioBlob, sessionId, sessionKey, session, debateTopic } = prepared;
+  // Pages Functions gives us waitUntil to finish work after the response is
+  // sent (background TTS below). Plain node tests call this handler without
+  // it — fall back to fire-and-forget so the promise still runs to completion.
+  const waitUntil = typeof context.waitUntil === 'function'
+    ? context.waitUntil.bind(context)
+    : (p) => { Promise.resolve(p).catch(() => {}); };
+
+  if (action === 'start') {
+    const greeting = findPhrase('greeting');
+    const greetingAudio = await synthesizeOrNull(env, apiKey, greeting.text_en);
+    return json({
+      ok: true,
+      session_id: sessionId,
+      level,
+      // V1.2 packet 2 (2026-07-12): the debate banner (approved Wave D2 C2
+      // state) shows Minny's playful position — server-picked from the
+      // allowlist, echoed here so the client never invents it.
+      ...(debateTopic ? { debate_topic: debateTopic } : {}),
+      greeting: {
+        text_en: greeting.text_en,
+        subtitle_vi: greeting.subtitle_vi,
+        ...(greetingAudio ? { audio_b64: greetingAudio.audio_b64, content_type: greetingAudio.content_type } : {}),
+      },
+      turns_left: 12,
+      seconds_left: 300,
+    });
   }
 
   // Resolve the kid's words: either a client-supplied transcript (legacy JSON
@@ -561,72 +571,12 @@ export async function onRequestPost(context) {
     { role: 'user', content: transcript },
   ];
 
-  let rawReply = null;
-
   // Latency instrumentation (2026-07-10): time each brain stage and record
   // which path actually answered, so a real session reveals exactly where the
   // per-turn seconds go (llm vs guard vs tts) rather than us guessing. Written
   // to the debug:convo-timing ring + echoed in the response `timing` field.
   const llmStart = Date.now();
-  let llmAttempts = 0;
-  let llmSource = 'none';
-
-  // Primary brain swapped from OpenAI (credit retired 2026-07-08) to
-  // DeepSeek via OpenRouter — same OpenAI-compatible request shape.
-  // apiKey (OpenAI) remains in use below only for the TTS last-resort path.
-  // Retry once on a transient failure (rate-limit / timeout / 5xx): a single
-  // hiccup on one turn must not cost the child a real reply and drop them to a
-  // canned redirect. Rapid or throttled turns can make OpenRouter blip — the
-  // retry absorbs that.
-  const convoKey = env.OPENROUTER_API_KEY || null;
-  if (convoKey) {
-    for (let attempt = 0; attempt < 2 && !rawReply; attempt++) {
-      llmAttempts++;
-      try {
-        const llmRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${convoKey}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: CONVO_MODEL,
-            provider: CONVO_PROVIDER,
-            messages,
-            response_format: { type: 'json_object' },
-            max_tokens: 150,
-            temperature: 0.8,
-          }),
-          // 4s: a Groq/Cerebras-class host answers a 150-token reply in ~0.5-1s.
-          // Anything past 4s means the fast provider is degraded -- fail fast to
-          // the retry / Workers-AI fallback rather than leave the child waiting.
-          signal: AbortSignal.timeout(4000),
-        });
-        if (llmRes.ok) {
-          const llmData = await llmRes.json();
-          rawReply = llmData?.choices?.[0]?.message?.content || null;
-          if (rawReply) llmSource = 'openrouter';
-        }
-      } catch {
-        // transient — try again, then the fallback
-      }
-    }
-  }
-
-  // Fallback brain: Workers AI Llama 3.3. Ask for JSON first (so parseModelReply
-  // succeeds), and retry as a plain call if the model rejects response_format —
-  // the old plain-only call returned free-form prose that never parsed, which is
-  // why fallback turns became canned redirects.
-  if (!rawReply && env.AI) {
-    for (const input of [{ messages, max_tokens: 150, response_format: { type: 'json_object' } }, { messages, max_tokens: 150 }]) {
-      if (rawReply) break;
-      llmAttempts++;
-      try {
-        const aiRes = await env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', input);
-        rawReply = typeof aiRes === 'string' ? aiRes : (aiRes?.response || aiRes?.text || null);
-        if (rawReply) llmSource = 'llama_fallback';
-      } catch {
-        // try the plain shape / fall through
-      }
-    }
-  }
+  const { rawReply, llmAttempts, llmSource } = await requestMinnyReply(env, messages, context.minnyReplyOptions);
 
   const llmMs = Date.now() - llmStart;
 
@@ -860,4 +810,8 @@ export async function onRequestPost(context) {
       ...(redirectAudio ? { audio_b64: redirectAudio.audio_b64, content_type: redirectAudio.content_type } : {}),
     });
   }
+}
+
+export async function onRequestPost() {
+  return speakingRetiredResponse();
 }

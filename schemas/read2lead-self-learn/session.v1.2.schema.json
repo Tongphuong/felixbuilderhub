@@ -1,0 +1,1402 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "urn:read2lead:self-learn:session:1.2.0",
+  "$ref": "#/definitions/session",
+  "definitions": {
+    "session": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.2.0"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lesson_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "rubric_version": {
+          "const": "practice-rubric-1"
+        },
+        "engine_version": {
+          "const": "self-learn-2"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stage": {
+          "enum": [
+            "pre_read",
+            "input",
+            "comprehension",
+            "understand_saved",
+            "shadowing",
+            "mini_story",
+            "retell",
+            "complete"
+          ]
+        },
+        "input_mode": {
+          "enum": [
+            "listening_only",
+            "audio_assisted_reading",
+            "independent_reading",
+            null
+          ]
+        },
+        "status": {
+          "enum": [
+            "active",
+            "saved",
+            "complete"
+          ]
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "acknowledged_request_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "input_order": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "read",
+              "listen"
+            ]
+          }
+        },
+        "question_cursor": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "dialogue_cursor": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6
+        },
+        "repair_state": {
+          "enum": [
+            "not_needed",
+            "available",
+            "shown",
+            "answered",
+            "skipped"
+          ]
+        },
+        "followup_state": {
+          "enum": [
+            "locked",
+            "ready",
+            "answered",
+            "skipped"
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "child_id",
+        "lesson_id",
+        "content_version",
+        "content_sha256",
+        "rubric_version",
+        "engine_version",
+        "revision",
+        "stage",
+        "input_mode",
+        "status",
+        "created_at",
+        "updated_at",
+        "acknowledged_request_ids",
+        "evidence_ids",
+        "input_order",
+        "question_cursor",
+        "dialogue_cursor",
+        "repair_state",
+        "followup_state"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "complete"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stage": {
+                "const": "complete"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "followup_state": {
+                "enum": [
+                  "answered",
+                  "skipped"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "enum": [
+                  "understand_saved",
+                  "shadowing",
+                  "mini_story",
+                  "retell",
+                  "complete"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "repair_state": {
+                "enum": [
+                  "not_needed",
+                  "answered",
+                  "skipped"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "enum": [
+                  "pre_read",
+                  "input",
+                  "comprehension",
+                  "understand_saved",
+                  "shadowing",
+                  "mini_story"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "followup_state": {
+                "const": "locked"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "submission": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "pause"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "resume"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "save_understand"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "begin_use"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "complete"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "prediction"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "maxLength": 1500
+                }
+              },
+              "required": [
+                "text"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "input_complete"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "order": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 2,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "read",
+                      "listen"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "order"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "support"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "item_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "kind": {
+                  "enum": [
+                    "question_audio",
+                    "revealing_hint",
+                    "frame",
+                    "repeated_item",
+                    "reference_script"
+                  ]
+                }
+              },
+              "required": [
+                "item_id",
+                "kind"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "answer"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "item_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "choice_index": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 2
+                },
+                "text": {
+                  "type": "string",
+                  "maxLength": 1500
+                },
+                "evidence_sentence_ids": {
+                  "type": "array",
+                  "maxItems": 12,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                  }
+                },
+                "support_used": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "question_audio",
+                      "revealing_hint",
+                      "frame",
+                      "repeated_item",
+                      "reference_script"
+                    ]
+                  },
+                  "uniqueItems": true
+                },
+                "capture_status": {
+                  "enum": [
+                    "valid",
+                    "missing",
+                    "low_confidence",
+                    "provider_failed",
+                    "not_attempted"
+                  ]
+                }
+              },
+              "required": [
+                "item_id",
+                "choice_index",
+                "text",
+                "evidence_sentence_ids",
+                "support_used",
+                "capture_status"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "shadow_complete"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "maxLength": 1500
+                },
+                "capture_status": {
+                  "enum": [
+                    "valid",
+                    "missing",
+                    "low_confidence",
+                    "provider_failed",
+                    "not_attempted"
+                  ]
+                },
+                "support_used": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "question_audio",
+                      "revealing_hint",
+                      "frame",
+                      "repeated_item",
+                      "reference_script"
+                    ]
+                  },
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "text",
+                "capture_status",
+                "support_used"
+              ],
+              "additionalProperties": false,
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "capture_status": {
+                        "const": "valid"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "text": {
+                        "pattern": "\\S"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "minny_turn"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "turn_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "text": {
+                  "type": "string",
+                  "maxLength": 1500
+                },
+                "capture_status": {
+                  "enum": [
+                    "valid",
+                    "missing",
+                    "low_confidence",
+                    "provider_failed",
+                    "not_attempted"
+                  ]
+                },
+                "support_used": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "question_audio",
+                      "revealing_hint",
+                      "frame",
+                      "repeated_item",
+                      "reference_script"
+                    ]
+                  },
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "turn_id",
+                "text",
+                "capture_status",
+                "support_used"
+              ],
+              "additionalProperties": false,
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "capture_status": {
+                        "const": "valid"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "text": {
+                        "pattern": "\\S"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "retell"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "maxLength": 1500
+                },
+                "capture_status": {
+                  "enum": [
+                    "valid",
+                    "missing",
+                    "low_confidence",
+                    "provider_failed",
+                    "not_attempted"
+                  ]
+                },
+                "support_used": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "question_audio",
+                      "revealing_hint",
+                      "frame",
+                      "repeated_item",
+                      "reference_script"
+                    ]
+                  },
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "text",
+                "capture_status",
+                "support_used"
+              ],
+              "additionalProperties": false,
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "capture_status": {
+                        "const": "valid"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "text": {
+                        "pattern": "\\S"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "begin_repair"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "skip_repair"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "skip_followup"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "repair_answer"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "item_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "choice_index": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 2
+                },
+                "text": {
+                  "type": "string",
+                  "maxLength": 1500
+                },
+                "support_used": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "question_audio",
+                      "revealing_hint",
+                      "frame",
+                      "repeated_item",
+                      "reference_script"
+                    ]
+                  },
+                  "uniqueItems": true
+                },
+                "capture_status": {
+                  "enum": [
+                    "valid",
+                    "missing",
+                    "low_confidence",
+                    "provider_failed",
+                    "not_attempted"
+                  ]
+                }
+              },
+              "required": [
+                "item_id",
+                "choice_index",
+                "text",
+                "support_used",
+                "capture_status"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "api_version": {
+              "const": "1.2"
+            },
+            "request_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "child_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "session_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event": {
+              "const": "followup_answer"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "item_id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+                },
+                "choice_index": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 2
+                },
+                "text": {
+                  "type": "string",
+                  "maxLength": 1500
+                },
+                "support_used": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "question_audio",
+                      "revealing_hint",
+                      "frame",
+                      "repeated_item",
+                      "reference_script"
+                    ]
+                  },
+                  "uniqueItems": true
+                },
+                "capture_status": {
+                  "enum": [
+                    "valid",
+                    "missing",
+                    "low_confidence",
+                    "provider_failed",
+                    "not_attempted"
+                  ]
+                }
+              },
+              "required": [
+                "item_id",
+                "choice_index",
+                "text",
+                "support_used",
+                "capture_status"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "api_version",
+            "request_id",
+            "child_id",
+            "session_id",
+            "expected_revision",
+            "event",
+            "payload"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "response": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "ok": {
+              "const": true
+            },
+            "request_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "session": {
+              "$ref": "#/definitions/session"
+            },
+            "replayed": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "ok",
+            "request_id",
+            "session",
+            "replayed"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "ok": {
+              "const": false
+            },
+            "code": {
+              "enum": [
+                "invalid_request",
+                "unauthorized",
+                "wrong_child",
+                "stale_revision",
+                "request_conflict",
+                "invalid_transition",
+                "content_unavailable",
+                "pending_assessment",
+                "session_limit"
+              ]
+            },
+            "current_revision": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            }
+          },
+          "required": [
+            "ok",
+            "code",
+            "current_revision"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

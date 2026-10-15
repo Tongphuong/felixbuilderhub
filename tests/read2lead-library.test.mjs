@@ -75,9 +75,9 @@ test('legacy library route redirects to student profile', () => {
 });
 
 test('landing page no longer exposes separate library entry', () => {
-  const landingPage = readFileSync('src/pages/read2lead.astro', 'utf-8');
+  const landingPage = readFileSync('src/components/Read2LeadChildHome.astro', 'utf-8');
   assert.doesNotMatch(landingPage, /Thư viện truyện/);
-  assert.match(landingPage, /các truyện con đã học/);
+  assert.match(landingPage, /Dành cho ba mẹ/);
 });
 
 test('progress API includes story_progress payload', () => {

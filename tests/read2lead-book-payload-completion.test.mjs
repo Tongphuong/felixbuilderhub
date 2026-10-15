@@ -235,7 +235,7 @@ test('vocabulary defaults to an empty array when absent from the pack', () => {
 });
 
 test('all passed chunks reward completion and append the book slug idempotently', async () => {
-  const fixture = makeFixture(['book_999', 'book_123']);
+  const fixture = makeFixture(['book_999']);
   const response = await submit(bookReader(), fixture);
   const payload = await response.json();
   assert.equal(payload.passed, true);

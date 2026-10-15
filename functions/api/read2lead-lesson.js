@@ -3,6 +3,7 @@ import { resolveAccessiblePack } from './_read2lead-pack-access.js';
 import { extractV2Pack } from './_read2lead-lesson-extract.js';
 import { ensureSixActivities } from './_read2lead-lesson-activities.js';
 import { rewriteAudioHost } from './_read2lead-audio-url.js';
+import { isStoryPack, loadAssignedStory, storyLessonPayload } from '../lib/read2lead/story-catalogue.mjs';
 
 export async function onRequestGet(context) {
   const { request, env } = context;
@@ -36,6 +37,15 @@ export async function onRequestGet(context) {
 
   if (pack.status === 'generation_in_progress') {
     return json({ ok: false, error: 'generation_in_progress', message: 'Bai van dang duoc tao. Vui long doi them mot chut.' }, 409);
+  }
+
+  if (isStoryPack(pack)) {
+    try {
+      const loaded = await loadAssignedStory(env, codeData, pack.story_reference);
+      return json({ ok: true, lesson: storyLessonPayload(pack, loaded) });
+    } catch {
+      return json({ ok: false, error: 'story_unavailable', message: 'Chưa mở được truyện đã lưu. Con thử lại sau nhé.' }, 409);
+    }
   }
 
   let v2Pack = extractV2Pack(pack);
@@ -143,6 +153,7 @@ export function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack, env }
   return {
     schema_version: 2,
     pack_id: pack.pack_id,
+    review_only:pack.review_only===true||(Array.isArray(codeData.completed_books)&&codeData.completed_books.includes(v2Pack.book_slug)),
     access_code_masked: maskAccessCode(accessCode),
     student_name: profile.student_name || progress.student_name || v2Pack.student_name || '',
     level: v2Pack.level || pack.level || progress.current_level || '',

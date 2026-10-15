@@ -1,0 +1,295 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "urn:read2lead:self-learn:evidence:1.0.0",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "evidence_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "child_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "session_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "item_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "item_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "content_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rubric_version": {
+      "const": "practice-rubric-1"
+    },
+    "input_mode": {
+      "enum": [
+        "listening_only",
+        "audio_assisted_reading",
+        "independent_reading"
+      ]
+    },
+    "capture_status": {
+      "enum": [
+        "valid",
+        "missing",
+        "low_confidence",
+        "provider_failed",
+        "not_attempted"
+      ]
+    },
+    "state": {
+      "enum": [
+        "provisional",
+        "assisted",
+        "independent_evidence_not_mastery",
+        "needs_support",
+        "practice",
+        "pending",
+        "unassessable",
+        "not_attempted"
+      ]
+    },
+    "dimensions": {
+      "type": "object",
+      "properties": {
+        "meaning": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 2
+        },
+        "evidence": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 2
+        },
+        "transfer": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 2
+        }
+      },
+      "required": [
+        "meaning",
+        "evidence",
+        "transfer"
+      ],
+      "additionalProperties": false
+    },
+    "retell": {
+      "type": "object",
+      "properties": {
+        "essential_facts": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 2
+        },
+        "order_causality": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 2
+        },
+        "language_intelligibility": {
+          "enum": [
+            "not_assessed",
+            "needs_support",
+            "clear",
+            "unassessable"
+          ]
+        },
+        "support_used": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "essential_facts",
+        "order_causality",
+        "language_intelligibility",
+        "support_used"
+      ],
+      "additionalProperties": false
+    },
+    "support_used": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "assessment_source": {
+      "enum": [
+        "deterministic_choice",
+        "prepared_practice",
+        "pending_validated_assessor"
+      ]
+    },
+    "automatic_mastery": {
+      "const": false
+    },
+    "level_change": {
+      "type": "null"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "schema_version",
+    "evidence_id",
+    "child_id",
+    "session_id",
+    "request_id",
+    "item_id",
+    "item_version",
+    "content_version",
+    "rubric_version",
+    "input_mode",
+    "capture_status",
+    "state",
+    "dimensions",
+    "retell",
+    "support_used",
+    "assessment_source",
+    "automatic_mastery",
+    "level_change",
+    "created_at"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "capture_status": {
+            "enum": [
+              "missing",
+              "low_confidence",
+              "provider_failed"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "state": {
+            "const": "unassessable"
+          },
+          "dimensions": {
+            "properties": {
+              "meaning": {
+                "type": "null"
+              },
+              "evidence": {
+                "type": "null"
+              },
+              "transfer": {
+                "type": "null"
+              }
+            }
+          },
+          "retell": {
+            "properties": {
+              "essential_facts": {
+                "type": "null"
+              },
+              "order_causality": {
+                "type": "null"
+              },
+              "language_intelligibility": {
+                "const": "unassessable"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "support_used": {
+            "contains": {
+              "enum": [
+                "revealing_hint",
+                "repeated_item",
+                "reference_script"
+              ]
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "state": {
+            "not": {
+              "const": "independent_evidence_not_mastery"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "capture_status": {
+            "const": "not_attempted"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "state": {
+            "const": "not_attempted"
+          },
+          "dimensions": {
+            "properties": {
+              "meaning": {
+                "type": "null"
+              },
+              "evidence": {
+                "type": "null"
+              },
+              "transfer": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

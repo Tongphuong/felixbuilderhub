@@ -1,0 +1,26 @@
+{
+  "format": 1,
+  "purpose": "read2lead-local-synthetic-game-themes",
+  "themes": [
+    {
+      "id": "synthetic-adventure",
+      "name_vi": "Cùng khám phá · Chủ đề mẫu",
+      "starts_at": "2026-09-01T00:00:00.000Z",
+      "ends_at": "2026-11-01T00:00:00.000Z",
+      "interest_ids": [
+        "nature",
+        "together"
+      ]
+    },
+    {
+      "id": "synthetic-warm-stories",
+      "name_vi": "Chuyện ấm áp · Chủ đề mẫu",
+      "starts_at": "2026-11-01T00:00:00.000Z",
+      "ends_at": "2027-01-01T00:00:00.000Z",
+      "interest_ids": [
+        "everyday",
+        "community"
+      ]
+    }
+  ]
+}

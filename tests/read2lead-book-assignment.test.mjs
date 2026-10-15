@@ -509,3 +509,18 @@ for (const [kidLevel, band, pages] of BAND_CASES) {
     }
   });
 }
+
+for (const name of ['Nguyễn Hoàng Minh Khánh', 'Nguyễn Hoàng Minh Khánh'.normalize('NFD'), "Anne-Marie O’Connor"]) test(`ordinary Unicode student name opens existing book: ${name}`, async () => {
+ const record=codeData();record.student_profile.student_name=name;
+ const f=makeKv({[ACCESS_CODE]:record,[PROGRESS_KEY]:progressAtL1(),'book_index:L1':['book_3'],'book:book_3':makeStoredBookPack('book_3')});
+ const response=await generate({READ2LEAD_CODES:f.kv,READ2LEAD_BOOK_LEVELS:'L1',RNG:()=>0});
+ assert.equal(response.status,200);assert.equal((await response.json()).status,'done');
+ assert.equal(f.store.get(ACCESS_CODE).student_profile.student_name,name,'stored identity is preserved');
+});
+for (const name of ['Pilot L3','<script>','A'.repeat(51),'An\nBinh','_An']) test(`invalid name refused before assignment: ${JSON.stringify(name)}`,async()=>{
+ const record=codeData();record.student_profile.student_name=name;
+ const f=makeKv({[ACCESS_CODE]:record,[PROGRESS_KEY]:progressAtL1(),'book_index:L1':['book_3'],'book:book_3':makeStoredBookPack('book_3')});
+ const response=await generate({READ2LEAD_CODES:f.kv,READ2LEAD_BOOK_LEVELS:'L1',RNG:()=>0});
+ assert.equal(response.status,400);const body=await response.json();assert.equal(body.error,'student_name_invalid');assert.doesNotMatch(body.message,/admin|Pilot/);
+ assert.deepEqual(f.store.get(ACCESS_CODE),record);
+});

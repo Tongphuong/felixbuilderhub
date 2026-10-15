@@ -18,6 +18,7 @@ export type ProgressPayload = {
   story_progress?: Record<string, unknown>;
   weekly_growth?: Record<string, unknown>;
   skill_quality?: SkillQuality;
+  parent_summary?: { version: number; entries: Array<Record<string, any>>; next_step: { kind: string; text: string }; completed_count: number };
   is_test?: boolean;
   is_shared?: boolean;
 };
@@ -125,9 +126,7 @@ async function renderView(role: Role) {
   window.scrollTo({ top: 0, behavior: 'instant' });
 
   if (role === 'kid') {
-    const { renderKidView, cleanupKidView } = await import('./ho-so-kid-view');
-    kidViewCleanup = cleanupKidView;
-    renderKidView(qs('#ho-so-kid')!, dashboardData, currentAccessCode);
+    window.location.replace('/read2lead?code=' + encodeURIComponent(currentAccessCode));
   } else {
     const { renderParentView, invalidateParentCache } = await import('./ho-so-parent-view');
     if (previousRole === 'kid') invalidateParentCache();

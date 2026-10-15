@@ -15,11 +15,17 @@
 // DOM-free functions are extracted from admin/classes.astro's inline script
 // and evaluated via `new Function` for real behavioral coverage.
 
+import ts from 'typescript';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-const classesPage = readFileSync('src/pages/admin/classes.astro', 'utf-8');
+const classesPage = readFileSync('src/pages/admin/classes.astro', 'utf-8').replace(
+  /(<script>)([\s\S]*?)(<\/script>)/g,
+  (_, open, code, close) => open + ts.transpileModule(code, {
+    compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, removeComments: true },
+  }).outputText.replace(/}\s+catch \(/g, '} catch (') + close,
+);
 
 function extractFunctionSrc(source, name) {
   const marker = `function ${name}(`;
@@ -59,7 +65,33 @@ function extractConstSrc(source, name) {
   return source.slice(start, end + 1);
 }
 
-function loadPureHelpers() {
+const DEFAULT_TEST_NOW = '2026-07-17T14:00:00.000Z';
+
+function fixedDateClass(nowIso) {
+  const NativeDate = Date;
+  const nowMs = NativeDate.parse(nowIso);
+  assert.ok(Number.isFinite(nowMs), `invalid deterministic test clock: ${nowIso}`);
+
+  return class FixedDate extends NativeDate {
+    constructor(...args) {
+      super(...(args.length ? args : [nowMs]));
+    }
+
+    static now() {
+      return nowMs;
+    }
+
+    static parse(value) {
+      return NativeDate.parse(value);
+    }
+
+    static UTC(...args) {
+      return NativeDate.UTC(...args);
+    }
+  };
+}
+
+function loadPureHelpers(nowIso = DEFAULT_TEST_NOW) {
   // renderPracticeTracker calls the imported escapeHtml() (../../lib/admin-
   // shared.mjs) on the humanized text -- inlined verbatim (byte-identical to
   // the real file) rather than re-imported, same reason the sibling
@@ -79,7 +111,7 @@ function loadPureHelpers() {
   ];
   const body = `${pieces.join('\n\n')}\n\nreturn { practiceStatusDot, humanizeLastActive, renderPracticeTracker };`;
   // eslint-disable-next-line no-new-func -- see file header: pure, DOM-free source extracted from the page itself
-  return new Function(body)();
+  return new Function('Date', body)(fixedDateClass(nowIso));
 }
 
 const { practiceStatusDot, humanizeLastActive, renderPracticeTracker } = loadPureHelpers();
@@ -161,6 +193,39 @@ test('renderPracticeTracker: renders the dot, both counts with their OWN distinc
   // Mon-Sun) and "(7 ngày)" (R2L, rolling) are the whole point.
   assert.doesNotMatch(html, /SpeakUp:.*\(7 ngày\)/);
   assert.doesNotMatch(html, /R2L:.*tuần này/);
+});
+
+test('renderPracticeTracker: injected clock works on a second independent date', () => {
+  const { renderPracticeTracker: renderOnAugustThird } = loadPureHelpers('2026-08-03T03:00:00.000Z');
+  const html = renderOnAugustThird({
+    practice_status: 'today',
+    last_activity_at: '2026-08-03T02:00:00.000Z',
+  });
+  assert.match(html, /hoạt động: hôm nay/);
+});
+
+test('renderPracticeTracker: Vietnam midnight changes the label even when only two seconds pass', () => {
+  const lastActivity = '2026-07-16T16:59:59.000Z'; // 23:59:59 on July 16 in Vietnam.
+  const student = { practice_status: 'recent', last_activity_at: lastActivity };
+  const { renderPracticeTracker: renderBeforeMidnight } = loadPureHelpers(lastActivity);
+  const { renderPracticeTracker: renderAfterMidnight } = loadPureHelpers('2026-07-16T17:00:01.000Z');
+
+  assert.match(renderBeforeMidnight(student), /hoạt động: hôm nay/);
+  assert.match(renderAfterMidnight(student), /hoạt động: hôm qua/);
+});
+
+test('renderPracticeTracker: stale activity stays non-today and a deliberately wrong label is rejected', () => {
+  const html = renderPracticeTracker({
+    practice_status: 'inactive',
+    last_activity_at: '2026-07-12T04:00:00.000Z',
+  });
+  assert.match(html, /hoạt động: 5 ngày trước/);
+  assert.doesNotMatch(html, /hoạt động: hôm nay/);
+  assert.throws(
+    () => assert.match(html, /hoạt động: hôm nay/),
+    { name: 'AssertionError' },
+    'known-bad today label must be caught by the renderer assertion',
+  );
 });
 
 test('renderPracticeTracker: missing/zero fields render honestly as 0, never crash', () => {

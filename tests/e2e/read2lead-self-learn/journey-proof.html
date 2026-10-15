@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Read2Lead version1.2 cache proof</title><style>body{font:17px/1.5 system-ui;max-width:850px;margin:30px auto;padding:20px}pre{white-space:pre-wrap}</style><h1>Version1.2 persistence proof</h1><p>Synthetic test instrumentation. No accounts, recordings or paid providers.</p><pre id="report">Loading…</pre><script type="module">
+import {openPendingStore} from '../../../src/lib/read2lead/self-learn/pending-store.mjs';
+import {createJourney,applyJourneyEvent} from '../../../functions/lib/read2lead/self-learn/journey.mjs';
+import {createSession} from '../../../functions/lib/read2lead/self-learn/session.mjs';
+const run=new URLSearchParams(location.search).get('run');if(!/^[a-z0-9-]+$/.test(run||''))throw Error('explicit_synthetic_run_required');
+const dbName='r2l-self-learn-journey-'+run,lesson=(await(await fetch('../../fixtures/read2lead-self-learn/reference-lessons.json')).json()).lessons[2],now='2026-09-18T12:00:00.000Z',actor={active:true,childId:'synthetic-an'},checks=[];
+const assert=(ok,label)=>{if(!ok)throw Error(label);checks.push(label)},reject=async(fn,code)=>{try{await fn()}catch(e){assert(e.message===code,'reject '+code);return}throw Error('missing '+code)};
+const ev=(r,event,payload={},request_id='req-'+(r.session.revision+1))=>({api_version:'1.2',request_id,child_id:r.session.child_id,session_id:r.session.session_id,expected_revision:r.session.revision,event,payload});
+const send=(r,event,payload={})=>{const x=applyJourneyEvent(r,ev(r,event,payload),actor,now);assert(x.response.ok,'transition '+event);return x.record};
+const choice=q=>({item_id:q.id,choice_index:q.correct_index,text:'',capture_status:'not_attempted',support_used:[]});
+const missing={text:'',capture_status:'missing',support_used:[]};
+async function seeds(){
+ let r=await createJourney({sessionId:'seed',childId:actor.childId,lesson,now});r=send(r,'prediction',{text:''});r=send(r,'input_complete',{order:['read']});
+ for(let i=0;i<3;i++){const q=lesson.questions[i];r=send(r,'answer',{...choice(q),choice_index:i===0?0:q.correct_index,evidence_sentence_ids:q.evidence_spans.map(e=>e.sentence_id)})}
+ const rows={'repair-available':r};r=send(r,'begin_repair');rows['repair-shown']=r;rows['repair-skipped']=send(r,'skip_repair');
+ r=send(r,'repair_answer',choice(lesson.misconception_repair));rows['repair-answered']=r;r=send(r,'save_understand');r=send(r,'begin_use');r=send(r,'shadow_complete',missing);
+ for(const turn of lesson.minny.turns)r=send(r,'minny_turn',{...missing,turn_id:turn.id});r=send(r,'retell',missing);rows['followup-ready']=r;rows['followup-skipped']=send(r,'skip_followup');r=send(r,'followup_answer',choice(lesson.independent_followup));rows['followup-answered']=r;rows.complete=send(r,'complete');return rows;
+}
+window.runJourneyProof=async()=>{
+ const store=await openPendingStore({name:dbName}),other=await openPendingStore({name:dbName}),scope=await store.activateChild(actor.childId),rows=await seeds();
+ for(const[name,record]of Object.entries(rows)){const snapshot={...record.session,session_id:name};await store.accept(scope,snapshot);if(name!=='complete')await store.enqueue(scope,ev({session:snapshot},'pause',{},'pending-'+name));}
+ const seed=await createJourney({sessionId:'versions',childId:actor.childId,lesson,now});await store.accept(scope,seed.session);
+ await reject(()=>store.enqueue(scope,{...ev(seed,'pause'),api_version:'1.1'}),'incompatible_event');
+ const legacy=await createSession({sessionId:'legacy',childId:actor.childId,lesson,now});await store.accept(scope,legacy.session);await reject(()=>store.enqueue(scope,ev(legacy,'pause')),'incompatible_event');
+ const pending=ev(seed,'prediction',{text:''});await store.enqueue(scope,pending);const done=applyJourneyEvent(seed,pending,actor,now);await other.acknowledge(scope,done.response);assert((await store.read(scope,'versions')).state==='acknowledged','1.2 acknowledgement clears pending');
+ await store.accept(scope,seed.session);assert((await store.read(scope,'versions')).acknowledged.revision===1,'old1.2 snapshot cannot rewind');
+ const scopeBefore=scope;await store.signOut(scope);await reject(()=>other.accept(scopeBefore,done.response.session),'scope_expired');
+ const fresh=await store.activateChild(actor.childId);for(const[name,record]of Object.entries(rows)){const snapshot={...record.session,session_id:name};await store.accept(fresh,snapshot);if(name!=='complete')await store.enqueue(fresh,ev({session:snapshot},'pause',{},'pending-'+name));}
+ store.close();other.close();document.querySelector('#report').textContent=JSON.stringify({checks:checks.length,states:Object.keys(rows)},null,2);return{checks:checks.length,states:Object.keys(rows)};
+};
+window.verifyJourneyReload=async()=>{const store=await openPendingStore({name:dbName}),scope=await store.activateChild(actor.childId),expected=await seeds(),result=[];for(const[name,record]of Object.entries(expected)){const row=await store.read(scope,name);assert(row.acknowledged.repair_state===record.session.repair_state,'repair retained '+name);assert(row.acknowledged.followup_state===record.session.followup_state,'followup retained '+name);assert(name==='complete'?!row.pending:row.pending.request_id==='pending-'+name,'pending separate '+name);result.push({name,revision:row.acknowledged.revision,repair:row.acknowledged.repair_state,followup:row.acknowledged.followup_state});}store.close();return result;};
+window.proofReady=true;document.querySelector('#report').textContent='Ready.';
+</script></html>

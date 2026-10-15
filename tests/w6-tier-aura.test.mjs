@@ -16,7 +16,7 @@ async function ensureHarness() {
   const config = await configFn({ command: 'serve', mode: 'development' });
   viteServer = await createServer({
     ...config,
-    server: { middlewareMode: true, hmr: false },
+    server: { watch: null, middlewareMode: true, hmr: false },
     appType: 'custom',
   });
   await viteServer.pluginContainer.buildStart({});
@@ -91,9 +91,6 @@ test('RarityBadge reads the shared W6 token with its approved fallback', async (
   assert.match(html, /✨/);
 });
 
-test('live shop keeps shared W6 rarity tokens and reduced-motion styling', () => {
-  assert.match(shopPage, /r2l-w6-tiers\.css/);
-  assert.match(shopPage, /var\(--w6-rare\)/);
-  assert.match(shopPage, /var\(--w6-epic\)/);
-  assert.match(shopPage, /prefers-reduced-motion: reduce/);
+test('legacy shop points to free companion instead of a paid rarity screen',()=>{
+ assert.match(shopPage,/\/read2lead\/companion/);assert.doesNotMatch(shopPage,/InsufficientCoinsModal/);
 });

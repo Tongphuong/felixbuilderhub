@@ -1,4 +1,6 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
+import { resolveOpenAIApiKey } from '../lib/read2lead/provider-config.mjs';
+export { resolveOpenAIApiKey };
 import { canAccessPackForPractice } from './_read2lead-pack-access.js';
 import {
   azureSpeechConfigured,
@@ -631,10 +633,6 @@ export function inferAudioFilename(blob) {
 
 export const TRANSCRIBE_TIMEOUT_MS = 20000;
 
-export function resolveOpenAIApiKey(env = {}) {
-  return String(env.OPENAI_API_KEY || env.READ2LEAD_OPENAI_API_KEY || '').trim();
-}
-
 export async function transcribeWithOpenAI(audioBlob, apiKey, fetchFn = fetch, prompt) {
   const filename = inferAudioFilename(audioBlob);
   const formData = new FormData();
@@ -1004,19 +1002,8 @@ export async function runSpeakingCheck({
   return readResult;
 }
 
-export async function onRequestPost(context) {
+export async function prepareSpeakingCheck(context) {
   const { request, env } = context;
-  // speakup-503-hunt revision 2 (2026-07-15): captured here, not read off
-  // `context` at the call site below -- a local `const context =
-  // buildFeedbackContext(...)` further down this function shadows this
-  // outer `context` parameter, so reading `context.waitUntil` there would
-  // silently resolve to undefined. Mirrors minny-conversation.js's
-  // onRequestPost: Pages Functions supplies waitUntil to finish work after
-  // the response is sent; plain node tests call this handler without it, so
-  // fall back to fire-and-forget so the promise still runs to completion.
-  const waitUntil = typeof context.waitUntil === 'function'
-    ? context.waitUntil.bind(context)
-    : (p) => { Promise.resolve(p).catch(() => {}); };
 
   if (!env.READ2LEAD_CODES) {
     return json(
@@ -1037,7 +1024,9 @@ export async function onRequestPost(context) {
 
   let formData;
   try {
-    formData = await request.formData();
+    // A trusted account host may finish the upload before entering its queue.
+    // Ordinary Pages requests retain the original parsing path.
+    formData = context.parsedFormData ?? await request.formData();
   } catch {
     return json({ ok: false, error: 'invalid_form', message: 'Khong doc duoc du lieu thu am.' }, 400);
   }
@@ -1163,6 +1152,28 @@ export async function onRequestPost(context) {
       return rateLimitedResponse(shadowRate.retryAfter);
     }
   }
+
+  return { accessCode, packId, expectedText, checkMode, practiceMode, shadowPractice, audio,
+    clientTelemetry, audioSize, audioName, audioType, stems, durationTargetSec, durationSec, codeData };
+}
+
+export async function completeSpeakingCheck(context, prepared) {
+  const { request, env } = context;
+  const { accessCode, packId, expectedText, checkMode, shadowPractice, audio,
+    clientTelemetry, audioSize, audioName, audioType, stems, durationTargetSec, durationSec, codeData } = prepared;
+  const workersAi = env.AI || null;
+  const openaiApiKey = resolveOpenAIApiKey(env);
+  // speakup-503-hunt revision 2 (2026-07-15): captured here, not read off
+  // `context` at the call site below -- a local `const context =
+  // buildFeedbackContext(...)` further down this function shadows this
+  // outer `context` parameter, so reading `context.waitUntil` there would
+  // silently resolve to undefined. Mirrors minny-conversation.js's
+  // onRequestPost: Pages Functions supplies waitUntil to finish work after
+  // the response is sent; plain node tests call this handler without it, so
+  // fall back to fire-and-forget so the promise still runs to completion.
+  const waitUntil = typeof context.waitUntil === 'function'
+    ? context.waitUntil.bind(context)
+    : (p) => { Promise.resolve(p).catch(() => {}); };
 
   try {
     const result = await runSpeakingCheck({
@@ -1406,6 +1417,12 @@ export async function onRequestPost(context) {
       500,
     );
   }
+}
+
+export async function onRequestPost(context) {
+  const prepared = await prepareSpeakingCheck(context);
+  if (prepared instanceof Response) return prepared;
+  return completeSpeakingCheck(context, prepared);
 }
 
 // V1 word-level feedback fix round (2026-07-12, Elon ruling): strips

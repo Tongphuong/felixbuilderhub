@@ -41,7 +41,7 @@
         "trivia_en": { "type": "string", "minLength": 20, "maxLength": 200 },
         "sentences": {
           "type": "array",
-          "minItems": 5,
+          "minItems": 3,
           "maxItems": 200,
           "items": {
             "type": "object",
@@ -162,6 +162,55 @@
           "activities": { "minItems": 4, "maxItems": 6 }
         }
       }
+    },
+    {
+      "if": {
+        "required": ["level"],
+        "properties": { "level": { "const": "L0" } },
+        "not": { "required": ["book_slug"] }
+      },
+      "then": {
+        "properties": {
+          "story": { "properties": { "sentences": { "minItems": 3, "maxItems": 12 } } },
+          "activities": {
+            "items": {
+              "allOf": [
+                {
+                  "if": { "properties": { "type": { "enum": ["listening_fill_blank", "listen_and_order"] } }, "required": ["type"] },
+                  "then": { "properties": { "items": { "minItems": 3, "maxItems": 3 } } }
+                },
+                {
+                  "if": { "properties": { "type": { "const": "reading_comprehension" } }, "required": ["type"] },
+                  "then": { "properties": { "questions": { "minItems": 3, "maxItems": 3 } } }
+                },
+                {
+                  "if": { "properties": { "type": { "const": "listen_and_speak" } }, "required": ["type"] },
+                  "then": { "properties": { "items": { "minItems": 3, "maxItems": 12 } } }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "story": { "properties": { "sentences": { "minItems": 5 } } },
+          "activities": {
+            "items": {
+              "allOf": [
+                {
+                  "if": { "properties": { "type": { "enum": ["listening_fill_blank", "listen_and_order", "listen_and_speak"] } }, "required": ["type"] },
+                  "then": { "properties": { "items": { "minItems": 5 } } }
+                },
+                {
+                  "if": { "properties": { "type": { "const": "reading_comprehension" } }, "required": ["type"] },
+                  "then": { "properties": { "questions": { "minItems": 5 } } }
+                }
+              ]
+            }
+          }
+        }
+      }
     }
   ],
 
@@ -210,7 +259,7 @@
         "instructions_vi": { "type": "string", "minLength": 1 },
         "items": {
           "type": "array",
-          "minItems": 5,
+          "minItems": 3,
           "maxItems": 5,
           "items": {
             "type": "object",
@@ -246,7 +295,7 @@
         "instructions_vi": { "type": "string", "minLength": 1 },
         "items": {
           "type": "array",
-          "minItems": 5,
+          "minItems": 3,
           "maxItems": 5,
           "items": {
             "type": "object",
@@ -287,7 +336,7 @@
         "scoring_mode": { "type": "string", "enum": ["self_rate", "whisper_stt"] },
         "items": {
           "type": "array",
-          "minItems": 5,
+          "minItems": 3,
           "maxItems": 35,
           "items": {
             "type": "object",
@@ -413,7 +462,7 @@
         "instructions_vi": { "type": "string", "minLength": 1 },
         "questions": {
           "type": "array",
-          "minItems": 5,
+          "minItems": 3,
           "maxItems": 5,
           "items": {
             "type": "object",

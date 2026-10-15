@@ -12,7 +12,11 @@ import {
   validateStudentId,
 } from '../_shared/student-profile.ts';
 
-export async function onRequestGet(context) {
+import type { ProfileDatabase, ProfileEnvironment, ResponseResult } from '../_shared/student-profile.ts';
+
+type ProfileContext = { request: Request; env: ProfileEnvironment };
+
+export async function onRequestGet(context: ProfileContext) {
   const setup = authorizeAndBind(context);
   if (!setup.ok) return setup.response;
 
@@ -30,7 +34,7 @@ export async function onRequestGet(context) {
   return json({ ok: true, profile });
 }
 
-export async function onRequestPost(context) {
+export async function onRequestPost(context: ProfileContext) {
   const setup = authorizeAndBind(context);
   if (!setup.ok) return setup.response;
 
@@ -51,7 +55,7 @@ export async function onRequestPost(context) {
   return json({ ok: true, profile }, 201);
 }
 
-export async function onRequestPut(context) {
+export async function onRequestPut(context: ProfileContext) {
   const setup = authorizeAndBind(context);
   if (!setup.ok) return setup.response;
 
@@ -77,7 +81,7 @@ export async function onRequestPut(context) {
   return json({ ok: true, profile });
 }
 
-export async function onRequestDelete(context) {
+export async function onRequestDelete(context: ProfileContext) {
   const setup = authorizeAndBind(context);
   if (!setup.ok) return setup.response;
 
@@ -95,7 +99,7 @@ export async function onRequestDelete(context) {
   return json({ ok: true, archived: true });
 }
 
-function authorizeAndBind(context) {
+function authorizeAndBind(context: ProfileContext): ResponseResult<{ db: ProfileDatabase }> {
   const auth = checkTokenAuth(context.request, context.env);
   if (!auth.ok) return auth;
 

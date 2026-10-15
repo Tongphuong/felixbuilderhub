@@ -9,6 +9,7 @@
   const TEST_SECONDS = 3;
   const SILENT_LEVEL = 4;
   const MIN_BLOB_BYTES = 280;
+  let activeTestRoot = null;
 
   function detectPlatform() {
     const ua = navigator.userAgent || '';
@@ -401,7 +402,7 @@
       lessonSkipBtn.hidden = false;
     }
 
-    function setPassed() {
+    function setPassed(broadcast = true) {
       root.dataset.state = 'passed';
       markSessionPassed();
       if (passBadge) passBadge.hidden = false;
@@ -426,10 +427,15 @@
         'ok',
       );
       onPass();
-      applyBlockedUi(false);
+      if (broadcast) applyBlockedUi(false);
+      else root.dataset.blocked = 'false';
     }
 
     function applyBlockedUi(blocked) {
+      if (blocked) {
+        try { sessionStorage.removeItem(STORAGE_KEY); } catch { /* storage may be unavailable */ }
+        if (root.dataset.state === 'passed' || root.dataset.state === 'testing' && !running) root.dataset.state = 'blocked';
+      }
       root.dataset.blocked = blocked ? 'true' : 'false';
       document.dispatchEvent(
         new CustomEvent('r2l-mic-gate', { detail: { ready: !blocked, root } }),
@@ -485,7 +491,7 @@
     }
 
     async function runTest() {
-      if (running) return;
+      if (running || activeTestRoot) return;
       if (showEnvironmentBlockers()) {
         failCount += 1;
         showLessonSkip();
@@ -494,6 +500,8 @@
       }
 
       running = true;
+      activeTestRoot = root;
+      try { sessionStorage.removeItem(STORAGE_KEY); } catch { /* storage may be unavailable */ }
       hideHelp();
       if (testBlobUrl) {
         URL.revokeObjectURL(testBlobUrl);
@@ -505,6 +513,7 @@
       if (testBtn) testBtn.disabled = true;
       if (retryBtn) retryBtn.hidden = true;
       root.dataset.state = 'testing';
+      applyBlockedUi(blockUntilPass);
       setStatus('Cho phép micro nếu trình duyệt hỏi...', 'active');
       if (meterWrap) meterWrap.hidden = false;
       setMeterLevel(0);
@@ -621,9 +630,37 @@
         onFail({ reason: 'error', error });
       } finally {
         running = false;
+        activeTestRoot = null;
+        if (root.dataset.blocked === 'true') {
+          root.dataset.state = 'blocked';
+          applyBlockedUi(true);
+        }
         if (testBtn) testBtn.disabled = false;
       }
     }
+
+    // One permission/device test governs this document. Mirror its visible
+    // result across panels without starting another test or rebroadcast loop.
+    document.addEventListener('r2l-mic-gate', (event) => {
+      const detail = event.detail;
+      if (!detail?.root || detail.root === root || !root.isConnected) return;
+      if (detail.ready) {
+        if (detail.root.dataset.state === 'passed') setPassed(false);
+        return;
+      }
+      const testing = detail.root.dataset.state === 'testing';
+      root.dataset.state = testing ? 'waiting' : 'blocked';
+      root.dataset.blocked = 'true';
+      if (passBadge) passBadge.hidden = true;
+      if (playBtn) playBtn.hidden = true;
+      if (testAudio) { testAudio.pause(); testAudio = null; }
+      if (testBtn) {
+        testBtn.disabled = testing;
+        testBtn.textContent = '🎤 Kiểm tra micro';
+      }
+      setStatus(testing ? 'Micro đang được kiểm tra. Con chờ một chút nhé.' : 'Micro chưa sẵn sàng. Con kiểm tra lại micro nhé.', testing ? 'active' : 'neutral');
+      onFail({ reason: 'shared_test' });
+    });
 
     testBtn?.addEventListener('click', () => runTest());
     retryBtn?.addEventListener('click', () => runTest());

@@ -2,21 +2,21 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 
-const read2LeadPage = readFileSync('src/pages/read2lead.astro', 'utf-8');
+const read2LeadPage = readFileSync('src/components/Read2LeadChildHome.astro', 'utf-8');
 const adminCodesPage = readFileSync('src/pages/admin/codes.astro', 'utf-8');
 const generateEndpoint = readFileSync('functions/api/generate-read2lead-pack.js', 'utf-8');
 const stateModule = readFileSync('functions/api/_read2lead-v2-state.js', 'utf-8');
 
 test('parent intake form does not expose a level selector', () => {
   assert.doesNotMatch(read2LeadPage, /name="level"/);
-  assert.match(read2LeadPage, /bắt đầu từ cấp đầu/);
+  assert.match(read2LeadPage, /home-open/);
 });
 
 test('parent intake form does not expose child identity fields', () => {
   assert.doesNotMatch(read2LeadPage, /name="child_name"/);
   assert.doesNotMatch(read2LeadPage, /name="age"/);
   assert.doesNotMatch(read2LeadPage, /name="child_gender"/);
-  assert.match(read2LeadPage, /Mã học sinh là gì/);
+  assert.match(read2LeadPage, /nhận link của con/);
 });
 
 test('admin create-code form does not expose a level selector', () => {

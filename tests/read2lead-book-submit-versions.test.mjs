@@ -134,3 +134,15 @@ test('a book_flow_version outside {2, 3} is rejected before validation runs', as
   assert.equal(payload.ok, false);
   assert.equal(payload.error, 'invalid_book_flow');
 });
+
+for(const trustedFlag of [true,false])test('reviewed source cannot pay page diamonds, completion rewards or XP (flag='+trustedFlag+')',async()=>{
+ const f=makeFixture(),account=f.store.get(ACCESS_CODE);account.completed_books=['book_42'];
+ if(trustedFlag)account.progress.current_pack.review_only=true;
+ const before=structuredClone(f.store.get(progressKey(ACCESS_CODE)));
+ const first=await submit(3,makeBookReaderState(f.pack,{version:3}),f),data=await first.json();
+ assert.equal(first.status,200);assert.equal(data.review_only,true);assert.equal(data.completed_without_reward,true);
+ assert.deepEqual(data.rewards_earned,{diamonds:0,xp:0});assert.deepEqual(f.store.get(progressKey(ACCESS_CODE)),before);
+ const second=await submit(3,makeBookReaderState(f.pack,{version:3}),f),again=await second.json();
+ assert.equal(again.review_only,true);assert.deepEqual(again.rewards_earned,{diamonds:0,xp:0});assert.deepEqual(f.store.get(progressKey(ACCESS_CODE)),before);
+ assert.equal(f.store.get(ACCESS_CODE).progress.completed_packs||0,0);
+});

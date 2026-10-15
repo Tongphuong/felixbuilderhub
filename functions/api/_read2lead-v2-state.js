@@ -1,3 +1,4 @@
+import { normalizeLearningReceipts, recordLearningReceipt } from '../lib/read2lead/learning-stars.mjs';
 import {
   MONSTER_COLORS,
   MONSTER_MANIFEST,
@@ -1004,14 +1005,9 @@ function clearPageDiamondsPaid(pageDiamondsPaid, packId) {
   return next;
 }
 
-export function normalizeAvatarStage(raw, state = {}) {
-  const unlockedParts = Array.isArray(state?.unlocked_parts) ? state.unlocked_parts : [];
-  const computedLadder = state?.rank_ladder || computeRankLadder(state);
-  const tierIndex = numberOrZero(computedLadder?.tier_index);
-  // Below Bạc (tier 0): always egg — leaderboard + hub must not show hatched monsters.
-  if (tierIndex < 1) return 'egg';
-  if (unlockedParts.length > 0) return 'custom';
-  return 'basic';
+export function normalizeAvatarStage(_raw, _state = {}) {
+  // Child UI revision 2: customization is available from the first lesson.
+  return 'custom';
 }
 
 function grandfatherUnlockedAvatarParts(raw, unlockedParts) {
@@ -1030,21 +1026,8 @@ function grandfatherUnlockedAvatarParts(raw, unlockedParts) {
   return [...unlocked];
 }
 
-function normalizePurchasedMonster(raw, unlockedParts, accessCode) {
-  const normalized = normalizeAvatarMonster(raw, accessCode, MONSTER_MANIFEST);
-  const unlocked = new Set(unlockedParts);
-  const purchasedOnly = { ...BASIC_MONSTER_CONFIG };
-  for (const slot of MONSTER_SLOTS) {
-    const partId = String(normalized[slot] || '').trim();
-    if (
-      partId
-      && (getPartRarity(partId) !== 'common' || PURCHASED_COSMETIC_SLOTS.includes(slot))
-      && unlocked.has(partId)
-    ) {
-      purchasedOnly[slot] = partId;
-    }
-  }
-  return purchasedOnly;
+function normalizePurchasedMonster(raw, _unlockedParts, accessCode) {
+  return normalizeAvatarMonster(raw, accessCode, MONSTER_MANIFEST);
 }
 
 function normalizePendingCeremony(raw) {
@@ -1282,6 +1265,7 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     chest_history: normalizeChestHistory(raw?.chest_history),
     daily_login_chest: normalizeDailyLoginChest(raw?.daily_login_chest),
     learning_metrics: normalizeLearningMetrics(raw?.learning_metrics, nowIso),
+    learning_receipts: normalizeLearningReceipts(raw?.learning_receipts),
     combo_lifetime_xu: numberOrZero(raw?.combo_lifetime_xu),
     page_diamonds_paid: normalizePageDiamondsPaid(raw?.page_diamonds_paid),
     unlocked_parts: unlockedParts,
@@ -1514,6 +1498,8 @@ export function applyPackCompletion(
     activityResults = [],
     scorePercent = null,
     learningMetric = null,
+    learningSource = null,
+    learningKind = 'original_complete',
     // R2L-REWARDS-REDESIGN Buffet fix round (2026-07-18, spec §11.8): the
     // page-diamonds portion, kept SEPARATE from rewardsEarned.diamonds (which
     // is grade-based only) so it can be checked against page_diamonds_paid —
@@ -1597,6 +1583,7 @@ export function applyPackCompletion(
     rank_title: RANK_TITLES[nextCurrentLevel] || state.rank_title,
     rank_asset_url: RANK_ASSETS[nextCurrentLevel] || state.rank_asset_url || RANK_ASSETS[START_LEVEL],
     diamonds: state.diamonds + earnedDiamonds,
+    learning_receipts: recordLearningReceipt(state.learning_receipts, { source: learningSource || 'pack:' + id, kind: learningKind, at: completedAt, diamonds: earnedDiamonds }),
     // The pack just completed — it can never be retried again (marked in
     // completed_pack_ids above), so any page-diamonds ledger entry for it is
     // now dead weight. Clear it.
@@ -1642,6 +1629,7 @@ export function applyPackPenalty(
     // Grade-based diamonds (S/A/B) stay gated on `passed` — only the caller
     // passes diamondsEarned here, never a grade reward.
     diamondsEarned = 0,
+    learningSource = null,
   } = {},
 ) {
   const id = String(packId || '').trim();
@@ -1662,6 +1650,7 @@ export function applyPackPenalty(
     rank_title: RANK_TITLES[currentLevel] || state.rank_title,
     rank_asset_url: RANK_ASSETS[currentLevel] || state.rank_asset_url || RANK_ASSETS[START_LEVEL],
     diamonds: numberOrZero(state.diamonds) + diamonds,
+    learning_receipts: diamonds > 0 ? recordLearningReceipt(state.learning_receipts, { source: learningSource || 'pack:' + id, kind: 'original_pages', at: completedAt, diamonds }) : normalizeLearningReceipts(state.learning_receipts),
     // Record what was paid so a later retry-then-pass of this exact pack_id
     // (applyPackCompletion) doesn't pay the same pages' diamonds again.
     page_diamonds_paid: recordPageDiamondsPaid(state.page_diamonds_paid, id, diamonds),
@@ -1747,28 +1736,27 @@ export function normalizeAvatarMonster(raw, accessCode, manifest = MONSTER_MANIF
     detail: validPart('detail', raw.detail),
     effects: validPart('effects', raw.effects),
     frame: validPart('frame', raw.frame),
-    // V5 Track B disabled — art style conflict. Force empty regardless of stored value.
-    hat: '',
-    pet: '',
-    wings: '',
+    hat: validPart('hat', raw.hat),
+    pet: validPart('pet', raw.pet),
+    wings: validPart('wings', raw.wings),
     color: MONSTER_COLORS.includes(color) ? color : defaults.color,
   };
 }
 
 export function saveAvatarMonster(state, monster, accessCode, manifest = MONSTER_MANIFEST) {
-  const unlockedParts = new Set(state?.unlocked_parts || []);
-  const allowedMonster = { ...BASIC_MONSTER_CONFIG, color: monster?.color || BASIC_MONSTER_CONFIG.color };
-  for (const slot of MONSTER_SLOTS) {
-    const partId = String(monster?.[slot] || '').trim();
-    if (
-      partId
-      && (getPartRarity(partId) !== 'common' || PURCHASED_COSMETIC_SLOTS.includes(slot))
-      && unlockedParts.has(partId)
-    ) {
-      allowedMonster[slot] = partId;
+  if (!monster || typeof monster !== 'object' || Array.isArray(monster)) return { ok: false, error: 'invalid_monster' };
+  const optional = new Set(['detail', 'effects', 'frame', 'hat', 'pet', 'wings']);
+  for (const [slot, value] of Object.entries(monster)) {
+    if (slot === 'color') {
+      if (!MONSTER_COLORS.includes(value)) return { ok: false, error: 'invalid_monster' };
+      continue;
     }
+    if (!MONSTER_SLOTS.includes(slot)) return { ok: false, error: 'invalid_slot' };
+    if (value === '' && optional.has(slot)) continue;
+    if (typeof value !== 'string' || !(manifest[slot] || []).some(part => part.id === value)) return { ok: false, error: 'invalid_monster' };
   }
-  const normalized = normalizeAvatarMonster(allowedMonster, accessCode, manifest);
+  // Partial old clients retain their current choices; they cannot buy or debit anything.
+  const normalized = normalizeAvatarMonster({ ...state.avatar?.monster, ...monster }, accessCode, manifest);
   return {
     ok: true,
     state: {

@@ -13,7 +13,7 @@ async function ensureHarness() {
   const config = await configFn({ command: 'serve', mode: 'development' });
   viteServer = await createServer({
     ...config,
-    server: { middlewareMode: true, hmr: false },
+    server: { watch: null, middlewareMode: true, hmr: false },
     appType: 'custom',
   });
   await viteServer.pluginContainer.buildStart({});

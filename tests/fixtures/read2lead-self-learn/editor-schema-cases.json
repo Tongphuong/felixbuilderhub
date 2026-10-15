@@ -1,0 +1,378 @@
+{
+  "format": 1,
+  "purpose": "synthetic-editor-schema-parity",
+  "cases": [
+    {
+      "id": "unchanged-title",
+      "path": [
+        "title_en"
+      ],
+      "op": "set",
+      "value": "A title edited for local QA",
+      "valid": true
+    },
+    {
+      "id": "empty-title",
+      "path": [
+        "title_en"
+      ],
+      "op": "set",
+      "value": "",
+      "valid": false
+    },
+    {
+      "id": "missing-title",
+      "path": [
+        "title_en"
+      ],
+      "op": "delete",
+      "valid": false
+    },
+    {
+      "id": "extra-property",
+      "path": [
+        "unexpected"
+      ],
+      "op": "set",
+      "value": true,
+      "valid": false
+    },
+    {
+      "id": "unknown-level",
+      "path": [
+        "level"
+      ],
+      "op": "set",
+      "value": "L6",
+      "valid": false
+    },
+    {
+      "id": "published-claim",
+      "path": [
+        "status"
+      ],
+      "op": "set",
+      "value": "published",
+      "valid": false
+    },
+    {
+      "id": "external-source",
+      "path": [
+        "source",
+        "kind"
+      ],
+      "op": "set",
+      "value": "licensed",
+      "valid": false
+    },
+    {
+      "id": "rights-approved",
+      "path": [
+        "source",
+        "publication_rights_review"
+      ],
+      "op": "set",
+      "value": "approved",
+      "valid": false
+    },
+    {
+      "id": "external-asset",
+      "path": [
+        "source",
+        "external_assets"
+      ],
+      "op": "set",
+      "value": [
+        "https://example.invalid/test"
+      ],
+      "valid": false
+    },
+    {
+      "id": "false-independent-review",
+      "path": [
+        "review",
+        "independent_review"
+      ],
+      "op": "set",
+      "value": true,
+      "valid": false
+    },
+    {
+      "id": "false-pedagogy-review",
+      "path": [
+        "review",
+        "pedagogical_validation"
+      ],
+      "op": "set",
+      "value": "approved",
+      "valid": false
+    },
+    {
+      "id": "promotion-enabled",
+      "path": [
+        "policy",
+        "automatic_promotion"
+      ],
+      "op": "set",
+      "value": true,
+      "valid": false
+    },
+    {
+      "id": "real-rewards",
+      "path": [
+        "policy",
+        "real_rewards"
+      ],
+      "op": "set",
+      "value": true,
+      "valid": false
+    },
+    {
+      "id": "wrong-key",
+      "path": [
+        "questions",
+        0,
+        "correct_index"
+      ],
+      "op": "set",
+      "value": 3,
+      "valid": false
+    },
+    {
+      "id": "negative-key",
+      "path": [
+        "questions",
+        0,
+        "correct_index"
+      ],
+      "op": "set",
+      "value": -1,
+      "valid": false
+    },
+    {
+      "id": "fractional-key",
+      "path": [
+        "questions",
+        0,
+        "correct_index"
+      ],
+      "op": "set",
+      "value": 0.5,
+      "valid": false
+    },
+    {
+      "id": "valid-key-boundary",
+      "path": [
+        "questions",
+        0,
+        "correct_index"
+      ],
+      "op": "set",
+      "value": 2,
+      "valid": true
+    },
+    {
+      "id": "question-extra-field",
+      "path": [
+        "questions",
+        0,
+        "private_child_name"
+      ],
+      "op": "set",
+      "value": "Synthetic only",
+      "valid": false
+    },
+    {
+      "id": "too-few-options",
+      "path": [
+        "questions",
+        0,
+        "options_en"
+      ],
+      "op": "set",
+      "value": [
+        "A",
+        "B"
+      ],
+      "valid": false
+    },
+    {
+      "id": "too-many-options",
+      "path": [
+        "questions",
+        0,
+        "options_en"
+      ],
+      "op": "set",
+      "value": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "valid": false
+    },
+    {
+      "id": "options-not-array",
+      "path": [
+        "questions",
+        0,
+        "options_en"
+      ],
+      "op": "set",
+      "value": "A B C",
+      "valid": false
+    },
+    {
+      "id": "missing-required-nested",
+      "path": [
+        "questions",
+        0,
+        "support",
+        "repeat_marks_practice"
+      ],
+      "op": "delete",
+      "valid": false
+    },
+    {
+      "id": "bad-hash",
+      "path": [
+        "story",
+        "text_sha256"
+      ],
+      "op": "set",
+      "value": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+      "valid": false
+    },
+    {
+      "id": "short-hash",
+      "path": [
+        "story",
+        "text_sha256"
+      ],
+      "op": "set",
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "valid": false
+    },
+    {
+      "id": "valid-hash-syntax",
+      "path": [
+        "story",
+        "text_sha256"
+      ],
+      "op": "set",
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "valid": true
+    },
+    {
+      "id": "nullable-visual",
+      "path": [
+        "questions",
+        0,
+        "scenario_visual_description"
+      ],
+      "op": "set",
+      "value": null,
+      "valid": true
+    },
+    {
+      "id": "visual-string",
+      "path": [
+        "questions",
+        0,
+        "scenario_visual_description"
+      ],
+      "op": "set",
+      "value": "A synthetic illustration",
+      "valid": true
+    },
+    {
+      "id": "visual-wrong-type",
+      "path": [
+        "questions",
+        0,
+        "scenario_visual_description"
+      ],
+      "op": "set",
+      "value": 11,
+      "valid": false
+    },
+    {
+      "id": "empty-objectives",
+      "path": [
+        "objectives"
+      ],
+      "op": "set",
+      "value": [],
+      "valid": false
+    },
+    {
+      "id": "null-story",
+      "path": [
+        "story"
+      ],
+      "op": "set",
+      "value": null,
+      "valid": false
+    },
+    {
+      "id": "array-story",
+      "path": [
+        "story"
+      ],
+      "op": "set",
+      "value": [],
+      "valid": false
+    },
+    {
+      "id": "numeric-title",
+      "path": [
+        "title_en"
+      ],
+      "op": "set",
+      "value": 4,
+      "valid": false
+    },
+    {
+      "id": "string-boolean",
+      "path": [
+        "policy",
+        "automatic_promotion"
+      ],
+      "op": "set",
+      "value": "false",
+      "valid": false
+    },
+    {
+      "id": "followup-version-shape",
+      "path": [
+        "independent_followup",
+        "version"
+      ],
+      "op": "set",
+      "value": "1.1.0",
+      "valid": true
+    },
+    {
+      "id": "forbidden-minny-action",
+      "path": [
+        "minny",
+        "allowed_actions"
+      ],
+      "op": "set",
+      "value": [
+        "award_value"
+      ],
+      "valid": false
+    },
+    {
+      "id": "single-codepoint-string",
+      "path": [
+        "title_en"
+      ],
+      "op": "set",
+      "value": "\ud83d\udc3e",
+      "valid": true
+    }
+  ]
+}

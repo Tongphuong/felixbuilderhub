@@ -1,3 +1,4 @@
+import { astroJavaScriptSource } from './helpers/astro-javascript-source.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -90,19 +91,7 @@ test('publicMinnyPractice - v1 entry tolerant', () => {
   assert.ok(!('summary' in result.history[0]));
 });
 
-test('speak-up.astro contains expected strings', () => {
-  const fileUrl = new URL('../src/pages/speak-up.astro', import.meta.url);
-  const text = readFileSync(fileUrl, 'utf8');
-  assert.ok(text.includes('minny-practice-log'));
-  assert.ok(text.includes('Xong bài tập'));
-  assert.ok(text.includes('Khớp bài thầy dạy'));
 
-  const idxXong = text.indexOf('Xong bài tập');
-  const idxSummary = text.indexOf('summary:');
-  assert.ok(idxXong !== -1);
-  assert.ok(idxSummary !== -1);
-  assert.ok(idxSummary > idxXong);
-});
 
 test('ho-so/index.astro contains ho-so-parent-minny', () => {
   const fileUrl = new URL('../src/pages/ho-so/index.astro', import.meta.url);

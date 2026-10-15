@@ -21,7 +21,7 @@ test('homepage features coaching as primary service', () => {
   assert.match(homePage, /id="ai-products"/);
   assert.match(homePage, /Sản phẩm giáo dục cho trẻ em/);
   assert.doesNotMatch(homePage, /tăng cường bởi AI/);
-  assert.match(homePage, /tích điểm và leo cấp/);
+  assert.match(homePage, /luyện nói cùng Minny/);
   assert.match(homePage, /Read2Lead/);
   assert.match(homePage, /Sản phẩm giáo dục/);
   assert.match(homePage, /ogImage="\/images\/felix\.jpg"/);
@@ -29,13 +29,13 @@ test('homepage features coaching as primary service', () => {
   assert.doesNotMatch(homePage, /Felix Sharing Space/);
 });
 
-test('header navigation prioritizes coaching, parent portal, and separate products', () => {
+test('header navigation prioritizes coaching, parent portal, and integrated reading', () => {
   assert.match(header, /href="\/coaching"/);
   assert.match(header, /ho-so|ho-so/);
   assert.match(header, /href="\/read2lead"/);
   assert.match(header, /Luyện đọc/);
-  assert.match(header, /href="\/speak-up"/);
-  assert.match(header, /SpeakUp/);
+  assert.doesNotMatch(header, /href="\/speak-up"/);
+  assert.doesNotMatch(header, /SpeakUp/);
   assert.match(header, /Xem tiến độ con/);
   assert.doesNotMatch(header, /Công cụ khác/);
 });
@@ -68,13 +68,13 @@ test('header diamond pill uses the gold token, not the old cyan', () => {
   assert.doesNotMatch(header, /cyan/);
 });
 
-test('header dropdown links to the monster shop next to the gift shop, both code-injected at runtime', () => {
-  assert.match(header, /href="\/read2lead\/shop" data-r2l-shop-link/);
+test('header dropdown links to the free companion next to the gift shop, both code-injected at runtime', () => {
+  assert.match(header, /href="\/read2lead\/companion" data-r2l-shop-link/);
   assert.match(header, /href="\/read2lead\/gifts" data-r2l-gifts-link/);
   const scriptStart = header.indexOf('const shopLink');
   assert.ok(scriptStart > -1, 'shop link runtime code-injection block must exist');
   const scriptBody = header.slice(scriptStart, scriptStart + 200);
-  assert.match(scriptBody, /shopLink\.href = `\/read2lead\/shop\?code=\$\{encodeURIComponent\(code\)\}`/);
+  assert.match(scriptBody, /shopLink\.href = `\/read2lead\/companion\?code=\$\{encodeURIComponent\(code\)\}`/);
 });
 
 test('unified profile page supports code entry and role switching', () => {

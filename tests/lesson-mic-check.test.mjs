@@ -1,3 +1,4 @@
+import { astroJavaScriptSource } from './helpers/astro-javascript-source.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -5,7 +6,6 @@ import vm from 'node:vm';
 
 const micScript = readFileSync('public/scripts/r2l-mic-check.js', 'utf-8');
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
-const speakingPage = readFileSync('src/pages/speak-up.astro', 'utf-8');
 const listenSpeak = readFileSync('src/components/read2lead/v2/ListenAndSpeak.astro', 'utf-8');
 const micPanel = readFileSync('src/components/read2lead/v2/MicCheckPanel.astro', 'utf-8');
 
@@ -45,13 +45,10 @@ test('lesson page has mic prep banner and shared stream helper', () => {
   assert.match(lessonPage, /_r2lFocusMicHelp/);
 });
 
-test('lesson and speaking pages load mic check script and panel', () => {
+test('lesson page load mic check script and panel', () => {
   assert.match(lessonPage, /r2l-mic-check\.js/);
-  assert.match(speakingPage, /r2l-mic-check\.js/);
   assert.match(listenSpeak, /MicCheckPanel/);
-  assert.match(speakingPage, /MicCheckPanel/);
   assert.match(lessonPage, /_r2lMountMicCheck/);
-  assert.match(speakingPage, /mountSpeakingMicCheck/);
 });
 
 // ── r2l-micgate Fix 1: a mic-less child must not be trapped on book page 1 ──

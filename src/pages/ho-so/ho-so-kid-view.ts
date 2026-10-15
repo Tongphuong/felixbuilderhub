@@ -510,8 +510,8 @@ function renderDailyExtras(state: Record<string, unknown>, pack: Record<string, 
   const status = statusMeta(data.state || '', pack);
   const v3 = isV3Enabled();
   const avatarStage = String(state.avatar_stage || 'basic');
-  const builder = v3 && avatarStage === 'custom' ? monsterBuilderHtml(name, shopHref) : '';
-  return `<section class="fx-card ho-so-extra-card"><div class="ho-so-card-head"><h3>Nhiệm vụ hôm nay</h3>${chestHtml}</div>${questHtml ? `<div class="ho-so-quest-grid">${questHtml}</div>` : '<p class="ho-so-empty">Hoàn thành một bài để mở nhiệm vụ hôm nay.</p>'}${pack && !status.completed ? `<p class="ho-so-chart-note">${escapeHtml(pack.story_title || 'Bài đang mở')} · ${escapeHtml(status.label)}</p>` : ''}</section>${builder}<nav class="ho-so-extra-actions" aria-label="Tiện ích"><a class="fx-btn fx-btn--ghost" href="${shopHref}">🛒 Cửa hàng</a><a class="fx-btn fx-btn--ghost" href="/read2lead/games?code=${encodeURIComponent(currentAccessCode)}&v3=1">🎮 Mini game</a><a class="fx-btn fx-btn--ghost" href="/read2lead/leaderboard">🏆 Bảng hạng</a><a class="fx-btn fx-btn--ghost" href="/read2lead/gifts?code=${encodeURIComponent(currentAccessCode)}">🎁 Quà thật</a></nav>`;
+  const builder = ''; // Dedicated free editor keeps this profile focused on saved progress.
+  return `<section class="fx-card ho-so-extra-card"><div class="ho-so-card-head"><h3>Nhiệm vụ hôm nay</h3>${chestHtml}</div>${questHtml ? `<div class="ho-so-quest-grid">${questHtml}</div>` : '<p class="ho-so-empty">Hoàn thành một bài để mở nhiệm vụ hôm nay.</p>'}${pack && !status.completed ? `<p class="ho-so-chart-note">${escapeHtml(pack.story_title || 'Bài đang mở')} · ${escapeHtml(status.label)}</p>` : ''}</section>${builder}<nav class="ho-so-extra-actions" aria-label="Tiện ích"><a class="fx-btn fx-btn--ghost" href="${shopHref}">Bạn đồng hành</a><a class="fx-btn fx-btn--ghost" href="/read2lead/games?code=${encodeURIComponent(currentAccessCode)}&v3=1">🎮 Mini game</a><a class="fx-btn fx-btn--ghost" href="/read2lead/leaderboard">🏆 Bảng hạng</a><a class="fx-btn fx-btn--ghost" href="/read2lead/gifts?code=${encodeURIComponent(currentAccessCode)}">🎁 Quà thật</a></nav>`;
 }
 
 // §4 GiftGoalCard — "Con đang tiết kiệm cho…". `state.gift_goal` is only a
@@ -571,7 +571,7 @@ export function renderKidView(_container: Element, data: ProgressPayload, access
   const cta = buildHeroCta(pack, data, accessCode);
   // Linking work (founder decision): the monster shop's ?v3=1 preview gate is
   // gone (kids must be able to find the shop), so this link no longer needs it.
-  const shopHref = `/read2lead/shop?code=${encodeURIComponent(accessCode)}`;
+  const shopHref = `/read2lead/companion?code=${encodeURIComponent(accessCode)}`;
 
   const sessionHost = qs<HTMLElement>('#ho-so-kid-session');
   const heroHost = qs<HTMLElement>('#ho-so-kid-hero');
@@ -598,7 +598,10 @@ export function renderKidView(_container: Element, data: ProgressPayload, access
   void loadGiftGoalCard(accessCode, extrasHost, state);
 
   const ctaHtml = cta.action === 'lesson' && cta.href ? `<a class="fx-btn fx-btn--primary fx-btn--lg fx-btn--block" href="${escapeHtml(cta.href)}">${escapeHtml(cta.label)}</a>` : `<button id="ho-so-hero-cta" class="fx-btn fx-btn--primary fx-btn--lg fx-btn--block" type="button" ${cta.action === 'wait' ? 'disabled' : ''}>${escapeHtml(cta.label)}</button>`;
-  ctaHost.innerHTML = `<div class="ho-so-cta">${ctaHtml}<p>Mất khoảng 30 giây — Minny viết riêng một truyện theo chủ đề con chọn.</p></div>`;
+  const ctaCaption = pack?.schema_version === 'story-mission-v1'
+    ? 'Đọc, tìm hiểu và kể lại truyện cùng Minny.'
+    : 'Mất khoảng 30 giây — Minny viết riêng một truyện theo chủ đề con chọn.';
+  ctaHost.innerHTML = `<div class="ho-so-cta">${ctaHtml}<p>${ctaCaption}</p></div>`;
 
   const monsterSlot = qs<HTMLElement>('[data-hub-monster]', heroHost);
   const v3 = isV3Enabled();

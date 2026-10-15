@@ -38,6 +38,9 @@ def test_prompt_specifies_story_first():
 def test_prompt_specifies_6_levels():
     for level in ("L0", "L1", "L2", "L3", "L4", "L5"):
         assert level in SYSTEM_PROMPT_V2
+        message = build_user_message_v2("Mai", 7, level, "girl")
+        assert f"Vocabulary scope: {LEVEL_REQUIREMENTS[level]['vocab']}" in message
+        assert f"Required sentences total: {LEVEL_REQUIREMENTS[level]['sentences']}" in message
 
 
 def test_prompt_lists_4_activity_types():
@@ -108,7 +111,7 @@ def test_prompt_requires_wh_comprehension_guided_listening_questions():
 
 # ---------------- Level requirement table ----------------
 
-def test_level_requirements_has_all_5_levels():
+def test_level_requirements_has_all_6_levels():
     assert set(LEVEL_REQUIREMENTS.keys()) == {"L0", "L1", "L2", "L3", "L4", "L5"}
 
 

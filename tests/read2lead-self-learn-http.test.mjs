@@ -1,0 +1,154 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdirSync, mkdtempSync, writeFileSync, readFileSync, symlinkSync } from 'node:fs';
+import { resolve, join } from 'node:path';
+import { request as httpRequest } from 'node:http';
+import { initializeSyntheticTarget, startLocalQA } from '../scripts/read2lead-local-qa.mjs';
+const proofs = resolve('.r2l-player-proofs'); mkdirSync(proofs, { recursive: true });
+function fixture() {
+  const root = mkdtempSync(join(proofs, 'http-')), dataRoot = join(root, 'data'), distRoot = join(root, 'dist');
+  mkdirSync(join(distRoot, 'read2lead/self-learn'), { recursive: true }); mkdirSync(join(distRoot, '_astro'));
+  writeFileSync(join(distRoot, 'read2lead/self-learn/index.html'), '<!doctype html><title>Player fixture</title>');
+  writeFileSync(join(distRoot, '_astro/player.js'), 'export const ready = true;');
+  writeFileSync(join(distRoot, 'private.json'), '{"private":"do-not-serve"}');
+  initializeSyntheticTarget(dataRoot); return { root, dataRoot, distRoot };
+}
+async function client(qa, code = 'DEMO-FAMILY-A') {
+  let cookie, csrf;
+  const call = async (route, data, headers = {}) => {
+    const r = await fetch(qa.origin + '/api/read2lead/self-learn/' + route, { method: data === undefined ? 'GET' : 'POST', headers: { ...(cookie ? { Cookie: cookie } : {}), ...(data === undefined ? {} : { Origin: qa.origin, 'Content-Type': 'application/json', ...(csrf ? { 'X-R2L-CSRF': csrf } : {}) }), ...headers }, ...(data === undefined ? {} : { body: JSON.stringify(data) }) });
+    const value = await r.json(); if (r.headers.has('set-cookie')) cookie = r.headers.get('set-cookie').split(';')[0]; if (value.csrf) csrf = value.csrf;
+    return { response: r, value };
+  };
+  const login = await call('login', { access_code: code }); assert.equal(login.response.status, 200);
+  assert.match(login.response.headers.get('set-cookie'), /HttpOnly; SameSite=Strict/);
+  return { call, login: login.value };
+}
+const rawGet = (qa, path, headers = {}) => new Promise((done, fail) => { const r = httpRequest(qa.origin, { path, headers }, res => { let text = ''; res.on('data', x => { text += x; }); res.on('end', () => done({ status: res.statusCode, text })); }); r.on('error', fail); r.end(); });
+test('local HTTP only serves selected built page/assets with restrictive headers', async t => {
+  const f = fixture(), qa = await startLocalQA({ ...f, mode: 'synthetic-local', port: 0 }); t.after(() => qa.close());
+  const page = await fetch(qa.url); assert.equal(page.status, 200); assert.match(page.headers.get('content-security-policy'), /connect-src 'self'/); assert.match(await page.text(), /Player fixture/);
+  assert.equal((await fetch(qa.origin + '/_astro/player.js')).status, 200);
+  for (const path of ['/private.json', '/tests/fixtures/read2lead-self-learn/access.json', '/.env', '/src/lib/read2lead/self-learn/player.mjs', '/_astro/', '/read2lead/']) assert.equal((await fetch(qa.origin + path)).status, 404, path);
+  for (const path of ['/../private.json', '/%2e%2e/private.json', '/_astro%2fplayer.js', '//elsewhere/']) assert.equal((await rawGet(qa, path)).status, 400, path);
+  assert.equal((await rawGet(qa, '/', { Host: 'evil.example' })).status, 403);
+  assert.equal((await fetch(qa.url, { headers: { Origin: 'https://evil.example' } })).status, 403);
+  symlinkSync(join(f.distRoot, 'private.json'), join(f.distRoot, '_astro/private.js'));
+  assert.equal((await fetch(qa.origin + '/_astro/private.js')).status, 404);
+  assert.equal((await fetch(qa.url, { method: 'POST' })).status, 405);
+  const head = await fetch(qa.url, { method: 'HEAD' }); assert.equal(head.status, 200); assert.equal(await head.text(), '');
+});
+test('target initialization refuses existing directories and unsafe configurations before adoption', async () => {
+  const f = fixture(), marker = readFileSync(join(f.dataRoot, 'synthetic-target.json'));
+  assert.throws(() => initializeSyntheticTarget(f.dataRoot), /unsafe_new_target/);
+  assert.throws(() => initializeSyntheticTarget('relative'), /unsafe_new_target/);
+  for (const config of [{ mode: 'production' }, { port: 80 }, { port: 99999 }]) await assert.rejects(startLocalQA({ ...f, mode: 'synthetic-local', port: 0, ...config }), /unsafe_server_config/);
+  const unknown = join(f.root, 'unknown'); mkdirSync(unknown); await assert.rejects(startLocalQA({ ...f, dataRoot: unknown, mode: 'synthetic-local', port: 0 }), /unsafe_target/);
+  assert.deepEqual(readFileSync(join(f.dataRoot, 'synthetic-target.json')), marker);
+});
+test('actual HTTP authentication, CSRF, body limits and child ownership precede session writes', async t => {
+  const qa = await startLocalQA({ ...fixture(), mode: 'synthetic-local', port: 0 }); t.after(() => qa.close());
+  assert.equal((await fetch(qa.origin + '/api/read2lead/self-learn/me')).status, 401);
+  const a = await client(qa), b = await client(qa, 'DEMO-FAMILY-B');
+  assert.equal((await a.call('child', { child_id: 'synthetic-chi' })).response.status, 403);
+  assert.equal((await a.call('child', { child_id: 'synthetic-an' }, { 'X-R2L-CSRF': 'wrong' })).response.status, 403);
+  assert.equal((await a.call('child', { child_id: 'synthetic-an', text: 'x'.repeat(33000) })).response.status, 413);
+  const list = (await a.call('lessons')).value;
+  assert.equal(list.lessons.length, 30);
+  const start = (await a.call('start', { request_id: 'http-owned', child_id: 'synthetic-an', lesson_id: list.lessons.find(l => l.level === 'L2').id })).value;
+  assert.equal(start.view.session.schema_version, '1.2.0');
+  assert.equal((await b.call('session?session_id=' + start.session.session_id)).response.status, 403);
+  assert.doesNotMatch(JSON.stringify(start.view), /correct_index|accepted_meanings|evidence_spans|expected_meaning/);
+  await a.call('logout', {}); assert.equal((await a.call('me')).response.status, 401);
+});
+test('dropped post-commit response retries the identical HTTP event exactly once', async t => {
+  let drop = true;
+  const f = fixture(), qa = await startLocalQA({ ...f, mode: 'synthetic-local', port: 0, afterHandle({ request, response }) { if (request.url.endsWith('/event') && response.ok && drop) { drop = false; return 'drop'; } } }); t.after(() => qa.close());
+  const a = await client(qa), lessons = (await a.call('lessons')).value.lessons;
+  const start = (await a.call('start', { request_id: 'http-loss', child_id: 'synthetic-an', lesson_id: lessons[2].id })).value;
+  const event = { api_version: '1.2', request_id: 'http-prediction', child_id: 'synthetic-an', session_id: start.session.session_id, expected_revision: 0, event: 'prediction', payload: { text: 'Synthetic prediction' } };
+  await assert.rejects(a.call('event', event));
+  const replay = (await a.call('event', event)).value;
+  assert.equal(replay.replayed, true); assert.equal(replay.current_view.session.revision, 1);
+  assert.deepEqual(replay.current_view.session.acknowledged_request_ids, ['http-prediction']);
+  assert.equal((await a.call('event', { ...event, payload: { text: 'Changed' } })).response.status, 409);
+  await qa.close();
+  const reopened = await startLocalQA({ ...f, mode: 'synthetic-local', port: 0 }); t.after(() => reopened.close());
+  const next = await client(reopened), saved = (await next.call('session?session_id=' + start.session.session_id)).value;
+  assert.equal(saved.view.session.revision, 1); assert.equal(reopened.diagnostics().provider_enabled, false);
+});
+test('expired HTTP cookie refuses event and same-child login can recover acknowledged progress', async t => {
+  let time = Date.now(); const qa = await startLocalQA({ ...fixture(), mode: 'synthetic-local', port: 0, now: () => time, ttlMs: 1000 }); t.after(() => qa.close());
+  const a = await client(qa); time += 1001;
+  assert.equal((await a.call('event', {})).response.status, 401);
+  await a.call('login', { access_code: 'DEMO-FAMILY-A' }); assert.equal((await a.call('me')).response.status, 200);
+});
+test('family HTTP lost replies replay once and restart preserves recovery, profile and learning state', async t => {
+  const drop = new Set(['parent/create-child', 'parent/update-child', 'recover']), f = fixture();
+  const qa = await startLocalQA({ ...f, mode: 'synthetic-local', port: 0, afterHandle({ request, response }) {
+    const route = new URL(request.url).pathname.split('/self-learn/')[1];
+    if (response.ok && drop.delete(route)) return 'drop';
+  } }); t.after(() => qa.close());
+  const child = await client(qa), p = await client(qa), b = await client(qa, 'DEMO-FAMILY-B');
+  const list = (await child.call('lessons')).value.lessons;
+  const started = (await child.call('start', { request_id: 'family-http-history', child_id: 'synthetic-an', lesson_id: list.find(l => l.level === 'L2').id })).value;
+  const prediction = { api_version: '1.2', request_id: 'family-http-prediction', child_id: 'synthetic-an', session_id: started.session.session_id, expected_revision: 0, event: 'prediction', payload: { text: 'Private synthetic prediction' } };
+  assert.equal((await child.call('event', prediction)).response.status, 200);
+  assert.equal((await p.call('parent/enter', { parent_secret: 'DEMO-PARENT-A-ONLY' })).value.role, 'parent');
+  const create = { request_id: 'http-create', display_name: 'New demo child' };
+  await assert.rejects(p.call('parent/create-child', create));
+  const created = (await p.call('parent/create-child', create)).value; assert.equal(created.replayed, true); assert.equal(created.profile.learning_enabled, false);
+  const change = { request_id: 'http-rename', child_id: 'synthetic-an', expected_revision: 0, display_name: 'Renamed demo An', archived: false, learning_enabled: true, recording_allowed: true };
+  await assert.rejects(p.call('parent/update-child', change)); assert.equal((await p.call('parent/update-child', change)).value.replayed, true);
+  const recovery = { family_id: 'synthetic-family-a', request_id: 'http-recovery', recovery_code: 'DEMO-RECOVERY-FAMILY-A-2026', new_access_code: 'HTTP-RECOVERED-FAMILY-A', new_parent_secret: 'HTTP-RECOVERED-PARENT-A', new_recovery_code: 'HTTP-RECOVERED-FAMILY-A-2026' };
+  await assert.rejects(p.call('recover', recovery)); assert.deepEqual((await p.call('recover', recovery)).value, { ok: true, replayed: true });
+  assert.equal((await child.call('me')).response.status, 401); assert.equal((await p.call('parent/family')).response.status, 401); assert.equal((await b.call('me')).response.status, 200);
+  const fresh = await client(qa, recovery.new_access_code); assert.equal(fresh.login.children[0].label_vi, 'Renamed demo An'); assert.equal(fresh.login.children[0].recording_allowed, true);
+  assert.equal((await fresh.call('recover', recovery)).value.replayed, true); assert.equal((await fresh.call('me')).response.status, 200);
+  await qa.close();
+  const reopened = await startLocalQA({ ...f, mode: 'synthetic-local', port: 0 }); t.after(() => reopened.close());
+  const next = await client(reopened, recovery.new_access_code);
+  assert.equal((await next.call('login', { access_code: 'DEMO-FAMILY-A' })).response.status, 401);
+  assert.equal((await next.call('parent/enter', { parent_secret: recovery.new_parent_secret })).value.role, 'parent');
+  const family = (await next.call('parent/family')).value; assert.equal(family.children.length, 3);
+  assert.equal(family.children[0].label_vi, 'Renamed demo An'); assert.equal(family.children[0].revision, 1);
+  assert.equal(family.children[0].history[0].session_id, started.session.session_id); assert.equal(family.children[0].wallet.balance, 0);
+  assert.doesNotMatch(JSON.stringify(family), /Private synthetic prediction|DEMO-|HTTP-RECOVERED|correct_index|access_hash|recovery_code/);
+  const saved = (await next.call('session?session_id=' + started.session.session_id)).value; assert.equal(saved.view.session.revision, 1);
+  const replay = (await next.call('event', prediction)).value; assert.equal(replay.replayed, true); assert.equal(replay.current_view.session.revision, 1);
+  assert.deepEqual((await next.call('parent/audit')).value.events.map(e => e.action), ['seeded', 'child_created', 'profile_updated', 'credentials_recovered']);
+  assert.equal(reopened.diagnostics().provider_enabled, false);
+});
+test('library HTTP lost replies replay interests, favorites and free reading across restart without rewards', async t => {
+  const f = fixture(), drop = new Set(['library/interests', 'library/favorite', 'library/open', 'library/position']);
+  const qa = await startLocalQA({ ...f, mode: 'synthetic-local', port: 0, afterHandle({ request, response }) {
+    const route = new URL(request.url).pathname.split('/self-learn/')[1]; if (response.ok && drop.delete(route)) return 'drop';
+  } }); t.after(() => qa.close());
+  const a = await client(qa), b = await client(qa, 'DEMO-FAMILY-B'), child_id = 'synthetic-an';
+  const list = (await a.call('library?level=L2')).value; assert.equal(list.lessons.length, 5); const lesson_id = list.lessons[0].id;
+  const started = (await a.call('start', { request_id: 'library-http-learning', child_id, lesson_id })).value;
+  const before = (await a.call('session?session_id=' + started.session.session_id)).value;
+  const interests = { request_id: 'http-library-interests', child_id, expected_revision: 0, interest_ids: ['together'] };
+  await assert.rejects(a.call('library/interests', interests)); const ir = (await a.call('library/interests', interests)).value; assert.equal(ir.replayed, true); assert.equal(ir.library.preferences.revision, 1);
+  const favorite = { request_id: 'http-library-favorite', child_id, expected_revision: 1, lesson_id, favorite: true };
+  await assert.rejects(a.call('library/favorite', favorite)); const fr = (await a.call('library/favorite', favorite)).value; assert.equal(fr.replayed, true); assert.equal(fr.library.favorites.length, 1);
+  const open = { request_id: 'http-library-open', child_id, lesson_id };
+  await assert.rejects(a.call('library/open', open)); const opened = (await a.call('library/open', open)).value;
+  assert.equal(opened.replayed, true); assert.equal(opened.current_view.reading.revision, 0);
+  const reading_id = opened.reading.reading_id, sentence_id = opened.current_view.lesson.story.sentences[1].id;
+  const position = { request_id: 'http-library-position', child_id, reading_id, expected_revision: 0, sentence_id, marked_finished: true };
+  await assert.rejects(a.call('library/position', position)); const saved = (await a.call('library/position', position)).value;
+  assert.equal(saved.replayed, true); assert.equal(saved.current_view.reading.revision, 1); assert.equal(saved.current_view.reading.marked_finished, true);
+  assert.equal((await b.call('library/reading?reading_id=' + reading_id)).response.status, 404);
+  assert.deepEqual((await a.call('session?session_id=' + started.session.session_id)).value, before);
+  assert.equal(before.wallet.balance, 0); assert.doesNotMatch(JSON.stringify(saved), /correct_index|accepted_meanings|evidence_spans|expected_meaning|access_hash/);
+  await qa.close(); const reopened = await startLocalQA({ ...f, mode: 'synthetic-local', port: 0 }); t.after(() => reopened.close());
+  const next = await client(reopened), library = (await next.call('library?favorites=1')).value;
+  assert.equal(library.library.preferences.revision, 2); assert.deepEqual(library.library.preferences.interest_ids, ['together']);
+  assert.deepEqual(library.lessons.map(l => l.id), [lesson_id]); assert.equal(library.library.reading_history.length, 1);
+  const restored = (await next.call('library/reading?reading_id=' + reading_id)).value;
+  assert.deepEqual(restored.view, saved.current_view); assert.equal((await next.call('library/position', position)).value.replayed, true);
+  assert.equal((await next.call('library/open', open)).value.current_view.reading.revision, 1);
+  assert.deepEqual((await next.call('session?session_id=' + started.session.session_id)).value, before);
+  assert.equal(reopened.diagnostics().provider_enabled, false);
+});

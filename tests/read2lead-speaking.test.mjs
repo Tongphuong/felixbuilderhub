@@ -544,14 +544,15 @@ test('speaking endpoint runs Whisper inside Cloudflare first, OpenAI as fallback
   // OpenAI kept as fallback when the AI binding is absent or errors.
   assert.match(speakingEndpoint, /whisper-1/);
   assert.match(speakingEndpoint, /api\.openai\.com\/v1\/audio\/transcriptions/);
-  assert.match(speakingEndpoint, /OPENAI_API_KEY/);
-  assert.match(speakingEndpoint, /READ2LEAD_OPENAI_API_KEY/);
+  assert.match(speakingEndpoint, /resolveOpenAIApiKey\(env\)/);
   assert.doesNotMatch(speakingEndpoint, /groq/i);
 });
 
 test('resolveOpenAIApiKey accepts either env var name', () => {
   assert.equal(resolveOpenAIApiKey({ OPENAI_API_KEY: 'a' }), 'a');
   assert.equal(resolveOpenAIApiKey({ READ2LEAD_OPENAI_API_KEY: 'b' }), 'b');
+  assert.equal(resolveOpenAIApiKey({ OPENAI_API_KEY: ' primary ', READ2LEAD_OPENAI_API_KEY: 'fallback' }), 'primary');
+  assert.equal(resolveOpenAIApiKey({ READ2LEAD_OPENAI_API_KEY: ' fallback ' }), 'fallback');
   assert.equal(resolveOpenAIApiKey({}), '');
 });
 

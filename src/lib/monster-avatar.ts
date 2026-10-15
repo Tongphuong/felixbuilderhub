@@ -106,15 +106,7 @@ const SLOT_LABELS_VI: Record<MonsterSlot, string> = {
 
 const loadedImages = new Set<string>();
 
-function w7DecorationsEnabled(): boolean {
-  if (W7_BUILD_ENABLED) return true;
-  if (typeof window === 'undefined') return false;
-  try {
-    return window.localStorage.getItem('PUBLIC_R2L_W7') === '1';
-  } catch {
-    return false;
-  }
-}
+function w7DecorationsEnabled(): boolean { return true; }
 
 function partFile(slot: MonsterSlot, partId: string): string | null {
   const parts = MONSTER_MANIFEST[slot] || [];
@@ -368,9 +360,9 @@ function injectMonsterStyles() {
     .r2l-monster__wings {
       position: absolute;
       left: 50%;
-      top: 18%;
-      width: 130%;
-      height: 75%;
+      top: -42%;
+      width: 170%;
+      height: 150%;
       translate: -50% 0;
       z-index: 0;
       pointer-events: none;
@@ -398,18 +390,18 @@ function injectMonsterStyles() {
     }
     .r2l-monster__hat {
       position: absolute;
-      top: calc(-6% + var(--hat-offset-y, 0px));
+      top: calc(-24% + var(--hat-offset-y, 0px));
       left: 50%;
-      width: 52%;
-      height: 38%;
+      width: 38%;
+      height: 28%;
       translate: -50% 0;
       z-index: 3;
       pointer-events: none;
     }
     .r2l-monster--small .r2l-monster__hat {
-      width: 58%;
-      height: 42%;
-      top: calc(-10% + var(--hat-offset-y, 0px));
+      width: 38%;
+      height: 28%;
+      top: calc(-24% + var(--hat-offset-y, 0px));
     }
     .r2l-monster__pet {
       position: absolute;
@@ -422,6 +414,8 @@ function injectMonsterStyles() {
       animation: r2l-pet-bob 3s ease-in-out infinite;
     }
     .r2l-monster--small .r2l-monster__pet { display: none; }
+    .r2l-monster:not(.r2l-monster--animate) .r2l-monster__wings-img,
+    .r2l-monster:not(.r2l-monster--animate) .r2l-monster__pet { animation: none; }
     @media (prefers-reduced-motion: reduce) {
       .r2l-monster__pet { animation: none !important; }
       .r2l-monster__wings-img { animation: none !important; }
@@ -603,7 +597,7 @@ export function renderMonster(
   const size = opts.size || 'large';
   const withCosmetics = opts.withCosmetics !== false;
   const compact = opts.compactCosmetics ?? size === 'small';
-  const animate = opts.animate !== false;
+  const animate = opts.animate !== false && !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   container.innerHTML = '';
   container.className = [
     'r2l-monster',
@@ -653,11 +647,9 @@ export function renderMonster(
   if (!compact && config.pet) {
     renderTintedCosmetic(container, 'pet', config.pet, 'r2l-monster__pet');
   }
-  // V5 hat slot disabled — Game-icons.net silhouettes contain person/head shapes that
-  // clash with monster face. Defer until proper hat-only art curated.
-  // if (config.hat) {
-  //   renderTintedCosmetic(container, 'hat', config.hat, 'r2l-monster__hat');
-  // }
+  if (withCosmetics && config.hat) {
+    renderTintedCosmetic(container, 'hat', config.hat, 'r2l-monster__hat');
+  }
 
   if (withCosmetics && COSMETIC_OVERLAYS_ENABLED) {
     const hatItem = getEquippedItem('hat', opts.equipped, opts.equippedDisplay);

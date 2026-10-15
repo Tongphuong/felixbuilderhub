@@ -1,0 +1,9 @@
+{
+  "format": 1,
+  "purpose": "read2lead-local-synthetic-editor",
+  "accounts": [{
+    "editor_id": "synthetic-editor-qa",
+    "display_name": "Biên tập mẫu",
+    "access_secret": "DEMO-EDITOR-LOCAL-ONLY"
+  }]
+}

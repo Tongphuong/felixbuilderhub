@@ -1,0 +1,221 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+import {createPreviewApp,durableSqlAdapter} from '../cloudflare/read2lead-private-preview/app.mjs';
+import {PrivateStoryStore} from '../scripts/lib/read2lead-story-store.mjs';
+import {initializeSyntheticTarget} from '../scripts/read2lead-local-qa.mjs';
+import {fixtureAssets,fixturePackage,seedFixturePackages} from './fixtures/read2lead-self-learn/publisher-test-tools.mjs';
+import {openPublisherStore} from '../scripts/lib/read2lead-publisher-import.mjs';
+import {initializePublisherCatalogue} from '../scripts/lib/read2lead-publisher-catalogue.mjs';
+import {preparePreviewPackage} from '../scripts/read2lead-story-preview-package.mjs';
+import pagesEntry from '../cloudflare/read2lead-private-preview/pages-worker.mjs';
+import {makeStoredBookPack} from './helpers/book-pack-fixture.mjs';
+import {PRIVATE_SITE_CODE} from '../functions/lib/read2lead/private-site.mjs';
+const origin='https://preview.example',key='fabricated-preview-key-only-1234567890123456';
+const sha=value=>createHash('sha256').update(value).digest('hex');
+test('Pages entry forwards the original request to the fixed private backend and fails closed without binding',async()=>{
+ const request=new Request('https://qa.example/private-rehearsal/login');let calls=0;
+ const env={R2L_PREVIEW_STATE:{idFromName:name=>{assert.equal(name,'private-adult-preview-v1');return 'fixed-id';},get:id=>{assert.equal(id,'fixed-id');return {fetch:actual=>{calls++;assert.equal(actual,request);return new Response('login',{status:200});}};}}};
+ assert.equal((await pagesEntry.fetch(request,env)).status,200);assert.equal(calls,1);
+ assert.equal((await pagesEntry.fetch(request,{})).status,503);
+});
+async function setup(t){
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'cloud-preview-')),dataRoot=path.join(root,'state');initializeSyntheticTarget(dataRoot);
+ const store=new PrivateStoryStore(dataRoot),pkg=await fixturePackage(fixtureAssets(root));
+ let clock=1800000000000;const now=()=>clock;
+ const manifest=JSON.stringify({format:'read2lead-private-cloud-preview-v1',package:pkg,publicAssets:['/scripts/recorder.js'],scriptHashes:['sha256-fixture']});
+ const requested=[];
+ const assets={fetch:async request=>{
+   const url=new URL(request.url);requested.push({path:url.pathname,range:request.headers.get('range'),cookie:request.headers.get('cookie')});
+   const body=url.pathname==='/__private/package.json'?manifest:url.pathname.startsWith('/__private/media/')?fs.readFileSync(path.join(root,path.basename(url.pathname))):'fixture-asset';
+   return new Response(body,{headers:{'Content-Type':'application/octet-stream'}});
+ }};
+ const config={store,assets,accessKey:key,packageSha256:sha(manifest),now};
+ const app=createPreviewApp(config);
+ t.after(()=>{store.close();fs.rmSync(root,{recursive:true,force:true});});
+ const login=async(secret=key,extra={})=>app(new Request(origin+'/private-rehearsal/login',{method:'POST',headers:{Origin:origin,'Content-Type':'application/x-www-form-urlencoded',...extra},body:new URLSearchParams({access_secret:secret})}));
+ const auth=async()=>{const response=await login();assert.equal(response.status,303);return response.headers.get('set-cookie').split(';')[0];};
+ return {root,store,pkg,app,login,auth,requested,config,manifest:JSON.parse(manifest),advance:()=>{clock+=900001;}};
+}
+test('all private content requires login; missing configuration fails closed',async t=>{
+ const s=await setup(t);
+ for(const route of ['/read2lead/lesson/?mission=story-mission-v1','/__private/package.json','/scripts/recorder.js'])assert.equal((await s.app(new Request(origin+route))).status,303);
+ assert.equal((await s.app(new Request(origin+'/api/read2lead-story-media/secret.mp3'))).status,401);
+ assert.equal(s.requested.length,0);
+ assert.equal((await createPreviewApp({...s.config,accessKey:''})(new Request(origin+'/private-rehearsal/login'))).status,503);
+ assert.equal((await s.login('wrong')).status,401);
+ assert.equal((await s.login(key,{Origin:'https://attacker.example'})).status,403);
+});
+test('secure cookie authenticates only its origin and expires; raw package and unrelated APIs stay denied',async t=>{
+ const s=await setup(t),response=await s.login(),header=response.headers.get('set-cookie');
+ for(const flag of ['HttpOnly','Secure','SameSite=Strict','Path=/','Max-Age=900'])assert.ok(header.includes(flag));
+ const cookie=header.split(';')[0],get=url=>s.app(new Request(url,{headers:{Cookie:cookie}}));
+ assert.equal((await get(origin+'/api/read2lead-story-session')).status,200);
+ assert.equal((await get('https://other.example/api/read2lead-story-session')).status,401);
+ assert.equal((await get(origin+'/__private/package.json')).status,404);
+ assert.equal((await get(origin+'/api/read2lead-progress')).status,404);
+ assert.equal((await get(origin+'/api/read2lead-story-turn')).status,503);
+ s.advance();assert.equal((await get(origin+'/api/read2lead-story-session')).status,401);
+});
+test('protected media preserves range; assets never receive cookies; reader keeps CSP hashes and blob audio',async t=>{
+ const s=await setup(t),cookie=await s.auth();
+ const result=await s.app(new Request(origin+'/api/read2lead-story-media/'+s.pkg.assets[0].object_key,{headers:{Cookie:cookie,Range:'bytes=0-100'}}));
+ assert.equal(result.status,206);assert.equal(result.headers.get('cache-control'),'private, no-store');
+ assert.equal(result.headers.get('content-range'),`bytes 0-${Math.min(100,s.pkg.assets[0].bytes-1)}/${s.pkg.assets[0].bytes}`);
+ assert.equal((await result.arrayBuffer()).byteLength,Math.min(101,s.pkg.assets[0].bytes));
+ assert.equal(s.requested.at(-1).range,null);assert.equal(s.requested.at(-1).cookie,null);
+ assert.ok(result.headers.get('content-security-policy').includes("'sha256-fixture'"));
+ assert.ok(result.headers.get('content-security-policy').includes("media-src 'self' blob:"));
+ assert.equal((await s.app(new Request(origin+'/scripts/recorder.js?v=123abc',{headers:{Cookie:cookie}}))).status,200);
+ assert.equal((await s.app(new Request(origin+'/api/read2lead-story-media/not-allowed.mp3',{headers:{Cookie:cookie}}))).status,404);
+ for(const range of ['bytes=999999999-','bytes=-0','bytes=10-2','bytes=0-1,4-5'])assert.equal((await s.app(new Request(origin+'/api/read2lead-story-media/'+s.pkg.assets[0].object_key,{headers:{Cookie:cookie,Range:range}}))).status,416);
+});
+test('package integrity is checked before content and a changed secret invalidates saved cookies',async t=>{
+ const s=await setup(t),cookie=await s.auth();
+ const bad=createPreviewApp({...s.config,packageSha256:'0'.repeat(64)});
+ assert.equal((await bad(new Request(origin+'/api/read2lead-story-session',{headers:{Cookie:cookie}}))).status,503);
+ const rotated=createPreviewApp({...s.config,accessKey:key+'rotated'});
+ assert.equal((await rotated(new Request(origin+'/api/read2lead-story-session',{headers:{Cookie:cookie}}))).status,401);
+});
+test('session events persist across app recreation without access to production or accepting supplied scores',async t=>{
+ const s=await setup(t),cookie=await s.auth();
+ const post=(app,body)=>app(new Request(origin+'/api/read2lead-story-session',{method:'POST',headers:{Cookie:cookie,Origin:origin,'Content-Type':'application/json'},body:JSON.stringify(body)}));
+ const opened=await (await post(s.app,{action:'open',storyId:s.pkg.lesson.id,contentVersion:s.pkg.lesson.version})).json();
+ const input={action:'event',sessionId:opened.session.id,requestId:'test-read',revision:0,event:{type:'read_complete'}};
+ assert.equal((await (await post(s.app,input)).json()).session.stage,'understand');
+ const restarted=createPreviewApp(s.config);
+ assert.equal((await (await post(restarted,input)).json()).replayed,true);
+ assert.equal((await post(restarted,{...input,requestId:'bad-score',event:{type:'award',diamonds:1000}})).status,409);
+ assert.equal(s.store.db.prepare('SELECT COUNT(*) AS n FROM story_test_wallets').get().n,0);
+});
+test('saved reader URL reloads the page and resumes its authenticated session',async t=>{
+ const s=await setup(t),cookie=await s.auth();
+ const post=body=>s.app(new Request(origin+'/api/read2lead-story-session',{method:'POST',headers:{Cookie:cookie,Origin:origin,'Content-Type':'application/json'},body:JSON.stringify(body)}));
+ const opened=await (await post({action:'open',storyId:s.pkg.lesson.id,contentVersion:s.pkg.lesson.version})).json();
+ const saved=await (await post({action:'event',sessionId:opened.session.id,requestId:'read-before-reload',revision:0,event:{type:'read_complete'}})).json();
+ const app=createPreviewApp(s.config),get=route=>app(new Request(origin+route,{headers:{Cookie:cookie}}));
+ const query='mission=story-mission-v1&session='+saved.session.id;
+ assert.equal((await get('/read2lead/lesson/?'+query)).status,200);
+ assert.equal(s.requested.at(-1).path,'/read2lead/lesson/index.html');
+ assert.equal((await get('/read2lead/lesson/?session='+saved.session.id+'&mission=story-mission-v1')).status,200);
+ const resumed=await (await get('/api/read2lead-story-session?sessionId='+saved.session.id)).json();
+ assert.deepEqual(resumed.session,saved.session);
+ for(const bad of [query+'&session=other',query+'&mission=other',query+'&unknown=1','mission=story-mission-v1&session=','mission=story-mission-v1&session=%3Cscript%3E','mission=other&session='+saved.session.id])
+  assert.equal((await get('/read2lead/lesson/?'+bad)).status,404);
+});
+test('login throttling survives app recreation and streaming body size is bounded',async t=>{
+ const s=await setup(t);
+ for(let i=0;i<20;i++)assert.equal((await s.login('wrong')).status,401);
+ const app=createPreviewApp(s.config);
+ assert.equal((await app(new Request(origin+'/private-rehearsal/login',{method:'POST',headers:{Origin:origin,'Content-Type':'application/x-www-form-urlencoded'},body:'access_secret='+key}))).status,429);
+ s.advance();assert.equal((await s.login('a'.repeat(5000))).status,413);
+});
+test('Cloudflare SQL adapter consumes cursors and invokes the actual transaction wrapper',async t=>{
+ const s=await setup(t);let transactions=0;
+ const storage={sql:{exec:(sql,...args)=>{
+   const rows=sql.startsWith('SELECT')?s.store.db.prepare(sql).all(...args):(s.store.db.prepare(sql).run(...args),[]);
+   return {toArray:()=>rows,one:()=>{assert.equal(rows.length,1);return rows[0];}};
+ }},transactionSync:fn=>{transactions++;return s.store.transaction(fn);}};
+ const adapter=durableSqlAdapter(storage);
+ assert.throws(()=>adapter.transaction(()=>{adapter.db.prepare('INSERT INTO preview_login_limits VALUES(?,?)').run(123,1);throw Error('rollback');}),/rollback/);
+ assert.equal(adapter.db.prepare('SELECT * FROM preview_login_limits WHERE window=?').get(123),undefined);
+ assert.equal(transactions,1);
+ adapter.db.prepare('INSERT INTO preview_login_limits VALUES(?,?)').run(10,1);
+ adapter.db.prepare('INSERT INTO preview_login_limits VALUES(?,?)').run(20,2);
+ assert.deepEqual(adapter.db.prepare('SELECT window FROM preview_login_limits WHERE window>? ORDER BY window').all(0).map(r=>r.window),[10,20]);
+});
+test('packager pins source/media/server code and refuses changed content or overwriting output',async t=>{
+ const s=await setup(t),publisherDb=path.join(s.root,'publisher.sqlite'),db=openPublisherStore(publisherDb,{create:true});initializePublisherCatalogue(db);await seedFixturePackages(db,[s.pkg]);
+ const row=db.prepare('SELECT package_sha256 FROM publisher_packages').get();db.close();
+ const distRoot=path.join(s.root,'build');fs.mkdirSync(path.join(distRoot,'read2lead/lesson'),{recursive:true});fs.mkdirSync(path.join(distRoot,'_astro'));
+ fs.writeFileSync(path.join(distRoot,'read2lead/lesson/index.html'),'<main id="main" data-r2l-w1-ssr="1"></main><script>const mode="story-mission-v1";</script>');
+ const assetRoot=s.root;
+ const options={plan:{publisherDb,sourceId:s.pkg.lesson.source.source_id,contentVersion:s.pkg.lesson.version,packageSha256:row.package_sha256},distRoot,assetRoot,output:path.join(s.root,'prepared')};
+ const result=preparePreviewPackage(options);assert.equal(result.aiEnabled,false);assert.equal(result.productionBindings,false);
+ assert.ok(result.files.some(f=>f.file.endsWith('/story-store.mjs')));
+ assert.equal(fs.existsSync(path.join(options.output,'.dev.vars')),false);
+ assert.throws(()=>preparePreviewPackage(options),/output_refused/);
+ const changed={...options,output:path.join(s.root,'changed'),plan:{...options.plan,packageSha256:'0'.repeat(64)}};
+ assert.throws(()=>preparePreviewPackage(changed),/package_changed/);assert.equal(fs.existsSync(changed.output),false);
+ for(const page of ['read2lead','ho-so','speak-up','shadowing','read2lead/speaking','read2lead/companion','read2lead/shop','read2lead/gifts','read2lead/leaderboard','read2lead/vinh-danh','read2lead/games','r2l/start']){
+  fs.mkdirSync(path.join(distRoot,page),{recursive:true});fs.writeFileSync(path.join(distRoot,page,'index.html'),'<body>Existing page</body>');
+ }
+ for(const dir of ['assets/monsters','assets/minny','assets/cosmetics','assets/effects','assets/frames','sfx/r2l'])fs.mkdirSync(path.join(distRoot,dir),{recursive:true});
+ fs.writeFileSync(path.join(distRoot,'sfx/r2l/success-1.mp3'),'synthetic sound bytes');
+ const fullOutput=path.join(s.root,'prepared-existing');
+ const full=preparePreviewPackage({...options,existingSite:true,output:fullOutput});
+ assert.ok(full.files.some(f=>f.file==='source/functions/lib/read2lead/private-content.mjs'));
+ assert.equal(fs.readFileSync(path.join(fullOutput,'assets/sfx/r2l/success-1.mp3'),'utf8'),'synthetic sound bytes');
+ assert.ok(JSON.parse(fs.readFileSync(path.join(fullOutput,'assets/__private/package.json'),'utf8')).publicAssets.includes('/sfx/r2l/success-1.mp3'));
+});
+
+function bundleApp(s,fields) {
+ const manifest=JSON.stringify({...s.manifest,...fields});
+ return createPreviewApp({...s.config,packageSha256:sha(manifest),assets:{fetch:request=>
+  new URL(request.url).pathname==='/__private/package.json'?new Response(manifest):s.config.assets.fetch(request)}});
+}
+test('hashed preview manifest preserves both collections and lists only assigned story sessions',async t=>{
+ for(const collection of [undefined,'one-story-a-day']) {
+  const s=await setup(t),cookie=await s.auth();
+  const second=await fixturePackage(s.pkg.assets,{index:1});
+  const app=bundleApp(s,{existingSite:true,packages:[s.pkg,second],legacyBooks:[makeStoredBookPack('book_123',{pages:6,sentencesPerPage:5})]});
+  const headers={Cookie:cookie,Origin:origin,'Content-Type':'application/json'};
+  const response=await app(new Request(origin+'/api/generate-read2lead-pack',{method:'POST',headers,body:JSON.stringify({access_code:PRIVATE_SITE_CODE,collection})}));
+  const value=await response.json();assert.equal(response.status,200,JSON.stringify(value));
+  assert.equal(value.current_pack.schema_version,collection?'story-mission-v1':2);
+  const list=await app(new Request(origin+'/api/read2lead-story-session',{headers:{Cookie:cookie,'X-Read2Lead-Code':PRIVATE_SITE_CODE}}));
+  assert.equal(list.status,200);assert.deepEqual((await list.json()).lessons.map(l=>l.id),collection?[s.pkg.lesson.id]:[]);
+ }
+});
+test('existing-site API awaits asynchronous catalogue configuration and caches the initialized API',async t=>{
+ const s=await setup(t),cookie=await s.auth();let loads=0;
+ s.config.voiceConfigurationFor=async manifest=>{loads++;await Promise.resolve();assert.equal(manifest.existingSite,true);return {config:null,status:{enabled:false,reason:'test-no-spend'}};};
+ const app=bundleApp(s,{existingSite:true,packages:[s.pkg]});
+ const headers={Cookie:cookie,Origin:origin,'Content-Type':'application/json','X-Read2Lead-Code':PRIVATE_SITE_CODE};
+ const created=await app(new Request(origin+'/api/generate-read2lead-pack',{method:'POST',headers,body:JSON.stringify({access_code:PRIVATE_SITE_CODE,collection:'one-story-a-day'})}));
+ assert.equal(created.status,200);assert.equal((await created.json()).current_pack.schema_version,'story-mission-v1');
+ const listed=await app(new Request(origin+'/api/read2lead-story-session',{headers}));assert.equal(listed.status,200);assert.equal((await listed.json()).lessons.length,1);assert.equal(loads,1);
+});
+test('second story media uses its exact bytes and ranges; private source stays inaccessible',async t=>{
+ const s=await setup(t),cookie=await s.auth(),assets=structuredClone(s.pkg.assets),audio=assets.find(a=>a.kind==='audio');
+ const bytes=fs.readFileSync(path.join(s.root,audio.object_key));bytes[bytes.length-1]=1;
+ audio.sha256=sha(bytes);audio.object_key=audio.sha256+'.wav';fs.writeFileSync(path.join(s.root,audio.object_key),bytes);
+ const second=await fixturePackage(assets,{index:1}),app=bundleApp(s,{packages:[s.pkg,second]});
+ const media='/api/read2lead-story-media/'+audio.object_key;
+ assert.equal((await app(new Request(origin+media))).status,401);
+ const full=await app(new Request(origin+media,{headers:{Cookie:cookie}}));assert.equal(full.status,200);assert.equal(sha(Buffer.from(await full.arrayBuffer())),audio.sha256);
+ const part=await app(new Request(origin+media,{headers:{Cookie:cookie,Range:'bytes=-16'}}));
+ assert.equal(part.status,206);assert.deepEqual(Buffer.from(await part.arrayBuffer()),bytes.subarray(-16));
+ assert.equal((await app(new Request(origin+'/__private/package.json',{headers:{Cookie:cookie}}))).status,404);
+ const unknown=await app(new Request(origin+'/api/read2lead-story-session',{method:'POST',headers:{Cookie:cookie,Origin:origin,'Content-Type':'application/json'},body:JSON.stringify({action:'open',storyId:'not-bundled',contentVersion:'1.2.1'})}));
+ assert.equal(unknown.status,409);
+ const listed=await (await app(new Request(origin+'/api/read2lead-story-session',{headers:{Cookie:cookie}}))).json();
+ assert.equal(listed.lessons.length,2);
+});
+test('authenticated requests fail closed for duplicate or conflicting manifest packages',async t=>{
+ const s=await setup(t),cookie=await s.auth(),conflict=await fixturePackage(s.pkg.assets,{index:1});conflict.assets[0].bytes++;
+ for(const packages of [[s.pkg,s.pkg],[s.pkg,conflict],[]]) {
+  const app=bundleApp(s,{packages});
+  const result=await app(new Request(origin+'/api/read2lead-story-session',{headers:{Cookie:cookie}}));
+  assert.equal(result.status,503);
+ }
+});
+
+test('only original-book candidates allow the fixed media host, never for scripts',async t=>{
+ const s=await setup(t),cookie=await s.auth();
+ for(const fields of [{},{existingSite:true},{legacyBooks:[makeStoredBookPack()]},{existingSite:true,legacyBooks:[makeStoredBookPack()]}]) {
+  const app=bundleApp(s,fields),response=await app(new Request(origin+'/scripts/recorder.js',{headers:{Cookie:cookie}}));
+  assert.equal(response.status,200);const csp=response.headers.get('content-security-policy');
+  const rules=Object.fromEntries(csp.split(';').map(rule=>rule.trim().split(/\s+/)).filter(parts=>parts[0]).map(([name,...values])=>[name,values]));
+  const expected=fields.existingSite===true&&Boolean(fields.legacyBooks?.length);
+  for(const name of ['img-src','media-src','connect-src'])assert.equal(rules[name].includes('https://audio.felixbuilderhub.com'),expected);
+  assert.equal(rules['script-src'].includes('https://audio.felixbuilderhub.com'),false);
+  assert.equal(rules['media-src'].includes('data:'),true,'existing SpeakUp uses inline returned voice audio');
+  for(const name of ['script-src','connect-src','default-src'])assert.equal(rules[name].includes('data:'),false);
+  assert.deepEqual(rules['default-src'],["'self'"]);
+  assert.equal(csp.includes('*'),false);assert.equal(csp.includes('unsafe-eval'),false);
+ }
+});

@@ -1,0 +1,1366 @@
+---
+/**
+ * SpeakUp Shadowing — re-skinned to the APPROVED design of record:
+ * design_handoff_speakup_shadowing/README.md + its 8 *.dc.html boards (the
+ * founder's own Claude Design export). Full-screen app shell
+ * (SpeakUpAppLayout), no marketing chrome — same convention as speak-up.astro.
+ *
+ * This page is the DOM/wiring layer only. All decision logic lives in the
+ * five shadowing-*.mjs modules under src/lib/ (read, never edited here):
+ *   - shadowing-engine.mjs   session state machine (phase/streak/stars)
+ *   - shadowing-player.mjs   YouTube IFrame API wrapper (segment playback)
+ *   - shadowing-speech.mjs   SpeechRecognition wrapper (live word-lighting)
+ *   - shadowing-score.mjs    lightWords() for karaoke chips + PASS_PERCENT
+ *   - shadowing-content.mjs  validateShadowingVideo() for content JSON
+ *
+ * Content: every src/data/shadowing/*.json is validated at BUILD time
+ * (Astro frontmatter runs on the server/CLI, so this never ships an
+ * unvalidated file); invalid files are skipped with a console.warn, never
+ * thrown. Zero valid videos -> the picker shows a friendly empty-state
+ * (handled client-side once the (possibly empty) video list reaches the
+ * page as JSON).
+ *
+ * ---------------------------------------------------------------------
+ * RECORDED MOCK DEVIATIONS (rule-20) -- from the build report to Elon/
+ * Phương, kept here verbatim so any reviewer can always find them in-repo.
+ * None of these are silent:
+ * ---------------------------------------------------------------------
+ * 1. Video posters: real YouTube thumbnails (i.ytimg.com/vi/<id>/hqdefault.jpg)
+ *    replace the boards' striped illustrated placeholders — expected, real
+ *    content varies per video.
+ * 2. "Tonight's featured" card: content schema has no featured flag, so the
+ *    first video in the sorted list is marked -- arbitrary, not
+ *    founder-specified.
+ * 3. The video region is a real 16:9 YouTube iframe, not the boards'
+ *    striped-placeholder art — expected per the handoff's own Fidelity note.
+ * 4. Boards 03/05/06 show no player at all (full Minny takeover); this build
+ *    keeps the paused player visible behind the interaction column
+ *    throughout the session instead of tearing it down each phase, so
+ *    "Nghe lại câu" replay never requires remounting the iframe.
+ * 5. Board 07 "Xem trọn video": the board draws one static state; tapping
+ *    it plays the full video inline in the same player area (button
+ *    becomes "Đang phát video…") since no second screen is drawn for
+ *    during-playback.
+ * 6. Star field: the boards hand-place a unique 14-dot twinkle pattern per
+ *    individual frame (390/820/1280, each screen). This build ships ONE
+ *    reusable 14-star field (.shd-starfield, same colors/sizes/glow/twinkle
+ *    timing) behind every screen instead of a bespoke pattern per frame —
+ *    a deliberate, visually-equivalent simplification, not a fidelity gap
+ *    in color/motion.
+ * 7. Tablet 820 / bespoke desktop layouts: the STAGE screen (02-07) widens
+ *    at 1024px+ into the boards' video-left/interaction-right two-column
+ *    layout (the existing r20 responsive scaffold, colors refreshed to the
+ *    new tokens). The gate/picker screen (board 01) NOW gets a tablet-768
+ *    3-column poster grid + a widened, centered 520px code card (p6 item 2)
+ *    — close to exact, since the board's own tablet-820 frame ALSO stacks
+ *    the code card above the picker in one column, same as this build's
+ *    sequential #shd-gate-screen / #shd-picker-screen. What is still NOT
+ *    reproduced: the board's desktop-1280 code-card-beside-picker SPLIT
+ *    view — see #16 below for why, and what ships instead. Gap narrowed,
+ *    not fully closed.
+ * 8. Board 08's fake browser chrome (traffic-light dots + URL bar) is
+ *    correctly NOT reproduced — presentation device for the design deck,
+ *    not real product chrome (same category as the illustrated video art).
+ * 9. Word-tile "correct" text color: uses file 04's own shipped --shd-on-gold
+ *    default (#1b3a57, bright-theme) rather than the README prose recipe's
+ *    "#132c42" — file 04's script is the literal approved-default source of
+ *    truth for the theme tokens, so its shipped value wins over the prose
+ *    where the two disagree. Recorded, deliberate.
+ * 10. 🔥 0 calm display: shown proactively in the HUD the moment
+ *     record_exhausted is reached (before the tap that triggers the
+ *     engine's actual streak reset), so the HUD never flashes a stale
+ *     higher number.
+ * 11. Resume edge case: a browser refresh mid-retry-attempt loses the exact
+ *     lit/warm/off word pattern from the last graded attempt (only
+ *     stars/streak persist in the snapshot) -- resumed retry screens show
+ *     words reset to "off" rather than the last settled pattern. Live-
+ *     session flow is unaffected.
+ * 12. Content JSONs: src/data/shadowing/*.json may not exist yet on a given
+ *     branch. The empty-state path is implemented and structurally tested
+ *     regardless.
+ * 13. Small duplication: shadowing-engine.mjs's internal questionForSegment()
+ *     lookup isn't exported, so the identical 3-line pure lookup is
+ *     replicated in this page (read-only, not a rules change) rather than
+ *     editing src/lib.
+ * 14. Unplayable-video "Chọn phim khác" CTA (new this pass, board 01 side
+ *     frame): dismisses the notice card back to the (already-fresh) picker
+ *     grid rather than a distinct navigation — we're already on the picker
+ *     screen when it fires, so there is nowhere else to route it.
+ * 15. Cream-soft fix (p6, Buffet finding): the gate subtitle
+ *     ("Tấm vé vào rạp của Minny đây!"), the watch-screen caption ("Minny
+ *     cũng đang xem cùng con"), and the "🔊 Nghe lại câu" replay pill now
+ *     use the boards' exact --shd-cream-soft #e8d9b8 instead of the darker
+ *     --cream-muted #d9c7a4 that was substituted in undisclosed. Gap
+ *     closed (Elon ruling: flat #e8d9b8 wins where a board's own phone
+ *     frame disagrees with its tablet/desktop frames). The round 44px
+ *     back-circle "‹" nav glyph this same fix flagged as missing is now
+ *     built — see #17.
+ * 16. (p6 item 2) Board 01's tablet/desktop frames draw the code card and
+ *     video picker COMBINED in one view; this build keeps them as the
+ *     existing sequential two-screen flow instead of merging (the real
+ *     per-class video list only exists once a code has validated — showing
+ *     the picker before that has nothing real to render, and merging would
+ *     mean bypassing the code gate at wide widths, a behavior change no one
+ *     asked for). Each screen is widened independently instead: 768px+ gets
+ *     the board's literal 520px-wide centered code card and 3-column poster
+ *     grid (a near-exact match, since the board's own tablet frame stacks
+ *     rather than splits); 1024px+ only grows the shared container further
+ *     (960px) — the board's literal 440px-code-card / 2-column-picker split
+ *     numbers are not reproduced because they were sized for the merged
+ *     layout this build doesn't have. Flagged to Elon rather than guessed:
+ *     whether to merge gate+picker into one desktop view is a real product
+ *     decision (it would mean previewing/bypassing the code step), not a
+ *     styling call.
+ * 17. (p6 final item, Elon ruling: this was a real functional gap, not a
+ *     recolor) Added the round 44px back-circle "‹" nav button
+ *     (#shd-stage-back-btn) to the stage HUD, per boards 02/03/04/06 —
+ *     recipe copied from file 04's shipped :root{--shd-*} script (the
+ *     established source-of-truth precedent from deviation #9), since
+ *     files 02/03/06's own phone frames disagree with file 04 and with
+ *     their own tablet/desktop frames on this glyph's border/bg (same
+ *     family of drift as #15). It reuses the existing goBackToPicker()
+ *     path (teardownPlayer() + showPicker()), now with an explicit
+ *     saveSnapshot() call FIRST (teardownPlayer() nulls the session/video
+ *     saveSnapshot() reads) so stars are always current on the picker
+ *     regardless of which phase the kid exited from. Disabled (not
+ *     hidden, so the header doesn't jump) during the 'listen' AND 'wait'
+ *     subviews (both grading-pipeline states, board 06's 429/outage side
+ *     card included, not just the visually-blurred 'listen' one) — and
+ *     hidden entirely on the video-complete screen, which draws no such
+ *     glyph in board 07 (the existing quiet "← Chọn video khác" link
+ *     stays that screen's only back affordance).
+ *
+ *     Adding a real mid-session exit made three previously-unreachable
+ *     async races reachable (a fetch/timeout resolving after the kid has
+ *     already left resumes into a null session) -- all three are now
+ *     guarded, mirroring the `if (session && session!.phase === 'record')`
+ *     shape showWait()'s own resume timeout already used: the correct-
+ *     answer 900ms auto-advance timeout, submitRecording()'s entry (called
+ *     from stopRecording(), which can resolve after a torn-down session)
+ *     and its post-fetch resume, and startVideo()'s post-ensurePlayer()
+ *     resume (which also destroys the just-created orphan YouTube player
+ *     so the next video picked doesn't inherit it).
+ *
+ *     Buffet's closing review on the first cut (9c34ef7) constructed a real
+ *     HIGH against the submitRecording() guard: it compared currentVideo,
+ *     but `videos` is parsed once at page load, so a picker card for the
+ *     SAME video closes over the same stable object -- exiting via
+ *     onUnplayable() (a teardown path that, unlike goBackToPicker(), is NOT
+ *     click-gated) or the header button, then re-picking that identical
+ *     video, left `currentVideo === videoAtStart` true even though session
+ *     was a brand-new object, so the stale fetch could write a phantom
+ *     SPEECH_SCORED into the fresh session!. Fixed by capturing the SESSION
+ *     OBJECT itself (`sessionAtStart`) and guarding on identity
+ *     (`session !== sessionAtStart`) -- reduce() always returns a new
+ *     object, so this is the only correct proxy for "still this exact
+ *     attempt," including across a same-video re-entry; a video/session-id
+ *     comparison would NOT catch this (ids are equal; only the object
+ *     identity changes). onUnplayable() also gained its own saveSnapshot()
+ *     call (it bypasses goBackToPicker() entirely, so it needed the same
+ *     fix independently) -- the "stars always current regardless of exit
+ *     path" claim above is now literally true for every exit, not just the
+ *     goBackToPicker() ones.
+ *
+ * v2-era items now resolved by this reskin (no longer deviations):
+ *  - The picker is now the boards' 2-column poster grid (16:10 thumbnail
+ *    on top, title+level+stars below), replacing the prior horizontal
+ *    list-row card style.
+ *  - The gate card, HUD pills, 12-bulb strip, word tiles, mic coin, CTAs,
+ *    and results panels are rebuilt to the boards' literal colors/radii/
+ *    shadows/fonts (Baloo 2 display, Manrope eyebrows, Inter body) instead
+ *    of the prior "night arcade" palette approximation.
+ *  - The recording dot moved off the mic button onto the caption line
+ *    (next to "Đang ghi âm…"), matching the boards; the mic coin itself is
+ *    gold in every state — the prior build incorrectly tinted it red/orange
+ *    even at idle.
+ *  - The BẢN NHÁP draft ribbon moved from the thumbnail's top-right to
+ *    top-left, per board 01.
+ *
+ * Buffet-A fix round (prior pass, still applies):
+ *  - F1 (HIGH): the progress strip renders exactly 12 milestone bulbs via
+ *    milestoneBulbStates() below, regardless of segment count.
+ *  - F4: MAX_SECONDS raised 10 -> 12 (Elon ruling, Buffet-confirmed safe).
+ *  - Network-drop guard: a thrown fetch (res === null) routes to the same
+ *    gentle "Nghỉ một chút nhé!" wait as a 429/asr_outage, instead of
+ *    silently scoring 0 and burning an attempt.
+ */
+import SpeakUpAppLayout from '../layouts/SpeakUpAppLayout.astro';
+import { r2lRecorderScriptSrc } from '../scripts/r2l-recorder-script.mjs';
+import { validateShadowingVideo } from '../lib/shadowing-content.mjs';
+
+const r2lRecorderSrc = r2lRecorderScriptSrc();
+
+const rawModules = import.meta.glob('../data/shadowing/*.json', { eager: true });
+const videos: { title_vi: string }[] = [];
+for (const [path, mod] of Object.entries(rawModules)) {
+  const json = mod && typeof mod === 'object' && 'default' in mod ? mod.default : mod;
+  const { ok, errors, video } = validateShadowingVideo(json);
+  if (ok) {
+    videos.push(video as { title_vi: string });
+  } else {
+    // Mark's content-prep packet lands these files in parallel; a bad one
+    // must never break the build or block every other video, just itself.
+    console.warn(`[shadowing] skipping invalid content file ${path}: ${errors.join('; ')}`);
+  }
+}
+videos.sort((a, b) => String(a.title_vi).localeCompare(String(b.title_vi), 'vi'));
+
+// Server-rendered JSON payload for the client script below. `<` is escaped
+// so a title/text field can never prematurely close this script tag.
+const videosJson = JSON.stringify(videos).replace(/</g, '\\u003c');
+---
+
+<SpeakUpAppLayout
+  title="Shadowing — Luyện nói cùng Minny | Felix Coaching"
+  robots="noindex, follow"
+>
+  <div class="shd-root" id="shd-root">
+    <div class="shd-starfield" aria-hidden="true">
+      <i class="shd-star shd-star--big"></i><i class="shd-star"></i><i class="shd-star"></i>
+      <i class="shd-star shd-star--big"></i><i class="shd-star"></i><i class="shd-star"></i>
+      <i class="shd-star shd-star--big"></i><i class="shd-star"></i><i class="shd-star"></i>
+      <i class="shd-star shd-star--big"></i><i class="shd-star"></i><i class="shd-star shd-star--big"></i>
+      <i class="shd-star"></i><i class="shd-star"></i>
+    </div>
+
+    <!-- ============ 01a: ticket-booth gate (code entry) ============ -->
+    <section class="shd-screen" id="shd-gate-screen">
+      <div class="shd-brandrow">
+        <img src="/assets/minny/logo-mark.svg" alt="" width="30" height="30" />
+        <span class="shd-brandname">SpeakUp</span>
+        <span class="shd-brandteacher">thầy Phương</span>
+      </div>
+      <div class="shd-gate" id="shd-code-card">
+        <div class="shd-gate-bulbs" aria-hidden="true">
+          <span class="shd-gate-bulb"></span>
+          <span class="shd-gate-bulb shd-gate-bulb--pulse"></span>
+          <span class="shd-gate-bulb"></span>
+          <span class="shd-gate-bulb shd-gate-bulb--pulse"></span>
+          <span class="shd-gate-bulb"></span>
+        </div>
+        <h1 class="shd-gatetitle">Nhập mã của con</h1>
+        <p class="shd-gatesub">Tấm vé vào rạp của Minny đây!</p>
+        <input
+          class="shd-ticket-input"
+          id="shd-code-input"
+          type="text"
+          placeholder="VD: R2L-LINH-8F3KQ2"
+          autocomplete="off"
+          spellcheck="false"
+          maxlength="40"
+        />
+        <p class="shd-gate-error hidden" id="shd-gate-error" role="alert"></p>
+        <button class="shd-cta" id="shd-go-btn" type="button">Vào xem!</button>
+      </div>
+    </section>
+
+    <!-- ============ 01b: poster picker (2-col grid) ============ -->
+    <section class="shd-screen hidden" id="shd-picker-screen">
+      <div class="shd-brandrow">
+        <img src="/assets/minny/logo-mark.svg" alt="" width="30" height="30" />
+        <span class="shd-brandname">SpeakUp</span>
+        <span class="shd-brandteacher">thầy Phương</span>
+      </div>
+      <p class="shd-pickhead">Chọn phim để luyện</p>
+      <div class="shd-cards" id="shd-video-picker"></div>
+
+      <div class="shd-card-shell shd-empty-card hidden" id="shd-picker-empty">
+        <div class="shd-minny shd-anim-bob"><img src="/assets/minny/minny_face.png" alt="Minny" width="76" height="76" /></div>
+        <p class="shd-empty-title">Phim đang được chuẩn bị… quay lại sau nhé!</p>
+      </div>
+
+      <div class="shd-card-shell shd-notice-card hidden" id="shd-picker-notice">
+        <div class="shd-notice-frame" aria-hidden="true"><span>···</span></div>
+        <div class="shd-notice-row">
+          <div class="shd-minny"><img src="/assets/minny/minny_face.png" alt="Minny" width="52" height="52" /></div>
+          <p class="shd-notice-msg" id="shd-picker-notice-msg">Phim này đang gặp sự cố, con chọn phim khác giúp Minny nhé!</p>
+        </div>
+        <button class="shd-cta shd-notice-cta" id="shd-picker-notice-cta" type="button">Chọn phim khác</button>
+      </div>
+    </section>
+
+    <!-- ============ 02-07: the stage (watch/question/record/celebrate/complete) ============ -->
+    <section class="shd-screen hidden" id="shd-stage-screen">
+      <div class="shd-hud" id="shd-hud">
+        <button class="shd-stage-back" id="shd-stage-back-btn" type="button" aria-label="Quay lại chọn phim">‹</button>
+        <div class="shd-hud-counters">
+          <div class="shd-counter" id="shd-stars"><span class="shd-em">⭐</span><span id="shd-stars-value">0</span></div>
+          <div class="shd-counter" id="shd-streak"><span class="shd-em">🔥</span><span id="shd-streak-value">0</span></div>
+        </div>
+      </div>
+
+      <div class="shd-stage-cols" id="shd-stage-cols">
+        <div class="shd-stage-left">
+          <div class="shd-stagezone" id="shd-stagezone">
+            <!-- YT.Player mounts via host: youtube-nocookie.com with playerVars.playsinline: 1
+                 (see shadowing-player.mjs's createSegmentPlayer/ensurePlayer) — no
+                 third-party-cookie embed, inline playback so iOS never forces fullscreen. -->
+            <div class="shd-player" id="shd-player-host">
+              <div id="shd-player-el"></div>
+              <!-- Shields the YouTube chrome from stray taps; a kid can only reach
+                   our own mic/replay/next controls, never YouTube's own UI. -->
+              <div class="shd-player-overlay" id="shd-player-overlay"></div>
+              <div class="shd-veil hidden" id="shd-player-veil">
+                <div class="shd-pausebadge hidden" id="shd-player-pausebadge"><i></i><i></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="shd-strip hidden" id="shd-progress"></div>
+        </div>
+
+        <div class="shd-stage-right">
+          <p class="shd-eyebrow shd-record-eyebrow" id="shd-record-eyebrow">Đến lượt con</p>
+
+          <!-- 02: watch caption -->
+          <div class="shd-watchrow hidden" id="shd-watch-panel">
+            <p class="shd-instr">Xem nhé… sắp đến lượt con!</p>
+            <div class="shd-minny shd-minny--watch shd-anim-bob"><img src="/assets/minny/minny_bust.png" alt="Minny cùng xem" width="96" height="96" /></div>
+            <p class="shd-subline">Minny cũng đang xem cùng con</p>
+          </div>
+
+          <!-- 03: question (correct-selected pop, or wrong-reveal HOLD until "Xem tiếp ▸") -->
+          <div class="shd-ask hidden" id="shd-question-panel">
+            <div class="shd-minny shd-minny--ask"><img src="/assets/minny/minny_face.png" alt="Minny hỏi con" width="64" height="64" /></div>
+            <div class="shd-bubble" id="shd-question-text"></div>
+          </div>
+          <div class="shd-tickets hidden" id="shd-question-card"></div>
+
+          <!-- 04/06: record (fresh first attempt, or retry after a near-miss) -->
+          <div class="shd-record hidden" id="shd-record-panel">
+            <div class="shd-record-minny-solo hidden" id="shd-record-minny-solo">
+              <div class="shd-minny shd-minny--retry"><img src="/assets/minny/minny_face.png" alt="Minny động viên" width="96" height="96" /></div>
+              <p class="shd-cheer" id="shd-record-cheer">Gần đúng rồi! Nghe lại nha</p>
+            </div>
+            <p class="shd-prompt" id="shd-record-prompt">Bây giờ đến lượt con nói!</p>
+            <div class="shd-words" id="shd-words"></div>
+            <p class="shd-retry-helper hidden" id="shd-retry-helper">Từ nào sáng rồi thì vẫn sáng mãi nha!</p>
+            <div class="shd-stage-mic">
+              <div class="shd-micwrap" id="shd-micwrap">
+                <div class="shd-ring"></div><div class="shd-ring shd-ring--2"></div><div class="shd-ring shd-ring--3"></div>
+                <button class="shd-mic" id="shd-mic-btn" type="button" aria-label="Bắt đầu ghi âm">
+                  <span class="shd-mic-icon" id="shd-mic-icon" aria-hidden="true">
+                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><line x1="12" y1="18" x2="12" y2="21.5"></line></svg>
+                  </span>
+                  <span class="shd-mic-label" id="shd-mic-label"></span>
+                </button>
+              </div>
+              <p class="shd-miccap" id="shd-miccap"><span class="shd-recdot hidden" id="shd-recdot" aria-hidden="true"></span><span id="shd-miccap-text">Bấm micro rồi nói cả câu nhé!</span></p>
+            </div>
+            <button class="shd-replay" id="shd-replay-btn" type="button">🔊 Nghe lại câu</button>
+          </div>
+
+          <!-- 05/06/07: celebrate / calm give-up / complete-tiles (same results panel) -->
+          <div class="shd-summary hidden" id="shd-summary"></div>
+
+          <button class="shd-cta hidden" id="shd-next-btn" type="button"></button>
+          <button class="shd-back hidden" id="shd-back-btn" type="button">← Chọn video khác</button>
+
+          <div class="shd-booth-minny" id="shd-booth-minny"><img src="/assets/minny/minny_face.png" alt="Minny đang nghe con" width="84" height="84" /></div>
+        </div>
+      </div>
+
+      <!-- grading wait (board 05 inset): whole stage blurs, this card floats
+           centered on top — Minny + 5-bar gold equalizer + animated dots. -->
+      <div class="shd-listen hidden" id="shd-listen-panel">
+        <div class="shd-listen-card">
+          <div class="shd-minny shd-minny--listen"><img src="/assets/minny/minny_face.png" alt="Minny đang nghe" width="84" height="84" /></div>
+          <div class="shd-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <p class="shd-listentext">Minny đang nghe<span class="shd-dot"></span><span class="shd-dot"></span><span class="shd-dot"></span></p>
+        </div>
+      </div>
+
+      <!-- 429 / provider hiccup rest state (board 06 side card): 🌙 + a
+           passive timer bar sized to the response's own Retry-After. -->
+      <div class="shd-wait hidden" id="shd-wait-panel">
+        <div class="shd-card-shell shd-wait-card">
+          <div class="shd-wait-moon" aria-hidden="true">🌙</div>
+          <div class="shd-minny"><img src="/assets/minny/minny_face.png" alt="Minny" width="72" height="72" /></div>
+          <p class="shd-wait-msg">Nghỉ một chút nhé!</p>
+          <div class="shd-waitbar"><div class="shd-waitbar-fill" id="shd-wait-fill"></div></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script type="application/json" id="shd-content-data" set:html={videosJson} />
+
+  <script>
+    import { createShadowingSession, reduce, toSnapshot, fromSnapshot } from '../lib/shadowing-engine.mjs';
+    import { loadYouTubeApi, createSegmentPlayer } from '../lib/shadowing-player.mjs';
+    import { speechSupport, createLighter } from '../lib/shadowing-speech.mjs';
+    import { lightWords } from '../lib/shadowing-score.mjs';
+    import { fireLessonPassConfetti, playKenney } from '../lib/lesson-juice';
+
+
+    type ShadowSegment = { i: number; start: number; end: number; text_en: string; shadow: boolean };
+    type ShadowQuestion = {
+      id: string; after_segment: number; type: string; question_vi: string;
+      answer?: boolean; options_vi?: string[]; correct_index?: number;
+    };
+    type ShadowVideo = {
+      id: string; youtube_id: string; title_vi: string; level: string;
+      content_status?: string; segments: ShadowSegment[]; questions?: ShadowQuestion[];
+    };
+    type ShadowResult = { stars: number; practiced: boolean };
+    type ShadowSession = {
+      video: ShadowVideo; currentSegmentIndex: number; phase: string; attemptsForSegment: number;
+      answeredQuestionIds: Set<unknown>; results: (ShadowResult | null)[];
+      streak: number; bestStreak: number; celebration: number | null; status: string;
+      lastQuestionResult: { questionId: string; correct: boolean } | null;
+      summary: { total_stars: number; best_streak: number; segments_passed: number; segments_practiced: number } | null;
+    };
+    type StoredSnapshot = { results?: ({ stars?: number } | null)[] };
+    type QuestionOption = { label: string; correct: boolean };
+    type LitWord = { raw: string; status: string };
+    type Recorder = { start(): void; stop(): Promise<Blob> };
+    type Recording = {
+      stream: MediaStream | null; recorder: Recorder | null;
+      monitor: { stop(): void } | null; timerId: number | null;
+    };
+    type Lighter = { start(options?: { lang?: string; onInterim?: (text: string) => void; onEnd?: () => void }): void; stop(): void };
+    declare const window: Window & typeof globalThis & {
+      R2LRecorder?: {
+        getStream?(): Promise<MediaStream>;
+        createRecorder?(stream: MediaStream, options: { engine: 'wav' }): Recorder;
+        startMonitor?(stream: MediaStream, options: Record<string, never>): Promise<{ stop(): void }>;
+      };
+    };
+
+    const MAX_SECONDS = 12; // Elon ruling (Buffet-confirmed server-side safe): 12-word segments at kid reading pace
+
+    // #shd-miccap-text is state-driven: idle/armed until the mic actually
+    // starts, recording copy only while it truly is. The idle string is the
+    // default in the markup above; the recdot span next to it is hidden by
+    // default and only unhidden once recorder.start() actually fires.
+    const MIC_CAPTION_IDLE = 'Bấm micro rồi nói cả câu nhé!';
+    const MIC_CAPTION_RECORDING = 'Đang ghi âm… nói cả câu nhé!';
+
+    let videos: ShadowVideo[] = [];
+    try {
+      videos = JSON.parse(document.getElementById('shd-content-data')?.textContent || '[]');
+    } catch {
+      videos = [];
+    }
+
+    const els = {
+      gateScreen: document.getElementById('shd-gate-screen') as HTMLElement,
+      pickerScreen: document.getElementById('shd-picker-screen') as HTMLElement,
+      stageScreen: document.getElementById('shd-stage-screen') as HTMLElement,
+      codeInput: document.getElementById('shd-code-input') as HTMLInputElement,
+      gateError: document.getElementById('shd-gate-error') as HTMLElement,
+      goBtn: document.getElementById('shd-go-btn') as HTMLButtonElement,
+      videoPicker: document.getElementById('shd-video-picker') as HTMLElement,
+      pickerEmpty: document.getElementById('shd-picker-empty') as HTMLElement,
+      pickerNotice: document.getElementById('shd-picker-notice') as HTMLElement,
+      pickerNoticeMsg: document.getElementById('shd-picker-notice-msg') as HTMLElement,
+      pickerNoticeCta: document.getElementById('shd-picker-notice-cta') as HTMLButtonElement,
+      starsValue: document.getElementById('shd-stars-value') as HTMLElement,
+      streakValue: document.getElementById('shd-streak-value') as HTMLElement,
+      starsCounter: document.getElementById('shd-stars') as HTMLElement,
+      streakCounter: document.getElementById('shd-streak') as HTMLElement,
+      hud: document.getElementById('shd-hud') as HTMLElement,
+      stageBackBtn: document.getElementById('shd-stage-back-btn') as HTMLButtonElement,
+      stageCols: document.getElementById('shd-stage-cols') as HTMLElement,
+      stagezone: document.getElementById('shd-stagezone') as HTMLElement,
+      playerHost: document.getElementById('shd-player-host') as HTMLElement,
+      playerVeil: document.getElementById('shd-player-veil') as HTMLElement,
+      playerPausebadge: document.getElementById('shd-player-pausebadge') as HTMLElement,
+      progress: document.getElementById('shd-progress') as HTMLElement,
+      watchPanel: document.getElementById('shd-watch-panel') as HTMLElement,
+      questionPanel: document.getElementById('shd-question-panel') as HTMLElement,
+      questionText: document.getElementById('shd-question-text') as HTMLElement,
+      questionCard: document.getElementById('shd-question-card') as HTMLElement,
+      recordPanel: document.getElementById('shd-record-panel') as HTMLElement,
+      recordMinnySolo: document.getElementById('shd-record-minny-solo') as HTMLElement,
+      recordCheer: document.getElementById('shd-record-cheer') as HTMLElement,
+      recordPrompt: document.getElementById('shd-record-prompt') as HTMLElement,
+      words: document.getElementById('shd-words') as HTMLElement,
+      retryHelper: document.getElementById('shd-retry-helper') as HTMLElement,
+      micwrap: document.getElementById('shd-micwrap') as HTMLElement,
+      micBtn: document.getElementById('shd-mic-btn') as HTMLButtonElement,
+      micIcon: document.getElementById('shd-mic-icon') as HTMLElement,
+      micLabel: document.getElementById('shd-mic-label') as HTMLElement,
+      recdot: document.getElementById('shd-recdot') as HTMLElement,
+      miccap: document.getElementById('shd-miccap') as HTMLElement,
+      miccapText: document.getElementById('shd-miccap-text') as HTMLElement,
+      replayBtn: document.getElementById('shd-replay-btn') as HTMLButtonElement,
+      listenPanel: document.getElementById('shd-listen-panel') as HTMLElement,
+      waitPanel: document.getElementById('shd-wait-panel') as HTMLElement,
+      waitFill: document.getElementById('shd-wait-fill') as HTMLElement,
+      summary: document.getElementById('shd-summary') as HTMLElement,
+      nextBtn: document.getElementById('shd-next-btn') as HTMLButtonElement,
+      backBtn: document.getElementById('shd-back-btn') as HTMLButtonElement,
+      boothMinny: document.getElementById('shd-booth-minny') as HTMLElement,
+    };
+
+    let accessCode = '';
+    let currentVideo: ShadowVideo | null = null;
+    let session: ShadowSession | null = null; // engine state (see shadowing-engine.mjs)
+    let playerCtl: ReturnType<typeof createSegmentPlayer> | null = null;
+    let lighter: Lighter | null = null;
+    let recording: Recording | null = null; // { stream, recorder, monitor, timerId }
+    let scoreLog: number[] = []; // raw score_percent per graded attempt, for the completion-log average
+    let loggedCompletionFor: string | null = null; // video.id already POSTed to minny-practice-log this page-load
+
+    // ---------------------------------------------------------------------
+    // localStorage snapshot (try/catch, in-memory fallback — house pattern,
+    // see src/lib/lesson-juice.ts's isMuted/setMuted).
+    // ---------------------------------------------------------------------
+    function loadSnapshot(videoId: string) {
+      try {
+        const raw = localStorage.getItem(`shd_progress_${videoId}`);
+        return raw ? JSON.parse(raw) as StoredSnapshot : null;
+      } catch {
+        return null;
+      }
+    }
+    function saveSnapshot() {
+      if (!currentVideo || !session) return;
+      try {
+        localStorage.setItem(`shd_progress_${currentVideo!.id}`, JSON.stringify(toSnapshot(session)));
+      } catch {
+        /* storage can be blocked (private mode, quota) — in-memory only, never fatal */
+      }
+    }
+    function totalStarsFor(videoId: string) {
+      const snap = loadSnapshot(videoId);
+      if (!snap || !Array.isArray(snap.results)) return 0;
+      return snap.results.reduce((sum, r) => sum + (r?.stars || 0), 0);
+    }
+
+    function escapeHtml(value: unknown) {
+      return String(value ?? '').replace(/[&<>"']/g, (c) => (({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' } as Record<string, string>)[c]));
+    }
+
+    function audioUploadFilename(blob: Blob | null | undefined) {
+      const type = String(blob?.type || '').toLowerCase();
+      if (type.includes('mp4') || type.includes('m4a') || type.includes('aac')) return 'audio.mp4';
+      if (type.includes('ogg')) return 'audio.ogg';
+      if (type.includes('wav')) return 'audio.wav';
+      return 'audio.webm';
+    }
+
+    // Pure lookup mirroring shadowing-engine.mjs's internal questionForSegment
+    // (not exported by that module) — needed here only to RENDER the question
+    // the engine has already decided to ask; the engine remains the sole
+    // decision-maker for whether/when a question fires.
+    function questionForSegment(video: ShadowVideo, segmentIndex: number, answeredIds: Set<unknown>) {
+      const qs = Array.isArray(video?.questions) ? video.questions : [];
+      return qs.find((q) => q?.after_segment === segmentIndex && !answeredIds.has(q?.id)) || null;
+    }
+
+    function currentSegment() {
+      return session!.video.segments[session!.currentSegmentIndex];
+    }
+
+    function computeTotals(state: ShadowSession) {
+      let totalStars = 0;
+      (state.results || []).forEach((r) => {
+        if (r) totalStars += r.stars;
+      });
+      return totalStars;
+    }
+
+    // ---------------------------------------------------------------------
+    // Screen switching
+    // ---------------------------------------------------------------------
+    function switchScreen(name: string) {
+      els.gateScreen.classList.toggle('hidden', name !== 'gate');
+      els.pickerScreen.classList.toggle('hidden', name !== 'picker');
+      els.stageScreen.classList.toggle('hidden', name !== 'stage');
+    }
+
+    const SUBVIEWS = ['watch', 'question', 'record', 'listen', 'wait'];
+    function switchSubview(name: string) {
+      const listening = name === 'listen';
+      const waiting = name === 'wait';
+      els.watchPanel.classList.toggle('hidden', name !== 'watch');
+      els.questionPanel.classList.toggle('hidden', name !== 'question');
+      els.questionCard.classList.toggle('hidden', name !== 'question');
+      // The record panel stays MOUNTED (and blurred) under the listen
+      // overlay — board 05's "waiting" state, not a screen swap.
+      els.recordPanel.classList.toggle('hidden', !(name === 'record' || listening));
+      els.listenPanel.classList.toggle('hidden', !listening);
+      els.waitPanel.classList.toggle('hidden', !waiting);
+      els.summary.classList.toggle('hidden', name !== 'summary');
+      els.summary.classList.remove('shd-summary--calm');
+      els.hud.classList.toggle('shd-blurred', listening);
+      els.stageCols.classList.toggle('shd-blurred', listening);
+      // p6 (Buffet review): the header back-circle is disabled during
+      // 'listen' (grading in flight) AND 'wait' (429/outage backoff card,
+      // board 06 side frame) -- both are grading-pipeline states, not just
+      // the visually-blurred 'listen' one, so exiting mid-either must be
+      // blocked the same way (see the matching session-identity guards in
+      // submitRecording/onAnswerQuestion/startVideo).
+      els.stageBackBtn.disabled = listening || waiting;
+    }
+
+    function setPlayerPaused(isPaused: boolean) {
+      els.playerVeil.classList.toggle('hidden', !isPaused);
+      els.playerPausebadge.classList.toggle('hidden', !isPaused);
+    }
+
+    // ---------------------------------------------------------------------
+    // Gate (01a) — same GET /api/minny-speaking-context?code= pattern as
+    // speak-up.astro's loadSession(); copies its behavior, not its markup.
+    // ---------------------------------------------------------------------
+    function showGateError(msg: string) {
+      els.gateError.textContent = msg;
+      els.gateError.classList.remove('hidden');
+    }
+    function clearGateError() {
+      els.gateError.classList.add('hidden');
+    }
+
+    async function onGate() {
+      clearGateError();
+      const code = els.codeInput.value.trim().toUpperCase();
+      if (!code) {
+        showGateError('Vui lòng nhập mã học sinh.');
+        return;
+      }
+      els.goBtn.disabled = true;
+      try {
+        const res = await fetch(`/api/minny-speaking-context?code=${encodeURIComponent(code)}`);
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) {
+          showGateError(data.message || 'Không tìm thấy mã học sinh.');
+          return;
+        }
+        accessCode = code;
+        showPicker();
+      } catch {
+        showGateError('Mạng không ổn định. Vui lòng thử lại.');
+      } finally {
+        els.goBtn.disabled = false;
+      }
+    }
+    els.goBtn.addEventListener('click', onGate);
+    els.codeInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') onGate();
+    });
+
+    // ---------------------------------------------------------------------
+    // Picker (01b)
+    // ---------------------------------------------------------------------
+    function showPicker() {
+      switchScreen('picker');
+      renderPicker();
+    }
+
+    function renderPicker() {
+      els.videoPicker.innerHTML = '';
+      els.pickerNotice.classList.add('hidden');
+      if (videos.length === 0) {
+        els.pickerEmpty.classList.remove('hidden');
+        return;
+      }
+      els.pickerEmpty.classList.add('hidden');
+      videos.forEach((video, idx) => {
+        const stars = totalStarsFor(video.id);
+        // Mark's parallel content packet: a MISSING content_status is
+        // treated as 'dev_draft' (the safe default -- never silently
+        // present unreviewed content as approved).
+        const isDraft = video.content_status !== 'approved';
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = idx === 0 ? 'shd-card shd-card--tonight' : 'shd-card';
+        card.innerHTML = `
+          <span class="shd-thumb">
+            <img src="https://i.ytimg.com/vi/${encodeURIComponent(video.youtube_id)}/hqdefault.jpg" alt="" loading="lazy" />
+            ${isDraft ? '<span class="shd-ribbon">BẢN NHÁP</span>' : ''}
+          </span>
+          <span class="shd-meta">
+            <span class="shd-vtitle">${escapeHtml(video.title_vi)}</span>
+            <span class="shd-row">
+              <span class="shd-lchip">${escapeHtml(video.level)}</span>
+              ${stars > 0 ? `<span class="shd-vstars">⭐ ${stars}</span>` : '<span class="shd-fresh">Chưa luyện</span>'}
+            </span>
+          </span>
+        `;
+        card.addEventListener('click', () => startVideo(video));
+        els.videoPicker.appendChild(card);
+      });
+    }
+
+    // Unplayable-video card's own CTA (board 01 side frame): dismiss back to
+    // the (already-fresh) grid — we're already on the picker screen, there
+    // is nowhere else to route it.
+    els.pickerNoticeCta.addEventListener('click', () => {
+      els.pickerNotice.classList.add('hidden');
+    });
+
+    // ---------------------------------------------------------------------
+    // Session bootstrap + player lifecycle
+    // ---------------------------------------------------------------------
+    async function startVideo(video: ShadowVideo) {
+      currentVideo = video;
+      const snap = loadSnapshot(video.id);
+      session = createShadowingSession(video, snap);
+      scoreLog = [];
+      switchScreen('stage');
+      els.backBtn.classList.add('hidden');
+      els.stageBackBtn.classList.remove('hidden');
+      els.stageBackBtn.disabled = false;
+      await ensurePlayer();
+      if (!session) {
+        // p6: the kid tapped the header back button while ensurePlayer()
+        // was still awaiting the YouTube API -- teardownPlayer() already
+        // ran (and found playerCtl still null then), so the player
+        // ensurePlayer() just created above is an orphan for an abandoned
+        // session. Destroy it now so the NEXT video picked doesn't inherit
+        // a wrong-video player via ensurePlayer()'s own `if (playerCtl)
+        // return;` guard.
+        playerCtl?.destroy();
+        playerCtl = null;
+        return;
+      }
+      renderStage();
+    }
+
+    async function ensurePlayer() {
+      if (playerCtl) return;
+      const YT = await loadYouTubeApi(window, document);
+      playerCtl = createSegmentPlayer({
+        elId: 'shd-player-el',
+        youtubeId: currentVideo!.youtube_id,
+        YT,
+        win: window,
+        callbacks: {
+          onSegmentEnd: onSegmentEnd,
+          onUnplayable: onUnplayable,
+        },
+      });
+    }
+
+    function teardownPlayer() {
+      try {
+        playerCtl?.destroy();
+      } catch {
+        /* best-effort */
+      }
+      playerCtl = null;
+      lighter?.stop();
+      lighter = null;
+      if (recording) {
+        if (recording.timerId) window.clearTimeout(recording.timerId);
+        try {
+          recording.recorder?.stop();
+        } catch {
+          /* never started */
+        }
+        recording.stream?.getTracks().forEach((t) => t.stop());
+        recording = null;
+      }
+      currentVideo = null;
+      session = null;
+    }
+
+    function goBackToPicker() {
+      // p6: write the snapshot BEFORE teardownPlayer() nulls session/
+      // currentVideo (saveSnapshot() reads both) -- explicit exit-time save
+      // rather than relying on the last in-session reduce() having already
+      // called it, so stars are always current on the picker the kid lands
+      // back on, from every exit path (mid-watch, mid-question, mid-record).
+      saveSnapshot();
+      teardownPlayer();
+      showPicker();
+    }
+    els.backBtn.addEventListener('click', goBackToPicker);
+    els.stageBackBtn.addEventListener('click', goBackToPicker);
+
+    function onUnplayable() {
+      // p6 (Buffet review): this exit path bypasses goBackToPicker() (it
+      // renders the unplayable-notice card, not a plain showPicker()), so it
+      // needs its OWN saveSnapshot() before teardownPlayer() nulls the
+      // session/currentVideo it reads -- without this, the "stars always
+      // current on the picker regardless of exit path" claim was false for
+      // exactly this path.
+      saveSnapshot();
+      teardownPlayer();
+      switchScreen('picker');
+      renderPicker();
+      els.pickerNoticeMsg.textContent = 'Phim này đang gặp sự cố, con chọn phim khác giúp Minny nhé!';
+      els.pickerNotice.classList.remove('hidden');
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) playerCtl?.pauseForHidden();
+    });
+
+    // ---------------------------------------------------------------------
+    // Engine-driven rendering
+    // ---------------------------------------------------------------------
+    function renderStage() {
+      if (session!.phase === 'watch') return showWatchAndPlay();
+      if (session!.phase === 'question') return showQuestion();
+      if (session!.phase === 'record') return showRecordPanel(null);
+      if (session!.phase === 'record_exhausted') return showGiveUp();
+      if (session!.phase === 'complete') return showComplete();
+      return undefined;
+    }
+
+    function updateHud() {
+      els.starsValue.textContent = String(computeTotals(session!));
+      els.streakValue.textContent = String(session!.streak);
+      els.starsCounter.classList.remove('shd-counter--zero');
+      els.streakCounter.classList.remove('shd-counter--zero');
+    }
+
+    // Pure — maps overall segment progress onto a FIXED 12-bulb milestone
+    // strip (the approved board's dial), regardless of how many segments
+    // the actual video has (Buffet F1, HIGH: a 124-segment book must still
+    // show the sleek 12-bulb pill, not one wrapped row per segment). Bulb i
+    // is 'on' once progress has passed the (i+1)/12 mark of the video,
+    // 'now' on the first milestone not yet reached (pulses), 'off' after
+    // that; every milestone is 'on' once the video itself is complete.
+    // Unit-tested directly in tests/shadowing-ui.test.mjs (source-extracted,
+    // not imported from src/lib — this is page-local presentation math, not
+    // an engine decision).
+    function milestoneBulbStates(completedSegments: number, totalSegments: number, milestoneCount = 12) {
+      const total = Math.max(1, Math.floor(Number(totalSegments)) || 0);
+      const completed = Math.max(0, Math.min(Number(completedSegments) || 0, total));
+      const isComplete = completed >= total;
+      const states = new Array(milestoneCount).fill('off');
+      let currentSet = false;
+      for (let i = 0; i < milestoneCount; i += 1) {
+        const threshold = ((i + 1) / milestoneCount) * total;
+        if (isComplete || completed >= threshold) {
+          states[i] = 'on';
+        } else if (!currentSet) {
+          states[i] = 'now';
+          currentSet = true;
+        }
+      }
+      return states;
+    }
+
+    function updateProgressBulbs() {
+      const total = session!.video.segments.length;
+      const complete = session!.phase === 'complete';
+      const completed = complete ? total : session!.currentSegmentIndex;
+      const states = milestoneBulbStates(completed, total);
+      els.progress.classList.remove('hidden');
+      els.progress.innerHTML = '';
+      states.forEach((status) => {
+        const b = document.createElement('span');
+        b.className = status === 'off' ? 'shd-bulb' : `shd-bulb shd-bulb--${status}`;
+        els.progress.appendChild(b);
+      });
+    }
+
+    function onSegmentEnd() {
+      session = reduce(session, { type: 'SEGMENT_WATCHED' });
+      saveSnapshot();
+      if (session!.phase === 'complete') logCompletionOnce();
+      renderStage();
+    }
+
+    function showWatchAndPlay() {
+      switchSubview('watch');
+      setPlayerPaused(false);
+      els.nextBtn.classList.add('hidden');
+      els.backBtn.classList.add('hidden');
+      updateHud();
+      updateProgressBulbs();
+      // NOTE (rule-20, flagged for real-device verification -- do NOT
+      // change this behavior on the strength of this comment alone): the
+      // FIRST call into showWatchAndPlay() per video always originates
+      // inside startVideo()'s picker-card click handler, a genuine user
+      // tap. Every later call -- a segment ending and auto-advancing into
+      // the next segment's watch phase, or a watch-only
+      // (segment.shadow === false) segment chaining straight into the
+      // next one via onSegmentEnd -- calls playSegment() here with NO new
+      // tap in between. This resumes the SAME already-engaged YT.Player
+      // session (never a cold autoplay on a fresh iframe), which is what
+      // mobile autoplay policies actually gate on in practice -- but that
+      // has not been confirmed on a real iPad/iOS Safari device yet.
+      playerCtl!.playSegment(currentSegment());
+    }
+
+    function buildQuestionOptions(q: ShadowQuestion) {
+      if (q.type === 'yes_no') {
+        return [
+          { label: 'Đúng rồi ✓', correct: q.answer === true },
+          { label: 'Sai rồi ✗', correct: q.answer === false },
+        ];
+      }
+      return (q.options_vi || []).map((label, i) => ({ label, correct: i === q.correct_index }));
+    }
+
+    function showQuestion() {
+      switchSubview('question');
+      setPlayerPaused(true);
+      els.nextBtn.classList.add('hidden');
+      els.backBtn.classList.add('hidden');
+      updateHud();
+      updateProgressBulbs();
+      const q = questionForSegment(session!.video, session!.currentSegmentIndex, session!.answeredQuestionIds);
+      if (!q) {
+        // Defensive: engine only enters 'question' when one exists. If this
+        // ever drifts, never strand the kid on a blank screen.
+        session = reduce(session, { type: 'QUESTION_ANSWERED', correct: true });
+        renderStage();
+        return;
+      }
+      els.questionText.textContent = q.question_vi;
+      els.questionCard.innerHTML = '';
+      const options = buildQuestionOptions(q);
+      options.forEach((opt) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'shd-ticket';
+        btn.innerHTML = `<span class="shd-ticket-txt">${escapeHtml(opt.label)}</span>`;
+        btn.addEventListener('click', () => onAnswerQuestion(opt, options, btn));
+        els.questionCard.appendChild(btn);
+      });
+    }
+
+    function onAnswerQuestion(chosen: QuestionOption, allOptions: QuestionOption[], chosenBtn: HTMLButtonElement) {
+      const buttons = Array.from(els.questionCard.children) as HTMLButtonElement[];
+      const isCorrect = !!chosen.correct;
+      buttons.forEach((b) => {
+        b.disabled = true;
+      });
+      session = reduce(session, { type: 'QUESTION_ANSWERED', correct: isCorrect });
+      saveSnapshot();
+
+      if (isCorrect) {
+        // Correct-selected (board 03, frame 1): gold gradient + ✨ pop, then
+        // a brief pause before auto-advancing — no CTA shown, matches the
+        // board exactly.
+        buttons.forEach((b, i) => {
+          if (allOptions[i].correct) b.classList.add('shd-ticket--win');
+        });
+        window.setTimeout(() => {
+          // p6: the kid can tap the header back button during this 900ms
+          // pause (session is torn down by then) -- same guard shape as
+          // showWait()'s own resume timeout just below.
+          if (session) renderStage();
+        }, 900);
+        return;
+      }
+
+      // Wrong-reveal (board 03, frame 2): HOLDS until the kid explicitly
+      // taps "Xem tiếp ▸" — no auto-advance timer. The correct answer gets
+      // a soft gold outline, the kid's own pick dims with "· con đã chọn",
+      // the third option just fades — never red, never a blocking retry
+      // (the engine already recorded the miss above via QUESTION_ANSWERED;
+      // this is display-only). The later tap doubles as the user gesture
+      // the next segment's playSegment()/playVideo call needs.
+      const correctOpt = allOptions.find((o) => o.correct);
+      els.questionText.textContent = correctOpt
+        ? `Đáp án là "${correctOpt.label}" nha. Mình xem tiếp nhé!`
+        : 'Mình xem tiếp nhé!';
+      buttons.forEach((b, i) => {
+        if (allOptions[i].correct) {
+          b.classList.add('shd-ticket--reveal-correct');
+        } else if (b === chosenBtn) {
+          b.classList.add('shd-ticket--reveal-chosen');
+          const txt = b.querySelector('.shd-ticket-txt');
+          if (txt) txt.textContent = `${allOptions[i].label} · con đã chọn`;
+        } else {
+          b.classList.add('shd-ticket--reveal-other');
+        }
+      });
+      els.nextBtn.classList.remove('hidden');
+      els.nextBtn.disabled = false;
+      els.nextBtn.textContent = 'Xem tiếp ▸';
+      els.nextBtn.onclick = onAdvanceAfterQuestion;
+    }
+
+    function onAdvanceAfterQuestion() {
+      els.nextBtn.classList.add('hidden');
+      renderStage();
+    }
+
+    function renderWords(text: string, statuses: LitWord[]) {
+      els.words.innerHTML = '';
+      statuses.forEach((w) => {
+        const span = document.createElement('span');
+        span.className = 'shd-word';
+        span.dataset.status = w.status === 'exact' ? 'lit' : w.status === 'close' ? 'warm' : 'off';
+        span.textContent = w.raw;
+        els.words.appendChild(span);
+      });
+    }
+
+    function showRecordPanel(settledWords: LitWord[] | null) {
+      switchSubview('record');
+      setPlayerPaused(true);
+      els.nextBtn.classList.add('hidden');
+      els.backBtn.classList.add('hidden');
+      updateHud();
+      updateProgressBulbs();
+      const seg = currentSegment();
+      const isRetry = session!.attemptsForSegment > 0;
+      els.recordPanel.classList.toggle('shd-record--retry', isRetry);
+      els.recordMinnySolo.classList.toggle('hidden', !isRetry);
+      els.recordPrompt.classList.toggle('hidden', isRetry);
+      els.retryHelper.classList.toggle('hidden', !isRetry);
+      els.micBtn.className = isRetry ? 'shd-mic shd-mic--retry shd-cta' : 'shd-mic';
+      els.micwrap.classList.toggle('shd-micwrap--retry', isRetry);
+      els.micLabel.textContent = isRetry ? 'Thử lại 🎤' : '';
+      els.micIcon.classList.toggle('hidden', isRetry);
+      // Every (re)entry into the fresh-attempt view starts truthfully idle
+      // -- the mic has NOT started recording yet at this point. The retry
+      // state (board 06) shows NO separate mic caption line at all -- the
+      // "Thử lại 🎤" CTA label already says it -- so the whole caption
+      // paragraph (recdot + idle text) hides in retry mode, not just the
+      // recdot.
+      els.recdot.classList.add('hidden');
+      els.miccapText.textContent = MIC_CAPTION_IDLE;
+      els.miccap.classList.toggle('hidden', isRetry);
+      els.micBtn.setAttribute('aria-label', isRetry ? 'Thử lại, bắt đầu ghi âm' : 'Bắt đầu ghi âm');
+      renderWords(seg.text_en, settledWords || lightWords(seg.text_en, ''));
+      els.replayBtn.classList.remove('hidden');
+    }
+
+    function showListening() {
+      switchSubview('listen');
+      els.nextBtn.classList.add('hidden');
+    }
+
+    // 429 / provider-hiccup rest state (board 06 side card): a passive timer
+    // bar sized to the server's own Retry-After — never a hardcoded guess,
+    // and never presented as an error.
+    function showWait(seconds: number) {
+      switchSubview('wait');
+      els.nextBtn.classList.add('hidden');
+      const dur = Math.max(1, Math.min(20, Number(seconds) || 3));
+      els.waitFill.style.transition = 'none';
+      els.waitFill.style.width = '6%';
+      // Force a reflow so the width reset above is committed as its own
+      // paint before the transition is re-enabled below — otherwise the
+      // browser coalesces both style writes into one frame and the bar
+      // never visibly animates from empty to full.
+      void els.waitFill.offsetWidth;
+      els.waitFill.style.transition = `width ${dur}s linear`;
+      els.waitFill.style.width = '100%';
+      window.setTimeout(() => {
+        if (session && session!.phase === 'record') showRecordPanel(null);
+      }, dur * 1000);
+    }
+
+    function showCelebrate(state: ShadowSession, segmentIndex: number) {
+      switchSubview('summary');
+      setPlayerPaused(true);
+      updateHud();
+      updateProgressBulbs();
+      const stars = state.results[segmentIndex]?.stars || 0;
+      els.summary.innerHTML = `
+        <div class="shd-confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="shd-minnywrap">
+          <div class="shd-starpop"><span class="shd-star-emoji">⭐</span><span class="shd-starplus">+${stars}</span></div>
+        </div>
+        <p class="shd-cheer">Tuyệt vời!</p>
+        <div class="shd-streakchip"><span class="shd-fl">🔥</span> Chuỗi ${state.streak}!</div>
+        <div class="shd-minny shd-minny--celebrate shd-anim-bounce"><img src="/assets/minny/minny_bust.png" alt="Minny ăn mừng" width="130" height="130" /></div>
+      `;
+      els.nextBtn.classList.remove('hidden');
+      els.nextBtn.disabled = false;
+      els.nextBtn.textContent = 'Câu tiếp theo →';
+      els.nextBtn.onclick = onAdvanceAfterCelebrate;
+      els.backBtn.classList.add('hidden');
+
+      if (state.celebration) {
+        fireLessonPassConfetti();
+        playKenney('quest-complete');
+      }
+    }
+
+    function onAdvanceAfterCelebrate() {
+      if (session!.phase === 'complete') logCompletionOnce();
+      renderStage();
+    }
+
+    function showGiveUp() {
+      switchSubview('summary');
+      setPlayerPaused(true);
+      updateHud();
+      updateProgressBulbs();
+      // Founder ruling: the streak resets to 0 the moment the kid moves on
+      // — shown as already-calm here so the HUD never flashes a stale
+      // higher number right before the reset takes effect.
+      els.streakValue.textContent = '0';
+      els.streakCounter.classList.add('shd-counter--zero');
+      els.summary.classList.add('shd-summary--calm');
+      els.summary.innerHTML = `
+        <div class="shd-minny shd-minny--encourage"><img src="/assets/minny/minny_face.png" alt="Minny an ủi" width="96" height="96" /></div>
+        <p class="shd-imsg">Nghe lại rồi mình qua câu tiếp nhé! 💛</p>
+      `;
+      els.nextBtn.classList.remove('hidden');
+      els.nextBtn.disabled = false;
+      els.nextBtn.textContent = 'Câu tiếp theo →';
+      els.nextBtn.onclick = onGiveUpNext;
+      els.backBtn.classList.add('hidden');
+    }
+
+    function onGiveUpNext() {
+      session = reduce(session, { type: 'GIVE_UP_ADVANCE' });
+      saveSnapshot();
+      if (session!.phase === 'complete') logCompletionOnce();
+      renderStage();
+    }
+
+    function showComplete() {
+      switchSubview('summary');
+      setPlayerPaused(true);
+      updateHud();
+      updateProgressBulbs();
+      const summary = session!.summary || { total_stars: 0, best_streak: 0 };
+      els.summary.innerHTML = `
+        <div class="shd-confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="shd-minny shd-minny--celebrate shd-anim-bounce"><img src="/assets/minny/minny_bust.png" alt="Minny ăn mừng" width="150" height="150" /></div>
+        <div class="shd-board">
+          <p class="shd-board-title">Con làm được rồi!</p>
+          <p class="shd-board-sub">${escapeHtml(currentVideo!.title_vi)} · ${session!.video.segments.length} câu</p>
+        </div>
+        <div class="shd-tiles" id="shd-summary-tiles">
+          <div class="shd-tile"><span class="shd-tile-big">⭐ ${summary.total_stars}</span><span class="shd-tile-lab">Tổng sao</span></div>
+          <div class="shd-tile"><span class="shd-tile-big">🔥 ${summary.best_streak}</span><span class="shd-tile-lab">Chuỗi dài nhất</span></div>
+        </div>
+      `;
+      els.nextBtn.classList.remove('hidden');
+      els.nextBtn.disabled = false;
+      els.nextBtn.innerHTML = '<span class="shd-watch-play" aria-hidden="true"></span> Xem trọn video';
+      els.nextBtn.onclick = onWatchFullVideo;
+      els.backBtn.classList.remove('hidden');
+      // Board 07 draws no round header back-circle (confirmed: absent from
+      // its inline styles, unlike boards 02/03/04/06) -- the existing quiet
+      // "← Chọn video khác" text link (els.backBtn above) is this screen's
+      // only back affordance.
+      els.stageBackBtn.classList.add('hidden');
+    }
+
+    function onWatchFullVideo() {
+      els.nextBtn.disabled = true;
+      els.nextBtn.textContent = 'Đang phát video…';
+      setPlayerPaused(false);
+      playerCtl?.playFullVideo();
+    }
+
+    function logCompletionOnce() {
+      if (!currentVideo || loggedCompletionFor === currentVideo!.id) return;
+      loggedCompletionFor = currentVideo!.id;
+      const avg = scoreLog.length ? Math.round(scoreLog.reduce((a, b) => a + b, 0) / scoreLog.length) : null;
+      fetch('/api/minny-practice-log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_code: accessCode,
+          pack_id: 'general',
+          prompt_id: `shadow_${currentVideo!.id}`,
+          score_percent: avg,
+          summary: {
+            stars: session!.summary?.total_stars ?? 0,
+            best_streak: session!.summary?.best_streak ?? 0,
+            video_id: currentVideo!.id,
+          },
+        }),
+      }).catch(() => {
+        /* non-blocking, matches speak-up.astro's logPractice() */
+      });
+    }
+
+    // ---------------------------------------------------------------------
+    // Recording — mirrors speak-up.astro's fixitStartRecording/
+    // fixitStopRecording R2LRecorder sequence (getStream -> wav engine ->
+    // startMonitor), the recorder engine loaded via r2lRecorderScriptSrc()
+    // below.
+    // ---------------------------------------------------------------------
+    els.micBtn.addEventListener('click', () => {
+      if (recording) stopRecording();
+      else startRecording();
+    });
+    els.replayBtn.addEventListener('click', () => {
+      playerCtl?.replaySegment(currentSegment());
+      session = reduce(session, { type: 'REPLAY' });
+    });
+
+    async function startRecording() {
+      if (recording || !session || session!.phase !== 'record') return;
+      const seg = currentSegment();
+      const rec: Recording = { stream: null, recorder: null, monitor: null, timerId: null };
+      recording = rec;
+      els.micBtn.classList.add('is-recording');
+      els.micwrap.classList.add('is-recording');
+      try {
+        const stream = window.R2LRecorder?.getStream
+          ? await window.R2LRecorder.getStream()
+          : await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
+        if (recording !== rec) {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        rec.stream = stream;
+        const recorder = window.R2LRecorder?.createRecorder ? window.R2LRecorder.createRecorder(stream, { engine: 'wav' }) : null;
+        if (!recorder) {
+          recording = null;
+          els.micBtn.classList.remove('is-recording');
+          els.micwrap.classList.remove('is-recording');
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        rec.recorder = recorder;
+        rec.monitor = window.R2LRecorder?.startMonitor
+          ? await window.R2LRecorder.startMonitor(stream, {})
+          : { stop() {} };
+        if (recording !== rec) {
+          try {
+            rec.monitor?.stop();
+          } catch {
+            /* best-effort */
+          }
+          try {
+            recorder.stop();
+          } catch {
+            /* never started */
+          }
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        recorder.start();
+        // Only NOW is the mic truly recording -- flip the caption + unhide
+        // the red dot here, not before (state-truthful: it used to say
+        // "Đang ghi âm…" while still idle).
+        els.miccapText.textContent = MIC_CAPTION_RECORDING;
+        els.recdot.classList.remove('hidden');
+        // Live karaoke lighting only — cosmetic, never gates the flow.
+        // Grading is ALWAYS the server call in stopRecording()/submitRecording().
+        if (speechSupport(window) === 'native') {
+          lighter = createLighter(window);
+          lighter.start({
+            lang: 'en-US',
+            onInterim: (text) => renderWords(seg.text_en, lightWords(seg.text_en, text)),
+          });
+        }
+        rec.timerId = window.setTimeout(() => stopRecording(), MAX_SECONDS * 1000);
+      } catch {
+        recording = null;
+        els.micBtn.classList.remove('is-recording');
+        els.micwrap.classList.remove('is-recording');
+      }
+    }
+
+    async function stopRecording() {
+      const rec = recording;
+      if (!rec) return;
+      recording = null;
+      if (rec.timerId) window.clearTimeout(rec.timerId);
+      els.micBtn.classList.remove('is-recording');
+      els.micwrap.classList.remove('is-recording');
+      els.miccapText.textContent = MIC_CAPTION_IDLE; // truthful the instant recording actually stops
+      els.recdot.classList.add('hidden');
+      lighter?.stop();
+      let blob = null;
+      try {
+        blob = await rec.recorder?.stop();
+      } catch {
+        blob = null;
+      }
+      try {
+        rec.monitor?.stop();
+      } catch {
+        /* best-effort */
+      }
+      rec.stream?.getTracks().forEach((t) => t.stop());
+      if (!blob || blob.size === 0) return;
+      // p6: the header back button can teardownPlayer() (nulls session)
+      // while rec.recorder.stop() above was still resolving -- submitRecording
+      // -> currentSegment() reads session.video unconditionally as its very
+      // first statement, so this must be checked before calling it at all.
+      if (!session) return;
+      await submitRecording(blob);
+    }
+
+    // The ONE scoring path — read2lead-speaking-check.js's shadow_practice
+    // bypass (never touches Azure/homework bookkeeping). While waiting:
+    // board 05's "Minny đang nghe…" shimmer card. A 429 (or an outage the
+    // server already mapped to asr_outage) is a gentle pause, never an
+    // error tone, and never consumes one of the 3 attempts — its rest-card
+    // timer bar runs for the response's own Retry-After seconds (falling
+    // back to 3s only if the header is missing/unparseable).
+    async function submitRecording(blob: Blob) {
+      const seg = currentSegment();
+      // p6 (Buffet review, HIGH): capture the SESSION OBJECT, not the video.
+      // `videos` is parsed once at page load, so the same-video picker card
+      // closes over the same stable object -- comparing currentVideo (or
+      // any video id) cannot tell "still this attempt" from "kid backed out
+      // via onUnplayable()/the header button, then re-picked the SAME
+      // video": currentVideo would read equal again even though session is
+      // a brand-new object from the fresh createShadowingSession() call.
+      // Session identity is the only correct proxy for "this exact attempt
+      // is still live" -- reduce() always returns a new session object, so
+      // a fresh session from ANY re-entry (same video or not) never ===
+      // the one captured here.
+      const sessionAtStart = session;
+      showListening();
+      const formData = new FormData();
+      formData.append('access_code', accessCode);
+      formData.append('pack_id', 'general');
+      formData.append('practice_mode', '1');
+      formData.append('check_mode', 'read');
+      formData.append('expected_text', seg.text_en);
+      formData.append('shadow_practice', '1');
+      formData.append('max_seconds', String(MAX_SECONDS));
+      formData.append('audio', blob, audioUploadFilename(blob));
+
+      let res = null;
+      let data = null;
+      try {
+        res = await fetch('/api/read2lead-speaking-check', { method: 'POST', body: formData });
+        data = await res.json().catch(() => null);
+      } catch {
+        res = null;
+        data = null;
+      }
+
+      // p6 (Buffet review, HIGH): the header back button is tappable during
+      // 'record' (this request is already in flight by the time it becomes
+      // 'listen' and gets disabled -- see switchSubview) -- teardownPlayer()
+      // nulls session on exit, and a fresh re-pick (even of the SAME video)
+      // assigns session a brand-new object, so `session !== sessionAtStart`
+      // catches both "exited, never came back" and "exited, then re-entered"
+      // — a grade must never resume onto an unmounted OR a since-replaced
+      // stage screen (showWait/showCelebrate/showGiveUp all assume the
+      // live session is the one this fetch was graded for).
+      if (!session || session !== sessionAtStart) return;
+
+      // A totally-thrown fetch (res still null -- network dropped mid-
+      // request) is exactly the same kind of outage as a 429 or a
+      // server-mapped asr_outage: the kid DID speak, only the round-trip
+      // failed. Route it to the same gentle wait, never a scored/consumed
+      // attempt (Buffet finding: this used to fall through to scorePercent
+      // 0 and burn one of the 3 tries on a plain network drop).
+      if (!res || res.status === 429 || (data && data.ok === false && data.asr_outage)) {
+        const retryAfterHeader = res ? Number(res.headers.get('Retry-After')) : NaN;
+        showWait(Number.isFinite(retryAfterHeader) && retryAfterHeader > 0 ? retryAfterHeader : 3);
+        return;
+      }
+
+      const scorePercent = data && data.ok ? Number(data.score_percent) || 0 : 0;
+      scoreLog.push(scorePercent);
+      const transcript = data && data.ok ? String(data.transcript || '') : '';
+      const settledWords = lightWords(seg.text_en, transcript);
+
+      const before = session;
+      const beforeSegmentIndex = before.currentSegmentIndex;
+      const after = reduce(before, { type: 'SPEECH_SCORED', scorePercent });
+      session = after;
+      saveSnapshot();
+
+      const passed = after.results[beforeSegmentIndex] != null;
+      if (passed) {
+        showCelebrate(after, beforeSegmentIndex);
+      } else if (after.phase === 'record_exhausted') {
+        showGiveUp();
+      } else {
+        showRecordPanel(settledWords);
+      }
+    }
+  </script>
+
+  <script src={r2lRecorderSrc} defer></script>
+</SpeakUpAppLayout>

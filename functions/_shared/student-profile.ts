@@ -1,10 +1,41 @@
+export type ProfilePatch = {
+  student_id?: string;
+  display_name?: string;
+  parent_name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  cefr_level?: string | null;
+  status?: string;
+  goals?: string[];
+  notes?: string | null;
+  metadata?: Record<string, unknown>;
+};
+type ProfileCreate = ProfilePatch & { student_id: string; display_name: string };
+type ProfileRow = Record<string, unknown>;
+type WriteResult = { meta?: { changes?: number }; changes?: number };
+type ProfileStatement = {
+  bind(...values: unknown[]): ProfileStatement;
+  first(): Promise<ProfileRow | null>;
+  run(): Promise<WriteResult>;
+};
+export type ProfileDatabase = { prepare(sql: string): ProfileStatement };
+export type ProfileEnvironment = {
+  STUDENT_PROFILE_API_TOKEN?: unknown;
+  STUDENT_PROFILE_DB?: ProfileDatabase;
+  DB?: ProfileDatabase;
+};
+export type ResponseResult<T = Record<never, never>> =
+  | ({ ok: true } & T)
+  | { ok: false; response: Response };
+type ValidationResult<T> = { ok: true; profile: T } | { ok: false; errors: string[] };
+
 const PROFILE_STATUSES = new Set(['active', 'paused', 'archived']);
 const CEFR_LEVELS = new Set(['pre_a1', 'a1', 'a2', 'b1', 'b2', 'c1', 'c2']);
 const MAX_TEXT_LENGTH = 2000;
 const MAX_SHORT_TEXT_LENGTH = 160;
 const MAX_GOALS = 12;
 
-export function json(body, status = 200) {
+export function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
@@ -14,7 +45,7 @@ export function json(body, status = 200) {
   });
 }
 
-export function checkTokenAuth(request, env) {
+export function checkTokenAuth(request: Request, env: ProfileEnvironment): ResponseResult {
   const expected = String(env.STUDENT_PROFILE_API_TOKEN || '').trim();
   if (!expected) {
     return { ok: false, response: json({ ok: false, error: 'config_error' }, 500) };
@@ -32,7 +63,7 @@ export function checkTokenAuth(request, env) {
   return { ok: true };
 }
 
-export function getStudentProfileDb(env) {
+export function getStudentProfileDb(env: ProfileEnvironment) {
   const db = env.STUDENT_PROFILE_DB || env.DB;
   if (!db) {
     return null;
@@ -40,7 +71,7 @@ export function getStudentProfileDb(env) {
   return db;
 }
 
-export async function readJson(request) {
+export async function readJson(request: Request): Promise<ResponseResult<{ body: Record<string, unknown> }>> {
   try {
     const body = await request.json();
     if (!body || typeof body !== 'object' || Array.isArray(body)) {
@@ -52,11 +83,11 @@ export async function readJson(request) {
   }
 }
 
-export function cleanStudentId(value) {
+export function cleanStudentId(value: unknown) {
   return String(value || '').trim().toUpperCase();
 }
 
-export function validateStudentId(value) {
+export function validateStudentId(value: unknown): { ok: true; studentId: string } | { ok: false; error: string } {
   const studentId = cleanStudentId(value);
   if (!studentId || studentId.length > 64 || !/^[A-Z0-9][A-Z0-9_-]*$/.test(studentId)) {
     return { ok: false, error: 'invalid_student_id' };
@@ -64,9 +95,11 @@ export function validateStudentId(value) {
   return { ok: true, studentId };
 }
 
-export function validateProfilePayload(body, { requireStudentId = false } = {}) {
+export function validateProfilePayload(body: Record<string, unknown>, options: { requireStudentId: true }): ValidationResult<ProfileCreate>;
+export function validateProfilePayload(body: Record<string, unknown>, options?: { requireStudentId?: boolean }): ValidationResult<ProfilePatch>;
+export function validateProfilePayload(body: Record<string, unknown>, { requireStudentId = false } = {}): ValidationResult<ProfilePatch> {
   const errors = [];
-  const profile = {};
+  const profile: ProfilePatch = {};
 
   if (requireStudentId || body.student_id !== undefined) {
     const checked = validateStudentId(body.student_id);
@@ -154,7 +187,7 @@ export function validateProfilePayload(body, { requireStudentId = false } = {}) 
   return errors.length ? { ok: false, errors } : { ok: true, profile };
 }
 
-export function serializeProfile(profile) {
+export function serializeProfile(profile: ProfileRow | null | undefined) {
   if (!profile) return null;
   return {
     ...profile,
@@ -163,7 +196,7 @@ export function serializeProfile(profile) {
   };
 }
 
-export async function findStudentProfile(db, studentId) {
+export async function findStudentProfile(db: ProfileDatabase, studentId: string) {
   const row = await db
     .prepare(
       `SELECT student_id, display_name, parent_name, email, phone, cefr_level, status, goals, notes, metadata, created_at, updated_at, deleted_at
@@ -175,7 +208,7 @@ export async function findStudentProfile(db, studentId) {
   return serializeProfile(row);
 }
 
-export async function createStudentProfile(db, profile, now) {
+export async function createStudentProfile(db: ProfileDatabase, profile: ProfileCreate, now: string) {
   await db
     .prepare(
       `INSERT INTO student_profiles (
@@ -200,7 +233,7 @@ export async function createStudentProfile(db, profile, now) {
   return findStudentProfile(db, profile.student_id);
 }
 
-export async function updateStudentProfile(db, studentId, profile, now) {
+export async function updateStudentProfile(db: ProfileDatabase, studentId: string, profile: ProfilePatch, now: string) {
   const updates = [];
   const values = [];
   const fields = [
@@ -211,7 +244,7 @@ export async function updateStudentProfile(db, studentId, profile, now) {
     'cefr_level',
     'status',
     'notes',
-  ];
+  ] as const;
 
   for (const field of fields) {
     if (Object.prototype.hasOwnProperty.call(profile, field)) {
@@ -252,7 +285,7 @@ export async function updateStudentProfile(db, studentId, profile, now) {
   return findStudentProfile(db, studentId);
 }
 
-export async function archiveStudentProfile(db, studentId, now) {
+export async function archiveStudentProfile(db: ProfileDatabase, studentId: string, now: string) {
   const result = await db
     .prepare(
       `UPDATE student_profiles
@@ -265,26 +298,26 @@ export async function archiveStudentProfile(db, studentId, now) {
   return rowChanged(result);
 }
 
-function rowChanged(result) {
+function rowChanged(result: WriteResult | null | undefined) {
   return Number(result?.meta?.changes ?? result?.changes ?? 0) > 0;
 }
 
-function cleanText(value, maxLength) {
+function cleanText(value: unknown, maxLength: number) {
   const text = String(value ?? '').trim();
   if (!text || text.length > maxLength) return '';
   return text;
 }
 
-function nullableText(value, maxLength) {
+function nullableText(value: unknown, maxLength: number) {
   const text = cleanText(value, maxLength);
   return text || null;
 }
 
-function isPlainObject(value) {
+function isPlainObject(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
 }
 
-function parseJsonField(value, fallback) {
+function parseJsonField(value: unknown, fallback: unknown): unknown {
   if (value === null || value === undefined || value === '') return fallback;
   if (typeof value !== 'string') return value;
   try {

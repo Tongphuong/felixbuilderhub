@@ -50,7 +50,7 @@ export async function onRequestGet(context) {
   const startedAt = Date.parse(currentPack.created_at || '');
   if (Number.isFinite(startedAt) && Date.now() - startedAt > STATUS_POLL_TIMEOUT_MS) {
     await clearGenerationLockSimple(env.READ2LEAD_CODES, accessCode, taskId);
-    return json({ ok: false, error: 'timeout', message: 'Generation quá thời gian cho phép. Vui lòng thử lại.' }, 504);
+    return terminalFailure(context, { ok: false, error: 'timeout', message: 'Generation quá thời gian cho phép. Vui lòng thử lại.' }, 504);
   }
 
   // Đọc task state trực tiếp từ KV (Render Python publish state qua /api/task-state).
@@ -86,7 +86,7 @@ export async function onRequestGet(context) {
   if (status === 'error') {
     await clearGenerationLockSimple(env.READ2LEAD_CODES, accessCode, taskId);
     const upstreamError = upstream.body.error || 'generation_failed';
-    return json({
+    return terminalFailure(context, {
       ok: false,
       error: upstreamError,
       message: `Tạo bài thất bại: ${upstreamError}. Vui lòng thử lại hoặc nhắn Zalo Felix.`,
@@ -146,6 +146,13 @@ async function clearGenerationLockSimple(kv, accessCode, taskId) {
       progress: { ...current.progress, current_pack: null },
     }),
   );
+}
+
+// Only a trusted account host supplies this callback. Original Pages retains
+// its exact response; browser fields cannot select transaction commit policy.
+function terminalFailure(context, body, status) {
+  const response = json(body, status);
+  return typeof context.commitTerminalFailure === 'function' ? context.commitTerminalFailure(response) : response;
 }
 
 function json(body, status = 200) {

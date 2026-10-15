@@ -1,7 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
 import ActivityProgress from '../../components/read2lead/v2/ActivityProgress.astro';
 import IdentityBanner from '../../components/read2lead/v2/IdentityBanner.astro';
 import ListeningFillBlank from '../../components/read2lead/v2/ListeningFillBlank.astro';
@@ -11,7 +9,6 @@ import ReadAloud from '../../components/read2lead/v2/ReadAloud.astro';
 import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
 import LevelUpModal from '../../components/read2lead/v2/LevelUpModal.astro';
 import RankUpModal from '../../components/read2lead/v3/rank/RankUpModal.astro';
-import ProgressBar from '../../components/read2lead/v2/ProgressBar.astro';
 import StoryDock from '../../components/read2lead/v2/StoryDock.astro';
 import MinnyCoachStrip from '../../components/read2lead/v2/MinnyCoachStrip.astro';
 import ParentStrip from '../../components/read2lead/v2/ParentStrip.astro';
@@ -24,6 +21,7 @@ import bookFlowHelperSrc from '../../lib/read2lead-book-flow.mjs?raw';
 import { r2lRecorderScriptSrc } from '../../scripts/r2l-recorder-script.mjs';
 import { stripInlineExports } from '../../lib/inline-esm.mjs';
 import '../../styles/r2l-w2-dynamic.css';
+import '../../styles/read2lead-story-mission.css';
 
 const r2lRecorderSrc = r2lRecorderScriptSrc();
 // These helper modules are authored as real ESM but inlined into classic
@@ -38,11 +36,16 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   title="Bài học Read2Lead — Luyện đọc tiếng Anh | Felix Coaching"
   description="Bài học Read2Lead: nghe truyện, xếp câu, nói lại và đọc hiểu theo nhịp nhẹ nhàng."
   robots="noindex, follow"
+  childHome={true}
 >
-  <Header read2LeadState={true} />
+  <header class="lesson-child-header">
+    <a id="lesson-home" href="/read2lead">← Về đọc sách</a>
+    <span id="lesson-wallet" hidden aria-label="Kim cương đã lưu"></span>
+    <button id="sfx-toggle" type="button" aria-label="Bật/tắt âm thanh">Tắt âm</button>
+  </header>
   <main id="main" class="min-h-screen bg-navy-950" data-r2l-w1-ssr={import.meta.env.PUBLIC_R2L_W1 === '1' ? '1' : '0'} data-r2l-v21-ssr={import.meta.env.PUBLIC_R2L_V21 === '1' ? '1' : '0'}>
-    <IdentityBanner />
-    <ProgressBar />
+    <div hidden><IdentityBanner /></div>
+    <div id="lesson-small-progress" class="lesson-small-progress"><span id="progress-part-label"></span><div id="progress-dots" aria-label="Tiến trình"></div></div>
 
     <section class="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
       <div id="loading-card" class="rounded-md border border-cream/10 bg-cream/5 p-6 text-cream">
@@ -219,8 +222,8 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
           </div>
 
           <section id="book-reader-summary" class="hidden rounded-md border border-gold/30 bg-gold/10 p-5" aria-live="polite">
-            <h3 class="font-display text-xl font-bold text-gold">Tóm tắt cho ba mẹ</h3>
-            <div id="book-reader-summary-content" class="mt-3 grid gap-2 text-sm text-cream/85 sm:grid-cols-2"></div>
+            <details><summary>Chi tiết bài đọc</summary>
+            <div id="book-reader-summary-content" class="mt-3 grid gap-2 text-sm text-cream/85 sm:grid-cols-2"></div></details>
             <p id="book-reader-save-status" class="mt-3 font-semibold text-cream"></p>
             <button id="book-reader-submit-retry" class="r2l-secondary mt-3 hidden w-full" type="button">Gửi lại kết quả</button>
           </section>
@@ -311,14 +314,12 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
         </section>
 
         <section id="completion-card" class="hidden rounded-md border border-gold/40 bg-gold/10 p-6 text-center">
-          <p class="font-display text-2xl font-bold text-gold">Nhiệm vụ xong!</p>
+          <h1 id="completion-title" class="font-display text-2xl font-bold text-gold">Bài đọc xong rồi!</h1>
           <p id="completion-copy" class="mt-2 text-cream/80"></p>
           <p id="completion-gift-goal" class="mt-4 hidden text-left"></p>
           <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
-            <a id="completion-new-pack" href="/read2lead#form" class="r2l-primary inline-flex items-center justify-center">Tạo bài mới</a>
-            <a id="completion-gift-shop" href="/read2lead/gifts" class="r2l-secondary inline-flex items-center justify-center">🎁 Quà thật</a>
-            <a href="/read2lead/leaderboard" class="r2l-secondary inline-flex items-center justify-center">Bảng xếp hạng</a>
-            <a href="/read2lead" class="r2l-secondary inline-flex items-center justify-center">Trang chính</a>
+            <a id="completion-done" href="/read2lead/" class="r2l-primary inline-flex items-center justify-center">Xong hôm nay</a>
+            <a id="completion-new-pack" href="/read2lead/" class="r2l-secondary inline-flex items-center justify-center">Đọc thêm truyện</a>
           </div>
         </section>
       </article>
@@ -329,7 +330,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     <RankUpModal />
 
   </main>
-  <Footer />
+
   <script src={r2lRecorderSrc} defer></script>
   <script src="/scripts/r2l-mic-check.js" defer></script>
 </BaseLayout>
@@ -2534,6 +2535,8 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
 <script is:inline set:html={bookFlowHelperInline} />
 
 <script is:inline>
+  // Explicit new contract only. Legacy v2/v3 controllers never handle missions.
+  if (new URLSearchParams(window.location.search).get('mission') !== 'story-mission-v1') {
   /* ----- W4.4 SFX library ----- */
   const SFX = {
     correctCommon: '/sfx/r2l/success-1.mp3',
@@ -4269,43 +4272,33 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   }
 
   function _r2lShowCompletionAfterTrivia(data) {
+    document.body.dataset.lessonSaving = 'false';
+    window.__r2lJuice?.showComboBadge?.(1);
     qs('#global-cta')?.classList.add('hidden');
     if (isW1() && !isBookLesson()) w1ShowResultRecap();
     const rewards = _r2lTriviaState.pendingRewards || data.rewards_earned || {};
     const completedWithoutReward = data.completed_without_reward === true;
+    const alreadyRewarded = data.already_completed === true || data.duplicate === true;
+    document.body.dataset.lessonFinished = 'true';
+    qs('#lesson-shell').prepend(qs('#completion-card'));
+    qs('#completion-title').textContent = state.lesson?.story?.title ? `Con đã đọc xong “${state.lesson.story.title}”` : 'Bài đọc xong rồi!';
     // R2L Rewards Redesign: rewards.coins was replaced by rewards.diamonds in
     // the submit response (SPEC_R2L_REWARDS_REDESIGN §5 Phase 2/3) — read the
     // new field, falling back to the old one in case the backend deploy
     // hasn't landed yet (avoids "Con nhận 0💎" on a stale/mixed rollout).
     const rewardDiamonds = Number(rewards.diamonds ?? rewards.coins ?? 0);
-    qs('#completion-copy').textContent = completedWithoutReward
-      ? 'Bài đã kết thúc. Phần nói được bỏ qua nên con không nhận sao hay điểm, nhưng vẫn có thể tạo bài mới.'
+    qs('#completion-copy').textContent = alreadyRewarded
+      ? `Bài đọc đã được lưu. Phần thưởng ${rewardDiamonds} kim cương đã nhận trước đó; không cộng thêm lần này.`
+      : completedWithoutReward
+      ? (data.review_only ? 'Con đã ôn lại câu chuyện. Bài ôn không cộng thêm thưởng.' : 'Bài đã kết thúc. Phần nói được bỏ qua nên con không nhận sao hay điểm; con có thể nghỉ hoặc đọc thêm truyện.')
       : `Con nhận 💎 ${rewardDiamonds} và ⭐ ${rewards.xp || 0} XP cho nhiệm vụ này.`;
     qs('#completion-card').classList.remove('hidden');
     if (state.accessCode) {
-      qs('#completion-new-pack').href = `/read2lead?code=${encodeURIComponent(state.accessCode)}#form`;
-      qs('#completion-gift-shop').href = `/read2lead/gifts?code=${encodeURIComponent(state.accessCode)}`;
+      qs('#completion-done').href = `/read2lead/?code=${encodeURIComponent(state.accessCode)}&done=1`;
+      qs('#completion-new-pack').href = `/read2lead/?code=${encodeURIComponent(state.accessCode)}`;
     }
-    // Celebrate the reading FIRST (completion-copy above already shows the
-    // 💎 just earned) — THEN surface the running diamond goal (the gift-goal
-    // progress bar tracks the cumulative balance, not this lesson's delta)
-    // so the reading never reads as pointless just because this particular
-    // submission earned zero 💎. Rendering is handled by a real ES module
-    // (see the plain <script> block near the end of this file) so it can
-    // import the shared GiftGoalCard component instead of re-deriving its
-    // markup inline here.
-    const goalState = _r2lTriviaState.pendingState || data.read2lead_state || null;
-    if (state.accessCode) {
-      document.dispatchEvent(new CustomEvent('r2l:gift-goal', {
-        detail: {
-          diamonds: goalState?.diamonds || 0,
-          giftGoal: goalState?.gift_goal || null,
-          redemptions: Array.isArray(goalState?.redemptions) ? goalState.redemptions : [],
-          code: state.accessCode,
-        },
-      }));
-    }
-    if (completedWithoutReward) return;
+    qs('#completion-card').scrollIntoView({ behavior: 'auto', block: 'center' });
+    if (completedWithoutReward || alreadyRewarded) return;
     playSfx(SFX.diamondChime, { volume: 0.6 });
     window.__r2lJuice?.fireLessonPassConfetti?.();
     window.__r2lJuice?.showXpTicker?.(Number(rewards.xp || 0), '#completion-card');
@@ -4317,9 +4310,6 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
       playSfxSequence([SFX.packComplete, pickVoiceClip()], 600);
     }
     showLevelUp(_r2lTriviaState.pendingLevelUp);
-    if (window.__r2lV3?.showRankUp) {
-      window.__r2lV3.showRankUp(_r2lTriviaState.pendingRankUp, _r2lTriviaState.pendingRankLadder);
-    }
     showReward({ mode: 'celebrate', withVoice: true });
     _r2lTriviaState.pendingRewards = null;
     _r2lTriviaState.pendingLevelUp = null;
@@ -4635,6 +4625,23 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     }
   }
 
+  window.__r2lSaveBeforeSwitch = async () => {
+    saveLessonSession();
+    if (!state.accessCode || !state.packId || !state.lesson) throw new Error('Bài chưa mở xong. Con thử lại nhé.');
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    try {
+      const response = await fetch('/api/read2lead-checkpoint-save', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: controller.signal,
+        body: JSON.stringify({ access_code: state.accessCode, pack_id: state.packId, snapshot: lessonSessionSnapshot() }),
+      });
+      const result = await response.json();
+      if (!response.ok || !result.ok || result.stored !== true) throw new Error('checkpoint_not_saved');
+    } catch {
+      throw new Error('Chưa lưu được phần con đang làm. Mình giữ truyện này; con thử lại nhé.');
+    } finally { clearTimeout(timeout); }
+  };
+
   function scheduleSaveLessonSession() {
     if (_r2lSaveSessionTimer) window.clearTimeout(_r2lSaveSessionTimer);
     _r2lSaveSessionTimer = window.setTimeout(() => {
@@ -4911,11 +4918,23 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     const params = new URLSearchParams(window.location.search);
 
     state.accessCode = (params.get('code') || '').trim().toUpperCase();
+    qs('#lesson-home').href = '/read2lead' + (state.accessCode ? '?code=' + encodeURIComponent(state.accessCode) : '');
     state.packId = (params.get('pack_id') || '').trim();
     if (!state.accessCode || !state.packId) {
       showError('Thiếu mã học sinh hoặc mã bài. Anh Phương mở lại từ link bài học nhé.');
       return;
     }
+
+    void (async () => {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      try {
+        const response = await fetch('/api/read2lead-progress?code=' + encodeURIComponent(state.accessCode), { signal: controller.signal });
+        const data = await response.json();
+        if (response.ok && data.ok && document.body.dataset.lessonFinished !== 'true') updateStateHeader(data.read2lead_state);
+      } catch { /* Optional saved balance must not block reading. */ }
+      finally { clearTimeout(timeout); }
+    })();
 
     const FETCH_TIMEOUT_MS = 15000;
     // Cloudflare KV eventual consistency: right after the generator mints a
@@ -6322,7 +6341,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     // call it BEFORE celebrateDiamondReward so the ticker's CSS animation
     // starts on a visible element instead of one still under display:none.
     bookSetStage('next');
-    if (pagePassed) {
+    if (pagePassed && !state.lesson?.review_only) {
       celebrateDiamondReward(PAGE_DIAMOND_REWARD, { anchorSelector: '#book-reader-next-stage' });
     }
   }
@@ -6423,7 +6442,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
         <p>Câu hỏi đã trả lời: <strong>${summary.questions_answered}</strong></p>
         <p>Phần đọc đạt: <strong>${summary.chunks_passed}</strong></p>
         <p>Phần đọc bỏ qua: <strong>${summary.chunks_skipped}</strong></p>
-        <p>Điểm phát âm trung bình: <strong>${summary.average_pronunciation_score}%</strong></p>
+        <p>Điểm đọc trung bình: <strong>${summary.average_pronunciation_score}%</strong></p>
       `;
     }
     qs('#book-reader-summary')?.classList.remove('hidden');
@@ -7054,6 +7073,14 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     console.log('[R2L] renderLesson guided_listening:', JSON.stringify(lesson.guided_listening?.length ?? 'missing'), 'activities:', (lesson.activities || []).map(a => a.type));
     lesson = ensureLessonActivities(lesson);
     state.lesson = lesson;
+    document.body.dataset.originalBook = String(isBookLesson(lesson));
+    if(lesson.review_only){
+      if(!qs('#lesson-review-note')){const note=document.createElement('p');note.id='lesson-review-note';note.className='story-mission-status';note.textContent='Ôn lại truyện · Không cộng thêm thưởng';qs('#lesson-shell')?.prepend(note);}
+      const reward=qs('#book-reader-next-stage');
+      reward?.querySelector('.r2l-book-reward__pills')?.classList.add('hidden');
+      const title=reward?.querySelector('h3');if(title)title.textContent='Con đã ôn xong trang này!';
+      const copy=reward?.querySelector('h3 + p');if(copy)copy.textContent='Mình sang trang tiếp theo nhé. Bài ôn không cộng thêm thưởng.';
+    }
     qs('#loading-card').classList.add('hidden');
     qs('#lesson-shell').classList.remove('hidden');
     const studentName = lesson.student_name || '';
@@ -8405,6 +8432,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   async function submitLesson({ trigger = 'manual', payload: payloadOverride = null } = {}) {
     if (submitInFlight) return;
     submitInFlight = true;
+    document.body.dataset.lessonSaving = 'true';
     if (_r2lAutoSubmitTimer) {
       window.clearTimeout(_r2lAutoSubmitTimer);
       _r2lAutoSubmitTimer = null;
@@ -8455,6 +8483,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
           qs('#book-reader-submit-retry')?.classList.remove('hidden');
         }
         submitInFlight = false;
+        document.body.dataset.lessonSaving = 'false';
         submitBtn.disabled = false;
         _r2lAutoSubmitArmed = false;
         updateGlobalCta();
@@ -8480,11 +8509,10 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
       _r2lTriviaState.pendingRankUp = data.rank_up || null;
       _r2lTriviaState.pendingRankLadder = data.read2lead_state?.rank_ladder || null;
       _r2lTriviaState.pendingState = data.read2lead_state || null;
-      void window.__r2lJuice?.openChest?.(data.pending_chest);
+      if (!data.already_completed && !data.duplicate) void window.__r2lJuice?.openChest?.(data.pending_chest);
       if (isBookLesson()) qs('#book-reader-save-status').textContent = 'Đã lưu kết quả và phần thưởng.';
-      if (data.read2lead_state?.rank_ladder?.stars_to_next === 1) window.__r2lJuice?.showNearMissBanner?.(`Còn 1 sao nữa là lên ${data.read2lead_state.rank_ladder.next_label_vi}!`);
 
-      if (_r2lMaybeRevealTriviaSecret(scorePercent)) {
+      if (!data.already_completed && !data.duplicate && _r2lMaybeRevealTriviaSecret(scorePercent)) {
         qs('#submit-hint').textContent = 'Con đã mở khóa bí mật sau truyện!';
       } else {
         _r2lShowCompletionAfterTrivia(data);
@@ -8504,6 +8532,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
         qs('#book-reader-submit-retry')?.classList.remove('hidden');
       }
       submitInFlight = false;
+      document.body.dataset.lessonSaving = 'false';
       submitBtn.disabled = false;
       _r2lAutoSubmitArmed = false;
       updateGlobalCta();
@@ -8535,6 +8564,8 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
 
   function updateStateHeader(read2LeadState) {
     if (!read2LeadState) return;
+    const wallet = qs('#lesson-wallet');
+    if (wallet) { wallet.textContent = '💎 ' + Number(read2LeadState.diamonds || 0).toLocaleString('vi-VN'); wallet.hidden = false; }
     const header = document.querySelector('[data-r2l-state-header]');
     if (!header) return;
     header.classList.remove('hidden');
@@ -8578,9 +8609,32 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     modal.classList.add('hidden');
     modal.classList.remove('flex');
   });
+  }
 </script>
 
 <script>
+  import { mountStoryMission } from '../../scripts/read2lead-story-voice.mjs';
+  import { mountLessonHelp, originalLessonBusy, createLessonAssignmentAction } from '../../scripts/read2lead-lesson-help.mjs';
+  const lessonEntryCode = new URLSearchParams(location.search).get('code');
+  const lessonHome = document.getElementById('lesson-home') as HTMLAnchorElement | null;
+  if (lessonHome && lessonEntryCode) lessonHome.href = '/read2lead?code=' + encodeURIComponent(lessonEntryCode);
+  if (new URLSearchParams(window.location.search).get('mission') === 'story-mission-v1') mountStoryMission();
+  else {
+    mountLessonHelp({container:document.getElementById('lesson-shell'),isBusy:()=>originalLessonBusy(),prepareSwitch:async()=>{
+      if(!window.__r2lSaveBeforeSwitch)throw new Error('Bài chưa mở xong. Con thử lại nhé.');
+      await window.__r2lSaveBeforeSwitch();
+    }});
+    const params=new URLSearchParams(location.search);
+    const next=document.getElementById('completion-new-pack');
+    const status=document.createElement('p');status.setAttribute('role','status');
+    document.getElementById('completion-card')?.append(status);
+    const openNext=createLessonAssignmentAction({code:params.get('code'),packId:params.get('pack_id'),origin:location.origin,isBusy:()=>originalLessonBusy()});
+    next?.addEventListener('click',async(event)=>{
+      event.preventDefault();next.setAttribute('aria-disabled','true');status.textContent='Đang mở truyện cho con…';
+      try{await openNext();}catch(error){status.textContent=error instanceof Error?error.message:'Chưa mở được truyện. Con thử lại nhé.';}
+      finally{next.removeAttribute('aria-disabled');}
+    });
+  }
   import { isV3Enabled } from '../../config/flags';
   import { applyV3HeaderRank } from '../../lib/rank-header';
   import { applyHeaderMonsterAvatar } from '../../lib/monster-avatar';
@@ -8591,6 +8645,34 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   import { bindRankUpModalClose, showRankUpModal } from '../../lib/rank-up-celebration';
   import type { RankLadderView } from '../../lib/rank-ladder-ui';
   import { renderGiftGoalCard, type GiftGoalItem, type GiftGoalRedemption } from '../../lib/gift-goal-card';
+
+  // This module supplies the existing classic-script bridges below.
+  // Keep its types local; the declaration emits no runtime code.
+  declare const window: Window & typeof globalThis & {
+    __r2lSaveBeforeSwitch?: () => Promise<void>;
+    __r2lLessonScoring: {
+      calculateLessonScore: typeof calcLessonScore;
+      questionPoints: typeof questionPoints;
+    };
+    R2LFeedbackVisual: typeof R2LFeedbackVisual;
+    R2LReplayControl: typeof R2LReplayControl;
+    __r2lJuice: {
+      playSynthTone: typeof playSynthTone;
+      fireStreakConfetti: typeof fireStreakConfetti;
+      fireLessonPassConfetti: typeof fireLessonPassConfetti;
+      playKenney: typeof playKenney;
+      showXpTicker: typeof showXpTicker;
+      showComboBadge: typeof showComboBadge;
+      openChest: typeof openChest;
+      showNearMissBanner: typeof showNearMissBanner;
+      setMuted: typeof setMuted;
+      isMuted: typeof isMuted;
+      claimDailyChest: typeof claimDailyChest;
+    };
+    __r2lV3: NonNullable<Window['__r2lV3']> & {
+      applyHeaderMonster: typeof applyHeaderMonsterAvatar;
+    };
+  };
 
   bindRankUpModalClose();
 
@@ -8662,3 +8744,23 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     },
   };
 </script>
+
+<style is:global>
+  .lesson-child-header {display:flex;align-items:center;gap:1rem;justify-content:space-between;max-width:76rem;margin:auto;width:100%;padding:1rem;color:#17364e;background:#fffaf0;box-sizing:border-box}
+  .lesson-child-header a,.lesson-child-header button{min-height:48px;display:inline-flex;align-items:center;font-weight:700}
+  .lesson-child-header a:focus-visible,.lesson-child-header button:focus-visible{outline:3px solid #7959bc;outline-offset:3px}
+  .lesson-small-progress{padding:.5rem 1rem;text-align:center}
+  body[data-original-book="true"] #story-dock,body[data-original-book="true"] #minny-strip,body[data-original-book="true"] #parent-strip,body[data-original-book="true"] #lesson-small-progress{display:none!important}
+  body[data-lesson-finished="true"] #book-reader-workspace,body[data-lesson-finished="true"] #book-reader-trail-header,body[data-lesson-finished="true"] #mic-prep-banner,body[data-lesson-finished="true"] #story-dock,body[data-lesson-finished="true"] #minny-strip{display:none!important}
+  body[data-lesson-finished="true"] #w1-book-reader-phase{display:block}
+  #completion-gift-goal{display:none!important}
+  body[data-lesson-finished="true"] .lesson-support,body[data-lesson-finished="true"] #lesson-review-note{display:none!important}
+  body[data-lesson-finished="true"] #lesson-shell{display:flex;flex-direction:column;gap:1rem;max-width:48rem;margin:auto}
+  body[data-lesson-finished="true"] #lesson-shell>*{margin-top:0}
+  body[data-lesson-finished="true"] #completion-card{order:-1;background:#fffaf0;color:#17364e;border-radius:24px;padding:2rem 1.25rem}
+  body[data-lesson-finished="true"] #completion-title{color:#17364e;font-size:1.6rem;line-height:1.4}
+  body[data-lesson-finished="true"] #completion-copy{color:#405b6d;line-height:1.7}
+  body[data-lesson-finished="true"] #completion-new-pack{color:#17364e;border-color:#b9c9d1}
+  body[data-lesson-finished="true"] #w1-book-reader-phase{padding:1rem;width:100%;margin:0;min-height:0;transform:none}
+
+</style>

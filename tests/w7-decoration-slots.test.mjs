@@ -146,39 +146,29 @@ test('Vietnamese labels cover effects, frames, and cầu vồng', () => {
   assert.equal(humanizePartId(RAINBOW_FRAME), 'Khung cầu vồng');
 });
 
-test('executeBuy accepts a common effect but still rejects a common body', () => {
+test('executeBuy accepts common effects and bodies for free', () => {
   const effectResult = executeBuy({ diamonds: 100, unlocked_parts: [] }, COMMON_EFFECT);
   assert.equal(effectResult.error, undefined);
-  assert.equal(effectResult.state.diamonds, 75);
-  assert.equal(effectResult.reward.price, 25);
+  assert.equal(effectResult.state.diamonds, 100);
+  assert.equal(effectResult.reward.price, 0);
 
   const bodyResult = executeBuy({ diamonds: 100, unlocked_parts: [] }, COMMON_BODY);
-  assert.equal(bodyResult.error, 'common_parts_are_free');
+  assert.equal(bodyResult.error, undefined);
 });
 
-test('buying a common effect auto-equips it and records a ceremony', async () => {
+test('buying a common effect auto-equips it without a purchase ceremony', async () => {
   const env = makeEnv(makeProgress());
   const { response, payload } = await buy(env, COMMON_EFFECT);
   assert.equal(response.status, 200);
   assert.equal(payload.avatar.monster.effects, COMMON_EFFECT);
-  assert.equal(payload.pending_ceremony.part_id, COMMON_EFFECT);
-  assert.equal(payload.pending_ceremony.rarity, 'common');
+  assert.equal(payload.pending_ceremony, null);
 });
 
-test('shop-buy rejects decorations while W7 is disabled and preserves state', async () => {
-  const initial = makeProgress();
-  const env = makeEnv(initial, { w7Enabled: false });
-  const { response, payload } = await buy(env, COMMON_EFFECT);
-  assert.equal(response.status, 400);
-  assert.deepEqual(payload, {
-    ok: false,
-    error: 'w7_disabled',
-    message: 'Tạm thời chưa mở',
-  });
-  assert.deepEqual(
-    JSON.parse(env.__store.get(progressKey(ACCESS_CODE))),
-    initial,
-  );
+test('free decorations do not require the old W7 flag', async () => {
+ const initial=makeProgress();const env=makeEnv(initial,{w7Enabled:false});
+ const {response,payload}=await buy(env,COMMON_EFFECT);
+ assert.equal(response.status,200);assert.equal(payload.avatar.monster.effects,COMMON_EFFECT);
+ assert.equal(payload.diamonds,initial.diamonds);assert.deepEqual(payload.unlocked_parts,initial.unlocked_parts);
 });
 
 test('buying a common frame preserves an equipped common effect', async () => {
@@ -218,10 +208,10 @@ test('buying a rare effect keeps the earned common effect unlocked', async () =>
   const { payload } = await buy(env, RARE_EFFECT);
   assert.equal(payload.avatar.monster.effects, RARE_EFFECT);
   assert.ok(payload.unlocked_parts.includes(COMMON_EFFECT));
-  assert.ok(payload.unlocked_parts.includes(RARE_EFFECT));
+  assert.equal(payload.unlocked_parts.includes(RARE_EFFECT), false);
 });
 
-test('common body alternatives still collapse to the basic default', async () => {
+test('common body choices survive decoration selection', async () => {
   assert.notEqual(COMMON_BODY, BASIC_MONSTER_CONFIG.body);
   const env = makeEnv(makeProgress({
     avatar: {
@@ -230,7 +220,7 @@ test('common body alternatives still collapse to the basic default', async () =>
     },
   }));
   const { payload } = await buy(env, COMMON_FRAME);
-  assert.equal(payload.avatar.monster.body, BASIC_MONSTER_CONFIG.body);
+  assert.equal(payload.avatar.monster.body, COMMON_BODY);
 });
 
 test('rare body remains equipped while buying a decoration', async () => {

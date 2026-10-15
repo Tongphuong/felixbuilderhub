@@ -1,0 +1,12 @@
+{
+  "format": 1,
+  "purpose": "read2lead-synthetic-library-interests",
+  "groups": [
+    { "id": "nature", "label_vi": "Thiên nhiên quanh mình", "themes": ["pets", "nature", "growing things", "environment", "environmental evidence"] },
+    { "id": "together", "label_vi": "Bạn bè và cùng làm", "themes": ["friends", "working as a group", "learning together", "design and teamwork", "shared decisions"] },
+    { "id": "everyday", "label_vi": "Khám phá mỗi ngày", "themes": ["home", "belongings", "care for belongings", "everyday objects", "getting ready", "play and tidying", "remembering a plan", "solving small problems", "sounds and actions"] },
+    { "id": "create", "label_vi": "Sáng tạo và tưởng tượng", "themes": ["art and communication", "fact and imagination", "making things", "music practice"] },
+    { "id": "community", "label_vi": "Quan tâm và công bằng", "themes": ["community", "time and fairness", "design for different needs", "surveys and access", "measurement and service"] },
+    { "id": "investigate", "label_vi": "Thử và tìm hiểu", "themes": ["comparing explanations", "testing a change"] }
+  ]
+}

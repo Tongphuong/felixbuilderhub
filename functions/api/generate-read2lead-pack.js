@@ -10,6 +10,7 @@ import {
 import { reconcileStrandedPack } from './_read2lead-reconcile-stranded.js';
 import { assessBookHealth } from '../../src/lib/read2lead-book-health.mjs';
 import { bandForReadingLoad, readingLoadOf } from './publish-read2lead-book.js';
+import { usesStoryCatalogue, storyCatalogueEnabled, isStoryPack, selectAssignedStory, storyAssignmentPack, storyLessonLink, withStoryRetellRequirement, loadAssignedStory } from '../lib/read2lead/story-catalogue.mjs';
 
 const GENERATION_LOCK_STALE_MS = 15 * 60 * 1000;
 
@@ -28,9 +29,16 @@ export function levelProgressPercent(progressState, level) {
   const packsDone = Math.floor(xp / XP_PER_PASSED_PACK);
   return Math.max(0, Math.min(100, Math.round((packsDone / required) * 100)));
 }
-const BACKEND_CHILD_NAME_RE = /^[^\W\d_]+(?:[\s\-'][^\W\d_]+)*$/u;
+const BACKEND_CHILD_NAME_RE = /^\p{L}[\p{L}\p{M}]*(?:[ \-'’]\p{L}[\p{L}\p{M}]*)*$/u;
 
-export async function onRequestPost(context) {
+export function onRequestPost(context) {
+  return assignRead2LeadPack(context);
+}
+
+// The account transaction host admits existing catalogue content first. Its
+// server-owned option cannot be enabled by a child's request body. The original
+// Pages endpoint retains its existing backend-generation default.
+export async function assignRead2LeadPack(context, { allowExternalGeneration = true } = {}) {
   const { request, env } = context;
 
   let data;
@@ -40,6 +48,9 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'Invalid JSON' }, 400);
   }
 
+  if (!data || typeof data !== 'object' || Array.isArray(data)) {
+    return json({ ok: false, error: 'Invalid JSON object' }, 400);
+  }
   if (data.website) {
     return json({ ok: false, error: 'Spam detected' }, 400);
   }
@@ -83,7 +94,36 @@ export async function onRequestPost(context) {
   const progress = normalizeProgress(codeData, progressState);
   const profileError = checkStudentProfile(progress);
   if (profileError) return profileError;
-  const requireReviewBeforeNextPack = shouldRequireReviewBeforeNextPack(codeData);
+  const selectionAccount = codeData;
+  const originalPack = progress.current_pack = await withStoryRetellRequirement(env, codeData, progress.current_pack);
+  const support = data.easier_from_pack !== undefined;
+  const automatic = data.collection === 'auto';
+  let supportLevel;
+  if (support) {
+    if (originalPack?.support_from_pack === data.easier_from_pack) {
+      return assignedResponse(accessCode, originalPack, progress);
+    }
+    if (!originalPack || originalPack.pack_id !== data.easier_from_pack || originalPack.status === 'generation_in_progress') {
+      return json({ok:false,error:'assignment_changed',message:'Bài đang học đã thay đổi. Con mở lại góc đọc sách nhé.'},409);
+    }
+    const level = /^L[0-5]$/.test(originalPack.level) ? Number(originalPack.level.slice(1)) : Number(progress.current_level.slice(1));
+    if (level === 0) return json({ok:false,error:'easier_unavailable',message:'Đây là cấp đầu tiên rồi. Con giữ truyện này và nghe lại từng phần nhé.'},409);
+    supportLevel = 'L' + (level - 1);
+    // Only an in-memory proposal until selection succeeds. Failure keeps the
+    // original account, answers and resume target intact.
+    codeData = {...codeData,story_pack_history:{...(codeData.story_pack_history||{}),
+      [originalPack.pack_id]:{...originalPack,paused_at:new Date().toISOString()}}};
+    progress.current_pack = null;
+  }
+  // A pinned story remains resumable even if the active catalogue is changed.
+  if (isStoryPack(progress.current_pack) && (progress.current_pack.status === 'story_in_progress' ||
+      (progress.current_pack.picture_retell_required === true && progress.current_pack.story_session?.picture_retell_complete !== true))) {
+    return assignedResponse(accessCode, progress.current_pack, progress);
+  }
+  // Collection selection must never discard an unfinished old lesson, including
+  // adult QA/shared accounts that historically allow unrestricted generation.
+  const requireReviewBeforeNextPack = data.collection !== undefined
+    || env.R2L_CONTENT_SOURCE === 'combined' || shouldRequireReviewBeforeNextPack(codeData);
   if (currentPackBlocksGeneration(progress.current_pack, requireReviewBeforeNextPack)) {
     const isGenerating = progress.current_pack.status === 'generation_in_progress';
     const errorCode = isGenerating ? 'generation_in_progress' : 'previous_pack_needs_review';
@@ -109,8 +149,39 @@ export async function onRequestPost(context) {
 
   const interests = (data.interests || '').toString().trim().slice(0, 120);
   const topic = (data.topic || '').toString().trim().slice(0, 60);
-  const levelForPack = normalizeKidLevel(progress.current_level);
+  const levelForPack = supportLevel || normalizeKidLevel(progress.current_level);
+  if (automatic) allowExternalGeneration = false;
+  let reviewReference;
+  const assignStory = async (loaded, reviewOnly=false) => {
+    const pack = {...storyAssignmentPack(loaded,levelForPack),...(reviewOnly?{review_only:true}:{})};
+    if(support)pack.support_from_pack=originalPack.pack_id;
+    const history={...(codeData.story_pack_history||{})};
+    if(originalPack?.pack_id)history[originalPack.pack_id]=codeData.story_pack_history?.[originalPack.pack_id]||originalPack;
+    const nextProgress={...(codeData.progress||{}),...progress,current_pack:pack,packs_created:(progress.packs_created||0)+1};
+    await env.READ2LEAD_CODES.put(accessCode,JSON.stringify({...codeData,story_selection:null,story_pack_history:history,progress:nextProgress}));
+    return assignedResponse(accessCode,pack,nextProgress);
+  };
+  if (usesStoryCatalogue(env,data.collection)||(automatic&&storyCatalogueEnabled(env))) {
+    let loaded;
+    try {
+      if(!storyCatalogueEnabled(env))throw Object.assign(new Error('story_catalogue_unavailable'),{code:'story_catalogue_unavailable'});
+      loaded=await selectAssignedStory(env,codeData,levelForPack);
+    } catch(error) {
+      if(error.code==='story_selection_pending') {
+        await env.READ2LEAD_CODES.put(accessCode,JSON.stringify({...selectionAccount,story_selection:error.cursor}));
+        return json({ok:true,status:'selecting',message:'Đang tìm truyện phù hợp cho con…'},202);
+      }
+      reviewReference=error.reviewReference;
+      if(!automatic)return json({ok:false,error:error.code||'story_catalogue_unavailable',message:'Truyện đang được chuẩn bị. Con có thể quay lại bài đã lưu nhé.'},409);
+    }
+    if(loaded)return assignStory(loaded);
+  }
   const useBookPool = (await loadBookLevels(env)).has(bandForLevel(levelForPack));
+  if (!useBookPool && automatic && reviewReference) return assignStory(await loadAssignedStory(env,codeData,reviewReference),true);
+  if (!useBookPool && allowExternalGeneration !== true) {
+    return json({ ok: false, error: 'account_generation_job_not_integrated',
+      message: 'Chưa có truyện phù hợp lúc này. Bài đã lưu của con vẫn còn. Con quay lại sau nhé.' }, 503);
+  }
   const backendUrl = env.READ2LEAD_BACKEND_URL;
   const backendSecret = env.READ2LEAD_BACKEND_SECRET;
   if (!useBookPool && !backendUrl) {
@@ -118,6 +189,14 @@ export async function onRequestPost(context) {
   }
   if (!useBookPool && !backendSecret) {
     return json({ ok: false, error: 'backend_auth_not_configured', message: 'Backend chưa cấu hình bảo mật.' }, 500);
+  }
+  // Preserve the pinned story package when returning to the existing book pool.
+  // Both lesson APIs already resolve this archive; no new account field is needed.
+  if (progress.current_pack?.pack_id) {
+    codeData = { ...codeData, story_pack_history: {
+      ...(codeData.story_pack_history || {}),
+      [progress.current_pack.pack_id]: progress.current_pack,
+    } };
   }
   const lockCreatedAt = new Date().toISOString();
   const pendingPackId = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
@@ -128,13 +207,14 @@ export async function onRequestPost(context) {
     topic: topic || '',
     story_title: 'Đang tạo bài Read2Lead',
     level: levelForPack,
+    ...(support ? {support_from_pack:originalPack.pack_id} : {}),
   };
   const lockedProgress = {
     ...progress,
-    current_level: levelForPack,
+    current_level: support ? progress.current_level : levelForPack,
     current_pack: pendingPack,
   };
-  await env.READ2LEAD_CODES.put(
+  if (!support) await env.READ2LEAD_CODES.put(
     accessCode,
     JSON.stringify({
       ...codeData,
@@ -160,16 +240,24 @@ export async function onRequestPost(context) {
           lockedProgress,
           pendingPack,
           levelForPack,
-          previousPack: progress.current_pack,
+          previousPack: originalPack,
+          support,
+          strictLevel: automatic,
         });
       } catch (err) {
+        if(automatic&&err?.code==='book_pool_exhausted') {
+          try {
+            if(reviewReference)return await assignStory(await loadAssignedStory(env,codeData,reviewReference),true);
+            return await assignBookPack({env,accessCode,codeData,progress,lockedProgress,pendingPack,levelForPack,previousPack:originalPack,support,strictLevel:true,reviewOnly:true});
+          } catch(reviewError) {err=reviewError;}
+        }
         console.error('Book assignment failed:', err?.name || 'BookAssignmentError');
-        await clearGenerationLock(env.READ2LEAD_CODES, accessCode, pendingPackId);
+        if (!support) await clearGenerationLock(env.READ2LEAD_CODES, accessCode, pendingPackId);
         return json(
           {
             ok: false,
             error: err?.code || 'book_unavailable',
-            message: err?.publicMessage || 'Chưa mở được truyện mới. Con thử lại sau một chút nhé.',
+            message: support ? 'Chưa có truyện dễ hơn phù hợp. Bài đã lưu vẫn còn; con giữ truyện này và nghe lại nhé.' : err?.publicMessage || 'Chưa mở được truyện mới. Con thử lại sau một chút nhé.',
           },
           err?.status || 503,
         );
@@ -434,17 +522,21 @@ async function assignBookPack({
   pendingPack,
   levelForPack,
   previousPack,
+  support = false,
+  strictLevel = false,
+  reviewOnly = false,
 }) {
   const band = bandForLevel(levelForPack);
-  const rawIndex = await env.READ2LEAD_CODES.get('book_index:' + band, { type: 'json' });
+  let rawIndex = await env.READ2LEAD_CODES.get('book_index:' + band, { type: 'json' });
   if (!Array.isArray(rawIndex)) {
     throw new BookPoolError(
       'book_pool_unavailable',
       'Kho truyện đang được cập nhật. Con thử lại sau một chút nhé.',
     );
   }
+  if(reviewOnly)rawIndex=rawIndex.filter(slug=>(codeData.completed_books||[]).includes(slug));
   const rng = typeof env.RNG === 'function' ? env.RNG : Math.random;
-  const previousSlug = bookSlugFromPack(previousPack);
+  const previousSlug = reviewOnly ? '' : bookSlugFromPack(previousPack);
   const now = new Date().toISOString();
   const quarantined = await loadQuarantine(env, band);
   const excluded = new Set();
@@ -459,7 +551,7 @@ async function assignBookPack({
   for (let attempt = 0; attempt < MAX_HEALTH_ATTEMPTS; attempt += 1) {
     const slug = selectUnreadBook(
       rawIndex,
-      [...(codeData.completed_books || []), ...excluded, ...quarantined],
+      [...(reviewOnly?[]:(codeData.completed_books || [])), ...excluded, ...quarantined],
       previousSlug,
       rng,
     );
@@ -522,7 +614,7 @@ async function assignBookPack({
     chosen = { slug: softFallback.slug, pack: softFallback.pack };
   }
 
-  if (!chosen && mishelved) {
+  if (!chosen && mishelved && !strictLevel) {
     // Every healthy book on this shelf grades too hard — the shelf itself is stale and wants a
     // reindex. Serve the gentlest of them rather than failing the child, and say so loudly.
     console.warn('book_shelf_stale', JSON.stringify({
@@ -565,7 +657,7 @@ async function assignBookPack({
   const storedPack = chosen.pack;
 
   const finalPack = buildFinalV2Pack({
-    pendingPack,
+    pendingPack: {...pendingPack,...(reviewOnly?{review_only:true}:{})},
     pack: storedPack,
     createdAt: new Date().toISOString(),
   });
@@ -578,7 +670,8 @@ async function assignBookPack({
     accessCode,
     JSON.stringify({
       ...codeData,
-      student_profile: {
+      story_selection:null,
+      student_profile: support || reviewOnly ? codeData.student_profile : {
         ...(codeData.student_profile || {}),
         student_name: progress.student_name,
         age: progress.age,
@@ -586,7 +679,7 @@ async function assignBookPack({
         child_gender: progress.child_gender,
       },
       progress: nextProgress,
-      uses_remaining: spendUse(codeData),
+      uses_remaining: reviewOnly ? codeData.uses_remaining : spendUse(codeData),
       last_used_at: finalPack.created_at.slice(0, 10),
     }),
   );
@@ -600,7 +693,7 @@ async function assignBookPack({
     child_name: progress.student_name,
     review_link: '/ho-so?code=' + encodeURIComponent(accessCode),
     lesson_link: '/read2lead/lesson?code=' + encodeURIComponent(accessCode)
-      + '&pack_id=' + encodeURIComponent(finalPack.pack_id),
+      + '&pack_id=' + encodeURIComponent(finalPack.pack_id) + (finalPack.review_only?'&review=1':''),
     current_pack: publicPack(finalPack),
     progress: publicProgress(nextProgress),
     level: finalPack.level,
@@ -609,12 +702,16 @@ async function assignBookPack({
 
 function validate(data) {
   const errors = [];
+  if (data.easier_from_pack !== undefined && (data.collection !== 'auto' || typeof data.easier_from_pack !== 'string' || !/^[a-zA-Z0-9_-]{1,128}$/.test(data.easier_from_pack))) errors.push('easier_from_pack');
+  if (data.collection !== undefined && !['read2lead', 'one-story-a-day', 'auto'].includes(data.collection)) {
+    errors.push('collection');
+  }
   return errors;
 }
 
 function checkStudentProfile(progress) {
   if (!progress.student_name) {
-    return json({ ok: false, error: 'student_profile_missing', message: 'Mã này chưa có tên học sinh. Vào admin/codes để cập nhật tên con trước khi tạo bài.' }, 400);
+    return json({ ok: false, error: 'student_profile_missing', message: 'Tên của con chưa được lưu. Con nhờ ba mẹ hoặc Coach Felix kiểm tra lại link nhé.' }, 400);
   }
   if (!isValidBackendChildName(progress.student_name)) {
     return json(
@@ -622,7 +719,7 @@ function checkStudentProfile(progress) {
         ok: false,
         error: 'student_name_invalid',
         message:
-          'Tên con chỉ dùng chữ cái (không số, không ký tự đặc biệt). Vào admin/codes → Edit — ví dụ dùng "Pilot" thay vì "Pilot L3".',
+          'Tên của con cần được kiểm tra lại. Con nhờ ba mẹ hoặc Coach Felix giúp nhé.',
       },
       400,
     );
@@ -751,12 +848,20 @@ function publicPack(pack) {
   if (!pack) return null;
   return {
     pack_id: pack.pack_id,
+    review_only:pack.review_only===true,
     status: pack.status,
     topic: pack.topic,
     story_title: pack.story_title,
     level: pack.level,
     schema_version: pack.schema_version || pack.review_context?.schema_version || null,
   };
+}
+
+function assignedResponse(accessCode, pack, progress) {
+  return json({ok:true,status:'done',pack_id:pack.pack_id,story_title:pack.story_title,
+    current_pack:publicPack(pack),child_name:progress.student_name,topic:pack.topic,level:pack.level,
+    lesson_link:isStoryPack(pack)?storyLessonLink(accessCode,pack):`/read2lead/lesson?code=${encodeURIComponent(accessCode)}&pack_id=${encodeURIComponent(pack.pack_id)}${pack.review_only?'&review=1':''}`,
+    progress:publicProgress(progress)});
 }
 
 function publicProgress(progress) {
@@ -780,7 +885,7 @@ function json(body, status = 200) {
 }
 
 function isValidBackendChildName(name) {
-  const trimmed = String(name || '').trim();
+  const trimmed = String(name || '').normalize('NFC').trim();
   return trimmed.length > 0 && trimmed.length <= 50 && BACKEND_CHILD_NAME_RE.test(trimmed);
 }
 
@@ -791,7 +896,7 @@ function mapBackendGenerateError(body) {
       ...body,
       error: 'student_name_invalid',
       message:
-        'Tên con chỉ dùng chữ cái (không số). Vào admin/codes → Edit — ví dụ "Pilot" thay vì "Pilot L3".',
+        'Tên của con cần được kiểm tra lại. Con nhờ ba mẹ hoặc Coach Felix giúp nhé.',
     };
   }
   return body;

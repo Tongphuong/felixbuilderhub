@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "purpose": "read2lead-local-synthetic-family",
+  "accounts": [
+    {
+      "family_id": "synthetic-family-a",
+      "label_vi": "Gia đình mẫu A",
+      "access_code": "DEMO-FAMILY-A",
+      "parent_secret": "DEMO-PARENT-A-ONLY",
+      "recovery_code": "DEMO-RECOVERY-FAMILY-A-2026",
+      "children": [
+        { "child_id": "synthetic-an", "display_name": "An mẫu", "level": "L2" },
+        { "child_id": "synthetic-binh", "display_name": "Bình mẫu", "level": "L0" }
+      ]
+    },
+    {
+      "family_id": "synthetic-family-b",
+      "label_vi": "Gia đình mẫu B",
+      "access_code": "DEMO-FAMILY-B",
+      "parent_secret": "DEMO-PARENT-B-ONLY",
+      "recovery_code": "DEMO-RECOVERY-FAMILY-B-2026",
+      "children": [
+        { "child_id": "synthetic-chi", "display_name": "Chi mẫu", "level": "L5" }
+      ]
+    }
+  ]
+}

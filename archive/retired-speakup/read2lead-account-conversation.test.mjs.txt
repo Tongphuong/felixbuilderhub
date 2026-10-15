@@ -1,0 +1,148 @@
+import test, { before, after } from 'node:test';
+import assert from 'node:assert/strict';
+import { DatabaseSync } from 'node:sqlite';
+import { createRead2LeadAccountService } from '../functions/lib/read2lead/account-service.mjs';
+import { createAccountTransactionRunner } from '../functions/lib/read2lead/account-transactions.mjs';
+
+const originalFetch = globalThis.fetch;
+before(() => { globalThis.fetch = async () => { throw Error('external network forbidden in synthetic conversation tests'); }; });
+after(() => { globalThis.fetch = originalFetch; });
+const CODE = 'R2L-SYNTHETIC-CONVERSATION', OTHER = 'R2L-SYNTHETIC-OTHER';
+const deferred = () => { let resolve; const promise = new Promise(r => { resolve = r; }); return { promise, resolve }; };
+const isBrain = model => model.includes('70b');
+async function fixture(t, { background = true } = {}) {
+  const db = new DatabaseSync(':memory:'); let now = Date.now(), custom, fail = false, legacy = 0;
+  const jobs = [], calls = [];
+  const transaction = fn => { db.exec('BEGIN'); try { const r = fn(); if (fail) throw Error('synthetic commit failure'); db.exec('COMMIT'); return r; } catch (e) { db.exec('ROLLBACK'); throw e; } };
+  const answer = model => model.includes('llama-guard') ? { response: 'safe' }
+    : isBrain(model) ? { response: JSON.stringify({ reply_en: 'What did you enjoy at the park?', mood: 'idle' }) }
+    : model.includes('whisper') ? { text: 'I played in the park.' }
+    : model.includes('melotts') ? { audio: 'c3ludGhldGlj' } : new Response('synthetic speech').body;
+  const options = { db, transaction, now: () => now, infrastructure: { AI: { async run(model, input) { calls.push({ model, input }); return custom ? custom(model, input, answer) : answer(model); } }, READ2LEAD_CODES: {
+    get() { legacy++; throw Error('old KV forbidden'); }, put() { legacy++; throw Error('old KV forbidden'); },
+  } }, ...(background ? { scheduleBackground(p) { jobs.push(p); } } : {}) };
+  const service = createRead2LeadAccountService(options), run = createAccountTransactionRunner(options);
+  const set = async (key, value) => { const r = await run(async env => { if (value === null) await env.READ2LEAD_CODES.delete(key); else await env.READ2LEAD_CODES.put(key, JSON.stringify(value)); return new Response(null, { status: 204 }); }); assert.equal(r.status, 204); };
+  const get = key => { const r = db.prepare("SELECT value FROM read2lead_account_kv WHERE namespace='codes' AND key=?").get(key); return r ? JSON.parse(r.value) : null; };
+  const request = body => new Request('https://synthetic.test/api/minny-conversation', { method: 'POST', headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': '192.0.2.130' }, body: JSON.stringify({ access_code: CODE, ...body }) });
+  const start = body => service(request({ action: 'start', ...body }));
+  const turn = (session_id, body = {}) => service(request({ action: 'turn', session_id, transcript: 'I played in the park.', ...body }));
+  await set(CODE, { student_profile: { student_name: 'Synthetic', level: 'L3' }, progress: { current_level: 'L3', diamonds: 700, current_pack: { pack_id: 'synthetic-pack', status: 'awaiting_review' } } });
+  await set(OTHER, { student_profile: { level: 'L3' } });
+  t.after(async () => { await Promise.all(jobs); assert.equal(legacy, 0); db.close(); });
+  return { db, service, request, start, turn, run, get, set, jobs, calls, provider(fn) { custom = fn; }, advance(ms) { now += ms; }, failCommit(v) { fail = v; }, restart: () => createRead2LeadAccountService(options) };
+}
+
+test('original start/turn/session history and cached owner audio survive service reconstruction', async t => {
+  const f = await fixture(t), account = f.get(CODE); const opened = await f.start(); assert.equal(opened.status, 200);
+  const initial = await opened.json(); assert.equal(initial.level, 'L3'); assert.equal(initial.turns_left, 12);
+  const r = await f.turn(initial.session_id); assert.equal(r.status, 200); const result = await r.json();
+  assert.equal(result.reply_en, 'What did you enjoy at the park?'); assert.equal(f.get('convo-session:' + initial.session_id).turns, 1);
+  await Promise.all(f.jobs);
+  if (result.audio_pending) {
+    const response = await f.restart()(f.request({ action: 'audio', session_id: initial.session_id, turn: result.audio_turn }));
+    assert.equal((await response.json()).ready, true);
+  } else assert.ok(result.audio_b64);
+  assert.equal(f.get('convo-inflight:' + initial.session_id), null); assert.deepEqual(f.get(CODE), account);
+});
+
+test('parallel starts reserve daily/global limits atomically; client cannot grant test exemption', async t => {
+  const f = await fixture(t); const responses = await Promise.all(Array.from({ length: 4 }, () => f.start({ is_test: true })));
+  assert.deepEqual(responses.map(r => r.status).sort(), [200, 200, 200, 429]);
+  const today = new Date().toISOString().slice(0,10), daily = 'convo-daily:' + CODE + ':' + today, global = 'convo-global:' + today;
+  assert.equal(f.get(daily), 3); assert.equal(f.get(global), 3);
+  await f.set(CODE, { ...f.get(CODE), is_test: true });
+  assert.equal((await f.start()).status, 200); assert.equal(f.get(daily), 3); assert.equal(f.get(global), 3);
+});
+
+test('global cap, missing account, missing host and failed start commit make no provider calls', async t => {
+  const f = await fixture(t); await f.set('convo-global:' + new Date().toISOString().slice(0,10), 60);
+  assert.equal((await f.start()).status, 429); assert.equal((await f.start({ access_code: 'MISSING' })).status, 404); assert.equal(f.calls.length, 0);
+  const noHost = await fixture(t, { background: false }); assert.equal((await noHost.start()).status, 503); assert.equal(noHost.calls.length, 0);
+  const badCommit = await fixture(t); const before = badCommit.db.prepare('SELECT * FROM read2lead_account_kv ORDER BY key').all(); badCommit.failCommit(true);
+  assert.equal((await badCommit.start()).status, 503); assert.equal(badCommit.calls.length, 0);
+  assert.deepEqual(badCommit.db.prepare('SELECT * FROM read2lead_account_kv ORDER BY key').all(), before);
+});
+
+test('only the session owner can send turns or fetch its late audio', async t => {
+  const f = await fixture(t), { session_id } = await (await f.start()).json(); const count = f.calls.length;
+  assert.equal((await (await f.turn(session_id, { access_code: OTHER })).json()).ended, true); assert.equal(f.calls.length, count);
+  await f.set(`convo-audio:${session_id}:1`, { code: CODE, audio_b64: 'c3ludGhldGlj', content_type: 'audio/mpeg' });
+  assert.equal((await (await f.service(f.request({ access_code: OTHER, action: 'audio', session_id, turn: 1 }))).json()).ready, false);
+});
+
+test('one in-flight turn refuses overlap before provider and permits same-service progress save', async t => {
+  const f = await fixture(t), { session_id } = await (await f.start()).json(), started = deferred(), release = deferred();
+  f.provider(async (model, input, answer) => { if (isBrain(model)) { started.resolve(); await release.promise; } return answer(model); });
+  const pending = f.turn(session_id); await started.promise;
+  let timer;
+  try {
+    const overlap = await Promise.race([f.turn(session_id), new Promise((_, reject) => { timer = setTimeout(() => reject(Error('overlap was not refused before provider')), 1000); })]);
+    clearTimeout(timer); assert.equal(overlap.status, 409); assert.equal((await overlap.json()).error, 'conversation_busy');
+    assert.equal(f.calls.filter(c => isBrain(c.model)).length, 1);
+    const saved = await Promise.race([f.service(new Request('https://synthetic.test/api/read2lead-checkpoint-save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ access_code: CODE, pack_id: 'synthetic-pack', snapshot: { page: 6 } }) })), new Promise((_, reject) => { timer = setTimeout(() => reject(Error('conversation held account queue')), 1000); })]);
+    assert.equal((await saved.json()).stored, true);
+  } finally { clearTimeout(timer); release.resolve(); }
+  assert.equal((await pending).status, 200); assert.equal(f.get('convo-session:' + session_id).turns, 1);
+  assert.deepEqual(f.get(CODE).progress.current_pack.web_session_checkpoint.snapshot, { page: 6 });
+});
+
+for (const change of ['delete-account', 'change-session', 'expire-lease', 'replace-lease']) test(`stale conversation cannot save or return success: ${change}`, async t => {
+  const f = await fixture(t), { session_id } = await (await f.start()).json(), started = deferred(), release = deferred();
+  const key = 'convo-session:' + session_id, before = f.get(key);
+  f.provider(async (model, input, answer) => { if (isBrain(model)) { started.resolve(); await release.promise; } return answer(model); });
+  const pending = f.turn(session_id); await started.promise;
+  if (change === 'delete-account') await f.set(CODE, null);
+  if (change === 'change-session') await f.set(key, { ...before, newer_marker: true });
+  if (change === 'expire-lease') f.advance(180001);
+  if (change === 'replace-lease') await f.set('convo-inflight:' + session_id, { token: 'new-owner-token', code: CODE });
+  release.resolve(); const r = await pending; assert.equal(r.status, 409); assert.equal((await r.json()).error, 'conversation_changed');
+  assert.equal(f.get(key).turns, 0);
+  if (change === 'change-session') assert.equal(f.get(key).newer_marker, true);
+  if (change === 'replace-lease') assert.equal(f.get('convo-inflight:' + session_id)?.token, 'new-owner-token');
+  await Promise.all(f.jobs); assert.equal(f.get(`convo-audio:${session_id}:1`), null);
+  if (change === 'expire-lease') {
+    assert.equal((await f.turn(session_id)).status, 200);
+    assert.equal(f.get(key).turns, 1); assert.equal(f.get('convo-inflight:' + session_id), null);
+  }
+});
+
+test('slow microphone upload permits saved progress, then uses original merged transcription path', async t => {
+  const f = await fixture(t), { session_id } = await (await f.start()).json(), release = deferred();
+  const form = new FormData();
+  for (const [key,value] of Object.entries({ access_code: CODE, action: 'turn', session_id })) form.set(key,value);
+  form.set('audio', new Blob(['synthetic recording bytes'], { type: 'audio/webm' }), 'synthetic.webm');
+  const original = new Request('https://synthetic.test/api/minny-conversation', { method: 'POST', body: form });
+  const bytes = new Uint8Array(await original.arrayBuffer());
+  const body = new ReadableStream({ async start(controller) { controller.enqueue(bytes.slice(0,10)); await release.promise; controller.enqueue(bytes.slice(10)); controller.close(); } });
+  const pending = f.service(new Request(original.url, { method: 'POST', headers: original.headers, body, duplex: 'half' }));
+  let timer;
+  try {
+    const saved = await Promise.race([f.service(new Request('https://synthetic.test/api/read2lead-checkpoint-save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ access_code: CODE, pack_id: 'synthetic-pack', snapshot: { page: 7 } }) })), new Promise((_, reject) => { timer = setTimeout(() => reject(Error('conversation upload held account queue')), 1000); })]);
+    assert.equal((await saved.json()).stored, true); assert.equal(f.calls.filter(c => c.model.includes('whisper')).length, 0);
+  } finally { clearTimeout(timer); release.resolve(); }
+  const response = await pending; assert.equal(response.status, 200); assert.equal((await response.json()).transcript, 'I played in the park.');
+  assert.equal(f.calls.filter(c => c.model.includes('whisper')).length, 1);
+  assert.deepEqual(f.get(CODE).progress.current_pack.web_session_checkpoint.snapshot, { page: 7 });
+});
+
+test('deferred audio arrives after response and remains owner-scoped without changing saved turn', async t => {
+  const f = await fixture(t), { session_id } = await (await f.start()).json(), audio = deferred();
+  f.provider(async (model, input, answer) => model.includes('aura-2') ? audio.promise : answer(model));
+  let timer, data;
+  try {
+    const r = await Promise.race([f.turn(session_id), new Promise((_, reject) => { timer = setTimeout(() => reject(Error('reply waited for deferred speech')), 1000); })]);
+    assert.equal(r.status, 200); data = await r.json(); assert.equal(data.audio_pending, true); assert.equal(data.audio_turn, 1);
+    assert.equal(f.get('convo-session:' + session_id).turns, 1); assert.equal(f.get(`convo-audio:${session_id}:1`), null);
+  } finally { clearTimeout(timer); audio.resolve(new Response('late synthetic speech').body); }
+  await Promise.all(f.jobs);
+  const ready = await f.service(f.request({ action: 'audio', session_id, turn: 1 })); assert.equal((await ready.json()).ready, true);
+  assert.equal(f.get('convo-session:' + session_id).turns, 1);
+});
+
+test('original capped session ends and releases reservation without touching learner balance', async t => {
+  const f = await fixture(t), { session_id } = await (await f.start()).json(), key = 'convo-session:' + session_id;
+  await f.set(key, { ...f.get(key), turns: 12 });
+  const r = await f.turn(session_id); assert.equal(r.status, 200); assert.equal((await r.json()).ended, true);
+  assert.equal(f.get(key), null); assert.equal(f.get('convo-inflight:' + session_id), null); assert.equal(f.get(CODE).progress.diamonds, 700);
+});

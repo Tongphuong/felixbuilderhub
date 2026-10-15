@@ -844,15 +844,15 @@
 .spk-rec-btn__icon {
   width: 28px;
   height: 28px;
-  border-radius: 7px;
+  border-radius: 50%;
   background: #fff;
   display: block;
 }
 
-@media (min-width: 1024px) { .spk-rec-btn__icon { width: 36px; height: 36px; border-radius: 8px; } }
+@media (min-width: 1024px) { .spk-rec-btn__icon { width: 36px; height: 36px; } }
 
 .spk-rec-btn.is-recording { animation: spk-rec-pulse 1.6s ease-out infinite; }
-.spk-rec-btn.is-recording .spk-rec-btn__icon { animation: spk-rec-dot 1.2s ease-in-out infinite; }
+.spk-rec-btn.is-recording .spk-rec-btn__icon { border-radius: 7px; animation: spk-rec-dot 1.2s ease-in-out infinite; }
 
 @keyframes spk-rec-pulse {
   0% { box-shadow: 0 12px 32px -8px rgba(248, 113, 113, 0.55), 0 0 0 0 rgba(248, 113, 113, 0.45); }
@@ -2022,7 +2022,8 @@
    component, size modifier only; reuses the existing .is-recording pulse
    and :disabled treatment already shipped for the main recorder. */
 .spk-rec-btn--sm { width: 56px; height: 56px; }
-.spk-rec-btn--sm .spk-rec-btn__icon { width: 16px; height: 16px; border-radius: 4px; }
+.spk-rec-btn--sm .spk-rec-btn__icon { width: 16px; height: 16px; }
+.spk-rec-btn--sm.is-recording .spk-rec-btn__icon { border-radius: 4px; }
 
 .minny-fixit-celebrate {
   border-radius: 20px;
@@ -2731,4 +2732,3 @@
   font-weight: 800; font-size: 10px; letter-spacing: 0.08em;
   border-radius: 6px; padding: 3px 7px; text-transform: uppercase;
 }
-

@@ -19,7 +19,7 @@
 // reader hiccupped.
 import { json } from '../../_classes.js';
 import { normalizeTeacherLine, parseHomeworkLines, parseFrameStems } from '../../../_homework.js';
-import { resolveOpenAIApiKey } from '../../../read2lead-speaking-check.js';
+import { resolveOpenAIApiKey } from '../../../../lib/read2lead/provider-config.mjs';
 
 export const VISION_MODEL = '@cf/meta/llama-3.2-11b-vision-instruct';
 export const OPENAI_VISION_MODEL = 'gpt-4o-mini';

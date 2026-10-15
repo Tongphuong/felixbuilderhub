@@ -1,0 +1,21 @@
+---
+import '../../styles/read2lead-self-learn.css';
+import giftStyles from '../../styles/read2lead-gifts.css?url&no-inline';
+---
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Bàn quà mẫu · Read2Lead</title>
+    <link rel="stylesheet" href={giftStyles} />
+  </head>
+  <body class="gift-staff-page">
+    <a class="skip-link" href="#main">Đến nội dung bàn quà</a>
+    <div class="qa-banner">BẢN THỬ CỤC BỘ · Chỉ dùng dữ liệu mẫu · Không có quà thật</div>
+    <div id="gift-staff-root"><main id="main" tabindex="-1"><p>Đang mở bàn quà mẫu…</p></main></div>
+    <noscript><p class="notice">Cần bật JavaScript để đối chiếu và lưu lượt thử.</p></noscript>
+    <script>import { mountGiftStaff } from '../../lib/read2lead/self-learn/gift-staff.mjs'; mountGiftStaff(document.getElementById('gift-staff-root'));</script>
+  </body>
+</html>

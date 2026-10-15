@@ -120,7 +120,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
       <p id="list-status" class="mt-3 text-sm text-cream-dim">Đang tải...</p>
       <div id="codes-list" class="mt-5 space-y-3"></div>
       <div id="load-more-wrap" class="mt-5 hidden text-center">
-        <button id="load-more" type="button" class="rounded-lg border border-cream-dim/30 px-5 py-2 text-sm font-medium text-cream transition hover:border-accent hover:text-accent">Tải thêm →</button>
+        <button id="load-more" type="button" class="min-h-[44px] rounded-lg border border-cream-dim/30 px-5 py-2 text-sm font-medium text-cream transition hover:border-accent hover:text-accent">Tải thêm →</button>
       </div>
     </div>
   </section>
@@ -130,38 +130,83 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
   <script>
     import { escapeHtml, formatDate, TEST_LEVELS } from '../../lib/admin-shared.mjs';
 
-    const createForm = document.getElementById('create-form');
-    const createResult = document.getElementById('create-result');
-    const createError = document.getElementById('create-error');
-    const copyCodeBtn = document.getElementById('copy-code');
-    const copyStatus = document.getElementById('copy-status');
-    const refreshBtn = document.getElementById('refresh-list');
-    const resetLevelsBtn = document.getElementById('reset-levels');
-    const clearOpenBooksBtn = document.getElementById('clear-open-books');
-    const syncBotPresetsBtn = document.getElementById('sync-bot-presets');
-    const listEl = document.getElementById('codes-list');
-    const listStatus = document.getElementById('list-status');
-    const searchInput = document.getElementById('search-codes');
-    const loadMoreWrap = document.getElementById('load-more-wrap');
-    const loadMoreBtn = document.getElementById('load-more');
-    const filterChips = document.querySelectorAll('.filter-chip');
-    const editModal = document.getElementById('edit-code-modal');
-    const editForm = document.getElementById('edit-code-form');
+    type CodeProfile = {
+      student_name?: string;
+      age?: string | number | null;
+      level?: string;
+      child_gender?: string;
+    };
+    type CodeProgress = CodeProfile & {
+      current_level?: string;
+      rank_title?: string;
+      completed_packs?: number;
+      coins?: number;
+    };
+    type AdminCode = {
+      code: string;
+      parent_name?: string;
+      parent_zalo?: string;
+      notes?: string;
+      expires_at?: string | null;
+      last_used_at?: string | null;
+      uses_remaining?: number | null;
+      uses_total?: number | null;
+      is_test?: boolean;
+      is_shared?: boolean;
+      is_bot?: boolean;
+      student_profile?: CodeProfile | null;
+      progress?: CodeProgress | null;
+    };
+    type CodePatch = {
+      uses_remaining?: number;
+      expires_at?: string;
+      is_test?: boolean;
+      is_shared?: boolean;
+      parent_name?: string;
+      parent_zalo?: string;
+      notes?: string;
+      student_profile?: { student_name: string; age: string; child_gender: string };
+    };
+    type BotPresetResult = {
+      ok: boolean;
+      display_name: string;
+      rank_label_vi: string;
+      completed_packs: number;
+      coins: number;
+    };
 
-    let allItems = [];
-    let filteredItems = [];
-    let activeFilter = 'all';
+    const createForm = document.getElementById('create-form') as HTMLFormElement;
+    const createResult = document.getElementById('create-result') as HTMLElement;
+    const createError = document.getElementById('create-error') as HTMLElement;
+    const copyCodeBtn = document.getElementById('copy-code') as HTMLButtonElement;
+    const copyStatus = document.getElementById('copy-status') as HTMLElement;
+    const refreshBtn = document.getElementById('refresh-list') as HTMLButtonElement;
+    const resetLevelsBtn = document.getElementById('reset-levels') as HTMLButtonElement;
+    const clearOpenBooksBtn = document.getElementById('clear-open-books') as HTMLButtonElement;
+    const syncBotPresetsBtn = document.getElementById('sync-bot-presets') as HTMLButtonElement;
+    const listEl = document.getElementById('codes-list') as HTMLElement;
+    const listStatus = document.getElementById('list-status') as HTMLElement;
+    const searchInput = document.getElementById('search-codes') as HTMLInputElement;
+    const loadMoreWrap = document.getElementById('load-more-wrap') as HTMLElement;
+    const loadMoreBtn = document.getElementById('load-more') as HTMLButtonElement;
+    const filterChips = document.querySelectorAll<HTMLButtonElement>('.filter-chip');
+    const editModal = document.getElementById('edit-code-modal') as HTMLDialogElement;
+    const editForm = document.getElementById('edit-code-form') as HTMLFormElement;
+
+    let allItems: AdminCode[] = [];
+    let filteredItems: AdminCode[] = [];
+    let activeFilter: string | undefined = 'all';
     let searchQuery = '';
-    let nextCursor = null;
+    let nextCursor: string | null = null;
     let listComplete = true;
 
-    function showCreateError(msg) {
+    function showCreateError(msg: string) {
       createResult.classList.add('hidden');
       createError.classList.remove('hidden');
       createError.textContent = '⚠ ' + msg;
     }
 
-    function showCreatedCode(code) {
+    function showCreatedCode(code: string) {
       createError.classList.add('hidden');
       createResult.classList.remove('hidden');
       copyCodeBtn.textContent = code;
@@ -170,7 +215,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
 
     copyCodeBtn.addEventListener('click', async () => {
       try {
-        await navigator.clipboard.writeText(copyCodeBtn.textContent);
+        await navigator.clipboard.writeText(copyCodeBtn.textContent!);
         copyStatus.textContent = '✓ Đã copy vào clipboard.';
       } catch {
         copyStatus.textContent = 'Không copy được — bôi đen mã và copy tay.';
@@ -179,7 +224,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
 
     createForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const submitBtn = createForm.querySelector('button[type="submit"]');
+      const submitBtn = createForm.querySelector<HTMLButtonElement>('button[type="submit"]')!;
       submitBtn.disabled = true;
       submitBtn.textContent = 'Đang tạo...';
       const data = Object.fromEntries(new FormData(createForm));
@@ -193,14 +238,14 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
         if (res.ok && result.ok) {
           showCreatedCode(result.code);
           createForm.reset();
-          createForm.querySelector('[name=uses]').value = '10';
-          createForm.querySelector('[name=expiry_days]').value = '60';
+          createForm.querySelector<HTMLInputElement>('[name=uses]')!.value = '10';
+          createForm.querySelector<HTMLInputElement>('[name=expiry_days]')!.value = '60';
           await loadList();
         } else {
           showCreateError(result.message || result.error || 'Lỗi không xác định');
         }
       } catch (err) {
-        showCreateError('Lỗi mạng: ' + err.message);
+        showCreateError('Lỗi mạng: ' + (err as Error).message);
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Tạo mã';
@@ -226,7 +271,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
         const exhausted = (item.uses_remaining ?? 0) <= 0;
         const active = !expired && !exhausted;
 
-        let matchesFilter = true;
+        let matchesFilter: boolean | string | null | undefined = true;
         if (activeFilter === 'active') matchesFilter = active;
         else if (activeFilter === 'expired') matchesFilter = expired;
         else if (activeFilter === 'exhausted') matchesFilter = exhausted;
@@ -239,7 +284,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
     }
 
     searchInput.addEventListener('input', (e) => {
-      searchQuery = e.target.value;
+      searchQuery = (e.target as HTMLInputElement).value;
       filterItems();
     });
 
@@ -256,7 +301,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
       });
     });
 
-    function renderItem(item) {
+    function renderItem(item: AdminCode) {
       const today = new Date().toISOString().slice(0, 10);
       const expired = item.expires_at && item.expires_at < today;
       const exhausted = (item.uses_remaining ?? 0) <= 0;
@@ -376,10 +421,10 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
         }
         allItems = result.items || [];
         nextCursor = result.cursor || null;
-        listComplete = result.list_complete || true;
+        listComplete = result.list_complete ?? true;
         filterItems();
       } catch (err) {
-        listStatus.textContent = '⚠ Lỗi mạng: ' + err.message;
+        listStatus.textContent = '⚠ Lỗi mạng: ' + (err as Error).message;
       }
     }
 
@@ -393,7 +438,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
         if (res.ok && result.ok) {
           allItems = [...allItems, ...(result.items || [])];
           nextCursor = result.cursor || null;
-          listComplete = result.list_complete || true;
+          listComplete = result.list_complete ?? true;
           filterItems();
         }
       } catch (err) {
@@ -406,7 +451,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
 
     loadMoreBtn.addEventListener('click', loadMore);
 
-    async function patchCode(code, body) {
+    async function patchCode(code: string, body: CodePatch) {
       const res = await fetch(`/api/admin/codes/${encodeURIComponent(code)}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -415,17 +460,17 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
       return res.json();
     }
 
-    function addDaysToISO(iso, days) {
+    function addDaysToISO(iso: string, days: number) {
       const d = new Date(iso + 'T00:00:00Z');
       d.setUTCDate(d.getUTCDate() + days);
       return d.toISOString().slice(0, 10);
     }
 
     listEl.addEventListener('click', async (e) => {
-      const copyLinkBtn = e.target.closest('[data-role="copy-link"]');
+      const copyLinkBtn = (e.target as Element).closest<HTMLButtonElement>('[data-role="copy-link"]');
       if (copyLinkBtn) {
         try {
-          await navigator.clipboard.writeText(copyLinkBtn.textContent);
+          await navigator.clipboard.writeText(copyLinkBtn.textContent!);
           const status = copyLinkBtn.closest('[data-link-result]')?.querySelector('[data-link-copy-status]');
           if (status) status.textContent = '✓ Đã copy link vào clipboard.';
         } catch {
@@ -435,9 +480,9 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
         return;
       }
 
-      const btn = e.target.closest('button[data-action]');
+      const btn = (e.target as Element).closest<HTMLButtonElement>('button[data-action]');
       if (!btn) return;
-      const article = btn.closest('article[data-code]');
+      const article = btn.closest<HTMLElement>('article[data-code]')!;
       const code = article?.dataset.code;
       if (!code) return;
       const action = btn.dataset.action;
@@ -476,7 +521,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
             alert('Lỗi tạo link: ' + (result.error || 'Không xác định'));
           }
         } catch (err) {
-          alert('Lỗi mạng: ' + err.message);
+          alert('Lỗi mạng: ' + (err as Error).message);
         } finally {
           btn.disabled = false;
           btn.textContent = '🔗 Link';
@@ -528,7 +573,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
       }
 
       if (action === 'set-level') {
-        const select = article.querySelector('[data-role="test-level"]');
+        const select = article.querySelector<HTMLSelectElement>('[data-role="test-level"]');
         const level = select?.value;
         if (!level) return;
         if (!confirm(`Set ${code} → ${level}? Chỉ dùng cho mã test / pilot.`)) return;
@@ -547,7 +592,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
           }
           await loadList();
         } catch (err) {
-          alert('Lỗi mạng: ' + err.message);
+          alert('Lỗi mạng: ' + (err as Error).message);
         } finally {
           btn.disabled = false;
           btn.textContent = 'Áp dụng';
@@ -556,9 +601,9 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
       }
 
       if (action === 'set-bot-stats') {
-        const rankLabelVi = article.querySelector('[data-role="bot-rank"]')?.value.trim();
-        const completedPacks = article.querySelector('[data-role="bot-packs"]')?.value;
-        const coins = article.querySelector('[data-role="bot-coins"]')?.value;
+        const rankLabelVi = article.querySelector<HTMLInputElement>('[data-role="bot-rank"]')?.value.trim();
+        const completedPacks = article.querySelector<HTMLInputElement>('[data-role="bot-packs"]')?.value;
+        const coins = article.querySelector<HTMLInputElement>('[data-role="bot-coins"]')?.value;
         if (!rankLabelVi) {
           alert('Nhập rank (vd. "Vàng II") trước khi áp dụng.');
           return;
@@ -583,7 +628,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
           }
           await loadList();
         } catch (err) {
-          alert('Lỗi mạng: ' + err.message);
+          alert('Lỗi mạng: ' + (err as Error).message);
         } finally {
           btn.disabled = false;
           btn.textContent = 'Áp dụng';
@@ -597,13 +642,13 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
         const profile = current.student_profile || {};
         const progress = current.progress || {};
 
-        document.getElementById('edit-modal-code').value = code;
-        document.getElementById('edit-parent-name').value = current.parent_name || '';
-        document.getElementById('edit-parent-zalo').value = current.parent_zalo || '';
-        document.getElementById('edit-student-name').value = profile.student_name || progress.student_name || '';
-        document.getElementById('edit-student-age').value = profile.age ?? progress.age ?? '';
-        document.getElementById('edit-child-gender').value = profile.child_gender || progress.child_gender || '';
-        document.getElementById('edit-notes').value = current.notes || '';
+        (document.getElementById('edit-modal-code') as HTMLInputElement).value = code;
+        (document.getElementById('edit-parent-name') as HTMLInputElement).value = current.parent_name || '';
+        (document.getElementById('edit-parent-zalo') as HTMLInputElement).value = current.parent_zalo || '';
+        (document.getElementById('edit-student-name') as HTMLInputElement).value = profile.student_name || progress.student_name || '';
+        (document.getElementById('edit-student-age') as unknown as { value: string | number }).value = profile.age ?? progress.age ?? '';
+        (document.getElementById('edit-child-gender') as HTMLSelectElement).value = profile.child_gender || progress.child_gender || '';
+        (document.getElementById('edit-notes') as HTMLInputElement).value = current.notes || '';
 
         editModal.showModal();
       }
@@ -611,15 +656,15 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
 
     editForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const code = document.getElementById('edit-modal-code').value;
+      const code = (document.getElementById('edit-modal-code') as HTMLInputElement).value;
       const body = {
-        parent_name: document.getElementById('edit-parent-name').value,
-        parent_zalo: document.getElementById('edit-parent-zalo').value,
-        notes: document.getElementById('edit-notes').value,
+        parent_name: (document.getElementById('edit-parent-name') as HTMLInputElement).value,
+        parent_zalo: (document.getElementById('edit-parent-zalo') as HTMLInputElement).value,
+        notes: (document.getElementById('edit-notes') as HTMLInputElement).value,
         student_profile: {
-          student_name: document.getElementById('edit-student-name').value,
-          age: document.getElementById('edit-student-age').value,
-          child_gender: document.getElementById('edit-child-gender').value,
+          student_name: (document.getElementById('edit-student-name') as HTMLInputElement).value,
+          age: (document.getElementById('edit-student-age') as HTMLInputElement).value,
+          child_gender: (document.getElementById('edit-child-gender') as HTMLSelectElement).value,
         },
       };
       const result = await patchCode(code, body);
@@ -646,12 +691,12 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
         const result = await res.json();
         if (!res.ok || !result.ok) throw new Error(result.message || result.error || 'sync failed');
         const lines = (result.results || [])
-          .filter((row) => row.ok)
-          .map((row) => `${row.display_name}: ${row.rank_label_vi} · ${row.completed_packs} bài · ${row.coins} xu`);
+          .filter((row: BotPresetResult) => row.ok)
+          .map((row: BotPresetResult) => `${row.display_name}: ${row.rank_label_vi} · ${row.completed_packs} bài · ${row.coins} xu`);
         alert(`Đã sync ${result.applied} bot.\n${lines.join('\n')}`);
         await loadList();
       } catch (err) {
-        alert('Lỗi sync bot: ' + err.message);
+        alert('Lỗi sync bot: ' + (err as Error).message);
       } finally {
         syncBotPresetsBtn.disabled = false;
         syncBotPresetsBtn.textContent = '🤖 Sync bot (Pilot + Ong)';
@@ -693,7 +738,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
         alert(`✓ Xong! Đã dừng ${result.cleared_count} bài và hoàn ${result.refunded_use_count} lượt.\nCon vào lại sẽ nhận truyện mới theo số trang.`);
         await loadList();
       } catch (err) {
-        alert('Lỗi: ' + err.message);
+        alert('Lỗi: ' + (err as Error).message);
       } finally {
         clearOpenBooksBtn.disabled = false;
         clearOpenBooksBtn.textContent = original;
@@ -711,7 +756,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
         alert(`Đã reset ${result.reset} / ${result.scanned} mã về L1.`);
         await loadList();
       } catch (err) {
-        alert('Lỗi reset: ' + err.message);
+        alert('Lỗi reset: ' + (err as Error).message);
       } finally {
         resetLevelsBtn.disabled = false;
         resetLevelsBtn.textContent = 'Reset tất cả về L1';

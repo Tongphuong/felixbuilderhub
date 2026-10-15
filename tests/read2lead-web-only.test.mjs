@@ -32,14 +32,12 @@ test('Read2Lead landing page does not expose PDF or MP3 download surfaces', () =
   assert.doesNotMatch(landingPage, /tự học tại nhà|học tại nhà|file nghe|đóng gói file/i);
 });
 
-test('Read2Lead landing page is profile-first and web-first', () => {
-  assert.match(
-    landingPage,
-    /Luyện đọc và nghe qua truyện phù hợp với con/,
-  );
-  assert.match(landingPage, /Tạo bài cho con/);
-  assert.match(landingPage, /Bảng xếp hạng/);
-  assert.match(landingPage, /Xem tiến độ con/);
+test('Read2Lead landing page shares the child reading home', () => {
+  assert.match(landingPage, /Read2LeadChildHome/);
+  const home=readFileSync('src/components/Read2LeadChildHome.astro','utf8');
+  assert.match(home,/Mở truyện/);
+  assert.match(home,/Bảng thành tích/);
+  assert.match(home,/Dành cho ba mẹ/);
 });
 
 test('Read2Lead public copy does not promise AI-written personalized stories', () => {

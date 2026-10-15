@@ -41,7 +41,8 @@ test('window.__r2lJuice keeps existing keys and registers every W2 key', () => {
 
 test('lesson page adds no more than five W2 hook lines', () => {
   const hooks = lessonPage.match(/window\.__r2lJuice\?\.(?:showComboBadge|showXpTicker|openChest|showNearMissBanner)|playKenney, showXpTicker/g) || [];
-  assert.equal(hooks.length, 5);
+  assert.ok(hooks.length <= 5, 'keep the existing effects integration bounded');
+  assert.doesNotMatch(lessonPage, /window\.__r2lJuice\?\.showNearMissBanner/, 'no old ranking pressure in reading');
 });
 
 test('showXpTicker creates a status ticker at the requested anchor', async () => {

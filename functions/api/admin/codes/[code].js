@@ -1,3 +1,4 @@
+import { isStoryPack } from '../../../lib/read2lead/story-catalogue.mjs';
 // Per-code admin endpoints.
 // PATCH  /api/admin/codes/:code  → update parent info / uses / expiry / notes
 // DELETE /api/admin/codes/:code  → revoke (remove from KV)
@@ -61,6 +62,23 @@ export async function onRequestPatch(context) {
     } else {
       return json({ ok: false, error: 'uses_total_invalid' }, 400);
     }
+  }
+
+  // Adult QA may select a revised story without losing its previous session.
+  // Existing pack lookup already resolves story_pack_history by pack_id.
+  if (body.archive_current_story === true) {
+    const previousPack = updated.progress?.current_pack;
+    if (existing.is_test !== true || body.clear_current_pack === true ||
+        !isStoryPack(previousPack) || !previousPack.pack_id) {
+      return json({ ok: false, error: 'test_story_archive_refused' }, 409);
+    }
+    const history = { ...(updated.story_pack_history || {}) };
+    if (history[previousPack.pack_id] && JSON.stringify(history[previousPack.pack_id]) !== JSON.stringify(previousPack)) {
+      return json({ ok: false, error: 'story_archive_conflict' }, 409);
+    }
+    history[previousPack.pack_id] = previousPack;
+    updated.story_pack_history = history;
+    updated.progress = { ...updated.progress, current_pack: null };
   }
 
   if (body.clear_current_pack === true) {

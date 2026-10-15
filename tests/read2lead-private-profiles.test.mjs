@@ -1,0 +1,168 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {DatabaseSync} from 'node:sqlite';
+import {StorySqlStore} from '../functions/lib/read2lead/story-store.mjs';
+import {PrivateStoryBudgetStore} from '../scripts/lib/read2lead-story-budget-store.mjs';
+import {createPrivateSiteApi,PRIVATE_SITE_CODE as first} from '../functions/lib/read2lead/private-site.mjs';
+import pkg from './fixtures/read2lead-self-learn/publisher-package.json' with {type:'json'};
+import {makeStoredBookPack} from './helpers/book-pack-fixture.mjs';
+const second='R2L-ADULT-PRIVATE-QA-02';
+const third='R2L-ADULT-STORY-QA';
+const fourth='R2L-ADULT-RETELL-QA';
+const fifth='R2L-ADULT-LESSON-QA';
+function setup(t,grant={scope:'batch',batchId:'profiles-synthetic-only',expiresAt:'2026-10-02T00:00:00.000Z',approvedVoiceMicroUsd:400000,worstCaseTurnMicroUsd:100000,maxTurns:2},legacyBooks=[]) {
+ const db=new DatabaseSync(':memory:');t.after(()=>db.close());let store,api,budget,calls=0;
+ const now=()=>new Date('2026-09-28T00:00:00.000Z');
+ function restart() {
+  store=new StorySqlStore(db,{transaction:fn=>{db.exec('BEGIN');try{const result=fn();db.exec('COMMIT');return result;}catch(e){db.exec('ROLLBACK');throw e;}}});
+  budget=new PrivateStoryBudgetStore(store,grant,now);
+  api=createPrivateSiteApi({store,pkg,legacyBooks,authenticate:r=>r.headers.get('cookie')==='private-test',now:()=>now().getTime(),voiceConfig:{
+   activation:{externalProcessingApproved:true,spendingApproved:true,adultTrialApproved:true},practiceTrial:true,budget,
+   provider:{transcribe(){calls++;throw Error('unexpected provider');}},
+   legacyAI:{async run(){calls++;return new Uint8Array([1,2,3]);}},
+  }});
+ }
+ restart();
+ const call=async(path,body=null,headers={})=>{
+  const response=await api(new Request('https://qa.example'+path,{method:body?'POST':'GET',headers:{cookie:'private-test',
+   ...(body?{Origin:'https://qa.example',...(body instanceof FormData?{}:{'Content-Type':'application/json'})}:{}),...headers},
+   ...(body?{body:body instanceof FormData?body:JSON.stringify(body)}:{})}));
+  return {status:response.status,value:await response.json()};
+ };
+ const get=key=>{const row=db.prepare('SELECT value FROM private_site_kv WHERE key=?').get(key);return row?JSON.parse(row.value):null;};
+ const entry=code=>call('/api/read2lead-private-entry'+(code?'?profile='+code:''));
+ const assign=(code,collection)=>call('/api/generate-read2lead-pack',{access_code:code,...(collection?{collection}:{})});
+ const open=async(code,collection)=>{const a=await assign(code,collection);assert.equal(a.status,200);const r=await call('/api/read2lead-story-session',{action:'open_assigned',packId:a.value.pack_id},{'X-Read2Lead-Code':code});assert.equal(r.status,200);return r.value.session;};
+ const event=(code,state,event)=>call('/api/read2lead-story-session',{action:'event',sessionId:state.id,revision:state.revision,requestId:'event-'+state.id+'-'+state.revision,event},{'X-Read2Lead-Code':code});
+ return {db,call,get,entry,assign,open,event,restart,setGrant(next){grant=next;restart();},get store(){return store;},get budget(){return budget;},calls:()=>calls};
+}
+test('second profile is lazy, authenticated, bounded, and preserves the original profile and home link',async t=>{
+ const s=setup(t);assert.equal(s.get(second),null);const oldEntry=await s.entry(),oldAccount=s.get(first),oldProgress=s.get('progress:'+first);
+ assert.equal((await s.call('/api/read2lead-private-entry?profile='+second,null,{cookie:''})).status,401);
+ assert.equal((await s.entry('ARBITRARY')).status,404);
+ assert.equal((await s.call('/api/read2lead-private-entry?profile='+second+'&profile='+first)).status,400);
+ assert.equal((await s.call('/api/read2lead-private-entry?profile='+second+'&reset=true')).status,400);
+ assert.equal(s.get(second),null);
+ const next=await s.entry(second);assert.equal(next.status,200);assert.notEqual(next.value.homeHref,oldEntry.value.homeHref);
+ assert.equal(s.get(second).is_test,true);assert.equal(s.get('progress:'+second).diamonds,700);
+ assert.deepEqual(s.get(first),oldAccount);assert.deepEqual(s.get('progress:'+first),oldProgress);
+ s.restart();assert.deepEqual(await s.entry(),oldEntry);assert.deepEqual(await s.entry(second),next);
+ assert.deepEqual(s.get(first),oldAccount);assert.deepEqual(s.get('progress:'+first),oldProgress);
+ for(const [code,entry] of [[first,oldEntry],[second,next]]) {
+  const token=new URL(entry.value.homeHref,'https://qa.example').searchParams.get('t');
+  assert.equal((await s.call('/api/r2l-link?token='+token)).value.access_code,code);
+ }
+ assert.equal(s.calls(),0);
+});
+test('unfinished assignments, sessions and saved voice reports remain separate',async t=>{
+ const s=setup(t),old=await s.open(first);await s.event(first,old,{type:'read_complete'});
+ const saved=s.store.get(first,old.id),account=s.get(first);await s.entry(second);const fresh=await s.open(second);
+ assert.notEqual(fresh.id,old.id);assert.equal(fresh.stage,'read');assert.deepEqual(s.store.get(first,old.id),saved);assert.deepEqual(s.get(first),account);
+ assert.equal((await s.call('/api/read2lead-story-session?sessionId='+old.id,null,{'X-Read2Lead-Code':second})).status,404);
+ assert.equal((await s.call('/api/read2lead-story-session?sessionId='+fresh.id,null,{'X-Read2Lead-Code':first})).status,404);
+ const result={transcript:'saved reply',reply:'A private reply',judgment:null,assessment:'unassessed',rewardsAwarded:false};
+ s.db.prepare('INSERT INTO story_speech_turns VALUES(?,?,?,?,?,?,?,?)').run(old.id,'saved-reply',0,'fingerprint','task','done',0,JSON.stringify(result));
+ const report='/api/read2lead-private-voice-report?sessionId='+old.id+'&requestId=saved-reply';
+ assert.equal((await s.call(report)).status,200);assert.equal((await s.call(report,null,{'X-Read2Lead-Code':second})).status,404);
+ s.restart();assert.equal(s.store.get(first,old.id).stage,'understand');assert.equal(s.store.get(second,fresh.id).stage,'read');
+ assert.equal((await s.assign(first)).value.pack_id,account.progress.current_pack.pack_id);
+});
+test('creating a new learner cannot refill the exhausted shared batch or call a provider',async t=>{
+ const s=setup(t,{scope:'batch',batchId:'exhausted-synthetic-only',expiresAt:'2026-10-02T00:00:00.000Z',approvedVoiceMicroUsd:4900000,worstCaseTurnMicroUsd:500000,maxTurns:8});
+ const old=await s.open(first);for(let i=0;i<8;i++){s.budget.claim(old.id,'old-'+i);s.budget.finish(old.id,'old-'+i,i===0?'failed_or_unknown':'succeeded');}
+ const reservations=s.db.prepare('SELECT * FROM story_voice_reservations').all(),turns=s.db.prepare('SELECT * FROM story_voice_turns').all(),oldState=s.store.get(first,old.id);
+ await s.entry(second);const fresh=await s.open(second),ready=await s.event(second,fresh,{type:'read_complete'});
+ const form=new FormData();form.set('sessionId',fresh.id);form.set('requestId','new-attempt');form.set('revision',String(ready.value.session.revision));form.set('audio',new Blob(['test'],{type:'audio/wav'}),'test.wav');
+ const refused=await s.call('/api/read2lead-story-turn',form,{'X-Read2Lead-Code':second});
+ assert.equal(refused.status,503);assert.equal(refused.value.code,'voice_budget_exhausted');assert.equal(s.calls(),0);
+ assert.deepEqual(s.db.prepare('SELECT * FROM story_voice_reservations').all(),reservations);assert.deepEqual(s.db.prepare('SELECT * FROM story_voice_turns').all(),turns);assert.deepEqual(s.store.get(first,old.id),oldState);
+ s.restart();assert.throws(()=>s.budget.reserve(fresh.id),/budget_exhausted/);assert.equal(s.calls(),0);
+});
+test('original voice charges the authenticated body account, never an unrelated account header',async t=>{
+ const s=setup(t),old=await s.open(first);s.budget.reserve(old.id);await s.entry(second);const fresh=await s.open(second);
+ const body={access_code:second,phrase_id:'wrap_up_1'},headers={'X-Read2Lead-Code':first};
+ const denied=await s.call('/api/minny-voice',body,headers);assert.equal(denied.status,503);assert.equal(s.calls(),0);
+ s.budget.reserve(fresh.id);
+ const success=await s.call('/api/minny-voice',body,headers);assert.equal(success.status,200,JSON.stringify(success));assert.equal(s.calls(),1);
+ assert.equal(s.db.prepare('SELECT COUNT(*) n FROM story_voice_turns WHERE session=?').get(old.id).n,0);
+ assert.equal(s.db.prepare('SELECT COUNT(*) n FROM story_voice_turns WHERE session=?').get(fresh.id).n,1);
+ assert.equal((await s.call('/api/minny-voice',body,headers)).status,200);assert.equal(s.calls(),1,'cached replay is free');
+});
+
+test('retired conversation cannot spend either private profile reservation',async t=>{
+ const s=setup(t),old=await s.open(first);s.budget.reserve(old.id);await s.entry(second);const fresh=await s.open(second);s.budget.reserve(fresh.id);
+ const before=s.db.prepare('SELECT * FROM story_voice_turns ORDER BY session,request').all();
+ const response=await s.call('/api/minny-conversation',{action:'start',access_code:second},{'X-Read2Lead-Code':first});
+ assert.equal(response.status,410);assert.equal(s.calls(),0);
+ assert.equal(s.db.prepare("SELECT COUNT(*) n FROM private_site_kv WHERE key LIKE 'convo-session:%'").get().n,0);
+ assert.deepEqual(s.db.prepare('SELECT * FROM story_voice_turns ORDER BY session,request').all(),before);
+});
+
+test('profile creation refuses an existing non-test record without modifying it',async t=>{
+ const s=setup(t),protectedValue=JSON.stringify({is_test:false,protected:'preserve'});
+ s.db.prepare('INSERT INTO private_site_kv VALUES(?,?,NULL)').run(second,protectedValue);
+ const before=s.db.prepare('SELECT * FROM private_site_kv ORDER BY key').all();
+ assert.equal((await s.entry(second)).status,503);
+ assert.deepEqual(s.db.prepare('SELECT * FROM private_site_kv ORDER BY key').all(),before);
+ assert.equal(s.calls(),0);
+});
+
+for(const [identity,label] of [[third,'Story Review'],[fourth,'Retell Review'],[fifth,'Lesson Review']]) test(identity+' preserves unfinished original-book and story accounts through restart',async t=>{
+ const s=setup(t,undefined,[makeStoredBookPack('book_123',{pages:6,sentencesPerPage:5})]);
+ const story=await s.open(first,'one-story-a-day');await s.event(first,story,{type:'read_complete'});
+ await s.entry(second);const book=await s.assign(second,'read2lead');assert.equal(book.status,200);assert.equal(s.get(second).progress.current_pack.schema_version,2);
+ const keys=[first,second,'progress:'+first,'progress:'+second,'private:home-token','private:home-token:'+second];
+ const previous=keys.map(k=>s.get(k)),saved=s.store.get(first,story.id);
+ assert.equal(s.get(identity),null);
+ assert.equal((await s.call('/api/read2lead-private-entry?profile='+identity,null,{cookie:''})).status,401);
+ assert.equal((await s.entry('R2L-ADULT-STORY-QA-OTHER')).status,404);
+ const entry=await s.entry(identity);assert.equal(entry.status,200);assert.equal(s.get(identity).student_profile.student_name,label);
+ const fresh=await s.open(identity,'one-story-a-day');assert.notEqual(fresh.id,story.id);assert.equal(fresh.stage,'read');
+ const ready=await s.event(identity,fresh,{type:'read_complete'});assert.equal(ready.status,200);assert.equal(ready.value.session.stage,'understand');
+ for(const code of [first,second])assert.equal((await s.call('/api/read2lead-story-session?sessionId='+fresh.id,null,{'X-Read2Lead-Code':code})).status,404);
+ assert.deepEqual(keys.map(k=>s.get(k)),previous);assert.deepEqual(s.store.get(first,story.id),saved);
+ s.restart();assert.deepEqual(await s.entry(identity),entry);assert.deepEqual(keys.map(k=>s.get(k)),previous);assert.deepEqual(s.store.get(first,story.id),saved);assert.equal(s.store.get(identity,fresh.id).stage,'understand');assert.equal(s.calls(),0);
+});
+
+for(const identity of [third,fourth,fifth]) test(identity+' cannot refill a spent batch or replace a protected record',async t=>{
+ const s=setup(t,{scope:'batch',batchId:'story-review-spent-fixture',expiresAt:'2026-10-02T00:00:00.000Z',approvedVoiceMicroUsd:4900000,worstCaseTurnMicroUsd:500000,maxTurns:8});
+ const old=await s.open(first);for(let i=0;i<8;i++){s.budget.claim(old.id,'spent-'+i);s.budget.finish(old.id,'spent-'+i,i?'succeeded':'failed_or_unknown');}
+ const ledger=()=>[s.db.prepare('SELECT * FROM story_voice_reservations').all(),s.db.prepare('SELECT * FROM story_voice_turns').all()];const before=ledger();
+ const entry=await s.entry(identity);assert.equal(entry.status,200);const fresh=await s.open(identity),ready=await s.event(identity,fresh,{type:'read_complete'});
+ const form=new FormData();form.set('sessionId',fresh.id);form.set('requestId','story-review-attempt');form.set('revision',String(ready.value.session.revision));form.set('audio',new Blob(['test'],{type:'audio/wav'}),'test.wav');
+ const refused=await s.call('/api/read2lead-story-turn',form,{'X-Read2Lead-Code':identity});assert.equal(refused.status,503);assert.equal(refused.value.code,'voice_budget_exhausted');assert.equal(s.calls(),0);assert.deepEqual(ledger(),before);
+ const protectedValue=JSON.stringify({is_test:false,protected:'preserve'});s.db.prepare('UPDATE private_site_kv SET value=? WHERE key=?').run(protectedValue,identity);const rows=s.db.prepare('SELECT * FROM private_site_kv ORDER BY key').all();
+ assert.equal((await s.entry(identity)).status,503);assert.deepEqual(s.db.prepare('SELECT * FROM private_site_kv ORDER BY key').all(),rows);
+});
+
+test('explicit one-action remaining allocation preserves old batch and rejects a second charge',async t=>{
+ const s=setup(t,{scope:'batch',batchId:'old-batch-preserved',expiresAt:'2026-10-02T00:00:00.000Z',approvedVoiceMicroUsd:4000000,worstCaseTurnMicroUsd:500000,maxTurns:8});
+ const old=await s.open(first);for(let i=0;i<8;i++){s.budget.claim(old.id,'old-'+i);s.budget.finish(old.id,'old-'+i,'succeeded');}
+ const original=s.db.prepare('SELECT * FROM story_voice_reservations').all(),turns=s.db.prepare('SELECT * FROM story_voice_turns').all();
+ await s.entry(fourth);const fresh=await s.open(fourth);
+ const grant={scope:'batch',batchId:'remaining-half-dollar',expiresAt:'2026-10-02T00:00:00.000Z',approvedVoiceMicroUsd:500000,worstCaseTurnMicroUsd:500000,maxTurns:1};
+ const budget=new PrivateStoryBudgetStore(s.store,grant,()=>new Date('2026-09-28T00:00:00.000Z'));
+ budget.claim(fresh.id,'retell');budget.finish(fresh.id,'retell','succeeded');
+ assert.throws(()=>budget.claim(fresh.id,'extra'),/budget_exhausted|turn_limit/);
+ assert.deepEqual(s.db.prepare('SELECT * FROM story_voice_reservations WHERE session=?').all(old.id),original);
+ assert.deepEqual(s.db.prepare('SELECT * FROM story_voice_turns WHERE session=?').all(old.id),turns);
+ assert.equal(s.db.prepare('SELECT SUM(reserved) total FROM story_voice_reservations').get().total,4500000);
+ assert.equal(s.calls(),0);
+});
+
+test('resumed same-account batch supports reading voice without borrowing another account reservation',async t=>{
+ const s=setup(t),old=await s.open(first);await s.entry(second);const other=await s.open(second);
+ for(const state of [old,other])for(let i=0;i<2;i++){s.budget.claim(state.id,'old-'+i);s.budget.finish(state.id,'old-'+i,'failed_or_unknown');}
+ const reservations=s.db.prepare('SELECT * FROM story_voice_reservations ORDER BY session').all(),turns=s.db.prepare('SELECT * FROM story_voice_turns ORDER BY session,request').all();
+ s.setGrant({scope:'batch',batchId:'same-lesson-continuation',expiresAt:'2026-10-02T00:00:00.000Z',approvedVoiceMicroUsd:200000,worstCaseTurnMicroUsd:100000,maxTurns:2});
+ assert.equal((await s.call('/api/minny-voice',{access_code:first,phrase_id:'wrap_up_1'})).status,503);assert.equal(s.calls(),0);
+ s.budget.reserve(old.id);assert.deepEqual(s.budget.reservedSessionsForOwner(first),[{session:old.id}]);assert.deepEqual(s.budget.reservedSessionsForOwner(second),[]);
+ assert.equal((await s.call('/api/minny-voice',{access_code:first,phrase_id:'wrap_up_1'},{'X-Read2Lead-Code':second})).status,200);assert.equal(s.calls(),1);
+ const voice=await s.call('/api/minny-voice',{access_code:first,phrase_id:'goodbye'},{'X-Read2Lead-Code':second});assert.equal(voice.status,200,JSON.stringify(voice));assert.equal(s.calls(),2);
+ assert.equal((await s.call('/api/minny-voice',{access_code:second,phrase_id:'wrap_up_1'},{'X-Read2Lead-Code':first})).status,200,'already cached generic phrase is free');assert.equal(s.calls(),2);
+ assert.equal((await s.call('/api/minny-voice',{access_code:second,phrase_id:'wrap_up_2'},{'X-Read2Lead-Code':first})).status,503);assert.equal(s.calls(),2);
+ assert.throws(()=>s.budget.claim(old.id,'extra'),/turn_limit/);
+ assert.deepEqual(s.db.prepare('SELECT * FROM story_voice_reservations WHERE session IN (?,?) ORDER BY session').all(old.id,other.id),reservations);
+ assert.deepEqual(s.db.prepare('SELECT * FROM story_voice_turns WHERE session IN (?,?) ORDER BY session,request').all(old.id,other.id),turns);
+ s.restart();assert.deepEqual(s.budget.reservedSessionsForOwner(first),[{session:old.id}]);assert.throws(()=>s.budget.claim(old.id,'extra'),/turn_limit/);
+});

@@ -80,11 +80,10 @@ const progressHref = '/ho-so';
               <!-- Linking work (founder decision): kids must be able to find
                    the monster shop — a matching entry next to the gift-shop
                    one, same runtime code-injection pattern (see script below). -->
-              <a href="/read2lead/shop" data-r2l-shop-link class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">🛒 Cửa hàng Minny · đổi kim cương</a>
+              <a href="/read2lead/companion" data-r2l-shop-link class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Bạn đồng hành · miễn phí</a>
               <a href="/read2lead/gifts" data-r2l-gifts-link class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">🎁 Quà thật · đổi kim cương</a>
               <a href="/read2lead" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Read2Lead · Luyện đọc</a>
               <a href="/coaching" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Coaching</a>
-              <a href="/speak-up" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">SpeakUp · Luyện nói</a>
               <a href={contactHref} target="_blank" rel="noopener noreferrer" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Liên hệ</a>
             </nav>
           </div>
@@ -105,7 +104,6 @@ const progressHref = '/ho-so';
       <nav class="hidden items-center gap-5 text-sm font-medium text-cream-muted lg:flex">
         <a href="/coaching" class="transition hover:text-accent">Coaching</a>
         <a href="/read2lead" class="transition hover:text-accent">Read2Lead</a>
-        <a href="/speak-up" class="transition hover:text-accent">SpeakUp</a>
         <a href={progressHref} class="transition hover:text-accent">Hồ sơ</a>
         <a href={contactHref} target="_blank" rel="noopener noreferrer" class="transition hover:text-accent">Liên hệ</a>
       </nav>
@@ -126,7 +124,6 @@ const progressHref = '/ho-so';
       <nav class="mx-auto flex max-w-6xl flex-col px-6 py-4 text-base font-medium text-cream-muted">
         <a href="/coaching" class="py-3 transition hover:text-accent">Coaching</a>
         <a href="/read2lead" class="py-3 transition hover:text-accent">Read2Lead · Luyện đọc</a>
-        <a href="/speak-up" class="py-3 transition hover:text-accent">SpeakUp · Luyện nói</a>
         <a href={progressHref} class="py-3 transition hover:text-accent">Hồ sơ học sinh</a>
         <a href={contactHref} target="_blank" rel="noopener noreferrer" class="py-3 transition hover:text-accent">Liên hệ</a>
       </nav>
@@ -135,6 +132,7 @@ const progressHref = '/ho-so';
 )}
 
 <script>
+  import { createProgressRefresh } from '../lib/read2lead-progress-refresh.mjs';
   import { applyV3HeaderRank } from '../lib/rank-header';
   import { applyHeaderMonsterAvatar } from '../lib/monster-avatar';
   import { isV3Enabled } from '../config/flags';
@@ -170,14 +168,15 @@ const progressHref = '/ho-so';
       // Same pattern for the monster shop (linking work, founder decision).
       const shopLink = stateHeader.querySelector('[data-r2l-shop-link]');
       if (shopLink instanceof HTMLAnchorElement) {
-        shopLink.href = `/read2lead/shop?code=${encodeURIComponent(code)}`;
+        shopLink.href = `/read2lead/companion?code=${encodeURIComponent(code)}`;
       }
 
-      fetch(`/api/read2lead-progress?code=${encodeURIComponent(code)}`)
-        .then((response) => response.json())
-        .then((data) => {
-          const state = data.read2lead_state;
-          if (!data.ok || !state) return;
+      const refreshProgress = createProgressRefresh({
+        load: async () => {
+          const response = await fetch(`/api/read2lead-progress?code=${encodeURIComponent(code)}`, {cache:'no-store'});
+          return response.ok ? response.json() : {ok:false};
+        },
+        apply: (state: any) => {
           stateHeader.classList.remove('hidden');
           stateHeader.classList.add('flex');
           const setText = (selector: string, value: string) => {
@@ -196,8 +195,12 @@ const progressHref = '/ho-so';
           if (xpFill instanceof HTMLElement) {
             xpFill.style.width = `${state.xp_percent ?? 0}%`;
           }
-        })
-        .catch(() => {});
+        },
+      });
+      window.addEventListener('read2lead:progress-changed', (event) => {
+        if (event instanceof CustomEvent && event.detail?.code === code) void refreshProgress();
+      });
+      void refreshProgress();
     }
   }
 </script>

@@ -10,27 +10,9 @@ const renderBlock = avatarSource.slice(
   avatarSource.indexOf('export function nameColorClassFromEquipped'),
 );
 
-test('W7 decorations default off with build or localStorage opt-in', () => {
-  assert.match(
-    avatarSource,
-    /const W7_BUILD_ENABLED = import\.meta\.env\.PUBLIC_R2L_W7 === '1';/,
-  );
-  assert.match(
-    avatarSource,
-    /localStorage\.getItem\('PUBLIC_R2L_W7'\) === '1'/,
-  );
-  assert.match(
-    avatarSource,
-    /function renderDecorationLayer\([\s\S]*?if \(!w7DecorationsEnabled\(\)\) return;/,
-  );
-  assert.match(
-    shopSource,
-    /item\.slot !== 'effects' && item\.slot !== 'frame'/,
-  );
-  assert.match(
-    shopSource,
-    /slot !== 'effects' && slot !== 'frame'/,
-  );
+test('free decorations render without an old opt-in flag', () => {
+ assert.match(avatarSource,/function w7DecorationsEnabled\(\): boolean \{ return true;/);
+ assert.doesNotMatch(avatarSource,/localStorage.getItem/);
 });
 
 test('render order is frame then monster stack then effects', () => {
@@ -140,12 +122,9 @@ test('builder exposes Vietnamese decoration rows with an empty option', () => {
   assert.match(builderSource, /if \(partId === 'frame-rainbow'\) return 'Khung cầu vồng';/);
 });
 
-test('builder requires common decorations to be earned', () => {
-  assert.match(builderSource, /const isDecoration = \['effects', 'frame'\]\.includes\(slot\);/);
-  assert.match(
-    builderSource,
-    /\(isDecoration \|\| getPartRarity\(part\.id\) !== 'common'\)[\s\S]*?unlocked\.has\(part\.id\)/,
-  );
+test('builder offers all valid decorations without purchase locks',()=>{
+ assert.doesNotMatch(builderSource,/unlocked\.has/);
+ assert.match(builderSource,/return partsForSlot\(state, slot\)/);
 });
 
 test('shop uses direct decoration thumbnail paths', () => {

@@ -1,3 +1,4 @@
+import { learningStarsResponse } from '../lib/read2lead/learning-stars-board.mjs';
 import { getClientIp, checkCodeRateLimit, rateLimitedResponse } from './_rate-limit.js';
 import { isAccessCodeKey, loadProgressState, publicProgressState, RANK_ASSETS, RANK_TITLES } from './_read2lead-v2-state.js';
 import { PRE_SEASON, SEASONS as SEASON_CONFIG } from './_read2lead-seasons.js';
@@ -16,77 +17,7 @@ const SEASONS = [PRE_SEASON, ...SEASON_CONFIG].map((season) => ({
 const PODIUM_MEDALS = ['🥇', '🥈', '🥉'];
 
 export async function onRequestGet(context) {
-  const { request, env } = context;
-
-  if (!env.READ2LEAD_CODES) {
-    return json({ ok: false, error: 'config_error', message: 'Felixar chua cau hinh bang xep hang.' }, 500);
-  }
-
-  const clientIp = getClientIp(request);
-  const rateLimit = await checkCodeRateLimit(env.READ2LEAD_CODES, clientIp);
-  if (rateLimit.blocked) {
-    return rateLimitedResponse(rateLimit.retryAfter);
-  }
-
-  const url = new URL(request.url);
-  const requestedLimit = parseInt(url.searchParams.get('limit') || '50', 10);
-  const limit = Number.isFinite(requestedLimit) ? Math.min(Math.max(requestedLimit, 1), 100) : 50;
-
-  const cached = await env.READ2LEAD_CODES.get(LEADERBOARD_CACHE_KEY, { type: 'json' });
-  if (cached?.leaders && cached?.updated_at) {
-    return json({
-      ok: true,
-      updated_at: cached.updated_at,
-      season: cached.season || null,
-      previous_season_podium: cached.previous_season_podium || [],
-      leaders: sliceLeaders(cached.leaders, limit),
-    });
-  }
-
-  let leaders;
-  try {
-    leaders = await computeLeaders(context);
-  } catch (err) {
-    return json({
-      ok: false,
-      error: 'leaderboard_compute_failed',
-      message: 'Không tải được bảng xếp hạng. Vui lòng thử lại sau ít phút.',
-    }, 500);
-  }
-  const season = leaderboardSeason(leaders);
-  const previousSeasonId = previousSeasonIdFor(season?.id);
-  const medalRows = leaders.flatMap((leader) =>
-    leader.medals.map((medal) => ({
-      ...medal,
-      display_name: leader.display_name,
-      masked_code: leader.masked_code,
-      season_name_vi: medal.name_vi,
-    })),
-  );
-  const previousSeasonPodium = buildPreviousSeasonPodium(medalRows, previousSeasonId);
-  const updatedAt = new Date().toISOString();
-  const payload = {
-    updated_at: updatedAt,
-    season,
-    previous_season_podium: previousSeasonPodium,
-    leaders,
-  };
-
-  try {
-    await env.READ2LEAD_CODES.put(
-      LEADERBOARD_CACHE_KEY,
-      JSON.stringify(payload),
-      { expirationTtl: LEADERBOARD_CACHE_TTL_SECONDS },
-    );
-  } catch {
-    // Cache write is best-effort; still return fresh data.
-  }
-
-  return json({
-    ok: true,
-    ...payload,
-    leaders: sliceLeaders(leaders, limit),
-  });
+  return learningStarsResponse(context);
 }
 
 async function computeLeaders(context) {

@@ -1,0 +1,87 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {DatabaseSync} from 'node:sqlite';
+import {StorySqlStore} from '../functions/lib/read2lead/story-store.mjs';
+import {PrivateStoryBudgetStore} from '../scripts/lib/read2lead-story-budget-store.mjs';
+import {createPrivateSiteApi,PRIVATE_SITE_CODE as code} from '../functions/lib/read2lead/private-site.mjs';
+import {runPrivateConversation} from '../functions/lib/read2lead/private-conversation.mjs';
+import pkg from './fixtures/read2lead-self-learn/publisher-package.json' with {type:'json'};
+const reply='Nice! What do you like?';
+function fixture(t,{maxTurns=8,reserve=true,run,fetchFn}={}) {
+ const db=new DatabaseSync(':memory:');t.after(()=>db.close());
+ const store=new StorySqlStore(db,{transaction:fn=>{db.exec('BEGIN');try{const v=fn();db.exec('COMMIT');return v;}catch(e){db.exec('ROLLBACK');throw e;}}});
+ const calls=[],budget=new PrivateStoryBudgetStore(store,{scope:'batch',batchId:'conversation-fixture',expiresAt:'2026-10-02T00:00:00.000Z',approvedVoiceMicroUsd:2000000,worstCaseTurnMicroUsd:100000,maxTurns},()=>new Date('2026-09-28T00:00:00.000Z'));
+ const config={budget,activation:{externalProcessingApproved:true,spendingApproved:true,adultTrialApproved:true},legacyAI:{async run(model,input){calls.push({model,input});if(run)return run(model,input);if(model.includes('whisper'))return {text:'I enjoy drawing pictures'};if(model.includes('guard'))return {response:'safe'};if(model.includes('instruct'))return {response:JSON.stringify({reply_en:reply,mood:'idle'})};return new Uint8Array([73,68,51]);}},legacyConversationFetch:async(url,options)=>{calls.push({model:'openrouter',url,body:JSON.parse(options.body)});if(fetchFn)return fetchFn(url,options);return Response.json({choices:[{message:{content:JSON.stringify({reply_en:reply,mood:'idle'})}}]});}};
+ let api;const restart=()=>{api=createPrivateSiteApi({store:new StorySqlStore(db,{transaction:fn=>store.transaction(fn)}),pkg,voiceConfig:config,authenticate:r=>r.headers.get('cookie')==='fixture'});};
+ // Synthetic reservation history only, created before connecting assignment/profile sinks.
+ const session=store.open(code,pkg.lesson).sessionId;if(reserve)budget.reserve(session);restart();
+ async function call(body,headers={},method='POST') {
+  const request=new Request('https://qa.example/api/minny-conversation',{method,headers:{cookie:'fixture',Origin:'https://qa.example',...(body instanceof FormData?{}:{'Content-Type':'application/json'}),...headers},...(method==='POST'?{body:body instanceof FormData?body:JSON.stringify({access_code:code,...body})}:{})});
+  const r=await api(request);return {status:r.status,value:await r.json()};
+ }
+ const row=key=>{const x=db.prepare('SELECT value FROM private_site_kv WHERE key=?').get(key);return x?JSON.parse(x.value):null;};
+ const turns=()=>db.prepare('SELECT state FROM story_voice_turns ORDER BY rowid').all().map(x=>x.state);
+ return {db,store,config,calls,budget,session,restart,call,row,turns};
+}
+test('standalone conversation start and real handler audio turn share existing slots and persist on restart',async t=>{
+ const s=fixture(t),start=await s.call({action:'start'});assert.equal(start.status,200,JSON.stringify(start.value));assert.ok(start.value.greeting.audio_b64);assert.equal(s.calls.length,1);
+ const form=new FormData();for(const [k,v] of Object.entries({access_code:code,action:'turn',session_id:start.value.session_id,audio:new Blob(['fixture audio'],{type:'audio/webm'})}))form.set(k,v);
+ const turn=await s.call(form);assert.equal(turn.status,200,JSON.stringify(turn.value));assert.equal(turn.value.reply_en,reply);assert.equal(turn.value.transcript,'I enjoy drawing pictures');assert.equal(turn.value.timing.llm_source,'openrouter');
+ assert.deepEqual(s.calls.map(x=>x.model).sort(),['@cf/deepgram/aura-2-en','@cf/deepgram/aura-2-en','@cf/meta/llama-guard-3-8b','@cf/openai/whisper-large-v3-turbo','openrouter'].sort());assert.deepEqual(s.turns(),Array(5).fill('succeeded'));
+ assert.equal(s.row('convo-session:'+start.value.session_id).turns,1);s.restart();assert.equal(s.row('convo-session:'+start.value.session_id).history[0].kid_transcript,'I enjoy drawing pictures');
+ assert.equal(s.row('progress:'+code).diamonds,700);assert.equal(s.db.prepare('SELECT COUNT(*) n FROM story_voice_reservations').get().n,1);
+});
+test('deferred voice finishes in its request and audio polling makes no additional provider call',async t=>{
+ const s=fixture(t,{run:async model=>{if(model.includes('guard'))return {response:'safe'};await new Promise(r=>setTimeout(r,20));return new Uint8Array([73,68,51]);}});
+ const start=await s.call({action:'start'}),turn=await s.call({action:'turn',session_id:start.value.session_id,transcript:'I enjoy drawing pictures'});assert.equal(turn.status,200);assert.equal(turn.value.audio_pending,true);
+ const before=s.calls.length;s.restart();const audio=await s.call({action:'audio',session_id:start.value.session_id,turn:turn.value.audio_turn});assert.equal(audio.status,200);assert.equal(audio.value.ready,true);assert.equal(audio.value.audio_b64,'SUQz');assert.equal(s.calls.length,before);
+});
+test('conversation auth, method, owner and malformed requests cannot claim provider capacity',async t=>{
+ const s=fixture(t);assert.equal((await s.call({action:'start'},{cookie:''})).status,401);assert.equal((await s.call({action:'start'},{Origin:'https://other.example'})).status,403);assert.equal((await s.call({}, {},'GET')).status,405);
+ assert.equal((await s.call({action:'start',access_code:'OTHER'})).status,404);assert.equal((await s.call({action:'invalid'})).status,400);
+ assert.equal((await s.call({action:'turn',session_id:'not-owned',transcript:'hello'})).value.ended,true);assert.equal((await s.call({action:'audio',session_id:'not-owned',turn:1})).value.ready,false);
+ assert.deepEqual(s.calls,[]);assert.deepEqual(s.turns(),[]);
+});
+test('exhausted conversation cannot advance saved history and does not create new reservations',async t=>{
+ const s=fixture(t,{maxTurns:1}),start=await s.call({action:'start'}),before=s.row('convo-session:'+start.value.session_id);
+ const denied=await s.call({action:'turn',session_id:start.value.session_id,transcript:'I enjoy drawing pictures'});assert.equal(denied.status,503);assert.equal(denied.value.error,'private_voice_unavailable');assert.deepEqual(s.row('convo-session:'+start.value.session_id),before);assert.equal(s.calls.length,1);assert.equal(s.turns().length,1);
+ const empty=fixture(t,{reserve:false});assert.equal((await empty.call({action:'start'})).status,503);assert.equal(empty.db.prepare("SELECT COUNT(*) n FROM private_site_kv WHERE key LIKE 'convo-session:%'").get().n,0);assert.equal(empty.calls.length,0);assert.equal(empty.db.prepare('SELECT COUNT(*) n FROM story_voice_reservations').get().n,0);
+});
+test('conversation storage failure rolls back every buffered account/cache write but retains provider cost',async t=>{
+ const s=fixture(t);s.db.exec("CREATE TRIGGER fail_convo BEFORE INSERT ON private_site_kv WHEN NEW.key LIKE 'convo-session:%' BEGIN SELECT RAISE(ABORT,'deliberate storage fault'); END");
+ const response=await s.call({action:'start'});assert.equal(response.status,503);assert.equal(s.db.prepare("SELECT COUNT(*) n FROM private_site_kv WHERE key LIKE 'convo-session:%' OR key LIKE 'tts:%'").get().n,0);assert.equal(s.calls.length,1);assert.deepEqual(s.turns(),['succeeded']);assert.equal(s.row('progress:'+code).diamonds,700);
+});
+test('failed primary conversation requests retain claims while the original Cloudflare fallback works',async t=>{
+ const s=fixture(t,{fetchFn:async()=>new Response('',{status:503})}),start=await s.call({action:'start'});const turn=await s.call({action:'turn',session_id:start.value.session_id,transcript:'I enjoy drawing pictures'});
+ assert.equal(turn.status,200);assert.equal(turn.value.reply_en,reply);assert.equal(turn.value.timing.llm_source,'llama_fallback');assert.equal(s.calls.filter(x=>x.model==='openrouter').length,2);assert.equal(s.turns().filter(x=>x==='failed_or_unknown').length,2);assert.equal(s.turns().length,6);
+});
+test('private conversation timeout denies late writes and spending, retaining uncertain reservation',async t=>{
+ const s=fixture(t);let release,cap;const held=new Promise(r=>{release=r;});let commits=0;
+ const response=await runPrivateConversation({handler:async ctx=>{cap=ctx;await ctx.env.AI.run('@cf/deepgram/aura-2-en',{text:'Hello'});return Response.json({ok:true});},request:new Request('https://qa.example'),env:{READ2LEAD_CODES:{get:async()=>null}},voiceConfig:{...s.config,legacyAI:{run:()=>held}},store:s.store,owner:code,commit:()=>{commits++;},timeoutMs:5});
+ assert.equal(response.status,503);assert.deepEqual(s.turns(),['failed_or_unknown']);assert.equal(commits,0);
+ await assert.rejects(()=>cap.env.READ2LEAD_CODES.put('late','value'),/closed/);await assert.rejects(()=>cap.env.AI.run('@cf/deepgram/aura-2-en',{text:'Late'}),/closed/);
+ release(new Uint8Array([1]));await new Promise(r=>setImmediate(r));assert.deepEqual(s.turns(),['failed_or_unknown']);assert.equal(commits,0);
+});
+test('private conversation refuses alternate destinations and models without exposing credentials',async t=>{
+ const s=fixture(t);
+ for(const handler of [async ctx=>{assert.equal(ctx.env.OPENROUTER_API_KEY,'private-capability');assert.equal(ctx.env.OPENAI_API_KEY,undefined);await ctx.minnyReplyOptions.fetchFn('https://unapproved.example',{method:'POST',body:'{}'});return Response.json({ok:true});},async ctx=>{await ctx.env.AI.run('unapproved-model',{});return Response.json({ok:true});}]) {
+  const r=await runPrivateConversation({handler,request:new Request('https://qa.example'),env:{READ2LEAD_CODES:{}},voiceConfig:s.config,store:s.store,owner:code,commit:()=>assert.fail('must not commit')});assert.equal(r.status,503);
+ }
+ assert.equal(s.calls.length,0);assert.equal(s.turns().length,0);
+});
+
+test('conversation rejects expired, ambiguous and unapproved reservations before any provider attempt',async t=>{
+ for(const state of ['expired','ambiguous','unapproved']) {
+  const s=fixture(t);
+  if(state==='expired')s.budget.now=()=>new Date('2026-10-03T00:00:00.000Z');
+  if(state==='ambiguous')s.budget.reserve(s.store.open(code,{...pkg.lesson,id:'second-budget-fixture'}).sessionId);
+  if(state==='unapproved')s.config.activation.spendingApproved=false;
+  assert.equal((await s.call({action:'start'})).status,503,state);assert.equal(s.calls.length,0,state);assert.equal(s.turns().length,0,state);
+  assert.equal(s.db.prepare("SELECT COUNT(*) n FROM private_site_kv WHERE key LIKE 'convo-session:%'").get().n,0);
+ }
+});
+test('conversation capability enforces per-model attempts and rolls back denied work',async t=>{
+ const s=fixture(t);
+ const response=await runPrivateConversation({handler:async ctx=>{await ctx.env.READ2LEAD_CODES.put('must-not-save','true');for(let i=0;i<3;i++)await ctx.env.AI.run('@cf/deepgram/aura-2-en',{text:'Hello'});return Response.json({ok:true});},request:new Request('https://qa.example'),env:{READ2LEAD_CODES:{}},voiceConfig:s.config,store:s.store,owner:code,commit:()=>assert.fail('denied request cannot commit')});
+ assert.equal(response.status,503);assert.equal(s.calls.length,2);assert.deepEqual(s.turns(),['succeeded','succeeded']);
+});

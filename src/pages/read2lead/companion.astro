@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/read2lead-companion.css';
+---
+<BaseLayout title="Bạn đồng hành | Read2Lead" description="Chọn một người bạn cùng con đọc sách." robots="noindex, nofollow" childHome>
+  <main id="main" class="companion-page">
+    <a id="companion-home" href="/read2lead">← Về đọc sách</a>
+    <header><p class="companion-kicker">GÓC CỦA CON</p><h1>Bạn đồng hành</h1><p>Chọn dáng con thích. Tất cả đều miễn phí.</p></header>
+    <p id="companion-message" role="status">Đang mở bạn đồng hành…</p>
+    <button id="companion-retry" type="button" hidden>Thử lại</button>
+    <div id="companion-host"></div>
+  </main>
+</BaseLayout>
+<script src="../../scripts/read2lead-companion.ts"></script>

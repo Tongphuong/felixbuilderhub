@@ -15,23 +15,23 @@ import {
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-test('COSMETIC_PRICES match spec tier table (diamonds, 1💎 = 2🪙)', () => {
-  assert.deepEqual(COSMETIC_PRICES.hat, { common: 40, rare: 100, epic: 200 });
-  assert.deepEqual(COSMETIC_PRICES.pet, { common: 60, rare: 140, epic: 250 });
-  assert.deepEqual(COSMETIC_PRICES.wings, { common: 100, rare: 200, epic: 400 });
+test('COSMETIC_PRICES are all zero under the free companion policy', () => {
+  assert.deepEqual(COSMETIC_PRICES.hat, { common: 0, rare: 0, epic: 0 });
+  assert.deepEqual(COSMETIC_PRICES.pet, { common: 0, rare: 0, epic: 0 });
+  assert.deepEqual(COSMETIC_PRICES.wings, { common: 0, rare: 0, epic: 0 });
 });
 
 // V5 Track B disabled — art style conflict với Kenney monster cartoon.
 // Tests below assert the disabled state (catalog excludes hat/pet/wings).
 
-test('buildShopCatalog excludes V5 cosmetic parts (Track B disabled)', () => {
+test('buildShopCatalog includes existing cosmetic parts', () => {
   const catalog = buildShopCatalog({ includeDecorations: true });
   const hats = catalog.filter((item) => item.slot === 'hat');
   const pets = catalog.filter((item) => item.slot === 'pet');
   const wings = catalog.filter((item) => item.slot === 'wings');
-  assert.equal(hats.length, 0);
-  assert.equal(pets.length, 0);
-  assert.equal(wings.length, 0);
+  assert.ok(hats.length > 0);
+  assert.ok(pets.length > 0);
+  assert.ok(wings.length > 0);
 });
 
 test('humanizePartId returns Vietnamese labels for cosmetics', () => {
@@ -43,8 +43,8 @@ test('humanizePartId returns Vietnamese labels for cosmetics', () => {
 test('executeBuy purchases hat common part', () => {
   const result = executeBuy({ current_level: 'L1', diamonds: 200, unlocked_parts: [] }, 'hat-crown-mint');
   assert.equal(result.error, undefined);
-  assert.equal(result.state.diamonds, 160);
-  assert.deepEqual(result.reward, { part_id: 'hat-crown-mint', price: 40 });
+  assert.equal(result.state.diamonds, 200);
+  assert.deepEqual(result.reward, { part_id: 'hat-crown-mint', price: 0 });
 });
 
 test('getPartSlot resolves cosmetic ids', () => {

@@ -1,0 +1,4094 @@
+---
+/**
+ * SpeakUp — the standalone app page (replaces the old "Sắp ra mắt" marketing
+ * page on Phương's instruction, 2026-07-06). Built exactly to the Claude
+ * Design handoffs: design_handoff_speakup_phase_7a (homework flow) and
+ * …phase_7b (Free Talking). Full-screen app shell (SpeakUpAppLayout), no
+ * marketing chrome. The JS below is the proven state machine ported from
+ * /read2lead/speaking (same element ids, same five APIs, R2LRecorder +
+ * R2LMicCheck pipelines untouched) with one behavior fix: a Free Talking
+ * start rejected by the server (daily_cap / global_cap / not_available)
+ * renders the designed wrap-up state instead of bouncing back to the mode
+ * picker (the "flashes then goes straight back" bug Phương reported).
+ */
+import SpeakUpAppLayout from '../layouts/SpeakUpAppLayout.astro';
+import MicCheckPanel from '../components/read2lead/v2/MicCheckPanel.astro';
+import TopicTile from '../components/ui/TopicTile.astro';
+import { HUB_TOPICS } from './ho-so/ho-so-topics.ts';
+import { r2lRecorderScriptSrc } from '../scripts/r2l-recorder-script.mjs';
+
+const r2lRecorderSrc = r2lRecorderScriptSrc();
+---
+
+<SpeakUpAppLayout
+  title="SpeakUp — Luyện nói cùng Minny | Felix Coaching"
+  robots="noindex, follow"
+>
+  <!-- shared SVG defs: gold gradient for the recorder progress ring -->
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <defs>
+      <linearGradient id="spk-ring-grad" x1="0" x2="1">
+        <stop offset="0" stop-color="#c88f38"></stop>
+        <stop offset="1" stop-color="#f2cc7e"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <header class="spk-appbar">
+    <div class="spk-appbar__brand">
+      <a class="spk-appbar__logo" href="/">SpeakUp</a>
+      <span class="spk-appbar__dot" aria-hidden="true">·</span>
+      <span class="spk-appbar__sub" id="appbar-sub">Luyện nói cùng <b>Minny</b></span>
+    </div>
+    <div class="spk-appbar__student hidden" id="appbar-student">
+      <span class="spk-appbar__student-name" id="appbar-student-name"></span>
+      <span class="spk-appbar__avatar" id="appbar-student-avatar" aria-hidden="true"></span>
+    </div>
+    <div class="spk-appbar__diamonds hidden" id="appbar-diamonds" role="status" aria-label="Số kim cương của con">
+      <span class="spk-appbar__diamonds-icon" aria-hidden="true">💎</span>
+      <span class="spk-appbar__diamonds-value" id="appbar-diamonds-value">0</span>
+    </div>
+  </header>
+
+  <main id="main" class="spk-main">
+    <!-- ============ Code entry (gate) ============ -->
+    <section id="speaking-code-card" class="spk-gate">
+      <div class="spk-gate__avatar">
+        <img src="/assets/minny/minny_idle.png" alt="Minny" width="200" height="200" />
+      </div>
+      <p class="spk-gate__eyebrow">Felix Coaching · SpeakUp</p>
+      <h1 class="spk-gate__title">Luyện nói cùng Minny</h1>
+      <p class="spk-gate__sub">Con nói — Minny nghe. Bài tập thầy Phương giao và trò chuyện tiếng Anh.</p>
+      <div class="spk-gate__card">
+        <label for="speaking-code" class="spk-gate__label">Mã học sinh</label>
+        <div class="spk-gate__row">
+          <input
+            id="speaking-code"
+            class="spk-input"
+            maxlength="40"
+            autocomplete="off"
+            placeholder="VD: R2L-LINH-8F3KQ2"
+          />
+          <button id="speaking-load" type="button" class="spk-btn spk-btn--gold">Bắt đầu</button>
+        </div>
+      </div>
+    </section>
+
+    <p id="speaking-error" class="spk-error hidden"></p>
+
+    <!-- ============ App shell (after code load) ============ -->
+    <div id="speaking-shell" class="hidden">
+
+      <!-- Mode select -->
+      <section id="spk-modes-screen" class="spk-modes">
+        <div class="spk-modes__greeting">
+          <div class="spk-modes__avatar">
+            <video
+              id="minny-video"
+              class="hidden"
+              poster="/assets/minny/minny_idle.png"
+              autoplay loop muted playsinline aria-hidden="true"
+            ></video>
+            <img id="minny-fallback" src="/assets/minny/minny_idle.png" alt="Minny" width="200" height="200" />
+          </div>
+          <p class="spk-modes__bubble" id="minny-greeting"></p>
+        </div>
+
+        <MicCheckPanel />
+
+        <div id="mode-picker">
+          <p class="spk-modes__label">Con chọn cách luyện hôm nay</p>
+          <p id="no-homework-note" class="spk-modes__note hidden">Thầy chưa giao bài tập mới — con trò chuyện với Minny nhé! 💛</p>
+          <div id="mode-cards"></div>
+        </div>
+      </section>
+
+      <!-- ============ Practice (7a homework flow + sentence steps) ============ -->
+      <section id="practice-screen" class="spk-practice hidden">
+        <div class="spk-topbar">
+          <button id="back-to-modes" type="button" class="spk-back">← Chọn cách luyện</button>
+          <div id="progress-dots" aria-label="Tiến độ"></div>
+        </div>
+
+        <!-- LEFT rail (frame steps only): bobbing Minny + bubble + hint -->
+        <aside class="spk-hw-rail">
+          <div class="spk-hw-rail__avatar-wrap spk-hw-rail__bob">
+            <div class="spk-hw-rail__glow" aria-hidden="true"></div>
+            <div class="spk-hw-rail__avatar">
+              <video id="hw-minny-video" class="hidden" poster="/assets/minny/minny_idle.png" autoplay loop muted playsinline aria-hidden="true"></video>
+              <img id="hw-minny-fallback" src="/assets/minny/minny_idle.png" alt="Minny" width="200" height="200" />
+            </div>
+          </div>
+          <div class="spk-hw-rail__bubble">
+            <p class="spk-hw-rail__title">Con nói to, rõ ràng nha!</p>
+            <p class="spk-hw-rail__sub">Kể liền một mạch cả các câu. Minny đang nghe từ đầu đến cuối. 🎧</p>
+          </div>
+          <p class="spk-hw-hint">💡 Gợi ý: kể như đang nói với bạn, không cần đọc từng chữ.</p>
+        </aside>
+
+        <!-- CENTER: story card + result -->
+        <div class="spk-hw-story">
+          <div class="spk-story-card">
+            <div class="spk-story-card__head">
+              <div>
+                <p class="spk-story-card__eyebrow" id="story-eyebrow">Luyện nói</p>
+                <h2 class="spk-story-card__title" id="prompt-vi"></h2>
+              </div>
+              <p class="spk-story-card__meta hidden" id="frame-meta"></p>
+            </div>
+            <button id="hw-photo-thumb-btn" type="button" class="spk-hw-photo hidden" aria-label="Xem ảnh bài tập">
+              <img id="hw-photo-thumb-img" alt="Ảnh bài tập thầy gửi" loading="lazy" />
+              <span class="spk-hw-photo__cap">📎 Ảnh bài tập của thầy — chạm để phóng to</span>
+            </button>
+            <p class="spk-story-card__en" id="prompt-en"></p>
+            <!-- story task_type: must_use[] words are the point of the
+                 exercise -- SHOW them, never hide them (contrast with
+                 picture's anchors, which must never render). -->
+            <div id="story-must-use" class="spk-must-use hidden">
+              <p class="spk-must-use__label">Con nhớ dùng những từ này nhé:</p>
+              <div id="story-must-use-chips" class="spk-must-use__chips"></div>
+            </div>
+            <ol id="frame-stems" class="hidden"></ol>
+            <!-- build task_type: columns[] of tappable chips (one pick per
+                 column), reusing the shipped Free Talk chip/reveal markup
+                 (.minny-options/.minny-option-chip/.minny-sentence-frame) so
+                 tapping a chip NEVER submits or skips speaking -- it only
+                 reveals the assembled sentence and arms the mic. -->
+            <div id="build-columns" class="spk-build-columns hidden"></div>
+            <div id="build-reveal" class="hidden"></div>
+          </div>
+
+          <div id="speaking-result" class="hidden"></div>
+
+          <div id="speaking-actions" class="spk-actions hidden">
+            <button id="speaking-retry" type="button" class="spk-btn spk-btn--ghost">Luyện lại</button>
+            <button id="speaking-next" type="button" class="spk-btn spk-btn--green">Tiếp theo</button>
+          </div>
+
+          <!-- V1.4 fix-it round (Wave D Set 2 screens 3-5): JS-rendered
+               invitation/rep/celebrate card, additive below the existing
+               result + actions above -- never replaces or hides them. -->
+          <div id="fixit-round" class="hidden"></div>
+        </div>
+
+        <!-- RIGHT: recorder panel (7a board values) -->
+        <div class="spk-hw-recorder spk-recorder">
+          <p class="spk-recorder__eyebrow" id="recorder-eyebrow">Ghi âm</p>
+          <button id="speaking-listen" type="button" class="spk-listen-btn">🔊 Nghe Minny</button>
+          <span id="speaking-timer" class="spk-recorder__timer" role="timer" aria-live="off">0:00</span>
+          <div id="record-ring" class="spk-ring">
+            <svg viewBox="0 0 200 200" aria-hidden="true">
+              <circle class="spk-ring__track" cx="100" cy="100" r="90"></circle>
+              <circle class="spk-ring__bar" cx="100" cy="100" r="90"></circle>
+            </svg>
+            <div class="spk-ring__center">
+              <button id="speaking-record" type="button" class="spk-rec-btn" aria-label="Nhấn để nói">
+                <span class="spk-rec-btn__icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+          <p id="frame-listening-caption" class="spk-rec-caption hidden">
+            <span class="spk-rec-caption__dot" aria-hidden="true"></span>
+            Minny đang lắng nghe 🎧
+          </p>
+          <p id="speaking-status" class="spk-rec-status"></p>
+          <p class="spk-rec-hint">Bấm nút đỏ để dừng · phím <b>Space</b></p>
+          <div id="hw-waveform" class="spk-waveform" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </section>
+
+      <dialog id="hw-photo-lightbox" class="spk-hw-lightbox">
+        <img id="hw-photo-full" src="" alt="Ảnh bài tập phóng to" />
+        <p class="spk-hw-lightbox__cap">Ảnh bài tập của thầy 📎</p>
+        <button id="hw-photo-close" type="button" class="spk-hw-lightbox__close">✕ Đóng</button>
+      </dialog>
+
+      <!-- ============ Free Talking (7b) ============ -->
+      <div id="free-talk-screen" class="hidden">
+        <div id="ft-conversation" class="ft-conversation">
+          <div class="ft-topbar">
+            <button id="free-talk-end" type="button" class="minny-end-btn">
+              <span class="ft-end-arrow" aria-hidden="true">← </span>Kết thúc<span class="ft-end-long"> cuộc trò chuyện</span>
+            </button>
+            <div class="ft-topbar__meta">
+              <div id="free-talk-dots" class="minny-turn-dots" aria-label="Còn 12 lượt trong tổng 12"></div>
+              <span id="free-talk-timer" class="minny-timer" role="timer" aria-live="off">5:00</span>
+              <span id="free-talk-timer-announce" class="sr-only" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <!-- V1.2 packet 2 (Wave D2 §C): game framing chrome, layered over
+               the unchanged ft-* conversation chrome above/below. Populated
+               by ftApplyGameFraming per turn; only build_a_story is wired
+               today (see the TODO(elon) beside ftGameFramingClass) -- empty
+               and hidden for every other case, including no game at all. -->
+          <div id="ft-game-framing" class="hidden" aria-live="polite"></div>
+
+          <div class="ft-hero">
+            <div class="ft-hero__avatar">
+              <video
+                id="ft-minny-video"
+                class="hidden"
+                poster="/assets/minny/minny_idle.png"
+                autoplay loop muted playsinline aria-hidden="true"
+              ></video>
+              <img id="ft-minny-fallback" src="/assets/minny/minny_idle.png" alt="Minny" width="200" height="200" />
+            </div>
+            <div class="ft-hero__body">
+              <p id="free-talk-status-eyebrow" class="ft-hero__eyebrow">Minny · Đợi con nói</p>
+              <p id="ft-hero-line" class="ft-hero__line"></p>
+              <!-- V1.2 packet 1 (Wave D Set 1): L1-L2 choice chips / sentence
+                   frame / repair-choice buttons render here, per-turn. Empty
+                   and inert unless the turn response carries `options`
+                   (server-gated to L1-L2, never a client-side level check). -->
+              <div id="ft-scaffold" class="ft-scaffold"></div>
+              <!-- V1.2 packet 2 (Wave D2 §B3): hint reveal card -- keyed on
+                   the CURRENT turn's `hint` field (never a client-side level
+                   lookup, same principle as ft-scaffold above). Filled by
+                   ftRenderHintCard; empty/hidden otherwise. -->
+              <div id="ft-hint-card" class="minny-hint-card hidden" aria-live="polite"></div>
+              <div id="free-talk-thinking-dots" class="minny-bubble--thinking"><span></span><span></span><span></span></div>
+              <button id="free-talk-play-chip" type="button" class="minny-play-chip" aria-label="Nghe Minny nói">🔊 Nghe Minny</button>
+              <p class="ft-hero__mood-cap"><span id="ft-mood">Đợi con nói</span></p>
+              <div class="ft-hero__turns">
+                <span class="ft-hero__turns-label">Lượt còn lại</span>
+                <span id="ft-turns-count" class="ft-hero__turns-count">12 / 12</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ft-transcript">
+            <p class="ft-section-label">Lượt trò chuyện</p>
+            <div id="free-talk-transcript" class="minny-transcript" role="log" aria-live="polite" aria-atomic="false"></div>
+          </div>
+
+          <div class="ft-recorder">
+            <p class="ft-section-label">Ghi âm</p>
+            <!-- V1.2 packet 2 (Wave D2 §B): 💡 hint button, L3+ only --
+                 keyed on the per-turn `hint` field via ftApplyHint, hidden
+                 whenever L0-L2 sends no such field. The row itself hides
+                 while the reveal card (#ft-hint-card above) is open (B3),
+                 per the mock -- see ftRevealHint/ftDismissHint. -->
+            <div id="ft-hint-row" class="minny-hint-row hidden">
+              <span id="ft-hint-affordance" class="minny-hint-affordance hidden">Cần gợi ý không?</span>
+              <button id="ft-hint-btn" type="button" class="minny-hint-btn">💡 Gợi ý</button>
+            </div>
+            <!-- V1.2 packet 1: hands-free is a visible, always-present,
+                 kid/parent-settable control (IDEAS.md 2026-07-10: "never a
+                 hidden flag again") -- wired to the existing
+                 r2l_ft_handsfree localStorage escape hatch, not a new flag. -->
+            <button id="ft-handsfree-toggle" type="button" class="minny-handsfree" aria-pressed="true">
+              <span class="minny-handsfree__track" aria-hidden="true"><span class="minny-handsfree__thumb"></span></span>
+              <span class="minny-handsfree__label">🎙️ Tự động nghe</span>
+            </button>
+            <p id="ft-listening-indicator" class="minny-listening-indicator hidden" aria-live="polite">
+              <span class="minny-listening-indicator__dot" aria-hidden="true"></span>Minny đang nghe…
+            </p>
+            <button id="free-talk-record" type="button" class="spk-rec-btn" aria-label="Nhấn để nói">
+              <span class="spk-rec-btn__icon" aria-hidden="true"></span>
+            </button>
+            <p id="free-talk-record-label">Nhấn để nói</p>
+            <div id="free-talk-waveform" class="spk-waveform" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <MicCheckPanel />
+          </div>
+        </div>
+
+        <!-- V1.2 packet 2 (Wave D2 §A): L3-L5 topic-pick session start,
+             shown BEFORE the existing start flow -- gated on the level
+             fetched via minny-speaking-context (ftIsPickerLevel), never a
+             guess. L0-L2 never sees this at all (existing flow, untouched);
+             see enterFreeTalking. Game cards (A2) are the same markup as A1
+             plus two extra blocks, toggled by ftIsGameLevel -- kept as one
+             screen rather than two templates. -->
+        <div id="ft-topic-picker" class="hidden">
+          <div class="spk-topbar">
+            <button id="ft-picker-back" type="button" class="spk-back">← Chọn cách luyện</button>
+          </div>
+          <div class="ft-hero">
+            <div class="ft-hero__avatar">
+              <img src="/assets/minny/minny_idle.png" alt="Minny" width="64" height="64" />
+            </div>
+            <div class="ft-hero__body">
+              <p class="ft-hero__eyebrow">Minny</p>
+              <p class="ft-hero__line">Hôm nay con muốn nói về gì?</p>
+            </div>
+          </div>
+          <div class="minny-topic-picker">
+            <p id="ft-picker-games-label" class="minny-topic-picker__section-label hidden">🎮 Hoạt động hôm nay (không bắt buộc)</p>
+            <div id="ft-picker-game-cards" class="minny-game-cards hidden">
+              <button type="button" class="minny-game-card" data-game="build_a_story" aria-pressed="false">
+                <span class="minny-game-card__emoji" aria-hidden="true">📖</span>
+                <span class="minny-game-card__body">
+                  <p class="minny-game-card__title">Kể chuyện cùng Minny</p>
+                  <p class="minny-game-card__desc">Minny kể một câu, con kể tiếp câu sau nhé!</p>
+                </span>
+              </button>
+              <button type="button" class="minny-game-card" data-game="debate" aria-pressed="false">
+                <span class="minny-game-card__emoji" aria-hidden="true">⚖️</span>
+                <span class="minny-game-card__body">
+                  <p class="minny-game-card__title">Tranh luận vui</p>
+                  <p class="minny-game-card__desc">Minny nói một ý ngộ nghĩnh, con thử phản biện xem!</p>
+                </span>
+              </button>
+              <button type="button" class="minny-game-card" data-game="would_you_rather" aria-pressed="false">
+                <span class="minny-game-card__emoji" aria-hidden="true">🤔</span>
+                <span class="minny-game-card__body">
+                  <p class="minny-game-card__title">Con chọn gì?</p>
+                  <p class="minny-game-card__desc">Minny đưa 2 lựa chọn, con chọn và nói lý do nhé!</p>
+                </span>
+              </button>
+            </div>
+
+            <p id="ft-picker-topics-label" class="minny-topic-picker__section-label hidden">Hoặc chọn một chủ đề tự do</p>
+            <div id="ft-picker-topic-grid" class="fx-topic-grid">
+              {HUB_TOPICS.map(([value, label, emoji]) => (
+                <TopicTile emoji={emoji} label={label} data-topic={value} />
+              ))}
+              <TopicTile emoji="🎲" label="Minny chọn" data-topic="minny_choice" class="fx-topic--random" />
+            </div>
+            <button id="ft-picker-start" type="button" class="spk-btn spk-btn--gold" disabled>Bắt đầu nói chuyện 🚀</button>
+          </div>
+        </div>
+
+        <!-- Wrap-up (cap reached / session end / start blocked) -->
+        <div id="free-talk-wrapup" class="hidden minny-wrap-up">
+          <div class="minny-wrap-up__avatar">
+            <img id="ft-wrapup-avatar" src="/assets/minny/minny_celebrate.png" alt="Minny" width="200" height="200" />
+          </div>
+          <div class="minny-wrap-up__body">
+            <p class="spk-eyebrow" id="free-talk-wrapup-eyebrow">Minny</p>
+            <p id="free-talk-wrapup-text" class="minny-wrap-up__text"></p>
+            <div class="minny-wrap-up__actions">
+              <button id="free-talk-wrapup-cta" type="button" class="spk-btn spk-btn--gold">Xem tóm tắt →</button>
+              <button id="free-talk-retry" type="button" class="spk-btn spk-btn--gold hidden">Thử lại</button>
+              <button id="free-talk-wrapup-home" type="button" class="spk-btn spk-btn--ghost">Về trang chính</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary (kid-facing close-out; no XP/rank/streak — Phương's call) -->
+        <div id="free-talk-summary" class="hidden minny-summary-panel">
+          <div class="minny-summary__avatar">
+            <img src="/assets/minny/minny_celebrate.png" alt="Minny" width="200" height="200" />
+          </div>
+          <div class="minny-summary__body">
+            <p class="spk-eyebrow">Tóm tắt hôm nay</p>
+            <h3 class="spk-summary-title">Con đã trò chuyện rất giỏi!</h3>
+            <div id="free-talk-summary-stats" class="minny-summary-stats"></div>
+            <p id="free-talk-summary-line" class="minny-summary-line"></p>
+            <div class="minny-summary__actions">
+              <button id="free-talk-summary-again" type="button" class="spk-btn spk-btn--gold">Nói chuyện nữa với Minny</button>
+              <button id="free-talk-summary-home" type="button" class="spk-btn spk-btn--ghost">Về trang chính</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- tiny app footer: practice stats + links (no marketing) -->
+      <p id="speaking-foot" class="spk-footlinks">
+        <span id="practice-stats"></span>
+        <a id="profile-link" href="/ho-so">Hồ sơ con</a>
+        <span aria-hidden="true"> · </span>
+        <a id="coaching-link" href="/coaching#book">Đặt lịch coaching</a>
+      </p>
+    </div>
+  </main>
+
+  <script>
+    // Diamond celebration (SpeakUp reward hook, 2026-07-17): REUSE the R2L
+    // confetti juice (canvas-confetti under the hood, already a dependency —
+    // see src/lib/lesson-juice.ts, the same helper lesson.astro exposes as
+    // window.__r2lJuice) rather than adding a second confetti dependency.
+    // Imported directly (not via window.__r2lJuice, which only exists on
+    // pages that mount it) so it works standalone on this page.
+    import { fireLessonPassConfetti, fireStreakConfetti } from '../lib/lesson-juice';
+
+
+    type Maybe<T> = T | null | undefined;
+    type Step = {
+      id: string; kind?: string; task_type?: string; check_mode?: string; max_seconds?: number;
+      audio_url?: string; prompt_en?: string; prompt_vi?: string; question_en?: string;
+      question_vi?: string; expected_text?: string; story_context?: string; title_vi?: string; label_vi?: string; show_photo?: boolean;
+      stems?: { id?: string; text_en: string }[]; must_use?: string[];
+      columns?: { id?: string; label_en?: string; options?: string[] }[];
+    };
+    type Mode = { id: string; title_vi: string; subtitle_vi?: string; steps: Step[]; photo?: { id?: string }; homework_note_vi?: string };
+    type Pronunciation = { accuracy_percent?: number; words?: { word: string }[] };
+    type SpeakingResult = {
+      ok?: boolean; message?: string; check_mode?: string; task_type?: string;
+      graded_against?: string | null; score_percent?: number; matchPct?: number;
+      feedback_vi?: string; transcript?: string; words_close?: string[]; words_missed?: string[]; words_matched?: string[];
+      pronunciation?: Pronunciation; rubric?: { spokeAllStems?: boolean; durationOnTarget?: boolean; spokeClearly?: boolean };
+      coach?: { praise_vi?: string; focus_word?: string; model_sentence_en?: string; tiny_challenge_vi?: string };
+    };
+    type HomeworkResult = { step_id: string; ok: boolean; score_percent?: number; check_mode: string | null; task_type: string | null; graded_against: string | null };
+    type Monitor = { available: boolean; peak(): number; voiced(): boolean; stop(): void; reset?(): void; voicedMs?(): number };
+    type Recorder = { engine: string; mimeType: string; start(): void; stop(): Promise<Blob> };
+    type Recording = { stream: MediaStream | null; mediaRecorder?: MediaRecorder | null; recorderCtl?: Recorder; monitor?: Monitor; finishRecording?: () => void | Promise<void>; status?: string };
+    type FixitRecording = { stream: MediaStream | null; recorder: Recorder | null; monitor: Monitor | null; timerId: number | null };
+    type FixitState = { words: string[]; wordIndex: number; repsUsed: number; kidAudioUrl: string | null; recording: FixitRecording | null };
+    type Telemetry = { peak: number; voiced: boolean; engine: string; mimeType: string; duration_seconds: number };
+    type SpeakingState = {
+      accessCode: string; level: string; packId: string; studentName: string; modes: Mode[];
+      activeModeId: string | undefined; modePicked: boolean; stepIndex: number; recording: Recording | null;
+      status: string; secondsLeft: number; timerId: number | null; lastResult: SpeakingResult | null;
+      activeAudio: HTMLAudioElement | null; videoAvailable: Record<string, boolean>; micGateReady: boolean;
+      homeworkResults: HomeworkResult[]; homeworkComplete: boolean; homeworkCompletionId: string | null;
+      fixit: FixitState | null; buildSelections: Record<string, string>; buildArmed: boolean; warmupMessage?: string;
+    };
+    type TalkResponse = {
+      options?: string[]; repair?: boolean; repair_step?: string; expected?: string[]; hint?: string;
+      reply_en?: string; mood?: string; subtitle_vi?: string; transcript?: string;
+      turns_left?: number; seconds_left?: number; ended?: boolean; flagged?: boolean;
+      audio_b64?: string; content_type?: string; audio_pending?: boolean; audio_turn?: number;
+      timing?: { stt_ms?: number; llm_source?: string };
+    };
+    type ScaffoldPlan =
+      | { mode: 'none'; tag?: string | null }
+      | { mode: 'repair-choices'; options: string[]; tag: string | null }
+      | { mode: 'chips'; options: string[]; expected: string[]; showHint: boolean; tag: string | null };
+    type TalkTiming = { stt_ms: number | null; brain_ms: number; total_ms: number; llm_source?: string; server: NonNullable<TalkResponse['timing']> };
+    declare const window: Window & typeof globalThis & {
+      R2LRecorder?: {
+        getStream?(): Promise<MediaStream>;
+        createRecorder?(stream: MediaStream, options?: { engine?: string }): Recorder;
+        startMonitor?(stream: MediaStream, options: { onSilenceHint?: () => void }): Promise<Monitor>;
+        appendTelemetry?(form: FormData, telemetry: Telemetry): void;
+        useWavEngine?(): void; bumpProfile?(): void;
+        recordingLooksVoiced?(monitor: Monitor, size: number): boolean;
+        trackInfo?(stream: MediaStream): { live: boolean; muted: boolean };
+        watchTrack?(stream: MediaStream, callback: () => void): () => void;
+      };
+      R2LMicCheck?: {
+        mount?(panel: HTMLElement, options: { blockUntilPass: boolean; onPass(): void; onFail(): void }): void;
+        sessionPassed?(): boolean; getMicStream?(): Promise<MediaStream>;
+        runMicWarmupCountdown?(options: { onMessage(message: string): void }): Promise<void>;
+        helpMessage?(error: unknown): string; focusMicHelpInShell?(shell: HTMLElement): void;
+      };
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const codeInput = (document.getElementById('speaking-code') as HTMLInputElement);
+    const loadBtn = (document.getElementById('speaking-load') as HTMLButtonElement);
+    const codeCard = (document.getElementById('speaking-code-card') as HTMLElement);
+    const shell = (document.getElementById('speaking-shell') as HTMLElement);
+    const errorEl = (document.getElementById('speaking-error') as HTMLElement);
+    const modesScreen = (document.getElementById('spk-modes-screen') as HTMLElement);
+    const practiceScreen = (document.getElementById('practice-screen') as HTMLElement);
+    const DEFAULT_MAX_SECONDS = 30;
+
+    function safeStopMonitor(m: Maybe<{ stop?: () => void }>) {
+      try { if (m && typeof m.stop === 'function') m.stop(); } catch {}
+    }
+
+    const MODE_EMOJI: Record<string, string> = { homework: '📚', free_talk: '🗣️' };
+
+    const state: SpeakingState = {
+      accessCode: '',
+      // V1.2 packet 2: level fetched via minny-speaking-context, used ONLY
+      // to gate the topic picker before any turn response exists.
+      level: '',
+      packId: '',
+      studentName: '',
+      modes: [],
+      activeModeId: '',
+      modePicked: false,
+      stepIndex: 0,
+      recording: null,
+      status: 'idle',
+      secondsLeft: DEFAULT_MAX_SECONDS,
+      timerId: null,
+      lastResult: null,
+      activeAudio: null,
+      videoAvailable: {},
+      micGateReady: false,
+      homeworkResults: [],
+      homeworkComplete: false,
+      // Stable per-session completion id (anti-farming, minny-practice-log.js
+      // idempotency guard): ONE id for this homework session's completion,
+      // shared by every per-step log ping AND the final homework_summary
+      // POST so a network retry of the exact same completion reuses it —
+      // see getOrCreateCompletionId(). Reset to null wherever a NEW homework
+      // session starts (enterPracticeMode, and the "done -> back to modes"
+      // handler) so the NEXT session gets a fresh id.
+      homeworkCompletionId: null,
+      fixit: null,
+      // build task_type (schema v3): one tap per column, keyed by column id;
+      // buildArmed only flips true once every column has a pick -- gates the
+      // record button in updateRecordUi() so tapping chips never skips
+      // speaking. Reset per-step in renderBuildColumns().
+      buildSelections: {},
+      buildArmed: false,
+    };
+
+    // V1.4 fix-it round (Wave D Set 2 screens 3-5, design_handoff_speakup_v1
+    // /SpeakUp V1 Homework Feedback v2.dc.html): <=3 reps TOTAL per homework
+    // attempt (not per word) is the Azure cost fence -- see CONTROL.md's
+    // speakup-v1-4-fixit-round task. FIXIT_CELEBRATE_MIN mirrors
+    // renderFrameResult's existing celebrate cutoff (matchPct >= 70) so a
+    // single-word exact match (scoreTranscript gives 100/50/0 for one word)
+    // reads as celebrate, a close match reads as encourage.
+    const FIXIT_REP_CAP = 3;
+    const FIXIT_CELEBRATE_MIN = 70;
+    const FIXIT_MAX_SECONDS = 6;
+
+    function escapeHtml(value: unknown) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function fmtClock(totalSeconds: number) {
+      const s = Math.max(0, Math.floor(totalSeconds));
+      return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+    }
+
+    function minnyAssetBase(mood: string) {
+      const file = ['idle', 'listen', 'celebrate', 'encourage'].includes(mood) ? mood : 'idle';
+      return `/assets/minny/minny_${file}`;
+    }
+
+    function showMinnyPng(mood: string, videoId = 'minny-video', imgId = 'minny-fallback') {
+      const img = (document.getElementById(imgId) as HTMLImageElement | null);
+      const video = (document.getElementById(videoId) as HTMLVideoElement | null);
+      if (!img) return;
+      img.src = `${minnyAssetBase(mood)}.png`;
+      img.classList.remove('hidden');
+      if (video) video.classList.add('hidden');
+    }
+
+    function setMinnyMood(mood: string, videoId = 'minny-video', imgId = 'minny-fallback') {
+      const video = (document.getElementById(videoId) as HTMLVideoElement | null);
+      const img = (document.getElementById(imgId) as HTMLImageElement | null);
+      const base = minnyAssetBase(mood);
+
+      if (!video) {
+        showMinnyPng(mood, videoId, imgId);
+        return;
+      }
+      if (state.videoAvailable[mood] === false) {
+        showMinnyPng(mood, videoId, imgId);
+        return;
+      }
+
+      const tryPlay = (ext: string) => {
+        video.onerror = () => {
+          if (ext === 'mp4') {
+            video.src = `${base}.webm`;
+            video.onerror = () => {
+              state.videoAvailable[mood] = false;
+              showMinnyPng(mood, videoId, imgId);
+            };
+          } else {
+            state.videoAvailable[mood] = false;
+            showMinnyPng(mood, videoId, imgId);
+          }
+        };
+        video.onloadeddata = () => {
+          state.videoAvailable[mood] = true;
+          video.classList.remove('hidden');
+          if (img) img.classList.add('hidden');
+          video.play().catch(() => showMinnyPng(mood, videoId, imgId));
+        };
+        video.poster = `${base}.png`;
+        video.src = `${base}.${ext}`;
+        video.load();
+      };
+
+      tryPlay('mp4');
+    }
+
+    function hwSetMood(mood: string) {
+      setMinnyMood(mood, 'hw-minny-video', 'hw-minny-fallback');
+    }
+
+    const FT_MOOD_CAP: Record<string, string> = {
+      idle: 'Đợi con nói',
+      listen: 'Minny đang nghe',
+      celebrate: 'Đang cổ vũ con',
+      encourage: 'Minny đang cổ vũ',
+    };
+    function ftSetMood(mood: string) {
+      setMinnyMood(mood, 'ft-minny-video', 'ft-minny-fallback');
+      const cap = FT_MOOD_CAP[mood] || FT_MOOD_CAP.idle;
+      const moodEl = (document.getElementById('ft-mood') as HTMLElement);
+      if (moodEl) moodEl.textContent = cap;
+      const eyebrow = (document.getElementById('free-talk-status-eyebrow') as HTMLElement);
+      if (eyebrow && !ft.awaitingReply) eyebrow.textContent = `Minny · ${cap}`;
+    }
+
+    function setAppbarSubtitle(html: string) {
+      const sub = (document.getElementById('appbar-sub') as HTMLElement);
+      if (sub) sub.innerHTML = html;
+    }
+
+    // Stable per-session completion id (Task 1, anti-farming dedup on
+    // minny-practice-log.js): pure + tiny so it's unit-testable without a
+    // DOM/fetch harness. `store` is `state` (homework) or `ft` (free talk),
+    // `key` is the property name holding the id. Generates ONCE, on first
+    // call for a given session; every later call for the SAME session
+    // (per-step pings, a retried summary POST) reuses the same value. A new
+    // session gets a fresh id only because the caller resets store[key] to
+    // null first (enterPracticeMode/"done" handler for homework, ftReset()
+    // for free talk) — this function itself never regenerates an existing id.
+    function getOrCreateCompletionId<K extends string>(store: Record<K, string | null>, key: K) {
+      if (!store[key]) store[key] = crypto.randomUUID();
+      return store[key];
+    }
+
+    // Kid diamond HUD (Task 2): seeded once from minny-speaking-context's
+    // diamond_balance (loadSession()), bumped whenever a practice-log
+    // response reports a real award. Defensive by design — every field is
+    // read with a fallback so a missing/malformed response never throws;
+    // the two call sites that use this remain fire-and-forget.
+    function updateDiamondPill(balance: unknown) {
+      const valueEl = (document.getElementById('appbar-diamonds-value') as HTMLElement);
+      const n = Number(balance);
+      if (valueEl && Number.isFinite(n)) valueEl.textContent = String(Math.max(0, Math.round(n)));
+    }
+
+    function showDiamondTicker(amount: number) {
+      const anchor = (document.getElementById('appbar-diamonds') as HTMLElement);
+      if (!anchor || !Number.isFinite(amount) || amount <= 0) return;
+      const ticker = document.createElement('span');
+      ticker.className = 'spk-diamond-ticker';
+      ticker.textContent = `+${Math.round(amount)} 💎`;
+      ticker.setAttribute('role', 'status');
+      ticker.dataset.visible = 'false';
+      anchor.appendChild(ticker);
+      requestAnimationFrame(() => { ticker.dataset.visible = 'true'; });
+      window.setTimeout(() => ticker.remove(), 2400);
+    }
+
+    // Called from a practice-log response (homework_summary / free_talk_summary
+    // completions only — per-step logs always report diamonds_awarded: 0, so
+    // this is a harmless no-op there). A bigger award gets the bigger R2L
+    // "lesson pass" burst, matching how R2L scales its own celebration by
+    // significance (streak vs. full pack pass) — reused, not reinvented.
+    function celebrateDiamonds(payload: Maybe<{ diamond_balance?: number; diamonds_awarded?: number }>) {
+      updateDiamondPill(payload?.diamond_balance);
+      const awarded = Number(payload?.diamonds_awarded);
+      if (!Number.isFinite(awarded) || awarded <= 0) return;
+      showDiamondTicker(awarded);
+      const burst = awarded >= 20 ? fireLessonPassConfetti() : fireStreakConfetti();
+      Promise.resolve(burst).catch(() => {});
+    }
+
+    function showModePicker() {
+      state.modePicked = false;
+      practiceScreen?.classList.remove('is-frame-layout');
+      practiceScreen?.classList.add('hidden');
+      (document.getElementById('free-talk-screen') as HTMLElement)?.classList.add('hidden');
+      modesScreen?.classList.remove('hidden');
+      setAppbarSubtitle('Luyện nói cùng <b>Minny</b>');
+      setMinnyMood('idle');
+    }
+
+    function enterPracticeMode(modeId: string | undefined) {
+      if (modeId === 'free_talk') {
+        enterFreeTalking();
+        return;
+      }
+      state.activeModeId = modeId;
+      state.stepIndex = 0;
+      state.modePicked = true;
+      state.homeworkResults = [];
+      state.homeworkComplete = false;
+      state.homeworkCompletionId = null;
+      stopPlayback();
+      modesScreen?.classList.add('hidden');
+      practiceScreen?.classList.remove('hidden');
+      if (modeId === 'homework') {
+        setAppbarSubtitle('Bài tập của <b>thầy Phương</b>');
+      }
+      renderStep();
+      updateRecordUi();
+    }
+
+    function showError(message: string) {
+      errorEl.textContent = message;
+      errorEl.classList.remove('hidden');
+    }
+
+    function clearError() {
+      errorEl.classList.add('hidden');
+      errorEl.textContent = '';
+    }
+
+    function activeMode() {
+      return state.modes.find((mode) => mode.id === state.activeModeId) || state.modes[0] || null;
+    }
+
+    function currentStep() {
+      const mode = activeMode();
+      if (!mode) return null;
+      return mode.steps[state.stepIndex] || null;
+    }
+
+    function stepMaxSeconds(step: Maybe<Step>) {
+      const n = Number(step?.max_seconds);
+      return Number.isFinite(n) && n > 0 ? n : DEFAULT_MAX_SECONDS;
+    }
+
+    function stopPlayback() {
+      if (state.activeAudio) {
+        state.activeAudio.pause();
+        state.activeAudio = null;
+      }
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+    }
+
+    function playMinnyAudio(step: Maybe<Step>) {
+      if (!step) return;
+      stopPlayback();
+      setMinnyMood('listen');
+      hwSetMood('listen');
+
+      if (step.audio_url) {
+        const audio = new Audio(step.audio_url);
+        state.activeAudio = audio;
+        audio.addEventListener('ended', () => {
+          setMinnyMood('idle');
+          hwSetMood('idle');
+          state.activeAudio = null;
+        });
+        audio.play().catch(() => speakEnglish(step.prompt_en || step.question_en));
+        return;
+      }
+
+      const text = step.prompt_en || step.question_en || '';
+      if (step.check_mode === 'frame' || step.id === 'hw_photo_talk') {
+        // The frame step has no prompt_en; its spoken intro is a whitelisted
+        // canned phrase (previously this Listen button played nothing).
+        playMinnyVoice(
+          { phrase_id: 'frame_intro' },
+          'Now tell me your story! Speak in full sentences, from start to finish. You can do it!',
+        );
+        return;
+      }
+      if (step.kind === 'homework' && text) {
+        playMinnyVoice({ text }, text);
+        return;
+      }
+      speakEnglish(text);
+    }
+
+    async function playMinnyVoice(payload: { phrase_id?: string; text?: string; word?: string }, fallbackText: string) {
+      try {
+        const res = await fetch('/api/minny-voice', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ access_code: state.accessCode, ...payload }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data?.ok || !data.audio_b64) throw new Error('minny_voice_failed');
+        const audio = new Audio(`data:${data.content_type || 'audio/mpeg'};base64,${data.audio_b64}`);
+        state.activeAudio = audio;
+        audio.addEventListener('ended', () => {
+          setMinnyMood('idle');
+          hwSetMood('idle');
+          state.activeAudio = null;
+        });
+        await audio.play();
+      } catch {
+        speakEnglish(fallbackText || payload.text || '');
+      }
+    }
+
+    function speakEnglish(text: Maybe<string>) {
+      const line = String(text || '').trim();
+      if (!line || !window.speechSynthesis) return;
+      const utterance = new SpeechSynthesisUtterance(line);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.92;
+      utterance.onend = () => { setMinnyMood('idle'); hwSetMood('idle'); };
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // Homework photo lightbox: tap thumb → full-size; ✕, backdrop tap, or
+    // Esc (native dialog) closes.
+    (document.getElementById('hw-photo-thumb-btn') as HTMLButtonElement)?.addEventListener('click', () => {
+      const lightbox = (document.getElementById('hw-photo-lightbox') as HTMLDialogElement);
+      const full = (document.getElementById('hw-photo-full') as HTMLImageElement);
+      const thumbImg = (document.getElementById('hw-photo-thumb-img') as HTMLImageElement);
+      if (!lightbox || !full || !thumbImg?.src) return;
+      full.src = thumbImg.src;
+      lightbox.showModal();
+    });
+    (document.getElementById('hw-photo-close') as HTMLButtonElement)?.addEventListener('click', () => {
+      (document.getElementById('hw-photo-lightbox') as HTMLDialogElement)?.close();
+    });
+    (document.getElementById('hw-photo-lightbox') as HTMLDialogElement)?.addEventListener('click', (event) => {
+      if (event.target === event.currentTarget) (event.currentTarget as HTMLDialogElement).close();
+    });
+
+    function renderModeCards() {
+      const cardsEl = (document.getElementById('mode-cards') as HTMLElement);
+      if (!cardsEl) return;
+      const note = (document.getElementById('no-homework-note') as HTMLElement);
+      if (note) note.classList.toggle('hidden', state.modes.some((m) => m.id === 'homework'));
+      cardsEl.innerHTML = state.modes
+        .map(
+          (mode) => `
+            <button type="button" class="spk-mode-card" data-mode-id="${escapeHtml(mode.id)}">
+              <span class="spk-mode-card__emoji" aria-hidden="true">${MODE_EMOJI[mode.id] || '✨'}</span>
+              <span class="spk-mode-card__title">${escapeHtml(mode.title_vi)}</span>
+              <span class="spk-mode-card__desc">${escapeHtml(mode.subtitle_vi || '')}</span>
+              ${mode.id === 'homework' && mode.photo?.id ? '<span class="spk-mode-card__badge">📎 Có ảnh đính kèm</span>' : ''}
+            </button>
+          `,
+        )
+        .join('');
+
+      cardsEl.querySelectorAll<HTMLElement>('[data-mode-id]').forEach((button) => {
+        button.addEventListener('click', () => enterPracticeMode(button.dataset.modeId));
+      });
+    }
+
+    function renderProgressDots() {
+      const dotsEl = (document.getElementById('progress-dots') as HTMLElement);
+      const mode = activeMode();
+      if (!dotsEl || !mode) return;
+
+      if (mode.steps.length <= 1) {
+        dotsEl.innerHTML = '';
+        dotsEl.classList.add('hidden');
+        return;
+      }
+
+      dotsEl.classList.remove('hidden');
+      dotsEl.innerHTML = mode.steps
+        .map((_, i) => {
+          let cls = 'minny-dot';
+          if (i < state.stepIndex) cls += ' minny-dot--done';
+          else if (i === state.stepIndex) cls += ' minny-dot--active';
+          return `<span class="${cls}" title="Bước ${i + 1}"></span>`;
+        })
+        .join('');
+    }
+
+    function renderFrameStems(step: Maybe<Step>) {
+      const el = (document.getElementById('frame-stems') as HTMLElement);
+      const metaEl = (document.getElementById('frame-meta') as HTMLElement);
+      if (!el) return;
+      // story's synthetic single stem is byte-identical to prompt_en (already
+      // shown by #prompt-en above) -- listing it again as "1. <same text>"
+      // would just be visual noise, so this list is skipped for story.
+      // picture-with-anchors compiles to a stem with an EMPTY text_en (its
+      // anchor_words must never be rendered -- see #8 in the contract), so
+      // the hasText check below hides the list rather than showing a bare,
+      // content-less numbered bullet.
+      const stems = step?.check_mode === 'frame' && step.task_type !== 'story' && Array.isArray(step.stems)
+        ? step.stems
+        : null;
+      const hasText = !!stems && stems.some((s) => String(s?.text_en || '').trim());
+      if (!stems || !stems.length || !hasText) {
+        el.classList.add('hidden');
+        el.innerHTML = '';
+        if (metaEl) metaEl.classList.add('hidden');
+        return;
+      }
+      const withBlanks = (text: string) => escapeHtml(text || '').replace(/_{2,}/g, '<span class="spk-blank">&nbsp;</span>');
+      el.innerHTML = stems
+        .map(
+          (stem, i) => `
+            <li class="spk-stem">
+              <span class="spk-stem__num">${i + 1}</span>
+              <span>${withBlanks(stem.text_en)}</span>
+            </li>
+          `,
+        )
+        .join('');
+      el.classList.remove('hidden');
+      if (metaEl) {
+        const seconds = Number(step!.max_seconds) || 60;
+        metaEl.textContent = `${stems.length} câu · ~${seconds} giây · Một mạch`;
+        metaEl.classList.remove('hidden');
+      }
+    }
+
+    // story task_type: must_use[] is an EXPLICIT, intentionally kid-visible
+    // field (contract #8 -- "SHOW these to the kid") -- do not confuse with
+    // picture's anchors, which live only in stems[0].anchor_words and are
+    // never read here or anywhere else in this file.
+    function renderStoryMustUse(step: Maybe<Step>) {
+      const wrap = (document.getElementById('story-must-use') as HTMLElement);
+      const chipsEl = (document.getElementById('story-must-use-chips') as HTMLElement);
+      if (!wrap || !chipsEl) return;
+      const words = step?.task_type === 'story' && Array.isArray(step.must_use)
+        ? step.must_use.filter((w) => String(w || '').trim())
+        : [];
+      if (!words.length) {
+        wrap.classList.add('hidden');
+        chipsEl.innerHTML = '';
+        return;
+      }
+      chipsEl.innerHTML = words.map((w) => `<span class="spk-must-use-chip">${escapeHtml(w)}</span>`).join('');
+      wrap.classList.remove('hidden');
+    }
+
+    // build task_type: columns[] of tappable chips, one pick per column.
+    // Reuses the exact Free Talk chip pattern (.minny-options/
+    // .minny-option-chip) per the packet's instruction -- tapping never
+    // submits; it only marks the pick and (once every column has one)
+    // reveals the assembled sentence via buildMaybeReveal, which is what
+    // arms the mic (see updateRecordUi).
+    function renderBuildColumns(step: Maybe<Step>) {
+      const wrap = (document.getElementById('build-columns') as HTMLElement);
+      const reveal = (document.getElementById('build-reveal') as HTMLElement);
+      if (!wrap || !reveal) return;
+      state.buildSelections = {};
+      state.buildArmed = false;
+      reveal.innerHTML = '';
+      reveal.classList.add('hidden');
+      const columns = step?.task_type === 'build' && Array.isArray(step.columns) ? step.columns : [];
+      if (!columns.length) {
+        wrap.classList.add('hidden');
+        wrap.innerHTML = '';
+        return;
+      }
+      wrap.innerHTML = columns
+        .map(
+          (col, i) => `
+            <div class="spk-build-column" data-build-col="${escapeHtml(col.id || `c${i + 1}`)}">
+              <p class="spk-build-column__label">${escapeHtml(col.label_en || '')}</p>
+              <div class="minny-options" role="group" aria-label="${escapeHtml(col.label_en || 'Chọn một ô')}">
+                ${(Array.isArray(col.options) ? col.options : [])
+                  .map((opt) => `<button type="button" class="minny-option-chip" data-build-option="${escapeHtml(opt)}">${escapeHtml(opt)}</button>`)
+                  .join('')}
+              </div>
+            </div>
+          `,
+        )
+        .join('');
+      wrap.classList.remove('hidden');
+    }
+
+    // A teacher's columns ARE a sentence template: her real lesson reads
+    // "We… / At… / We feel… / Because…" with options "play football",
+    // "school", "happy", "it is fun". The label's trailing "…"/"..." is the
+    // fill-in marker, so it is stripped and the chosen option appended.
+    //
+    // Joining the labels verbatim yields "We play football At school We feel
+    // happy Because it is fun." -- a run-on with mid-sentence capitals. That
+    // matters: this exact string is BOTH shown to the child to read aloud AND
+    // sent as expected_text for word-level scoring, so it has to be real
+    // English. Continuation labels are therefore lowercased, and a label that
+    // opens a new clause (a subject pronoun) is preceded by a comma, giving
+    // "We play football at school, we feel happy because it is fun."
+    const BUILD_CLAUSE_START = /^(?:we|i|they|he|she|it|you)\b/i;
+    // The ellipsis is a PLACEHOLDER POSITION, not a suffix to trim. Usually it
+    // sits at the end ("We…" + "play football"), but a teacher can put it
+    // mid-label ("Do you like...?" + "pizza" -> "Do you like pizza?"). Stripping
+    // only a trailing marker left that case as "Do you like...? pizza"
+    // (Buffet, 2026-07-13) — so substitute AT the marker wherever it appears,
+    // and only append when the label has no marker at all.
+    const BUILD_BLANK_MARKER = /(?:\.\.\.|…)/;
+
+    function buildAssembleSentence(step: Maybe<Step>) {
+      const columns = Array.isArray(step?.columns) ? step.columns : [];
+      if (!columns.length) return null;
+      const segments = columns.map((col, i) => {
+        const key = col.id || `c${i + 1}`;
+        const chosen = state.buildSelections[key];
+        if (!chosen) return null;
+        let label = String(col.label_en || '').trim();
+        // Only the first column keeps the teacher's capitalisation; the rest
+        // are mid-sentence continuations.
+        if (i > 0 && label) label = label.charAt(0).toLowerCase() + label.slice(1);
+        let text;
+        if (BUILD_BLANK_MARKER.test(label)) {
+          text = label
+            .replace(BUILD_BLANK_MARKER, ` ${chosen} `)
+            .replace(/\s+/g, ' ')
+            .replace(/\s+([.,!?;:])/g, '$1')
+            .trim();
+        } else {
+          text = label ? `${label} ${chosen}` : chosen;
+        }
+        return { text, newClause: i > 0 && BUILD_CLAUSE_START.test(label) };
+      });
+      if (segments.some((s) => !s)) return null;
+      const raw = segments
+        .reduce((acc, seg, i) => (i === 0 ? seg!.text : `${acc}${seg!.newClause ? ',' : ''} ${seg!.text}`), '')
+        .trim();
+      if (!raw) return null;
+      const capitalized = raw.charAt(0).toUpperCase() + raw.slice(1);
+      return /[.!?]$/.test(capitalized) ? capitalized : `${capitalized}.`;
+    }
+
+    // Called after every chip tap. Mutates the CURRENT step object in place
+    // (the same reference startRecording() captures as `prompt`) so
+    // submitAudio's existing expected_text/check_mode plumbing needs no
+    // changes -- once armed, a build step behaves exactly like a normal
+    // 'read' step whose expected_text happens to be assembled from taps.
+    function buildMaybeReveal() {
+      const step = currentStep();
+      const reveal = (document.getElementById('build-reveal') as HTMLElement);
+      if (!reveal || step?.task_type !== 'build') return;
+      const sentence = buildAssembleSentence(step);
+      if (!sentence) {
+        reveal.classList.add('hidden');
+        reveal.innerHTML = '';
+        state.buildArmed = false;
+        updateRecordUi();
+        return;
+      }
+      step.expected_text = sentence;
+      state.buildArmed = true;
+      const escapedSentence = escapeHtml(sentence);
+      reveal.innerHTML = `
+        <div class="minny-sentence-frame">
+          <p class="minny-sentence-frame__label">Con hãy nói to câu này nhé!</p>
+          <p class="minny-sentence-frame__text">${escapedSentence}</p>
+          <p class="minny-sentence-frame__mic-armed">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0M12 17v4"></path></svg>
+            Mic đã sẵn sàng — con nói đi nào!
+          </p>
+        </div>
+      `;
+      reveal.classList.remove('hidden');
+      updateRecordUi();
+    }
+
+    (document.getElementById('build-columns') as HTMLElement)?.addEventListener('click', (event) => {
+      const btn = (event.target as Element).closest<HTMLElement>('[data-build-option]');
+      if (!btn) return;
+      const colEl = btn.closest<HTMLElement>('[data-build-col]');
+      if (!colEl) return;
+      colEl.querySelectorAll<HTMLElement>('.minny-option-chip').forEach((b) => {
+        b.classList.toggle('is-selected', b === btn);
+        b.classList.toggle('is-dimmed', b !== btn);
+      });
+      state.buildSelections[colEl.dataset.buildCol as string] = btn.dataset.buildOption as string;
+      buildMaybeReveal();
+    });
+
+    function renderStep() {
+      const mode = activeMode();
+      const step = currentStep();
+      if (!mode || !step) return;
+
+      const viEl = (document.getElementById('prompt-vi') as HTMLElement);
+      const enEl = (document.getElementById('prompt-en') as HTMLElement);
+      const eyebrowEl = (document.getElementById('story-eyebrow') as HTMLElement);
+
+      viEl.textContent = step.prompt_vi || step.question_vi || step.label_vi || '';
+      enEl.textContent = step.prompt_en || step.question_en || '';
+      if (eyebrowEl) eyebrowEl.textContent = mode.title_vi || 'Luyện nói';
+      renderFrameStems(step);
+      renderStoryMustUse(step);
+      renderBuildColumns(step);
+
+      const photoBtn = (document.getElementById('hw-photo-thumb-btn') as HTMLButtonElement);
+      if (photoBtn) {
+        // Per-step gating (schema v3): 'picture' steps always carry
+        // show_photo:true and 'story' carries show_photo:!!use_photo (an
+        // explicit opt-in/out). Steps that predate this field (read,
+        // present, qa, build, and every upgraded v1/v2 step) don't set it at
+        // all -- default to the pre-existing behavior of showing the
+        // homework's attached photo throughout, so this stays byte-identical
+        // for every step that isn't new.
+        const stepWantsPhoto = step.show_photo === undefined ? true : !!step.show_photo;
+        const photoUrl = mode.id === 'homework' && mode.photo?.id && stepWantsPhoto
+          ? `/api/speakup-homework-photo?code=${encodeURIComponent(state.accessCode)}&id=${encodeURIComponent(mode.photo.id)}`
+          : null;
+        if (photoUrl) {
+          const thumbImg = (document.getElementById('hw-photo-thumb-img') as HTMLImageElement);
+          if (thumbImg.getAttribute('src') !== photoUrl) thumbImg.src = photoUrl;
+          photoBtn.classList.remove('hidden');
+        } else {
+          photoBtn.classList.add('hidden');
+        }
+      }
+
+      // Frame steps get the 7a rail/story/recorder layout.
+      const isFrameStep = step.check_mode === 'frame';
+      practiceScreen.classList.toggle('is-frame-layout', isFrameStep);
+      if (isFrameStep) hwSetMood('idle');
+
+      const recorderEyebrow = (document.getElementById('recorder-eyebrow') as HTMLElement);
+      if (recorderEyebrow) {
+        recorderEyebrow.textContent = isFrameStep
+          ? `Ghi âm · mục tiêu ~${stepMaxSeconds(step)}s`
+          : 'Ghi âm';
+      }
+
+      renderProgressDots();
+      setMinnyMood('idle');
+      (document.getElementById('speaking-result') as HTMLElement).classList.add('hidden');
+      (document.getElementById('speaking-actions') as HTMLElement).classList.add('hidden');
+      fixitReset();
+      (document.getElementById('speaking-record') as HTMLButtonElement).disabled = false;
+      const isQuestion = step.kind === 'question';
+      (document.getElementById('speaking-status') as HTMLElement).textContent = isQuestion
+        ? 'Nghe Minny hỏi, rồi con trả lời nhé.'
+        : 'Nghe Minny nhắc, rồi con kể nhé.';
+    }
+
+    // WAV engine decision for startRecording() (speakup-grading-honesty-ui,
+    // 2026-07-14) — pure so it's testable without a DOM/media pipeline (see
+    // tests/speakup-homework-types-ui.test.mjs). ALL homework-mode steps
+    // force WAV (needed for the Ear / Azure per-word scoring to run at all
+    // on iPhone Safari, which otherwise records audio/mp4); Free Talking
+    // and any other non-homework mode keep the original, narrower
+    // check_mode-based triggers (read/frame steps, or the legacy
+    // hw_photo_talk id) untouched.
+    function recorderEngineOptions(activeModeId: string | undefined, step: Maybe<Step>) {
+      return step && (
+        activeModeId === 'homework'
+        || step.check_mode === 'read'
+        || step.id === 'hw_photo_talk'
+        || step.check_mode === 'frame'
+      )
+        ? { engine: 'wav' }
+        : {};
+    }
+
+    function wordChips(words: Maybe<string[]>, tone: string) {
+      if (!Array.isArray(words) || !words.length) return '';
+      // V1 word-level feedback (2026-07-12): real buttons (not spans) so a
+      // tap can trigger Minny reading the word aloud — see the delegated
+      // click handler below renderResult. All call sites (read step +
+      // frame's practiceWordsRow) inherit the tappable markup.
+      return words.map((w) => `<button type="button" class="minny-word minny-word--${tone}" data-word="${escapeHtml(w)}">${escapeHtml(w)}</button>`).join('');
+    }
+
+    // Grading-honesty rule (2026-07-14, real founder report): a student who
+    // did photo homework correctly scored 45% and the summary still read
+    // "Khớp bài thầy dạy: 45%" (matches what the teacher taught) — but
+    // open/photo_talk/frame steps are never compared against the teacher's
+    // content, so that label was flatly false for them. A step only counts
+    // as genuinely graded against homework content when it's a read step,
+    // or a build step (the assembled sentence rides the exact same
+    // check_mode: 'read' scoring pipeline — see buildMaybeReveal's
+    // `step.expected_text = sentence` comment), or the backend explicitly
+    // says so via the response's optional graded_against field. graded_against
+    // wins when present (forward-compatible with Mark's backend work); the
+    // check_mode/task_type check is the fallback for today's backend, which
+    // doesn't send it yet.
+    function isGradedAgainstHomeworkContent(entry: Maybe<Pick<HomeworkResult, "graded_against" | "check_mode" | "task_type">>) {
+      if (entry && entry.graded_against) return entry.graded_against === 'homework_content';
+      return entry?.check_mode === 'read' || entry?.task_type === 'build';
+    }
+
+    // Homework mode accumulates each completed step's score for the
+    // end-of-set summary; keyed by step id so retries replace, not duplicate.
+    function finalizeHomeworkStep(result: SpeakingResult, isLast: boolean) {
+      if (state.activeModeId !== 'homework') return;
+      const step = currentStep();
+      const stepId = step?.id || `step_${state.stepIndex}`;
+      const scorePercent = result.check_mode === 'frame' ? result.matchPct : result.score_percent;
+      const entry = {
+        step_id: stepId,
+        ok: true,
+        score_percent: scorePercent,
+        check_mode: result.check_mode || step?.check_mode || null,
+        task_type: step?.task_type || null,
+        graded_against: result.graded_against || null,
+      };
+      const existingIdx = state.homeworkResults.findIndex((r) => r.step_id === stepId);
+      if (existingIdx >= 0) state.homeworkResults[existingIdx] = entry;
+      else state.homeworkResults.push(entry);
+      if (isLast) appendHomeworkSummary();
+    }
+
+    function appendHomeworkSummary() {
+      const resultEl = (document.getElementById('speaking-result') as HTMLElement);
+      const nextBtn = (document.getElementById('speaking-next') as HTMLButtonElement);
+      if (!resultEl || !nextBtn) return;
+
+      const rows = state.homeworkResults
+        .map((r, i) => {
+          const pct = Number.isFinite(Number(r.score_percent)) ? `${Math.round(Number(r.score_percent))}%` : '—';
+          return `<p style="margin:4px 0 0;font-size:14px;color:var(--cream-muted)">Câu ${i + 1}: ${pct}</p>`;
+        })
+        .join('');
+
+      const valid = state.homeworkResults.filter(r => Number.isFinite(Number(r.score_percent)));
+      const matchPercent = valid.length
+        ? Math.round(valid.reduce((acc, r) => acc + Number(r.score_percent), 0) / valid.length)
+        : null;
+      // Honest label: only claim "Khớp bài thầy dạy" (matches what the
+      // teacher taught) when EVERY valid entry was actually graded against
+      // homework content — a single open/photo/frame step in the set falls
+      // back to the neutral "Kết quả luyện nói hôm nay" phrasing. Per-row
+      // "Câu N: NN%" rows above are unaffected either way.
+      const gradedAgainstContent = valid.length > 0 && valid.every(isGradedAgainstHomeworkContent);
+      const summaryLabel = gradedAgainstContent ? 'Khớp bài thầy dạy' : 'Kết quả luyện nói hôm nay';
+
+      const summary = document.createElement('div');
+      summary.className = 'minny-frame-rubric-card';
+      summary.innerHTML = `
+        <p class="minny-frame-rubric-card__eyebrow">Hoàn thành bài tập</p>
+        <p style="margin:0;font-family:Manrope,sans-serif;font-weight:800;font-size:18px;color:var(--cream)">Con đã hoàn thành bài tập thầy giao! 🎉</p>
+        ${rows}
+        ${matchPercent !== null ? `<p style="margin:10px 0 0;font-family:Manrope,sans-serif;font-weight:800;font-size:18px;color:var(--gold-light)">${escapeHtml(summaryLabel)}: ${matchPercent}%</p>` : ''}
+      `;
+      resultEl.appendChild(summary);
+
+      state.homeworkComplete = true;
+      nextBtn.classList.remove('hidden');
+      nextBtn.textContent = 'Xong bài tập 🎯';
+
+      if (state.accessCode && state.packId) {
+        fetch('/api/minny-practice-log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            pack_id: state.packId,
+            prompt_id: 'homework_summary',
+            mode_id: 'homework',
+            completion_id: getOrCreateCompletionId(state, 'homeworkCompletionId'),
+            summary: {
+              mode: 'homework',
+              turns: state.homeworkResults.length,
+              match_percent: matchPercent,
+              homework_note_vi: (activeMode() && activeMode().homework_note_vi) || null,
+            },
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => { if (data?.ok) celebrateDiamonds(data); })
+          .catch(() => {});
+      }
+    }
+
+    function rubricRow(ok: boolean, label: string, subtext?: string) {
+      const markClass = ok ? 'is-ok' : 'is-miss';
+      const mark = ok ? '✓' : '—';
+      const sub = subtext && !ok
+        ? `<span style="display:block;font-size:12.5px;color:var(--cream-dim);margin-top:2px">${escapeHtml(subtext)}</span>`
+        : '';
+      return `
+        <div class="minny-frame-rubric-row">
+          <span class="minny-frame-rubric-row__mark ${markClass}">${mark}</span>
+          <span style="font-size:14.5px;color:var(--cream)">${escapeHtml(label)}${sub}</span>
+        </div>
+      `;
+    }
+
+    // Warm pronunciation row (V1, speakup-azure-frame-grading): only rendered
+    // when the server attached the optional `pronunciation` block (Azure
+    // configured + WAV + under free tier) — absent block renders nothing,
+    // so the frame panel is byte-identical to before this feature when Azure
+    // grading didn't run. Always the "is-ok" (green) mark — never red/miss
+    // styling, per the founder's kid-safe framing rule for this row.
+    function pronunciationRow(pronunciation: Maybe<Pronunciation>) {
+      if (!pronunciation) return '';
+      const accuracy = Number(pronunciation.accuracy_percent);
+      // No finite accuracy -> no row at all: a kid must never see "NaN%".
+      if (!Number.isFinite(accuracy)) return '';
+      const valueText = accuracy < 50
+        ? 'Con nói to rõ hơn nhé! 💪'
+        : `${Math.round(accuracy)}% 🌟`;
+      return `
+        <div class="minny-frame-rubric-row">
+          <span class="minny-frame-rubric-row__mark is-ok">✓</span>
+          <span style="font-size:14.5px;color:var(--cream)">Phát âm rõ ràng: ${escapeHtml(valueText)}</span>
+        </div>
+      `;
+    }
+
+    // "Từ cần luyện:" chips (V1 word-level feedback, 2026-07-12): only
+    // rendered when the pronunciation block carries its optional words[]
+    // (accuracy<70, stopwords excluded, max 3 — see
+    // mapAzureFramePronunciation); absent/empty -> nothing, so the panel
+    // stays byte-identical without this data. Reuses the read step's exact
+    // wordChips(...,'miss') renderer (Lead-authored label verbatim).
+    function practiceWordsRow(pronunciation: Maybe<Pronunciation>) {
+      const words = Array.isArray(pronunciation?.words) ? pronunciation.words : [];
+      if (!words.length) return '';
+      return `<p style="margin:10px 0 0;font-size:14px;color:var(--cream-muted)"><strong>Từ cần luyện:</strong> ${wordChips(words.map((w) => w.word), 'miss')}</p>`;
+    }
+
+    // V1.3 homework feedback sandwich (2026-07-12, design_handoff_speakup_v1
+    // /SpeakUp V1 Homework Feedback v2.dc.html screens 1-2, approved
+    // 2026-07-10; founder gate: Phương ack via AskUserQuestion). Pure,
+    // DOM-free (see tests/speakup-feedback-ui.test.mjs). result.coach is
+    // server-side best-effort — read2lead-speaking-check.js's onRequestPost
+    // only ever sets it after the grounding validator + guardrail stack both
+    // pass — so any missing/malformed required field here returns '',
+    // leaving the panel byte-identical to the pre-V1.3 shape. Fixed part
+    // order (eyebrow -> praise -> focus word -> model sentence -> tiny
+    // challenge) per the mock's "sandwich" naming: never reorder.
+    // `celebrateMood` is passed in rather than recomputed here so it always
+    // matches the exact cutoff the caller already used for its own score
+    // card (matchPct>=70 for frame, score_percent>=50 for read/open).
+    // recast_en (optional in the contract) has no slot in the approved mock
+    // and is intentionally not rendered here — see TODO(elon) in the
+    // dispatch report. Same for a Vietnamese translation under
+    // model_sentence_en: the mock's __model-vi line has no backing field in
+    // result.coach today, so it is omitted rather than invented.
+    // Tap-to-hear on model_sentence_en (speakup-grading-honesty-ui, 2026-07-14):
+    // a real .minny-word button, reusing the exact same delegated handler and
+    // is-loading pulse as the word chips below — see the click listener on
+    // #speaking-result, which now branches on data-sentence vs data-word so
+    // this sends the full model sentence to /api/minny-voice as `{ text }`
+    // (the payload shape already used for other full-sentence Minny audio)
+    // instead of the single-word `{ word }` shape.
+    function renderCoachSandwich(result: Maybe<SpeakingResult>, celebrateMood: boolean) {
+      const coach = result?.coach;
+      if (!coach || typeof coach !== 'object') return '';
+      const { praise_vi, focus_word, model_sentence_en, tiny_challenge_vi } = coach;
+      if (!praise_vi || !focus_word || !model_sentence_en || !tiny_challenge_vi) return '';
+      return `
+        <div class="minny-feedback-sandwich ${celebrateMood ? 'is-celebrate' : 'is-encourage'}">
+          <p class="minny-feedback-sandwich__eyebrow">💬 Minny nói thêm</p>
+          <div class="minny-feedback-sandwich__row">
+            <span class="ico" aria-hidden="true">🌟</span>
+            <p class="minny-feedback-sandwich__praise">${escapeHtml(praise_vi)}</p>
+          </div>
+          <div class="minny-feedback-sandwich__row">
+            <span class="ico" aria-hidden="true">🎯</span>
+            <div>
+              <p class="minny-feedback-sandwich__focus-label">Từ để luyện thêm</p>
+              <button type="button" class="minny-word minny-word--close minny-word--focus" data-word="${escapeHtml(focus_word)}">${escapeHtml(focus_word)}</button>
+            </div>
+          </div>
+          <div class="minny-feedback-sandwich__row">
+            <span class="ico" aria-hidden="true">📘</span>
+            <div class="minny-feedback-sandwich__model">
+              <p class="minny-feedback-sandwich__model-en">"${escapeHtml(model_sentence_en)}"</p>
+              <button type="button" class="minny-word minny-word--close minny-model-play" data-sentence="${escapeHtml(model_sentence_en)}">🔊 Nghe mẫu</button>
+            </div>
+          </div>
+          <div class="minny-feedback-sandwich__row">
+            <span class="ico" aria-hidden="true">✨</span>
+            <p class="minny-feedback-sandwich__challenge">${escapeHtml(tiny_challenge_vi)}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // Rubric copy follows task_type (packet C: "story -> 'Con dùng đủ từ
+    // thầy dặn?' rather than 'Đủ 6 câu?'") -- only the FIRST row's wording
+    // varies; "Đủ thời gian"/"Nói to, rõ ràng" and the pronunciation row stay
+    // generic across every frame-mode task (present/story/picture/qa). The
+    // underlying rubric.spokeAllStems boolean is unchanged (server-computed
+    // coverage), this only changes what the kid is told it means.
+    const FRAME_RUBRIC_ROW1_VI: Record<string, string> = {
+      present: 'Nói đủ các câu trong khung',
+      story: 'Con dùng đủ từ thầy dặn?',
+      picture: 'Con tả được đủ những gì trong ảnh?',
+      qa: 'Con trả lời đủ ý câu hỏi?',
+    };
+
+    function renderFrameResult(result: SpeakingResult) {
+      const resultEl = (document.getElementById('speaking-result') as HTMLElement);
+      const actionsEl = (document.getElementById('speaking-actions') as HTMLElement);
+      const matchPct = Math.round(Number(result.matchPct) || 0);
+      const celebrate = matchPct >= 70;
+      setMinnyMood(celebrate ? 'celebrate' : 'encourage');
+      hwSetMood(celebrate ? 'celebrate' : 'encourage');
+
+      const taskType = currentStep()?.task_type;
+      const rubricRow1Label = FRAME_RUBRIC_ROW1_VI[taskType as string] || FRAME_RUBRIC_ROW1_VI.present;
+      const rubric = result.rubric || {};
+      const rubricHtml = [
+        rubricRow(!!rubric.spokeAllStems, rubricRow1Label),
+        rubricRow(!!rubric.durationOnTarget, 'Đủ thời gian', 'Kể chậm lại một chút, hít thở giữa các câu.'),
+        rubricRow(!!rubric.spokeClearly, 'Nói to, rõ ràng', 'Nói to hơn một xíu, như đang kể cho bạn nghe.'),
+        pronunciationRow(result.pronunciation),
+      ].join('');
+
+      resultEl.classList.remove('hidden');
+      resultEl.innerHTML = `
+        <div class="minny-frame-score-card">
+          <p class="minny-frame-score-card__eyebrow">${celebrate ? 'Điểm hoàn thành' : 'Đã đạt'}</p>
+          <p class="minny-frame-score-card__value">${matchPct}%</p>
+          <p style="margin:4px 0 0;font-size:14px;color:var(--cream-muted)">${celebrate ? 'Khớp bài thầy dạy — tuyệt vời con ơi!' : 'Sát rồi con ơi! Mình cùng thử lại nhé.'}</p>
+        </div>
+        <div class="minny-frame-rubric-card">
+          <p class="minny-frame-rubric-card__eyebrow">${celebrate ? 'Bảng đánh giá' : 'Cùng nhìn lại nào'}</p>
+          ${rubricHtml}
+          ${practiceWordsRow(result.pronunciation)}
+        </div>
+        <div class="minny-frame-smile-chip">
+          <span style="font-size:24px;line-height:1" aria-hidden="true">😄</span>
+          <span>
+            <span class="minny-frame-smile-chip__eyebrow">Nhắc nhẹ từ Minny</span>
+            <span style="font-size:14px;color:var(--cream-muted)">Con nhớ cười thật tươi khi quay video gửi thầy Phương nhé!</span>
+          </span>
+        </div>
+        ${renderCoachSandwich(result, celebrate)}
+      `;
+
+      actionsEl.classList.remove('hidden');
+      actionsEl.classList.toggle('is-encourage', !celebrate);
+      const retryBtn = (document.getElementById('speaking-retry') as HTMLButtonElement);
+      if (retryBtn) retryBtn.textContent = celebrate ? 'Luyện lại' : 'Thử lại 🎤';
+      const mode = activeMode();
+      const isLast = mode ? state.stepIndex >= mode.steps.length - 1 : true;
+      (document.getElementById('speaking-next') as HTMLButtonElement).classList.toggle('hidden', isLast);
+      (document.getElementById('speaking-next') as HTMLButtonElement).textContent = 'Bước tiếp theo';
+
+      finalizeHomeworkStep(result, isLast);
+      logPractice({ ...result, score_percent: matchPct });
+      maybeShowFixitInvite(result);
+    }
+
+    function renderResult(result: Maybe<SpeakingResult>) {
+      const resultEl = (document.getElementById('speaking-result') as HTMLElement);
+      const actionsEl = (document.getElementById('speaking-actions') as HTMLElement);
+      if (!result?.ok) {
+        setMinnyMood('encourage');
+        hwSetMood('encourage');
+        resultEl.classList.remove('hidden');
+        resultEl.innerHTML = `<div class="minny-frame-rubric-card"><p style="margin:0;font-family:Manrope,sans-serif;font-weight:800;font-size:17px;color:var(--gold-light)">${escapeHtml(result?.message || 'Chưa nghe rõ — thử lại nhé!')}</p></div>`;
+        actionsEl.classList.remove('hidden');
+        actionsEl.classList.add('is-encourage');
+        (document.getElementById('speaking-next') as HTMLButtonElement).classList.add('hidden');
+        return;
+      }
+
+      if (result.check_mode === 'frame') {
+        renderFrameResult(result);
+        return;
+      }
+
+      const isOpen = result.check_mode === 'open';
+      const passed = Number(result.score_percent) >= 50;
+      setMinnyMood(passed ? 'celebrate' : 'encourage');
+
+      const missed = !isOpen && result.words_missed?.length
+        ? `<p style="margin:10px 0 0;font-size:14px;color:var(--cream-muted)"><strong>Luyện thêm:</strong> ${wordChips(result.words_missed, 'miss')}</p>`
+        : '';
+      const close = !isOpen && result.words_close?.length
+        ? `<p style="margin:10px 0 0;font-size:14px;color:var(--cream-muted)"><strong>Gần đúng:</strong> ${wordChips(result.words_close, 'close')}</p>`
+        : '';
+      const matched = isOpen && result.words_matched?.length
+        ? `<p style="margin:10px 0 0;font-size:14px;color:var(--cream-muted)"><strong>Con nhắc tới:</strong> ${wordChips(result.words_matched, 'good')}</p>`
+        : '';
+      const transcript = result.transcript
+        ? `<p style="margin:8px 0 0;font-size:14px;color:var(--cream-dim)">Minny nghe: “${escapeHtml(result.transcript)}”</p>`
+        : '';
+
+      resultEl.classList.remove('hidden');
+      resultEl.innerHTML = `
+        <div class="minny-frame-rubric-card">
+          <p style="margin:0;font-family:Manrope,sans-serif;font-weight:800;font-size:19px;color:var(--gold-light)">${escapeHtml(result.feedback_vi || 'Hay lắm!')}</p>
+          ${transcript}
+          ${matched}
+          ${close}
+          ${missed}
+        </div>
+        ${renderCoachSandwich(result, passed)}
+      `;
+      actionsEl.classList.remove('hidden');
+      actionsEl.classList.toggle('is-encourage', !passed);
+      const mode = activeMode();
+      const isLast = mode ? state.stepIndex >= mode.steps.length - 1 : true;
+      (document.getElementById('speaking-next') as HTMLButtonElement).classList.toggle('hidden', isLast);
+      const stepKind = currentStep()?.kind;
+      (document.getElementById('speaking-next') as HTMLButtonElement).textContent =
+        stepKind === 'question' ? 'Câu tiếp theo' : 'Bước tiếp theo';
+
+      finalizeHomeworkStep(result, isLast);
+      logPractice(result);
+      maybeShowFixitInvite(result);
+    }
+
+    // V1 word-level feedback fix round (2026-07-12, Elon ruling): mirrors
+    // read2lead-speaking-check.js's normalizePracticeWord exactly, so a chip
+    // labeled with the original sentence's punctuation (e.g. "banana.")
+    // taps through to precisely the string the server flagged ("banana").
+    function normalizePracticeWord(raw: unknown) {
+      return String(raw || '').toLowerCase().replace(/[^a-z'-]/g, '');
+    }
+
+    // ===================== V1.4 fix-it round — pure helpers =================
+    // Pure, DOM-free (see tests/speakup-fixit-ui.test.mjs): plain data in,
+    // plain data out, so behavior is covered without a DOM.
+
+    // Rep-word derivation: read mode's words_close/words_missed (same order
+    // renderResult already shows them: close before missed) or frame mode's
+    // pronunciation.words[] (same order practiceWordsRow already shows),
+    // deduped by the shared normalizePracticeWord form, capped at 3. 'open'
+    // check_mode (words_matched only) never offers a fix-it round.
+    function fixitDeriveRepWords(result: Maybe<SpeakingResult>) {
+      if (!result || result.ok === false) return [];
+      let raw: string[] = [];
+      if (result.check_mode === 'frame') {
+        const words = Array.isArray(result.pronunciation?.words) ? result.pronunciation.words : [];
+        raw = words.map((w) => w?.word);
+      } else if (result.check_mode !== 'open') {
+        raw = [...(result.words_close || []), ...(result.words_missed || [])];
+      }
+      const seen = new Set();
+      const out = [];
+      for (const w of raw) {
+        const norm = normalizePracticeWord(w);
+        if (!norm || seen.has(norm)) continue;
+        seen.add(norm);
+        out.push(String(w));
+        if (out.length >= 3) break;
+      }
+      return out;
+    }
+
+    // A single-word read-check scores 100 (exact), 50 (close) or 0 (missed)
+    // per scoreTranscript's CLOSE_SCORE_WEIGHT -- any cutoff in (50,100]
+    // separates them identically; FIXIT_CELEBRATE_MIN reuses the frame
+    // panel's own celebrate cutoff rather than inventing a new number.
+    function fixitRepOutcome(scorePercent: unknown) {
+      const pct = Number(scorePercent);
+      return Number.isFinite(pct) && pct >= FIXIT_CELEBRATE_MIN ? 'celebrate' : 'encourage';
+    }
+
+    // The 3-rep hard cap is the Azure cost fence: it counts SUBMISSIONS
+    // total across the whole round, not per word, so it always increments
+    // regardless of outcome (including a client-side/network failure --
+    // conservative on purpose, since undercounting on failure would let a
+    // flaky connection loop past the fence). Once the cap is hit the round
+    // always finishes, even mid-celebrate or with words left unreached --
+    // per the mock's screen 4 note ("capped at <=3 total, not per word").
+    function fixitAfterRep(fixitState: Maybe<Partial<FixitState>>, outcome: string) {
+      const repsUsed = (fixitState?.repsUsed || 0) + 1;
+      const wordsLeft = (fixitState?.wordIndex ?? 0) < ((fixitState?.words?.length || 0) - 1);
+      if (repsUsed >= FIXIT_REP_CAP) return { action: 'finish', repsUsed };
+      if (outcome === 'celebrate') return { action: wordsLeft ? 'next-word' : 'finish', repsUsed };
+      return { action: 'retry-word', repsUsed };
+    }
+
+    // The one-word re-record request: the EXISTING /api/read2lead-speaking
+    // -check endpoint, read-mode single-word scoring (zero backend change).
+    function fixitReadCheckRequestFields(word: string) {
+      return { check_mode: 'read', expected_text: String(word || ''), practice_mode: '1' };
+    }
+
+    // Tap-to-hear (V1 word-level feedback, 2026-07-12; extended
+    // 2026-07-14 to the coach sandwich's model sentence): one delegated
+    // handler on the results container covers the read step's chips
+    // ("Luyện thêm:"/"Gần đúng:"), the frame "Từ cần luyện:" chips, the
+    // coach sandwich's focus-word chip, AND the model_sentence_en play
+    // button — every one of them is a `.minny-word` button. A
+    // data-sentence attribute (full model sentence) routes to the
+    // `{ text }` minny-voice payload; a plain data-word attribute routes to
+    // the single-word `{ word }` payload, same as before. Reuses
+    // playMinnyVoice (the page's existing fetch-then-play helper) rather
+    // than a new Audio pattern; an empty fallback text means a 403/error
+    // stays a silent no-op (never a broken button or a console error for a
+    // kid tapping a chip) — this also covers "Con nhắc tới:" (words_matched,
+    // tone 'good') chips, which are never in the flagged-words record, so
+    // those taps are expected to always 403 and silently no-op, by design.
+    (document.getElementById('speaking-result') as HTMLElement)?.addEventListener('click', async (event) => {
+      const chip = (event.target as Element).closest<HTMLElement>('.minny-word');
+      if (!chip || chip.classList.contains('is-loading')) return;
+      const sentence = chip.dataset.sentence || '';
+      const word = sentence ? '' : normalizePracticeWord(chip.dataset.word);
+      if (!sentence && !word) return;
+      chip.classList.add('is-loading');
+      try {
+        await playMinnyVoice(sentence ? { text: sentence } : { word }, '');
+      } finally {
+        chip.classList.remove('is-loading');
+      }
+    });
+
+    // ===================== V1.4 fix-it round — DOM wiring ====================
+    // Appended BELOW the existing #speaking-actions (Luyện lại / Bước tiếp
+    // theo) rather than replacing the result panel -- per the handoff
+    // README's own framing ("no screen blocks the next step flow"), those
+    // buttons stay exactly as they are the whole time; the fix-it card is
+    // purely additive, same pattern as the (not-yet-built) feedback sandwich
+    // rendering directly under the existing score/rubric/smile-chip stack.
+
+    function fixitReset() {
+      const el = (document.getElementById('fixit-round') as HTMLElement);
+      if (el) {
+        el.classList.add('hidden');
+        el.innerHTML = '';
+      }
+      if (state.fixit?.kidAudioUrl) URL.revokeObjectURL(state.fixit.kidAudioUrl);
+      state.fixit = null;
+    }
+
+    // Called after every scored result (read/open/frame). Populates the
+    // skippable invitation (mock screen 3) when there are practice words;
+    // otherwise leaves the panel hidden/empty, byte-identical to before this
+    // feature for a clean result.
+    function maybeShowFixitInvite(result: SpeakingResult) {
+      const el = (document.getElementById('fixit-round') as HTMLElement);
+      if (!el) return;
+      const words = fixitDeriveRepWords(result);
+      if (!words.length) {
+        fixitReset();
+        return;
+      }
+      state.fixit = { words, wordIndex: 0, repsUsed: 0, kidAudioUrl: null, recording: null };
+      renderFixitInvite(words);
+    }
+
+    function fixitWordChip(word: string) {
+      return `<span class="minny-word minny-word--close minny-word--focus">${escapeHtml(word)}</span>`;
+    }
+
+    function renderFixitInvite(words: string[]) {
+      const el = (document.getElementById('fixit-round') as HTMLElement);
+      if (!el) return;
+      el.innerHTML = `
+        <div class="minny-fixit-invite">
+          <div class="minny-fixit-invite__avatar" aria-hidden="true"><img src="/assets/minny/minny_idle.png" alt="" width="64" height="64" style="width:64px;height:64px;object-fit:contain"/></div>
+          <p class="minny-fixit-invite__title">Mình luyện lại ${words.length} từ này nhé!</p>
+          <div class="minny-fixit-invite__words">${words.map(fixitWordChip).join('')}</div>
+          <div class="minny-fixit-invite__actions">
+            <button type="button" class="spk-btn spk-btn--gold" id="fixit-start-btn" style="width:100%">Bắt đầu luyện 🎯</button>
+            <button type="button" class="minny-fixit-invite__skip" id="fixit-skip-btn">Bỏ qua, làm sau</button>
+          </div>
+        </div>
+      `;
+      el.classList.remove('hidden');
+      (document.getElementById('fixit-start-btn') as HTMLButtonElement)?.addEventListener('click', fixitStart);
+      // Skip is a real, always-available exit: closes the card, no closing
+      // celebrate screen, never blocks the existing Bước tiếp theo flow.
+      (document.getElementById('fixit-skip-btn') as HTMLButtonElement)?.addEventListener('click', fixitReset);
+    }
+
+    function fixitStart() {
+      if (!state.fixit) return;
+      renderFixitRep();
+    }
+
+    function renderFixitRep() {
+      const el = (document.getElementById('fixit-round') as HTMLElement);
+      const fx = state.fixit;
+      if (!el || !fx) return;
+      const word = fx.words[fx.wordIndex];
+      const hasKidAudio = Boolean(fx.kidAudioUrl);
+      el.innerHTML = `
+        <div class="minny-fixit-rep">
+          <p class="minny-fixit-rep__progress">Từ ${fx.wordIndex + 1} / ${fx.words.length}</p>
+          <p class="minny-fixit-rep__word">${escapeHtml(word)}</p>
+          <div class="minny-fixit-rep__compare">
+            <button type="button" class="minny-compare-btn minny-compare-btn--minny" id="fixit-hear-minny">🔊 Nghe Minny</button>
+            ${hasKidAudio ? '<button type="button" class="minny-compare-btn minny-compare-btn--kid" id="fixit-hear-kid">▶️ Nghe con nói</button>' : ''}
+          </div>
+          <button type="button" class="spk-rec-btn spk-rec-btn--sm" id="fixit-record-btn" aria-label="Nhấn để thu âm lại">
+            <span class="spk-rec-btn__icon" aria-hidden="true"></span>
+          </button>
+          <p class="minny-fixit-rep__rerecord-label" id="fixit-rerecord-label">Nhấn để thu âm lại</p>
+        </div>
+      `;
+      el.classList.remove('hidden');
+      // Hear Minny: reuses the shipped minny-voice word branch verbatim
+      // (same helper the read/frame chips already call).
+      (document.getElementById('fixit-hear-minny') as HTMLButtonElement)?.addEventListener('click', () => { playMinnyVoice({ word }, ''); });
+      // Hear yourself: plays back THIS rep's own last recording client-side --
+      // nothing uploaded, no button until a recording exists this rep (mock
+      // screen 4 note).
+      (document.getElementById('fixit-hear-kid') as HTMLButtonElement)?.addEventListener('click', () => {
+        if (!fx.kidAudioUrl) return;
+        stopPlayback();
+        const audio = new Audio(fx.kidAudioUrl);
+        state.activeAudio = audio;
+        audio.addEventListener('ended', () => { state.activeAudio = null; });
+        audio.play().catch(() => {});
+      });
+      (document.getElementById('fixit-record-btn') as HTMLButtonElement)?.addEventListener('click', fixitToggleRecord);
+    }
+
+    async function fixitToggleRecord() {
+      const fx = state.fixit;
+      if (!fx) return;
+      if (fx.recording) fixitStopRecording();
+      else await fixitStartRecording();
+    }
+
+    // Mirrors startRecording()'s R2LRecorder sequence (getStream -> wav
+    // engine -> startMonitor) but standalone from the main homework-step
+    // recorder/state.recording session -- a fix-it rep is not a homework
+    // step, so it must not touch currentStep()/finalizeHomeworkStep/
+    // logPractice bookkeeping. Short fixed cap (FIXIT_MAX_SECONDS) instead
+    // of the ring countdown UI -- a single word never needs 30s.
+    async function fixitStartRecording() {
+      const fx = state.fixit;
+      if (!fx || fx.recording) return;
+      const btn = (document.getElementById('fixit-record-btn') as HTMLButtonElement);
+      const session: FixitRecording = { stream: null, recorder: null, monitor: null, timerId: null };
+      fx.recording = session;
+      btn?.classList.add('is-recording');
+      try {
+        const stream = window.R2LRecorder?.getStream
+          ? await window.R2LRecorder.getStream()
+          : await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
+        if (fx.recording !== session) {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        session.stream = stream;
+        const recorder = window.R2LRecorder?.createRecorder
+          ? window.R2LRecorder.createRecorder(stream, { engine: 'wav' })
+          : null;
+        if (!recorder) {
+          fx.recording = null;
+          btn?.classList.remove('is-recording');
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        session.recorder = recorder;
+        session.monitor = window.R2LRecorder?.startMonitor
+          ? await window.R2LRecorder.startMonitor(stream, {})
+          : { available: false, peak: () => -1, voiced: () => true, stop: () => {} };
+        if (fx.recording !== session) {
+          safeStopMonitor(session.monitor);
+          try { recorder.stop(); } catch { /* never started */ }
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        recorder.start();
+        session.timerId = window.setTimeout(() => fixitStopRecording(), FIXIT_MAX_SECONDS * 1000);
+      } catch {
+        fx.recording = null;
+        btn?.classList.remove('is-recording');
+      }
+    }
+
+    async function fixitStopRecording() {
+      const fx = state.fixit;
+      const session = fx?.recording;
+      if (!fx || !session) return;
+      fx.recording = null;
+      if (session.timerId) window.clearTimeout(session.timerId);
+      const btn = (document.getElementById('fixit-record-btn') as HTMLButtonElement);
+      btn?.classList.remove('is-recording');
+      if (btn) btn.disabled = true;
+      let blob = null;
+      try { blob = await session.recorder?.stop(); } catch { blob = null; }
+      safeStopMonitor(session.monitor);
+      session.stream?.getTracks().forEach((t) => t.stop());
+      if (!blob || blob.size === 0) {
+        if (btn) btn.disabled = false;
+        return;
+      }
+      await fixitSubmit(blob);
+      const btnAgain = (document.getElementById('fixit-record-btn') as HTMLButtonElement);
+      if (btnAgain) btnAgain.disabled = false;
+    }
+
+    // The one-word re-record + fresh score: the EXISTING
+    // /api/read2lead-speaking-check endpoint, read-mode single-word scoring
+    // (practice_mode '1', WAV engine) -- zero backend change, the same
+    // metered path every other read step already uses. A network/parse
+    // failure is treated as 'encourage' (never a scary error state, per the
+    // product's silent-degrade convention) and still consumes a rep, since
+    // the cap is a cost fence and must not be bypassable by retrying through
+    // failures.
+    async function fixitSubmit(blob: Blob) {
+      const fx = state.fixit;
+      if (!fx) return;
+      const word = fx.words[fx.wordIndex];
+      if (fx.kidAudioUrl) URL.revokeObjectURL(fx.kidAudioUrl);
+      fx.kidAudioUrl = URL.createObjectURL(blob);
+      const fields = fixitReadCheckRequestFields(word);
+      const formData = new FormData();
+      formData.append('access_code', state.accessCode);
+      formData.append('pack_id', state.packId || 'practice');
+      formData.append('expected_text', fields.expected_text);
+      formData.append('check_mode', fields.check_mode);
+      formData.append('practice_mode', fields.practice_mode);
+      formData.append('max_seconds', String(FIXIT_MAX_SECONDS));
+      formData.append('audio', blob, audioUploadFilename(blob));
+
+      let data = null;
+      try {
+        const res = await fetch('/api/read2lead-speaking-check', { method: 'POST', body: formData });
+        data = await res.json();
+      } catch {
+        data = null;
+      }
+
+      const outcome = data?.ok ? fixitRepOutcome(data.score_percent) : 'encourage';
+      // feedback_vi is the server's existing warm copy (feedbackVi()/
+      // feedbackOpenVi() — never negative even at 0%), reused verbatim
+      // rather than inventing new per-word copy the mock doesn't specify.
+      const feedback = data?.ok && data.feedback_vi
+        ? data.feedback_vi
+        : 'Không sao, mình thử lại nhé!';
+      const decision = fixitAfterRep(fx, outcome);
+      fx.repsUsed = decision.repsUsed;
+
+      setMinnyMood(outcome === 'celebrate' ? 'celebrate' : 'encourage');
+      hwSetMood(outcome === 'celebrate' ? 'celebrate' : 'encourage');
+      const label = (document.getElementById('fixit-rerecord-label') as HTMLElement);
+      if (label) label.textContent = feedback;
+
+      window.setTimeout(() => {
+        if (decision.action === 'finish') {
+          renderFixitCelebrate();
+        } else if (decision.action === 'next-word') {
+          fx.wordIndex += 1;
+          if (fx.kidAudioUrl) { URL.revokeObjectURL(fx.kidAudioUrl); fx.kidAudioUrl = null; }
+          renderFixitRep();
+        } else {
+          renderFixitRep(); // retry-word: same word, kid's own recording now available
+        }
+      }, 1400);
+    }
+
+    function renderFixitCelebrate() {
+      const el = (document.getElementById('fixit-round') as HTMLElement);
+      const fx = state.fixit;
+      if (!el) return;
+      if (fx?.kidAudioUrl) URL.revokeObjectURL(fx.kidAudioUrl);
+      const count = fx?.words?.length || 0;
+      el.innerHTML = `
+        <div class="minny-fixit-celebrate">
+          <div class="minny-fixit-celebrate__avatar" aria-hidden="true"><img src="/assets/minny/minny_celebrate.png" alt="" width="64" height="64" style="width:64px;height:64px;object-fit:contain"/></div>
+          <p class="minny-fixit-celebrate__title">Tuyệt vời! Con đã luyện xong ${count} từ rồi 🎉</p>
+          <p class="minny-fixit-celebrate__sub">Thầy Phương sẽ thấy con tiến bộ nhiều lắm.</p>
+        </div>
+        <div class="spk-actions" style="margin-top:14px">
+          <button type="button" class="spk-btn spk-btn--ghost" id="fixit-home-btn">Về trang cá nhân</button>
+          <button type="button" class="spk-btn spk-btn--green" id="fixit-done-btn">Xong 🎯</button>
+        </div>
+      `;
+      el.classList.remove('hidden');
+      (document.getElementById('fixit-home-btn') as HTMLButtonElement)?.addEventListener('click', () => {
+        window.location.href = '/ho-so';
+      });
+      (document.getElementById('fixit-done-btn') as HTMLButtonElement)?.addEventListener('click', fixitReset);
+    }
+
+    async function logPractice(result: SpeakingResult, readyForClass = false) {
+      const step = currentStep();
+      if (!state.accessCode || !state.packId) return;
+      // Per-step log, never a diamond-paying completion on its own (backend
+      // only pays on prompt_id 'homework_summary'/'free_talk_summary' — see
+      // minny-practice-log.js). In homework mode this shares the SAME id as
+      // the session's eventual homework_summary POST (one id per homework
+      // completion, per Task 1); outside homework mode there's no shared
+      // per-session id to reuse, so a fresh one is sent per call (harmless —
+      // the backend never dedups a non-summary prompt_id against it).
+      const completionId = state.activeModeId === 'homework'
+        ? getOrCreateCompletionId(state, 'homeworkCompletionId')
+        : crypto.randomUUID();
+      try {
+        await fetch('/api/minny-practice-log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            pack_id: state.packId,
+            prompt_id: step?.id || '',
+            mode_id: state.activeModeId,
+            score_percent: result?.score_percent,
+            ready_for_class: readyForClass,
+            completion_id: completionId,
+          }),
+        });
+      } catch {
+        /* non-blocking */
+      }
+    }
+
+    function micReady() {
+      return !!((navigator.mediaDevices as Partial<MediaDevices> | undefined)?.getUserMedia && window.MediaRecorder);
+    }
+
+    function createRecorder(stream: MediaStream) {
+      const candidates = [
+        'audio/mp4',
+        'audio/aac',
+        'audio/webm;codecs=opus',
+        'audio/webm',
+        'audio/ogg;codecs=opus',
+      ];
+      for (const mimeType of candidates) {
+        try {
+          if (typeof MediaRecorder.isTypeSupported === 'function' && !MediaRecorder.isTypeSupported(mimeType)) {
+            continue;
+          }
+          const mediaRecorder = new MediaRecorder(stream, { mimeType });
+          return { mediaRecorder, mimeType: mediaRecorder.mimeType || mimeType };
+        } catch {
+          // try next Safari-friendly codec
+        }
+      }
+      const mediaRecorder = new MediaRecorder(stream);
+      return { mediaRecorder, mimeType: mediaRecorder.mimeType || 'audio/mp4' };
+    }
+
+    function audioUploadFilename(blob: Maybe<Blob>) {
+      const type = String(blob?.type || '').toLowerCase();
+      if (type.includes('mp4') || type.includes('m4a') || type.includes('aac')) return 'audio.mp4';
+      if (type.includes('ogg')) return 'audio.ogg';
+      if (type.includes('wav')) return 'audio.wav';
+      return 'audio.webm';
+    }
+
+    function stopMediaRecorder(mediaRecorder: MediaRecorder) {
+      if (!mediaRecorder || mediaRecorder.state !== 'recording') return;
+      try {
+        mediaRecorder.requestData();
+      } catch {
+        /* optional on some browsers */
+      }
+      mediaRecorder.stop();
+    }
+
+    function cleanupRecording() {
+      if (state.timerId) {
+        clearInterval(state.timerId);
+        state.timerId = null;
+      }
+      safeStopMonitor(state.recording?.monitor);
+      if (state.recording?.stream) {
+        state.recording.stream.getTracks().forEach((t) => t.stop());
+      }
+      state.recording = null;
+      state.status = 'idle';
+      state.secondsLeft = DEFAULT_MAX_SECONDS;
+    }
+
+    // The record button is icon-only per the design — state is communicated
+    // through the ring, timer, caption, waveform and status line, never by
+    // rewriting the button's contents.
+    function updateRecordUi() {
+      const btn = (document.getElementById('speaking-record') as HTMLButtonElement);
+      const statusEl = (document.getElementById('speaking-status') as HTMLElement);
+      const timerEl = (document.getElementById('speaking-timer') as HTMLElement);
+      const ringEl = (document.getElementById('record-ring') as HTMLElement);
+      const captionEl = (document.getElementById('frame-listening-caption') as HTMLElement);
+      const waveEl = (document.getElementById('hw-waveform') as HTMLElement);
+      const step = currentStep();
+      if (!btn) return;
+
+      const maxSeconds = stepMaxSeconds(step);
+      const isRecording = state.status === 'recording';
+      const elapsed = isRecording ? Math.max(0, maxSeconds - state.secondsLeft) : 0;
+
+      btn.classList.toggle('is-recording', isRecording);
+      waveEl?.classList.toggle('is-recording', isRecording);
+      captionEl?.classList.toggle('hidden', !isRecording);
+      if (ringEl) ringEl.style.setProperty('--ring-pct', String(isRecording ? Math.min(1, elapsed / maxSeconds) : 0));
+      if (timerEl) timerEl.textContent = fmtClock(elapsed);
+      btn.setAttribute('aria-label', isRecording ? 'Dừng ghi âm' : 'Nhấn để nói');
+
+      if (state.status === 'warming') {
+        btn.disabled = true;
+        statusEl.textContent = state.warmupMessage || 'Micro đã bật — chờ 3 giây rồi mới nói nhé…';
+        setMinnyMood('listen');
+        return;
+      }
+
+      if (isRecording) {
+        btn.disabled = false;
+        statusEl.textContent = 'Minny đang nghe con...';
+        setMinnyMood('listen');
+        return;
+      }
+
+      if (state.status === 'uploading') {
+        btn.disabled = true;
+        statusEl.textContent = 'Minny đang nhận xét...';
+        setMinnyMood('listen');
+        return;
+      }
+
+      // build task_type: the mic stays disarmed until a chip is tapped in
+      // every column (buildMaybeReveal flips buildArmed) -- "tapping must
+      // never skip the speaking" per the contract, enforced here rather than
+      // by hiding the button so the status line can tell the kid what to do.
+      const buildNotArmed = step?.task_type === 'build' && !state.buildArmed;
+      const micBlocked = state.modePicked && !state.micGateReady;
+      btn.disabled = !micReady() || micBlocked || buildNotArmed;
+      if (buildNotArmed) {
+        statusEl.textContent = 'Con chọn một ô ở mỗi cột trước nhé!';
+      } else if (micBlocked) {
+        statusEl.textContent = 'Con kiểm tra micro ở màn hình trước nhé.';
+      } else {
+        statusEl.textContent = micReady() ? 'Bấm nút đỏ rồi nói to, rõ nhé.' : 'Micro chưa sẵn sàng.';
+      }
+      if (state.modePicked) setMinnyMood('idle');
+    }
+
+    function mountSpeakingMicCheck() {
+      const panels = shell ? Array.from(shell.querySelectorAll<HTMLElement>('[data-r2l-mic-check]')) : [];
+      if (!panels.length) return;
+      if (!window.R2LMicCheck?.mount) {
+        window.setTimeout(mountSpeakingMicCheck, 50);
+        return;
+      }
+      // Two instances: the mode-select gate panel and the free-talk screen's
+      // always-available mic test. mount() self-guards against double-mounting.
+      panels.forEach((panel) => {
+        window.R2LMicCheck!.mount!(panel, {
+          blockUntilPass: true,
+          onPass: () => {
+            state.micGateReady = true;
+            // A passed test may have pinned a different device — drop an idle
+            // conversation stream so the next free-talk turn picks it up.
+            if (ft.micStream && !ft.recording) ftReleaseMic();
+            updateRecordUi();
+            ftUpdateRecordUi();
+          },
+          onFail: () => {
+            state.micGateReady = false;
+            updateRecordUi();
+          },
+        });
+      });
+    }
+
+    document.addEventListener('r2l-mic-gate', (event) => {
+      state.micGateReady = Boolean((event as CustomEvent<{ ready?: boolean }>).detail?.ready);
+      updateRecordUi();
+    });
+
+    async function submitAudio(blob: Blob, prompt: Step, telemetry: Telemetry | null = null) {
+      state.status = 'uploading';
+      updateRecordUi();
+      const formData = new FormData();
+      formData.append('access_code', state.accessCode);
+      formData.append('pack_id', state.packId || 'practice');
+      const isFrame = prompt.check_mode === 'frame';
+      formData.append(
+        'expected_text',
+        prompt.expected_text
+          || prompt.story_context
+          || prompt.question_en
+          || prompt.prompt_en
+          // Frame steps carry `stems` instead — fall back to stem text so the
+          // backend's required expected_text is never empty.
+          || (isFrame && Array.isArray(prompt.stems) ? prompt.stems.map((s) => s.text_en || '').join(' ') : '')
+          || '',
+      );
+      formData.append('check_mode', prompt.check_mode || 'open');
+      formData.append('practice_mode', '1');
+      formData.append('max_seconds', String(stepMaxSeconds(prompt)));
+      if (isFrame) {
+        formData.append('stems', JSON.stringify(prompt.stems || []));
+        formData.append('duration_seconds', String(telemetry?.duration_seconds ?? 0));
+      }
+      formData.append('audio', blob, audioUploadFilename(blob));
+      if (telemetry && window.R2LRecorder?.appendTelemetry) {
+        window.R2LRecorder.appendTelemetry(formData, telemetry);
+      }
+
+      try {
+        const res = await fetch('/api/read2lead-speaking-check', { method: 'POST', body: formData });
+        const data = await res.json();
+        // Analyser heard speech but ASR heard nothing → broken platform
+        // encoder; record raw WAV on this machine from now on.
+        if (
+          data && !data.ok && data.error === 'transcription_failed'
+          && telemetry && telemetry.voiced === true && telemetry.engine === 'mr'
+        ) {
+          window.R2LRecorder?.useWavEngine?.();
+        }
+        state.lastResult = data;
+        state.status = 'done';
+        renderResult(data);
+      } catch {
+        renderResult({ ok: false, message: 'Mạng không ổn định. Con thử lại nhé!' });
+      } finally {
+        state.status = 'idle';
+        updateRecordUi();
+      }
+    }
+
+    async function startRecording() {
+      const prompt = currentStep();
+      if (!prompt) return;
+      stopPlayback();
+      if (!micReady()) {
+        renderResult({ ok: false, message: 'Micro chưa sẵn sàng. Con thử trình duyệt khác hoặc cho phép micro nhé.' });
+        return;
+      }
+      if (!state.micGateReady && !window.R2LMicCheck?.sessionPassed?.()) {
+        renderResult({ ok: false, message: 'Con bấm Kiểm tra micro ở màn hình chọn cách luyện trước nhé.' });
+        return;
+      }
+
+      if (state.recording) return;
+      // Same identity-session pattern as ftStartRecording: installed before the
+      // first await, re-checked after every await, mutated (never reassigned).
+      const session: Recording = { stream: null, mediaRecorder: null };
+      state.recording = session;
+      state.status = 'warming';
+      state.warmupMessage = 'Đang bật micro…';
+      updateRecordUi();
+      try {
+        const stream = window.R2LRecorder?.getStream
+          ? await window.R2LRecorder.getStream()
+          : window.R2LMicCheck?.getMicStream
+            ? await window.R2LMicCheck.getMicStream()
+            : await navigator.mediaDevices.getUserMedia({
+                audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+              });
+        if (state.recording !== session) {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        session.stream = stream;
+        state.warmupMessage = 'Micro đã bật — chờ 3 giây rồi mới nói nhé…';
+        updateRecordUi();
+
+        // NOTE: no primeAudioPipeline here — creating/closing an AudioContext
+        // on the live stream right before recording leaves the track feeding
+        // silence on Windows/Realtek (root cause fixed in lesson.astro; the
+        // 3s countdown warms the pipeline naturally).
+        if (window.R2LMicCheck?.runMicWarmupCountdown) {
+          await window.R2LMicCheck.runMicWarmupCountdown({
+            onMessage: (msg) => {
+              if (state.recording !== session) return;
+              state.warmupMessage = msg;
+              updateRecordUi();
+            },
+          });
+        } else {
+          await new Promise((resolve) => window.setTimeout(resolve, 3000));
+        }
+        if (state.recording !== session) {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+
+        // WAV engine is load-bearing for the Ear (per-word Azure Pronunciation
+        // Assessment): iPhone Safari's default MediaRecorder output is
+        // audio/mp4, which the Azure REST endpoint can't score, so any
+        // homework step recorded with the default engine silently loses
+        // per-word feedback on iPhone. ALL homework steps now force WAV
+        // regardless of step kind/check_mode (2026-07-14 fix — was
+        // hw_photo_talk-only, which left read/open/build/frame homework
+        // steps locked out). Free Talking and any other non-homework mode
+        // keep the original, narrower check_mode-based triggers untouched.
+        // Extracted as recorderEngineOptions() so the decision is testable
+        // without a DOM/media pipeline (see tests/speakup-homework-types-ui.test.mjs).
+        const recStep = currentStep();
+        const recorderOptions = recorderEngineOptions(state.activeModeId, recStep);
+        const recorder = window.R2LRecorder?.createRecorder
+          ? window.R2LRecorder.createRecorder(stream, recorderOptions)
+          : (() => {
+              const { mediaRecorder, mimeType } = createRecorder(stream);
+              const chunks: Blob[] = [];
+              let resolveStop: ((blob: Blob) => void) | null = null;
+              const stopped = new Promise<Blob>((resolve) => { resolveStop = resolve; });
+              mediaRecorder.addEventListener('dataavailable', (event) => {
+                if (event.data?.size > 0) chunks.push(event.data);
+              });
+              mediaRecorder.addEventListener('stop', () => {
+                resolveStop!(new Blob(chunks, { type: mediaRecorder.mimeType || mimeType || 'audio/mp4' }));
+              });
+              return {
+                engine: 'mr',
+                mimeType,
+                start() { mediaRecorder.start(250); },
+                stop() { stopMediaRecorder(mediaRecorder); return stopped; },
+              };
+            })();
+        const monitor = window.R2LRecorder?.startMonitor
+          ? await window.R2LRecorder.startMonitor(stream, {
+              onSilenceHint: () => {
+                const statusEl = (document.getElementById('speaking-status') as HTMLElement);
+                if (statusEl && state.status === 'recording') {
+                  statusEl.textContent = 'Minny chưa thấy tiếng — con nói TO hơn nhé!';
+                }
+              },
+            })
+          : { available: false, peak: () => -1, voiced: () => true, stop: () => {} };
+
+        if (state.recording !== session) {
+          safeStopMonitor(monitor);
+          try {
+            recorder.stop();
+          } catch {
+            /* recorder never started */
+          }
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+
+        let finished = false;
+        const finishRecording = async () => {
+          if (finished) return;
+          finished = true;
+          if (state.timerId) {
+            clearInterval(state.timerId);
+            state.timerId = null;
+          }
+          // Release the session so the record button works again after this turn.
+          if (state.recording === session) state.recording = null;
+          // state.secondsLeft still holds the countdown value at stop time,
+          // so target minus remaining gives actual elapsed seconds.
+          const elapsedSeconds = Math.max(0, stepMaxSeconds(prompt) - state.secondsLeft);
+          let blob = null;
+          try {
+            blob = await recorder.stop();
+          } catch {
+            blob = null;
+          }
+          safeStopMonitor(monitor);
+          stream.getTracks().forEach((t) => t.stop());
+          const voiced = window.R2LRecorder?.recordingLooksVoiced
+            ? window.R2LRecorder.recordingLooksVoiced(monitor, blob?.size || 0)
+            : (monitor.available ? monitor.voiced() : true);
+          if (blob && blob.size > 0 && !voiced) {
+            // Silent capture caught on-device: relax constraints next try
+            // instead of sending silence to the server.
+            window.R2LRecorder?.bumpProfile?.();
+            state.status = 'idle';
+            renderResult({ ok: false, message: 'Minny không thấy tiếng vào micro. Con thử lại — nói TO hơn, hoặc kiểm tra micro nhé.' });
+            updateRecordUi();
+            return;
+          }
+          if (blob && blob.size > 0) {
+            submitAudio(blob, prompt, {
+              peak: monitor.available ? monitor.peak() : -1,
+              voiced,
+              engine: recorder.engine || 'mr',
+              mimeType: blob.type || recorder.mimeType || '',
+              duration_seconds: elapsedSeconds,
+            });
+          } else {
+            state.status = 'idle';
+            renderResult({ ok: false, message: 'Không thu được tiếng. Con thử nói to hơn nhé.' });
+            updateRecordUi();
+          }
+        };
+
+        session.recorderCtl = recorder;
+        session.monitor = monitor;
+        session.finishRecording = finishRecording;
+        state.status = 'recording';
+        state.secondsLeft = stepMaxSeconds(prompt);
+        recorder.start();
+        updateRecordUi();
+
+        state.timerId = window.setInterval(() => {
+          state.secondsLeft -= 1;
+          updateRecordUi();
+          if (state.secondsLeft <= 0) {
+            finishRecording();
+          }
+        }, 1000);
+      } catch (error) {
+        if (state.recording !== session) return;
+        const message = window.R2LMicCheck?.helpMessage?.(error)
+          || 'Không mở được micro. Con nhờ bố mẹ cho phép micro nhé.';
+        renderResult({ ok: false, message });
+        window.R2LMicCheck?.focusMicHelpInShell?.(shell);
+        cleanupRecording();
+        updateRecordUi();
+      }
+    }
+
+    function stopRecording() {
+      if (!state.recording) return;
+      if (state.status === 'recording' && state.recording.finishRecording) {
+        state.recording.finishRecording();
+        return;
+      }
+      // Cancel while the mic is still opening / warming up.
+      cleanupRecording();
+      updateRecordUi();
+    }
+
+    async function loadSession() {
+      clearError();
+      const code = codeInput.value.trim().toUpperCase();
+      if (!code) {
+        showError('Vui lòng nhập mã học sinh.');
+        return;
+      }
+
+      loadBtn.disabled = true;
+      loadBtn.textContent = 'Đang tải...';
+
+      try {
+        const res = await fetch(`/api/minny-speaking-context?code=${encodeURIComponent(code)}`);
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          showError(data.message || 'Không tìm thấy mã học sinh.');
+          shell.classList.add('hidden');
+          return;
+        }
+
+        state.accessCode = code;
+        // V1.2 packet 2: the ONE legitimate client-side level read in this
+        // page -- the topic picker must gate BEFORE any turn response
+        // exists to key off (unlike chips/hint, which key on the response
+        // shape). See ftIsPickerLevel/ftIsGameLevel.
+        state.level = data.level || 'L1';
+        state.packId = data.pack_id || 'practice';
+        state.studentName = data.student_name || '';
+        state.modes = Array.isArray(data.modes) ? data.modes : [];
+        state.activeModeId = state.modes[0]?.id || '';
+        state.stepIndex = 0;
+        state.modePicked = false;
+
+        (document.getElementById('minny-greeting') as HTMLElement).textContent = data.greeting_vi || 'Chào con! Minny sẵn sàng luyện nói.';
+        (document.getElementById('practice-stats') as HTMLElement).textContent =
+          data.practice_count_this_week > 0
+            ? `Tuần này con luyện ${data.practice_count_this_week} lần · `
+            : 'Buổi luyện đầu tuần · ';
+        (document.getElementById('profile-link') as HTMLAnchorElement).href = data.profile_link || `/ho-so?code=${encodeURIComponent(code)}`;
+
+        if (!data.has_story && !data.pack_id) {
+          (document.getElementById('minny-greeting') as HTMLElement).textContent = data.message_vi || data.greeting_vi;
+        }
+
+        // App bar: student identity (7a board right side)
+        const studentWrap = (document.getElementById('appbar-student') as HTMLElement);
+        const nameEl = (document.getElementById('appbar-student-name') as HTMLElement);
+        const avatarEl = (document.getElementById('appbar-student-avatar') as HTMLElement);
+        if (state.studentName && studentWrap && nameEl && avatarEl) {
+          nameEl.textContent = state.studentName;
+          avatarEl.textContent = state.studentName.trim().charAt(0).toUpperCase() || 'M';
+          studentWrap.classList.remove('hidden');
+        }
+
+        // Diamond HUD (Task 2): seed from minny-speaking-context's
+        // diamond_balance; bumped later by celebrateDiamonds() on a real award.
+        const diamondsWrap = (document.getElementById('appbar-diamonds') as HTMLElement);
+        if (diamondsWrap) {
+          updateDiamondPill(data.diamond_balance);
+          diamondsWrap.classList.remove('hidden');
+        }
+
+        codeCard.classList.add('hidden');
+        shell.classList.remove('hidden');
+        mountSpeakingMicCheck();
+        showModePicker();
+        renderModeCards();
+        setMinnyMood('idle');
+
+        const url = new URL(window.location.href);
+        url.searchParams.set('code', code);
+        window.history.replaceState({}, '', url);
+      } catch {
+        showError('Mạng không ổn định. Vui lòng thử lại.');
+      } finally {
+        loadBtn.disabled = false;
+        loadBtn.textContent = 'Bắt đầu';
+      }
+    }
+
+    (document.getElementById('speaking-listen') as HTMLButtonElement)?.addEventListener('click', () => {
+      playMinnyAudio(currentStep());
+    });
+
+    (document.getElementById('speaking-record') as HTMLButtonElement)?.addEventListener('click', () => {
+      if (state.recording) stopRecording();
+      else startRecording();
+    });
+
+    // 7a interaction: Space toggles record on desktop (never while typing).
+    document.addEventListener('keydown', (event) => {
+      if (event.code !== 'Space') return;
+      if (practiceScreen?.classList.contains('hidden')) return;
+      const target = event.target as Element | null;
+      if (target && ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(target.tagName)) return;
+      event.preventDefault();
+      if (state.recording) stopRecording();
+      else if (state.status === 'idle') startRecording();
+    });
+
+    (document.getElementById('speaking-retry') as HTMLButtonElement)?.addEventListener('click', () => {
+      (document.getElementById('speaking-result') as HTMLElement).classList.add('hidden');
+      (document.getElementById('speaking-actions') as HTMLElement).classList.add('hidden');
+      renderStep();
+      updateRecordUi();
+    });
+
+    (document.getElementById('speaking-next') as HTMLButtonElement)?.addEventListener('click', () => {
+      if (state.activeModeId === 'homework' && state.homeworkComplete) {
+        state.homeworkComplete = false;
+        state.homeworkResults = [];
+        state.homeworkCompletionId = null;
+        showModePicker();
+        return;
+      }
+      const mode = activeMode();
+      if (mode && state.stepIndex < mode.steps.length - 1) {
+        state.stepIndex += 1;
+        renderStep();
+        updateRecordUi();
+      }
+    });
+
+    (document.getElementById('back-to-modes') as HTMLButtonElement)?.addEventListener('click', () => {
+      stopPlayback();
+      cleanupRecording();
+      (document.getElementById('speaking-result') as HTMLElement).classList.add('hidden');
+      (document.getElementById('speaking-actions') as HTMLElement).classList.add('hidden');
+      fixitReset();
+      showModePicker();
+    });
+
+    // ── Free Talking (7b) ────────────────────────────────────────────────
+    const ft = {
+      sessionId: null as string | null,
+      turnsLeft: 12,
+      secondsLeft: 300,
+      countdownId: null as number | null,
+      recTimerId: null as number | null,
+      recSecondsLeft: DEFAULT_MAX_SECONDS,
+      recording: null as Recording | null,
+      ended: false,
+      awaitingReply: false,
+      sentenceCount: 0,
+      turnsUsed: 0,
+      // Stable per-session completion id (anti-farming, minny-practice-log.js
+      // idempotency guard): ONE id for this free-talk session's completion,
+      // used on the free_talk_summary POST; a retry of that exact same
+      // summary reuses it. Reset to null in ftReset() so the NEXT free-talk
+      // session gets a fresh id — see getOrCreateCompletionId().
+      completionId: null as string | null,
+      flaggedSession: false,
+      lastKidChip: null as HTMLElement | null,
+      lastKidChipSeconds: null as number | null,
+      // V1.2 packet 1: how many chip-bearing (non-repair) turns this session
+      // has shown, so the starter-hint can fade after the first couple of
+      // turns per the mock (screen 1 vs screen 3) -- see ftShowStarterHint.
+      chipTurnsSeen: 0,
+      // Conversation-scoped mic (Zoom pattern): stream + analyser stay open
+      // across turns so a tap starts recording instantly (no 3s warmup).
+      micStream: null as MediaStream | null,
+      micMonitor: null as Monitor | null,
+      micWatch: null as (() => void) | null,
+      micAcquire: null as Promise<MediaStream> | null,
+      micStreamDead: false,
+      micGen: 0,
+      // Hands-free turn-taking (Stage A): silence-pause auto-send + auto
+      // re-arm after Minny speaks. First turn stays a manual tap (the monitor
+      // AudioContext must be created inside a user gesture on iOS).
+      vadTimerId: null as number | null,
+      autoArmTimerId: null as number | null,
+      // Thinking filler: short cached Minny lines played while the reply is
+      // generated (prefetched once per session, alternated per turn).
+      fillerClips: [] as { audio_b64: string; content_type?: string }[],
+      fillerTimerId: null as number | null,
+      // Per-turn latency (stt_ms / brain_ms / total_ms); p50 goes into the
+      // session summary — the spec's 2.5s target was never measured live.
+      turnTimings: [] as TalkTiming[],
+      // Two-phase audio: token guards the background poll for a reply's voice
+      // so a stale poll can never play audio over a newer turn or session.
+      audioPollToken: 0,
+      // V1.2 packet 2 (Wave D2): topic-pick + hint + game framing state.
+      // pickerTopic/pickerGame hold the in-progress tile/card selection
+      // (before "Bắt đầu nói chuyện 🚀" is tapped); game/storyLines/
+      // currentHint/hintRevealed hold the LIVE session's state once started.
+      pickerTopic: null as string | null,
+      pickerGame: null as string | null,
+      game: null as string | null,
+      storyLines: [] as string[],
+      // Micro-round (Elon, 2026-07-12): server-picked debate position,
+      // echoed on the start response -- set once at start, never per-turn.
+      debateTopic: null as string | null,
+      currentHint: null as string | null,
+      hintRevealed: false,
+    };
+
+    // Hands-free tuning. A pause this long after real speech sends the turn;
+    // escape hatch: localStorage r2l_ft_handsfree=0 restores pure tap-to-send.
+    // Trimmed 1500->900ms (2026-07-10): the trailing-silence window sits entirely
+    // in the child's wait, so it was ~0.6s of dead time every turn. 900ms still
+    // leaves room for a kid's mid-thought pause without clipping them; tune up if
+    // real sessions show turns sending before the child finishes.
+    const FT_VAD_PAUSE_MS = 900;
+    const FT_VAD_MIN_VOICED_MS = 400;
+    const FT_VAD_MAX_WAIT_MS = 12000; // auto-armed mic heard nothing → settle to idle
+    const FT_FILLER_DELAY_MS = 1200; // thinking gap before the filler line plays
+    // V1.2 packet 2 (Wave D2 §B2): proactive hint-offer stall threshold --
+    // reuses the SAME VAD interval below (no second timer, per the packet)
+    // rather than a fresh setInterval. Shorter than FT_VAD_MAX_WAIT_MS so the
+    // nudge appears while the mic is still very much listening, well before
+    // that hands-free give-up point.
+    const FT_HINT_STALL_MS = 5000;
+
+    function ftHandsFreeOn() {
+      try {
+        return localStorage.getItem('r2l_ft_handsfree') !== '0';
+      } catch {
+        return true;
+      }
+    }
+
+    // ============================================================
+    // V1.2 packet 1 (Wave D Set 1 mock) -- L1-L2 choice-chip / repair-choice
+    // UI. Pure decision helpers live here (no DOM access) so they are
+    // directly unit-testable via source extraction in
+    // tests/speakup-chips-ui.test.mjs; the DOM-writing functions further
+    // below (ftApplyScaffold etc.) stay thin wrappers around these plans.
+    // ============================================================
+
+    // Single source of truth for "does this turn show chip UI at all" --
+    // keyed ONLY on the server sending `options` (gateReplyForLevel already
+    // restricts that field to L1-L2), never a client-side level lookup. The
+    // client has no level value at all, by design.
+    function ftHasChips(data: Maybe<TalkResponse>): data is TalkResponse & { options: string[] } {
+      return Boolean(data) && Array.isArray(data!.options) && data!.options.length > 0;
+    }
+
+    // The repair ladder's one exception to "tap never answers" (V1-D2 /
+    // Wave D Set 1 screen 5): step 'choices' renders the oversized two-choice
+    // buttons, and tapping one resolves the turn by sending its text as the
+    // transcript. Keyed on the server's explicit `repair_step` field
+    // (added 2026-07-11 for exactly this) rather than options-presence --
+    // step 'rephrase' ALSO carries options (screen 4: normal chips, tap
+    // reveals frame, never submits), so options-presence alone can't tell
+    // the two apart.
+    function ftIsRepairChoiceState(data: Maybe<TalkResponse>): data is TalkResponse & { options: string[] } {
+      return Boolean(data) && data!.repair_step === 'choices' && ftHasChips(data);
+    }
+
+    // Repair-tag labels (approved mock copy, verbatim) for the ladder steps
+    // that have one; 'move_on' and 'vn_nudge' have no mock state, so no tag.
+    const FT_REPAIR_TAGS: Record<string, string> = {
+      rephrase: 'Câu hỏi đơn giản hơn',
+      choices: 'Xác nhận lại',
+      model: 'Minny mẫu câu trả lời',
+    };
+    function ftRepairTag(repairStep: string | undefined) {
+      return FT_REPAIR_TAGS[repairStep as string] || null;
+    }
+
+    function ftNormalizeWord(word: unknown) {
+      return String(word || '').toLowerCase().replace(/[^a-z]/g, '');
+    }
+
+    // Builds the sentence-frame text to reveal after a chip tap. The turn
+    // response only gives us the short chip label (e.g. "Dogs!") plus the
+    // turn's `expected[]` fuzzy-match variants -- which, per the system
+    // prompt's own convention (_minny-convo.js), already includes a full
+    // spoken-sentence variant per option (e.g. "i like dogs"). This finds
+    // the longest expected[] entry that contains the tapped option's core
+    // word, so the frame shows a real sentence to say aloud rather than the
+    // bare word; falls back to the option text itself (always renders
+    // *something*) when no expected variant matches.
+    function ftBuildSentenceFrame(optionText: string, expected: Maybe<string[]>) {
+      const word = ftNormalizeWord(optionText);
+      const list = Array.isArray(expected) ? expected : [];
+      const wordRe = word ? new RegExp(`(^|[^a-z])${word}([^a-z]|$)`) : null;
+      const matches = wordRe ? list.filter((v) => wordRe.test(String(v || '').toLowerCase())) : [];
+      if (!matches.length) return { sentence: optionText, blank: optionText };
+      const longest = matches.reduce((a, b) => (String(b).length > String(a).length ? b : a));
+      const sentence = String(longest);
+      return { sentence: sentence.charAt(0).toUpperCase() + sentence.slice(1), blank: word };
+    }
+
+    // Sentence-starter hint (`minny-starter-hint`) fades with "in-range
+    // progress" per the mock (screen 1 shows it, screen 3 -- later in the
+    // same L1-L2 range -- does not). There is no per-kid progress signal on
+    // the client (or in the V1.1 turn response) to key this off, so this is
+    // a session-local proxy: show it only for the session's first
+    // FT_STARTER_HINT_MAX_TURNS chip turns. TODO(elon): replace with a real
+    // signal (e.g. consecutive answerable turns) if/when one exists.
+    const FT_STARTER_HINT_MAX_TURNS = 2;
+    function ftShowStarterHint(chipTurnsSeen: number) {
+      return chipTurnsSeen <= FT_STARTER_HINT_MAX_TURNS;
+    }
+
+    // Pure "what should this turn's scaffold look like" plan -- no DOM.
+    // Branches on `repair_step`, not raw options-presence (Elon, 2026-07-11
+    // round 2): 'rephrase' renders the SAME normal chip UI as any other
+    // options turn (screen 4); 'choices' renders the oversized tap-resolves
+    // buttons (screen 5); every other repair step ('model', 'move_on',
+    // 'vn_nudge') is plain chrome regardless of whether it happens to carry
+    // options. The repair-tag label (if any) is independent of the mode.
+    function ftPlanScaffold(data: Maybe<TalkResponse>, chipTurnsSeen: number): ScaffoldPlan {
+      const tag = (data && data.repair === true) ? ftRepairTag(data.repair_step) : null;
+
+      if (ftIsRepairChoiceState(data)) {
+        return { mode: 'repair-choices', options: data.options.slice(0, 2), tag };
+      }
+
+      const isRephraseChips = Boolean(data) && data!.repair === true && data!.repair_step === 'rephrase' && ftHasChips(data);
+      const isNormalChips = ftHasChips(data) && data.repair !== true;
+      if (isRephraseChips || isNormalChips) {
+        return {
+          mode: 'chips',
+          options: data.options,
+          expected: Array.isArray(data.expected) ? data.expected : [],
+          // The rephrase step always shows the hint again (mock screen 4) --
+          // a kid being repaired needs more scaffolding, not less; a normal
+          // turn still follows the session-progress fade.
+          showHint: isRephraseChips || ftShowStarterHint(chipTurnsSeen),
+          tag,
+        };
+      }
+
+      return { mode: 'none', tag };
+    }
+
+    // ============================================================
+    // V1.2 packet 2 (Wave D2 mock) -- L3-L5 topic-pick session start, hint
+    // on-demand states, game framing. Pure decision helpers live here (no
+    // DOM access), unit-tested via source extraction in
+    // tests/speakup-games-ui.test.mjs, same convention as the packet 1
+    // block above.
+    // ============================================================
+
+    // The topic picker is the ONE place a client-side level value legitimately
+    // gates UI (unlike ftHasChips/hint below): it must decide what to show
+    // BEFORE any turn response exists to key off. Mirrors the server's L3-L5
+    // split (_minny-convo.js isBeginnerLevel), with L0/unknown defensively
+    // falling to "no picker" rather than guessing.
+    function ftIsPickerLevel(level: string) {
+      return level === 'L3' || level === 'L4' || level === 'L5';
+    }
+
+    function ftIsGameLevel(level: string) {
+      return level === 'L4' || level === 'L5';
+    }
+
+    // Single source of truth for "does this turn carry a hint to offer" --
+    // keyed ONLY on the server sending `hint` (gateReplyForLevel restricts
+    // that field to L3+), never a client-side level lookup -- same
+    // principle as ftHasChips above.
+    function ftHintAvailable(data: Maybe<TalkResponse>): data is TalkResponse & { hint: string } {
+      return Boolean(data) && typeof data!.hint === 'string' && data!.hint.length > 0;
+    }
+
+    // The server sends one un-typed string (either a topic word or a short
+    // nudge question) -- the mock's card swaps layout (word-row vs a plain
+    // question line) based on shape, so this is a presentation-only
+    // classification, not new content. A hint containing "?" or more than a
+    // few words reads as a question; anything else renders as a single word.
+    function ftHintType(hint: string) {
+      const text = String(hint || '').trim();
+      if (text.includes('?')) return 'question';
+      return text.split(/\s+/).filter(Boolean).length > 2 ? 'question' : 'word';
+    }
+
+    // Game framing chrome is keyed on client state (which game was picked at
+    // session start), never a new server field beyond what start already
+    // echoes. build_a_story (Minny's own reply_en lines, already tracked for
+    // the transcript) and debate (start's echoed `debate_topic`, Elon's
+    // micro-diff -- the server picks it, the client only displays it) are
+    // both wired in ftApplyGameFraming. C3 cards deferred -- needs
+    // structured WYR turn field (TODO backlog): the two would-you-rather
+    // option strings + VN glosses aren't in the turn response, and Elon
+    // ruled the change isn't worth it this round (flagged to Phương as a
+    // mock deviation) -- this function still reports its class (so "game
+    // framing class per selected game" is real, tested behavior) but
+    // ftApplyGameFraming never populates content for it.
+    function ftGameFramingClass(game: Maybe<string>) {
+      if (game === 'build_a_story') return 'minny-story-strip';
+      if (game === 'debate') return 'minny-debate-banner';
+      if (game === 'would_you_rather') return 'minny-wyr-cards';
+      return null;
+    }
+
+    function ftStopVad() {
+      if (ft.vadTimerId) {
+        clearInterval(ft.vadTimerId);
+        ft.vadTimerId = null;
+      }
+      ftHideListening();
+      // Every VAD-stop path (turn sent, cap reached, tab hidden, hands-free
+      // off) also returns a still-offered hint to plain idle (B1) -- a new
+      // recording attempt starts its own fresh stall clock.
+      ftHintOfferedSet(false);
+    }
+
+    function ftCancelAutoArm() {
+      if (ft.autoArmTimerId) {
+        clearTimeout(ft.autoArmTimerId);
+        ft.autoArmTimerId = null;
+      }
+    }
+
+    // Watches monitor.voicedMs() while recording: it only grows while the kid
+    // is audibly speaking, so a frozen value = silence. After enough real
+    // speech plus a natural pause, the turn sends itself — no second tap.
+    function ftStartVad(session: Recording, monitor: Monitor, finishRecording: () => void, autoArmed: boolean) {
+      ftStopVad();
+      if (!monitor?.available || typeof monitor.voicedMs !== 'function') return;
+      // "Minny đang nghe…" is shown for exactly the window VAD is actively
+      // watching the mic in hands-free mode (mock screen 1); ftStopVad above
+      // (called from every exit path: turn sent, cap reached, tab hidden,
+      // hands-free turned off) hides it again.
+      ftShowListening();
+      let lastVoicedMs = monitor.voicedMs();
+      let lastVoiceAt = Date.now();
+      const armedAt = Date.now();
+      // V1.2 packet 2: fires at most once per recording attempt (mock B2 --
+      // one nudge, not a repeated pulse-restart every tick).
+      let hintOfferFired = false;
+      ft.vadTimerId = window.setInterval(() => {
+        if (ft.recording !== session || session.status !== 'recording') {
+          ftStopVad();
+          return;
+        }
+        const voicedMs = monitor.voicedMs!();
+        const now = Date.now();
+        if (voicedMs > lastVoicedMs) {
+          lastVoicedMs = voicedMs;
+          lastVoiceAt = now;
+          return;
+        }
+        // V1.2 packet 2 (Wave D2 §B2): kid stalled -- no real speech yet this
+        // recording attempt, and a hint exists for this turn. Offers
+        // regardless of hands-free auto-arm (unlike the give-up branch
+        // below), since the mock's B2 boards show the same nudge whether the
+        // kid tapped manually or the mic auto-armed.
+        if (!hintOfferFired && ft.currentHint && voicedMs < FT_VAD_MIN_VOICED_MS && now - armedAt >= FT_HINT_STALL_MS) {
+          hintOfferFired = true;
+          ftHintOfferedSet(true);
+        }
+        if (voicedMs >= FT_VAD_MIN_VOICED_MS) {
+          if (now - lastVoiceAt >= FT_VAD_PAUSE_MS) {
+            ftStopVad();
+            finishRecording();
+          }
+        } else if (autoArmed && now - armedAt >= FT_VAD_MAX_WAIT_MS) {
+          // A hands-free mic that never heard the kid settles back to the
+          // button instead of looping silent recordings forever.
+          ftStopVad();
+          ftCleanupRecording();
+          ftUpdateRecordUi('Minny không nghe thấy con — nhấn nút để nói tiếp nhé!');
+        }
+      }, 150);
+    }
+
+    // After Minny finishes speaking, re-arm the mic so the kid just answers.
+    // Only once a manual tap has created the monitor (iOS gesture rule).
+    function ftMaybeAutoArm() {
+      if (!ftHandsFreeOn() || ft.ended || ft.recording || ft.awaitingReply) return;
+      if (!ft.micMonitor?.available) return;
+      if (document.visibilityState === 'hidden') return;
+      ftCancelAutoArm();
+      // Small gap so the mic never catches the tail of Minny's own audio.
+      ft.autoArmTimerId = window.setTimeout(() => {
+        ft.autoArmTimerId = null;
+        if (ft.ended || ft.recording || ft.awaitingReply) return;
+        if (document.visibilityState === 'hidden') return;
+        ftStartRecording({ auto: true });
+      }, 350);
+    }
+
+    // Prefetch the two thinking clips once per session (KV-cached server-side);
+    // best-effort garnish — a failure just means silence while thinking.
+    function ftPrefetchFiller() {
+      ft.fillerClips = [];
+      ['thinking_1', 'thinking_2'].forEach((phraseId, idx) => {
+        fetch('/api/minny-voice', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ access_code: state.accessCode, phrase_id: phraseId }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data?.ok && data.audio_b64) {
+              ft.fillerClips[idx] = { audio_b64: data.audio_b64, content_type: data.content_type };
+            }
+          })
+          .catch(() => {});
+      });
+    }
+
+    function ftPlayFiller() {
+      if (state.activeAudio) return; // never talk over anything
+      const clip = ft.fillerClips[ft.turnsUsed % 2] || ft.fillerClips.find(Boolean);
+      if (!clip) return;
+      const audio = new Audio(`data:${clip.content_type || 'audio/mpeg'};base64,${clip.audio_b64}`);
+      state.activeAudio = audio;
+      audio.addEventListener('ended', () => {
+        if (state.activeAudio === audio) state.activeAudio = null;
+      });
+      audio.play().catch(() => {
+        if (state.activeAudio === audio) state.activeAudio = null;
+      });
+    }
+
+    function ftLatencyP50() {
+      const totals = ft.turnTimings.map((t) => t.total_ms).sort((a, b) => a - b);
+      if (!totals.length) return null;
+      return totals[Math.floor((totals.length - 1) / 2)];
+    }
+
+    function ftUpdateTimerDisplay() {
+      const el = (document.getElementById('free-talk-timer') as HTMLElement);
+      if (!el) return;
+      el.textContent = fmtClock(ft.secondsLeft);
+      el.classList.remove('minny-timer--warn', 'minny-timer--settled');
+      if (ft.secondsLeft <= 0) el.classList.add('minny-timer--settled');
+      else if (ft.secondsLeft <= 30) el.classList.add('minny-timer--warn');
+
+      const announceEl = (document.getElementById('free-talk-timer-announce') as HTMLElement);
+      if (announceEl && [60, 30, 10].includes(ft.secondsLeft)) {
+        announceEl.textContent = `Còn ${fmtClock(ft.secondsLeft)}`;
+      }
+    }
+
+    function ftRenderDots() {
+      const el = (document.getElementById('free-talk-dots') as HTMLElement);
+      const turnsCount = (document.getElementById('ft-turns-count') as HTMLElement);
+      if (turnsCount) turnsCount.textContent = `${ft.turnsLeft} / 12`;
+      if (!el) return;
+      const used = Math.max(0, Math.min(12, 12 - ft.turnsLeft));
+      el.setAttribute('aria-label', `Còn ${ft.turnsLeft} lượt trong tổng 12`);
+      el.innerHTML = Array.from({ length: 12 }, (_, i) => {
+        const cls = i < used ? 'minny-turn-dot minny-turn-dot--used' : 'minny-turn-dot';
+        return `<span class="${cls}" aria-hidden="true"></span>`;
+      }).join('');
+    }
+
+    function ftStartCountdown() {
+      if (ft.countdownId) (clearInterval as (id: number | null) => void)(ft.countdownId);
+      ft.countdownId = window.setInterval(() => {
+        ft.secondsLeft -= 1;
+        ftUpdateTimerDisplay();
+        if (ft.secondsLeft <= 0) {
+          (clearInterval as (id: number | null) => void)(ft.countdownId);
+          ft.countdownId = null;
+          ftHandleCapReached('time');
+        }
+      }, 1000);
+    }
+
+    function ftStopCountdown() {
+      if (ft.countdownId) {
+        (clearInterval as (id: number | null) => void)(ft.countdownId);
+        ft.countdownId = null;
+      }
+    }
+
+    function ftSetThinking(isThinking: boolean) {
+      const avatar = document.querySelector('.ft-hero__avatar');
+      const eyebrow = (document.getElementById('free-talk-status-eyebrow') as HTMLElement);
+      const dots = (document.getElementById('free-talk-thinking-dots') as HTMLElement);
+      avatar?.classList.toggle('minny-avatar--thinking', isThinking);
+      dots?.classList.toggle('is-visible', isThinking);
+      if (eyebrow) {
+        eyebrow.textContent = isThinking ? 'Minny đang nghĩ...' : 'Minny · Đợi con nói';
+        eyebrow.style.color = isThinking ? 'var(--gold-light)' : '';
+      }
+      ft.awaitingReply = isThinking;
+      // While Minny "thinks", a short cached filler line covers the silent
+      // gap — but only if the reply is genuinely slow (> FT_FILLER_DELAY_MS).
+      if (isThinking) {
+        if (!ft.fillerTimerId) {
+          ft.fillerTimerId = window.setTimeout(() => {
+            ft.fillerTimerId = null;
+            if (ft.awaitingReply && !ft.ended) ftPlayFiller();
+          }, FT_FILLER_DELAY_MS);
+        }
+      } else if (ft.fillerTimerId) {
+        clearTimeout(ft.fillerTimerId);
+        ft.fillerTimerId = null;
+      }
+      const recordBtn = (document.getElementById('free-talk-record') as HTMLButtonElement);
+      if (recordBtn) recordBtn.disabled = isThinking;
+      ftUpdateRecordUi();
+    }
+
+    function ftAppendReplyBubble(text: Maybe<string>, mood: string) {
+      const list = (document.getElementById('free-talk-transcript') as HTMLElement);
+      if (!list || !text) return;
+      const bubble = document.createElement('div');
+      bubble.className = 'minny-transcript__reply';
+      bubble.textContent = text;
+      list.appendChild(bubble);
+      list.scrollTop = list.scrollHeight;
+      // Minny's latest line also shows in the hero bubble (phone/tablet).
+      const heroLine = (document.getElementById('ft-hero-line') as HTMLElement);
+      if (heroLine) heroLine.textContent = text;
+      ftSetMood(mood || 'idle');
+      // Once Minny replies, the previous "con vừa nói xong" chip settles to
+      // "con đã nói · Ns" per the 7b transcript-chip spec.
+      if (ft.lastKidChip) {
+        const secs = ft.lastKidChipSeconds;
+        ft.lastKidChip.innerHTML = Number.isFinite(secs)
+          ? `🎤 con đã nói <span class="hidden lg:inline">· ${secs} giây</span>`
+          : '🎤 con đã nói';
+        ft.lastKidChip = null;
+      }
+    }
+
+    function ftAppendKidChip(durationSeconds: number) {
+      const list = (document.getElementById('free-talk-transcript') as HTMLElement);
+      if (!list) return;
+      const chip = document.createElement('div');
+      chip.className = 'minny-transcript__kid-chip';
+      chip.innerHTML = '🎤 con vừa nói xong';
+      list.appendChild(chip);
+      list.scrollTop = list.scrollHeight;
+      ft.lastKidChip = chip;
+      ft.lastKidChipSeconds = Math.round(durationSeconds);
+    }
+
+    // ---- V1.2 packet 1: DOM-writing side of the chip/repair scaffold ----
+    // Thin on purpose: every branching decision already happened in
+    // ftPlanScaffold/ftIsRepairChoiceState above, so this just paints it.
+
+    function ftScaffoldEl() {
+      return (document.getElementById('ft-scaffold') as HTMLElement);
+    }
+
+    // Chips (and any revealed sentence frame) clear on the next turn --
+    // called at the top of every ftApplyScaffold so stale chips from an
+    // abandoned question never linger into a new one.
+    function ftClearScaffold() {
+      const el = ftScaffoldEl();
+      if (el) el.innerHTML = '';
+    }
+
+    function ftApplyScaffold(plan: ScaffoldPlan) {
+      const el = ftScaffoldEl();
+      ftClearScaffold();
+      if (!el) return;
+
+      // The repair-tag label is independent of the mode -- e.g. the 'model'
+      // step shows "Minny mẫu câu trả lời" even though it renders as plain
+      // chrome (no chips, no oversized buttons) below it.
+      if (plan.tag) {
+        const tag = document.createElement('span');
+        tag.className = 'minny-repair-tag';
+        tag.textContent = plan.tag;
+        el.appendChild(tag);
+      }
+
+      if (plan.mode === 'none') return;
+
+      if (plan.mode === 'chips') {
+        if (plan.showHint && plan.options[0]) {
+          const frame = ftBuildSentenceFrame(plan.options[0], plan.expected);
+          const hint = document.createElement('p');
+          hint.className = 'minny-starter-hint';
+          hint.innerHTML = `💡 Con có thể nói: <span>${escapeHtml(frame.sentence)}</span>`;
+          el.appendChild(hint);
+        }
+        const group = document.createElement('div');
+        group.className = 'minny-options';
+        group.setAttribute('role', 'group');
+        group.setAttribute('aria-label', 'Gợi ý câu trả lời');
+        plan.options.forEach((optionText) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'minny-option-chip';
+          btn.textContent = optionText;
+          btn.addEventListener('click', () => ftOnChipTap(btn, optionText, plan.expected));
+          group.appendChild(btn);
+        });
+        el.appendChild(group);
+        return;
+      }
+
+      if (plan.mode === 'repair-choices') {
+        const wrap = document.createElement('div');
+        wrap.className = 'minny-repair-choices';
+        plan.options.forEach((optionText) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'minny-repair-choice-btn';
+          btn.textContent = optionText;
+          btn.addEventListener('click', () => {
+            wrap.querySelectorAll<HTMLButtonElement>('button').forEach((b) => { b.disabled = true; });
+            // The ladder's one exception: this tap alone resolves the turn,
+            // sending the tapped text as the transcript -- no speaking step.
+            ftSubmitTranscript(optionText);
+          });
+          wrap.appendChild(btn);
+        });
+        el.appendChild(wrap);
+      }
+    }
+
+    // Tapping a chip NEVER submits or skips speaking -- it only marks the
+    // tap and reveals the sentence frame to say aloud (mock screen 2). No
+    // network call fires here; the mic itself is armed by the existing
+    // hands-free/manual flow (ftMaybeAutoArm once Minny's audio ends, or the
+    // kid's own tap on the record button), unchanged by this packet.
+    function ftOnChipTap(clickedBtn: HTMLButtonElement, optionText: string, expected: string[]) {
+      const group = clickedBtn.parentElement;
+      group?.querySelectorAll<HTMLElement>('.minny-option-chip').forEach((btn) => {
+        btn.classList.toggle('is-selected', btn === clickedBtn);
+        btn.classList.toggle('is-dimmed', btn !== clickedBtn);
+      });
+      const scaffold = ftScaffoldEl();
+      scaffold?.querySelector('.minny-sentence-frame')?.remove();
+      if (!scaffold) return;
+      const frame = ftBuildSentenceFrame(optionText, expected);
+      const escapedSentence = escapeHtml(frame.sentence);
+      const escapedBlank = escapeHtml(frame.blank);
+      const blankRe = new RegExp(`(${escapedBlank.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'i');
+      const sentenceHtml = blankRe.test(escapedSentence)
+        ? escapedSentence.replace(blankRe, '<span class="minny-sentence-frame__blank">$1</span>')
+        : escapedSentence;
+      const frameEl = document.createElement('div');
+      frameEl.className = 'minny-sentence-frame';
+      frameEl.innerHTML = `
+        <p class="minny-sentence-frame__label">Con hãy nói to câu này nhé!</p>
+        <p class="minny-sentence-frame__text">${sentenceHtml}</p>
+        <p class="minny-sentence-frame__mic-armed">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0M12 17v4"></path></svg>
+          Mic đã sẵn sàng — con nói đi nào!
+        </p>
+      `;
+      scaffold.appendChild(frameEl);
+    }
+
+    // ---- V1.2 packet 2: DOM-writing side of the hint on-demand states ----
+    // (Wave D2 §B). ft.currentHint/ft.hintRevealed hold the state; every
+    // branching decision (is there a hint this turn? word or question?)
+    // already happened in ftHintAvailable/ftHintType above.
+
+    function ftHintRowEl() {
+      return (document.getElementById('ft-hint-row') as HTMLElement);
+    }
+
+    function ftHintOfferedSet(offered: boolean) {
+      (document.getElementById('ft-hint-btn') as HTMLButtonElement)?.classList.toggle('is-pulsing', offered);
+      (document.getElementById('ft-hint-affordance') as HTMLElement)?.classList.toggle('hidden', !offered);
+    }
+
+    // Called once per turn (ftHandleTurnResponse) with the fresh response --
+    // re-hides any still-open card from the PREVIOUS turn (mock: "re-hides
+    // on the next turn") and shows/hides the idle button purely on whether
+    // THIS turn carries a hint, never a client-side level check.
+    function ftApplyHint(data: Maybe<TalkResponse>) {
+      ft.currentHint = ftHintAvailable(data) ? data.hint : null;
+      ft.hintRevealed = false;
+      ftHintOfferedSet(false);
+      ftRenderHintCard();
+      ftHintRowEl()?.classList.toggle('hidden', !ft.currentHint);
+    }
+
+    // Tapping the idle OR pulsing button reveals the card (B3); the row
+    // itself hides while the card is open, per the mock (B3 boards show no
+    // hint button at all -- button and card are mutually exclusive).
+    function ftRevealHint() {
+      if (!ft.currentHint) return;
+      ft.hintRevealed = true;
+      ftHintOfferedSet(false);
+      ftHintRowEl()?.classList.add('hidden');
+      ftRenderHintCard();
+    }
+
+    // The ladder's one exception is chips (ftOnChipTap); a hint reveal has
+    // its own single exception -- dismissing (or, above, revealing) both
+    // return the screen to B1 idle, per the mock, never a lingering pulse.
+    function ftDismissHint() {
+      ft.hintRevealed = false;
+      ftHintOfferedSet(false);
+      ftRenderHintCard();
+      ftHintRowEl()?.classList.toggle('hidden', !ft.currentHint);
+    }
+
+    function ftRenderHintCard() {
+      const card = (document.getElementById('ft-hint-card') as HTMLElement);
+      if (!card) return;
+      if (!ft.hintRevealed || !ft.currentHint) {
+        card.classList.add('hidden');
+        card.innerHTML = '';
+        return;
+      }
+      const type = ftHintType(ft.currentHint);
+      const escaped = escapeHtml(ft.currentHint);
+      // TODO(elon): the mock's word variant (B3) also shows a VN gloss
+      // (.minny-hint-card__word-vi) and a "🔊 Nghe từ này" minny-play-chip --
+      // the server's `hint` field is EN-only (no translation, no audio), so
+      // per the packet's own instruction this ships EN-only rather than
+      // inventing a translation, until a translation/audio source exists.
+      const body = type === 'question'
+        ? `<p class="minny-hint-card__question">${escaped}</p>`
+        : `<div class="minny-hint-card__word-row"><span class="minny-hint-card__word-en">${escaped}</span></div>`;
+      card.innerHTML = `
+        <button type="button" class="minny-hint-card__dismiss" aria-label="Đóng gợi ý">×</button>
+        <p class="minny-hint-card__eyebrow">💡 Minny gợi ý</p>
+        ${body}
+      `;
+      card.classList.remove('hidden');
+      card.querySelector('.minny-hint-card__dismiss')?.addEventListener('click', ftDismissHint);
+    }
+
+    // ---- V1.2 packet 2: DOM-writing side of game framing (Wave D2 §C) ----
+    // build_a_story and debate are populated with real content;
+    // would_you_rather (C3) is deferred -- needs structured WYR turn field
+    // (TODO backlog), see the comment beside ftGameFramingClass.
+
+    function ftClearGameFraming() {
+      const el = (document.getElementById('ft-game-framing') as HTMLElement);
+      if (!el) return;
+      el.innerHTML = '';
+      el.className = 'hidden';
+    }
+
+    function ftApplyGameFraming(data: Maybe<TalkResponse>) {
+      const el = (document.getElementById('ft-game-framing') as HTMLElement);
+      if (!el) return;
+      if (ft.game === 'build_a_story' && data?.reply_en) {
+        ft.storyLines.push(data.reply_en);
+        ft.storyLines = ft.storyLines.slice(-2);
+        const lines = ft.storyLines
+          .map((line, i) => {
+            const isLast = i === ft.storyLines.length - 1;
+            const cls = isLast ? 'minny-story-strip__line minny-story-strip__line--minny-last' : 'minny-story-strip__line';
+            return `<p class="${cls}">${escapeHtml(line)}</p>`;
+          })
+          .join('');
+        el.innerHTML = `<p class="minny-story-strip__eyebrow">📖 Câu chuyện của chúng ta</p>${lines}`;
+        el.className = ftGameFramingClass('build_a_story')!;
+        return;
+      }
+      // Micro-round (Elon, 2026-07-12): start now echoes the server-picked
+      // `debate_topic` (never client-invented) -- persists for the whole
+      // debate game per the mock, not just one turn, so this renders off
+      // ft.debateTopic (set once at start) rather than anything per-turn.
+      if (ft.game === 'debate' && ft.debateTopic) {
+        el.innerHTML = `
+          <span class="minny-debate-banner__emoji">⚖️</span>
+          <div>
+            <p class="minny-debate-banner__eyebrow">Minny nghĩ</p>
+            <p class="minny-debate-banner__text">${escapeHtml(ft.debateTopic)}</p>
+          </div>
+        `;
+        el.className = ftGameFramingClass('debate')!;
+        return;
+      }
+      ftClearGameFraming();
+    }
+
+    // subtitle_vi renders under the English line whenever the turn carries
+    // it (repair/vn-nudge lines only -- normal LLM turns never send it).
+    function ftRenderSubtitle(text: Maybe<string>) {
+      const list = (document.getElementById('free-talk-transcript') as HTMLElement);
+      const existing = document.getElementById('ft-subtitle-vi');
+      if (!text) {
+        existing?.remove();
+        return;
+      }
+      const sub = existing || document.createElement('p');
+      sub.id = 'ft-subtitle-vi';
+      sub.className = 'ft-subtitle-vi';
+      sub.textContent = text;
+      if (!existing && list) {
+        list.appendChild(sub);
+        list.scrollTop = list.scrollHeight;
+      }
+    }
+
+    // Hands-free is a visible, always-present, settable control (never a
+    // hidden localStorage-only flag again, per IDEAS.md 2026-07-10) --
+    // reflects + writes the SAME r2l_ft_handsfree flag the existing VAD
+    // auto-arm logic already reads via ftHandsFreeOn().
+    function ftUpdateHandsFreeToggle() {
+      const btn = (document.getElementById('ft-handsfree-toggle') as HTMLButtonElement);
+      if (!btn) return;
+      const on = ftHandsFreeOn();
+      btn.classList.toggle('is-on', on);
+      btn.setAttribute('aria-pressed', String(on));
+    }
+
+    function ftShowListening() {
+      (document.getElementById('ft-listening-indicator') as HTMLElement)?.classList.remove('hidden');
+    }
+
+    function ftHideListening() {
+      (document.getElementById('ft-listening-indicator') as HTMLElement)?.classList.add('hidden');
+    }
+
+    function ftHidePlayChip() {
+      const chip = (document.getElementById('free-talk-play-chip') as HTMLButtonElement);
+      chip?.classList.remove('is-visible');
+      if (chip) chip.onclick = null;
+    }
+
+    // Real TTS when available; browser speechSynthesis fallback. If .play()
+    // rejects (iOS autoplay-gesture block) a tap-to-play chip appears inside
+    // Minny's bubble instead of failing silently — 7b screen 3.
+    function playConversationAudio(audioB64: Maybe<string>, contentType: Maybe<string>, fallbackText: Maybe<string>) {
+      ftHidePlayChip();
+      if (!audioB64) {
+        speakEnglish(fallbackText);
+        return;
+      }
+      stopPlayback();
+      const audio = new Audio(`data:${contentType || 'audio/mpeg'};base64,${audioB64}`);
+      state.activeAudio = audio;
+      audio.addEventListener('ended', () => {
+        ftSetMood('idle');
+        state.activeAudio = null;
+        // Minny finished speaking — hands-free mode re-arms the mic so the
+        // kid just answers, no tap (guarded inside for ended/hidden/etc).
+        ftMaybeAutoArm();
+      });
+      audio.play().catch(() => {
+        const chip = (document.getElementById('free-talk-play-chip') as HTMLButtonElement);
+        if (!chip) {
+          speakEnglish(fallbackText);
+          return;
+        }
+        chip.classList.add('is-visible');
+        chip.onclick = () => {
+          ftHidePlayChip();
+          audio.play().catch(() => speakEnglish(fallbackText));
+        };
+      });
+    }
+
+    // Two-phase audio, phase 2 (2026-07-10): the turn response carried the
+    // reply TEXT only (audio_pending) — Minny's voice finishes server-side and
+    // lands in KV. Poll briefly and play on arrival; a failed/timed-out fetch
+    // falls back exactly like the old no-audio_b64 path (speechSynthesis).
+    // The token + session checks kill the poll the moment a newer turn,
+    // reset, or session takes over.
+    async function ftFetchPendingAudio(audioTurn: number | undefined, fallbackText: Maybe<string>) {
+      const sessionAtStart = ft.sessionId;
+      const token = ft.audioPollToken;
+      // Stale when a newer turn / reset / recording superseded it, the session
+      // changed, or the conversation ENDED — "I pressed End and it's over" is a
+      // hard contract; Minny must never speak over the wrap-up screen.
+      const stale = () => ft.audioPollToken !== token || ft.sessionId !== sessionAtStart || ft.ended;
+      const deadline = Date.now() + 8000;
+      while (Date.now() < deadline) {
+        await new Promise((resolve) => setTimeout(resolve, 350));
+        if (stale()) return;
+        try {
+          const res = await fetch('/api/minny-conversation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              access_code: state.accessCode,
+              action: 'audio',
+              session_id: sessionAtStart,
+              turn: audioTurn,
+            }),
+          });
+          const data = await res.json();
+          if (stale()) return;
+          if (data?.ready && data.audio_b64) {
+            playConversationAudio(data.audio_b64, data.content_type, fallbackText);
+            return;
+          }
+          if (data?.failed) break;
+        } catch {
+          // transient poll error — keep trying until the deadline
+        }
+      }
+      if (stale()) return;
+      playConversationAudio(null, null, fallbackText);
+    }
+
+    function ftReset() {
+      ft.sessionId = null;
+      ft.turnsLeft = 12;
+      ft.secondsLeft = 300;
+      ft.ended = false;
+      ft.awaitingReply = false;
+      ft.sentenceCount = 0;
+      ft.turnsUsed = 0;
+      ft.completionId = null;
+      ft.flaggedSession = false;
+      ft.lastKidChip = null;
+      ft.lastKidChipSeconds = null;
+      ft.chipTurnsSeen = 0;
+      ftClearScaffold();
+      ftHideListening();
+      // V1.2 packet 2: clear picker selection + hint + game-framing state
+      // and UI so a new free-talk entry never carries over a stale session.
+      ft.pickerTopic = null;
+      ft.pickerGame = null;
+      ft.game = null;
+      ft.storyLines = [];
+      ft.debateTopic = null;
+      ft.currentHint = null;
+      ft.hintRevealed = false;
+      ftApplyHint(null);
+      ftClearGameFraming();
+      (document.getElementById('ft-topic-picker') as HTMLElement)?.classList.add('hidden');
+      ft.turnTimings = [];
+      ft.fillerClips = [];
+      ft.audioPollToken += 1;
+      ftCancelAutoArm();
+      if (ft.fillerTimerId) {
+        clearTimeout(ft.fillerTimerId);
+        ft.fillerTimerId = null;
+      }
+      ftStopCountdown();
+      ftCleanupRecording();
+      ftReleaseMic();
+    }
+
+    function enterFreeTalking() {
+      ftReset();
+      modesScreen?.classList.add('hidden');
+      practiceScreen?.classList.add('hidden');
+      (document.getElementById('free-talk-screen') as HTMLElement)?.classList.remove('hidden');
+      (document.getElementById('ft-conversation') as HTMLElement)?.classList.remove('hidden');
+      (document.getElementById('free-talk-wrapup') as HTMLElement)?.classList.add('hidden');
+      (document.getElementById('free-talk-summary') as HTMLElement)?.classList.add('hidden');
+      setAppbarSubtitle('Nói chuyện với <b>Minny</b>');
+      const transcriptEl = (document.getElementById('free-talk-transcript') as HTMLElement);
+      if (transcriptEl) transcriptEl.innerHTML = '';
+      const heroLine = (document.getElementById('ft-hero-line') as HTMLElement);
+      if (heroLine) heroLine.textContent = '';
+      ftSetThinking(false);
+      ftSetMood('idle');
+      ftRenderDots();
+      ftUpdateTimerDisplay();
+      ftUpdateHandsFreeToggle();
+      // V1.2 packet 2 (Wave D2 §A): L3-L5 sees the topic picker BEFORE
+      // start; L0-L2 is exactly today's flow, untouched.
+      if (ftIsPickerLevel(state.level)) {
+        ftShowTopicPicker();
+      } else {
+        startFreeTalkSession();
+      }
+    }
+
+    // V1.2 packet 2: renders + shows the topic-pick session start (mock A1
+    // L3 / A2 L4-L5), resetting any stale selection from a previous entry.
+    function ftShowTopicPicker() {
+      (document.getElementById('ft-conversation') as HTMLElement)?.classList.add('hidden');
+      const picker = (document.getElementById('ft-topic-picker') as HTMLElement);
+      picker?.classList.remove('hidden');
+      ft.pickerTopic = null;
+      ft.pickerGame = null;
+      const showGames = ftIsGameLevel(state.level);
+      (document.getElementById('ft-picker-games-label') as HTMLElement)?.classList.toggle('hidden', !showGames);
+      (document.getElementById('ft-picker-game-cards') as HTMLElement)?.classList.toggle('hidden', !showGames);
+      (document.getElementById('ft-picker-topics-label') as HTMLElement)?.classList.toggle('hidden', !showGames);
+      picker?.querySelectorAll<HTMLElement>('.fx-topic').forEach((btn) => {
+        btn.classList.remove('fx-topic--selected');
+        btn.setAttribute('aria-pressed', 'false');
+      });
+      picker?.querySelectorAll<HTMLElement>('.minny-game-card').forEach((btn) => {
+        btn.classList.remove('is-selected');
+        btn.setAttribute('aria-pressed', 'false');
+      });
+      const startBtn = (document.getElementById('ft-picker-start') as HTMLButtonElement);
+      if (startBtn) startBtn.disabled = true;
+    }
+
+    function ftExitToModes() {
+      ftReset();
+      (document.getElementById('free-talk-screen') as HTMLElement)?.classList.add('hidden');
+      showModePicker();
+    }
+
+    // Show the wrap-up panel with configurable copy + buttons. Used for the
+    // normal session end AND for a start blocked by the server (cap /
+    // not-available / network) — the kid never gets bounced back mid-flash.
+    function ftShowWrapup(opts: { text: string; eyebrow?: string; showSummaryCta?: boolean; showRetry?: boolean }) {
+      (document.getElementById('ft-conversation') as HTMLElement)?.classList.add('hidden');
+      (document.getElementById('free-talk-summary') as HTMLElement)?.classList.add('hidden');
+      const textEl = (document.getElementById('free-talk-wrapup-text') as HTMLElement);
+      if (textEl) textEl.textContent = opts.text;
+      const eyebrowEl = (document.getElementById('free-talk-wrapup-eyebrow') as HTMLElement);
+      if (eyebrowEl) eyebrowEl.textContent = opts.eyebrow || 'Minny';
+      (document.getElementById('free-talk-wrapup-cta') as HTMLButtonElement)?.classList.toggle('hidden', !opts.showSummaryCta);
+      (document.getElementById('free-talk-retry') as HTMLButtonElement)?.classList.toggle('hidden', !opts.showRetry);
+      (document.getElementById('free-talk-wrapup') as HTMLElement)?.classList.remove('hidden');
+    }
+
+    // V1.2 packet 2: opts = { topic, game } from the topic-picker CTA (L3+
+    // only); L0-L2 calls this with no opts at all, exactly as before.
+    async function startFreeTalkSession(opts?: { game?: string | null; topic?: string }) {
+      const recordBtn = (document.getElementById('free-talk-record') as HTMLButtonElement);
+      if (recordBtn) recordBtn.disabled = true;
+      // ft.game drives the game-framing chrome (Wave D2 §C); storyLines
+      // starts empty every session -- the canned greeting below is never
+      // part of the story.
+      ft.game = opts?.game || null;
+      ft.storyLines = [];
+      ftClearGameFraming();
+      try {
+        const res = await fetch('/api/minny-conversation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            action: 'start',
+            ...(opts?.topic ? { topic: opts.topic } : {}),
+            ...(opts?.game ? { game: opts.game } : {}),
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          // THE FIX for the "flashes then goes straight back" bug: a blocked
+          // start renders the designed wrap-up state (7b kill-switch copy for
+          // the daily cap) — never a bounce back to the mode picker.
+          ft.ended = true;
+          const isCap = data.error === 'daily_cap' || data.error === 'global_cap';
+          const blocked = isCap || data.error === 'not_available';
+          ftShowWrapup({
+            text: data.error === 'daily_cap'
+              ? 'Mai nói chuyện tiếp với Minny nhé!'
+              : (data.message || 'Không mở được phiên trò chuyện. Con thử lại nhé!'),
+            eyebrow: isCap ? 'Minny · Hẹn gặp lại' : 'Minny',
+            showSummaryCta: false,
+            showRetry: !blocked,
+          });
+          return;
+        }
+        ft.sessionId = data.session_id;
+        ft.turnsLeft = data.turns_left ?? 12;
+        ft.secondsLeft = data.seconds_left ?? 300;
+        // Micro-round (Elon, 2026-07-12): start echoes the server-picked
+        // debate_topic (never client-invented); the banner persists for the
+        // whole game (mock), so it renders once here rather than waiting
+        // for the first turn.
+        ft.debateTopic = data.debate_topic || null;
+        ftApplyGameFraming(null);
+        ftRenderDots();
+        ftUpdateTimerDisplay();
+        ftStartCountdown();
+        ftAppendReplyBubble(data.greeting?.text_en, 'idle');
+        playConversationAudio(data.greeting?.audio_b64, data.greeting?.content_type, data.greeting?.text_en || '');
+        if (recordBtn) recordBtn.disabled = false;
+        // Warm the conversation mic while Minny's greeting plays — no prompt
+        // possible (mic gate already passed), so the first tap records instantly.
+        if (state.micGateReady || window.R2LMicCheck?.sessionPassed?.()) {
+          ftAcquireMic().catch(() => {});
+        }
+        ftPrefetchFiller();
+      } catch {
+        ft.ended = true;
+        ftShowWrapup({
+          text: 'Mạng không ổn định. Con thử lại nhé!',
+          eyebrow: 'Minny',
+          showSummaryCta: false,
+          showRetry: true,
+        });
+      }
+    }
+
+    function ftMicUsable() {
+      if (!ft.micStream) return false;
+      if (window.R2LRecorder?.trackInfo) {
+        const info = window.R2LRecorder.trackInfo(ft.micStream);
+        return info.live && !info.muted;
+      }
+      return ft.micStream.getAudioTracks().some((t) => t.readyState === 'live');
+    }
+
+    function ftReleaseMic() {
+      ft.micGen += 1;
+      if (ft.micWatch) {
+        ft.micWatch();
+        ft.micWatch = null;
+      }
+      safeStopMonitor(ft.micMonitor);
+      ft.micMonitor = null;
+      if (ft.micStream) {
+        ft.micStream.getTracks().forEach((t) => t.stop());
+      }
+      ft.micStream = null;
+      ft.micAcquire = null;
+      ft.micStreamDead = false;
+    }
+
+    // Opens (or reuses) the conversation-scoped mic stream. Kept warm across
+    // turns; reacquired only when the old track died (Windows app grab,
+    // device switch) or the constraint profile was bumped after a silent turn.
+    async function ftAcquireMic() {
+      if (ft.micStream && !ft.micStreamDead && ftMicUsable()) {
+        return { stream: ft.micStream, cold: false };
+      }
+      if (!ft.micAcquire) {
+        ftReleaseMic();
+        const gen = ft.micGen;
+        ft.micAcquire = (async () => {
+          const stream = window.R2LRecorder?.getStream
+            ? await window.R2LRecorder.getStream()
+            : window.R2LMicCheck?.getMicStream
+              ? await window.R2LMicCheck.getMicStream()
+              : await navigator.mediaDevices.getUserMedia({
+                  audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+                });
+          if (ft.micGen !== gen || ft.ended) {
+            // Conversation ended / mic released while acquiring — never leave
+            // a stray live track behind (mic indicator must turn off).
+            stream.getTracks().forEach((t) => t.stop());
+            throw new Error('ft_mic_stale');
+          }
+          ft.micStream = stream;
+          ft.micStreamDead = false;
+          if (window.R2LRecorder?.watchTrack) {
+            ft.micWatch = window.R2LRecorder.watchTrack(stream, () => {
+              // Mid-recording: finishRecording releases at turn end;
+              // idle: release now so the next tap reacquires cleanly.
+              ft.micStreamDead = true;
+              if (!ft.recording) ftReleaseMic();
+            });
+          }
+          return stream;
+        })();
+      }
+      const pending = ft.micAcquire;
+      try {
+        const stream = await pending;
+        return { stream, cold: true };
+      } finally {
+        if (ft.micAcquire === pending) ft.micAcquire = null;
+      }
+    }
+
+    function ftCleanupRecording() {
+      ftStopVad();
+      if (ft.recTimerId) {
+        clearInterval(ft.recTimerId);
+        ft.recTimerId = null;
+      }
+      // Stop the in-flight recorder explicitly — the conversation-scoped
+      // stream stays live, so there is no track death to end it implicitly.
+      try {
+        ft.recording?.recorderCtl?.stop();
+      } catch {
+        /* recorder never started */
+      }
+      ft.recording = null;
+      ftUpdateRecordUi();
+    }
+
+    function ftUpdateRecordUi(message?: string) {
+      const btn = (document.getElementById('free-talk-record') as HTMLButtonElement);
+      const label = (document.getElementById('free-talk-record-label') as HTMLElement);
+      const wave = (document.getElementById('free-talk-waveform') as HTMLElement);
+      if (!btn) return;
+      const recording = ft.recording?.status === 'recording';
+      btn.classList.toggle('is-recording', recording);
+      wave?.classList.toggle('is-recording', recording);
+      btn.setAttribute('aria-label', recording ? 'Dừng ghi âm' : 'Nhấn để nói');
+      if (label) {
+        label.textContent = message
+          || (recording ? 'Đang nghe con nói...' : (ft.awaitingReply ? 'Đợi Minny trả lời...' : 'Nhấn để nói'));
+      }
+    }
+
+    async function ftStartRecording(opts?: { auto?: boolean }) {
+      if (ft.ended || ft.awaitingReply) return;
+      stopPlayback();
+      // Kid chose to talk — cancel any still-pending Minny voice so it can
+      // never start playing into the open mic mid-recording.
+      ft.audioPollToken += 1;
+      if (!micReady()) {
+        ftUpdateRecordUi('Micro chưa sẵn sàng. Con thử trình duyệt khác nhé!');
+        return;
+      }
+      if (!state.micGateReady && !window.R2LMicCheck?.sessionPassed?.()) {
+        ftUpdateRecordUi('Con bấm Kiểm tra micro ngay bên dưới nhé.');
+        return;
+      }
+
+      if (ft.recording) return;
+      // One session object per attempt, installed before the first await. Every
+      // await below re-checks identity (not status) so a cancel or a second tap
+      // during the gaps can never detach the live recorder/timer from ft.recording.
+      const session: Recording = { stream: null, status: 'warming' };
+      ft.recording = session;
+      try {
+        // Conversation-scoped stream (usually already warm from the greeting;
+        // never stop its tracks on a bail-out — later turns share it).
+        const { stream, cold } = await ftAcquireMic();
+        if (ft.recording !== session) return;
+        session.stream = stream;
+
+        // Escape hatch: r2l_ft_warmup=1 restores the legacy 3s countdown on a
+        // problem machine without a redeploy.
+        let legacyWarmup = false;
+        try {
+          legacyWarmup = localStorage.getItem('r2l_ft_warmup') === '1';
+        } catch {
+          /* storage blocked */
+        }
+        if (legacyWarmup && window.R2LMicCheck?.runMicWarmupCountdown) {
+          ftUpdateRecordUi('Micro đã bật — chờ 3 giây rồi mới nói nhé…');
+          await window.R2LMicCheck.runMicWarmupCountdown({
+            onMessage: (msg) => {
+              if (ft.recording !== session) return;
+              ftUpdateRecordUi(msg);
+            },
+          });
+          if (ft.recording !== session) return;
+        }
+
+        const recorder = window.R2LRecorder?.createRecorder
+          ? window.R2LRecorder.createRecorder(stream)
+          : (() => {
+              const { mediaRecorder, mimeType } = createRecorder(stream);
+              const chunks: Blob[] = [];
+              let resolveStop: ((blob: Blob) => void) | null = null;
+              const stopped = new Promise<Blob>((resolve) => { resolveStop = resolve; });
+              mediaRecorder.addEventListener('dataavailable', (event) => {
+                if (event.data?.size > 0) chunks.push(event.data);
+              });
+              mediaRecorder.addEventListener('stop', () => {
+                resolveStop!(new Blob(chunks, { type: mediaRecorder.mimeType || mimeType || 'audio/mp4' }));
+              });
+              return {
+                engine: 'mr',
+                mimeType,
+                start() { mediaRecorder.start(250); },
+                stop() { stopMediaRecorder(mediaRecorder); return stopped; },
+              };
+            })();
+
+        // Conversation-scoped monitor: created on the first tap (inside the
+        // user gesture — iOS can refuse AudioContext.resume() outside one),
+        // then kept open across turns. Never open/close one per turn on the
+        // live stream — that is the Windows/Realtek silence pattern (7cd5158).
+        if (!ft.micMonitor || !ft.micMonitor.available) {
+          safeStopMonitor(ft.micMonitor);
+          ft.micMonitor = window.R2LRecorder?.startMonitor
+            ? await window.R2LRecorder.startMonitor(stream, {
+                onSilenceHint: () => {
+                  if (ft.recording?.status === 'recording') {
+                    ftUpdateRecordUi('Minny chưa thấy tiếng — con nói TO hơn nhé!');
+                  }
+                },
+              })
+            : { available: false, peak: () => -1, voiced: () => true, reset: () => {}, stop: () => {} };
+          if (ft.recording !== session) {
+            try {
+              recorder.stop();
+            } catch {
+              /* recorder never started */
+            }
+            return;
+          }
+        }
+        const monitor = ft.micMonitor;
+
+        // A just-opened stream gets a brief settle so first words are not
+        // clipped; the warm path (every later turn) starts immediately.
+        if (cold && !legacyWarmup) {
+          ftUpdateRecordUi('Micro đang bật…');
+          await new Promise((resolve) => window.setTimeout(resolve, 300));
+          if (ft.recording !== session) {
+            try {
+              recorder.stop();
+            } catch {
+              /* recorder never started */
+            }
+            return;
+          }
+        }
+        monitor.reset?.();
+
+        let finished = false;
+        const finishRecording = async () => {
+          if (finished) return;
+          finished = true;
+          ftStopVad();
+          if (ft.recTimerId) {
+            clearInterval(ft.recTimerId);
+            ft.recTimerId = null;
+          }
+          // Release the button immediately — a stale ft.recording here left the
+          // UI stuck on "Đang nghe con nói..." after every successful turn.
+          if (ft.recording === session) ft.recording = null;
+          const elapsedSeconds = Math.max(0, DEFAULT_MAX_SECONDS - ft.recSecondsLeft);
+          let blob = null;
+          try {
+            blob = await recorder.stop();
+          } catch {
+            blob = null;
+          }
+          // Conversation stream + monitor stay warm for the next turn;
+          // release only if the track died mid-turn.
+          if (ft.micStreamDead) ftReleaseMic();
+          const voiced = window.R2LRecorder?.recordingLooksVoiced
+            ? window.R2LRecorder.recordingLooksVoiced(monitor, blob?.size || 0)
+            : (monitor.available ? monitor.voiced() : true);
+
+          if (blob && blob.size > 0 && !voiced) {
+            window.R2LRecorder?.bumpProfile?.();
+            // Profile changed — the next tap must reopen the mic with the
+            // relaxed constraints, not reuse the stream that recorded silence.
+            ftReleaseMic();
+            ftUpdateRecordUi('Minny không thấy tiếng vào micro. Con thử lại nhé!');
+            return;
+          }
+          if (blob && blob.size > 0) {
+            ftSubmitAudio(blob, elapsedSeconds);
+          } else {
+            ftUpdateRecordUi('Không thu được tiếng. Con thử nói to hơn nhé.');
+          }
+        };
+
+        session.status = 'recording';
+        session.recorderCtl = recorder;
+        session.monitor = monitor;
+        session.finishRecording = finishRecording;
+        ft.recSecondsLeft = DEFAULT_MAX_SECONDS;
+        recorder.start();
+        ftUpdateRecordUi();
+        // Hands-free: a natural pause after real speech sends the turn — the
+        // kid talks, stops, and Minny answers. Tap still works as manual send.
+        if (ftHandsFreeOn()) ftStartVad(session, monitor, finishRecording, Boolean(opts?.auto));
+
+        ft.recTimerId = window.setInterval(() => {
+          ft.recSecondsLeft -= 1;
+          if (ft.recSecondsLeft <= 0) finishRecording();
+        }, 1000);
+      } catch (error) {
+        if (ft.recording !== session) return;
+        const message = window.R2LMicCheck?.helpMessage?.(error)
+          || 'Không mở được micro. Con nhờ bố mẹ cho phép micro nhé.';
+        ftCleanupRecording();
+        ftReleaseMic();
+        ftUpdateRecordUi(message);
+        window.R2LMicCheck?.focusMicHelpInShell?.(shell);
+      }
+    }
+
+    function ftStopRecording() {
+      if (!ft.recording) return;
+      if (ft.recording.status === 'recording' && ft.recording.finishRecording) {
+        ft.recording.finishRecording();
+        return;
+      }
+      // Tap while the mic is still opening / warming up = cancel back to idle.
+      ftCleanupRecording();
+    }
+
+    // Merged voice turn (Step C, 2026-07-10): upload the audio straight to the
+    // conversation endpoint in ONE request. The server transcribes (Whisper),
+    // runs the brain + guardrails + TTS, and returns transcript + reply + audio
+    // together — removing the separate /api/read2lead-speaking-check round-trip
+    // (and its extra function cold-start) that the two-call flow paid every turn.
+    // Shared post-fetch turn handling for BOTH the merged voice-turn (audio
+    // upload) and the repair-choice tap (client-supplied transcript, no
+    // audio) paths -- factored out so the chip/repair scaffold rendering,
+    // cap handling, and audio playback logic exist in exactly one place.
+    // `opts.submitStartedAt` (audio path only) drives the latency-timing
+    // entry; `opts.kidChipDurationSeconds` (audio path only) appends the
+    // "con vừa nói xong" transcript chip -- the repair-choice tap has
+    // neither (no recording happened), per this packet's report.
+    function ftHandleTurnResponse(data: TalkResponse, opts: { kidChipDurationSeconds?: number; submitStartedAt?: number } = {}) {
+      if (opts.kidChipDurationSeconds !== undefined) {
+        ftAppendKidChip(opts.kidChipDurationSeconds);
+      }
+      if (data.transcript) ft.sentenceCount += (data.transcript.match(/[.!?]+/g) || [1]).length;
+
+      ft.turnsUsed += 1;
+      if (typeof opts.submitStartedAt === 'number') {
+        // One request now, so the client times the whole record→reply gap;
+        // the server's per-stage split (stt/llm/guard/tts) rides in data.timing.
+        const totalMs = Date.now() - opts.submitStartedAt;
+        const server = data.timing || {};
+        const entry = {
+          stt_ms: server.stt_ms ?? null,
+          brain_ms: totalMs - (server.stt_ms ?? 0),
+          total_ms: totalMs,
+          llm_source: server.llm_source,
+          server,
+        };
+        ft.turnTimings.push(entry);
+        console.info('[ft-latency] turn', ft.turnsUsed, entry);
+      }
+
+      ft.turnsLeft = data.turns_left ?? Math.max(0, ft.turnsLeft - 1);
+      ft.secondsLeft = data.seconds_left ?? ft.secondsLeft;
+      ftRenderDots();
+      ftUpdateTimerDisplay();
+      ftSetThinking(false);
+
+      if (data.ended) {
+        ftAppendReplyBubble(data.reply_en, data.mood || 'celebrate');
+        ftApplyScaffold({ mode: 'none' });
+        ftApplyHint(null);
+        ftRenderSubtitle(data.subtitle_vi);
+        playConversationAudio(data.audio_b64, data.content_type, data.reply_en);
+        if (data.flagged) ft.flaggedSession = true;
+        ftHandleCapReached(data.flagged ? 'flagged' : (ft.secondsLeft <= 0 ? 'time' : 'turns'));
+        return;
+      }
+
+      ftAppendReplyBubble(data.reply_en, data.mood || 'idle');
+      // Chips/frame/repair-choices for THIS turn -- level-gated purely by
+      // the response shape (ftHasChips/ftIsRepairChoiceState), never a
+      // client-side level lookup (see V1.2 packet 1 acceptance criteria).
+      if (ftHasChips(data) && data.repair !== true) ft.chipTurnsSeen += 1;
+      ftApplyScaffold(ftPlanScaffold(data, ft.chipTurnsSeen));
+      // V1.2 packet 2: hint keyed on data.hint (never level, same principle
+      // as chips above); game framing keyed on ft.game (client state from
+      // the topic-picker CTA).
+      ftApplyHint(data);
+      ftApplyGameFraming(data);
+      ftRenderSubtitle(data.subtitle_vi);
+      if (!data.audio_b64 && data.audio_pending) {
+        ftFetchPendingAudio(data.audio_turn, data.reply_en);
+      } else {
+        playConversationAudio(data.audio_b64, data.content_type, data.reply_en);
+      }
+    }
+
+    async function ftSubmitAudio(blob: Blob, durationSeconds: number) {
+      ftSetThinking(true);
+      // A new turn supersedes any still-polling audio from the previous one.
+      ft.audioPollToken += 1;
+      const submitStartedAt = Date.now();
+      const formData = new FormData();
+      formData.append('access_code', state.accessCode);
+      formData.append('action', 'turn');
+      formData.append('session_id', ft.sessionId!);
+      formData.append('audio', blob, audioUploadFilename(blob));
+
+      try {
+        const res = await fetch('/api/minny-conversation', { method: 'POST', body: formData });
+        const data = await res.json();
+
+        if (!res.ok || !data.ok) {
+          ftSetThinking(false);
+          // transcript_missing = Minny didn't catch the words; else a reply error.
+          ftUpdateRecordUi(data.error === 'transcript_missing'
+            ? 'Minny chưa nghe rõ. Con thử nói lại nhé!'
+            : 'Minny chưa trả lời được. Con thử nói lại nhé!');
+          return;
+        }
+
+        if (data.ended && !data.reply_en) {
+          // Session expired/missing server-side — rare edge case, not a cap.
+          ftSetThinking(false);
+          ftHandleCapReached('expired', data.message_vi);
+          return;
+        }
+
+        ftHandleTurnResponse(data, { submitStartedAt, kidChipDurationSeconds: durationSeconds });
+      } catch {
+        ftSetThinking(false);
+        ftUpdateRecordUi('Mạng không ổn định. Con thử lại nhé!');
+      }
+    }
+
+    // V1.1 repair step-(b) exception (Wave D Set 1 screen 5): the oversized
+    // two-choice buttons resolve the turn directly by sending the tapped
+    // option's text as the transcript -- the ladder's one tap-alone-answers
+    // case (V1-D2). Reuses the endpoint's existing legacy JSON `turn` path
+    // (client-supplied transcript, no audio) rather than a new request shape.
+    async function ftSubmitTranscript(text: string) {
+      ftSetThinking(true);
+      ft.audioPollToken += 1;
+      try {
+        const res = await fetch('/api/minny-conversation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            action: 'turn',
+            session_id: ft.sessionId,
+            transcript: text,
+          }),
+        });
+        const data = await res.json();
+
+        if (!res.ok || !data.ok) {
+          ftSetThinking(false);
+          ftUpdateRecordUi('Minny chưa trả lời được. Con thử lại nhé!');
+          return;
+        }
+
+        if (data.ended && !data.reply_en) {
+          ftSetThinking(false);
+          ftHandleCapReached('expired', data.message_vi);
+          return;
+        }
+
+        ftHandleTurnResponse(data);
+      } catch {
+        ftSetThinking(false);
+        ftUpdateRecordUi('Mạng không ổn định. Con thử lại nhé!');
+      }
+    }
+
+    function ftHandleCapReached(reason: string, overrideText?: string) {
+      ft.ended = true;
+      // Session is over — kill any still-pending reply-audio poll.
+      ft.audioPollToken += 1;
+      ftStopCountdown();
+      ftCleanupRecording();
+      ftReleaseMic();
+      const recordBtn = (document.getElementById('free-talk-record') as HTMLButtonElement);
+      if (recordBtn) recordBtn.disabled = true;
+
+      const texts: Record<string, string> = {
+        time: 'Hôm nay nói chuyện vui quá! Hẹn gặp lại con nhé!',
+        turns: 'Con nói giỏi quá! Nghỉ tay một tí rồi tiếp nhé!',
+        flagged: 'Con nói giỏi quá! Nghỉ tay một tí rồi tiếp nhé!',
+        expired: overrideText || 'Phiên trò chuyện đã kết thúc rồi. Con bắt đầu phiên mới nhé!',
+      };
+
+      ftShowWrapup({
+        text: texts[reason] || texts.time,
+        eyebrow: 'Minny · celebrate',
+        showSummaryCta: true,
+        showRetry: false,
+      });
+    }
+
+    function ftShowSummary() {
+      (document.getElementById('ft-conversation') as HTMLElement)?.classList.add('hidden');
+      (document.getElementById('free-talk-wrapup') as HTMLElement)?.classList.add('hidden');
+      const minutesUsed = Math.max(1, Math.round((300 - ft.secondsLeft) / 60));
+
+      const statsEl = (document.getElementById('free-talk-summary-stats') as HTMLElement);
+      if (statsEl) {
+        statsEl.innerHTML = [
+          { value: ft.turnsUsed, label: 'lượt trò chuyện' },
+          { value: ft.sentenceCount, label: 'câu con đã nói' },
+          { value: minutesUsed, label: 'phút trò chuyện' },
+        ].map((s) => `
+          <div class="minny-summary-stat">
+            <strong>${s.value}</strong>
+            <span>${s.label}</span>
+          </div>
+        `).join('');
+      }
+      const lineEl = (document.getElementById('free-talk-summary-line') as HTMLElement);
+      if (lineEl) lineEl.textContent = 'Con nói rõ ràng và tự tin lắm. Ngày mai kể tiếp cho Minny nghe nhé!';
+
+      (document.getElementById('free-talk-summary') as HTMLElement)?.classList.remove('hidden');
+      console.info('[ft-latency] session p50:', ftLatencyP50(), 'ms over', ft.turnTimings.length, 'turns');
+
+      if (state.accessCode && state.packId) {
+        fetch('/api/minny-practice-log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            pack_id: state.packId,
+            prompt_id: 'free_talk_summary',
+            mode_id: 'free_talk',
+            completion_id: getOrCreateCompletionId(ft, 'completionId'),
+            summary: {
+              mode: 'free_talk',
+              turns: ft.turnsUsed,
+              sentence_count: ft.sentenceCount,
+              minutes: minutesUsed,
+              flagged: ft.flaggedSession === true,
+              latency_p50_ms: ftLatencyP50(),
+              latency_turns: ft.turnTimings.length,
+            },
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => { if (data?.ok) celebrateDiamonds(data); })
+          .catch(() => {});
+      }
+    }
+
+    (document.getElementById('free-talk-record') as HTMLButtonElement)?.addEventListener('click', () => {
+      if (ft.recording) {
+        ftStopRecording();
+      } else {
+        ftStartRecording();
+      }
+    });
+
+    (document.getElementById('ft-handsfree-toggle') as HTMLButtonElement)?.addEventListener('click', () => {
+      const next = ftHandsFreeOn() ? '0' : '1';
+      try { localStorage.setItem('r2l_ft_handsfree', next); } catch {}
+      ftUpdateHandsFreeToggle();
+      if (next === '0') {
+        // Turning hands-free off mid-listen must stop VAD immediately --
+        // the toggle is now the visible source of truth, not a silent flag.
+        ftStopVad();
+      }
+    });
+    ftUpdateHandsFreeToggle();
+
+    // V1.2 packet 2: 💡 hint button -- tap reveals the card (works for both
+    // the idle B1 and pulsing/offered B2 button, mock: same button).
+    (document.getElementById('ft-hint-btn') as HTMLButtonElement)?.addEventListener('click', ftRevealHint);
+
+    // V1.2 packet 2 (Wave D2 §A): topic-picker interactions. Tapping a tile
+    // or game card only SELECTS it (mock: a separate "Bắt đầu nói chuyện 🚀"
+    // CTA confirms) -- never fires the start request by itself.
+    (document.getElementById('ft-picker-topic-grid') as HTMLElement)?.addEventListener('click', (event) => {
+      const btn = (event.target as Element).closest<HTMLElement>('.fx-topic');
+      const grid = (document.getElementById('ft-picker-topic-grid') as HTMLElement);
+      if (!btn || !grid?.contains(btn)) return;
+      grid.querySelectorAll<HTMLElement>('.fx-topic').forEach((el) => {
+        const isTarget = el === btn;
+        el.classList.toggle('fx-topic--selected', isTarget);
+        el.setAttribute('aria-pressed', String(isTarget));
+      });
+      ft.pickerTopic = btn.dataset.topic || null;
+      const startBtn = (document.getElementById('ft-picker-start') as HTMLButtonElement);
+      if (startBtn) startBtn.disabled = !ft.pickerTopic;
+    });
+
+    // Games are optional and single-select; tapping the already-selected
+    // card deselects it (mock: "không bắt buộc" -- picking a topic is the
+    // only required step, per the README's game/topic interaction note).
+    (document.getElementById('ft-picker-game-cards') as HTMLElement)?.addEventListener('click', (event) => {
+      const btn = (event.target as Element).closest<HTMLElement>('.minny-game-card');
+      const cards = (document.getElementById('ft-picker-game-cards') as HTMLElement);
+      if (!btn || !cards?.contains(btn)) return;
+      const alreadySelected = btn.classList.contains('is-selected');
+      cards.querySelectorAll<HTMLElement>('.minny-game-card').forEach((el) => {
+        el.classList.remove('is-selected');
+        el.setAttribute('aria-pressed', 'false');
+      });
+      if (alreadySelected) {
+        ft.pickerGame = null;
+      } else {
+        btn.classList.add('is-selected');
+        btn.setAttribute('aria-pressed', 'true');
+        ft.pickerGame = btn.dataset.game || null;
+      }
+    });
+
+    (document.getElementById('ft-picker-start') as HTMLButtonElement)?.addEventListener('click', () => {
+      if (!ft.pickerTopic) return;
+      const topic = ft.pickerTopic;
+      const game = ft.pickerGame;
+      (document.getElementById('ft-topic-picker') as HTMLElement)?.classList.add('hidden');
+      (document.getElementById('ft-conversation') as HTMLElement)?.classList.remove('hidden');
+      startFreeTalkSession({ topic, game });
+    });
+
+    (document.getElementById('ft-picker-back') as HTMLButtonElement)?.addEventListener('click', ftExitToModes);
+
+    (document.getElementById('free-talk-end') as HTMLButtonElement)?.addEventListener('click', () => {
+      ft.ended = true;
+      // Kid pressed End — kill any still-pending reply-audio poll too.
+      ft.audioPollToken += 1;
+      ftStopCountdown();
+      ftCleanupRecording();
+      ftReleaseMic();
+      ftShowSummary();
+    });
+
+    // Free the conversation mic when the tab is hidden and idle (the next tap
+    // reacquires it); never interrupt an in-flight recording.
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        // Never let a pending hands-free re-arm reopen the mic in a hidden tab.
+        ftCancelAutoArm();
+        if (ft.micStream && !ft.recording) ftReleaseMic();
+      }
+    });
+
+    (document.getElementById('free-talk-wrapup-cta') as HTMLButtonElement)?.addEventListener('click', ftShowSummary);
+    (document.getElementById('free-talk-retry') as HTMLButtonElement)?.addEventListener('click', () => {
+      enterFreeTalking();
+    });
+    (document.getElementById('free-talk-wrapup-home') as HTMLButtonElement)?.addEventListener('click', ftExitToModes);
+
+    (document.getElementById('free-talk-summary-again') as HTMLButtonElement)?.addEventListener('click', () => {
+      (document.getElementById('free-talk-summary') as HTMLElement)?.classList.add('hidden');
+      enterFreeTalking();
+    });
+
+    (document.getElementById('free-talk-summary-home') as HTMLButtonElement)?.addEventListener('click', ftExitToModes);
+
+    loadBtn?.addEventListener('click', loadSession);
+    codeInput?.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') loadSession();
+    });
+
+    if (params.get('code')) {
+      codeInput.value = params.get('code')!.toUpperCase();
+      loadSession();
+    }
+  </script>
+  <script src={r2lRecorderSrc} defer></script>
+  <script src="/scripts/r2l-mic-check.js" defer></script>
+</SpeakUpAppLayout>

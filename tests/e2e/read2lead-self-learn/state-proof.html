@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Read2Lead local state proof — synthetic only</title><style>body{font:17px/1.5 system-ui;max-width:850px;margin:30px auto;padding:20px}pre{white-space:pre-wrap}h1{font-size:25px}</style><h1>Read2Lead state and persistence proof</h1><p>Test instrumentation. Synthetic records only. No account, microphone or paid provider access.</p><pre id="report">Loading modules…</pre><script type="module">
+import {openPendingStore} from '../../../src/lib/read2lead/self-learn/pending-store.mjs';
+import {createSession,applyEvent,STAGES} from '../../../functions/lib/read2lead/self-learn/session.mjs';
+const run = new URLSearchParams(location.search).get('run');
+if (!/^[a-z0-9-]+$/.test(run||'')) throw Error('explicit_synthetic_run_required');
+const dbName='r2l-self-learn-proof-'+run, now='2026-09-18T10:00:00.000Z', actor={active:true,childId:'synthetic-a'};
+const lessons=(await (await fetch('../../fixtures/read2lead-self-learn/reference-lessons.json')).json()).lessons;
+const lesson=lessons[2], checks=[];
+const assert=(condition,label)=>{if(!condition)throw Error(label);checks.push(label)};
+const reject=async(fn,code)=>{try{await fn()}catch(e){assert(e.message===code,'reject '+code);return}throw Error('missing rejection '+code)};
+const seed=(session='main',child='synthetic-a')=>createSession({sessionId:session,childId:child,lesson,now});
+const event=(r,name='pause',payload={},id='req-'+(r.session.revision+1))=>({api_version:'1.1',request_id:id,child_id:r.session.child_id,session_id:r.session.session_id,expected_revision:r.session.revision,event:name,payload});
+const send=(r,name,p={},id)=>{const x=applyEvent(r,event(r,name,p,id),actor,now);if(!x.response.ok)throw Error(x.response.code);return x};
+function next(r){const s=r.session,p={text:'',capture_status:'missing',support_used:[]};switch(s.stage){case'pre_read':return['prediction',{text:''}];case'input':return['input_complete',{order:['read']}];case'comprehension':return s.question_cursor<3?['answer',{item_id:lesson.questions[s.question_cursor].id,choice_index:0,text:'',evidence_sentence_ids:[],support_used:[],capture_status:'valid'}]:['save_understand'];case'understand_saved':return['begin_use'];case'shadowing':return['shadow_complete',p];case'mini_story':return['minny_turn',{...p,turn_id:lesson.minny.turns[s.dialogue_cursor].id}];case'retell':return r.retell_received?['complete']:['retell',p];}}
+window.runProof=async()=>{
+ let a=await openPendingStore({name:dbName}),b=await openPendingStore({name:dbName}),scope=await a.activateChild('synthetic-a'),other=await b.activateChild('synthetic-b'),r=await seed();
+ await reject(()=>a.enqueue(scope,event(r)),'acknowledgement_required');await a.accept(scope,r.session);
+ await reject(()=>a.accept(other,r.session),'wrong_scope');await reject(()=>a.enqueue(scope,{...event(r),diamonds:99}),'invalid_event');
+ const e=event(r,'prediction',{text:'A map'});await a.enqueue(scope,e);await b.enqueue(scope,e);
+ assert((await b.read(scope,'main')).acknowledged.stage==='pre_read','pending does not advance acknowledged stage');
+ await reject(()=>b.enqueue(scope,{...e,payload:{text:'Changed'}}),'request_conflict');await reject(()=>b.enqueue(scope,{...e,request_id:'another'}),'pending_exists');
+ a.close();a=await openPendingStore({name:dbName});assert((await a.read(scope,'main')).pending.request_id===e.request_id,'pending survives connection restart');
+ const result=applyEvent(r,e,actor,now);r=result.record;await a.acknowledge(scope,result.response);assert((await b.read(scope,'main')).state==='acknowledged','ack clears pending atomically');
+ await reject(()=>a.acknowledge(scope,{...result.response,request_id:'not-saved'}),'invalid_acknowledgement');
+ await reject(()=>a.enqueue(scope,e),'already_acknowledged');
+ await reject(()=>a.accept(scope,{...r.session,stage:'complete'}),'snapshot_conflict');
+ const second=send(r,'input_complete',{order:['read']});r=second.record;await a.accept(scope,r.session);await a.acknowledge(scope,result.response);assert((await a.read(scope,'main')).acknowledged.revision===2,'old replay receipt cannot rewind cache');
+ const pending=event(r,'pause',{},'pending-conflict');await a.enqueue(scope,pending);
+ r=send(r,'pause',{},'other-device').record;await b.accept(scope,r.session);let row=await a.read(scope,'main');assert(row.state==='conflict'&&row.pending.request_id==='pending-conflict','newer foreign receipt preserves pending as conflict');
+ await reject(()=>a.discardPending(scope,'main','wrong-id'),'request_conflict');await a.discardPending(scope,'main','pending-conflict');
+ const race=await seed('race');await a.accept(scope,race.session);
+ const competing=await Promise.allSettled([a.enqueue(scope,event(race,'pause',{},'race-a')),b.enqueue(scope,event(race,'pause',{},'race-b'))]);assert(competing.filter(x=>x.status==='fulfilled').length===1&&competing.filter(x=>x.status==='rejected'&&x.reason.message==='pending_exists').length===1,'concurrent IndexedDB connections permit one pending event');
+ const sibling=await seed('sibling','synthetic-b');await b.accept(other,sibling.session);
+ await a.signOut(scope);await reject(()=>b.acknowledge(scope,result.response),'scope_expired');assert((await b.read(other,'sibling')).acknowledged.child_id==='synthetic-b','sibling cache preserved on sign-out');
+ const newScope=await a.activateChild('synthetic-a');assert(newScope.epoch>scope.epoch,'sign-in creates new generation');assert(await a.read(newScope,'main')===null,'signed-out child state cleared');await reject(()=>b.accept(scope,result.response.session),'scope_expired');
+ scope=newScope;
+ for(const stage of STAGES){let record=await seed('reload-'+stage);while(record.session.stage!==stage)record=send(record,...next(record)).record;await a.accept(scope,record.session);if(stage!=='complete')await a.enqueue(scope,event(record,'pause',{},'pending-'+stage));else await reject(()=>a.enqueue(scope,event(record)),'session_complete');}
+ await reject(()=>openPendingStore({indexedDB:null,name:dbName}),'storage_unavailable');
+ window.proofScope=scope;window.proofChecks=checks;document.querySelector('#report').textContent=JSON.stringify({passed:checks.length,checks,reload:'eight snapshots prepared'},null,2);a.close();b.close();return {passed:checks.length,checks};
+};
+window.verifyReload=async()=>{const store=await openPendingStore({name:dbName}),scope=await store.activateChild('synthetic-a'),rows=[];for(const stage of STAGES){const row=await store.read(scope,'reload-'+stage);assert(row?.acknowledged.stage===stage,'reload keeps '+stage);assert(stage==='complete'?!row.pending:row.pending?.request_id==='pending-'+stage,'reload pending distinct '+stage);rows.push({stage,pending:!!row.pending,revision:row.acknowledged.revision});}store.close();document.querySelector('#report').textContent=JSON.stringify({reload_passed:rows},null,2);return rows;};
+window.competeFromTab=async(id)=>{const store=await openPendingStore({name:dbName}),scope=await store.activateChild('synthetic-a');const row=await store.read(scope,'reload-pre_read');await reject(()=>store.enqueue(scope,{...row.pending,request_id:id}),'pending_exists');store.close();return 'cross-tab stale event refused';};
+window.proofReady=true;document.querySelector('#report').textContent='Ready for isolated synthetic tests.';
+</script></html>

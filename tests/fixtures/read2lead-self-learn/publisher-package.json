@@ -1,0 +1,423 @@
+{
+  "format": "r2l-publisher-package/1",
+  "lesson": {
+    "id": "r2l-the-missing-cup",
+    "version": "1.2.1",
+    "rubric_version": "practice-rubric-1",
+    "level": "L1",
+    "level_label_vi": "\u0110\u1ed3ng",
+    "title_en": "The Missing Cup",
+    "theme": "home",
+    "status": "draft",
+    "source": {
+      "kind": "synthetic_fixture",
+      "source_id": "synthetic-story-01",
+      "collection_id": "synthetic-collection-1",
+      "collection_level": 1,
+      "edition_id": "synthetic-edition",
+      "book_id": "synthetic-january",
+      "month": 1,
+      "story_number": 1,
+      "title_as_printed": "The Missing Cup",
+      "pdf_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "pdf_pages": [
+        6,
+        7
+      ],
+      "printed_pages": [
+        "2",
+        "3"
+      ],
+      "attribution": "Synthetic contract test, not One Story a Day",
+      "predecessor_source_id": null
+    },
+    "objectives": [
+      "Order three events, resolve she, and reject a contradiction."
+    ],
+    "difficulty": {
+      "reasoning": "sequence_reference",
+      "independence": "fading_frames",
+      "language": "short_linked_sentences"
+    },
+    "story": {
+      "sentences": [
+        {
+          "id": "s1",
+          "text_en": "Linh puts a small cup on the kitchen table."
+        },
+        {
+          "id": "s2",
+          "text_en": "She wants to give her plant some water."
+        },
+        {
+          "id": "s3",
+          "text_en": "First, she looks for the plant by the window."
+        },
+        {
+          "id": "s4",
+          "text_en": "The plant is on a high shelf."
+        },
+        {
+          "id": "s5",
+          "text_en": "When Linh turns back, the cup is gone."
+        },
+        {
+          "id": "s6",
+          "text_en": "Her little brother points to the sink."
+        },
+        {
+          "id": "s7",
+          "text_en": "The cup is there, beside a big bowl."
+        },
+        {
+          "id": "s8",
+          "text_en": "Linh fills it with water and walks slowly to the shelf."
+        },
+        {
+          "id": "s9",
+          "text_en": "She waters the plant, and one drop lands on her nose."
+        },
+        {
+          "id": "s10",
+          "text_en": "Her brother smiles and hands her a small towel."
+        }
+      ],
+      "text_sha256": "c85ce91530dd677972bde5a6b52c0a2d6bc61974b029ff5b417fc9a4af84bc60"
+    },
+    "illustrations": [],
+    "input": {
+      "order": "listen_then_read",
+      "evidence_labels": [
+        "listening_only",
+        "audio_assisted_reading",
+        "independent_reading"
+      ],
+      "break_after_sentence_ids": [
+        "s5",
+        "s10"
+      ]
+    },
+    "pre_read": {
+      "graded": false,
+      "vocabulary": [
+        {
+          "word_en": "shelf",
+          "meaning_vi": "k\u1ec7"
+        },
+        {
+          "word_en": "sink",
+          "meaning_vi": "b\u1ed3n r\u1eeda"
+        }
+      ],
+      "prediction_en": "What might happen?"
+    },
+    "audio": {
+      "content_version": "1.2.1",
+      "script_en": "Linh puts a small cup on the kitchen table. She wants to give her plant some water. First, she looks for the plant by the window. The plant is on a high shelf. When Linh turns back, the cup is gone. Her little brother points to the sink. The cup is there, beside a big bowl. Linh fills it with water and walks slowly to the shelf. She waters the plant, and one drop lands on her nose. Her brother smiles and hands her a small towel.",
+      "script_sha256": "c85ce91530dd677972bde5a6b52c0a2d6bc61974b029ff5b417fc9a4af84bc60",
+      "asset_id": null,
+      "voice_version": "synthetic-voice",
+      "status": "missing",
+      "segments": []
+    },
+    "questions": [
+      {
+        "id": "r2l-the-missing-cup-q1",
+        "version": "1.2.1",
+        "kind": "choice",
+        "dimension": "meaning",
+        "prompt_en": "What does Linh do after she finds the cup?",
+        "options_en": [
+          "She puts the plant in the sink.",
+          "She fills the cup and waters the plant.",
+          "She gives the empty cup to her brother."
+        ],
+        "correct_index": 1,
+        "accepted_meanings": [
+          "She fills it with water and waters the plant."
+        ],
+        "evidence_spans": [
+          {
+            "sentence_id": "s8",
+            "quote": "Linh fills it with water and walks slowly to the shelf."
+          },
+          {
+            "sentence_id": "s9",
+            "quote": "She waters the plant, and one drop lands on her nose."
+          }
+        ],
+        "source": "story",
+        "distractors": [
+          {
+            "option_index": 0,
+            "reason_en": "The plant stays on the shelf."
+          },
+          {
+            "option_index": 2,
+            "reason_en": "The story does not say she gives away the cup."
+          }
+        ],
+        "support": {
+          "question_audio_allowed": true,
+          "revealing_hint_marks_assisted": true,
+          "repeat_marks_practice": true
+        },
+        "expected": {
+          "correct_unassisted": "provisional",
+          "correct_with_hint": "assisted",
+          "wrong_valid": "needs_support",
+          "missing_capture": "unassessable"
+        },
+        "scenario_visual_description": null
+      },
+      {
+        "id": "r2l-the-missing-cup-q2",
+        "version": "1.2.1",
+        "kind": "choice",
+        "dimension": "evidence",
+        "prompt_en": "In \u201cShe waters the plant\u201d, who is \u201cShe\u201d?",
+        "options_en": [
+          "The plant",
+          "Her brother",
+          "Linh"
+        ],
+        "correct_index": 2,
+        "accepted_meanings": [
+          "She means Linh."
+        ],
+        "evidence_spans": [
+          {
+            "sentence_id": "s8",
+            "quote": "Linh fills it with water and walks slowly to the shelf."
+          },
+          {
+            "sentence_id": "s9",
+            "quote": "She waters the plant, and one drop lands on her nose."
+          }
+        ],
+        "source": "story",
+        "distractors": [
+          {
+            "option_index": 0,
+            "reason_en": "A plant is not the person carrying water."
+          },
+          {
+            "option_index": 1,
+            "reason_en": "Her brother gives the towel later."
+          }
+        ],
+        "support": {
+          "question_audio_allowed": true,
+          "revealing_hint_marks_assisted": true,
+          "repeat_marks_practice": true
+        },
+        "expected": {
+          "correct_unassisted": "provisional",
+          "correct_with_hint": "assisted",
+          "wrong_valid": "needs_support",
+          "missing_capture": "unassessable"
+        },
+        "scenario_visual_description": null
+      },
+      {
+        "id": "r2l-the-missing-cup-q3",
+        "version": "1.2.1",
+        "kind": "choice",
+        "dimension": "transfer",
+        "prompt_en": "A new story says: first fill a cup, next carry it, then water a plant. What happens in the middle?",
+        "options_en": [
+          "Carry the cup",
+          "Water the plant",
+          "Fill the cup"
+        ],
+        "correct_index": 0,
+        "accepted_meanings": [
+          "Carry it."
+        ],
+        "evidence_spans": [],
+        "source": "new_scenario",
+        "distractors": [
+          {
+            "option_index": 1,
+            "reason_en": "Watering comes last."
+          },
+          {
+            "option_index": 2,
+            "reason_en": "Filling comes first."
+          }
+        ],
+        "support": {
+          "question_audio_allowed": true,
+          "revealing_hint_marks_assisted": true,
+          "repeat_marks_practice": true
+        },
+        "expected": {
+          "correct_unassisted": "provisional",
+          "correct_with_hint": "assisted",
+          "wrong_valid": "needs_support",
+          "missing_capture": "unassessable"
+        },
+        "scenario_visual_description": null
+      }
+    ],
+    "misconception_repair": {
+      "id": "r2l-the-missing-cup-repair",
+      "fresh_prompt_en": "Linh finds the cup. Then she fills it. Which happens first?",
+      "options_en": [
+        "She fills it.",
+        "She finds it.",
+        "Her brother waters the plant."
+      ],
+      "correct_index": 1,
+      "maximum_probes": 1,
+      "after_exposure": "practice_only",
+      "exit_if_uncertain": "save_needs_support_and_continue",
+      "hint_en": "Read the story again."
+    },
+    "shadowing": {
+      "sentence_ids": [
+        "s7",
+        "s8"
+      ],
+      "mode": "chunk_then_fade",
+      "capture_optional": true,
+      "missing_capture_result": "unassessable"
+    },
+    "minny": {
+      "identity_vi": "Minny l\u00e0 b\u1ea1n luy\u1ec7n t\u1eadp AI. M\u00ecnh c\u00f9ng luy\u1ec7n v\u1edbi c\u00e2u chuy\u1ec7n n\u00e0y nh\u00e9.",
+      "max_turns": 4,
+      "assessment_mode": "practice",
+      "facts": [
+        {
+          "sentence_id": "s1",
+          "quote": "Linh puts a small cup on the kitchen table."
+        },
+        {
+          "sentence_id": "s7",
+          "quote": "The cup is there, beside a big bowl."
+        },
+        {
+          "sentence_id": "s9",
+          "quote": "She waters the plant, and one drop lands on her nose."
+        }
+      ],
+      "turns": [
+        {
+          "id": "r2l-the-missing-cup-m1",
+          "prompt_en": "Where does Linh put the cup at the beginning?",
+          "expected_meaning": "On the kitchen table.",
+          "fallback_vi": "M\u00ecnh c\u00f3 th\u1ec3 xem l\u1ea1i c\u00e2u chuy\u1ec7n r\u1ed3i th\u1eed m\u1ed9t \u00fd ng\u1eafn nh\u00e9.",
+          "fact_policy": "story_only"
+        },
+        {
+          "id": "r2l-the-missing-cup-m2",
+          "prompt_en": "Where is the plant?",
+          "expected_meaning": "On a high shelf.",
+          "fallback_vi": "M\u00ecnh c\u00f3 th\u1ec3 xem l\u1ea1i c\u00e2u chuy\u1ec7n r\u1ed3i th\u1eed m\u1ed9t \u00fd ng\u1eafn nh\u00e9.",
+          "fact_policy": "story_only"
+        },
+        {
+          "id": "r2l-the-missing-cup-m3",
+          "prompt_en": "What lands on Linh\u2019s nose?",
+          "expected_meaning": "One drop of water.",
+          "fallback_vi": "M\u00ecnh c\u00f3 th\u1ec3 xem l\u1ea1i c\u00e2u chuy\u1ec7n r\u1ed3i th\u1eed m\u1ed9t \u00fd ng\u1eafn nh\u00e9.",
+          "fact_policy": "story_only"
+        },
+        {
+          "id": "r2l-the-missing-cup-m4",
+          "prompt_en": "Tell Minny the last thing her brother does.",
+          "expected_meaning": "He hands Linh a towel.",
+          "fallback_vi": "M\u00ecnh c\u00f3 th\u1ec3 xem l\u1ea1i c\u00e2u chuy\u1ec7n r\u1ed3i th\u1eed m\u1ed9t \u00fd ng\u1eafn nh\u00e9.",
+          "fact_policy": "story_only"
+        }
+      ],
+      "failure_result": "prepared_practice_no_grade",
+      "allowed_actions": [
+        "ask_story_question",
+        "offer_reviewed_hint",
+        "encourage_effort"
+      ],
+      "forbidden_actions": [
+        "change_story_facts",
+        "change_level",
+        "award_value",
+        "request_personal_details"
+      ]
+    },
+    "retell": {
+      "prompt_en": "Tell what happens first, next and last. How does Linh find the cup and water her plant?",
+      "essential_facts": [
+        {
+          "sentence_id": "s1",
+          "quote": "Linh puts a small cup on the kitchen table."
+        },
+        {
+          "sentence_id": "s7",
+          "quote": "The cup is there, beside a big bowl."
+        },
+        {
+          "sentence_id": "s9",
+          "quote": "She waters the plant, and one drop lands on her nose."
+        }
+      ],
+      "accepted_paraphrases": [
+        "Linh puts a small cup on the kitchen table.",
+        "The cup is there, beside a big bowl.",
+        "She waters the plant, and one drop lands on her nose.",
+        "Linh gets her cup back, adds water and uses it for her plant."
+      ],
+      "nonessential_details": [
+        "exact wording",
+        "accent",
+        "speech speed"
+      ],
+      "dimensions": [
+        "essential_facts",
+        "order_causality",
+        "language_intelligibility",
+        "support_used"
+      ],
+      "support_form": "sequence_frame",
+      "missing_speech_preserves_reading": true,
+      "open_response_scoring": "pending_validated_assessor"
+    },
+    "independent_followup": {
+      "id": "r2l-the-missing-cup-follow",
+      "version": "1.2.1",
+      "prompt_en": "Which statement matches the story?",
+      "options_en": [
+        "Linh finds the cup beside a bowl.",
+        "Linh finds the cup under the plant.",
+        "Her brother waters the plant."
+      ],
+      "correct_index": 0,
+      "accepted_meanings": [
+        "The cup is beside a bowl."
+      ],
+      "not_in_minny_script": true
+    },
+    "policy": {
+      "practice_only": true,
+      "automatic_promotion": false,
+      "real_rewards": false,
+      "max_teaching_repairs": 1,
+      "no_summed_pass_threshold": true,
+      "unassessable_is_zero": false
+    },
+    "review": {
+      "author_check": "complete",
+      "independent_review": false,
+      "pedagogical_validation": "pending",
+      "publication": "not_authorized"
+    },
+    "response_mode": {
+      "kind": "read_speak",
+      "typing_allowed": false,
+      "tap_choices": "optional",
+      "capture_required": false
+    }
+  },
+  "assets": [],
+  "rights": [],
+  "reviews": []
+}

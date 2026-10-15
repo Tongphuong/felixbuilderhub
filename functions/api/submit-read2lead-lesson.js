@@ -1,3 +1,4 @@
+import { recordLearningReceipt } from '../lib/read2lead/learning-stars.mjs';
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import { ensureSixActivities } from './_read2lead-lesson-activities.js';
 import { validateBookFlowSubmission } from '../../src/lib/read2lead-book-flow.mjs';
@@ -300,8 +301,9 @@ export async function submitV2Lesson({
     : completedTypes.size >= ACTIVE_LESSON_ACTIVITY_TYPES.size;
   const scorePercent = score.score_percent;
   const speakingGate = evaluateSpeakingGate(activityResults, expectedTypes);
-  const completedWithoutReward = allActivitiesAttempted && speakingGate.skipped;
-  const passed = allActivitiesAttempted
+  const reviewOnly = currentPack.review_only === true || (isBookFlowV2 && (codeData.completed_books || []).includes(lessonContext.book_slug));
+  const completedWithoutReward = allActivitiesAttempted && (speakingGate.skipped || reviewOnly);
+  const passed = !reviewOnly && allActivitiesAttempted
     && speakingGate.passed
     && scorePercent >= PASS_THRESHOLD_PERCENT;
   const graded = gradeRewards(scorePercent);
@@ -316,7 +318,7 @@ export async function submitV2Lesson({
   // out for the individual pages it DID pass. Only the grade-based bonus
   // (S/A/B) stays gated on `passed`. See applyPackPenalty's diamondsEarned
   // param for how this lands when the pack doesn't pass.
-  const pageDiamonds = isBookFlowV2
+  const pageDiamonds = !reviewOnly && isBookFlowV2
     ? countPagesWithPassedReadUnit(submittedAnswers.book_reader) * 5
     : 0;
   // Naive total — corrected below (passed branch only) to reflect what
@@ -332,6 +334,7 @@ export async function submitV2Lesson({
     passed,
     completed: passed || completedWithoutReward,
     completed_without_reward: completedWithoutReward,
+    review_only:reviewOnly,
     score_percent: scorePercent,
     grade: graded.grade,
     grade_label_vi: graded.label_vi,
@@ -377,10 +380,12 @@ export async function submitV2Lesson({
     });
   }
 
+  if(reviewOnly&&!allActivitiesAttempted)return json({ok:false,error:'review_incomplete',message:'Con hoàn thành các phần còn lại nhé. Bài ôn không cộng thêm thưởng.'},400);
   if (!passed) {
     const progressState = await loadProgressState(env, accessCode, codeData);
     const penaltyResult = applyPackPenalty(progressState, {
       packId: currentPack.pack_id,
+      learningSource: isBookLessonContext(lessonContext) ? 'book:' + lessonContext.book_slug : 'pack:' + currentPack.pack_id,
       completedAt: submittedAt,
       penaltyXp: XP_PENALTY_BELOW_THRESHOLD,
       diamondsEarned: pageDiamonds,
@@ -420,6 +425,7 @@ export async function submitV2Lesson({
   const rankLadderBefore = computeSeasonLadder(progressState);
   const stateResult = applyPackCompletion(progressState, {
     packId: currentPack.pack_id,
+    learningSource: isBookLessonContext(lessonContext) ? 'book:' + lessonContext.book_slug : 'pack:' + currentPack.pack_id,
     completedAt: submittedAt,
     // Grade-only here — pageDiamonds goes in its own param so
     // applyPackCompletion can subtract what was already paid via an earlier
@@ -670,6 +676,7 @@ async function finalizeWithoutReward({
     ? await saveProgressState(env, accessCode, {
         ...progressState,
         diamonds: numberOrZero(progressState.diamonds) + rewardsEarned.diamonds,
+        learning_receipts: recordLearningReceipt(progressState.learning_receipts, { source: isBookLessonContext(lessonContext) ? 'book:' + lessonContext.book_slug : 'pack:' + currentPack.pack_id, kind: 'original_pages', at: submittedAt, diamonds: rewardsEarned.diamonds }),
         // This pack_id can never reach a full pack-completion again (this
         // path marks the pack reviewed, terminal — no retry possible), but
         // the ledger stays the single source of truth for page-diamonds
@@ -716,6 +723,7 @@ async function finalizeWithoutReward({
     schema_version: 2,
     completed: true,
     completed_without_reward: true,
+    review_only:attempt.review_only===true,
     passed: false,
     score_percent: scorePercent,
     correct_count: correctCount,
@@ -755,6 +763,7 @@ async function respondFromCachedAttempt({
     ...(alreadyCompleted ? { already_completed: true } : { duplicate: true }),
     completed,
     completed_without_reward: completedWithoutReward,
+    review_only:currentPack.review_only===true||attempt?.review_only===true,
     passed,
     score_percent: attempt?.score_percent ?? null,
     correct_count: attempt?.correct_count ?? null,

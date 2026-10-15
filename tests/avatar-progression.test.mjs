@@ -21,42 +21,42 @@ function rawAtLevel(level, extra = {}) {
   };
 }
 
-test('tier 0 defaults to egg stage', () => {
+test('tier 0 is ready for free customization', () => {
   const state = normalizeProgressState(null, { accessCode: 'EGG-L1' });
-  assert.equal(state.avatar_stage, 'egg');
+  assert.equal(state.avatar_stage, 'custom');
 });
 
-test('learning level no longer hatches a tier 0 egg', () => {
+test('learning level does not restrict customization', () => {
   const state = normalizeProgressState(rawAtLevel('L2'), { accessCode: 'BASIC-L2' });
-  assert.equal(state.avatar_stage, 'egg');
+  assert.equal(state.avatar_stage, 'custom');
 });
 
-test('tier index 1 hatches to basic even at L1', () => {
+test('rank points are preserved when customization is free', () => {
   const state = normalizeProgressState(
     rawAtLevel('L1', { rank_points: 9 }),
     { accessCode: 'BASIC-SILVER' },
   );
   assert.equal(state.rank_points, 9);
-  assert.equal(state.avatar_stage, 'basic');
+  assert.equal(state.avatar_stage, 'custom');
 });
 
-test('persisted custom without purchases reverts to egg below Silver', () => {
+test('persisted custom remains custom without purchases', () => {
   const state = normalizeProgressState(
     rawAtLevel('L3', { avatar_stage: 'custom' }),
     { accessCode: 'CUSTOM-PERSIST' },
   );
-  assert.equal(state.avatar_stage, 'egg');
+  assert.equal(state.avatar_stage, 'custom');
 });
 
-test('persisted basic without purchases reverts to egg below Silver', () => {
+test('persisted basic gains free customization', () => {
   const state = normalizeProgressState(
     rawAtLevel('L2', { avatar_stage: 'basic' }),
     { accessCode: 'BASIC-REVERT' },
   );
-  assert.equal(state.avatar_stage, 'egg');
+  assert.equal(state.avatar_stage, 'custom');
 });
 
-test('tier 0 with a legacy monster body still renders as egg', () => {
+test('tier 0 preserves a legacy monster body', () => {
   const state = normalizeProgressState(
     rawAtLevel('L1', {
       avatar: {
@@ -70,19 +70,19 @@ test('tier 0 with a legacy monster body still renders as egg', () => {
     { accessCode: 'BRONZE-LEGACY-MONSTER' },
   );
   assert.deepEqual(state.unlocked_parts, []);
-  assert.equal(state.avatar_stage, 'egg');
-  assert.equal(getEggOrMonsterView(state).stage, 'egg');
+  assert.equal(state.avatar_stage, 'custom');
+  assert.equal(getEggOrMonsterView(state).stage, 'custom');
 });
 
-test('persisted egg advances to basic after reaching Silver', () => {
+test('persisted egg can customize without a hatch requirement', () => {
   const state = normalizeProgressState(
     rawAtLevel('L1', { avatar_stage: 'egg', rank_points: 9 }),
     { accessCode: 'EGG-HATCH' },
   );
-  assert.equal(state.avatar_stage, 'basic');
+  assert.equal(state.avatar_stage, 'custom');
 });
 
-test('unlocked purchases below Silver still render as egg until Bạc', () => {
+test('old purchases remain available below Silver', () => {
   const state = normalizeProgressState(
     rawAtLevel('L1', {
       avatar_stage: 'basic',
@@ -90,10 +90,10 @@ test('unlocked purchases below Silver still render as egg until Bạc', () => {
     }),
     { accessCode: 'PURCHASE-PRESERVE' },
   );
-  assert.equal(state.avatar_stage, 'egg');
+  assert.equal(state.avatar_stage, 'custom');
 });
 
-test('persisted custom with purchases below Silver still renders as egg', () => {
+test('old custom purchases remain available below Silver', () => {
   const state = normalizeProgressState(
     rawAtLevel('L1', {
       avatar_stage: 'custom',
@@ -101,10 +101,10 @@ test('persisted custom with purchases below Silver still renders as egg', () => 
     }),
     { accessCode: 'CUSTOM-PURCHASE-PRESERVE' },
   );
-  assert.equal(state.avatar_stage, 'egg');
+  assert.equal(state.avatar_stage, 'custom');
 });
 
-test('legacy equipped rare monster without avatar_stage below Silver stays egg', () => {
+test('legacy equipped rare monster remains visible below Silver', () => {
   const state = normalizeProgressState(
     rawAtLevel('L1', {
       avatar: {
@@ -116,7 +116,7 @@ test('legacy equipped rare monster without avatar_stage below Silver stays egg',
     }),
     { accessCode: 'LEGACY-RARE-BRONZE' },
   );
-  assert.equal(state.avatar_stage, 'egg');
+  assert.equal(state.avatar_stage, 'custom');
   assert.deepEqual(state.unlocked_parts, []);
 });
 
@@ -129,7 +129,7 @@ test('basic stage receives the frozen white monster defaults', () => {
   assert.equal(state.avatar.monster.detail, '');
 });
 
-test('saving free common choices keeps the locked basic stage', () => {
+test('saving free common choices preserves the selected common body', () => {
   const state = normalizeProgressState(
     rawAtLevel('L2', { rank_points: 9 }),
     { accessCode: 'FIRST-CUSTOM' },
@@ -140,8 +140,8 @@ test('saving free common choices keeps the locked basic stage', () => {
     'FIRST-CUSTOM',
   );
   assert.equal(saved.ok, true);
-  assert.equal(saved.state.avatar_stage, 'basic');
-  assert.equal(saved.state.avatar.monster.body, BASIC_MONSTER_CONFIG.body);
+  assert.equal(saved.state.avatar_stage, 'custom');
+  assert.equal(saved.state.avatar.monster.body, 'png-default-body-bluea');
 });
 
 test('pending ceremony is normalized and exposed publicly', () => {
@@ -164,19 +164,14 @@ test('public progress exposes stage and independent basic defaults', () => {
     { accessCode: 'PUBLIC-BASIC' },
   );
   const view = publicProgressState(state);
-  assert.equal(view.avatar_stage, 'basic');
+  assert.equal(view.avatar_stage, 'custom');
   assert.deepEqual(view.monster_basic_defaults, BASIC_MONSTER_CONFIG);
   assert.notEqual(view.monster_basic_defaults, BASIC_MONSTER_CONFIG);
 });
 
-test('getEggOrMonsterView returns egg data without monster config', () => {
-  const state = normalizeProgressState(
-    { student_name: 'Linh', xp_in_level: 40 },
-    { accessCode: 'EGG-VIEW' },
-  );
+test('getEggOrMonsterView returns the selected monster even for a beginner', () => {
+  const state = normalizeProgressState({ student_name: 'Linh', xp_in_level: 40 }, { accessCode: 'EGG-VIEW' });
   const view = getEggOrMonsterView(state);
-  assert.equal(view.stage, 'egg');
-  assert.equal(view.name, 'Linh');
-  assert.equal(view.level, 'L0');
-  assert.equal('monster' in view, false);
+  assert.equal(view.stage, 'custom');
+  assert.deepEqual(view.monster, state.avatar.monster);
 });

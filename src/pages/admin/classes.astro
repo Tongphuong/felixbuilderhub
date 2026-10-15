@@ -82,19 +82,70 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       togglePresentationMode,
     } from '../../lib/admin-juice.mjs';
 
-    const createClassBtn = document.getElementById('create-class');
-    const refreshClassesBtn = document.getElementById('refresh-classes');
-    const classStatus = document.getElementById('class-status');
-    const classListEl = document.getElementById('class-list');
-    const classEmpty = document.getElementById('class-empty');
-    const classDetail = document.getElementById('class-detail');
-    const classNameInput = document.getElementById('class-name');
-    const saveClassNameBtn = document.getElementById('save-class-name');
-    const addStudentForm = document.getElementById('add-student-form');
-    const presetEditor = document.getElementById('preset-editor');
-    const classBoard = document.getElementById('class-board');
-    const presentationToggle = document.getElementById('presentation-toggle');
-    let classState = { classes: [], selectedId: '' };
+
+    import type { MonsterConfig, MonsterRenderOpts } from '../../lib/monster-avatar';
+
+    type RewardPreset = {
+      id?: string; label: string; diamond_delta?: number; xp_delta?: number;
+      coins_delta?: number; kind?: string;
+    };
+    type HomeworkText = { id?: string; text_en: string };
+    // Editable drafts allow empty fields until the existing server validation runs.
+    type HomeworkTask = {
+      id: string; type: string; items?: HomeworkText[]; stems?: HomeworkText[];
+      duration_s?: number; prompt_en?: string; prompt_vi?: string; must_use?: string[];
+      use_photo?: boolean; columns?: { id: string; label_en?: string; options?: string[] }[];
+      sentences_required?: number; anchors?: string[];
+      cards?: { id: string; question_en?: string; stem?: { text_en: string } }[];
+    };
+    type HomeworkPhoto = { r2_key: string };
+    type Homework = {
+      updated_at: string; sentences?: HomeworkText[];
+      frame?: { stems?: HomeworkText[]; duration_s?: number }; note_vi?: string;
+      tasks?: HomeworkTask[]; photo?: HomeworkPhoto | null;
+    };
+    type ClassStudent = {
+      code: string; student_name?: string; age?: string | number; missing?: boolean;
+      attendance_today?: string; homework?: Homework | null; practice_status?: string;
+      minny_practice?: { sessions_this_week?: number }; r2l_weekly_completed?: number;
+      last_activity_at?: string | null;
+      read2lead_state?: {
+        rank_ladder?: { label_vi?: string }; rank_title?: string; current_level?: string;
+        xp_in_level?: number; xp_to_next_level?: number; xp_percent?: number;
+        coins?: number; diamonds?: number; streak_days?: number; avatar_stage?: string;
+        avatar?: { monster?: MonsterConfig }; equipped?: MonsterRenderOpts['equipped'];
+        equipped_display?: MonsterRenderOpts['equippedDisplay'];
+      };
+    };
+    type ClassRecord = {
+      id: string; name: string; students?: ClassStudent[]; student_codes?: string[];
+      positive_presets?: RewardPreset[]; needs_work_presets?: RewardPreset[];
+    };
+    type ClassPatch = {
+      name?: string; add_code?: string; remove_code?: string;
+      attendance?: { code?: string; status?: string };
+      positive_presets?: RewardPreset[]; needs_work_presets?: RewardPreset[];
+    };
+    type HomeworkSaveBody = {
+      tasks?: HomeworkTask[]; note_vi: string; sentences_text?: string;
+      frame_text?: string; frame_duration_s?: number; codes?: string[];
+      photo?: HomeworkPhoto | null;
+    };
+    type HomeworkField = HTMLInputElement | (HTMLTextAreaElement & { checked?: undefined });
+
+    const createClassBtn = (document.getElementById('create-class') as HTMLButtonElement);
+    const refreshClassesBtn = (document.getElementById('refresh-classes') as HTMLButtonElement);
+    const classStatus = (document.getElementById('class-status') as HTMLElement);
+    const classListEl = (document.getElementById('class-list') as HTMLElement);
+    const classEmpty = (document.getElementById('class-empty') as HTMLElement);
+    const classDetail = (document.getElementById('class-detail') as HTMLElement);
+    const classNameInput = (document.getElementById('class-name') as HTMLInputElement);
+    const saveClassNameBtn = (document.getElementById('save-class-name') as HTMLButtonElement);
+    const addStudentForm = (document.getElementById('add-student-form') as HTMLFormElement);
+    const presetEditor = (document.getElementById('preset-editor') as HTMLElement);
+    const classBoard = (document.getElementById('class-board') as HTMLElement);
+    const presentationToggle = (document.getElementById('presentation-toggle') as HTMLButtonElement);
+    let classState: { classes: ClassRecord[]; selectedId: string | undefined } = { classes: [], selectedId: '' };
 
     function currentClass() {
       return classState.classes.find((klass) => klass.id === classState.selectedId) || classState.classes[0] || null;
@@ -121,7 +172,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       }).join('');
     }
 
-    function renderPresetRows(title, type, presets) {
+    function renderPresetRows(title: string, type: string, presets: RewardPreset[]) {
       return `
         <div>
           <h4 class="font-semibold text-cream">${escapeHtml(title)}</h4>
@@ -139,7 +190,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       `;
     }
 
-    function renderPresetEditor(klass) {
+    function renderPresetEditor(klass: ClassRecord) {
       presetEditor.innerHTML = `
         ${renderPresetRows('Thưởng tích cực', 'positive_presets', klass.positive_presets || [])}
         ${renderPresetRows('Cần cố gắng', 'needs_work_presets', klass.needs_work_presets || [])}
@@ -159,18 +210,18 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
     // misled into thinking they're the same window.
     const PRACTICE_STATUS_DOT = { today: '🟢', recent: '🟡', inactive: '🔴' };
 
-    function practiceStatusDot(status) {
-      return PRACTICE_STATUS_DOT[status] || PRACTICE_STATUS_DOT.inactive;
+    function practiceStatusDot(status: string | undefined) {
+      return PRACTICE_STATUS_DOT[status as keyof typeof PRACTICE_STATUS_DOT] || PRACTICE_STATUS_DOT.inactive;
     }
 
     // VN calendar-day buckets (UTC+7), matching enrichClass's own
     // practiceStatus() day math in admin/_classes.js — "hôm nay"/"hôm qua"
     // reads naturally to a teacher; a bare timestamp or hour count does not.
-    function humanizeLastActive(iso, nowIso = new Date().toISOString()) {
+    function humanizeLastActive(iso: string | null | undefined, nowIso = new Date().toISOString()) {
       const ts = Date.parse(String(iso || ''));
       if (!Number.isFinite(ts)) return 'chưa luyện';
       const VN_OFFSET_MS = 7 * 60 * 60 * 1000;
-      const dayKey = (ms) => new Date(ms + VN_OFFSET_MS).toISOString().slice(0, 10);
+      const dayKey = (ms: number) => new Date(ms + VN_OFFSET_MS).toISOString().slice(0, 10);
       const today = dayKey(Date.parse(nowIso));
       const lastDay = dayKey(ts);
       if (lastDay === today) return 'hôm nay';
@@ -183,7 +234,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       return `${diffDays} ngày trước`;
     }
 
-    function renderPracticeTracker(student) {
+    function renderPracticeTracker(student: ClassStudent) {
       const dot = practiceStatusDot(student.practice_status);
       const sessions = Number(student.minny_practice?.sessions_this_week) || 0;
       const r2lWeekly = Number(student.r2l_weekly_completed) || 0;
@@ -200,7 +251,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       `;
     }
 
-    function renderStudentCard(student, klass) {
+    function renderStudentCard(student: ClassStudent, klass: ClassRecord) {
       const state = student.read2lead_state || {};
       const ladder = state.rank_ladder || {};
       const rankLabel = ladder.label_vi || state.rank_title || state.current_level || 'Read2Lead';
@@ -279,9 +330,9 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       `;
     }
 
-    function renderClassAvatars(students) {
+    function renderClassAvatars(students: ClassStudent[]) {
       for (const student of students || []) {
-        const host = Array.from(classBoard.querySelectorAll('[data-class-avatar]')).find((node) => node.dataset.classAvatar === student.code);
+        const host = Array.from(classBoard.querySelectorAll<HTMLElement>('[data-class-avatar]')).find((node) => node.dataset.classAvatar === student.code);
         if (!host) continue;
         const state = student.read2lead_state || {};
         if (state.avatar_stage === 'egg') {
@@ -338,11 +389,11 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
         }
         renderClasses();
       } catch (err) {
-        classStatus.textContent = '⚠ ' + err.message;
+        classStatus.textContent = '⚠ ' + (err as Error).message;
       }
     }
 
-    async function patchClass(body) {
+    async function patchClass(body: ClassPatch) {
       const klass = currentClass();
       if (!klass) throw new Error('Chưa chọn lớp');
       const res = await fetch(`/api/admin/classes/${encodeURIComponent(klass.id)}`, {
@@ -358,17 +409,17 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       return result.class;
     }
 
-    function collectPresets(type) {
-      return Array.from(presetEditor.querySelectorAll(`[data-preset-row][data-preset-type="${type}"]`)).map((row) => ({
+    function collectPresets(type: string) {
+      return Array.from(presetEditor.querySelectorAll<HTMLElement>(`[data-preset-row][data-preset-type="${type}"]`)).map((row) => ({
         id: `${type}-${row.dataset.index}`,
-        label: row.querySelector('[data-field="label"]')?.value || '',
-        diamond_delta: Number(row.querySelector('[data-field="diamond_delta"]')?.value || 0),
-        coins_delta: Number(row.querySelector('[data-field="coins_delta"]')?.value || 0),
+        label: row.querySelector<HTMLInputElement>('[data-field="label"]')?.value || '',
+        diamond_delta: Number(row.querySelector<HTMLInputElement>('[data-field="diamond_delta"]')?.value || 0),
+        coins_delta: Number(row.querySelector<HTMLInputElement>('[data-field="coins_delta"]')?.value || 0),
         kind: type === 'needs_work_presets' ? 'needs_work' : 'positive',
       }));
     }
 
-    async function applyClassReward({ code, diamondDelta, coinsDelta, reason, kind, sourceEl }) {
+    async function applyClassReward({ code, diamondDelta, coinsDelta, reason, kind, sourceEl }: { code: string | undefined; diamondDelta: number; coinsDelta: number; reason: string; kind: string; sourceEl: HTMLElement }) {
       const klass = currentClass();
       if (!klass) return;
       const res = await fetch(`/api/admin/classes/${encodeURIComponent(klass.id)}/reward`, {
@@ -394,7 +445,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
     }
 
     classListEl.addEventListener('click', (event) => {
-      const btn = event.target.closest('[data-class-id]');
+      const btn = (event.target as Element).closest<HTMLButtonElement>('[data-class-id]');
       if (!btn) return;
       classState.selectedId = btn.dataset.classId;
       renderClasses();
@@ -404,25 +455,25 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       try {
         await patchClass({ name: classNameInput.value });
       } catch (err) {
-        alert('Lỗi lưu tên lớp: ' + err.message);
+        alert('Lỗi lưu tên lớp: ' + (err as Error).message);
       }
     });
 
     addStudentForm.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const codeInput = addStudentForm.querySelector('[name="code"]');
+      const codeInput = addStudentForm.querySelector<HTMLInputElement>('[name="code"]')!;
       const code = codeInput.value.trim().toUpperCase();
       if (!code) return;
       try {
         await patchClass({ add_code: code });
         codeInput.value = '';
       } catch (err) {
-        alert('Lỗi thêm học sinh: ' + err.message);
+        alert('Lỗi thêm học sinh: ' + (err as Error).message);
       }
     });
 
     presetEditor.addEventListener('click', async (event) => {
-      const btn = event.target.closest('#save-presets');
+      const btn = (event.target as Element).closest<HTMLButtonElement>('#save-presets');
       if (!btn) return;
       btn.disabled = true;
       btn.textContent = 'Đang lưu...';
@@ -432,7 +483,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
           needs_work_presets: collectPresets('needs_work_presets'),
         });
       } catch (err) {
-        alert('Lỗi lưu nút thưởng: ' + err.message);
+        alert('Lỗi lưu nút thưởng: ' + (err as Error).message);
       } finally {
         btn.disabled = false;
         btn.textContent = 'Lưu các nút thưởng';
@@ -440,7 +491,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
     });
 
     classBoard.addEventListener('click', async (event) => {
-      const btn = event.target.closest('[data-class-action]');
+      const btn = (event.target as Element).closest<HTMLButtonElement>('[data-class-action]');
       if (!btn) return;
       const action = btn.dataset.classAction;
       const code = btn.dataset.code;
@@ -449,7 +500,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
         try {
           await patchClass({ remove_code: code });
         } catch (err) {
-          alert('Lỗi gỡ học sinh: ' + err.message);
+          alert('Lỗi gỡ học sinh: ' + (err as Error).message);
         }
         return;
       }
@@ -462,7 +513,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
             showEmojiBurst(btn, '✅');
           }
         } catch (err) {
-          alert('Lỗi điểm danh: ' + err.message);
+          alert('Lỗi điểm danh: ' + (err as Error).message);
         }
         return;
       }
@@ -482,16 +533,16 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
         const klass = currentClass();
         if (!klass) return;
         const student = klass.students?.find(s => s.code === code);
-        const modal = document.getElementById('homework-modal');
-        document.getElementById('homework-class-id').value = klass.id;
-        document.getElementById('homework-code').value = code;
-        document.getElementById('homework-title').textContent = `Giao bài tập riêng cho ${studentName}`;
+        const modal = (document.getElementById('homework-modal') as HTMLDialogElement);
+        (document.getElementById('homework-class-id') as HTMLInputElement).value = klass.id;
+        (document.getElementById('homework-code') as HTMLInputElement).value = code as string;
+        (document.getElementById('homework-title') as HTMLElement).textContent = `Giao bài tập riêng cho ${studentName}`;
         const hw = student?.homework;
-        document.getElementById('homework-sentences').value = hw?.sentences ? hw.sentences.map(s => s.text_en).join('\n') : '';
-        document.getElementById('homework-frame').value = hw?.frame?.stems ? hw.frame.stems.map(s => s.text_en).join('\n') : '';
-        document.getElementById('homework-duration').value = hw?.frame?.duration_s ?? 60;
-        document.getElementById('homework-note').value = hw?.note_vi || '';
-        const lessonPasteEl = document.getElementById('homework-lesson-paste');
+        (document.getElementById('homework-sentences') as HTMLTextAreaElement).value = hw?.sentences ? hw.sentences.map(s => s.text_en).join('\n') : '';
+        (document.getElementById('homework-frame') as HTMLTextAreaElement).value = hw?.frame?.stems ? hw.frame.stems.map(s => s.text_en).join('\n') : '';
+        (document.getElementById('homework-duration') as unknown as { value: string | number }).value = hw?.frame?.duration_s ?? 60;
+        (document.getElementById('homework-note') as HTMLInputElement).value = hw?.note_vi || '';
+        const lessonPasteEl = (document.getElementById('homework-lesson-paste') as HTMLTextAreaElement);
         if (lessonPasteEl) lessonPasteEl.value = '';
         hwLessonStatus('');
         // Prefill the editable task list from the stored v3 tasks[] when
@@ -509,11 +560,11 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
     });
 
     classBoard.addEventListener('submit', async (event) => {
-      const form = event.target.closest('[data-custom-reward]');
+      const form = (event.target as Element).closest<HTMLFormElement>('[data-custom-reward]');
       if (!form) return;
       event.preventDefault();
-      const diamondDelta = Number(form.querySelector('[name="diamond_delta"]')?.value || 0);
-      const coinsDelta = Number(form.querySelector('[name="coins_delta"]')?.value || 0);
+      const diamondDelta = Number(form.querySelector<HTMLInputElement>('[name="diamond_delta"]')?.value || 0);
+      const coinsDelta = Number(form.querySelector<HTMLInputElement>('[name="coins_delta"]')?.value || 0);
       const kind = diamondDelta < 0 || coinsDelta < 0 ? 'needs_work' : 'positive';
       await applyClassReward({
         code: form.dataset.code,
@@ -539,7 +590,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
         classState.selectedId = result.class.id;
         await loadClasses();
       } catch (err) {
-        alert('Lỗi tạo lớp: ' + err.message);
+        alert('Lỗi tạo lớp: ' + (err as Error).message);
       } finally {
         createClassBtn.disabled = false;
         createClassBtn.textContent = '+ Tạo lớp';
@@ -556,17 +607,17 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
 
     // --- Homework photo (one per homework; binary lives in R2, the form
     // only carries the descriptor returned by the upload endpoint) ---
-    let hwPhotoState = { status: 'none' };
+    let hwPhotoState: { status: 'none' } | { status: 'saved'; descriptor: HomeworkPhoto } = { status: 'none' };
 
-    function hwPhotoShowPreview(src) {
-      const preview = document.getElementById('homework-photo-preview');
-      document.getElementById('homework-photo-thumb').src = src;
+    function hwPhotoShowPreview(src: string) {
+      const preview = (document.getElementById('homework-photo-preview') as HTMLElement);
+      (document.getElementById('homework-photo-thumb') as HTMLImageElement).src = src;
       preview.classList.remove('hidden');
       preview.classList.add('flex');
-      document.getElementById('homework-photo-pick').classList.add('hidden');
+      (document.getElementById('homework-photo-pick') as HTMLButtonElement).classList.add('hidden');
     }
 
-    function hwPhotoStatus(msg) {
+    function hwPhotoStatus(msg: string) {
       const el = document.getElementById('homework-photo-status');
       if (!el) return;
       el.textContent = msg || '';
@@ -574,18 +625,18 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
     }
 
     function hwPhotoClear() {
-      const thumb = document.getElementById('homework-photo-thumb');
+      const thumb = (document.getElementById('homework-photo-thumb') as HTMLImageElement);
       if (thumb.src.startsWith('blob:')) URL.revokeObjectURL(thumb.src);
       thumb.src = '';
-      const preview = document.getElementById('homework-photo-preview');
+      const preview = (document.getElementById('homework-photo-preview') as HTMLElement);
       preview.classList.add('hidden');
       preview.classList.remove('flex');
-      document.getElementById('homework-photo-pick').classList.remove('hidden');
+      (document.getElementById('homework-photo-pick') as HTMLButtonElement).classList.remove('hidden');
       hwPhotoState = { status: 'none' };
       hwPhotoStatus('');
     }
 
-    function hwPhotoPrefill(photo, classId) {
+    function hwPhotoPrefill(photo: HomeworkPhoto | null, classId: string) {
       if (photo && photo.r2_key) {
         hwPhotoState = { status: 'saved', descriptor: photo };
         hwPhotoShowPreview(`/api/admin/classes/${encodeURIComponent(classId)}/homework-photo?key=${encodeURIComponent(photo.r2_key)}`);
@@ -597,7 +648,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
     // Kid screens are ≤1024px wide — a 1600px JPEG is plenty and turns a
     // 5MB camera photo into ~300KB. Falls back to the original file when
     // the browser cannot decode it (server caps still apply).
-    async function hwPhotoDownscale(file) {
+    async function hwPhotoDownscale(file: File) {
       try {
         const bitmap = await createImageBitmap(file);
         const maxEdge = 1600;
@@ -606,8 +657,8 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
         const canvas = document.createElement('canvas');
         canvas.width = Math.max(1, Math.round(bitmap.width * scale));
         canvas.height = Math.max(1, Math.round(bitmap.height * scale));
-        canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-        const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.85));
+        canvas.getContext('2d')!.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+        const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.85));
         return blob || file;
       } catch {
         return file;
@@ -621,9 +672,9 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
     // server-side per the contract) — draft.tasks[] coming back from
     // /homework-extract has already been run through the real validators, so
     // this is a display/edit layer over already-valid shapes.
-    let hwTasksState = [];
+    let hwTasksState: HomeworkTask[] = [];
 
-    const HW_TASK_TYPE_META = {
+    const HW_TASK_TYPE_META: Record<string, { emoji: string; label: string }> = {
       read: { emoji: '📖', label: 'Đọc câu' },
       present: { emoji: '🎤', label: 'Thuyết trình' },
       story: { emoji: '📚', label: 'Kể chuyện' },
@@ -636,7 +687,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       return 't' + Math.random().toString(36).slice(2, 9);
     }
 
-    function hwEmptyTask(type) {
+    function hwEmptyTask(type: string): HomeworkTask | null {
       const id = hwTaskId();
       switch (type) {
         case 'read': return { id, type: 'read', items: [{ id: 's1', text_en: '' }] };
@@ -652,11 +703,11 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
     // Deep-clones a task pulled from classState (shared app state) before it
     // enters the modal's draft array — editing hwTasksState in place must
     // never mutate the class board behind the teacher's back before save.
-    function hwCloneTask(task) {
+    function hwCloneTask(task: HomeworkTask): HomeworkTask {
       return JSON.parse(JSON.stringify(task));
     }
 
-    function hwTaskSummary(task) {
+    function hwTaskSummary(task: HomeworkTask) {
       switch (task.type) {
         case 'read': {
           const items = task.items || [];
@@ -684,16 +735,16 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       }
     }
 
-    function hwFieldWrap(label, inner) {
+    function hwFieldWrap(label: string, inner: string) {
       return `<label class="block text-xs text-cream-muted"><span class="mb-1 block">${escapeHtml(label)}</span>${inner}</label>`;
     }
-    function hwTextareaField(field, value, placeholder) {
+    function hwTextareaField(field: string, value: string, placeholder: string) {
       return `<textarea data-field="${escapeHtml(field)}" rows="3" class="fx-field w-full rounded border border-cream-dim/20 bg-navy-900 px-2 py-1 text-sm text-cream focus:border-accent focus:outline-none" placeholder="${escapeHtml(placeholder || '')}">${escapeHtml(value || '')}</textarea>`;
     }
-    function hwInputField(field, value, type, placeholder) {
+    function hwInputField(field: string, value: string | number | undefined, type: string, placeholder?: string) {
       return `<input data-field="${escapeHtml(field)}" type="${escapeHtml(type || 'text')}" value="${escapeHtml(value ?? '')}" placeholder="${escapeHtml(placeholder || '')}" class="fx-field w-full rounded border border-cream-dim/20 bg-navy-900 px-2 py-1 text-sm text-cream focus:border-accent focus:outline-none" />`;
     }
-    function hwCheckboxField(field, checked, label) {
+    function hwCheckboxField(field: string, checked: boolean, label: string) {
       return `<label class="flex items-center gap-2 text-xs text-cream-muted"><input data-field="${escapeHtml(field)}" type="checkbox" ${checked ? 'checked' : ''} /> ${escapeHtml(label)}</label>`;
     }
 
@@ -701,7 +752,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
     // format (documented in their own placeholder text) rather than a
     // bespoke nested-array UI, since this is an internal authoring tool —
     // see the dispatch report for the tradeoff.
-    function hwRenderTaskEditor(task) {
+    function hwRenderTaskEditor(task: HomeworkTask) {
       switch (task.type) {
         case 'read':
           return hwFieldWrap('Câu / từ (mỗi dòng một câu)', hwTextareaField('items_text', (task.items || []).map((i) => i.text_en).join('\n'), 'I have two cats.'));
@@ -735,10 +786,10 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       }
     }
 
-    function hwApplyTaskEdit(task, editorEl) {
-      const get = (field) => editorEl.querySelector(`[data-field="${field}"]`);
-      const lines = (value) => (value || '').split('\n').map((s) => s.trim()).filter(Boolean);
-      const words = (value) => (value || '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
+    function hwApplyTaskEdit(task: HomeworkTask, editorEl: HTMLElement) {
+      const get = (field: string) => editorEl.querySelector<HomeworkField>(`[data-field="${field}"]`);
+      const lines = (value: string | undefined) => (value || '').split('\n').map((s) => s.trim()).filter(Boolean);
+      const words = (value: string | undefined) => (value || '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
       switch (task.type) {
         case 'read':
           task.items = lines(get('items_text')?.value).map((text_en, i) => ({ id: `s${i + 1}`, text_en }));
@@ -806,20 +857,20 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
     }
 
     document.getElementById('homework-task-list')?.addEventListener('click', (event) => {
-      const row = event.target.closest('[data-task-index]');
+      const row = (event.target as Element).closest<HTMLElement>('[data-task-index]');
       if (!row) return;
       const index = Number(row.dataset.taskIndex);
       const task = hwTasksState[index];
       if (!task) return;
-      const editorEl = row.querySelector('[data-task-editor]');
+      const editorEl = row.querySelector<HTMLElement>('[data-task-editor]')!;
 
-      if (event.target.closest('[data-task-action="delete"]')) {
+      if ((event.target as Element).closest<HTMLButtonElement>('[data-task-action="delete"]')) {
         if (!confirm('Xoá bài này khỏi danh sách?')) return;
         hwTasksState.splice(index, 1);
         renderTaskList();
         return;
       }
-      if (event.target.closest('[data-task-action="edit"]')) {
+      if ((event.target as Element).closest<HTMLButtonElement>('[data-task-action="edit"]')) {
         editorEl.innerHTML = `
           ${hwRenderTaskEditor(task)}
           <div class="flex justify-end gap-2 pt-1">
@@ -830,26 +881,26 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
         editorEl.classList.remove('hidden');
         return;
       }
-      if (event.target.closest('[data-task-action="apply"]')) {
+      if ((event.target as Element).closest<HTMLButtonElement>('[data-task-action="apply"]')) {
         hwApplyTaskEdit(task, editorEl);
         renderTaskList();
         return;
       }
-      if (event.target.closest('[data-task-action="cancel"]')) {
+      if ((event.target as Element).closest<HTMLButtonElement>('[data-task-action="cancel"]')) {
         editorEl.classList.add('hidden');
         editorEl.innerHTML = '';
       }
     });
 
     document.getElementById('homework-task-add-btn')?.addEventListener('click', () => {
-      const type = document.getElementById('homework-task-add-type')?.value || 'read';
+      const type = (document.getElementById('homework-task-add-type') as HTMLSelectElement)?.value || 'read';
       const task = hwEmptyTask(type);
       if (!task) return;
       hwTasksState.push(task);
       renderTaskList();
     });
 
-    function hwLessonStatus(msg) {
+    function hwLessonStatus(msg: string) {
       const el = document.getElementById('homework-lesson-status');
       if (!el) return;
       el.textContent = msg || '';
@@ -861,9 +912,9 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
     // ONE draft shape). draft:null (bad JSON, no key, timeout, everything
     // invalid) always renders the calm nudge below, NEVER an error dialog —
     // same for a network/parse failure here, which the catch block folds
-    // into the identical calm state rather than surfacing err.message.
-    async function hwRunExtract(payload) {
-      const classId = document.getElementById('homework-class-id').value;
+    // into the identical calm state rather than surfacing (err as Error).message.
+    async function hwRunExtract(payload: { lesson_text?: string; r2_key?: string }) {
+      const classId = (document.getElementById('homework-class-id') as HTMLInputElement).value;
       hwLessonStatus('🔎 Minny đang đọc bài…');
       try {
         const res = await fetch(`/api/admin/classes/${encodeURIComponent(classId)}/homework-extract`, {
@@ -876,7 +927,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
         if (draft && Array.isArray(draft.tasks) && draft.tasks.length) {
           hwTasksState = hwTasksState.concat(draft.tasks);
           renderTaskList();
-          const noteEl = document.getElementById('homework-note');
+          const noteEl = (document.getElementById('homework-note') as HTMLInputElement);
           if (draft.note_vi && noteEl && !noteEl.value.trim()) noteEl.value = draft.note_vi;
           hwLessonStatus(`Minny đã soạn ${draft.tasks.length} bài — thầy kiểm tra rồi sửa giúp nhé ✏️`);
         } else {
@@ -887,10 +938,10 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       }
     }
 
-    document.getElementById('homework-lesson-extract-btn')?.addEventListener('click', async () => {
-      const text = document.getElementById('homework-lesson-paste')?.value || '';
+    (document.getElementById('homework-lesson-extract-btn') as HTMLButtonElement)?.addEventListener('click', async () => {
+      const text = (document.getElementById('homework-lesson-paste') as HTMLTextAreaElement)?.value || '';
       if (!text.trim()) return;
-      const btn = document.getElementById('homework-lesson-extract-btn');
+      const btn = (document.getElementById('homework-lesson-extract-btn') as HTMLButtonElement);
       btn.disabled = true;
       const original = btn.textContent;
       btn.textContent = 'Đang đọc…';
@@ -902,8 +953,8 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       }
     });
 
-    document.getElementById('homework-photo-pick')?.addEventListener('click', () => {
-      document.getElementById('homework-photo-input').click();
+    (document.getElementById('homework-photo-pick') as HTMLButtonElement)?.addEventListener('click', () => {
+      (document.getElementById('homework-photo-input') as HTMLInputElement).click();
     });
 
     // Photo uploads on pick (not at save) so Minny can read it and draft
@@ -912,11 +963,11 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
     // not the old two-textarea shape — replaces the previous
     // /homework-photo-extract call, which only ever filled the quick-path
     // textareas. Best-effort throughout: a failed read never blocks save.
-    document.getElementById('homework-photo-input')?.addEventListener('change', async (event) => {
-      const file = event.target.files?.[0];
-      event.target.value = '';
+    (document.getElementById('homework-photo-input') as HTMLInputElement)?.addEventListener('change', async (event) => {
+      const file = (event.target as HTMLInputElement).files?.[0];
+      (event.target as HTMLInputElement).value = '';
       if (!file) return;
-      const classId = document.getElementById('homework-class-id').value;
+      const classId = (document.getElementById('homework-class-id') as HTMLInputElement).value;
       hwPhotoShowPreview(URL.createObjectURL(file));
       hwPhotoStatus('Đang tải ảnh…');
       try {
@@ -944,7 +995,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
         // out first, then clear (alert() is blocking, so this ordering is
         // also the paint order the teacher actually sees).
         alert(
-          'Lỗi tải ảnh: ' + err.message +
+          'Lỗi tải ảnh: ' + (err as Error).message +
           '\n\nBài tập sẽ được lưu KHÔNG có ảnh nếu thầy tiếp tục lưu bây giờ. ' +
           'Thầy bấm "📷 Thêm ảnh bài tập" để thử lại nhé.',
         );
@@ -958,15 +1009,15 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
     document.getElementById('assign-class-homework')?.addEventListener('click', () => {
       const klass = currentClass();
       if (!klass) return;
-      const modal = document.getElementById('homework-modal');
-      document.getElementById('homework-class-id').value = klass.id;
-      document.getElementById('homework-code').value = '';
-      document.getElementById('homework-title').textContent = 'Giao bài tập cho cả lớp';
-      document.getElementById('homework-sentences').value = '';
-      document.getElementById('homework-frame').value = '';
-      document.getElementById('homework-duration').value = '60';
-      document.getElementById('homework-note').value = '';
-      document.getElementById('homework-lesson-paste').value = '';
+      const modal = (document.getElementById('homework-modal') as HTMLDialogElement);
+      (document.getElementById('homework-class-id') as HTMLInputElement).value = klass.id;
+      (document.getElementById('homework-code') as HTMLInputElement).value = '';
+      (document.getElementById('homework-title') as HTMLElement).textContent = 'Giao bài tập cho cả lớp';
+      (document.getElementById('homework-sentences') as HTMLTextAreaElement).value = '';
+      (document.getElementById('homework-frame') as HTMLTextAreaElement).value = '';
+      (document.getElementById('homework-duration') as HTMLInputElement).value = '60';
+      (document.getElementById('homework-note') as HTMLInputElement).value = '';
+      (document.getElementById('homework-lesson-paste') as HTMLTextAreaElement).value = '';
       hwLessonStatus('');
       hwTasksState = [];
       renderTaskList();
@@ -982,11 +1033,11 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
     // requirement — the save endpoint accepts both.
     document.getElementById('homework-form')?.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const classId = document.getElementById('homework-class-id').value;
-      const code = document.getElementById('homework-code').value;
-      const noteVi = document.getElementById('homework-note').value;
-      const legacySentences = document.getElementById('homework-sentences').value;
-      const legacyFrame = document.getElementById('homework-frame').value;
+      const classId = (document.getElementById('homework-class-id') as HTMLInputElement).value;
+      const code = (document.getElementById('homework-code') as HTMLInputElement).value;
+      const noteVi = (document.getElementById('homework-note') as HTMLInputElement).value;
+      const legacySentences = (document.getElementById('homework-sentences') as HTMLTextAreaElement).value;
+      const legacyFrame = (document.getElementById('homework-frame') as HTMLTextAreaElement).value;
 
       // The task list wins when it has entries — but never SILENTLY. If the
       // teacher also typed into the old boxes, that text would be dropped on
@@ -1001,18 +1052,18 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
         if (!proceed) return;
       }
 
-      const body = hwTasksState.length
+      const body: HomeworkSaveBody = hwTasksState.length
         ? { tasks: hwTasksState, note_vi: noteVi }
         : {
             sentences_text: legacySentences,
             frame_text: legacyFrame,
-            frame_duration_s: Number(document.getElementById('homework-duration').value) || 60,
+            frame_duration_s: Number((document.getElementById('homework-duration') as HTMLInputElement).value) || 60,
             note_vi: noteVi,
           };
       if (code) {
         body.codes = [code];
       }
-      const submitBtn = event.target.querySelector('button[type="submit"]');
+      const submitBtn = (event.target as HTMLFormElement).querySelector<HTMLButtonElement>('button[type="submit"]')!;
       submitBtn.disabled = true;
       submitBtn.textContent = 'Đang lưu...';
       try {
@@ -1027,10 +1078,10 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
         if (!res.ok || !result.ok) {
           throw new Error(result.error_vi || result.message || result.error || 'Không lưu được bài tập');
         }
-        document.getElementById('homework-modal').close();
+        (document.getElementById('homework-modal') as HTMLDialogElement).close();
         await loadClasses();
       } catch (err) {
-        alert('Lỗi giao bài tập: ' + err.message);
+        alert('Lỗi giao bài tập: ' + (err as Error).message);
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Lưu bài tập';

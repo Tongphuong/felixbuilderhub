@@ -5,10 +5,11 @@ import Footer from '../../components/Footer.astro';
 import MonsterBuilder from '../../components/read2lead/v3/avatar/MonsterBuilder.astro';
 import RankUpModal from '../../components/read2lead/v3/rank/RankUpModal.astro';
 import './ho-so.css';
+import '../../styles/read2lead-parent-summary.css';
 ---
 
-<BaseLayout title="Hồ sơ học sinh — Read2Lead | Felix Coaching" description="Xem tiến độ học tập, avatar, xu và cấp độ của con." robots="noindex, follow">
-  <Header />
+<BaseLayout title="Hồ sơ học sinh — Read2Lead | Felix Coaching" description="Xem kết quả đọc và luyện nói đã lưu của con." robots="noindex, follow" childHome>
+  <div data-profile-chrome><Header /></div>
   <main id="main" class="ho-so-page flex-1">
     <section id="ho-so-entry" class="ho-so-entry star-field">
       <div class="ho-so-entry__panel">
@@ -40,7 +41,7 @@ import './ho-so.css';
     <MonsterBuilder />
     <RankUpModal />
   </main>
-  <Footer />
+  <div data-profile-chrome><Footer /></div>
 </BaseLayout>
 
 <script>

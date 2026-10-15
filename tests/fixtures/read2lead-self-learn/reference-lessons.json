@@ -1,0 +1,2621 @@
+{
+  "contract_version": "1.0.0",
+  "lessons": [
+    {
+      "id": "r2l-pip-and-the-red-ball",
+      "version": "1.0.0",
+      "rubric_version": "practice-rubric-1",
+      "level": "L0",
+      "level_label_vi": "Mầm non",
+      "title_en": "Pip and the Red Ball",
+      "theme": "pets",
+      "status": "draft",
+      "source": {
+        "kind": "original",
+        "attribution": "Original Read2Lead project draft, Codex for Coach Felix, 2026-09-18",
+        "publication_rights_review": "pending_owner_review",
+        "external_assets": []
+      },
+      "objectives": [
+        "Identify actor, action and object; keep Ben and Pip distinct."
+      ],
+      "difficulty": {
+        "reasoning": "actor_action_object",
+        "independence": "pictures_and_short_phrases",
+        "language": "concrete_present_simple"
+      },
+      "story": {
+        "sentences": [
+          {
+            "id": "s1",
+            "text_en": "Ben has a ball."
+          },
+          {
+            "id": "s2",
+            "text_en": "The ball is red."
+          },
+          {
+            "id": "s3",
+            "text_en": "Ben rolls the ball."
+          },
+          {
+            "id": "s4",
+            "text_en": "Pip runs to Ben."
+          },
+          {
+            "id": "s5",
+            "text_en": "Pip gets the ball."
+          },
+          {
+            "id": "s6",
+            "text_en": "Ben pats his dog."
+          }
+        ],
+        "text_sha256": "25ca2ce2615c174ad1d7c7b60d04389ffda9cfc11b66151c9f4d7aa800a8b73d"
+      },
+      "illustrations": [
+        {
+          "id": "r2l-pip-and-the-red-ball-scene",
+          "kind": "original_svg",
+          "alt_en": "Pip and the Red Ball — scene guide",
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 230\" role=\"img\"><rect width=\"400\" height=\"230\" rx=\"18\" fill=\"#182838\"/><circle cx=\"210\" cy=\"135\" r=\"27\" fill=\"#e75d57\"/><circle cx=\"65\" cy=\"60\" r=\"20\" fill=\"#f7ce9c\"/><path d=\"M65 82v60m0-43 60 24m-60 19-20 35m20-35 23 35\" fill=\"none\" stroke=\"#f5cf75\" stroke-width=\"14\"/><ellipse cx=\"300\" cy=\"135\" rx=\"35\" ry=\"22\" fill=\"#cf9163\"/><circle cx=\"268\" cy=\"109\" r=\"20\" fill=\"#cf9163\"/><path d=\"m260 93-16-15 5 28m38 44v26m26-26v26\" fill=\"none\" stroke=\"#cf9163\" stroke-width=\"9\"/></svg>",
+          "review_status": "draft"
+        },
+        {
+          "id": "r2l-pip-and-the-red-ball-choice-0",
+          "kind": "original_svg",
+          "alt_en": "Pip the dog with the red ball",
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 300 230\" role=\"img\"><rect width=\"300\" height=\"230\" rx=\"18\" fill=\"#182838\"/><ellipse cx=\"170\" cy=\"130\" rx=\"55\" ry=\"30\" fill=\"#cf9163\"/><circle cx=\"120\" cy=\"100\" r=\"28\" fill=\"#cf9163\"/><path d=\"m102 85-22-20 7 41m60 50v35m49-34v35\" stroke=\"#cf9163\" stroke-width=\"13\"/><circle cx=\"77\" cy=\"143\" r=\"23\" fill=\"#e75d57\"/></svg>",
+          "review_status": "draft"
+        },
+        {
+          "id": "r2l-pip-and-the-red-ball-choice-1",
+          "kind": "original_svg",
+          "alt_en": "Ben the boy with the red ball",
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 300 230\" role=\"img\"><rect width=\"300\" height=\"230\" rx=\"18\" fill=\"#182838\"/><circle cx=\"150\" cy=\"70\" r=\"27\" fill=\"#f7ce9c\"/><path d=\"M150 100v65m0-48-48 23m48 25-25 42m25-42 25 42\" stroke=\"#f5cf75\" stroke-width=\"18\" fill=\"none\"/><circle cx=\"77\" cy=\"143\" r=\"23\" fill=\"#e75d57\"/></svg>",
+          "review_status": "draft"
+        },
+        {
+          "id": "r2l-pip-and-the-red-ball-choice-2",
+          "kind": "original_svg",
+          "alt_en": "A bird with the red ball",
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 300 230\" role=\"img\"><rect width=\"300\" height=\"230\" rx=\"18\" fill=\"#182838\"/><ellipse cx=\"150\" cy=\"119\" rx=\"47\" ry=\"30\" fill=\"#89c9e0\"/><circle cx=\"114\" cy=\"92\" r=\"24\" fill=\"#89c9e0\"/><path d=\"m90 88-23 9 25 8\" fill=\"#f5cf75\"/><path d=\"m130 148-10 27m48-28 10 28\" stroke=\"#f5cf75\" stroke-width=\"7\"/><circle cx=\"77\" cy=\"143\" r=\"23\" fill=\"#e75d57\"/></svg>",
+          "review_status": "draft"
+        }
+      ],
+      "input": {
+        "order": "listen_then_read",
+        "evidence_labels": [
+          "listening_only",
+          "audio_assisted_reading",
+          "independent_reading"
+        ],
+        "break_after_sentence_ids": [
+          "s3",
+          "s6"
+        ]
+      },
+      "pre_read": {
+        "prediction_vi": "Con nghĩ Pip sẽ làm gì với quả bóng?",
+        "graded": false,
+        "vocabulary": [
+          {
+            "word_en": "roll",
+            "meaning_vi": "lăn"
+          },
+          {
+            "word_en": "pat",
+            "meaning_vi": "vuốt nhẹ"
+          }
+        ]
+      },
+      "audio": {
+        "content_version": "1.0.0",
+        "script_en": "Ben has a ball. The ball is red. Ben rolls the ball. Pip runs to Ben. Pip gets the ball. Ben pats his dog.",
+        "script_sha256": "25ca2ce2615c174ad1d7c7b60d04389ffda9cfc11b66151c9f4d7aa800a8b73d",
+        "asset_status": "not_recorded",
+        "asset_uri": null,
+        "voice_version": "unselected"
+      },
+      "questions": [
+        {
+          "id": "r2l-pip-and-the-red-ball-q1",
+          "version": "1.0.0",
+          "kind": "picture_choice",
+          "dimension": "meaning",
+          "prompt_en": "Who gets the ball after Ben rolls it?",
+          "options_en": [
+            "Pip",
+            "Ben",
+            "A bird"
+          ],
+          "correct_index": 0,
+          "accepted_meanings": [
+            "Pip gets it.",
+            "The dog has the ball."
+          ],
+          "evidence_spans": [
+            {
+              "sentence_id": "s5",
+              "quote": "Pip gets the ball."
+            }
+          ],
+          "source": "story",
+          "distractors": [
+            {
+              "option_index": 1,
+              "reason_en": "Ben rolls the ball, but Pip gets it next."
+            },
+            {
+              "option_index": 2,
+              "reason_en": "There is no bird in this story."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": "Who gets the ball after Ben rolls it?",
+          "option_illustration_ids": [
+            "r2l-pip-and-the-red-ball-choice-0",
+            "r2l-pip-and-the-red-ball-choice-1",
+            "r2l-pip-and-the-red-ball-choice-2"
+          ]
+        },
+        {
+          "id": "r2l-pip-and-the-red-ball-q2",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "evidence",
+          "prompt_en": "Which sentence shows that Pip gets the ball?",
+          "options_en": [
+            "Ben pats his dog.",
+            "Pip gets the ball.",
+            "Ben has a ball."
+          ],
+          "correct_index": 1,
+          "accepted_meanings": [
+            "Pip gets the ball."
+          ],
+          "evidence_spans": [
+            {
+              "sentence_id": "s5",
+              "quote": "Pip gets the ball."
+            }
+          ],
+          "source": "story",
+          "distractors": [
+            {
+              "option_index": 0,
+              "reason_en": "Patting the dog does not tell us who gets the ball."
+            },
+            {
+              "option_index": 2,
+              "reason_en": "Ben has the ball before he rolls it; this does not show Pip getting it."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": "Which sentence tells us what Ben does first?"
+        },
+        {
+          "id": "r2l-pip-and-the-red-ball-q3",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "transfer",
+          "prompt_en": "In a new picture, a dog gives a ball to a boy. Who gets that ball?",
+          "options_en": [
+            "The dog",
+            "A bird",
+            "The boy"
+          ],
+          "correct_index": 2,
+          "accepted_meanings": [
+            "The boy gets it."
+          ],
+          "evidence_spans": [],
+          "source": "new_scenario",
+          "distractors": [
+            {
+              "option_index": 0,
+              "reason_en": "Giving and getting are different actions."
+            },
+            {
+              "option_index": 1,
+              "reason_en": "The new picture has no bird."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": "In a new picture, a dog gives a ball to a boy. Who gets that ball?"
+        }
+      ],
+      "misconception_repair": {
+        "id": "r2l-pip-and-the-red-ball-repair",
+        "hint_vi": "Ben là bạn nhỏ. Pip là chú chó; con tìm xem ai nhận bóng nhé.",
+        "fresh_prompt_en": "Pip gets the ball. Ben pats Pip. Who is the dog?",
+        "options_en": [
+          "Ben",
+          "Pip",
+          "The ball"
+        ],
+        "correct_index": 1,
+        "maximum_probes": 1,
+        "after_exposure": "practice_only",
+        "exit_if_uncertain": "save_needs_support_and_continue"
+      },
+      "shadowing": {
+        "sentence_ids": [
+          "s3",
+          "s5"
+        ],
+        "mode": "echo_with_pause",
+        "capture_optional": true,
+        "missing_capture_result": "unassessable"
+      },
+      "minny": {
+        "identity_vi": "Minny là bạn luyện tập AI. Mình cùng luyện với câu chuyện này nhé.",
+        "max_turns": 4,
+        "assessment_mode": "practice",
+        "facts": [
+          {
+            "sentence_id": "s3",
+            "quote": "Ben rolls the ball."
+          },
+          {
+            "sentence_id": "s5",
+            "quote": "Pip gets the ball."
+          },
+          {
+            "sentence_id": "s6",
+            "quote": "Ben pats his dog."
+          }
+        ],
+        "turns": [
+          {
+            "id": "r2l-pip-and-the-red-ball-m1",
+            "prompt_en": "What colour is the ball?",
+            "expected_meaning": "The ball is red.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-pip-and-the-red-ball-m2",
+            "prompt_en": "Who rolls the ball?",
+            "expected_meaning": "Ben rolls it.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-pip-and-the-red-ball-m3",
+            "prompt_en": "What does Pip get?",
+            "expected_meaning": "Pip gets the ball.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-pip-and-the-red-ball-m4",
+            "prompt_en": "Tell Minny one thing Ben does.",
+            "expected_meaning": "Ben has or rolls the ball, or pats Pip.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          }
+        ],
+        "failure_result": "prepared_practice_no_grade",
+        "allowed_actions": [
+          "ask_story_question",
+          "offer_reviewed_hint",
+          "encourage_effort"
+        ],
+        "forbidden_actions": [
+          "change_story_facts",
+          "change_level",
+          "award_value",
+          "request_personal_details"
+        ]
+      },
+      "retell": {
+        "prompt_en": "Point to the pictures, then name Ben rolling and Pip getting the ball; a word or short phrase is enough.",
+        "essential_facts": [
+          {
+            "sentence_id": "s3",
+            "quote": "Ben rolls the ball."
+          },
+          {
+            "sentence_id": "s5",
+            "quote": "Pip gets the ball."
+          },
+          {
+            "sentence_id": "s6",
+            "quote": "Ben pats his dog."
+          }
+        ],
+        "accepted_paraphrases": [
+          "Ben rolls the ball.",
+          "Pip gets the ball.",
+          "Ben pats his dog.",
+          "Ben sends the ball along the ground, and his dog Pip takes it."
+        ],
+        "nonessential_details": [
+          "exact wording",
+          "accent",
+          "speech speed"
+        ],
+        "dimensions": [
+          "essential_facts",
+          "order_causality",
+          "language_intelligibility",
+          "support_used"
+        ],
+        "support_form": "pictures_and_one_slot_frame",
+        "missing_speech_preserves_reading": true,
+        "open_response_scoring": "pending_validated_assessor"
+      },
+      "independent_followup": {
+        "id": "r2l-pip-and-the-red-ball-follow",
+        "version": "1.0.0",
+        "prompt_en": "A girl rolls a blue ball to a cat. Who rolls the ball?",
+        "options_en": [
+          "The cat",
+          "The girl",
+          "The ball"
+        ],
+        "correct_index": 1,
+        "accepted_meanings": [
+          "The girl rolls it."
+        ],
+        "not_in_minny_script": true
+      },
+      "policy": {
+        "practice_only": true,
+        "automatic_promotion": false,
+        "real_rewards": false,
+        "max_teaching_repairs": 1,
+        "no_summed_pass_threshold": true,
+        "unassessable_is_zero": false
+      },
+      "review": {
+        "author_check": "complete",
+        "independent_review": false,
+        "pedagogical_validation": "pending",
+        "publication": "not_authorized"
+      }
+    },
+    {
+      "id": "r2l-the-missing-cup",
+      "version": "1.0.0",
+      "rubric_version": "practice-rubric-1",
+      "level": "L1",
+      "level_label_vi": "Đồng",
+      "title_en": "The Missing Cup",
+      "theme": "home",
+      "status": "draft",
+      "source": {
+        "kind": "original",
+        "attribution": "Original Read2Lead project draft, Codex for Coach Felix, 2026-09-18",
+        "publication_rights_review": "pending_owner_review",
+        "external_assets": []
+      },
+      "objectives": [
+        "Order three events, resolve she, and reject a contradiction."
+      ],
+      "difficulty": {
+        "reasoning": "sequence_reference",
+        "independence": "fading_frames",
+        "language": "short_linked_sentences"
+      },
+      "story": {
+        "sentences": [
+          {
+            "id": "s1",
+            "text_en": "Linh puts a small cup on the kitchen table."
+          },
+          {
+            "id": "s2",
+            "text_en": "She wants to give her plant some water."
+          },
+          {
+            "id": "s3",
+            "text_en": "First, she looks for the plant by the window."
+          },
+          {
+            "id": "s4",
+            "text_en": "The plant is on a high shelf."
+          },
+          {
+            "id": "s5",
+            "text_en": "When Linh turns back, the cup is gone."
+          },
+          {
+            "id": "s6",
+            "text_en": "Her little brother points to the sink."
+          },
+          {
+            "id": "s7",
+            "text_en": "The cup is there, beside a big bowl."
+          },
+          {
+            "id": "s8",
+            "text_en": "Linh fills it with water and walks slowly to the shelf."
+          },
+          {
+            "id": "s9",
+            "text_en": "She waters the plant, and one drop lands on her nose."
+          },
+          {
+            "id": "s10",
+            "text_en": "Her brother smiles and hands her a small towel."
+          }
+        ],
+        "text_sha256": "c85ce91530dd677972bde5a6b52c0a2d6bc61974b029ff5b417fc9a4af84bc60"
+      },
+      "illustrations": [
+        {
+          "id": "r2l-the-missing-cup-scene",
+          "kind": "original_svg",
+          "alt_en": "The Missing Cup — scene guide",
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 230\" role=\"img\"><rect width=\"400\" height=\"230\" rx=\"18\" fill=\"#182838\"/><path d=\"M80 140h45l-5 40H85z\" fill=\"#9edbea\"/><path d=\"M215 125h90l-15 65h-60z\" fill=\"#d89365\"/><path d=\"M260 125V60\" stroke=\"#80c992\" stroke-width=\"9\"/><ellipse cx=\"239\" cy=\"80\" rx=\"28\" ry=\"13\" fill=\"#80c992\"/><ellipse cx=\"280\" cy=\"63\" rx=\"28\" ry=\"13\" fill=\"#80c992\"/></svg>",
+          "review_status": "draft"
+        }
+      ],
+      "input": {
+        "order": "listen_then_read",
+        "evidence_labels": [
+          "listening_only",
+          "audio_assisted_reading",
+          "independent_reading"
+        ],
+        "break_after_sentence_ids": [
+          "s5",
+          "s10"
+        ]
+      },
+      "pre_read": {
+        "prediction_vi": "Chiếc cốc có thể ở đâu nhỉ?",
+        "graded": false,
+        "vocabulary": [
+          {
+            "word_en": "shelf",
+            "meaning_vi": "kệ"
+          },
+          {
+            "word_en": "sink",
+            "meaning_vi": "bồn rửa"
+          }
+        ]
+      },
+      "audio": {
+        "content_version": "1.0.0",
+        "script_en": "Linh puts a small cup on the kitchen table. She wants to give her plant some water. First, she looks for the plant by the window. The plant is on a high shelf. When Linh turns back, the cup is gone. Her little brother points to the sink. The cup is there, beside a big bowl. Linh fills it with water and walks slowly to the shelf. She waters the plant, and one drop lands on her nose. Her brother smiles and hands her a small towel.",
+        "script_sha256": "c85ce91530dd677972bde5a6b52c0a2d6bc61974b029ff5b417fc9a4af84bc60",
+        "asset_status": "not_recorded",
+        "asset_uri": null,
+        "voice_version": "unselected"
+      },
+      "questions": [
+        {
+          "id": "r2l-the-missing-cup-q1",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "meaning",
+          "prompt_en": "What does Linh do after she finds the cup?",
+          "options_en": [
+            "She puts the plant in the sink.",
+            "She fills the cup and waters the plant.",
+            "She gives the empty cup to her brother."
+          ],
+          "correct_index": 1,
+          "accepted_meanings": [
+            "She fills it with water and waters the plant."
+          ],
+          "evidence_spans": [
+            {
+              "sentence_id": "s8",
+              "quote": "Linh fills it with water and walks slowly to the shelf."
+            },
+            {
+              "sentence_id": "s9",
+              "quote": "She waters the plant, and one drop lands on her nose."
+            }
+          ],
+          "source": "story",
+          "distractors": [
+            {
+              "option_index": 0,
+              "reason_en": "The plant stays on the shelf."
+            },
+            {
+              "option_index": 2,
+              "reason_en": "The story does not say she gives away the cup."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": null
+        },
+        {
+          "id": "r2l-the-missing-cup-q2",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "evidence",
+          "prompt_en": "In “She waters the plant”, who is “She”?",
+          "options_en": [
+            "The plant",
+            "Her brother",
+            "Linh"
+          ],
+          "correct_index": 2,
+          "accepted_meanings": [
+            "She means Linh."
+          ],
+          "evidence_spans": [
+            {
+              "sentence_id": "s8",
+              "quote": "Linh fills it with water and walks slowly to the shelf."
+            },
+            {
+              "sentence_id": "s9",
+              "quote": "She waters the plant, and one drop lands on her nose."
+            }
+          ],
+          "source": "story",
+          "distractors": [
+            {
+              "option_index": 0,
+              "reason_en": "A plant is not the person carrying water."
+            },
+            {
+              "option_index": 1,
+              "reason_en": "Her brother gives the towel later."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": null
+        },
+        {
+          "id": "r2l-the-missing-cup-q3",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "transfer",
+          "prompt_en": "A new story says: first fill a cup, next carry it, then water a plant. What happens in the middle?",
+          "options_en": [
+            "Carry the cup",
+            "Water the plant",
+            "Fill the cup"
+          ],
+          "correct_index": 0,
+          "accepted_meanings": [
+            "Carry it."
+          ],
+          "evidence_spans": [],
+          "source": "new_scenario",
+          "distractors": [
+            {
+              "option_index": 1,
+              "reason_en": "Watering comes last."
+            },
+            {
+              "option_index": 2,
+              "reason_en": "Filling comes first."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": null
+        }
+      ],
+      "misconception_repair": {
+        "id": "r2l-the-missing-cup-repair",
+        "hint_vi": "Con lần theo hai việc: tìm thấy cốc, rồi mới cho nước vào cốc.",
+        "fresh_prompt_en": "Linh finds the cup. Then she fills it. Which happens first?",
+        "options_en": [
+          "She fills it.",
+          "She finds it.",
+          "Her brother waters the plant."
+        ],
+        "correct_index": 1,
+        "maximum_probes": 1,
+        "after_exposure": "practice_only",
+        "exit_if_uncertain": "save_needs_support_and_continue"
+      },
+      "shadowing": {
+        "sentence_ids": [
+          "s7",
+          "s8"
+        ],
+        "mode": "chunk_then_fade",
+        "capture_optional": true,
+        "missing_capture_result": "unassessable"
+      },
+      "minny": {
+        "identity_vi": "Minny là bạn luyện tập AI. Mình cùng luyện với câu chuyện này nhé.",
+        "max_turns": 4,
+        "assessment_mode": "practice",
+        "facts": [
+          {
+            "sentence_id": "s1",
+            "quote": "Linh puts a small cup on the kitchen table."
+          },
+          {
+            "sentence_id": "s7",
+            "quote": "The cup is there, beside a big bowl."
+          },
+          {
+            "sentence_id": "s9",
+            "quote": "She waters the plant, and one drop lands on her nose."
+          }
+        ],
+        "turns": [
+          {
+            "id": "r2l-the-missing-cup-m1",
+            "prompt_en": "Where does Linh put the cup at the beginning?",
+            "expected_meaning": "On the kitchen table.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-the-missing-cup-m2",
+            "prompt_en": "Where is the plant?",
+            "expected_meaning": "On a high shelf.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-the-missing-cup-m3",
+            "prompt_en": "What lands on Linh’s nose?",
+            "expected_meaning": "One drop of water.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-the-missing-cup-m4",
+            "prompt_en": "Tell Minny the last thing her brother does.",
+            "expected_meaning": "He hands Linh a towel.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          }
+        ],
+        "failure_result": "prepared_practice_no_grade",
+        "allowed_actions": [
+          "ask_story_question",
+          "offer_reviewed_hint",
+          "encourage_effort"
+        ],
+        "forbidden_actions": [
+          "change_story_facts",
+          "change_level",
+          "award_value",
+          "request_personal_details"
+        ]
+      },
+      "retell": {
+        "prompt_en": "Tell the beginning, finding the cup, and watering the plant in order; pictures and first/then/last frames are allowed and logged.",
+        "essential_facts": [
+          {
+            "sentence_id": "s1",
+            "quote": "Linh puts a small cup on the kitchen table."
+          },
+          {
+            "sentence_id": "s7",
+            "quote": "The cup is there, beside a big bowl."
+          },
+          {
+            "sentence_id": "s9",
+            "quote": "She waters the plant, and one drop lands on her nose."
+          }
+        ],
+        "accepted_paraphrases": [
+          "Linh puts a small cup on the kitchen table.",
+          "The cup is there, beside a big bowl.",
+          "She waters the plant, and one drop lands on her nose.",
+          "Linh gets her cup back, adds water and uses it for her plant."
+        ],
+        "nonessential_details": [
+          "exact wording",
+          "accent",
+          "speech speed"
+        ],
+        "dimensions": [
+          "essential_facts",
+          "order_causality",
+          "language_intelligibility",
+          "support_used"
+        ],
+        "support_form": "sequence_frame",
+        "missing_speech_preserves_reading": true,
+        "open_response_scoring": "pending_validated_assessor"
+      },
+      "independent_followup": {
+        "id": "r2l-the-missing-cup-follow",
+        "version": "1.0.0",
+        "prompt_en": "Which statement matches the story?",
+        "options_en": [
+          "Linh finds the cup beside a bowl.",
+          "Linh finds the cup under the plant.",
+          "Her brother waters the plant."
+        ],
+        "correct_index": 0,
+        "accepted_meanings": [
+          "The cup is beside a bowl."
+        ],
+        "not_in_minny_script": true
+      },
+      "policy": {
+        "practice_only": true,
+        "automatic_promotion": false,
+        "real_rewards": false,
+        "max_teaching_repairs": 1,
+        "no_summed_pass_threshold": true,
+        "unassessable_is_zero": false
+      },
+      "review": {
+        "author_check": "complete",
+        "independent_review": false,
+        "pedagogical_validation": "pending",
+        "publication": "not_authorized"
+      }
+    },
+    {
+      "id": "r2l-a-dry-place-for-the-map",
+      "version": "1.0.0",
+      "rubric_version": "practice-rubric-1",
+      "level": "L2",
+      "level_label_vi": "Bạc",
+      "title_en": "A Dry Place for the Map",
+      "theme": "friends",
+      "status": "draft",
+      "source": {
+        "kind": "original",
+        "attribution": "Original Read2Lead project draft, Codex for Coach Felix, 2026-09-18",
+        "publication_rights_review": "pending_owner_review",
+        "external_assets": []
+      },
+      "objectives": [
+        "Connect two causes, infer a supported feeling, and retell beginning–middle–end."
+      ],
+      "difficulty": {
+        "reasoning": "cause_feeling",
+        "independence": "fading_frames",
+        "language": "short_linked_sentences"
+      },
+      "story": {
+        "sentences": [
+          {
+            "id": "s1",
+            "text_en": "Mai and Tom draw a map for a treasure game in the school garden."
+          },
+          {
+            "id": "s2",
+            "text_en": "They mark a tall tree, a bench and a little wooden bridge."
+          },
+          {
+            "id": "s3",
+            "text_en": "Just before their friends arrive, dark clouds cover the sun."
+          },
+          {
+            "id": "s4",
+            "text_en": "Tom wants to leave the map on the bench so everyone can see it."
+          },
+          {
+            "id": "s5",
+            "text_en": "Mai feels a cold drop on her hand and looks at the paper."
+          },
+          {
+            "id": "s6",
+            "text_en": "She puts the map inside a clear lunch box and closes the lid."
+          },
+          {
+            "id": "s7",
+            "text_en": "A short shower makes the bench wet, but the map stays dry."
+          },
+          {
+            "id": "s8",
+            "text_en": "When their friends come, Tom opens the box and shows them the route."
+          },
+          {
+            "id": "s9",
+            "text_en": "“We can still play,” he says with a wide smile."
+          },
+          {
+            "id": "s10",
+            "text_en": "Mai carries the box while the others follow the first mark on the map."
+          },
+          {
+            "id": "s11",
+            "text_en": "At the bridge, they find a small bag of smooth stones to paint together."
+          }
+        ],
+        "text_sha256": "d58819250a6364f6a3e866483db13a84b11076649273c4fd8b9ba48dc2ca67c1"
+      },
+      "illustrations": [
+        {
+          "id": "r2l-a-dry-place-for-the-map-scene",
+          "kind": "original_svg",
+          "alt_en": "A Dry Place for the Map — scene guide",
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 230\" role=\"img\"><rect width=\"400\" height=\"230\" rx=\"18\" fill=\"#182838\"/><rect x=\"78\" y=\"77\" width=\"244\" height=\"104\" rx=\"14\" fill=\"#9edbea\"/><rect x=\"94\" y=\"93\" width=\"212\" height=\"69\" fill=\"#fff1ca\"/><path d=\"m112 136 40-21 41 28 66-26 29 14\" stroke=\"#795f47\" stroke-width=\"6\" fill=\"none\"/><path d=\"m78 72h244m-210-20 9-18m76 18 9-18m76 18 9-18\" stroke=\"#74badf\" stroke-width=\"7\"/></svg>",
+          "review_status": "draft"
+        }
+      ],
+      "input": {
+        "order": "read_with_optional_audio",
+        "evidence_labels": [
+          "listening_only",
+          "audio_assisted_reading",
+          "independent_reading"
+        ],
+        "break_after_sentence_ids": [
+          "s5",
+          "s11"
+        ]
+      },
+      "pre_read": {
+        "prediction_vi": "Con sẽ giữ tờ bản đồ thế nào nếu trời sắp mưa?",
+        "graded": false,
+        "vocabulary": [
+          {
+            "word_en": "route",
+            "meaning_vi": "đường đi"
+          },
+          {
+            "word_en": "lid",
+            "meaning_vi": "nắp"
+          }
+        ]
+      },
+      "audio": {
+        "content_version": "1.0.0",
+        "script_en": "Mai and Tom draw a map for a treasure game in the school garden. They mark a tall tree, a bench and a little wooden bridge. Just before their friends arrive, dark clouds cover the sun. Tom wants to leave the map on the bench so everyone can see it. Mai feels a cold drop on her hand and looks at the paper. She puts the map inside a clear lunch box and closes the lid. A short shower makes the bench wet, but the map stays dry. When their friends come, Tom opens the box and shows them the route. “We can still play,” he says with a wide smile. Mai carries the box while the others follow the first mark on the map. At the bridge, they find a small bag of smooth stones to paint together.",
+        "script_sha256": "d58819250a6364f6a3e866483db13a84b11076649273c4fd8b9ba48dc2ca67c1",
+        "asset_status": "not_recorded",
+        "asset_uri": null,
+        "voice_version": "unselected"
+      },
+      "questions": [
+        {
+          "id": "r2l-a-dry-place-for-the-map-q1",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "meaning",
+          "prompt_en": "Why can the friends still use the map after the shower?",
+          "options_en": [
+            "The bench stays dry.",
+            "Tom draws a second map.",
+            "Mai keeps the map in a closed box."
+          ],
+          "correct_index": 2,
+          "accepted_meanings": [
+            "The closed box keeps rain off the map.",
+            "Mai protects the paper in the lunch box."
+          ],
+          "evidence_spans": [
+            {
+              "sentence_id": "s6",
+              "quote": "She puts the map inside a clear lunch box and closes the lid."
+            },
+            {
+              "sentence_id": "s7",
+              "quote": "A short shower makes the bench wet, but the map stays dry."
+            }
+          ],
+          "source": "story",
+          "distractors": [
+            {
+              "option_index": 0,
+              "reason_en": "The bench gets wet."
+            },
+            {
+              "option_index": 1,
+              "reason_en": "Nobody draws a second map."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": null
+        },
+        {
+          "id": "r2l-a-dry-place-for-the-map-q2",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "evidence",
+          "prompt_en": "Which detail best supports the idea that Tom feels relieved?",
+          "options_en": [
+            "He smiles and says they can still play.",
+            "He marks a tree on the map.",
+            "The stones are smooth."
+          ],
+          "correct_index": 0,
+          "accepted_meanings": [
+            "His smile and words show relief."
+          ],
+          "evidence_spans": [
+            {
+              "sentence_id": "s9",
+              "quote": "“We can still play,” he says with a wide smile."
+            }
+          ],
+          "source": "story",
+          "distractors": [
+            {
+              "option_index": 1,
+              "reason_en": "Marking the tree happens before the problem."
+            },
+            {
+              "option_index": 2,
+              "reason_en": "The stones do not show Tom’s response to the rain."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": null
+        },
+        {
+          "id": "r2l-a-dry-place-for-the-map-q3",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "transfer",
+          "prompt_en": "A new group needs to keep a paper list readable in light rain. Which choice follows Mai’s idea?",
+          "options_en": [
+            "Leave it on a wet chair.",
+            "Put it in a closed clear folder.",
+            "Draw the letters smaller."
+          ],
+          "correct_index": 1,
+          "accepted_meanings": [
+            "Use a closed folder to keep the rain out."
+          ],
+          "evidence_spans": [],
+          "source": "new_scenario",
+          "distractors": [
+            {
+              "option_index": 0,
+              "reason_en": "The list could get wet on the chair."
+            },
+            {
+              "option_index": 2,
+              "reason_en": "Smaller letters do not keep water away."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": null
+        }
+      ],
+      "misconception_repair": {
+        "id": "r2l-a-dry-place-for-the-map-repair",
+        "hint_vi": "Mình nối hai chi tiết: nắp đã đóng và bản đồ vẫn khô. Chiếc hộp giúp ngăn nước mưa.",
+        "fresh_prompt_en": "A paper note stays dry inside a closed jar while its table gets wet. What protects the note?",
+        "options_en": [
+          "The wet table",
+          "The closed jar",
+          "The dark cloud"
+        ],
+        "correct_index": 1,
+        "maximum_probes": 1,
+        "after_exposure": "practice_only",
+        "exit_if_uncertain": "save_needs_support_and_continue"
+      },
+      "shadowing": {
+        "sentence_ids": [
+          "s6",
+          "s7"
+        ],
+        "mode": "chunk_then_fade",
+        "capture_optional": true,
+        "missing_capture_result": "unassessable"
+      },
+      "minny": {
+        "identity_vi": "Minny là bạn luyện tập AI. Mình cùng luyện với câu chuyện này nhé.",
+        "max_turns": 4,
+        "assessment_mode": "practice",
+        "facts": [
+          {
+            "sentence_id": "s1",
+            "quote": "Mai and Tom draw a map for a treasure game in the school garden."
+          },
+          {
+            "sentence_id": "s6",
+            "quote": "She puts the map inside a clear lunch box and closes the lid."
+          },
+          {
+            "sentence_id": "s7",
+            "quote": "A short shower makes the bench wet, but the map stays dry."
+          },
+          {
+            "sentence_id": "s9",
+            "quote": "“We can still play,” he says with a wide smile."
+          }
+        ],
+        "turns": [
+          {
+            "id": "r2l-a-dry-place-for-the-map-m1",
+            "prompt_en": "What are Mai and Tom making?",
+            "expected_meaning": "A treasure map.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-a-dry-place-for-the-map-m2",
+            "prompt_en": "Name two marks on their map.",
+            "expected_meaning": "The tree, bench or bridge.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-a-dry-place-for-the-map-m3",
+            "prompt_en": "What does Mai feel before she closes the box?",
+            "expected_meaning": "A cold drop on her hand.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-a-dry-place-for-the-map-m4",
+            "prompt_en": "What treasure do the friends find?",
+            "expected_meaning": "Smooth stones to paint together.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          }
+        ],
+        "failure_result": "prepared_practice_no_grade",
+        "allowed_actions": [
+          "ask_story_question",
+          "offer_reviewed_hint",
+          "encourage_effort"
+        ],
+        "forbidden_actions": [
+          "change_story_facts",
+          "change_level",
+          "award_value",
+          "request_personal_details"
+        ]
+      },
+      "retell": {
+        "prompt_en": "Retell the plan, the rain problem, Mai’s action and the outcome; explain the protection with because.",
+        "essential_facts": [
+          {
+            "sentence_id": "s1",
+            "quote": "Mai and Tom draw a map for a treasure game in the school garden."
+          },
+          {
+            "sentence_id": "s6",
+            "quote": "She puts the map inside a clear lunch box and closes the lid."
+          },
+          {
+            "sentence_id": "s7",
+            "quote": "A short shower makes the bench wet, but the map stays dry."
+          },
+          {
+            "sentence_id": "s9",
+            "quote": "“We can still play,” he says with a wide smile."
+          }
+        ],
+        "accepted_paraphrases": [
+          "Mai and Tom draw a map for a treasure game in the school garden.",
+          "She puts the map inside a clear lunch box and closes the lid.",
+          "A short shower makes the bench wet, but the map stays dry.",
+          "“We can still play,” he says with a wide smile.",
+          "By shutting the map inside the lunch box, Mai stops the shower from soaking it."
+        ],
+        "nonessential_details": [
+          "exact wording",
+          "accent",
+          "speech speed"
+        ],
+        "dimensions": [
+          "essential_facts",
+          "order_causality",
+          "language_intelligibility",
+          "support_used"
+        ],
+        "support_form": "connectors_then_keywords",
+        "missing_speech_preserves_reading": true,
+        "open_response_scoring": "pending_validated_assessor"
+      },
+      "independent_followup": {
+        "id": "r2l-a-dry-place-for-the-map-follow",
+        "version": "1.0.0",
+        "prompt_en": "Why would an open box be less useful during the shower?",
+        "options_en": [
+          "Rain could reach the paper.",
+          "The paper would become a stone.",
+          "The friends could not see the tree."
+        ],
+        "correct_index": 0,
+        "accepted_meanings": [
+          "Water could get in through the open top."
+        ],
+        "not_in_minny_script": true
+      },
+      "policy": {
+        "practice_only": true,
+        "automatic_promotion": false,
+        "real_rewards": false,
+        "max_teaching_repairs": 1,
+        "no_summed_pass_threshold": true,
+        "unassessable_is_zero": false
+      },
+      "review": {
+        "author_check": "complete",
+        "independent_review": false,
+        "pedagogical_validation": "pending",
+        "publication": "not_authorized"
+      }
+    },
+    {
+      "id": "r2l-the-quiet-bridge",
+      "version": "1.0.0",
+      "rubric_version": "practice-rubric-1",
+      "level": "L3",
+      "level_label_vi": "Vàng",
+      "title_en": "The Quiet Bridge",
+      "theme": "nature",
+      "status": "draft",
+      "source": {
+        "kind": "original",
+        "attribution": "Original Read2Lead project draft, Codex for Coach Felix, 2026-09-18",
+        "publication_rights_review": "pending_owner_review",
+        "external_assets": []
+      },
+      "objectives": [
+        "Explain a motive using evidence, trace a causal chain, and make a conditional prediction."
+      ],
+      "difficulty": {
+        "reasoning": "motive_causal_chain",
+        "independence": "self_selected_evidence",
+        "language": "connected_narrative_and_reasons"
+      },
+      "story": {
+        "sentences": [
+          {
+            "id": "s1",
+            "text_en": "Every afternoon, An and Jo crossed a narrow wooden bridge on their way to the reading club."
+          },
+          {
+            "id": "s2",
+            "text_en": "One day, An heard a small scratching sound beneath the first plank."
+          },
+          {
+            "id": "s3",
+            "text_en": "Jo was already halfway across, talking loudly about a story with a flying bicycle."
+          },
+          {
+            "id": "s4",
+            "text_en": "An raised a hand and asked her to stop for a moment."
+          },
+          {
+            "id": "s5",
+            "text_en": "Through a gap, he could see a nest with two young birds near the bank."
+          },
+          {
+            "id": "s6",
+            "text_en": "The parent bird waited on a branch with a seed in its beak."
+          },
+          {
+            "id": "s7",
+            "text_en": "Each time someone stamped across the bridge, it flew farther away instead of approaching the nest."
+          },
+          {
+            "id": "s8",
+            "text_en": "An did not try to touch the birds or move their nest."
+          },
+          {
+            "id": "s9",
+            "text_en": "He suggested that they take the longer stone path beside the pond for a few days."
+          },
+          {
+            "id": "s10",
+            "text_en": "Jo looked at her watch because the reading club would begin soon."
+          },
+          {
+            "id": "s11",
+            "text_en": "“We can walk quickly on the path without making the bridge shake,” she said."
+          },
+          {
+            "id": "s12",
+            "text_en": "They arrived at the club a little later than usual and explained the reason."
+          },
+          {
+            "id": "s13",
+            "text_en": "On the next afternoon, they saw the parent bird reach the nest while the bridge was quiet."
+          },
+          {
+            "id": "s14",
+            "text_en": "They kept their distance and watched for only a minute before taking the stone path again."
+          }
+        ],
+        "text_sha256": "add4477b74b79037ee91261ea50a411deaa0b2f7e8cfe0664c8e7f0eb419178a"
+      },
+      "illustrations": [
+        {
+          "id": "r2l-the-quiet-bridge-scene",
+          "kind": "original_svg",
+          "alt_en": "The Quiet Bridge — scene guide",
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 230\" role=\"img\"><rect width=\"400\" height=\"230\" rx=\"18\" fill=\"#182838\"/><path d=\"M35 165q160-70 330 0\" fill=\"none\" stroke=\"#d2a776\" stroke-width=\"22\"/><path d=\"M10 208q100-50 195-12t185-10\" fill=\"none\" stroke=\"#77bde0\" stroke-width=\"12\"/><ellipse cx=\"185\" cy=\"176\" rx=\"33\" ry=\"11\" fill=\"#c78b54\"/><circle cx=\"177\" cy=\"157\" r=\"10\" fill=\"#f3d278\"/><circle cx=\"197\" cy=\"157\" r=\"10\" fill=\"#f3d278\"/></svg>",
+          "review_status": "draft"
+        }
+      ],
+      "input": {
+        "order": "read_with_optional_audio",
+        "evidence_labels": [
+          "listening_only",
+          "audio_assisted_reading",
+          "independent_reading"
+        ],
+        "break_after_sentence_ids": [
+          "s7",
+          "s14"
+        ]
+      },
+      "pre_read": {
+        "prediction_vi": "Tiếng động nhỏ dưới cầu có thể khiến hai bạn thay đổi kế hoạch ra sao?",
+        "graded": false,
+        "vocabulary": [
+          {
+            "word_en": "plank",
+            "meaning_vi": "tấm ván"
+          },
+          {
+            "word_en": "bank",
+            "meaning_vi": "bờ nước"
+          }
+        ]
+      },
+      "audio": {
+        "content_version": "1.0.0",
+        "script_en": "Every afternoon, An and Jo crossed a narrow wooden bridge on their way to the reading club. One day, An heard a small scratching sound beneath the first plank. Jo was already halfway across, talking loudly about a story with a flying bicycle. An raised a hand and asked her to stop for a moment. Through a gap, he could see a nest with two young birds near the bank. The parent bird waited on a branch with a seed in its beak. Each time someone stamped across the bridge, it flew farther away instead of approaching the nest. An did not try to touch the birds or move their nest. He suggested that they take the longer stone path beside the pond for a few days. Jo looked at her watch because the reading club would begin soon. “We can walk quickly on the path without making the bridge shake,” she said. They arrived at the club a little later than usual and explained the reason. On the next afternoon, they saw the parent bird reach the nest while the bridge was quiet. They kept their distance and watched for only a minute before taking the stone path again.",
+        "script_sha256": "add4477b74b79037ee91261ea50a411deaa0b2f7e8cfe0664c8e7f0eb419178a",
+        "asset_status": "not_recorded",
+        "asset_uri": null,
+        "voice_version": "unselected"
+      },
+      "questions": [
+        {
+          "id": "r2l-the-quiet-bridge-q1",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "meaning",
+          "prompt_en": "Why does An suggest the stone path?",
+          "options_en": [
+            "He wants to win a race to the club.",
+            "He wants the parent bird to reach its nest with less disturbance.",
+            "He wants Jo to miss the reading club."
+          ],
+          "correct_index": 1,
+          "accepted_meanings": [
+            "The bridge noise keeps the parent bird away, so another path may help."
+          ],
+          "evidence_spans": [
+            {
+              "sentence_id": "s6",
+              "quote": "The parent bird waited on a branch with a seed in its beak."
+            },
+            {
+              "sentence_id": "s7",
+              "quote": "Each time someone stamped across the bridge, it flew farther away instead of approaching the nest."
+            },
+            {
+              "sentence_id": "s9",
+              "quote": "He suggested that they take the longer stone path beside the pond for a few days."
+            }
+          ],
+          "source": "story",
+          "distractors": [
+            {
+              "option_index": 0,
+              "reason_en": "There is no race."
+            },
+            {
+              "option_index": 2,
+              "reason_en": "They still go to the club and explain their delay."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": null
+        },
+        {
+          "id": "r2l-the-quiet-bridge-q2",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "evidence",
+          "prompt_en": "Which observation gives the strongest reason for trying a quieter route?",
+          "options_en": [
+            "Jo talks about a flying bicycle.",
+            "The bridge is made of wood.",
+            "The parent bird moves away when people stamp across."
+          ],
+          "correct_index": 2,
+          "accepted_meanings": [
+            "The bird flies away when the bridge is noisy."
+          ],
+          "evidence_spans": [
+            {
+              "sentence_id": "s7",
+              "quote": "Each time someone stamped across the bridge, it flew farther away instead of approaching the nest."
+            }
+          ],
+          "source": "story",
+          "distractors": [
+            {
+              "option_index": 0,
+              "reason_en": "Jo’s story is not evidence about the bird."
+            },
+            {
+              "option_index": 1,
+              "reason_en": "Wood alone does not show how this bird reacts."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": null
+        },
+        {
+          "id": "r2l-the-quiet-bridge-q3",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "transfer",
+          "prompt_en": "At a different pond, birds keep away whenever a gate bangs. What is a reasonable first step?",
+          "options_en": [
+            "Observe from a distance while keeping the gate quiet.",
+            "Move the nest beside the gate.",
+            "Assume the birds do not need food."
+          ],
+          "correct_index": 0,
+          "accepted_meanings": [
+            "Reduce disturbance and observe safely."
+          ],
+          "evidence_spans": [],
+          "source": "new_scenario",
+          "distractors": [
+            {
+              "option_index": 1,
+              "reason_en": "Moving a nest is not the careful action used in the story."
+            },
+            {
+              "option_index": 2,
+              "reason_en": "The observation does not show that birds do not need food."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": null
+        }
+      ],
+      "misconception_repair": {
+        "id": "r2l-the-quiet-bridge-repair",
+        "hint_vi": "Con tìm chi tiết cho thấy tiếng động làm chim thay đổi hành động; từ đó giải thích ý định của An.",
+        "fresh_prompt_en": "A bird comes to a feeder when a nearby bell is quiet, but leaves when it rings. Which detail matters when choosing where to stand?",
+        "options_en": [
+          "The bell’s effect on the bird",
+          "The colour of your shoes",
+          "The name of the street"
+        ],
+        "correct_index": 0,
+        "maximum_probes": 1,
+        "after_exposure": "practice_only",
+        "exit_if_uncertain": "save_needs_support_and_continue"
+      },
+      "shadowing": {
+        "sentence_ids": [
+          "s9",
+          "s11"
+        ],
+        "mode": "chunk_then_fade",
+        "capture_optional": true,
+        "missing_capture_result": "unassessable"
+      },
+      "minny": {
+        "identity_vi": "Minny là bạn luyện tập AI. Mình cùng luyện với câu chuyện này nhé.",
+        "max_turns": 5,
+        "assessment_mode": "practice",
+        "facts": [
+          {
+            "sentence_id": "s5",
+            "quote": "Through a gap, he could see a nest with two young birds near the bank."
+          },
+          {
+            "sentence_id": "s7",
+            "quote": "Each time someone stamped across the bridge, it flew farther away instead of approaching the nest."
+          },
+          {
+            "sentence_id": "s9",
+            "quote": "He suggested that they take the longer stone path beside the pond for a few days."
+          },
+          {
+            "sentence_id": "s13",
+            "quote": "On the next afternoon, they saw the parent bird reach the nest while the bridge was quiet."
+          }
+        ],
+        "turns": [
+          {
+            "id": "r2l-the-quiet-bridge-m1",
+            "prompt_en": "Where are An and Jo going?",
+            "expected_meaning": "To the reading club.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-the-quiet-bridge-m2",
+            "prompt_en": "What is the parent bird holding?",
+            "expected_meaning": "A seed.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-the-quiet-bridge-m3",
+            "prompt_en": "What does Jo worry about?",
+            "expected_meaning": "Being late for the club.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-the-quiet-bridge-m4",
+            "prompt_en": "How do they explain arriving later?",
+            "expected_meaning": "They explain the birds and their quieter route.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-the-quiet-bridge-m5",
+            "prompt_en": "What do they do after watching for a minute?",
+            "expected_meaning": "They take the stone path again.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          }
+        ],
+        "failure_result": "prepared_practice_no_grade",
+        "allowed_actions": [
+          "ask_story_question",
+          "offer_reviewed_hint",
+          "encourage_effort"
+        ],
+        "forbidden_actions": [
+          "change_story_facts",
+          "change_level",
+          "award_value",
+          "request_personal_details"
+        ]
+      },
+      "retell": {
+        "prompt_en": "Use keywords to explain problem, observation, attempted solution and outcome; identify the evidence for An’s motive without reading an answer script.",
+        "essential_facts": [
+          {
+            "sentence_id": "s5",
+            "quote": "Through a gap, he could see a nest with two young birds near the bank."
+          },
+          {
+            "sentence_id": "s7",
+            "quote": "Each time someone stamped across the bridge, it flew farther away instead of approaching the nest."
+          },
+          {
+            "sentence_id": "s9",
+            "quote": "He suggested that they take the longer stone path beside the pond for a few days."
+          },
+          {
+            "sentence_id": "s13",
+            "quote": "On the next afternoon, they saw the parent bird reach the nest while the bridge was quiet."
+          }
+        ],
+        "accepted_paraphrases": [
+          "Through a gap, he could see a nest with two young birds near the bank.",
+          "Each time someone stamped across the bridge, it flew farther away instead of approaching the nest.",
+          "He suggested that they take the longer stone path beside the pond for a few days.",
+          "On the next afternoon, they saw the parent bird reach the nest while the bridge was quiet.",
+          "The friends choose another route so their footsteps will not keep the feeding bird away."
+        ],
+        "nonessential_details": [
+          "exact wording",
+          "accent",
+          "speech speed"
+        ],
+        "dimensions": [
+          "essential_facts",
+          "order_causality",
+          "language_intelligibility",
+          "support_used"
+        ],
+        "support_form": "connectors_then_keywords",
+        "missing_speech_preserves_reading": true,
+        "open_response_scoring": "pending_validated_assessor"
+      },
+      "independent_followup": {
+        "id": "r2l-the-quiet-bridge-follow",
+        "version": "1.0.0",
+        "prompt_en": "If the stone path also became noisy, what should the friends do before choosing another solution?",
+        "options_en": [
+          "Assume all paths are safe.",
+          "Observe whether the noise affects the birds from a distance.",
+          "Carry the birds to the club."
+        ],
+        "correct_index": 1,
+        "accepted_meanings": [
+          "Check how the birds respond, without approaching them."
+        ],
+        "not_in_minny_script": true
+      },
+      "policy": {
+        "practice_only": true,
+        "automatic_promotion": false,
+        "real_rewards": false,
+        "max_teaching_repairs": 1,
+        "no_summed_pass_threshold": true,
+        "unassessable_is_zero": false
+      },
+      "review": {
+        "author_check": "complete",
+        "independent_review": false,
+        "pedagogical_validation": "pending",
+        "publication": "not_authorized"
+      }
+    },
+    {
+      "id": "r2l-two-ways-to-share-the-shade",
+      "version": "1.0.0",
+      "rubric_version": "practice-rubric-1",
+      "level": "L4",
+      "level_label_vi": "Kim cương",
+      "title_en": "Two Ways to Share the Shade",
+      "theme": "community",
+      "status": "draft",
+      "source": {
+        "kind": "original",
+        "attribution": "Original Read2Lead project draft, Codex for Coach Felix, 2026-09-18",
+        "publication_rights_review": "pending_owner_review",
+        "external_assets": []
+      },
+      "objectives": [
+        "Compare responses, interpret changing feelings and contextual vocabulary with evidence."
+      ],
+      "difficulty": {
+        "reasoning": "comparison_viewpoint",
+        "independence": "self_selected_evidence",
+        "language": "qualified_claims_and_viewpoints"
+      },
+      "story": {
+        "sentences": [
+          {
+            "id": "s1",
+            "text_en": "The school gardening group had one large cloth to shade its young plants during a week of strong sunshine."
+          },
+          {
+            "id": "s2",
+            "text_en": "Nora suggested stretching the cloth over the vegetable bed, where several leaves had begun to curl at the edges."
+          },
+          {
+            "id": "s3",
+            "text_en": "Duc preferred putting it over the new flower pots because the younger class had planted them only yesterday."
+          },
+          {
+            "id": "s4",
+            "text_en": "At first, Nora thought Duc cared more about attractive flowers than the vegetables everyone had worked on for a month."
+          },
+          {
+            "id": "s5",
+            "text_en": "She folded her arms and pointed at a drooping bean plant."
+          },
+          {
+            "id": "s6",
+            "text_en": "Instead of arguing, Duc showed her a note from the younger class: their pots were too heavy for the children to carry inside."
+          },
+          {
+            "id": "s7",
+            "text_en": "Nora unfolded her arms and asked whether the pots could be moved on the group’s small trolley."
+          },
+          {
+            "id": "s8",
+            "text_en": "Together they tested the trolley with one pot, holding it steady as they crossed the uneven path."
+          },
+          {
+            "id": "s9",
+            "text_en": "The test worked, although moving every pot would take longer than simply covering them."
+          },
+          {
+            "id": "s10",
+            "text_en": "They agreed to wheel the pots under the veranda and keep the cloth above the vegetable bed."
+          },
+          {
+            "id": "s11",
+            "text_en": "Two classmates offered to help with the trolley, so the younger children only needed to guide them to the right pots."
+          },
+          {
+            "id": "s12",
+            "text_en": "By lunchtime, both areas had shade, but Nora and Duc were tired and had not finished labelling the seedlings."
+          },
+          {
+            "id": "s13",
+            "text_en": "“Our plan costs more time,” Nora said, “but now neither group loses the shade it needs.”"
+          },
+          {
+            "id": "s14",
+            "text_en": "Duc nodded and suggested finishing the labels during the next gardening session."
+          },
+          {
+            "id": "s15",
+            "text_en": "Nora wrote down the route that had worked, including the uneven corner, so another group could move the pots safely later."
+          }
+        ],
+        "text_sha256": "9ee44fe94c09344e8ac2d158979b9cb3885ecef37126f6f19fcf0f4e87ef6241"
+      },
+      "illustrations": [
+        {
+          "id": "r2l-two-ways-to-share-the-shade-scene",
+          "kind": "original_svg",
+          "alt_en": "Two Ways to Share the Shade — scene guide",
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 230\" role=\"img\"><rect width=\"400\" height=\"230\" rx=\"18\" fill=\"#182838\"/><path d=\"M35 90h145l-15 60H50z\" fill=\"#80c992\"/><path d=\"M215 68h135l30 32H195z\" fill=\"#c6a3db\"/><path d=\"M215 98v87m135-87v87\" stroke=\"#d3ad78\" stroke-width=\"8\"/><path d=\"M245 142h52l-9 42h-34z\" fill=\"#d89365\"/><path d=\"M271 142v-29\" stroke=\"#80c992\" stroke-width=\"7\"/></svg>",
+          "review_status": "draft"
+        }
+      ],
+      "input": {
+        "order": "read_with_optional_audio",
+        "evidence_labels": [
+          "listening_only",
+          "audio_assisted_reading",
+          "independent_reading"
+        ],
+        "break_after_sentence_ids": [
+          "s7",
+          "s15"
+        ]
+      },
+      "pre_read": {
+        "prediction_vi": "Chỉ có một tấm vải che nắng: con muốn biết thêm điều gì trước khi chọn nơi dùng?",
+        "graded": false,
+        "vocabulary": [
+          {
+            "word_en": "drooping",
+            "meaning_vi": "rũ xuống"
+          },
+          {
+            "word_en": "veranda",
+            "meaning_vi": "hiên có mái"
+          },
+          {
+            "word_en": "seedling",
+            "meaning_vi": "cây con"
+          }
+        ]
+      },
+      "audio": {
+        "content_version": "1.0.0",
+        "script_en": "The school gardening group had one large cloth to shade its young plants during a week of strong sunshine. Nora suggested stretching the cloth over the vegetable bed, where several leaves had begun to curl at the edges. Duc preferred putting it over the new flower pots because the younger class had planted them only yesterday. At first, Nora thought Duc cared more about attractive flowers than the vegetables everyone had worked on for a month. She folded her arms and pointed at a drooping bean plant. Instead of arguing, Duc showed her a note from the younger class: their pots were too heavy for the children to carry inside. Nora unfolded her arms and asked whether the pots could be moved on the group’s small trolley. Together they tested the trolley with one pot, holding it steady as they crossed the uneven path. The test worked, although moving every pot would take longer than simply covering them. They agreed to wheel the pots under the veranda and keep the cloth above the vegetable bed. Two classmates offered to help with the trolley, so the younger children only needed to guide them to the right pots. By lunchtime, both areas had shade, but Nora and Duc were tired and had not finished labelling the seedlings. “Our plan costs more time,” Nora said, “but now neither group loses the shade it needs.” Duc nodded and suggested finishing the labels during the next gardening session. Nora wrote down the route that had worked, including the uneven corner, so another group could move the pots safely later.",
+        "script_sha256": "9ee44fe94c09344e8ac2d158979b9cb3885ecef37126f6f19fcf0f4e87ef6241",
+        "asset_status": "not_recorded",
+        "asset_uri": null,
+        "voice_version": "unselected"
+      },
+      "questions": [
+        {
+          "id": "r2l-two-ways-to-share-the-shade-q1",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "meaning",
+          "prompt_en": "How does the agreed plan differ from simply covering the flower pots?",
+          "options_en": [
+            "It needs no help and no time.",
+            "It abandons the flowers to save vegetables.",
+            "It protects both groups of plants but takes extra work."
+          ],
+          "correct_index": 2,
+          "accepted_meanings": [
+            "Both get shade, but moving pots takes time and effort."
+          ],
+          "evidence_spans": [
+            {
+              "sentence_id": "s9",
+              "quote": "The test worked, although moving every pot would take longer than simply covering them."
+            },
+            {
+              "sentence_id": "s10",
+              "quote": "They agreed to wheel the pots under the veranda and keep the cloth above the vegetable bed."
+            },
+            {
+              "sentence_id": "s12",
+              "quote": "By lunchtime, both areas had shade, but Nora and Duc were tired and had not finished labelling the seedlings."
+            },
+            {
+              "sentence_id": "s13",
+              "quote": "“Our plan costs more time,” Nora said, “but now neither group loses the shade it needs.”"
+            }
+          ],
+          "source": "story",
+          "distractors": [
+            {
+              "option_index": 0,
+              "reason_en": "They need classmates and miss the labelling task."
+            },
+            {
+              "option_index": 1,
+              "reason_en": "The flower pots are moved into shade, not abandoned."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": null
+        },
+        {
+          "id": "r2l-two-ways-to-share-the-shade-q2",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "evidence",
+          "prompt_en": "Which detail best supports a change in Nora’s view of Duc’s concern?",
+          "options_en": [
+            "She asks about a trolley after reading the note.",
+            "The cloth is large.",
+            "The younger class planted yesterday."
+          ],
+          "correct_index": 0,
+          "accepted_meanings": [
+            "She stops assuming and looks for a solution to the weight problem."
+          ],
+          "evidence_spans": [
+            {
+              "sentence_id": "s4",
+              "quote": "At first, Nora thought Duc cared more about attractive flowers than the vegetables everyone had worked on for a month."
+            },
+            {
+              "sentence_id": "s6",
+              "quote": "Instead of arguing, Duc showed her a note from the younger class: their pots were too heavy for the children to carry inside."
+            },
+            {
+              "sentence_id": "s7",
+              "quote": "Nora unfolded her arms and asked whether the pots could be moved on the group’s small trolley."
+            }
+          ],
+          "source": "story",
+          "distractors": [
+            {
+              "option_index": 1,
+              "reason_en": "Cloth size does not show Nora’s changed response."
+            },
+            {
+              "option_index": 2,
+              "reason_en": "Planting time alone does not show her response."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": null
+        },
+        {
+          "id": "r2l-two-ways-to-share-the-shade-q3",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "transfer",
+          "prompt_en": "A new group has fragile pots that cannot safely travel on its trolley. What follows from this story’s reasoning?",
+          "options_en": [
+            "Copy the trolley plan without testing.",
+            "Check another way to provide shade and compare its costs.",
+            "Assume one group must lose every plant."
+          ],
+          "correct_index": 1,
+          "accepted_meanings": [
+            "Adapt the plan after checking the new constraint."
+          ],
+          "evidence_spans": [],
+          "source": "new_scenario",
+          "distractors": [
+            {
+              "option_index": 0,
+              "reason_en": "Their plan depended on a successful test."
+            },
+            {
+              "option_index": 2,
+              "reason_en": "The story encourages looking for workable alternatives."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": null
+        }
+      ],
+      "misconception_repair": {
+        "id": "r2l-two-ways-to-share-the-shade-repair",
+        "hint_vi": "Hai ý tưởng đều có lý do. Con so sánh điều kiện và công sức của từng cách, rồi dùng chi tiết trong truyện.",
+        "fresh_prompt_en": "One team can move light pots easily, but another has heavy pots on a rough path. Why might they choose different shade plans?",
+        "options_en": [
+          "Their practical constraints differ.",
+          "One team has no plants.",
+          "Shade never helps plants."
+        ],
+        "correct_index": 0,
+        "maximum_probes": 1,
+        "after_exposure": "practice_only",
+        "exit_if_uncertain": "save_needs_support_and_continue"
+      },
+      "shadowing": {
+        "sentence_ids": [
+          "s12",
+          "s13"
+        ],
+        "mode": "chunk_then_fade",
+        "capture_optional": true,
+        "missing_capture_result": "unassessable"
+      },
+      "minny": {
+        "identity_vi": "Minny là bạn luyện tập AI. Mình cùng luyện với câu chuyện này nhé.",
+        "max_turns": 5,
+        "assessment_mode": "practice",
+        "facts": [
+          {
+            "sentence_id": "s1",
+            "quote": "The school gardening group had one large cloth to shade its young plants during a week of strong sunshine."
+          },
+          {
+            "sentence_id": "s6",
+            "quote": "Instead of arguing, Duc showed her a note from the younger class: their pots were too heavy for the children to carry inside."
+          },
+          {
+            "sentence_id": "s10",
+            "quote": "They agreed to wheel the pots under the veranda and keep the cloth above the vegetable bed."
+          },
+          {
+            "sentence_id": "s12",
+            "quote": "By lunchtime, both areas had shade, but Nora and Duc were tired and had not finished labelling the seedlings."
+          },
+          {
+            "sentence_id": "s13",
+            "quote": "“Our plan costs more time,” Nora said, “but now neither group loses the shade it needs.”"
+          }
+        ],
+        "turns": [
+          {
+            "id": "r2l-two-ways-to-share-the-shade-m1",
+            "prompt_en": "What two areas need shade?",
+            "expected_meaning": "The vegetable bed and flower pots.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-two-ways-to-share-the-shade-m2",
+            "prompt_en": "Why can’t the younger children carry the pots?",
+            "expected_meaning": "The pots are too heavy.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-two-ways-to-share-the-shade-m3",
+            "prompt_en": "How do Nora and Duc test their idea?",
+            "expected_meaning": "They try one pot on the trolley.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-two-ways-to-share-the-shade-m4",
+            "prompt_en": "Which job is postponed?",
+            "expected_meaning": "Labelling the seedlings.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-two-ways-to-share-the-shade-m5",
+            "prompt_en": "Retell one fact from Duc’s point of view.",
+            "expected_meaning": "Keep the weight concern and shared solution true; feelings not stated remain an inference.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          }
+        ],
+        "failure_result": "prepared_practice_no_grade",
+        "allowed_actions": [
+          "ask_story_question",
+          "offer_reviewed_hint",
+          "encourage_effort"
+        ],
+        "forbidden_actions": [
+          "change_story_facts",
+          "change_level",
+          "award_value",
+          "request_personal_details"
+        ]
+      },
+      "retell": {
+        "prompt_en": "Retell from Duc’s viewpoint, preserving stated facts; distinguish inferred feelings from facts and explain one benefit and cost of the chosen plan.",
+        "essential_facts": [
+          {
+            "sentence_id": "s1",
+            "quote": "The school gardening group had one large cloth to shade its young plants during a week of strong sunshine."
+          },
+          {
+            "sentence_id": "s6",
+            "quote": "Instead of arguing, Duc showed her a note from the younger class: their pots were too heavy for the children to carry inside."
+          },
+          {
+            "sentence_id": "s10",
+            "quote": "They agreed to wheel the pots under the veranda and keep the cloth above the vegetable bed."
+          },
+          {
+            "sentence_id": "s12",
+            "quote": "By lunchtime, both areas had shade, but Nora and Duc were tired and had not finished labelling the seedlings."
+          },
+          {
+            "sentence_id": "s13",
+            "quote": "“Our plan costs more time,” Nora said, “but now neither group loses the shade it needs.”"
+          }
+        ],
+        "accepted_paraphrases": [
+          "The school gardening group had one large cloth to shade its young plants during a week of strong sunshine.",
+          "Instead of arguing, Duc showed her a note from the younger class: their pots were too heavy for the children to carry inside.",
+          "They agreed to wheel the pots under the veranda and keep the cloth above the vegetable bed.",
+          "By lunchtime, both areas had shade, but Nora and Duc were tired and had not finished labelling the seedlings.",
+          "“Our plan costs more time,” Nora said, “but now neither group loses the shade it needs.”",
+          "Moving the flowers under the veranda leaves the cloth available for the vegetables, at the cost of extra effort."
+        ],
+        "nonessential_details": [
+          "exact wording",
+          "accent",
+          "speech speed"
+        ],
+        "dimensions": [
+          "essential_facts",
+          "order_causality",
+          "language_intelligibility",
+          "support_used"
+        ],
+        "support_form": "planning_headings",
+        "missing_speech_preserves_reading": true,
+        "open_response_scoring": "pending_validated_assessor"
+      },
+      "independent_followup": {
+        "id": "r2l-two-ways-to-share-the-shade-follow",
+        "version": "1.0.0",
+        "prompt_en": "What does “drooping” most likely tell us about the bean plant here?",
+        "options_en": [
+          "It hangs down and may need protection.",
+          "It has already been labelled.",
+          "It is growing wheels."
+        ],
+        "correct_index": 0,
+        "accepted_meanings": [
+          "The plant’s leaves or stem hang down."
+        ],
+        "not_in_minny_script": true
+      },
+      "policy": {
+        "practice_only": true,
+        "automatic_promotion": false,
+        "real_rewards": false,
+        "max_teaching_repairs": 1,
+        "no_summed_pass_threshold": true,
+        "unassessable_is_zero": false
+      },
+      "review": {
+        "author_check": "complete",
+        "independent_review": false,
+        "pedagogical_validation": "pending",
+        "publication": "not_authorized"
+      }
+    },
+    {
+      "id": "r2l-the-rain-tank-report",
+      "version": "1.0.0",
+      "rubric_version": "practice-rubric-1",
+      "level": "L5",
+      "level_label_vi": "Huyền thoại",
+      "title_en": "The Rain Tank Report",
+      "theme": "environment",
+      "status": "draft",
+      "source": {
+        "kind": "original",
+        "attribution": "Original Read2Lead project draft, Codex for Coach Felix, 2026-09-18",
+        "publication_rights_review": "pending_owner_review",
+        "external_assets": []
+      },
+      "objectives": [
+        "Combine two evidence sources, distinguish claim from assumption, address an alternative and missing information."
+      ],
+      "difficulty": {
+        "reasoning": "claim_evidence_uncertainty",
+        "independence": "self_selected_evidence",
+        "language": "qualified_claims_and_viewpoints"
+      },
+      "story": {
+        "sentences": [
+          {
+            "id": "s1",
+            "text_en": "A student council was deciding whether a small rain tank should supply the school garden throughout the next dry month."
+          },
+          {
+            "id": "s2",
+            "text_en": "The proposal sounded simple: collect roof water after rain, then use it instead of tap water whenever the beds needed watering."
+          },
+          {
+            "id": "s3",
+            "text_en": "Amir’s group measured the tank for one week and reported that it held enough water for four ordinary watering days."
+          },
+          {
+            "id": "s4",
+            "text_en": "During that week, however, rain fell on three afternoons and the vegetable beds were partly shaded."
+          },
+          {
+            "id": "s5",
+            "text_en": "Their report concluded, “The tank can provide all the water our garden needs.”"
+          },
+          {
+            "id": "s6",
+            "text_en": "A second group kept an older gardening diary covering a hot week without rain."
+          },
+          {
+            "id": "s7",
+            "text_en": "The diary said that the beds needed almost twice as much water as usual, and one leaking hose had wasted an unknown amount."
+          },
+          {
+            "id": "s8",
+            "text_en": "The diary did not record the exact size of the planted area, which had since increased."
+          },
+          {
+            "id": "s9",
+            "text_en": "At the council meeting, some students argued that the recent measurements were more useful because they described the current garden."
+          },
+          {
+            "id": "s10",
+            "text_en": "Others thought the older diary proved that a rain tank could never be useful."
+          },
+          {
+            "id": "s11",
+            "text_en": "Lea disagreed with both absolute conclusions: each source described conditions that were different from the proposed dry month."
+          },
+          {
+            "id": "s12",
+            "text_en": "She suggested using the tank as a supplementary supply while measuring daily demand, rainfall and losses with the leak repaired."
+          },
+          {
+            "id": "s13",
+            "text_en": "Amir worried that keeping tap water available would make students forget to collect rainwater at all."
+          },
+          {
+            "id": "s14",
+            "text_en": "Lea proposed a clear routine: check the tank first, record how much is used, and take additional water only when the plants need it."
+          },
+          {
+            "id": "s15",
+            "text_en": "The council accepted a limited trial instead of promising that the tank would replace the tap completely."
+          },
+          {
+            "id": "s16",
+            "text_en": "They would compare records after two weeks, including days when the tank was empty, before deciding whether to change its size."
+          },
+          {
+            "id": "s17",
+            "text_en": "No one could yet say how much money the plan would save, because the price of a larger tank and the cost of maintenance had not been collected."
+          },
+          {
+            "id": "s18",
+            "text_en": "Amir revised the final heading to “What our tank supplied this week, and what we still need to find out.”"
+          }
+        ],
+        "text_sha256": "176ca2fb7a8d1e879950d69622b1934384a2c965e6a08ac9667dc11cb8ba974d"
+      },
+      "illustrations": [
+        {
+          "id": "r2l-the-rain-tank-report-scene",
+          "kind": "original_svg",
+          "alt_en": "The Rain Tank Report — scene guide",
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 230\" role=\"img\"><rect width=\"400\" height=\"230\" rx=\"18\" fill=\"#182838\"/><path d=\"M30 91 114 46l84 45\" stroke=\"#d3ad78\" stroke-width=\"10\" fill=\"none\"/><path d=\"M181 90v35h56\" stroke=\"#8db9d7\" stroke-width=\"9\" fill=\"none\"/><rect x=\"238\" y=\"87\" width=\"100\" height=\"112\" rx=\"12\" fill=\"#8db9d7\"/><path d=\"M248 142h80\" stroke=\"#194d6b\" stroke-width=\"5\"/><path d=\"m68 142 9-20m35 20 9-20m35 20 9-20\" stroke=\"#8db9d7\" stroke-width=\"7\"/></svg>",
+          "review_status": "draft"
+        }
+      ],
+      "input": {
+        "order": "read_with_optional_audio",
+        "evidence_labels": [
+          "listening_only",
+          "audio_assisted_reading",
+          "independent_reading"
+        ],
+        "break_after_sentence_ids": [
+          "s9",
+          "s18"
+        ]
+      },
+      "pre_read": {
+        "prediction_vi": "Một tuần đo lượng nước có đủ để hứa dùng bồn cả tháng khô hạn không? Con muốn xem thêm bằng chứng nào?",
+        "graded": false,
+        "vocabulary": [
+          {
+            "word_en": "supplementary",
+            "meaning_vi": "bổ sung"
+          },
+          {
+            "word_en": "maintenance",
+            "meaning_vi": "bảo trì"
+          },
+          {
+            "word_en": "absolute",
+            "meaning_vi": "tuyệt đối"
+          }
+        ]
+      },
+      "audio": {
+        "content_version": "1.0.0",
+        "script_en": "A student council was deciding whether a small rain tank should supply the school garden throughout the next dry month. The proposal sounded simple: collect roof water after rain, then use it instead of tap water whenever the beds needed watering. Amir’s group measured the tank for one week and reported that it held enough water for four ordinary watering days. During that week, however, rain fell on three afternoons and the vegetable beds were partly shaded. Their report concluded, “The tank can provide all the water our garden needs.” A second group kept an older gardening diary covering a hot week without rain. The diary said that the beds needed almost twice as much water as usual, and one leaking hose had wasted an unknown amount. The diary did not record the exact size of the planted area, which had since increased. At the council meeting, some students argued that the recent measurements were more useful because they described the current garden. Others thought the older diary proved that a rain tank could never be useful. Lea disagreed with both absolute conclusions: each source described conditions that were different from the proposed dry month. She suggested using the tank as a supplementary supply while measuring daily demand, rainfall and losses with the leak repaired. Amir worried that keeping tap water available would make students forget to collect rainwater at all. Lea proposed a clear routine: check the tank first, record how much is used, and take additional water only when the plants need it. The council accepted a limited trial instead of promising that the tank would replace the tap completely. They would compare records after two weeks, including days when the tank was empty, before deciding whether to change its size. No one could yet say how much money the plan would save, because the price of a larger tank and the cost of maintenance had not been collected. Amir revised the final heading to “What our tank supplied this week, and what we still need to find out.”",
+        "script_sha256": "176ca2fb7a8d1e879950d69622b1934384a2c965e6a08ac9667dc11cb8ba974d",
+        "asset_status": "not_recorded",
+        "asset_uri": null,
+        "voice_version": "unselected"
+      },
+      "questions": [
+        {
+          "id": "r2l-the-rain-tank-report-q1",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "meaning",
+          "prompt_en": "Which conclusion is best supported by both reports?",
+          "options_en": [
+            "The tank will always supply the whole garden.",
+            "The tank may help, but dry-month demand and supply still need testing.",
+            "The tank can never provide useful water."
+          ],
+          "correct_index": 1,
+          "accepted_meanings": [
+            "It supplied useful water in one week, but neither report establishes full dry-month coverage."
+          ],
+          "evidence_spans": [
+            {
+              "sentence_id": "s3",
+              "quote": "Amir’s group measured the tank for one week and reported that it held enough water for four ordinary watering days."
+            },
+            {
+              "sentence_id": "s4",
+              "quote": "During that week, however, rain fell on three afternoons and the vegetable beds were partly shaded."
+            },
+            {
+              "sentence_id": "s7",
+              "quote": "The diary said that the beds needed almost twice as much water as usual, and one leaking hose had wasted an unknown amount."
+            },
+            {
+              "sentence_id": "s8",
+              "quote": "The diary did not record the exact size of the planted area, which had since increased."
+            },
+            {
+              "sentence_id": "s11",
+              "quote": "Lea disagreed with both absolute conclusions: each source described conditions that were different from the proposed dry month."
+            }
+          ],
+          "source": "story",
+          "distractors": [
+            {
+              "option_index": 0,
+              "reason_en": "The measured week had rain and shade."
+            },
+            {
+              "option_index": 2,
+              "reason_en": "The recent measurements show some useful supply."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": null
+        },
+        {
+          "id": "r2l-the-rain-tank-report-q2",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "evidence",
+          "prompt_en": "Which pair of details most directly limits the promise of full replacement?",
+          "options_en": [
+            "The report has a heading and the council meets.",
+            "Amir has a group and Lea speaks.",
+            "The measured week had rain; the older diary describes higher demand in heat."
+          ],
+          "correct_index": 2,
+          "accepted_meanings": [
+            "Supply conditions and demand differ between weeks."
+          ],
+          "evidence_spans": [
+            {
+              "sentence_id": "s4",
+              "quote": "During that week, however, rain fell on three afternoons and the vegetable beds were partly shaded."
+            },
+            {
+              "sentence_id": "s7",
+              "quote": "The diary said that the beds needed almost twice as much water as usual, and one leaking hose had wasted an unknown amount."
+            }
+          ],
+          "source": "story",
+          "distractors": [
+            {
+              "option_index": 0,
+              "reason_en": "Presentation details do not measure water."
+            },
+            {
+              "option_index": 1,
+              "reason_en": "Who speaks does not establish supply or demand."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": null
+        },
+        {
+          "id": "r2l-the-rain-tank-report-q3",
+          "version": "1.0.0",
+          "kind": "choice",
+          "dimension": "transfer",
+          "prompt_en": "A new garden has a larger tank but twice the planted area. What should be checked before promising full replacement?",
+          "options_en": [
+            "Water demand, collection and losses under the new conditions.",
+            "Only whether the tank looks large.",
+            "Only who wrote the older report."
+          ],
+          "correct_index": 0,
+          "accepted_meanings": [
+            "Measure both supply and demand, including leaks and dry weather."
+          ],
+          "evidence_spans": [],
+          "source": "new_scenario",
+          "distractors": [
+            {
+              "option_index": 1,
+              "reason_en": "Appearance is not enough to calculate usable water."
+            },
+            {
+              "option_index": 2,
+              "reason_en": "Authorship alone does not answer the quantity question."
+            }
+          ],
+          "support": {
+            "question_audio_allowed": true,
+            "revealing_hint_marks_assisted": true,
+            "repeat_marks_practice": true
+          },
+          "expected": {
+            "correct_unassisted": "provisional",
+            "correct_with_hint": "assisted",
+            "wrong_valid": "needs_support",
+            "missing_capture": "unassessable"
+          },
+          "scenario_visual_description": null
+        }
+      ],
+      "misconception_repair": {
+        "id": "r2l-the-rain-tank-report-repair",
+        "hint_vi": "Con tách điều đã đo khỏi điều đang dự đoán. Một nguồn cho biết lượng nước có; nguồn kia cho thấy nhu cầu có thể thay đổi.",
+        "fresh_prompt_en": "A bucket supplied two beds for a rainy week. A class wants to use it for four beds in a dry week. What assumption needs checking?",
+        "options_en": [
+          "That enough water will still be available.",
+          "That the bucket has a name.",
+          "That every rainy day is a holiday."
+        ],
+        "correct_index": 0,
+        "maximum_probes": 1,
+        "after_exposure": "practice_only",
+        "exit_if_uncertain": "save_needs_support_and_continue"
+      },
+      "shadowing": {
+        "sentence_ids": [
+          "s11",
+          "s12"
+        ],
+        "mode": "chunk_then_fade",
+        "capture_optional": true,
+        "missing_capture_result": "unassessable"
+      },
+      "minny": {
+        "identity_vi": "Minny là bạn luyện tập AI. Mình cùng luyện với câu chuyện này nhé.",
+        "max_turns": 6,
+        "assessment_mode": "practice",
+        "facts": [
+          {
+            "sentence_id": "s3",
+            "quote": "Amir’s group measured the tank for one week and reported that it held enough water for four ordinary watering days."
+          },
+          {
+            "sentence_id": "s4",
+            "quote": "During that week, however, rain fell on three afternoons and the vegetable beds were partly shaded."
+          },
+          {
+            "sentence_id": "s7",
+            "quote": "The diary said that the beds needed almost twice as much water as usual, and one leaking hose had wasted an unknown amount."
+          },
+          {
+            "sentence_id": "s8",
+            "quote": "The diary did not record the exact size of the planted area, which had since increased."
+          },
+          {
+            "sentence_id": "s12",
+            "quote": "She suggested using the tank as a supplementary supply while measuring daily demand, rainfall and losses with the leak repaired."
+          },
+          {
+            "sentence_id": "s15",
+            "quote": "The council accepted a limited trial instead of promising that the tank would replace the tap completely."
+          },
+          {
+            "sentence_id": "s17",
+            "quote": "No one could yet say how much money the plan would save, because the price of a larger tank and the cost of maintenance had not been collected."
+          }
+        ],
+        "turns": [
+          {
+            "id": "r2l-the-rain-tank-report-m1",
+            "prompt_en": "What did Amir’s group actually measure?",
+            "expected_meaning": "Enough water for four ordinary watering days during one week.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-the-rain-tank-report-m2",
+            "prompt_en": "Name a condition in that week.",
+            "expected_meaning": "Rain on three afternoons or partial shade.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-the-rain-tank-report-m3",
+            "prompt_en": "What uncertainty appears in the older diary?",
+            "expected_meaning": "Unknown leak loss or unrecorded planted area.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-the-rain-tank-report-m4",
+            "prompt_en": "What alternative does Lea suggest?",
+            "expected_meaning": "A supplementary supply and a measured trial.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-the-rain-tank-report-m5",
+            "prompt_en": "What is Amir’s concern about the alternative?",
+            "expected_meaning": "Students may stop collecting rainwater if tap water stays available.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          },
+          {
+            "id": "r2l-the-rain-tank-report-m6",
+            "prompt_en": "How does the routine address that concern?",
+            "expected_meaning": "Check and record tank water first, then add water as needed.",
+            "fallback_vi": "Mình có thể xem lại câu chuyện rồi thử một ý ngắn nhé.",
+            "fact_policy": "story_only"
+          }
+        ],
+        "failure_result": "prepared_practice_no_grade",
+        "allowed_actions": [
+          "ask_story_question",
+          "offer_reviewed_hint",
+          "encourage_effort"
+        ],
+        "forbidden_actions": [
+          "change_story_facts",
+          "change_level",
+          "award_value",
+          "request_personal_details"
+        ]
+      },
+      "retell": {
+        "prompt_en": "Give a claim, independently chosen evidence from both reports and a reason; address Amir’s alternative concern and name a remaining uncertainty without inventing a number.",
+        "essential_facts": [
+          {
+            "sentence_id": "s3",
+            "quote": "Amir’s group measured the tank for one week and reported that it held enough water for four ordinary watering days."
+          },
+          {
+            "sentence_id": "s4",
+            "quote": "During that week, however, rain fell on three afternoons and the vegetable beds were partly shaded."
+          },
+          {
+            "sentence_id": "s7",
+            "quote": "The diary said that the beds needed almost twice as much water as usual, and one leaking hose had wasted an unknown amount."
+          },
+          {
+            "sentence_id": "s8",
+            "quote": "The diary did not record the exact size of the planted area, which had since increased."
+          },
+          {
+            "sentence_id": "s12",
+            "quote": "She suggested using the tank as a supplementary supply while measuring daily demand, rainfall and losses with the leak repaired."
+          },
+          {
+            "sentence_id": "s15",
+            "quote": "The council accepted a limited trial instead of promising that the tank would replace the tap completely."
+          },
+          {
+            "sentence_id": "s17",
+            "quote": "No one could yet say how much money the plan would save, because the price of a larger tank and the cost of maintenance had not been collected."
+          }
+        ],
+        "accepted_paraphrases": [
+          "Amir’s group measured the tank for one week and reported that it held enough water for four ordinary watering days.",
+          "During that week, however, rain fell on three afternoons and the vegetable beds were partly shaded.",
+          "The diary said that the beds needed almost twice as much water as usual, and one leaking hose had wasted an unknown amount.",
+          "The diary did not record the exact size of the planted area, which had since increased.",
+          "She suggested using the tank as a supplementary supply while measuring daily demand, rainfall and losses with the leak repaired.",
+          "The council accepted a limited trial instead of promising that the tank would replace the tap completely.",
+          "No one could yet say how much money the plan would save, because the price of a larger tank and the cost of maintenance had not been collected.",
+          "The council uses the tank as one water source and gathers better records before making a larger promise."
+        ],
+        "nonessential_details": [
+          "exact wording",
+          "accent",
+          "speech speed"
+        ],
+        "dimensions": [
+          "essential_facts",
+          "order_causality",
+          "language_intelligibility",
+          "support_used"
+        ],
+        "support_form": "planning_headings",
+        "missing_speech_preserves_reading": true,
+        "open_response_scoring": "pending_validated_assessor"
+      },
+      "independent_followup": {
+        "id": "r2l-the-rain-tank-report-follow",
+        "version": "1.0.0",
+        "prompt_en": "Which missing information prevents a reliable claim about money saved?",
+        "options_en": [
+          "The colour of the tank.",
+          "The larger tank’s price and maintenance cost.",
+          "Whether Lea has a notebook."
+        ],
+        "correct_index": 1,
+        "accepted_meanings": [
+          "Purchase and maintenance costs are missing."
+        ],
+        "not_in_minny_script": true
+      },
+      "policy": {
+        "practice_only": true,
+        "automatic_promotion": false,
+        "real_rewards": false,
+        "max_teaching_repairs": 1,
+        "no_summed_pass_threshold": true,
+        "unassessable_is_zero": false
+      },
+      "review": {
+        "author_check": "complete",
+        "independent_review": false,
+        "pedagogical_validation": "pending",
+        "publication": "not_authorized"
+      }
+    }
+  ]
+}

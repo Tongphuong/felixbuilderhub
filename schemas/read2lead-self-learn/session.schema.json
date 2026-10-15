@@ -1,0 +1,319 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "urn:read2lead:self-learn:session:1.0.0",
+  "$ref": "#/definitions/session",
+  "definitions": {
+    "session": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lesson_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "rubric_version": {
+          "const": "practice-rubric-1"
+        },
+        "engine_version": {
+          "const": "self-learn-1"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stage": {
+          "enum": [
+            "pre_read",
+            "input",
+            "comprehension",
+            "understand_saved",
+            "shadowing",
+            "mini_story",
+            "retell",
+            "complete"
+          ]
+        },
+        "input_mode": {
+          "enum": [
+            "listening_only",
+            "audio_assisted_reading",
+            "independent_reading"
+          ]
+        },
+        "status": {
+          "enum": [
+            "active",
+            "saved",
+            "complete"
+          ]
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "acknowledged_request_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "child_id",
+        "lesson_id",
+        "content_version",
+        "content_sha256",
+        "rubric_version",
+        "engine_version",
+        "revision",
+        "stage",
+        "input_mode",
+        "status",
+        "created_at",
+        "updated_at",
+        "acknowledged_request_ids",
+        "evidence_ids"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "complete"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stage": {
+                "const": "complete"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "submission": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event": {
+          "enum": [
+            "prediction",
+            "input_complete",
+            "answer",
+            "save_understand",
+            "shadow_complete",
+            "minny_turn",
+            "retell",
+            "complete"
+          ]
+        },
+        "item_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "answer": {
+          "type": "object",
+          "properties": {
+            "choice_index": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 2
+            },
+            "text": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 3000
+            },
+            "evidence_sentence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "choice_index",
+            "text",
+            "evidence_sentence_ids"
+          ],
+          "additionalProperties": false
+        },
+        "support_used": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "question_audio",
+              "revealing_hint",
+              "frame",
+              "repeated_item",
+              "reference_script"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "capture_status": {
+          "enum": [
+            "valid",
+            "missing",
+            "low_confidence",
+            "provider_failed",
+            "not_attempted"
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "request_id",
+        "session_id",
+        "child_id",
+        "expected_revision",
+        "event",
+        "item_id",
+        "answer",
+        "support_used",
+        "capture_status"
+      ],
+      "additionalProperties": false
+    },
+    "response": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "ok": {
+              "const": true
+            },
+            "request_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "session": {
+              "$ref": "#/definitions/session"
+            },
+            "replayed": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "ok",
+            "request_id",
+            "session",
+            "replayed"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "ok": {
+              "const": false
+            },
+            "code": {
+              "enum": [
+                "invalid_request",
+                "unauthorized",
+                "wrong_child",
+                "stale_revision",
+                "request_conflict",
+                "invalid_transition",
+                "content_unavailable",
+                "pending_assessment"
+              ]
+            },
+            "current_revision": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            }
+          },
+          "required": [
+            "ok",
+            "code",
+            "current_revision"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

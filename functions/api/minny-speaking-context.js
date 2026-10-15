@@ -1,10 +1,5 @@
-import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import { normalizeHomeworkRecord } from './_homework.js';
-import { loadProgressState, publicProgressState } from './_read2lead-v2-state.js';
-
-// SpeakUp is a separate product from Read2Lead: they share student codes and
-// profile/XP state, never activities. This endpoint must not read the kid's
-// Read2Lead pack/story (Phương, 2026-07-06 — retell/questions modes removed).
+import { speakingRetiredResponse } from '../lib/read2lead/speaking-retired.mjs';
 
 // Schema v3 (2026-07-13): tasks[] -> steps[] compiler. Every step keeps the
 // exact field names the client and grader already use; the only new field
@@ -198,88 +193,6 @@ export function buildSpeakingModes(codeData) {
   return modes;
 }
 
-export async function onRequestGet(context) {
-  const { request, env } = context;
-  if (!env.READ2LEAD_CODES) {
-    return json({ ok: false, error: 'config_error', message: 'Hệ thống chưa cấu hình mã học sinh.' }, 500);
-  }
-
-  const url = new URL(request.url);
-  const accessCode = (url.searchParams.get('code') || '').trim().toUpperCase();
-  if (!accessCode) {
-    return json({ ok: false, error: 'code_missing', message: 'Vui lòng nhập mã học sinh.' }, 400);
-  }
-
-  const clientIp = getClientIp(request);
-  const rl = await checkCodeRateLimit(env.READ2LEAD_CODES, clientIp);
-  if (rl.blocked) return rateLimitedResponse(rl.retryAfter);
-
-  const codeData = await env.READ2LEAD_CODES.get(accessCode, { type: 'json' });
-  if (!codeData) {
-    await recordCodeFailure(env.READ2LEAD_CODES, clientIp);
-    return json({ ok: false, error: 'code_not_found', message: 'Mã học sinh không tồn tại.' }, 404);
-  }
-
-  const profile = codeData.student_profile || {};
-  const progress = codeData.progress || {};
-  const studentName = profile.student_name || progress.student_name || '';
-  const practiceLog = progress.minny_practice || { sessions_this_week: 0, last_at: null };
-
-  const profileLink = `/ho-so?code=${encodeURIComponent(accessCode)}`;
-  const coachingLink = '/coaching#book';
-
-  const modes = buildSpeakingModes(codeData);
-
-  // A KV hiccup loading progress state must only degrade the diamond pill,
-  // never the whole bootstrap response a kid needs to start practicing.
-  let diamondBalance = 0;
-  try {
-    const progressState = await loadProgressState(env, accessCode, codeData);
-    diamondBalance = Number(publicProgressState(progressState).diamonds) || 0;
-  } catch (err) {
-    console.error('[minny-speaking-context] loadProgressState failed', accessCode, err?.message || err);
-  }
-
-  let greeting;
-  const homeworkMode = modes.find(m => m.id === 'homework');
-  if (homeworkMode && homeworkMode.homework_updated_at) {
-    const dateStr = new Date(homeworkMode.homework_updated_at).toLocaleDateString('vi-VN', { day: 'numeric', month: 'long', year: 'numeric' });
-    greeting = `Chào ${studentName || 'bé'}! Hôm nay mình luyện bài thầy Phương giao ngày ${dateStr} — chuẩn bị cho buổi coaching với Felix nhé.`;
-  } else if (homeworkMode) {
-    greeting = `Chào ${studentName || 'bé'}! Hôm nay mình luyện bài thầy Phương giao — chuẩn bị cho buổi coaching với Felix nhé.`;
-  } else {
-    greeting = `Chào ${studentName || 'bé'}! Minny sẵn sàng luyện nói cùng con.`;
-  }
-
-  // has_story / pack_id / story_title are kept for response-shape stability
-  // with the page JS; SpeakUp no longer reads any Read2Lead story.
-  return json({
-    ok: true,
-    student_name: studentName,
-    // V1.2 packet 2 (2026-07-12): the client needs the level BEFORE calling
-    // start — the topic picker renders only at L3+ (same lookup
-    // minny-conversation.js uses for the session level).
-    level: codeData?.progress?.current_level || codeData?.student_profile?.level || 'L1',
-    has_story: false,
-    pack_id: 'general',
-    story_title: '',
-    modes,
-    greeting_vi: greeting,
-    practice_count_this_week: numberOrZero(practiceLog.sessions_this_week),
-    diamond_balance: diamondBalance,
-    coaching_link: coachingLink,
-    profile_link: profileLink,
-  });
-}
-
-function numberOrZero(value) {
-  const n = Number(value);
-  return Number.isFinite(n) ? n : 0;
-}
-
-function json(body, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
-  });
+export async function onRequestGet() {
+  return speakingRetiredResponse();
 }

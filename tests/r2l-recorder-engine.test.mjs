@@ -1,3 +1,4 @@
+import { astroJavaScriptSource } from './helpers/astro-javascript-source.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -7,7 +8,6 @@ const engine = readFileSync('public/scripts/r2l-recorder.js', 'utf-8');
 const versionedRecorderSrc = r2lRecorderScriptSrc();
 const micScript = readFileSync('public/scripts/r2l-mic-check.js', 'utf-8');
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
-const speakingPage = readFileSync('src/pages/speak-up.astro', 'utf-8');
 const checkApi = readFileSync('functions/api/read2lead-speaking-check.js', 'utf-8');
 
 test('engine exposes the unified recording API', () => {
@@ -67,9 +67,9 @@ test('engine ships a raw-PCM WAV fallback that bypasses platform encoders', () =
   assert.match(engine, /WAV_TARGET_RATE = 16000/);
 });
 
-test('lesson and speaking pages load a versioned engine before the mic check script', () => {
+test('lesson page load a versioned engine before the mic check script', () => {
   assert.match(versionedRecorderSrc, /^\/scripts\/r2l-recorder\.js\?v=[a-f0-9]{12}$/);
-  for (const page of [lessonPage, speakingPage]) {
+  for (const page of [lessonPage]) {
     assert.doesNotMatch(page, /src="\/scripts\/r2l-recorder\.js"/, 'bare engine URL must not appear');
     assert.match(page, /r2lRecorderScriptSrc/, 'build-time recorder URL helper is used');
     assert.match(page, /src=\{r2lRecorderSrc\}/, 'engine script tag uses hashed src');
@@ -91,12 +91,10 @@ test('startMonitor exposes a callable stop on every return path', () => {
   }
 });
 
-test('lesson and speaking inline cleanup uses safeStop guards', () => {
+test('lesson inline cleanup uses safeStop guards', () => {
   assert.match(lessonPage, /function _r2lSafeStopMonitor/);
   assert.match(lessonPage, /_r2lSafeStopMonitor\(entry\.monitor\)/);
   assert.doesNotMatch(lessonPage, /entry\.monitor\.stop\(\)/);
-  assert.match(speakingPage, /function safeStopMonitor/);
-  assert.doesNotMatch(speakingPage, /state\.recording\.monitor\.stop\(\)/);
 });
 
 test('lesson detects silent captures on-device and never uploads silence', () => {
@@ -142,15 +140,9 @@ test('mic check pins the passed device for later recordings', () => {
 
 test('the prime-then-close AudioContext pattern is fully gone', () => {
   assert.doesNotMatch(micScript, /async function primeAudioPipeline/);
-  assert.doesNotMatch(speakingPage, /primeAudioPipeline\(stream\)/);
 });
 
-test('speaking page uses the unified engine with the silent-capture gate', () => {
-  assert.match(speakingPage, /R2LRecorder\?\.createRecorder/);
-  assert.match(speakingPage, /recordingLooksVoiced/);
-  assert.match(speakingPage, /bumpProfile/);
-  assert.match(speakingPage, /useWavEngine/);
-});
+
 
 test('monitor resume cannot hang the recording flow on iOS (timeout race + fail-open)', () => {
   // iOS can leave AudioContext.resume() pending forever outside a user gesture.
@@ -196,36 +188,4 @@ test('monitor supports reset() for conversation-scoped reuse (free talk)', () =>
   assert.match(monitorBody, /hinted = false/);
   // Unavailable-monitor fallbacks expose a no-op reset so callers never branch.
   assert.ok((monitorBody.match(/reset: \(\) => \{\}/g) || []).length >= 2, 'no-op reset on both fallbacks');
-});
-
-test('free talk uses a persistent conversation mic — no fixed 3s warmup', () => {
-  const ftStart = speakingPage.indexOf('async function ftStartRecording');
-  const ftEnd = speakingPage.indexOf('function ftStopRecording');
-  const ftBody = speakingPage.slice(ftStart, ftEnd);
-  // Warm path: reuse the conversation stream, monitor kept across turns,
-  // counters reset per turn; the 3s countdown only behind the escape hatch.
-  assert.match(ftBody, /ftAcquireMic\(\)/);
-  assert.match(ftBody, /monitor\.reset\?\.\(\)/);
-  assert.match(ftBody, /r2l_ft_warmup/);
-  const warmupIdx = ftBody.indexOf('runMicWarmupCountdown');
-  const hatchIdx = ftBody.indexOf('legacyWarmup');
-  assert.ok(warmupIdx > -1 && hatchIdx > -1 && hatchIdx < warmupIdx, 'warmup only behind legacy flag');
-  // Every conversation exit releases the mic (indicator must turn off).
-  assert.match(speakingPage, /function ftReleaseMic/);
-  const resetBody = speakingPage.slice(
-    speakingPage.indexOf('function ftReset'),
-    speakingPage.indexOf('function enterFreeTalking'),
-  );
-  assert.match(resetBody, /ftReleaseMic\(\)/);
-  const capBody = speakingPage.slice(
-    speakingPage.indexOf('function ftHandleCapReached'),
-    speakingPage.indexOf('function ftShowSummary'),
-  );
-  assert.match(capBody, /ftReleaseMic\(\)/);
-  // Homework keeps its per-turn acquire + 3s warmup (score-sensitive).
-  const hwStart = speakingPage.indexOf('async function startRecording');
-  const hwEnd = speakingPage.indexOf('function stopRecording');
-  const hwBody = speakingPage.slice(hwStart, hwEnd);
-  assert.match(hwBody, /runMicWarmupCountdown/);
-  assert.doesNotMatch(hwBody, /ftAcquireMic/);
 });

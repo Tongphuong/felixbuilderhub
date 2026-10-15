@@ -9,12 +9,18 @@
 // coverage (task summary/edit-apply round-tripping), matching this repo's
 // existing convention for .astro inline-script logic.
 
+import ts from 'typescript';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const modalSrc = readFileSync('src/components/admin/HomeworkModal.astro', 'utf-8');
-const classesSrc = readFileSync('src/pages/admin/classes.astro', 'utf-8');
+const classesSrc = readFileSync('src/pages/admin/classes.astro', 'utf-8').replace(
+  /(<script>)([\s\S]*?)(<\/script>)/g,
+  (_, open, code, close) => open + ts.transpileModule(code, {
+    compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext, removeComments: true },
+  }).outputText.replace(/}\s+catch \(/g, '} catch (') + close,
+);
 
 function extractFunctionSrc(source, name) {
   const marker = `function ${name}(`;

@@ -1,0 +1,24 @@
+---
+import '../../styles/read2lead-self-learn.css';
+import giftStyleUrl from '../../styles/read2lead-gifts.css?url&no-inline';
+import gameStyleUrl from '../../styles/read2lead-game.css?url&no-inline';
+---
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href={gameStyleUrl} />
+    <link rel="stylesheet" href={giftStyleUrl} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="Bản luyện tập mẫu Read2Lead — đọc, hiểu và kể lại theo nhịp của con." />
+    <title>Hành trình đọc của con · Read2Lead</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Đến nội dung chính</a>
+    <div class="qa-banner">BẢN QA CỤC BỘ · Chỉ dùng dữ liệu mẫu · Không có quà thật</div>
+    <div id="player-root"><main id="main" tabindex="-1" class="loading"><p>Đang mở hành trình…</p></main></div>
+    <noscript><p class="notice">Con cần bật JavaScript để lưu và tiếp tục bài học.</p></noscript>
+    <script>import { mountPlayer } from '../../lib/read2lead/self-learn/player.mjs'; mountPlayer(document.getElementById('player-root'));</script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "format": 1,
+  "purpose": "read2lead-local-synthetic-gifts",
+  "real_rewards": false,
+  "funding_status": "not_funded",
+  "items": [
+    {"gift_id":"synthetic-encouragement-card","version":"sample-v1","title_vi":"Thiệp động viên · Quà mẫu","description_vi":"Một lựa chọn mẫu để con thử đặt mục tiêu. Bản QA không gửi thiệp thật.","price_diamonds":5,"available":true},
+    {"gift_id":"synthetic-bookmark","version":"sample-v1","title_vi":"Dấu trang · Quà mẫu","description_vi":"Con có thể giữ một mục tiêu cho lần sau. Đây là mẫu thử, chưa có quà thật hay lịch giao.","price_diamonds":15,"available":true},
+    {"gift_id":"synthetic-notebook","version":"sample-v1","title_vi":"Sổ nhỏ · Quà mẫu","description_vi":"Mẫu này chưa mở để đổi. Con vẫn có thể chọn một mục tiêu khác hoặc tiếp tục đọc.","price_diamonds":30,"available":false}
+  ]
+}
