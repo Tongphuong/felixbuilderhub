@@ -219,6 +219,22 @@ public migration endpoint, new access key, restore command or automatic startup
 merge is added. Preserve private backups on disk with0600 permissions. Release
 freeze/drain, native recovery and independent plan approval still precede apply.
 
+For large backups use `exportFrozenAccountsStream()`, which returns the same
+JSON document in a streamed Response across both internal RPC boundaries.
+Forward that Response without parsing it inside a Worker; parse or save it in
+the authenticated local client. This avoids the platform's 32 MiB serialized
+RPC result limit without relaxing freeze checks, checksums or export limits.
+The original object-returning method remains available for small exports.
+No new binding, public route or permission is introduced.
+
+Large or Unicode-heavy merge inputs use `applyFrozenAccountsStream(Request)`
+with POST and `Content-Type: application/json`. Forward the body through the
+internal entry point without parsing it between services. The fixed target and
+freeze checks run before reading; the same input shape, configured pins, backup
+and rollout checks run after parsing. This is an internal RPC method, not an
+HTTP importer; public fetch still returns404. Keep the source and backup pins
+independently verified before sending either form of merge input.
+
 The existing `READ2LEAD_CODES` binding, when separately configured on the Worker,
 may provide retained speech-cache reads through the validated `tts:` capability.
 All account reads/writes still use SQL. Existing `AI`, media and provider settings

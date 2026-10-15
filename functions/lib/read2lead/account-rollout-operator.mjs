@@ -1,11 +1,12 @@
 import { snapshotAccountStore, mergeAccountSnapshot, readAccountSnapshotRows as accountRows } from './account-snapshot.mjs';
+import {accountJsonDigest} from './account-json-stream.mjs';
 
 const FORMAT='read2lead-frozen-account-export-v1';
 const OBJECT='existing-student-test-v1';
 const encoder=new TextEncoder();
 const fail=code=>{throw Error(code);};
 const pin=value=>typeof value==='string'&&/^[a-f0-9]{64}$/.test(value);
-const hash=async value=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',encoder.encode(JSON.stringify(value)))),b=>b.toString(16).padStart(2,'0')).join('');
+const hash=async value=>accountJsonDigest(value);
 const quote=name=>'"'+name.replaceAll('"','""')+'"';
 const compare=(a,b)=>a<b?-1:a>b?1:0;
 // Bookmark creation may add _cf_METADATA. Like platform KV, it refuses
@@ -30,7 +31,7 @@ function cell(type,value) {
  * covers platform-owned KV/system data that SQL clients cannot inspect.
  * Integer values are cast by SQLite before JS to preserve all 64 bits.
  */
-export function captureAccountSqlEvidence(db,{maxBytes=32*1024*1024}={}) {
+export function captureAccountSqlEvidence(db,{maxBytes=32*1024*1024,rowDigests=false}={}) {
   if(!Number.isSafeInteger(maxBytes)||maxBytes<1)fail('account_export_limit_invalid');
   const schema=db.prepare('SELECT type,name,tbl_name,sql FROM sqlite_master ORDER BY type,name').all()
     .filter(row=>!platformOwned(row.name)&&!platformOwned(row.tbl_name)).map(row=>({type:row.type,name:row.name,table:row.tbl_name,sql:row.sql}));
@@ -44,11 +45,19 @@ export function captureAccountSqlEvidence(db,{maxBytes=32*1024*1024}={}) {
     const rows=db.prepare(`SELECT ${select} FROM ${quote(item.name)}`).all().map(row=>{
       const values=columns.map((_,i)=>cell(row['t'+i],row['v'+i]));
       const text=JSON.stringify(values);bytes+=encoder.encode(text).length;
-      if(bytes>maxBytes)fail('account_export_limit');return text;
-    }).sort(compare).map(text=>JSON.parse(text));
+      if(bytes>maxBytes)fail('account_export_limit');return rowDigests?accountJsonDigest(values):text;
+    }).sort(compare).map(text=>rowDigests?text:JSON.parse(text));
     tables.push({name:item.name,columns,rows});
   }
   return {scope:'user_sql_including_sqlite_metadata',platformTablesExcluded:'_cf_KV/__cf_kv/_cf_METADATA and their schema objects; covered by native PITR',schema,tables};
+}
+
+/** Comparison-only fingerprints: schema, types, duplicate rows and counts stay
+ * bound. Backups still contain every full cell value. This avoids retaining a
+ * second full account table while checking a large frozen export or merge.
+ */
+export function accountSqlEvidenceDigests(sql) {
+  return {...sql,tables:sql.tables.map(table=>({...table,rows:table.rows.map(accountJsonDigest).sort(compare)}))};
 }
 
 function guard({db,transaction,exclusive,isFrozen,objectName,objectId,progressInCodes}) {
@@ -73,7 +82,7 @@ export async function captureFrozenAccountState(options) {
     const accounts=await snapshotAccountStore({db,progressInCodes});
     const bookmark=await getCurrentBookmark();
     if(typeof bookmark!=='string'||!bookmark||bookmark.length>512||!/^[a-zA-Z0-9-]+$/.test(bookmark))fail('native_recovery_invalid');
-    if(isFrozen()!==true||JSON.stringify(transaction(()=>captureAccountSqlEvidence(db)))!==JSON.stringify(sql))fail('account_changed_during_export');
+    if(isFrozen()!==true||JSON.stringify(transaction(()=>captureAccountSqlEvidence(db,{rowDigests:true})))!==JSON.stringify(accountSqlEvidenceDigests(sql)))fail('account_changed_during_export');
     const capturedAt=now();if(!Number.isSafeInteger(capturedAt)||capturedAt<1)fail('account_export_time_invalid');
     const body={format:FORMAT,objectName,objectId,progressInCodes,capturedAt,
       recovery:{kind:'cloudflare-durable-object-pitr',scope:'entire_sqlite_database_including_storage_kv',retentionDays:30,bookmark},accounts,sql};
@@ -113,10 +122,10 @@ export async function applyFrozenAccountRollout(options) {
   return exclusive(async()=>{
     guard(options);
     const hasReceipt=db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='read2lead_account_rollout'").get();
-    const initial=transaction(()=>captureAccountSqlEvidence(db));
+    const initial=transaction(()=>captureAccountSqlEvidence(db,{rowDigests:true}));
     // A retry acknowledges the original receipt without restoring the opening
     // backup or discarding subsequent learning. merge validates every pin.
-    if(!hasReceipt&&JSON.stringify(initial)!==JSON.stringify(checked.sql))fail('account_target_changed_since_backup');
+    if(!hasReceipt&&JSON.stringify(initial)!==JSON.stringify(accountSqlEvidenceDigests(checked.sql)))fail('account_target_changed_since_backup');
     const beforeRetained=JSON.stringify(retainedSql(initial));
     const expectedRows=new Map(accountRows(db).map(row=>[rowKey(row),row]));
     if(!hasReceipt){
@@ -126,7 +135,7 @@ export async function applyFrozenAccountRollout(options) {
     const guardedTransaction=fn=>transaction(()=>{
       if(isFrozen()!==true)fail('account_operator_forbidden');
       const result=fn();
-      if(JSON.stringify(retainedSql(captureAccountSqlEvidence(db)))!==beforeRetained)fail('account_retained_state_changed');
+      if(JSON.stringify(retainedSql(captureAccountSqlEvidence(db,{rowDigests:true})))!==beforeRetained)fail('account_retained_state_changed');
       if(result?.status==='merged'||result?.status==='already_merged'){
         const rows=accountRows(db);
         if(rows.length!==expectedRows.size||rows.some(row=>JSON.stringify(row)!==JSON.stringify(expectedRows.get(rowKey(row)))))fail('account_preserved_rows_changed');

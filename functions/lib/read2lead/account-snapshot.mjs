@@ -4,6 +4,8 @@
  * completeness, ownership, authorization, writer fencing or safe cutover.
  * Values/metadata are raw strings; expires is absolute Unix milliseconds.
  */
+import {accountJsonDigest} from './account-json-stream.mjs';
+
 const FORMAT = 'read2lead-account-snapshot-v1';
 const encoder = new TextEncoder();
 const fail = code => { throw Error(code); };
@@ -38,8 +40,7 @@ function inventory(input) {
   return { format: FORMAT, sourceId: input.sourceId, progressInCodes: input.progressInCodes, records };
 }
 async function digest(body) {
-  const bytes = await crypto.subtle.digest('SHA-256', encoder.encode(JSON.stringify(body)));
-  return Array.from(new Uint8Array(bytes), x => x.toString(16).padStart(2, '0')).join('');
+  return accountJsonDigest(body);
 }
 export async function prepareAccountSnapshot(input) {
   // Copy before the asynchronous hash so the caller cannot change hashed rows.

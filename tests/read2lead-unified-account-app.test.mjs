@@ -198,7 +198,9 @@ test('actual Worker keeps public traffic outside accounts, freezes old callers a
     assert.equal((await instance.fetch(f.request('/api/read2lead-progress?code='+A))).status,503);
     if(mode==='freeze-v1'){
       const exported=await instance.exportFrozenAccounts();assert.equal(exported.format,'read2lead-frozen-account-export-v1');assert.equal(exported.objectId,ctx.id);assert.equal(exported.accounts.progressInCodes,true);
-    }else await assert.rejects(instance.exportFrozenAccounts(),/operator_forbidden/);
+      const streamed=await instance.exportFrozenAccountsStream();assert.equal(streamed.headers.get('Cache-Control'),'no-store');
+      const document=await streamed.json();assert.deepEqual(document.accounts,exported.accounts);assert.deepEqual(document.sql,exported.sql);
+    }else {await assert.rejects(instance.exportFrozenAccounts(),/operator_forbidden/);await assert.rejects(instance.exportFrozenAccountsStream(),/operator_forbidden/);}
   }
   assert.equal(assetReads,0,'refuse before loading content or opening account service');
   const instance=new module.Read2LeadPrivatePreview(ctx,{...env,R2L_ACCOUNT_MODE:'unified-v1'});
@@ -208,6 +210,7 @@ test('actual Worker keeps public traffic outside accounts, freezes old callers a
   assert.equal(f.value('progress:'+A).diamonds,270);assert.equal(f.value('progress:'+QA).diamonds,520);
   assert.equal(assetReads,1,'actual unified Worker reuses its verified manifest');
   const adult=new module.Read2LeadPrivatePreview({...ctx,id:'private-adult-preview-v1'},env);await assert.rejects(adult.exportFrozenAccounts(),/operator_forbidden/);
+  await assert.rejects(adult.exportFrozenAccountsStream(),/operator_forbidden/);
 });
 
 async function studentWorkerFixture(t){
@@ -296,43 +299,48 @@ test('actual Worker requires voice verification for the exact accepted package b
   assert.equal(f.value(A).progress.current_pack,null);assert.equal(f.providerCalls(),0);
 });
 
-for(const shared of [true,false])test(`internal operator RPC requires configured pins and preserves retry-after-learning (shared=${shared})`,async t=>{
+for(const shared of [true,false])for(const streamedInput of [false,true])test(`internal operator RPC requires configured pins and preserves retry-after-learning (shared=${shared}, streamed=${streamedInput})`,async t=>{
   const f=await fixture(t,{shared,merged:false}),module=await worker();
   const ctx={id:'existing-student-test-v1',blockConcurrencyWhile:fn=>fn(),storage:{getCurrentBookmark:async()=> 'synthetic-native-bookmark',transactionSync:f.options.transaction,sql:{exec(sql,...args){const rows=f.db.prepare(sql).all(...args);return {toArray:()=>rows,one:()=>rows[0]};}}}};
   let instance;
   const env={R2L_ACCOUNT_MODE:'freeze-v1',R2L_PREVIEW_STATE:{idFromName:name=>name,get:id=>{assert.equal(id,ctx.id);return instance;}}};
   instance=new module.Read2LeadPrivatePreview(ctx,env);
   const operator=new module.Read2LeadAccountOperator({},env);
+  const apply=value=>streamedInput?operator.applyFrozenAccountsStream(new Request('https://operator.invalid/apply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(value)})):operator.applyFrozenAccounts(value);
   const backup=await operator.exportFrozenAccounts(),input={backup,snapshot:f.snapshot,plan:f.plan};
+  const streamed=await (await operator.exportFrozenAccountsStream()).json();assert.deepEqual(streamed.accounts,backup.accounts);assert.deepEqual(streamed.sql,backup.sql);
   const before=await snapshotAccountStore({db:f.db,progressInCodes:shared});
+  for(const request of [{},new Request('https://operator.invalid'),new Request('https://operator.invalid',{method:'POST',headers:{'Content-Type':'application/json'},body:'{'})])await assert.rejects(operator.applyFrozenAccountsStream(request));
   assert.equal((await operator.fetch(f.request('/applyFrozenAccounts',input))).status,404);
   for(const pins of [{},{R2L_ACCOUNT_BACKUP_SHA256:'bad',R2L_ACCOUNT_ROLLOUT_SHA256:f.plan.sha256},{R2L_ACCOUNT_BACKUP_SHA256:backup.sha256,R2L_ACCOUNT_ROLLOUT_SHA256:'bad'}]){
     delete env.R2L_ACCOUNT_BACKUP_SHA256;delete env.R2L_ACCOUNT_ROLLOUT_SHA256;Object.assign(env,pins);
-    await assert.rejects(operator.applyFrozenAccounts(input),/operator_pins_required/);
+    await assert.rejects(apply(input),/operator_pins_required/);
   }
   env.R2L_ACCOUNT_BACKUP_SHA256='f'.repeat(64);env.R2L_ACCOUNT_ROLLOUT_SHA256=f.plan.sha256;
-  await assert.rejects(operator.applyFrozenAccounts(input),/backup_pin_or_identity_mismatch/);
+  await assert.rejects(apply(input),/backup_pin_or_identity_mismatch/);
   env.R2L_ACCOUNT_BACKUP_SHA256=backup.sha256;env.R2L_ACCOUNT_ROLLOUT_SHA256='f'.repeat(64);
-  await assert.rejects(operator.applyFrozenAccounts(input));
+  await assert.rejects(apply(input));
   env.R2L_ACCOUNT_ROLLOUT_SHA256=f.plan.sha256;
-  await assert.rejects(operator.applyFrozenAccounts({...input,expectedPlanSha256:'f'.repeat(64)}),/operator_input_invalid/);
+  await assert.rejects(apply({...input,expectedPlanSha256:'f'.repeat(64)}),/operator_input_invalid/);
   const changed=structuredClone(input);changed.snapshot.records[0].value='tampered';
-  await assert.rejects(operator.applyFrozenAccounts(changed));
+  await assert.rejects(apply(changed));
   assert.deepEqual(await snapshotAccountStore({db:f.db,progressInCodes:shared}),before);
   for(const mode of [undefined,'unified-v1','invalid']){
     env.R2L_ACCOUNT_MODE=mode;
     await assert.rejects(operator.exportFrozenAccounts(),/operator_forbidden/);
-    await assert.rejects(operator.applyFrozenAccounts(input),/operator_forbidden/);
+    await assert.rejects(operator.exportFrozenAccountsStream(),/operator_forbidden/);
+    await assert.rejects(apply(input),/operator_forbidden/);
     await assert.rejects(instance.applyFrozenAccounts(input),/operator_forbidden/);
   }
   env.R2L_ACCOUNT_MODE='freeze-v1';
-  assert.equal((await operator.applyFrozenAccounts(input)).status,'merged');
+  assert.equal((await apply(input)).status,'merged');
   assert.equal(f.value('progress:'+QA).diamonds,520);assert.equal(f.value('progress:'+A).diamonds,270);
   f.db.prepare('UPDATE read2lead_account_kv SET value=? WHERE namespace=? AND key=?').run('{"diamonds":777,"later_learning":true}',shared?'codes':'progress','progress:'+A);
-  assert.equal((await operator.applyFrozenAccounts(input)).status,'already_merged');
+  assert.equal((await apply(input)).status,'already_merged');
   assert.deepEqual(f.value('progress:'+A),{diamonds:777,later_learning:true});
   const adult=new module.Read2LeadPrivatePreview({...ctx,id:'private-adult-preview-v1'},env);
   await assert.rejects(adult.applyFrozenAccounts(input),/operator_forbidden/);
+  await assert.rejects(adult.applyFrozenAccountsStream({}),/operator_forbidden/);
 });
 
 test('optional trusted diagnostics preserve fail-closed public responses even when the reporter throws',async t=>{

@@ -8,6 +8,7 @@ import {UNIFIED_MODE,FREEZE_MODE,ACCOUNT_MODE_HEADER,ACCOUNT_PLAN_HEADER} from '
 import {captureFrozenAccountState,applyFrozenAccountRollout} from '../../functions/lib/read2lead/account-rollout-operator.mjs';
 import {studentStoryConfiguration} from '../../functions/lib/read2lead/student-story.mjs';
 import {createAccountVoiceMetadata} from '../../functions/lib/read2lead/account-voice-metadata.mjs';
+import {accountJsonStream} from '../../functions/lib/read2lead/account-json-stream.mjs';
 
 const EXISTING_TEST_OBJECT='existing-student-test-v1';
 const ADMIN_HEADER='X-R2L-Account-Admin-Verified';
@@ -55,6 +56,7 @@ async function existingAccountApp(ctx,env,adapter){
 export class Read2LeadPrivatePreview extends DurableObject {
   #frozenExport;
   #frozenApply;
+  #frozenApplyStream;
   constructor(ctx,env) {
     super(ctx,env);
     const adapter=durableSqlAdapter(ctx.storage);
@@ -74,6 +76,11 @@ export class Read2LeadPrivatePreview extends DurableObject {
         if(!/^[a-f0-9]{64}$/.test(env.R2L_ACCOUNT_BACKUP_SHA256||'')||!/^[a-f0-9]{64}$/.test(env.R2L_ACCOUNT_ROLLOUT_SHA256||''))throw Error('account_operator_pins_required');
         return applyFrozenAccountRollout({...options,backup:input.backup,snapshot:input.snapshot,plan:input.plan,
           expectedBackupSha256:env.R2L_ACCOUNT_BACKUP_SHA256,expectedPlanSha256:env.R2L_ACCOUNT_ROLLOUT_SHA256});
+      };
+      this.#frozenApplyStream=async request=>{
+        frozenOptions();
+        if(!(request instanceof Request)||request.method!=='POST'||request.headers.get('Content-Type')!=='application/json')throw Error('account_operator_input_invalid');
+        return this.#frozenApply(await request.json());
       };
       let app;
       this.app=async request=>{
@@ -104,9 +111,19 @@ export class Read2LeadPrivatePreview extends DurableObject {
     if(!this.#frozenExport)throw Error('account_operator_forbidden');
     return this.#frozenExport();
   }
+  async exportFrozenAccountsStream(){
+    if(!this.#frozenExport)throw Error('account_operator_forbidden');
+    return new Response(accountJsonStream(await this.#frozenExport()),{
+      headers:{'Content-Type':'application/json','Cache-Control':'no-store'},
+    });
+  }
   async applyFrozenAccounts(input){
     if(!this.#frozenApply)throw Error('account_operator_forbidden');
     return this.#frozenApply(input);
+  }
+  async applyFrozenAccountsStream(request){
+    if(!this.#frozenApplyStream)throw Error('account_operator_forbidden');
+    return this.#frozenApplyStream(request);
   }
 }
 // Named service-binding RPC only. No public route, caller-selected namespace,
@@ -117,7 +134,9 @@ export class Read2LeadAccountOperator extends WorkerEntrypoint {
     return this.env.R2L_PREVIEW_STATE.get(this.env.R2L_PREVIEW_STATE.idFromName(EXISTING_TEST_OBJECT));
   }
   async exportFrozenAccounts(){return this.#target().exportFrozenAccounts();}
+  async exportFrozenAccountsStream(){return this.#target().exportFrozenAccountsStream();}
   async applyFrozenAccounts(input){return this.#target().applyFrozenAccounts(input);}
+  async applyFrozenAccountsStream(request){return this.#target().applyFrozenAccountsStream(request);}
   fetch(){return new Response(null,{status:404});}
 }
 export default {

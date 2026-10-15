@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {createAccountTransactionRunner} from '../functions/lib/read2lead/account-transactions.mjs';
 import {prepareAccountSnapshot,importAccountSnapshot,prepareAccountRollout} from '../functions/lib/read2lead/account-snapshot.mjs';
-import {captureAccountSqlEvidence,captureFrozenAccountState,applyFrozenAccountRollout} from '../functions/lib/read2lead/account-rollout-operator.mjs';
+import {captureAccountSqlEvidence,accountSqlEvidenceDigests,captureFrozenAccountState,applyFrozenAccountRollout} from '../functions/lib/read2lead/account-rollout-operator.mjs';
 
 async function fixture(t,{shared=true}={}) {
   const db=new DatabaseSync(':memory:');t.after(()=>db.close());
@@ -39,6 +39,16 @@ test('typed export preserves all user SQL, native-recovery metadata, binary, lar
   const future=result.sql.tables.find(table=>table.name==='future table');assert.deepEqual(future.rows[0],[['integer','1'],['text','Vietnamese 🌏\u0000 preserved'],['blob','0001feff'],['integer','9223372036854775807'],['real','0.12345678901234568']]);
   assert.ok(result.sql.schema.some(row=>row.type==='view'&&row.name==='future_view'));assert.ok(result.sql.tables.some(table=>table.name==='sqlite_sequence'));
   assert.equal((await f.capture()).sha256,result.sha256,'stable export with fixed time/bookmark');
+});
+
+test('compact SQL comparison preserves typed rows, duplicate counts and schema changes',async t=>{
+  const f=await fixture(t);f.db.exec('CREATE TABLE repeated(value); INSERT INTO repeated VALUES(1),(1),(\'1\'),(NULL)');
+  const full=f.sql(),compact=captureAccountSqlEvidence(f.db,{rowDigests:true});
+  assert.deepEqual(compact,accountSqlEvidenceDigests(full));
+  const rows=compact.tables.find(table=>table.name==='repeated').rows;
+  assert.equal(rows.length,4);assert.equal(new Set(rows).size,3);
+  f.db.exec('DELETE FROM repeated WHERE rowid=1');assert.notDeepEqual(captureAccountSqlEvidence(f.db,{rowDigests:true}),compact);
+  f.db.exec('CREATE INDEX repeated_index ON repeated(value)');assert.notDeepEqual(captureAccountSqlEvidence(f.db,{rowDigests:true}).schema,compact.schema);
 });
 
 test('missing freeze, wrong object, wrong mode and absent native recovery refuse without mutation',async t=>{
