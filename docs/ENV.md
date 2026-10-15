@@ -203,6 +203,14 @@ The host requires its matching durable merge receipt and progress-storage mode.
 This value cannot import data or grant story publication/speaking permission.
 Unknown routes and backend errors never fall back to legacy account KV.
 
+In unified mode, GET/HEAD requests for `/_astro/*.js`, `/_astro/*.css` and
+PNG/JPEG/WebP pictures under `/story-retell/` with an account cookie use the same pinned account host as the reading HTML.
+The host still authenticates that cookie and serves only its manifest assets.
+Only a static-file401/404 may fall back to the public Pages build, allowing
+public-site navigation with a stale student cookie. Account APIs/pages and
+backend errors never gain this fallback. Test with separate fresh Pages and
+preserved account asset stores; a combined asset directory hides missing chunks.
+
 `R2L_ACCOUNT_BACKUP_SHA256` (private account Worker, optional except for a
 frozen merge): independently verified SHA256 of the exact native-bookmark plus
 logical backup returned by `exportFrozenAccounts()`. The internal merge requires

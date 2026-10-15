@@ -65,3 +65,32 @@ test('invalid mode and missing rollout pin fail closed',async()=>{
   const f=fixture({mode:'typo'});assert.equal((await f.run('/api/read2lead-progress')).status,503);assert.equal(f.calls.length,0);
   const g=fixture();delete g.env.R2L_ACCOUNT_ROLLOUT_SHA256;assert.equal((await g.run('/api/read2lead-progress')).status,503);assert.equal(g.calls.length,0);
 });
+
+test('student hashed scripts and styles use the same pinned account host as their HTML',async()=>{
+  const f=fixture(),headers={cookie:'other=value; __Host-r2l_account=synthetic',[VERIFIED_ADMIN_HEADER]:'forged'};
+  for(const method of ['GET','HEAD'])for(const path of ['/_astro/lesson.SyntheticHash.js','/_astro/classes.SyntheticHash.css?v=abcdef','/story-retell/sky/storyboard-v1.png']){
+    const response=await f.run(path,{method,headers});assert.equal(response.status,200);assert.equal(f.nextCalls(),0);
+    assert.equal(f.calls.at(-1).request.method,method);assert.equal(f.calls.at(-1).request.headers.get(VERIFIED_ADMIN_HEADER),null);
+  }
+  assert.equal(f.calls.length,6);assert.deepEqual(f.reads,[]);
+});
+
+test('asset routing never extends cookie authority to public pages, private files or mutations',async()=>{
+  for(const [path,headers,method] of [
+    ['/_astro/page.js',{},'GET'],['/_astro/page.js',{cookie:'not__Host-r2l_account=synthetic'},'GET'],
+    ['/_astro/page.js',{cookie:'__Host-r2l_account=synthetic'},'POST'],
+    ['/',{cookie:'__Host-r2l_account=synthetic'},'GET'],['/__private/package.json',{cookie:'__Host-r2l_account=synthetic'},'GET'],
+    ['/_astro/config.json',{cookie:'__Host-r2l_account=synthetic'},'GET'],
+    ['/story-retell/sky/private.json',{cookie:'__Host-r2l_account=synthetic'},'GET'],
+    ['/story-retell/sky/storyboard.png',{cookie:'__Host-r2l_account=synthetic'},'POST'],
+    ['/story-retell/sky/storyboard.png',{},'GET'],
+  ]){const f=fixture();assert.equal(await(await f.run(path,{headers,method})).text(),'public-site');assert.equal(f.calls.length,0);}
+  for(const status of [401,404]){
+    const f=fixture({status}),response=await f.run('/_astro/new-public.js',{headers:{cookie:'__Host-r2l_account=stale'}});
+    assert.equal(await response.text(),'public-site');assert.equal(f.calls.length,1);assert.equal(f.nextCalls(),1);assert.deepEqual(f.reads,[]);
+    await f.run('/api/read2lead-progress',{headers:{cookie:'__Host-r2l_account=stale'}});assert.equal(f.nextCalls(),1);
+  }
+  for(const options of [{status:503},{headers:{[ACCOUNT_PLAN_HEADER]:'f'.repeat(64)}},{status:302,headers:{Location:'/legacy'}}]){
+    const f=fixture(options);assert.equal((await f.run('/_astro/page.js',{headers:{cookie:'__Host-r2l_account=synthetic'}})).status,503);assert.equal(f.nextCalls(),0);
+  }
+});

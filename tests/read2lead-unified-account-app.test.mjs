@@ -13,6 +13,7 @@ import { makeStoredBookPack } from './helpers/book-pack-fixture.mjs';
 import {publisherDigest} from '../functions/lib/read2lead/self-learn/publisher-contract.mjs';
 import {verifiedLessonCatalogue} from '../functions/lib/read2lead/private-voice.mjs';
 import {studentStoryConfiguration} from '../functions/lib/read2lead/student-story.mjs';
+import {onRequest as pagesMiddleware} from '../functions/_middleware.js';
 
 const origin='https://unified.test', QA='R2L-SYNTHETIC-QA', A='R2L-SYNTHETIC-A', B='R2L-SYNTHETIC-B', OTHER_TEST='R2L-SYNTHETIC-OTHER-TEST';
 const digest=value=>createHash('sha256').update(value).digest('hex');
@@ -211,6 +212,25 @@ test('actual Worker keeps public traffic outside accounts, freezes old callers a
   assert.equal(assetReads,1,'actual unified Worker reuses its verified manifest');
   const adult=new module.Read2LeadPrivatePreview({...ctx,id:'private-adult-preview-v1'},env);await assert.rejects(adult.exportFrozenAccounts(),/operator_forbidden/);
   await assert.rejects(adult.exportFrozenAccountsStream(),/operator_forbidden/);
+});
+
+test('actual Worker serves pinned reading assets through Pages with separate fresh static storage',async t=>{
+  const f=await fixture(t),module=await worker();
+  const originalManifest=await(await f.options.assets.fetch(new Request(origin+'/__private/package.json'))).json();
+  const assetPath='/_astro/lesson.PreservedHash.js',picturePath='/story-retell/sky/storyboard-v1.png';originalManifest.publicAssets.push(assetPath,picturePath);
+  const manifest=JSON.stringify(originalManifest);
+  const assets={fetch:request=>new URL(request.url).pathname==='/__private/package.json'?new Response(manifest):new URL(request.url).pathname===picturePath?new Response('preserved picture',{headers:{'Content-Type':'image/png'}}):new URL(request.url).pathname===assetPath?new Response('/* preserved reading script */',{headers:{'Content-Type':'text/javascript'}}):f.options.assets.fetch(request)};
+  const ctx={id:'existing-student-test-v1',waitUntil:p=>p.catch(()=>{}),blockConcurrencyWhile:fn=>fn(),storage:{transactionSync:f.options.transaction,sql:{exec(sql,...args){const rows=f.db.prepare(sql).all(...args);return {toArray:()=>rows,one:()=>rows[0]};}}}};
+  let instance;const namespace={idFromName:name=>name,get:id=>{assert.equal(id,ctx.id);return instance;}};
+  instance=new module.Read2LeadPrivatePreview(ctx,{R2L_PREVIEW_STATE:namespace,ASSETS:assets,R2L_PREVIEW_PACKAGE_SHA256:digest(manifest),R2L_ACCOUNT_MODE:'unified-v1',R2L_ACCOUNT_ROLLOUT_SHA256:f.plan.sha256});
+  let staticCalls=0;
+  const call=(path,cookie)=>pagesMiddleware({request:f.request(path,undefined,cookie?{cookie}:{}),env:{R2L_ACCOUNT_MODE:'unified-v1',R2L_ACCOUNT_ROLLOUT_SHA256:f.plan.sha256,R2L_MAINTENANCE_STATE:namespace},data:{},next:async()=>{staticCalls++;return path==='/_astro/public.NewHash.js'?new Response('/* fresh public script */'):new Response('Fresh Pages asset absent',{status:404});}});
+  const home=await call('/read2lead/?code='+A);assert.equal(home.status,200);const cookie=home.headers.get('set-cookie').split(';')[0];
+  assert.equal(await(await call(assetPath,cookie)).text(),'/* preserved reading script */');assert.equal(staticCalls,0);
+  assert.equal(await(await call(picturePath,cookie)).text(),'preserved picture');assert.equal(staticCalls,0);
+  assert.equal(await(await call('/_astro/public.NewHash.js',cookie)).text(),'/* fresh public script */');assert.equal(staticCalls,1);
+  assert.equal((await call(assetPath,'__Host-r2l_account=forged')).status,404);assert.equal(staticCalls,2);
+  assert.equal((await call('/api/read2lead-unknown',cookie)).status,404);assert.equal(staticCalls,2);
 });
 
 async function studentWorkerFixture(t){

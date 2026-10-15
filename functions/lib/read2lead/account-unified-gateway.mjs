@@ -32,7 +32,13 @@ export async function unifiedAccountGateway(context) {
     (context.data??={}).clearRead2LeadAccountCookies=true;
     return null;
   }
-  if (!isUnifiedAccountPath(url.pathname)) return null;
+  // The account HTML, hashed build assets and retelling pictures share one bundle.
+  // Cookie presence selects transport only; the host authenticates the token.
+  const accountAsset=mode===UNIFIED_MODE&&['GET','HEAD'].includes(request.method)&&
+    (/^\/_astro\/[A-Za-z0-9_.-]+\.(?:js|css)$/.test(url.pathname)||
+    /^\/story-retell\/(?:[A-Za-z0-9_-]+\/)*[A-Za-z0-9_-][A-Za-z0-9_.-]*\.(?:png|jpg|jpeg|webp)$/.test(url.pathname))&&
+    (request.headers.get('cookie')||'').split(';').some(value=>value.trim().startsWith('__Host-r2l_account='));
+  if (!isUnifiedAccountPath(url.pathname)&&!accountAsset) return null;
   if (mode===FREEZE_MODE) return Response.json({code:'account_temporarily_paused'},{status:503,headers:{'Cache-Control':'no-store','Retry-After':'60'}});
   const pin=env.R2L_ACCOUNT_ROLLOUT_SHA256,namespace=env.R2L_MAINTENANCE_STATE;
   if (!/^[a-f0-9]{64}$/.test(pin||'')||!namespace) return unavailable();
@@ -47,6 +53,11 @@ export async function unifiedAccountGateway(context) {
         response.headers.get(ACCOUNT_MODE_HEADER)!==UNIFIED_MODE||response.headers.get(ACCOUNT_PLAN_HEADER)!==pin||
         (response.status>=300&&response.status<400)) {
       await response.body?.cancel();return unavailable();
+    }
+    // Public pages can request their own assets with an old student cookie.
+    // Only this static-file path may fall back, never an account API or page.
+    if(accountAsset&&[401,404].includes(response.status)){
+      await response.body?.cancel();return null;
     }
     return response;
   } catch { return unavailable(); }
