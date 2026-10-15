@@ -2,7 +2,7 @@
  * Separate from original-draft 1.1: never relabel publisher text/art as original.
  * Reviews attest to a particular package; this module cannot perform human review.
  */
-import legacy from '../../../../schemas/read2lead-self-learn/lesson.v1.1.schema.json' with { type: 'json' };
+import legacy from '../../../../schemas/read2lead-self-learn/lesson.v1.1.schema.mjs';
 import { createSchemaCheck } from './schema-check.mjs';
 import { levelIssues } from './level-policy.mjs';
 import { contentDigest } from './catalogue.mjs';

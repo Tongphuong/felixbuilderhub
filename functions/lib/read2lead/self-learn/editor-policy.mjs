@@ -1,5 +1,5 @@
 /** Original-draft import integrity only. No datastore, publishing authority or human assessment. */
-import schema from '../../../../schemas/read2lead-self-learn/lesson.v1.1.schema.json' with { type: 'json' };
+import schema from '../../../../schemas/read2lead-self-learn/lesson.v1.1.schema.mjs';
 import { createSchemaCheck } from './schema-check.mjs';
 import { levelIssues } from './level-policy.mjs';
 import { contentDigest } from './catalogue.mjs';
