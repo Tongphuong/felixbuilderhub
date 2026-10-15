@@ -66,10 +66,16 @@ delete lesson.properties.misconception_repair.properties.hint_vi;
 lesson.properties.misconception_repair.required = lesson.properties.misconception_repair.required.map(k=>k==='hint_vi'?'hint_en':k);
 lesson.properties.illustrations = list(object({ id, kind:{const:'raster'}, asset_id:id, alt_en:text, sentence_ids:list(id,1,30) }),0,12);
 lesson.properties.audio = object({content_version:text,script_en:text,script_sha256:hash,asset_id:nullableId,
-  voice_version:text,segments:list(segment,0,100),status:{enum:['missing','candidate','playable','matched','timing_verified','reviewed']}});
+  voice_version:text,segments:list(segment,0,100),status:{enum:['missing','candidate','playable','matched','timing_verified','reviewed','approved_exception']}});
 lesson.properties.review = object({author_check:{enum:['pending','complete']},independent_review:{const:false},pedagogical_validation:{const:'pending'},publication:{const:'not_authorized'}});
 publisherSchema.properties = {format:{const:'r2l-publisher-package/1'},lesson:{$ref:'#/definitions/lesson'},assets:list(asset,0,13),rights:list(grant,0,20),reviews:list(review,0,30)};
 publisherSchema.required = Object.keys(publisherSchema.properties);
+// Optional, explicitly owner-approved exception for one existing recording.
+// It is not a listening/timing review, and cannot enable sentence replay.
+publisherSchema.properties.audio_review_exception=object({
+  kind:{const:'owner_approved_existing_recording'},approval_sha256:hash,
+  sentence_replay:{const:'unavailable'}
+});
 const check = createSchemaCheck(publisherSchema);
 const legacyPublisherSchema=structuredClone(publisherSchema);
 legacyPublisherSchema.definitions.lesson.properties.questions.maxItems=3;
@@ -95,7 +101,23 @@ function jsonSnapshot(input) {
   const result=copy(input);if(new TextEncoder().encode(JSON.stringify(result)).length>524288)fail('publisher_input_limit');return result;
 }
 export async function publisherDigest(pkg) {
-  return contentDigest({format:pkg.format,lesson:pkg.lesson,assets:pkg.assets,rights:pkg.rights});
+  return contentDigest({format:pkg.format,lesson:pkg.lesson,assets:pkg.assets,rights:pkg.rights,
+    ...(Object.hasOwn(pkg,'audio_review_exception')?{audio_review_exception:pkg.audio_review_exception}:{})});
+}
+// Pins contain no book text. The approval applies to these exact existing bytes
+// and narrative, not to another recording, lesson, or a request-supplied waiver.
+export function hasApprovedRecordingException(pkg) {
+  const l=pkg?.lesson,e=pkg?.audio_review_exception;
+  const a=pkg?.assets?.find(a=>a.id===l?.audio?.asset_id);
+  return e?.kind==='owner_approved_existing_recording'&&e.sentence_replay==='unavailable'&&
+    e.approval_sha256==='00476f0278bc1139ba0ab83b226ccaada02f25f9ec57afec04a39207f032ff00'&&
+    l?.id==='osad-51fda697ea22c07a08f16b8f-s01'&&l.version==='1.2.9'&&l.source?.source_id===l.id&&
+    l.source.kind==='user_supplied_publisher'&&
+    l.story?.text_sha256==='9bd77b624cd14ab9e1b4278fe0d6f7dafbbaadebdd6bd309c0766efa10805f2a'&&
+    l.audio?.script_sha256===l.story.text_sha256&&l.audio.status==='approved_exception'&&
+    Array.isArray(l.audio.segments)&&l.audio.segments.length===0&&
+    a?.kind==='audio'&&a.provenance==='supplied_recording'&&a.mime==='audio/mpeg'&&
+    a.bytes===617073&&a.sha256==='633b0017f6485230a3ca833bbfa0d1e1205d621b07e895f5bfccdb6ce228c715';
 }
 export async function validatePublisherPackage(input) {
   const pkg=jsonSnapshot(input), schemaIssues=(pkg?.lesson?.interview?check:checkLegacy)(pkg);
@@ -154,6 +176,10 @@ export async function validatePublisherPackage(input) {
   }
   for(const picture of l.illustrations){add(assets.get(picture.asset_id)?.kind==='image','missing_image_asset');add(picture.sentence_ids.every(s=>sentences.has(s)),'unknown_scene_sentence');}
   const audio=assets.get(l.audio.asset_id);
+  if(pkg.audio_review_exception||l.audio.status==='approved_exception'){
+    add(hasApprovedRecordingException(pkg),'invalid_audio_review_exception');
+    add(!pkg.reviews.some(r=>['audio_listening','audio_timing'].includes(r.kind)),'exception_cannot_claim_listening_or_timing');
+  }
   add(l.audio.asset_id===null?l.audio.status==='missing'&&l.audio.segments.length===0:audio?.kind==='audio'&&l.audio.status!=='missing','invalid_audio_reference');
   add(unique(l.audio.segments.map(s=>s.id)),'duplicate_segment_id');
   for(const s of l.audio.segments){add(s.start_seconds<s.end_seconds&&s.end_seconds<=audio?.duration_seconds&&s.sentence_ids.every(id=>sentences.has(id))&&unique(s.sentence_ids),'invalid_audio_segment');}
@@ -169,12 +195,14 @@ export async function publisherReadiness(input,{now,assetProofs=[]}={}) {
   if(typeof now!=='string'||!Number.isFinite(Date.parse(now)))fail('readiness_time_required');
   const l=pkg.lesson,blocked=[],reviews=new Map(pkg.reviews.map(r=>[r.kind,r]));
   const requireReview=(kind,method)=>{const r=reviews.get(kind);if(!r||r.package_sha256!==package_sha256||!['verified','approved'].includes(r.status)||Date.parse(r.reviewed_at)>Date.parse(now)||(method&&r.method!==method)||(['text','activities','visual','audio_match','audio_listening','audio_timing'].includes(kind)&&r.method==='automated'))blocked.push('review_'+kind);};
-  for(const kind of ['text','activities','visual','audio_decode','audio_match','audio_listening','audio_timing','rights'])requireReview(kind);
+  const recordingException=hasApprovedRecordingException(pkg);
+  for(const kind of ['text','activities','visual','audio_decode','audio_match','rights'])requireReview(kind);
+  if(!recordingException)for(const kind of ['audio_listening','audio_timing'])requireReview(kind);
   for(const kind of ['human_teaching','human_art'])requireReview(kind,'human');
   if(l.source.kind==='user_supplied_publisher'&&pkg.assets.some(a=>a.provenance==='synthetic_fixture'))blocked.push('synthetic_assets_in_publisher');
   if(!l.illustrations.length)blocked.push('illustrations_missing');
-  if(l.audio.asset_id===null||l.audio.status!=='reviewed')blocked.push('audio_not_reviewed');
-  if(l.shadowing.sentence_ids.some(id=>!l.audio.segments.some(s=>s.sentence_ids.length===1&&s.sentence_ids[0]===id)))blocked.push('replay_segments_missing');
+  if(l.audio.asset_id===null||(l.audio.status!=='reviewed'&&!recordingException))blocked.push('audio_not_reviewed');
+  if(!recordingException&&l.shadowing.sentence_ids.some(id=>!l.audio.segments.some(s=>s.sentence_ids.length===1&&s.sentence_ids[0]===id)))blocked.push('replay_segments_missing');
   if(l.review.author_check!=='complete')blocked.push('author_check_missing');
   // File proofs come from the private decoder/importer, never from child requests.
   for(const a of pkg.assets){const proof=assetProofs.filter(p=>p.id===a.id);if(proof.length!==1||proof[0].sha256!==a.sha256||proof[0].bytes!==a.bytes||proof[0].mime!==a.mime||proof[0].decoded!==true)blocked.push('asset_unverified:'+a.id);}

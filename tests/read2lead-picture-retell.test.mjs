@@ -22,7 +22,7 @@ function setup(t){
     state=store.finishVoice('learner',lesson,i,result);return{i,result};
   };
   const finishInterview=()=>{send({type:'read_complete'});for(let n=0;n<12;n++){speak(['meaning']);send({type:'continue_voice'});}};
-  return{lesson,db,store,send,speak,input,finishInterview,get state(){return state;}};
+  return{lesson,db,store,send,speak,input,finishInterview,reopen:()=>state=store.open('learner',lesson),get state(){return state;}};
 }
 test('feature is isolated to approved source, version and interview; old lessons unchanged',t=>{
   const s=setup(t);assert.ok(pictureRetellFor(s.lesson));
@@ -47,6 +47,18 @@ test('twelve questions still award50; whole retell awards200 atomically once and
   assert.equal(s.db.prepare('SELECT COUNT(*) n FROM story_picture_rewards').get().n,1);
   const view=storySessionView({...pkg,lesson:s.lesson},s.state);assert.deepEqual(view.lesson.sentences,[]);assert.equal(view.lesson.audio.url,null);
   assert.equal(view.session.pictureRetell.status,'complete');assert.equal(view.session.awarded.diamonds,50);
+});
+test('approval metadata version preserves exact retelling and cannot earn another reward',t=>{
+  const s=setup(t),old=pictureRetellFor(s.lesson);
+  s.finishInterview();s.send({type:'start_picture_retell'});s.speak(old.criteria.map(c=>c.id));
+  assert.equal(s.db.prepare('SELECT diamonds FROM story_test_wallets').get().diamonds,250);
+  s.lesson.version='1.2.9';assert.deepEqual(pictureRetellFor(s.lesson),old);
+  s.reopen();
+  s.send({type:'read_complete'});for(let i=0;i<12;i++){s.speak(['meaning']);s.send({type:'continue_voice'});}
+  s.send({type:'start_picture_retell'});s.speak(old.criteria.map(c=>c.id));
+  assert.equal(s.db.prepare('SELECT diamonds FROM story_test_wallets').get().diamonds,250);
+  assert.equal(s.state.pictureRetellResult.award.diamonds,0);
+  assert.equal(s.db.prepare('SELECT COUNT(*) n FROM story_picture_rewards').get().n,1);
 });
 test('partial, unrelated and unclear speech do not earn200 or change original interview result',t=>{
   const s=setup(t);s.finishInterview();const original=structuredClone(s.state.missionResult);s.send({type:'start_picture_retell'});

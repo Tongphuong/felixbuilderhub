@@ -16,7 +16,8 @@ const skyFrames=[[14,6,582,460],[611,6,470,460],[1095,6,562,460],[14,480,706,445
   .map(([x,y,width,height])=>({x,y,width,height}));
 
 /** Only explicitly authored, validated OSAD interview packages opt in. Keep
- * already assigned Sky1.2.8 unchanged, including its original grading facts. */
+ * already assigned Sky1.2.8 unchanged, including its original grading facts.
+ * Sky1.2.9 changes approval metadata only and retains the identical activity. */
 export function pictureRetellFor(lesson) {
   if(!isStoryInterview(lesson))return null;
   const p=lesson.picture_retell;
@@ -27,7 +28,7 @@ export function pictureRetellFor(lesson) {
       criteria:p.criteria.map(({id,meaning})=>({id,meaning})),labels:p.criteria.map(c=>c.label_vi),
       assetId:p.asset_id,frames:p.frames.map(f=>({...f})),maxSeconds:PICTURE_RETELL_SECONDS};
   }
-  if(lesson.source?.source_id!==SOURCE||lesson.version!=='1.2.8')return null;
+  if(lesson.source?.source_id!==SOURCE||!['1.2.8','1.2.9'].includes(lesson.version))return null;
   return {id:PICTURE_RETELL_TASK,kind:'picture_retell',source:'story',
     prompt:'Retell The Sky Is Blue! in your own words using the five pictures. Include the main events and why the uncle is happy. Do not add story facts.',
     criteria:facts.map(([id,meaning])=>({id,meaning})),

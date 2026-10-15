@@ -21,7 +21,7 @@ const verified=(a,proofs)=>a&&proofs.filter(p=>p.id===a.id&&p.sha256===a.sha256&
 function lessonView(pkg,proofs) {
   const l=pkg.lesson,assets=new Map(pkg.assets.map(a=>[a.id,a]));
   const route=a=>'/api/read2lead/self-learn/media/'+a.object_key;
-  const audio=assets.get(l.audio.asset_id),playable=verified(audio,proofs)&&['playable','matched','timing_verified','reviewed'].includes(l.audio.status);
+  const audio=assets.get(l.audio.asset_id),playable=verified(audio,proofs)&&['playable','matched','timing_verified','reviewed','approved_exception'].includes(l.audio.status);
   const timing=playable&&['timing_verified','reviewed'].includes(l.audio.status);
   return{id:l.id,version:l.version,level:l.level,level_label_vi:l.level_label_vi,title_en:l.title_en,theme:l.theme,rubric_version:l.rubric_version,practice_only:true,
     response_mode:{kind:'read_speak',typing_allowed:false,tap_choices:'optional',capture_required:false},

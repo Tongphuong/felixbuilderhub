@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import lessons from './fixtures/read2lead-self-learn/level-lessons.json' with {type:'json'};
-import {validatePublisherPackage,publisherReadiness,publisherDigest} from '../functions/lib/read2lead/self-learn/publisher-contract.mjs';
+import {validatePublisherPackage,publisherReadiness,publisherDigest,hasApprovedRecordingException} from '../functions/lib/read2lead/self-learn/publisher-contract.mjs';
+import {contentDigest} from '../functions/lib/read2lead/self-learn/catalogue.mjs';
 import {validateEditorLesson} from '../functions/lib/read2lead/self-learn/editor-policy.mjs';
 
 const NOW='2026-09-20T12:00:00.000Z', SHA='a'.repeat(64);
@@ -63,4 +64,44 @@ test('source illustrations retain their PDF reference and do not imply rights or
  const p=fixture();p.lesson.source.kind='user_supplied_publisher';p.assets[0].provenance='source_illustration';p.assets[0].reference_hashes=[p.lesson.source.pdf_sha256];p.assets[1].provenance='supplied_recording';p.rights=[];
  await validatePublisherPackage(p);const readiness=await ready(p);assert.equal(readiness.publication_ready,false);assert.ok(readiness.blockers.includes('rights_illustrations'));assert.ok(readiness.blockers.includes('review_visual'));
  for(const mutate of [x=>x.assets[0].reference_hashes=[],x=>x.assets[0].reference_hashes=['b'.repeat(64)],x=>x.assets[1].provenance='source_illustration']){const bad=structuredClone(p);mutate(bad);await assert.rejects(validatePublisherPackage(bad),e=>e.issues?.includes('invalid_source_illustration'));}
+});
+
+const exceptionRecord=()=>({kind:'owner_approved_existing_recording',approval_sha256:'00476f0278bc1139ba0ab83b226ccaada02f25f9ec57afec04a39207f032ff00',sentence_replay:'unavailable'});
+// Identity-only unit fixture, intentionally not a valid publisher package. The
+// real private package is separately exercised without publishing its book text.
+function exceptionIdentity(){
+ const storyHash='9bd77b624cd14ab9e1b4278fe0d6f7dafbbaadebdd6bd309c0766efa10805f2a';
+ const id='osad-51fda697ea22c07a08f16b8f-s01';
+ return {audio_review_exception:exceptionRecord(),lesson:{id,version:'1.2.9',source:{source_id:id,kind:'user_supplied_publisher'},
+  story:{text_sha256:storyHash},audio:{asset_id:'recording',script_sha256:storyHash,status:'approved_exception',segments:[]}},
+  assets:[{id:'recording',kind:'audio',provenance:'supplied_recording',mime:'audio/mpeg',bytes:617073,
+   sha256:'633b0017f6485230a3ca833bbfa0d1e1205d621b07e895f5bfccdb6ce228c715'}]};
+}
+test('owner exception pins exact identity, content and recording; it is not package approval',async()=>{
+ const p=exceptionIdentity();assert.equal(hasApprovedRecordingException(p),true);
+ await assert.rejects(validatePublisherPackage(p),/invalid_publisher_schema/);
+ for(const change of [
+  p=>delete p.audio_review_exception,p=>p.audio_review_exception.approval_sha256=SHA,
+  p=>p.audio_review_exception.kind='generic_waiver',p=>p.audio_review_exception.sentence_replay='available',
+  p=>p.lesson.id='another-story',p=>p.lesson.version='1.2.10',p=>p.lesson.source.source_id='another-source',
+  p=>p.lesson.source.kind='synthetic_fixture',p=>p.lesson.story.text_sha256=SHA,
+  p=>p.lesson.audio.script_sha256=SHA,p=>p.lesson.audio.status='reviewed',
+  p=>p.lesson.audio.segments=[{id:'invented'}],p=>p.lesson.audio.asset_id='missing',
+  p=>p.assets[0].sha256=SHA,p=>p.assets[0].bytes++,p=>p.assets[0].mime='audio/wav',
+  p=>p.assets[0].provenance='new_authorized_narration',p=>p.assets[0].kind='image'
+ ]){const bad=structuredClone(p);change(bad);assert.equal(hasApprovedRecordingException(bad),false);}
+});
+test('exception metadata is optional for old digests but bound in new package digests',async()=>{
+ const p=await reviewed();const before=await publisherDigest(p);
+ assert.equal(before,await contentDigest({format:p.format,lesson:p.lesson,assets:p.assets,rights:p.rights}));
+ p.audio_review_exception=exceptionRecord();assert.notEqual(await publisherDigest(p),before);
+ p.audio_review_exception.approval_sha256=SHA;const altered=await publisherDigest(p);
+ p.audio_review_exception=exceptionRecord();assert.notEqual(await publisherDigest(p),altered);
+});
+test('exception cannot promote another package or relabel its audio review',async()=>{
+ for(const change of [p=>p.audio_review_exception=exceptionRecord(),p=>p.lesson.audio.status='approved_exception',
+  p=>{p.audio_review_exception=exceptionRecord();p.lesson.audio.status='approved_exception';p.lesson.audio.segments=[];}]){
+  const p=await reviewed();change(p);
+  await assert.rejects(publisherReadiness(p,{now:NOW,assetProofs:proofs(p)}),e=>e.issues?.includes('invalid_audio_review_exception'));
+ }
 });
