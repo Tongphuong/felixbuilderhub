@@ -1,4 +1,11 @@
 # Environment bindings — felixbuilderhub.com
+During `freeze-v1`, ordinary account GET/HEAD pages return a self-contained
+Vietnamese HTML pause page with HTTP503, `no-store`, and `Retry-After: 60`.
+The page exposes only the fixed `data-read2lead-state="account_temporarily_paused"`
+marker; no request, account, or credential values are reflected. APIs and
+non-GET/HEAD requests retain the JSON error. Both forms keep the same storage
+fence and do not dispatch to the account host. HEAD pages have no response body.
+
 Unified account host: story voice for ordinary students and the existing founder
 test account receives restricted SQL-backed speech metadata. `READ2LEAD_CODES`
 is retained only for validated legacy TTS cache reads; new cache writes and atomic

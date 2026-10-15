@@ -94,3 +94,27 @@ test('asset routing never extends cookie authority to public pages, private file
     const f=fixture(options);assert.equal((await f.run('/_astro/page.js',{headers:{cookie:'__Host-r2l_account=synthetic'}})).status,503);assert.equal(f.nextCalls(),0);
   }
 });
+
+
+test('frozen ordinary pages show a readable pause without account details or live access',async()=>{
+  for(const path of ['/read2lead/?code=PRIVATE-DIAGNOSTIC','/read2lead/lesson?token=PRIVATE-DIAGNOSTIC','/ho-so']){
+    const f=fixture({mode:FREEZE_MODE}),response=await f.run(path,{headers:{accept:'text/html'}}),body=await response.text();
+    assert.equal(response.status,503);assert.match(response.headers.get('Content-Type'),/^text\/html/);
+    assert.equal(response.headers.get('Cache-Control'),'no-store');assert.equal(response.headers.get('Retry-After'),'60');
+    assert.match(body,/data-read2lead-state="account_temporarily_paused"/);assert.match(body,/<html lang="vi"/);
+    assert.match(body,/name="viewport"/);assert.match(body,/Thử lại/);assert.equal((body.match(/<a /g)||[]).length,1);
+    assert.doesNotMatch(body,/PRIVATE-DIAGNOSTIC|<script|https?:\/\//);assert.equal(f.calls.length,0);assert.equal(f.nextCalls(),0);assert.deepEqual(f.reads,[]);
+    assert.throws(()=>f.env.READ2LEAD_CODES.put('key','value'),/legacy_account_fenced/);
+  }
+});
+test('frozen page HEAD has the same status and headers without a body',async()=>{
+  const f=fixture({mode:FREEZE_MODE}),response=await f.run('/read2lead/',{method:'HEAD',headers:{accept:'text/html'}});
+  assert.equal(response.status,503);assert.match(response.headers.get('Content-Type'),/^text\/html/);assert.equal(await response.text(),'');assert.equal(f.calls.length,0);assert.equal(f.nextCalls(),0);
+});
+test('frozen APIs and page mutations retain JSON errors and never dispatch',async()=>{
+  for(const [path,method] of [['/api/read2lead-progress','GET'],['/api/generate-read2lead-pack','POST'],['/read2lead/','POST'],['/read2lead/','DELETE']]){
+    const f=fixture({mode:FREEZE_MODE}),response=await f.run(path,{method,headers:{accept:'text/html'}});
+    assert.equal(response.status,503);assert.match(response.headers.get('Content-Type'),/^application\/json/);assert.deepEqual(await response.json(),{code:'account_temporarily_paused'});
+    assert.equal(response.headers.get('Cache-Control'),'no-store');assert.equal(f.calls.length,0);assert.equal(f.nextCalls(),0);assert.deepEqual(f.reads,[]);
+  }
+});
