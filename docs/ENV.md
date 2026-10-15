@@ -1,4 +1,12 @@
 # Environment bindings — felixbuilderhub.com
+Unified account host: story voice for ordinary students and the existing founder
+test account receives restricted SQL-backed speech metadata. `READ2LEAD_CODES`
+is retained only for validated legacy TTS cache reads; new cache writes and atomic
+picture-retelling Azure reservations use account SQL. The reservation reads the
+preserved current-month meter, refuses exhausted/unavailable/corrupt counters,
+and retains usage after failed provider calls. No new binding or allowance is
+introduced. Non-unified hosts retain their existing configuration.
+
 Reference for all `env.X` references inside Cloudflare Pages Functions.
 Bindings are configured in Cloudflare Pages dashboard → Settings →
 Environment variables and bindings. This doc is the source of truth;

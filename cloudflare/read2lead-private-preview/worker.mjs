@@ -7,6 +7,7 @@ import {createUnifiedAccountApp} from './unified-account-app.mjs';
 import {UNIFIED_MODE,FREEZE_MODE,ACCOUNT_MODE_HEADER,ACCOUNT_PLAN_HEADER} from '../../functions/lib/read2lead/account-unified-gateway.mjs';
 import {captureFrozenAccountState,applyFrozenAccountRollout} from '../../functions/lib/read2lead/account-rollout-operator.mjs';
 import {studentStoryConfiguration} from '../../functions/lib/read2lead/student-story.mjs';
+import {createAccountVoiceMetadata} from '../../functions/lib/read2lead/account-voice-metadata.mjs';
 
 const EXISTING_TEST_OBJECT='existing-student-test-v1';
 const ADMIN_HEADER='X-R2L-Account-Admin-Verified';
@@ -26,8 +27,11 @@ async function existingAccountApp(ctx,env,adapter){
   if(!config)throw Error('account_manifest_not_configured');
   const store=new StorySqlStore(adapter.db,{transaction:adapter.transaction});
   const lessonCatalogue=await verifiedLessonCatalogue(manifest).catch(()=>null);
-  const {config:voiceConfig}=existingStudentVoiceConfiguration({store,env,packageSha256:manifest.sourcePackageSha256,lessonCatalogue});
-  const ordinaryStory=contentLoader?await studentStoryConfiguration({manifest,store,env}):null;
+  const voiceEnv=env.R2L_ACCOUNT_MODE===UNIFIED_MODE?{...env,READ2LEAD_CODES:createAccountVoiceMetadata({
+    ...adapter,progressInCodes:config.snapshot.progressInCodes,legacySpeechCache:env.READ2LEAD_CODES,
+  })}:env;
+  const {config:voiceConfig}=existingStudentVoiceConfiguration({store,env:voiceEnv,packageSha256:manifest.sourcePackageSha256,lessonCatalogue});
+  const ordinaryStory=contentLoader?await studentStoryConfiguration({manifest,store,env:voiceEnv}):null;
   const app=env.R2L_ACCOUNT_MODE===UNIFIED_MODE
     ? createUnifiedAccountApp({...adapter,contentLoader,assets:env.ASSETS,packageSha256:hash,expectedRolloutSha256:env.R2L_ACCOUNT_ROLLOUT_SHA256,
       progressInCodes:config.snapshot.progressInCodes,founderCode:config.code,origin:config.origin,founderVoiceConfig:voiceConfig,

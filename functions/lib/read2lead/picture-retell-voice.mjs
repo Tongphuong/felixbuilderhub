@@ -12,11 +12,17 @@ export function createPicturePronunciation({env,fetchFn=fetch}) {
       const chunks=splitWavIntoChunks(await audio.arrayBuffer(),30);
       if(!chunks?.length)return null;
       const seconds=chunks.reduce((sum,c)=>sum+c.sampledSeconds,0),key=azureUsageKey();
-      const raw=await env.READ2LEAD_CODES.get(key,{type:'json'});
-      const used=raw===null?0:Number(raw);
-      if(!Number.isFinite(used)||used<0||used+seconds>AZURE_PA_MONTHLY_FREE_SECONDS)return null;
-      // Unlike the legacy best-effort bump, a failed reservation forbids calls.
-      await env.READ2LEAD_CODES.put(key,JSON.stringify(used+seconds),{expirationTtl:40*24*3600});
+      if(typeof env.READ2LEAD_CODES.reserveAzureSeconds==='function'){
+        // Unified host reserves against authoritative SQL atomically. Never
+        // retry a refused reservation through the retained legacy cache.
+        if(await env.READ2LEAD_CODES.reserveAzureSeconds(key,seconds)!==true)return null;
+      }else{
+        const raw=await env.READ2LEAD_CODES.get(key,{type:'json'});
+        const used=raw===null?0:Number(raw);
+        if(!Number.isFinite(used)||used<0||used+seconds>AZURE_PA_MONTHLY_FREE_SECONDS)return null;
+        // Existing non-unified hosts retain their original meter behavior.
+        await env.READ2LEAD_CODES.put(key,JSON.stringify(used+seconds),{expirationTtl:40*24*3600});
+      }
       const results=[];
       for(const chunk of chunks) {
         const best=await assessPronunciationWithAzure({env,audioBlob:chunk.wav,referenceText:'',fetchFn});
