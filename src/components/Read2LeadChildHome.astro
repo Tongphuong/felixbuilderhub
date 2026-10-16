@@ -25,10 +25,16 @@ import '../styles/read2lead-child-home.css';
       <p id="home-action-status" role="status" aria-live="polite"></p>
       <ol id="home-steps" class="reading-home__steps" aria-label="Các bước đọc truyện"><li>1 <span>Đọc</span></li><li>2 <span id="home-step-two">Trả lời Minny</span></li><li>3 <span id="home-step-three">Kể qua tranh</span></li></ol>
     </section>
+    <a id="home-rankings" class="reading-home__ranks" href="/read2lead/leaderboard" aria-label="Bảng xếp hạng — mở bảng đầy đủ">
+      <span class="reading-home__ranks-head"><strong>🏆 Bảng xếp hạng</strong><span id="home-rank-own" class="reading-home__ranks-own">Mở bảng xem các bạn →</span></span>
+      <span class="reading-home__ranks-cols">
+        <span class="reading-home__ranks-col"><span class="reading-home__ranks-title">⚡ XP</span><span id="home-rank-xp" class="reading-home__ranks-list"></span></span>
+        <span class="reading-home__ranks-col"><span class="reading-home__ranks-title">💎 Kim cương</span><span id="home-rank-diamonds" class="reading-home__ranks-list"></span></span>
+      </span>
+    </a>
     <p id="home-personal-progress" class="reading-home__progress">Mỗi câu chuyện là một bước nhỏ.</p>
     <nav class="reading-home__secondary" aria-label="Góc của con">
       <a id="home-companion" href="/ho-so"><span aria-hidden="true">☺</span> Đổi bạn đồng hành</a>
-      <a id="home-rankings" href="/read2lead/leaderboard"><span aria-hidden="true">☆</span> Bảng thành tích</a>
     </nav>
     <a id="home-parent" class="reading-home__parent" href="/ho-so">Dành cho ba mẹ</a>
   </section>

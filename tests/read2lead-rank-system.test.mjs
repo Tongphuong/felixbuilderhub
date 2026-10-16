@@ -55,11 +55,23 @@ test('child home puts reading before secondary rankings', () => {
   assert.doesNotMatch(source, /<form|rank-medal|speak-up/);
 });
 
+test('child home shows a rankings card with both boards, linking to the full leaderboard, right after the read button', () => {
+  const source = readFileSync(join(ROOT, 'src/components/Read2LeadChildHome.astro'), 'utf8');
+  const card = source.slice(source.indexOf('id="home-rankings"'));
+  assert.match(card, /^id="home-rankings"[^>]*href="\/read2lead\/leaderboard"/);
+  assert.ok(source.indexOf('id="home-open"') < source.indexOf('id="home-rankings"'));
+  assert.match(source, /id="home-rank-xp"/); assert.match(source, /id="home-rank-diamonds"/); assert.match(source, /id="home-rank-own"/);
+  const script = readFileSync(join(ROOT, 'src/scripts/read2lead-child-home.ts'), 'utf8');
+  assert.match(script, /\/api\/read2lead-leaderboard\?limit=3/);
+  assert.match(script, /'\/read2lead\/leaderboard\?code='/);
+});
+
 test('leaderboard page presents two learning boards', () => {
   const source = readFileSync(join(ROOT, 'src/pages/read2lead/leaderboard.astro'), 'utf8');
-  assert.match(source, /Bảng thành tích/);
-  assert.match(source, /Ngôi sao đọc sách/);
-  assert.match(source, /Ngôi sao kim cương/);
+  assert.match(source, /Bảng xếp hạng/);
+  assert.match(source, /id="xp-tab"[^>]*>[^<]*XP/);
+  assert.match(source, /id="diamonds-tab"[^>]*>[^<]*Kim cương/);
+  assert.equal(/Tuần này|thứ Hai/.test(source), false, 'boards are all-time, no weekly reset copy');
   assert.equal(/bảng vinh danh/i.test(source), false);
 });
 

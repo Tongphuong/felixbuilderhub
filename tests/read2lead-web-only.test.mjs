@@ -36,7 +36,7 @@ test('Read2Lead landing page shares the child reading home', () => {
   assert.match(landingPage, /Read2LeadChildHome/);
   const home=readFileSync('src/components/Read2LeadChildHome.astro','utf8');
   assert.match(home,/Mở truyện/);
-  assert.match(home,/Bảng thành tích/);
+  assert.match(home,/Bảng xếp hạng/);
   assert.match(home,/Dành cho ba mẹ/);
 });
 

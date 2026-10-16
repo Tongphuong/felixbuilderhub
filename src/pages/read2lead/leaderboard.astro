@@ -2,25 +2,24 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/read2lead-stars.css';
 ---
-<BaseLayout title="Bảng thành tích | Read2Lead" description="Mỗi câu chuyện là một bước tiến của con." childHome robots="noindex, nofollow">
+<BaseLayout title="Bảng xếp hạng | Read2Lead" description="Bảng xếp hạng XP và kim cương của tất cả các bạn đọc sách." childHome robots="noindex, nofollow">
   <main id="main" class="stars-page">
     <a id="stars-home" class="stars-back" href="/read2lead">← Về đọc sách</a>
-    <header><p class="stars-kicker">TỪNG CÂU CHUYỆN, TỪNG BƯỚC NHỎ</p><h1>Bảng thành tích</h1><p>Mình vui cùng những bước tiến của nhau.</p></header>
+    <header><p class="stars-kicker">TẤT CẢ CÁC BẠN CÙNG ĐỌC</p><h1>Bảng xếp hạng</h1><p>Đọc thêm một truyện, con leo thêm một bậc nhé!</p></header>
     <section id="stars-personal" class="stars-personal" aria-live="polite" hidden></section>
-    <div class="stars-tabs" role="tablist" aria-label="Bảng thành tích tuần này">
-      <button id="reading-tab" role="tab" aria-selected="true" aria-controls="stars-panel" type="button">☆ Ngôi sao đọc sách</button>
-      <button id="diamonds-tab" role="tab" aria-selected="false" aria-controls="stars-panel" tabindex="-1" type="button">◇ Ngôi sao kim cương</button>
+    <div class="stars-tabs" role="tablist" aria-label="Bảng xếp hạng">
+      <button id="xp-tab" role="tab" aria-selected="true" aria-controls="stars-panel" type="button">⚡ XP</button>
+      <button id="diamonds-tab" role="tab" aria-selected="false" aria-controls="stars-panel" tabindex="-1" type="button">💎 Kim cương</button>
     </div>
-    <p class="stars-week">Tuần này · Bắt đầu lại mỗi thứ Hai, 00:00 giờ Việt Nam</p>
-    <p id="stars-status" role="status">Đang mở bảng thành tích…</p>
+    <p id="stars-week" class="stars-week">Xếp hạng tất cả các bạn, tính từ trước đến nay.</p>
+    <p id="stars-status" role="status">Đang mở bảng xếp hạng…</p>
     <button id="stars-retry" class="stars-retry" type="button" hidden>Thử lại</button>
-    <section id="stars-panel" role="tabpanel" aria-labelledby="reading-tab" tabindex="0" hidden>
+    <section id="stars-panel" role="tabpanel" aria-labelledby="xp-tab" tabindex="0" hidden>
       <div id="stars-podium" class="stars-podium"></div>
       <ol id="stars-list" class="stars-list" aria-label="Các bạn cùng đọc"></ol>
       <div id="stars-own" class="stars-own" hidden></div>
-      <p class="stars-note">Truyện hoàn thành được tính một lần. Kim cương tính từ học tập; đổi quà không làm giảm thành tích. Bảng này không tặng thêm kim cương.</p>
+      <p class="stars-note">XP tính tổng từ trước đến nay. Kim cương là số con đang có. Bảng này không tặng thêm kim cương.</p>
     </section>
-    <p id="stars-start" class="stars-start"></p>
   </main>
 </BaseLayout>
 <script src="../../scripts/read2lead-stars.ts"></script>
