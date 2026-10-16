@@ -5,7 +5,7 @@ import vm from 'node:vm';
 import { VOICE_POOL_REST_CODE, VOICE_POOL_REST_VI } from '../src/lib/read2lead-minny-notes.mjs';
 import { createStoryCapture, createStorySpeechEndDetector, createStoryIllustrationReader } from '../src/scripts/read2lead-story-voice.mjs';
 const page=fs.readFileSync(new URL('../src/pages/read2lead/lesson.astro',import.meta.url),'utf8');
-function voiceUploadHarness({login=false,picture=false,recover=false}={}) {
+function voiceUploadHarness({login=false,picture=false,recover=false,code=null}={}) {
  const source=fs.readFileSync(new URL('../src/scripts/read2lead-story-voice.mjs',import.meta.url),'utf8');
  const handler=source.slice(source.indexOf('  async function uploadVoice()'),source.indexOf('  async function recordVoice()'));
  const pending=new Map([['requestId','same-recording']]),cues=[],requests=[],received=[];
@@ -14,7 +14,8 @@ function voiceUploadHarness({login=false,picture=false,recover=false}={}) {
   controls:{children:[],replaceChildren(...children){this.children=children;},prepend(child){this.children.unshift(child);}},
   view:{policy:{interview:!picture}},focusActivity(){},notice:{textContent:''},start(){},
   savedVoiceQuery:id=>'?requestId='+id,
-  voiceRequest:async(input,query)=>{requests.push({input,query});if(!input&&recover)return{saved:true};throw Error(login?'login':'network');},
+  voiceRequest:async(input,query)=>{requests.push({input,query});if(!input&&recover)return{saved:true};throw Error(code||(login?'login':'network'));},
+  poolRestControls:()=>({tag:'a',text:'Về đọc sách',href:'/read2lead'}),
   receivedVoice:result=>received.push(result)};
  vm.createContext(context);vm.runInContext(handler+';this.uploadVoice=uploadVoice;',context);
  return {context,pending,cues,requests,received};
@@ -32,6 +33,33 @@ test('failed voice upload and lookup leave an honest retry cue and preserve the 
   else {assert.equal(h.context.notice.textContent,'Chưa nhận được kết quả. Phần đã lưu vẫn được giữ nguyên.');}
   await h.context.controls.children[login?1:0].action();
   assert.equal(h.requests[2].input,h.pending);assert.equal(h.context.busy,false);
+ }
+});
+test('pool rest: new text, no retry buttons, one way home (no false promise of tapping answers)',async()=>{
+ for(const picture of [false,true]){
+  const h=voiceUploadHarness({picture,code:VOICE_POOL_REST_CODE});await h.context.uploadVoice();
+  assert.equal(h.context.notice.textContent,VOICE_POOL_REST_VI);
+  assert.equal(VOICE_POOL_REST_VI,'Minny đang nghỉ ngơi đến đầu tháng sau nên chưa nói chuyện được. Bài của con đã được lưu. Con quay về đọc sách nhé!');
+  assert.doesNotMatch(h.context.notice.textContent,/chọn đáp án/);
+  assert.deepEqual(h.context.controls.children.map(c=>c.text),['Về đọc sách']);
+  assert.equal(h.context.controls.children[0].href,'/read2lead');
+  assert.equal(h.context.controls.children.some(c=>/Thử nhận lại|Mở lại tiến trình/.test(c.text)),false);
+  assert.equal(h.context.busy,false);
+ }
+});
+test('pool rest wiring: real helper reuses the top link href at a tappable primary class; prompt path uses it too',()=>{
+ const source=fs.readFileSync(new URL('../src/scripts/read2lead-story-voice.mjs',import.meta.url),'utf8');
+ const helper=source.slice(source.indexOf('  function poolRestControls()'),source.indexOf('  function microphoneButton'));
+ assert.match(helper,/\$\('lesson-home'\)\?\.getAttribute\('href'\)/);assert.match(helper,/'r2l-primary'/);
+ assert.match(page,/id="lesson-home" href="\/read2lead"/);
+ const prompt=source.slice(source.indexOf('onError:error=>'),source.indexOf('promptPlayback=playback'));
+ assert.match(prompt,/VOICE_POOL_REST_CODE[\s\S]*controls\.replaceChildren\(poolRestControls\(\)\)[\s\S]*return;[\s\S]*ready\(\)/);
+});
+test('other voice errors still show both retry buttons (regression guard)',async()=>{
+ for(const code of ['network','voice_unavailable']){
+  const h=voiceUploadHarness({code});await h.context.uploadVoice();
+  assert.deepEqual(h.context.controls.children.map(c=>c.text),['Thử nhận lại câu trả lời','Mở lại tiến trình đã lưu']);
+  assert.equal(h.context.notice.textContent,'Chưa nhận được kết quả. Phần đã lưu vẫn được giữ nguyên.');
  }
 });
 test('lost upload response recovered from its receipt does not show a failure or resubmit audio',async()=>{

@@ -2,7 +2,7 @@
 // Pure strings so tests can assert them without a browser.
 
 /** B4: the monthly voice pool is used up. Reading and tap answers still work. */
-export const VOICE_POOL_REST_VI = 'Minny đang nghỉ ngơi đến đầu tháng sau nên chưa nói chuyện được. Con vẫn đọc truyện và chọn đáp án như bình thường nhé!';
+export const VOICE_POOL_REST_VI = 'Minny đang nghỉ ngơi đến đầu tháng sau nên chưa nói chuyện được. Bài của con đã được lưu. Con quay về đọc sách nhé!';
 export const VOICE_POOL_REST_CODE = 'voice_pool_exhausted';
 
 /** B6: the free pronunciation score is not available right now. Never silent. */

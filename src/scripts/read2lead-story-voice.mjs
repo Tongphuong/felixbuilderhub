@@ -247,6 +247,13 @@ export async function mountStoryMission() {
   }
   const event = payload => send({action:'event',sessionId:view.session.id,requestId:crypto.randomUUID(),revision:view.session.revision,event:payload});
   function button(text, action, secondary=false) { const b=node('button',text,secondary?'r2l-secondary':'r2l-primary');if(text.startsWith('🔊'))b.classList.add('minny-play-chip'); b.type='button';b.onclick=action;return b; }
+  // The monthly voice pool is spent: the interview has no tap-answer path, so offer no mic and no retry,
+  // only the way home (same href as the page's own top "← Về đọc sách" link).
+  function poolRestControls() {
+    const home=node('a','Về đọc sách','r2l-primary');
+    home.href=$('lesson-home')?.getAttribute('href')||'/read2lead';home.onclick=stop;
+    return home;
+  }
   function microphoneButton(label,action,recording=false){
     const b=button('',action);b.classList.add('spk-rec-btn');if(recording)b.classList.add('is-recording');
     b.setAttribute('aria-label',label);b.title=label;
@@ -275,6 +282,10 @@ export async function mountStoryMission() {
       // The server may have saved a reply even if its HTTP response was lost.
       try {receivedVoice(await voiceRequest(null,savedVoiceQuery(voicePending.get('requestId'))));}
       catch {
+        if(error.message===VOICE_POOL_REST_CODE){
+          setCue('retry','Minny đang nghỉ ngơi.');notice.textContent=VOICE_POOL_REST_VI;
+          controls.replaceChildren(poolRestControls());return;
+        }
         setCue('retry',error.message==='login'?'Mở lại phiên đọc để tiếp tục.':'Con thử lại để nhận kết quả nhé.');
         notice.textContent=error.message==='login'?'Phiên riêng tư đã hết. Đăng nhập lại để tiếp tục.':error.message===VOICE_POOL_REST_CODE?VOICE_POOL_REST_VI:'Chưa nhận được kết quả. Phần đã lưu vẫn được giữ nguyên.';
         controls.replaceChildren(button('Thử nhận lại câu trả lời',uploadVoice),button('Mở lại tiến trình đã lưu',()=>{voicePending=null;start();},true));
@@ -361,7 +372,9 @@ export async function mountStoryMission() {
         const value=await response.json();if(!response.ok)throw Error(value.code||'voice_unavailable');return value;
       },
       onLoading:loading=>{listen.disabled=loading;listen.textContent='🔊 Nghe lại câu hỏi';halt.hidden=!loading&&player.hidden;if(loading){if(speak)speak.disabled=true;setCue('loading','👂 Minny đang chuẩn bị câu hỏi…');}},
-      onError:error=>{ready();notice.textContent=error?.message===VOICE_POOL_REST_CODE?VOICE_POOL_REST_VI:'Con bấm Nghe lại câu hỏi, hoặc đọc câu hỏi ở trên rồi trả lời nhé.';},
+      onError:error=>{
+        if(error?.message===VOICE_POOL_REST_CODE){setCue('retry','Minny đang nghỉ ngơi.');notice.textContent=VOICE_POOL_REST_VI;controls.replaceChildren(poolRestControls());return;}
+        ready();notice.textContent='Con bấm Nghe lại câu hỏi, hoặc đọc câu hỏi ở trên rồi trả lời nhé.';},
     });
     promptPlayback=playback;
     controls.append(listen,halt,player);
