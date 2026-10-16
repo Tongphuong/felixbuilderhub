@@ -6,8 +6,37 @@ export const STORY_MAX_VOICE_TURNS = 8;
 // action. Twelve-question interviews need 24; eight more allow bounded retries.
 // This is a validator ceiling, never an increase to an existing dollar grant.
 export const STORY_MAX_BATCH_VOICE_ACTIONS = 32;
+
+// SPEC_R2L_MINNY_VOICE_COST.md Packet B (approved by Phuong 2026-10-16).
+// ONE monthly pool (UTC calendar month) for all enrolled students. It is a
+// runaway safety stop, NOT a per-child allowance: nothing is reserved per
+// mission, every action is debited when it is actually claimed. Amounts are
+// measured cost plus margin; the 10k/day free neurons are ignored on purpose,
+// so the meter over-counts. These are the ONLY place the numbers live.
+export const STORY_POOL_MONTHLY_MICRO_USD = 15_000_000;
+export const STORY_POOL_DEBIT_MICRO_USD = Object.freeze({
+  cachedPlayback: 0,        // question/authored line served from saved audio
+  freshSynthesis: 3_000,    // any text-to-speech actually generated (additive)
+  authoredAnswerTurn: 1_000,// interview answer turn: grader only, fixed reply
+  aiReplyTurn: 8_000,       // story_question/help/non-interview: grader + reply + safety
+  retell: 1_000,            // picture retell (grader only, no reply/TTS)
+});
+// Marks an audio result whose synthesis was freshly generated (not replayed
+// from saved audio). Symbol keys never serialize, so it cannot leak to clients.
+export const STORY_SYNTHESIS_FRESH = Symbol.for('r2l.story.synthesis.fresh');
 export function validateStoryBudget(config) {
   const integer = v => Number.isSafeInteger(v) && v >= 0;
+  if (config?.scope === 'pool') {
+    if (!/^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/.test(config.poolId || '') ||
+        !integer(config.approvedVoiceMicroUsd) || config.approvedVoiceMicroUsd === 0 ||
+        config.approvedVoiceMicroUsd > STORY_POOL_MONTHLY_MICRO_USD ||
+        !Number.isSafeInteger(config.maxTurns) || config.maxTurns < STORY_MAX_BATCH_VOICE_ACTIONS ||
+        config.maxTurns > 64 || Object.keys(config).sort().join(',') !== 'approvedVoiceMicroUsd,maxTurns,poolId,scope') {
+      throw Error('voice_pool_budget_invalid');
+    }
+    // No up-front mission reserve: debits happen per claimed action.
+    return { ...config, missionReserveMicroUsd: 0 };
+  }
   if (config?.scope === 'batch') {
     const reserve = config.worstCaseTurnMicroUsd * config.maxTurns;
     if (!/^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/.test(config.batchId || '') ||

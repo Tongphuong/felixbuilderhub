@@ -272,6 +272,9 @@ test('prompt refuses foreign session, caller text, stale revision, read stage, d
  s.voiceConfig.activation.spendingApproved=false;assert.equal((await s.call(promptRequest(s))).status,503);
  s.voiceConfig.activation.spendingApproved=true;s.voiceConfig.budget.claim=()=>{throw Error('voice_budget_exhausted');};
  assert.equal((await s.call(promptRequest(s))).value.code,'voice_budget_exhausted');assert.equal(calls,0);
+ // Packet B: a resting monthly pool is a named, kind refusal (503, phase budget), never a generic failure.
+ s.voiceConfig.budget.claim=()=>{throw Error('voice_pool_exhausted');};
+ const resting=await s.call(promptRequest(s,'question-audio-rest'));assert.equal(resting.value.code,'voice_pool_exhausted');assert.equal(resting.status,503);assert.equal(calls,0);
  assert.equal(s.store.db.prepare('SELECT COUNT(*) AS n FROM story_test_wallets').get().n,0);
 });
 test('concurrent question clicks synthesize once; a lost response replays the saved recording',async t=>{

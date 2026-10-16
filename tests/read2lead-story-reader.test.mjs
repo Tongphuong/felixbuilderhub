@@ -2,13 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import { VOICE_POOL_REST_CODE, VOICE_POOL_REST_VI } from '../src/lib/read2lead-minny-notes.mjs';
 import { createStoryCapture, createStorySpeechEndDetector, createStoryIllustrationReader } from '../src/scripts/read2lead-story-voice.mjs';
 const page=fs.readFileSync(new URL('../src/pages/read2lead/lesson.astro',import.meta.url),'utf8');
 function voiceUploadHarness({login=false,picture=false,recover=false}={}) {
  const source=fs.readFileSync(new URL('../src/scripts/read2lead-story-voice.mjs',import.meta.url),'utf8');
  const handler=source.slice(source.indexOf('  async function uploadVoice()'),source.indexOf('  async function recordVoice()'));
  const pending=new Map([['requestId','same-recording']]),cues=[],requests=[],received=[];
- const context={busy:false,voicePending:pending,hideNarration(){},pictureMode:()=>picture,
+ const context={VOICE_POOL_REST_CODE,VOICE_POOL_REST_VI,busy:false,voicePending:pending,hideNarration(){},pictureMode:()=>picture,
   setCue:(state,text)=>cues.push({state,text}),node:(tag,text)=>({tag,text}),button:(text,action)=>({text,action}),
   controls:{children:[],replaceChildren(...children){this.children=children;},prepend(child){this.children.unshift(child);}},
   view:{policy:{interview:!picture}},focusActivity(){},notice:{textContent:''},start(){},

@@ -85,7 +85,7 @@ export function createStoryTurnHandler({store,runtime,origin,authenticate,voiceC
       const current=store.finishVoice(owner,pkg.lesson,input,result);claimed=false;
       return response(pkg,current,result,false);
     } catch(error) {
-      const known=['voice_budget_exhausted','voice_turn_limit','voice_budget_month_expired','voice_request_already_claimed'];
+      const known=['voice_pool_exhausted','voice_budget_exhausted','voice_turn_limit','voice_budget_month_expired','voice_request_already_claimed'];
       const phase=['transcription','reply','safety','assessment','synthesis','persistence'].includes(error.storyVoicePhase)?error.storyVoicePhase:known.includes(error.message)?'budget':null;
       const reason=['invalid_story_reply','story_model_invalid_json','story_model_unavailable','story_voice_timeout',
         'story_reply_unverified','invalid_semantic_judgment','unsupported_semantic_evidence','unexpected_semantic_evidence',

@@ -1,14 +1,33 @@
 import {PrivateStoryBudgetStore} from '../../../scripts/lib/read2lead-story-budget-store.mjs';
-import {validateStoryBudget} from './story-budget.mjs';
+import {validateStoryBudget,STORY_POOL_MONTHLY_MICRO_USD,STORY_SYNTHESIS_FRESH} from './story-budget.mjs';
 import {createMinnyStoryProvider} from './story-voice.mjs';
 import {verifiedLessonCatalogue} from './private-voice.mjs';
 import {publisherDigest} from './self-learn/publisher-contract.mjs';
-import {synthesizeWithAura2} from '../../api/_minny-tts.js';
+import {getOrSynthesize} from '../../api/_minny-tts.js';
 
 const hash=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
 const disabled=reason=>({config:null,canAssign:()=>false,status:{enabled:false,reason}});
-const budgetKeys=['approvedVoiceMicroUsd','batchId','expiresAt','maxTurns','scope','worstCaseTurnMicroUsd'];
-const exactBudget=v=>v&&Object.keys(v).sort().join(',')===budgetKeys.join(',');
+const batchKeys=['approvedVoiceMicroUsd','batchId','expiresAt','maxTurns','scope','worstCaseTurnMicroUsd'];
+// Packet B (SPEC_R2L_MINNY_VOICE_COST): one standing monthly pool, no expiry.
+export const STUDENT_POOL_ID='r2l-student-pool';
+const poolKeys=['approvedVoiceMicroUsd','maxTurns','poolId','scope'];
+const exactKeys=(v,keys)=>v&&Object.keys(v).sort().join(',')===keys.join(',');
+
+/** Student speech goes through the shared saved-audio cache (getOrSynthesize,
+ * same Aura-2 voice). Every fixed line is paid for once, then replayed free.
+ * The returned audio is tagged fresh/cached so the pool debits honestly. A
+ * cache outage degrades to plain synthesis, never to a failed turn. */
+export function createStudentSynthesizer(env,fetchFn=fetch) {
+  return async text=>{
+    let hit=false;const kv=env.READ2LEAD_CODES;
+    const cache=kv&&typeof kv.get==='function'&&typeof kv.put==='function'?{
+      async get(key,options){try{const v=await kv.get(key,options);if(v&&v.audio_b64)hit=true;return v;}catch{return null;}},
+      async put(key,value){try{await kv.put(key,value);}catch{/* cache write is best-effort */}},
+    }:undefined;
+    const audio=await getOrSynthesize({AI:env.AI,READ2LEAD_CODES:cache},text,{fetchFn});
+    return Object.defineProperty({...audio},STORY_SYNTHESIS_FRESH,{value:!hit,enumerable:false});
+  };
+}
 
 /** Trusted host configuration only. Grant and catalogue are separately pinned
  * release inputs, never HTTP fields. Evidence references do not manufacture
@@ -26,16 +45,23 @@ export async function studentVoiceConfiguration({store,env,packageSha256,lessonC
     value.mode!=='assessed'||value.providerRoute!=='cloudflare-only'||value.assessorModel!=='gpt-oss-120b'||
     !hash(packageSha256)||value.packageSha256!==packageSha256)return disabled('package_or_policy_mismatch');
   if(value.processingApproved!==true||value.spendingApproved!==true)return disabled('approval_missing');
+  const pool=grant?.budget?.scope==='pool',keys=pool?poolKeys:batchKeys;
   if(!hash(grant?.approvalSha256)||value.approvalSha256!==grant.approvalSha256||
-    !exactBudget(value.budget)||!exactBudget(grant.budget)||
-    budgetKeys.some(k=>value.budget[k]!==grant.budget[k]))return disabled('grant_mismatch');
+    !exactKeys(value.budget,keys)||!exactKeys(grant.budget,keys)||
+    keys.some(k=>value.budget[k]!==grant.budget[k]))return disabled('grant_mismatch');
   const b=grant.budget;
+  let validated,expires=Infinity;
+  if(pool) {
+    // Standing monthly pool: no expiry, nothing reserved per mission or per child.
+    if(b.poolId!==STUDENT_POOL_ID||b.approvedVoiceMicroUsd>STORY_POOL_MONTHLY_MICRO_USD||b.maxTurns!==32)return disabled('launch_limit_invalid');
+    try{validated=validateStoryBudget(b);}catch{return disabled('launch_limit_invalid');}
+  }else{
   if(b.scope!=='batch'||b.batchId!=='r2l-student-launch-'+grant.approvalSha256.slice(0,32)||
     b.approvedVoiceMicroUsd>5000000||b.maxTurns!==32||b.worstCaseTurnMicroUsd!==70000)return disabled('launch_limit_invalid');
-  let validated;
   try{validated=validateStoryBudget(b);}catch{return disabled('launch_limit_invalid');}
-  const expires=Date.parse(b.expiresAt),current=now().getTime();
+  expires=Date.parse(b.expiresAt);const current=now().getTime();
   if(!Number.isFinite(current)||expires<=current||expires-current>7*86400000)return disabled('launch_expiry_invalid');
+  }
   if(!hash(value.pricingEvidenceSha256)||value.verification?.provider!==true||
     value.verification?.assessor!==true||!hash(value.verification.evidenceSha256))return disabled('verification_missing');
   let catalogue;
@@ -43,24 +69,27 @@ export async function studentVoiceConfiguration({store,env,packageSha256,lessonC
   if(!catalogue||catalogue.sha256!==lessonCatalogue.sha256||value.verification.catalogueSha256!==catalogue.sha256)return disabled('catalogue_mismatch');
   if(typeof env.AI?.run!=='function')return disabled('existing_provider_missing');
   // Canonical key order keeps restart/config-conflict checks stable.
-  const budgetConfig={scope:b.scope,batchId:b.batchId,expiresAt:b.expiresAt,
+  const budgetConfig=pool?{scope:b.scope,poolId:b.poolId,approvedVoiceMicroUsd:b.approvedVoiceMicroUsd,maxTurns:b.maxTurns}
+    :{scope:b.scope,batchId:b.batchId,expiresAt:b.expiresAt,
     approvedVoiceMicroUsd:b.approvedVoiceMicroUsd,worstCaseTurnMicroUsd:b.worstCaseTurnMicroUsd,maxTurns:b.maxTurns};
   let budget;
   try{budget=new PrivateStoryBudgetStore(store,budgetConfig,now);}catch{return disabled('budget_unavailable');}
   const provider=createMinnyStoryProvider({env:{AI:env.AI,AZURE_SPEECH_KEY:env.AZURE_SPEECH_KEY,
     AZURE_SPEECH_REGION:env.AZURE_SPEECH_REGION,READ2LEAD_CODES:env.READ2LEAD_CODES},
     fetchFn,assessor:'gpt-oss-120b',cloudflareTimeoutMs:10000});
-  provider.synthesize=text=>synthesizeWithAura2(env.AI,text);
+  provider.synthesize=createStudentSynthesizer({AI:env.AI,READ2LEAD_CODES:env.READ2LEAD_CODES},fetchFn);
   const scoped={provider,budget,practiceTrial:false,activation:{externalProcessingApproved:true,
     spendingApproved:true,providerVerified:true,assessorValidated:true}};
   const entryFor=lesson=>catalogue.lessons.find(l=>l.id===lesson?.id&&l.version===lesson?.version);
-  const alive=()=>now().getTime()<expires;
+  const alive=()=>pool||now().getTime()<expires;
   const config={...scoped,async forPackage(pkg){
     const entry=entryFor(pkg?.lesson);
     return alive()&&entry&&entry.packageSha256===await publisherDigest(pkg)?scoped:null;
   }};
   const canAssign=lesson=>{
     if(!alive()||!entryFor(lesson))return false;
+    // A resting pool never hides a story: reading and tap answers keep working.
+    if(pool)return true;
     try{
       const scope='batch:'+budget.config.batchId;
       const prior=store.db.prepare('SELECT config FROM story_voice_reservations WHERE month=? LIMIT 1').get(scope);

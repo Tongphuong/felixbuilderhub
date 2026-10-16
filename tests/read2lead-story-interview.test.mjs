@@ -174,20 +174,22 @@ test('failure during final payment rolls back question progress and reward; retr
   assert.equal(s.store.event(s.owner,s.lesson,input).replayed,true);
 });
 
-test('interview uses existing speech workflow and gives explanation after a clear wrong answer',async()=>{
+test('interview wrong answer is answered with the authored stored answer, not a model reply (Packet A2)',async()=>{
   const l=interview().lesson,task=storyRubric(l).tasks[0],calls=[];
-  const reply='The story says: '+l.story.sentences[0].text_en;
+  const expected='Good try! '+l.questions[0].accepted_meanings[0];
   const provider={
     transcribe:async()=>{calls.push('speech-to-text');return 'A clearly wrong answer.';},
     assess:async()=>{calls.push('check-answer');return {intent:'answer',reliability:'confirmed',replySupport:'none',criteria:[{id:'meaning',met:false,quote:''}]};},
-    respond:async messages=>{calls.push('reply');assert.match(messages[0].content,/gently explain/);assert.doesNotMatch(messages[0].content,/retelling/);return {reply,sentenceIds:['s1']};},
-    validateSafety:async()=>{calls.push('safety');return {valid:true,replySupport:'model'};},
-    synthesize:async text=>{calls.push('text-to-speech');assert.equal(text,reply);return {audio_b64:'YXVkaW8=',content_type:'audio/mpeg'};},
+    respond:async()=>{calls.push('reply');throw Error('authored path must not call the reply model');},
+    validateSafety:async()=>{calls.push('safety');throw Error('authored path must not call the safety model');},
+    synthesize:async text=>{calls.push('text-to-speech');assert.equal(text,expected);return {audio_b64:'YXVkaW8=',content_type:'audio/mpeg'};},
   };
   const result=await runStoryVoiceTurn({lesson:l,task,provider,budget:{claim(){},finish(){}},sessionId:'synthetic-interview',requestId:'synthetic-wrong',
     activation:{externalProcessingApproved:true,spendingApproved:true,providerVerified:true,assessorValidated:true},audio:new Blob(['synthetic'],{type:'audio/webm'})});
-  assert.deepEqual(calls,['speech-to-text','check-answer','reply','safety','text-to-speech']);
+  assert.deepEqual(calls,['speech-to-text','check-answer','text-to-speech']);
+  assert.equal(result.reply,expected);
   assert.equal(result.assessment,'server_validated');assert.deepEqual(result.judgment.matchedCriteria,[]);
+  assert.equal(result.judgment.replySupport,'model');
   assert.match(storyVoicePrompt(fixture().lesson,task,'Wrong')[0].content,/try again/);
 });
 

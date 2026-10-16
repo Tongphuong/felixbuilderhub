@@ -1,4 +1,5 @@
 import { STORY_MISSION_VERSION, STORY_STAGES } from '../lib/read2lead-story-mission.mjs';
+import { pronunciationNote, VOICE_POOL_REST_VI, VOICE_POOL_REST_CODE } from '../lib/read2lead-minny-notes.mjs';
 import { mountLessonHelp, createLessonAssignmentAction } from './read2lead-lesson-help.mjs';
 
 /** Late network replies must never speak over a microphone or a new question. */
@@ -275,7 +276,7 @@ export async function mountStoryMission() {
       try {receivedVoice(await voiceRequest(null,savedVoiceQuery(voicePending.get('requestId'))));}
       catch {
         setCue('retry',error.message==='login'?'Mở lại phiên đọc để tiếp tục.':'Con thử lại để nhận kết quả nhé.');
-        notice.textContent=error.message==='login'?'Phiên riêng tư đã hết. Đăng nhập lại để tiếp tục.':'Chưa nhận được kết quả. Phần đã lưu vẫn được giữ nguyên.';
+        notice.textContent=error.message==='login'?'Phiên riêng tư đã hết. Đăng nhập lại để tiếp tục.':error.message===VOICE_POOL_REST_CODE?VOICE_POOL_REST_VI:'Chưa nhận được kết quả. Phần đã lưu vẫn được giữ nguyên.';
         controls.replaceChildren(button('Thử nhận lại câu trả lời',uploadVoice),button('Mở lại tiến trình đã lưu',()=>{voicePending=null;start();},true));
         if(error.message==='login'){const a=node('a','Đăng nhập lại','r2l-secondary');a.href='/private-rehearsal/login';controls.prepend(a);}
       }
@@ -360,7 +361,7 @@ export async function mountStoryMission() {
         const value=await response.json();if(!response.ok)throw Error(value.code||'voice_unavailable');return value;
       },
       onLoading:loading=>{listen.disabled=loading;listen.textContent='🔊 Nghe lại câu hỏi';halt.hidden=!loading&&player.hidden;if(loading){if(speak)speak.disabled=true;setCue('loading','👂 Minny đang chuẩn bị câu hỏi…');}},
-      onError:()=>{ready();notice.textContent='Con bấm Nghe lại câu hỏi, hoặc đọc câu hỏi ở trên rồi trả lời nhé.';},
+      onError:error=>{ready();notice.textContent=error?.message===VOICE_POOL_REST_CODE?VOICE_POOL_REST_VI:'Con bấm Nghe lại câu hỏi, hoặc đọc câu hỏi ở trên rồi trả lời nhé.';},
     });
     promptPlayback=playback;
     controls.append(listen,halt,player);
@@ -453,7 +454,7 @@ export async function mountStoryMission() {
         details.append(node('p',`Ý chính: ${savedResult.matched}/${savedResult.total}`));
         const meanings=node('ul','','picture-retell-meanings');
         for(const m of savedResult.meanings)meanings.append(node('li',`${m.met?'✓':'○'} ${m.label}`));
-        details.append(meanings,node('p',savedResult.pronunciation?`Phát âm: ${savedResult.pronunciation.accuracy}/100 · Độ trôi chảy: ${savedResult.pronunciation.fluency}/100`:'Đã hiểu phần nói của con. Lượt này chưa có điểm phát âm.','story-mission-note'));
+        details.append(meanings,node('p',pronunciationNote(savedResult.pronunciation),'story-mission-note'));
         if(view.policy.providerEnabled)details.append(button('Ghi âm luyện lại · Không cộng thêm thưởng',recordVoice,true));
         controls.append(details);focusActivity();return;
       }
@@ -467,7 +468,7 @@ export async function mountStoryMission() {
           controls.append(node('p',`Ý chính: ${result.matched}/${result.total}`,'story-mission-status'));
           const list=node('ul','','picture-retell-meanings');
           for(const m of result.meanings)list.append(node('li',`${m.met?'✓':'○'} ${m.label}`));controls.append(list);
-          controls.append(node('p',result.pronunciation?`Phát âm: ${result.pronunciation.accuracy}/100 · Độ trôi chảy: ${result.pronunciation.fluency}/100`:'Đã hiểu phần nói của con. Lượt này chưa có điểm phát âm.','story-mission-note'));
+          controls.append(node('p',pronunciationNote(result.pronunciation),'story-mission-note'));
         }
         controls.append(node('p',done?(result.alreadyAwarded||!freshPictureAward?'200 💎 cho phần kể này đã được cộng trước đó.':'Đã cộng 200 💎 cho phần kể của con.'):'Con có thể ghi âm lại khi sẵn sàng.','story-mission-status'));
         if(done){controls.append(node('p','✓ 12 câu hỏi · ✓ Kể lại qua tranh','story-mission-status'));finishActions();}
