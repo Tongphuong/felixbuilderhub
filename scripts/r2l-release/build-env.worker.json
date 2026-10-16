@@ -1,8 +1,8 @@
 {
-  "_note": "PUBLIC_* env used to build the Worker's pages. EMPTY on purpose: the live Worker pages (v98) were built with NO PUBLIC_* vars (verified 2026-10-16: flags chunk is ?v3=1-gated, data-r2l-w1-ssr=0, data-r2l-v21-ssr=0, no Clarity/Sentry ids). Pages production has PUBLIC_R2L_V3=1 and PUBLIC_R2L_W1=1, so the two surfaces differ on purpose. Turning v3 on for kids is a separate, deliberately tested change: edit this file only with Phuong's sign-off.",
+  "_note": "PUBLIC_* env used to build the Worker's pages. W1 enabled 2026-10-16 with Phuong's approval (R2L-BOOK-READER-FIX), because book lessons were blank without it (the W1 book reader is the only code path that renders a book lesson). V3 still deliberately off: PUBLIC_R2L_V3 and every other PUBLIC_* stay unset (live v98 pages had flags chunk ?v3=1-gated, data-r2l-v21-ssr=0, no Clarity/Sentry ids). Pages production has PUBLIC_R2L_V3=1 and PUBLIC_R2L_W1=1, so the surfaces still differ on V3 on purpose. Turning v3 on for kids is a separate, deliberately tested change: edit this file only with Phuong's sign-off.",
+  "PUBLIC_R2L_W1": "1",
   "_unset": [
     "PUBLIC_R2L_V3",
-    "PUBLIC_R2L_W1",
     "PUBLIC_R2L_V21",
     "PUBLIC_R2L_W7",
     "PUBLIC_R2L_PROFILE",

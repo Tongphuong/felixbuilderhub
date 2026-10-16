@@ -23,16 +23,23 @@ The tool only **prepares and prints**. It never uploads or deploys. Upload and d
 
 ## The build env (read this before building)
 
-The Worker's pages are built on a local machine. They do **not** get the Pages `PUBLIC_*` variables.
-Verified 2026-10-16 by inspecting the live candidate (v98):
+The Worker's pages are built on a local machine. They do **not** get the Pages `PUBLIC_*` variables;
+exactly ONE is set on purpose: `PUBLIC_R2L_W1=1`.
+
+**W1 is ON for the Worker pages (2026-10-16, Phuong approved, R2L-BOOK-READER-FIX).** `lesson.astro`
+skips book rendering when W1 is off, and the W1 book reader is the only code path that displays a book
+lesson. Built with W1 unset (v98), every ordinary book lesson on the Worker was blank: mic panel only,
+"Tiep tuc" disabled forever. Pages production has always been built with `PUBLIC_R2L_W1=1`.
+
+Everything else stays unset (verified on the live v98 candidate, 2026-10-16):
 
 * compiled `_astro/flags.*.js` is `?v3=1`-gated (`PUBLIC_R2L_V3` **unset**),
-* `data-r2l-w1-ssr="0"` and `data-r2l-v21-ssr="0"` (`PUBLIC_R2L_W1`, `PUBLIC_R2L_V21` **unset**),
+* `data-r2l-v21-ssr="0"` (`PUBLIC_R2L_V21` **unset**),
 * Clarity and Sentry ids are `undefined`.
 
-Pages production, by contrast, has `PUBLIC_R2L_V3=1` and `PUBLIC_R2L_W1=1`. So the two surfaces differ,
-and every v3-gated feature is OFF for kids on the gateway pages. **That is the current deliberate
-state.** Turning v3 on is a separate, tested change that needs Phuong's sign-off: edit
+Pages production still has `PUBLIC_R2L_V3=1`, so the surfaces differ on V3 on purpose, and every
+v3-gated feature is OFF for kids on the gateway pages. **That is the current deliberate state.**
+Turning v3 on is a separate, tested change that needs Phuong's sign-off: edit
 `build-env.worker.json` for it, never as a side effect.
 
 `build_candidate.py --build-env <file>` records this env in the proof and **cross-checks it against the
@@ -40,13 +47,18 @@ built `dist/`** (flags chunk, `data-r2l-*-ssr` markers). If you build with a dif
 says, the tool refuses. Reproducibility proof: building `bd3fcb7` with the empty env reproduced all
 live pages and chunks byte-for-byte (0 changed assets in the dry run).
 
-Build with every `PUBLIC_*` variable removed from the shell, and make sure no `.env*` file sets any:
+Build with every `PUBLIC_*` variable removed from the shell EXCEPT `PUBLIC_R2L_W1=1`, and make sure
+no `.env*` file sets any:
 
 ```bash
 cd <repo root, on the commit to release, clean tree>
 ls -a | grep '^\.env'          # expect nothing that sets PUBLIC_*
-(unset $(env | grep -o '^PUBLIC_[A-Za-z0-9_]*'); npm ci; npm run build)
+(unset $(env | grep -o '^PUBLIC_[A-Za-z0-9_]*'); export PUBLIC_R2L_W1=1; npm ci; npm run build)
 ```
+
+After the build, `grep -o 'data-r2l-w1-ssr="[01]"' dist/read2lead/lesson/index.html` must print `"1"`.
+`build_candidate.py` refuses both directions of mismatch (env says W1=1 but dist has 0, or env empty but
+dist has 1).
 
 ## Release procedure
 

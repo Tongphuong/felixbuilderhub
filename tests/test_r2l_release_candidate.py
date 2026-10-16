@@ -271,6 +271,40 @@ class ReleaseCandidateTests(unittest.TestCase):
         self.assertNotEqual(r.returncode, 0)
         self.assertIn("PUBLIC_R2L_V3=1", r.stderr)
 
+    def _set_lesson_w1(self, marker):
+        (self.f.repo / "dist/read2lead/lesson/index.html").write_text(
+            '<main data-r2l-w1-ssr="%s" data-r2l-v21-ssr="0"></main>' % marker)
+
+    def test_build_env_w1_on_matching_dist_accepted(self):
+        # the Worker env (W1=1) with a dist whose lesson page was built W1-on must pass
+        self.f.build_env.write_text(json.dumps({"PUBLIC_R2L_W1": "1"}))
+        self._set_lesson_w1("1")
+        r = self.f.run()
+        self.assertEqual(r.returncode, 0, r.stderr)
+
+    def test_build_env_w1_on_but_dist_built_off_fails(self):
+        # env says W1=1, dist was built without it (blank-book-lesson build): refuse
+        self.f.build_env.write_text(json.dumps({"PUBLIC_R2L_W1": "1"}))
+        self._set_lesson_w1("0")
+        r = self.f.run()
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("PUBLIC_R2L_W1 implies data-r2l-w1-ssr=1", r.stderr)
+
+    def test_build_env_w1_unset_but_dist_built_on_fails(self):
+        # env empty, dist built with W1=1: refuse
+        self.f.build_env.write_text("{}")
+        self._set_lesson_w1("1")
+        r = self.f.run()
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("PUBLIC_R2L_W1 implies data-r2l-w1-ssr=0", r.stderr)
+
+    def test_shipped_worker_build_env_has_w1_on_v3_off(self):
+        env = json.loads((TOOL.parent / "build-env.worker.json").read_text())
+        self.assertEqual(env.get("PUBLIC_R2L_W1"), "1")
+        self.assertNotIn("PUBLIC_R2L_W1", env["_unset"])
+        self.assertNotIn("PUBLIC_R2L_V3", env)
+        self.assertIn("PUBLIC_R2L_V3", env["_unset"])
+
     def test_build_env_rejects_non_public_keys(self):
         self.f.build_env.write_text(json.dumps({"OPENAI_API_KEY": "x"}))
         r = self.f.run()
