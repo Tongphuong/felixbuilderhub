@@ -110,8 +110,8 @@ test('existing shop, gift prices and rank routes use only isolated account stora
  const gifts=await s.call('/api/read2lead-gifts-list',{code:PRIVATE_SITE_CODE});
  assert.equal(gifts.value.items.find(g=>g.id==='sticker').price_diamonds,1000);
  const rank=await s.call('/api/read2lead-leaderboard?limit=50');assert.equal(rank.status,200,JSON.stringify(rank.value));
- assert.deepEqual(rank.value.boards.reading.leaders,[],'private test account is excluded');
- assert.deepEqual(rank.value.boards.diamonds.leaders,[]); assert.equal(rank.value.boards.reading.own,null);
+ assert.deepEqual(rank.value.boards.xp.leaders,[],'private test account is excluded');
+ assert.deepEqual(rank.value.boards.diamonds.leaders,[]); assert.equal(rank.value.boards.xp.own,null);
 });
 
 test('private home uses the original token resolver and denies anonymous entry discovery',async t=>{

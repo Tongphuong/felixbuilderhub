@@ -5,4 +5,22 @@
 
 .reading-home__pet{aspect-ratio:1;overflow:hidden}.reading-home__pet>.r2l-monster{width:100%;height:100%}
 
+.reading-home__secondary{grid-template-columns:minmax(0,1fr)}
+.reading-home .reading-home__ranks{grid-column:1/-1;display:block;background:linear-gradient(160deg,var(--navy-850),var(--navy-900));border:1px solid var(--gold);border-radius:20px;padding:12px 14px;box-shadow:var(--shadow-card);min-height:44px}
+.reading-home__ranks:hover{background:var(--navy-850)}
+.reading-home__ranks-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.reading-home__ranks-head strong{font-size:15px;color:var(--gold-light)}
+.reading-home__ranks-own{font-size:12px;font-weight:700;color:var(--cream)}
+.reading-home__ranks-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.reading-home__ranks-col{display:block;min-width:0}
+.reading-home__ranks-title{display:block;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--home-muted);margin-bottom:4px}
+.reading-home__ranks-list{display:grid;gap:3px}
+.reading-home__rank-row{display:grid;grid-template-columns:18px 24px minmax(0,1fr) auto;align-items:center;gap:5px;font-size:12px;line-height:1.2}
+.reading-home__rank-row.is-self{color:var(--gold-light);font-weight:800}
+.reading-home__rank-face{width:24px;height:24px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:14px}
+.reading-home__rank-face>div,.reading-home__rank-face .r2l-monster{width:100%!important;height:100%!important}
+.reading-home__rank-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.reading-home__rank-value{font-weight:800;color:var(--gold-light)}
+.reading-home__rank-empty{font-size:12px;color:var(--home-muted);line-height:1.4}
+@media(min-width:521px){.reading-home__rank-row{font-size:14px;grid-template-columns:22px 32px minmax(0,1fr) auto}.reading-home__rank-face{width:32px;height:32px}.reading-home .reading-home__ranks{padding:16px 20px}}
 .reading-home__speaking-note{max-width:780px;margin:24px auto 0;padding:12px 18px;border-radius:16px;background:var(--navy-900);color:var(--home-muted);font-size:14px;line-height:1.6;text-align:center}

@@ -1,7 +1,6 @@
 import { honorsExclusionReason } from '../../api/_read2lead-honors.js';
 import { isAccessCodeKey, normalizeProgressState, progressKey } from '../../api/_read2lead-v2-state.js';
 import { getClientIp, checkCodeRateLimit, rateLimitedResponse } from '../../api/_rate-limit.js';
-import { learningStarTotals, vietnamWeek } from './learning-stars.mjs';
 
 export const STARS_CONFIG_KEY = 'config:learning-stars:v1';
 export function starsEligible(account, state, now = new Date()) {
@@ -12,13 +11,17 @@ export function starsEligible(account, state, now = new Date()) {
   return true;
 }
 
-export function buildLearningBoards(entries, { now = new Date(), startsAt, ownCode = '', limit = 50 } = {}) {
-  const active = Number.isFinite(Date.parse(startsAt)) && Date.parse(startsAt) <= new Date(now).getTime();
+export const RANKS_VERSION = 'r2l-ranks-v2';
+const metricValue = value => (Number.isFinite(Number(value)) ? Math.max(0, Math.floor(Number(value))) : 0);
+
+// All-time boards across every eligible real student: `xp` ranks lifetime total_xp,
+// `diamonds` ranks the current diamond balance. No weekly window, no start date, no bots.
+export function buildLearningBoards(entries, { now = new Date(), ownCode = '', limit = 50 } = {}) {
   const eligible = entries.filter(e => isAccessCodeKey(e.code) && starsEligible(e.account, e.state, now));
   const rows = eligible.map(e => ({ code: e.code, display_name: String(e.account.student_profile?.student_name || e.state.student_name || '').trim(),
-    avatar: { monster: Object.fromEntries(['body','color','eyes','mouth','arms','detail','effects','frame','hat','pet','wings'].filter(key => typeof e.state.avatar?.monster?.[key] === 'string').map(key => [key, e.state.avatar.monster[key]])) }, totals: active ? learningStarTotals(e.state.learning_receipts, { now, startsAt }) : { reading: 0, diamonds: 0 } }));
+    avatar: { monster: Object.fromEntries(['body','color','eyes','mouth','arms','detail','effects','frame','hat','pet','wings'].filter(key => typeof e.state.avatar?.monster?.[key] === 'string').map(key => [key, e.state.avatar.monster[key]])) }, totals: { xp: metricValue(e.state.total_xp), diamonds: metricValue(e.state.diamonds) } }));
   const boards = {};
-  for (const metric of ['reading', 'diamonds']) {
+  for (const metric of ['xp', 'diamonds']) {
     const sorted = rows.filter(r => r.totals[metric] > 0).sort((a, b) => b.totals[metric] - a.totals[metric] || a.display_name.localeCompare(b.display_name, 'vi') || a.code.localeCompare(b.code));
     let previous = null, rank = 0;
     const ranked = sorted.map((row, index) => {
@@ -30,7 +33,7 @@ export function buildLearningBoards(entries, { now = new Date(), startsAt, ownCo
     boards[metric] = { leaders: ranked.slice(0, Math.min(100, Math.max(1, limit))), participants: ranked.length,
       own: ranked.find(r => r.is_self) || (own ? { rank: null, display_name: own.display_name, avatar: own.avatar, total: 0, is_self: true } : null) };
   }
-  return { ok: true, version: 'learning-stars-v1', active, starts_at: active ? new Date(startsAt).toISOString() : null, week: vietnamWeek(now), boards };
+  return { ok: true, version: RANKS_VERSION, boards };
 }
 
 export async function learningStarsResponse({ request, env }) {
@@ -39,7 +42,6 @@ export async function learningStarsResponse({ request, env }) {
   try {
     const rate = await checkCodeRateLimit(env.READ2LEAD_CODES, getClientIp(request));
     if (rate.blocked) return rateLimitedResponse(rate.retryAfter);
-    const config = await env.READ2LEAD_CODES.get(STARS_CONFIG_KEY, { type: 'json' });
     const now = new Date(), entries = [];
     let cursor;
     do {
@@ -59,7 +61,7 @@ export async function learningStarsResponse({ request, env }) {
     const params = new URL(request.url).searchParams;
     const limit = Number.parseInt(params.get('limit') || '50', 10);
     // Never consult or populate the retired RP/bot cache. Eligibility is fresh on every read.
-    return json(buildLearningBoards(entries, { now, startsAt: config?.enabled === true ? config.starts_at : null,
+    return json(buildLearningBoards(entries, { now,
       ownCode: (params.get('code') || '').trim().toUpperCase(), limit: Number.isFinite(limit) ? limit : 50 }));
   } catch {
     return json({ ok: false, error: 'leaderboard_compute_failed', message: 'Chưa tải được bảng thành tích. Con thử lại nhé.' }, 503);
