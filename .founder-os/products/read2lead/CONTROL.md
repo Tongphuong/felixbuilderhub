@@ -1,7 +1,170 @@
+# Control — Read2Lead (Claude company, resumed 2026-10-16)
+
+- Product: Read2Lead (SpeakUp now lives inside it)
+- Current goal: Phương 2026-10-16 — "get the site working as soon as possible"; full authority delegated to Elon on technical calls. Priorities: P1 rankings back + prominent; P2 chosen monster shown at every level; P3 student entry/switch; P4 Minny cost model for public opening.
+- Active workers: 0
+- Last updated: 2026-10-16
+- Operating model: Phương → Elon (plan/dispatch/review/integrate) → Mark/Steve build → Buffet reviews → Phương sees result before release. Codex retired 2026-10-16.
+- Start here: _ops/outbox/CLAUDE_TAKEOVER_MAP_2026-10-16.md (architecture, Worker deploy recipe, landmines). SQL in the Worker is authoritative; never restore KV.
+
+## Current task
+
+- Task ID: R2L-TAKEOVER-P1P2 (rankings back + chosen monster everywhere + Worker release tool)
+- Status: complete
+- Owner: Elon (Lead); builders Mark (A: rankings), Mark (B: monster); then Mark (C: release tool) when a slot frees (max two active workers); reviewer Buffet
+- Lane: two parallel background packets with disjoint file sets; C queued
+- State inventory: rankings — empty/populated board, test/bot/expired accounts present/absent, tie/no tie, own child on/off top list; monster — chosen/not chosen × level L0/L1/L2+ × surface (home, hồ sơ, companion, board row); release tool — base present/missing, changed/unchanged dist asset, new/existing inline script, `__private` file altered/untouched.
+- Operational reality: production = Pages 8fd5fc80 + Worker 97b4bceb (`read2lead-story-private-preview`) at bd3fcb7, both env R2L_ACCOUNT_MODE=unified-v1 (verified 2026-10-16). Gateway routes (/read2lead*, /ho-so*, /api/read2lead-*) run inside the Worker against SQL, so every packet here ships only via BOTH a main push (Pages) AND a Worker version built from candidate-v98 (Codex folder theme-match-20261016/release/header-followup/candidate-v98). ~611 accounts; the board scan over all accounts is in-process.
+- Branch: claude-bg/r2l-ranks, claude-bg/r2l-monster, claude-bg/r2l-release-tool (each from origin/main bd3fcb7)
+- Starting commit: bd3fcb77cc979089dcbbe3539f7e0df70a8e824f
+- Spec: Phương's words 2026-10-16 — "the old ranking of all the students, separate in 2: XP ranking and diamond ranking … visible where the kids can see it most easily (all kids) so it gives them a hype" and "kids can choose their monster freely now, but what's shown at low level is still the egg or the ugly avatar, not the monster". Elon decisions: boards are ALL-TIME across all real students (no weekly reset, no start-date gate, no bots); XP board = total_xp; diamond board = current diamond balance (no lifetime-earned field exists; matches the old board); test/bot/shared/disabled/expired accounts excluded; a chosen monster is shown at EVERY level on every surface; egg only for a child who has never chosen.
+- Files owned:
+  - A (rankings): functions/api/read2lead-leaderboard.js; functions/lib/read2lead/learning-stars-board.mjs; functions/lib/read2lead/learning-stars.mjs; src/pages/read2lead/leaderboard.astro; src/scripts/read2lead-stars.ts; src/components/Read2LeadChildHome.astro; src/scripts/read2lead-child-home.ts; src/styles/read2lead-child-home.css; any new src/styles/read2lead-stars*.css; tests/*leaderboard*/*stars* (new or existing).
+  - B (monster): functions/api/_read2lead-v2-state.js; src/pages/ho-so/ho-so-kid-view.ts; src/lib/egg-renderer.ts; src/lib/monster-builder.ts; src/lib/*monster*render* helpers; src/pages/read2lead/companion.astro and its script; tests/*monster*/*avatar*/*egg*/*companion* (new or existing).
+  - C (release tool): new scripts/r2l-worker-candidate.py + tests/test_r2l_worker_candidate.py + docs/R2L_WORKER_RELEASE.md. Never touches app source.
+- Acceptance criteria:
+  - A1 /api/read2lead-leaderboard returns two all-time boards (xp, diamonds) over every eligible real student, ranked desc with ties sharing a rank, own row included; excluded accounts never appear.
+  - A2 kid home shows a prominent rankings card ABOVE the fold at 390px (top 3 of each board + the child's own rank), tapping opens the full board.
+  - A3 full board page has two tabs (XP / Kim cương) with name, monster avatar, value; own row highlighted; works at 390/768/1280.
+  - B1 a child with a stored chosen monster sees that monster (not egg, not basic) at every level on home, hồ sơ, companion page and leaderboard rows.
+  - B2 a child with no stored monster still sees the existing egg/basic flow (no regression); chosen parts are not stripped by level unlock rules.
+  - C1 tool builds candidate vN+1 from a base candidate (hard-linked copy) + repo build output + repo server source, updates manifest publicAssets/scriptHashes, writes wrangler config; asserts every `__private` content file (story packages + illustrations) is byte-identical to the base; refuses to run if the base is missing. Prints but NEVER runs upload/deploy.
+  - All: full `npm test` green; `npm run build` green; known-bad tests for each fix fail on the old code.
+- Stop condition: each packet stops at a committed claude-bg branch with tests green and a completion report. No push to main, no deploy, no Cloudflare/KV/D1/R2 writes, no paid provider calls.
+- Cost ceiling: Claude team (Max plan, not metered); USD 0 metered spend.
+- Reuse survey: (1) the retired all-student leaderboard (archive/retired-rankings/read2lead-leaderboard.js.txt) — REUSED for ranking semantics, minus seasons/bots; (2) Codex's existing learning-stars board module + monster renderer — REUSED, extended not replaced; (3) external leaderboard libraries/services (e.g. Redis sorted sets, LootLocker, PlayFab leaderboards) — REJECTED: ~600 rows sorted in-process from the existing SQL store; an external service adds cost, credentials and a second copy of children's data. (4) Codex's prepare.py release scripts (Codex private folder) — ADOPTED as the basis for C, committed and generalized.
+- Tradeoff watch: diamond board ranks by balance, so spending on gifts lowers rank. SIGNAL: kids stop redeeming gifts. QUERY: admin gift-redemptions count per week vs prior 4-week average (read admin:gift-redemptions:v1 entries). THRESHOLD: redemptions drop >50% for 2 consecutive weeks after release → switch the diamond board to lifetime-earned (needs a new counter).
+- Runtime bindings/secrets: N/A — no new env.X; uses existing READ2LEAD_CODES/READ2LEAD_PROGRESS interfaces (SQL-backed in the Worker).
+- Design self-verification: Elon rendered the EXACT release candidate (~/work/r2l-releases/v99-20261016, byte-identical to what was uploaded) in the committed Miniflare rehearsal (scripts/r2l-release/rehearse.mjs, synthetic accounts, network off) at 390 and 768: kid home (chosen monster whole, rankings card above the fold with whole monsters, own rank), full board XP + Kim cương tabs (podium, own row pinned), companion save → home shows saved monster; 0 console errors. Compared against the existing navy/gold theme and the old leaderboard semantics (no Claude Design mock exists for this restore). Screenshots: _ops/.playwright-mcp/v99b-board-diamonds-390.png, v99-final-home-390.png (768 render), v99-home-390.png, v99-board-390.png. Rehearsal first surfaced the empty-detail fallback blob and the clipped/fragmented avatars — both fixed and re-rendered before release. Match.
+- Founder handoff: plain-language report to Phương with before (green blob / empty weekly board) vs after screenshots; no QA asked of him. Not agent-verifiable: the logged-in LIVE screens with a real student (Elon has no test-account credential; the anonymous bundle 404 is by design) — live verification is via the API payload (r2l-ranks-v2, 9 participants per board, real monsters), deployed version ids, and byte-identical candidate assets.
+- Founder-operated surface check: N/A — no admin surface touched.
+- Verified commit: 24b9bfd8859b016ad156d71b8896049666411f2a (origin/main; Pages 4c4ff55b production success; Worker read2lead-story-private-preview version 2d22515c-e9bf-4795-9aab-dd4ae0fad7ad @100%; rollback Worker 97b4bceb).
+
+## Acceptance criteria reconciliation
+
+- PASS — A1 API two all-time boards over eligible real students: live `/api/read2lead-leaderboard` returns version r2l-ranks-v2, xp + diamonds, 9 participants each, ties share rank (tests read2lead-stars-board 12/12; Buffet repro).
+- PASS — A2 home card above the fold at 390 with top 3 + own rank, taps to board (rehearsal screenshot; card y≈575–730 of 844).
+- PASS — A3 full board two tabs, podium, own row pinned, 390/768 rendered in rehearsal. 1280 rendered by Mark (qa/r2l-home-monster/), not by Elon.
+- PASS — B1 saved monster at every level on home, hồ sơ, lesson header, companion, board rows (r2l-saved-monster-shows 18 tests + rehearsal save→home).
+- PASS — B2 never-chosen child renders the real BASIC white monster (was the green fallback blob) — Buffet verified BASIC config parts exist.
+- PASS — B3 no progress field dropped (round-trip test).
+- PASS — C1 release tool: hard-link candidate, protected `__private` 2092 files verified, manifest/CSP, wrangler config, prints-only; 18 unittests; two-generation write-through bug caught by Buffet and fixed.
+- PASS — All: npm test 3720/3720, build PASS, known-bad tests fail on old code.
+- SKIPPED — logged-in live screenshot with a real/test student: no credential available to Elon (R2L_TEST_ACCOUNT_CODE is a secret); covered by byte-identical candidate rehearsal + live API payload.
+- Deviation — lesson.astro (protected) changed by one condition under _ops/specs/SPEC_R2L_MONSTER_EVERYWHERE.md on Phương's delegated authority.
+
+## Previous task — R2L-P0-CONTROLS (Codex, historical)
+
+- Task ID: R2L-P0-CONTROLS
+- Status: complete
+- Completion scope: isolated base and control reconciliation only; application baseline remains red; P0 still open.
+- Owner: Codex
+- Session ID: codex-r2l-controls-20260917
+- Lane: control reconciliation and isolated implementation-base setup; no app fixes
+- Branch: codex/r2l-self-learn (new worktree); _ops/main docs; shared hub main control pointers only
+- Starting commit: 5963370774799ed919a3978c5d9f98175bab9263
+- Worktree: /home/felixbuilderhub/work/repos/hub-codex-r2l-self-learn
+- Spec: _ops/specs/SPEC_R2L_SELF_LEARN_V1.md P0-CONTROLS; P0_VERIFY.md findings
+- Files owned: _ops/specs/read2lead-self-learn/{P0_CONTROLS.md,STATUS.md,DECISIONS.md}; append-only _ops/AGENT_LOG.md; shared hub .founder-os/products/read2lead/{PRODUCT.md,EVIDENCE.md,BUDGET.md,CONTROL.md,CHECKPOINT.md}; new worktree same five control files plus AGENTS.md, CLAUDE.md, docs/ENV.md; private /home/felixbuilderhub/r2l-p0-controls-20260917-N9UQY2/.
+- Acceptance criteria: reconcile remote/local base and legacy ownership; create one isolated worktree with no unrelated source commits; prove inherited hook allow/deny without changing real indexes; existing governance regressions pass; exact CI/gate gaps and bounded remediation documented; preserved originals and reproducible checkpoint.
+- Stop condition: controls report and safe worktree verified; no application fixes, dependency installs, CI weakening, credential use, live-data access, paid calls, push, merge or deployment.
+- Cost ceiling: USD 0 metered.
+- Reuse survey: N/A — existing Git worktree, Company OS gates/tests and control documents; no new product capability or installed verifier.
+- State inventory: expected/drifted SHA; free/occupied branch; guarded/unguarded worktree; docs allowed/unreviewed source blocked; current/historical ownership; green/red baseline.
+- Operational reality: local main differs from remote by one AGENTS.md-only commit; all application source is identical. Legacy agents/processes and dirty source/control work must not be disturbed.
+- Tradeoff watch: retain tested base 5963370 after proving remote d1132a2 ancestry and AGENTS-only difference; zero source imports from old feature branches. No green-app claim from governance tests.
+- Design self-verification: N/A — nonvisual controls/docs and Git setup only.
+- Founder handoff: self-verified controls, measured limitations, exact next bounded task; not a request for founder QA.
+- Tests: actual worktree hook docs-allow/source-deny PASS; real indexes unchanged; collision good/bad PASS; 61 governance regressions + 112 bite checks + self-canary PASS; build/complete gates PASS. Existing application baseline remains 2149/1, backend 206/0 and 205/1, Astro 1278 errors; not rerun.
+- Recovery: private ops-before.tar and hub-before.tar; preserve prior history and compare files before scoped recovery.
+- Blockers: application baseline still red; no push/release permitted. No blocker established for local control setup.
+- Next action: claim test-only R2L-P0-CONTROLS-TRACKER in this same worktree; exact file and acceptance in P0_CONTROLS.md section 4A. No source fixes, installs, push or deploy performed by this packet.
+
+## Previous acceptance reconciliation — R2L-P0-CONTROLS (Codex)
+
+- PASS — remote d1132a2/local 5963370 differ only by one AGENTS.md commit; new codex/r2l-self-learn worktree established at tested 5963370 with no unrelated feature source.
+- PASS — inherited project resolution/hook path; actual synthetic docs allowed and unreviewed source denied; real indexes unchanged; collision positive/negative controls.
+- PASS — 61 governance regression tests, 112 registered bite checks and engine self-canary; build/complete gates for this nonvisual control packet.
+- PASS — current product/evidence/budget notices and exact eight-file branch documentation set; historical text and original work preserved.
+- PASS — CI/gate gaps and bounded tracker/L0/static remediation in _ops/specs/read2lead-self-learn/P0_CONTROLS.md; no waived check.
+- N/A — application/UI tests or deployment this packet: no application/test/CI behavior edits; prior failing baseline remains explicitly unresolved.
+- Deviation: no remote server-side protection or current-spend verification; no claim these local checks establish either. Deployed resource separation remains later P0-ISOLATION work.
+- Handoff: eight uncommitted worktree docs, five shared control updates, ops report/STATUS/DECISIONS/log; no commit/push/merge/deploy. Exact inventory and restore evidence: /home/felixbuilderhub/r2l-p0-controls-20260917-N9UQY2/.
+
+## Previous completed packet — R2L-P0-VERIFY
+
+- Task ID: R2L-P0-VERIFY
+- Status: complete
+- Completion scope: offline measurement and recovery packet only; baseline failures remain open; P0 NOT complete.
+- Owner: Codex
+- Session ID: codex-r2l-verify-20260917
+- Lane: offline baseline verification, no application fixes
+- Branch/commit: _ops/main 431c614; pinned hub main 5963370; backend main 6f0c5ec; governance checkpoint bb72860 (clean).
+- Files owned: _ops/qa/r2l-p0-verify/{runner.py,canary.py,storage.mjs,test_runner.py}; _ops/specs/read2lead-self-learn/{P0_VERIFY.md,STATUS.md,DECISIONS.md}; append-only _ops/AGENT_LOG.md; hub .founder-os/products/read2lead/{CONTROL.md,CHECKPOINT.md}; private /home/felixbuilderhub/r2l-p0-verify-20260917-skTXaI/.
+- Acceptance criteria: proven external-traffic and credential/storage isolation; scoped baseline commands with raw outputs; source/dirty-work archive restore checks; synthetic recovery and negative controls; exact baseline failures and next packet; all original work preserved.
+- Stop condition: evidence report/checkpoint complete or exact isolation/dependency blocker; no application fix, install, live-data request, paid API, deletion, redesign or deployment.
+- Cost ceiling: USD 0 metered.
+- Reuse survey: (1) Bubblewrap — adopted: installed OS network/filesystem isolation. (2) Linux unshare — rejected as sole runner: network namespaces alone do not hide credentials/files. Existing Node/Python test runners reused.
+- State inventory: sandbox unavailable/denied; isolation good/bad; dependency present/missing; test pass/fail; restore match/corruption; conflicting source/ownership.
+- Operational reality: tests may call paid services or mutate broad child records; fixture mocks alone do not isolate a process. Host repositories and credentials must remain inaccessible from tests.
+- Tradeoff watch: strict isolation can expose missing dependencies; any successful external socket or visible credential path stops the run before application code.
+- Design self-verification: N/A — no UI implementation.
+- Founder handoff: evidence-backed baseline and bounded next action; no founder bug hunt.
+- Recovery: /home/felixbuilderhub/r2l-p0-verify-20260917-skTXaI/control-before.tar and hub-control-before.tar; restore only scoped files after comparing later work.
+- Tests: 12 runner controls PASS; discovery/build/type freshness PASS; hub 2149 pass/1 fail; standalone backend 206 pass; hub/backend 205 pass/1 fail; Astro 1278 errors/107 hints; source/dirty/synthetic restore and negative controls PASS. See P0_VERIFY.md and checksum-bound final-*.result.json.
+- Blockers: no blocker to this completed measurement packet. Application baseline is red; stale-checkpoint/gift races reproduced. Integration worktree/base, CI remediation and deployed resource separation remain unresolved; no app implementation authorized by this checkpoint.
+- Next action: claim R2L-P0-CONTROLS on resume; reconcile/select isolated integration base and gates, scope exact baseline remediation. No redesign, live data or deploy.
+
+## Previous acceptance reconciliation — R2L-P0-VERIFY
+
+- PASS — pinned sources, task ownership and pre-implementation build gate.
+- PASS — OS network/filesystem isolation, positive local execution and 12 runner tests including known-bad controls.
+- PASS — all baseline commands executed with raw evidence; hub 2149/1, standalone backend 206/0, hub/backend 205/1, Astro 1278 errors/107 hints; failures identified, not waived.
+- PASS — discovery/build/type freshness; source/dirty patches/selected untracked delivery files/synthetic restore and deliberate corruption.
+- PASS — stale checkpoint, sequential/concurrent submits, competing redemptions and interrupted writes measured; defects retained in report, not fixed.
+- PASS — original work preserved; 2216 comparisons; no application edit, install, live data, spending, retired-agent dispatch or deployment.
+- N/A — UI/render/deployed parity: offline QA harness and documentation only.
+- NOT VERIFIED — deployed resource separation, real D1/R2 engine recovery and release readiness; later recorded P0/P2 work, not this packet's completion claim.
+- Deviation from spec: synthetic media/table envelopes prove serialization only, not real storage-engine durability. P2 actual-runtime proof remains required. Full evidence: _ops/specs/read2lead-self-learn/P0_VERIFY.md.
+- Uncommitted handoff: QA/report in _ops/main 431c614; this CONTROL/CHECKPOINT on hub main 5963370. No source commit/merge/push. Exact inventory: /home/felixbuilderhub/r2l-p0-verify-20260917-skTXaI/workspace-state.json.
+
+## Previous completed packet — R2L-P0-BASELINE
+
+- Task ID: R2L-P0-BASELINE
+- Status: complete — seven-section read-only audit; P0-VERIFY remains unrun
+- Owner: Codex
+- Session ID: codex-r2l-solo-20260917
+- Lane: documentation / baseline audit
+- Spec: _ops/specs/SPEC_R2L_SELF_LEARN_V1.md, P0; durable state _ops/specs/read2lead-self-learn/STATUS.md
+- Acceptance criteria: seven evidenced P0_BASELINE sections; preserve all dirty work and historical records; exact safe P0-VERIFY plan.
+- Files owned: _ops/specs/read2lead-self-learn/P0_BASELINE.md, STATUS.md, DECISIONS.md; this control/checkpoint; current entry notices; append-only _ops/AGENT_LOG.md.
+- Stop condition: documented read-only baseline; no unknown-side-effect application tests, remote data, installs, redesign or deployment.
+- Cost ceiling: USD 0 metered.
+- Reuse survey: N/A — source/configuration audit and governance reconciliation, no new product capability.
+- Tradeoff watch: audit evidence is not test evidence; threshold zero claims of product completion from unrun tests.
+- Design self-verification: N/A — no UI change.
+- Founder handoff: local evidence/report, not a request for Phuong to find defects.
+- Governance evidence: bb72860; 112 bite checks and 61 tests passed, solo verification independent=false.
+- Rollback: private recovery archives; never restore broad archives over dirty working directories.
+
+## Previous acceptance reconciliation — R2L-P0-BASELINE
+
+- PASS — seven-section P0_BASELINE report and exact Git/ownership reconciliation.
+- PASS — governance: bb72860; installed 112 bite checks + 61 tests, solo not independent.
+- PASS — preservation: 2,216 comparisons plus known-bad byte-change control.
+- PASS — documented sandbox/test/restore plan; next task R2L-P0-VERIFY, unclaimed.
+- N/A — UI, provider and production proof: no app source changes or release.
+- NOT RUN — application baselines and synthetic storage recovery; P0 not complete.
+
+## Historical control record — preserved verbatim below
+
+Legacy role/dispatch/approval clauses and old active-task labels are historical.
+Their product data hazards remain relevant; no old production action is authorized.
+
 # Control — Read2Lead
 
 - Product: Read2Lead
-- Current goal: R2L-OPEN-ACCESS — self-serve free signup, first phase of the approved growth plan (Bigger / Free for everyone / Cheap / Monetize later). Spec: `_ops/specs/SPEC_R2L_OPEN_ACCESS.md`. Plan approved by Phương 2026-08-01.
+- Current goal: **STUDENTS-ONLY, STEADY STATE** — growth plan cancelled 2026-08-02; R2L-BOOK-QA audit COMPLETE 2026-08-03 (431/431 books, $0: 94 pass · 113 typo-fix proposals · 190 review pile · 34 flagged; book_107734 removed live). TWO HANDOFF STEPS remain in `_ops/outbox/book-audit/FINISH_CLEANUP_RUNBOOK.md` (founder-approved, permission-classifier-blocked in the closing session): (1) shelf-removal write for the 35 approved books, (2) `company merge claude-bg/bookqa` (tip f17b3e9, Buffet-approved). FUTURE (own packet, founder-gated): apply archived typo fixes + republish (audio-mismatch design note in spec follow-ups). Audit data of record: `_ops/outbox/book-audit/qa_state/` (431 verdicts).
 - Latest staging URL: PRODUCTION — https://felixbuilderhub.com (rewards merged 2026-07-19, dbb65bd)
 - Active workers: 0 (all lanes cleared)
 - Last updated: 2026-08-01 (R2L-OPEN-ACCESS backend MERGED TO PRODUCTION on Phương's "merge GO" — abb34a8; prod smoke PASS: /api/signup live and DARK, 503 signup_disabled. Going live gated by the spec's launch checklist: welcome page + Turnstile keys + CF edge rate-limit rule + Phương flips config:signup_enabled. Voice decision = Aura-2 luna + loudnorm, awaiting founder ear-check of louder samples; coin→diamond balance migration STILL pending Phương's separate OK)
@@ -23,6 +186,26 @@ stale until 2026-07-05.
 ## Current task
 
 - Status: active
+- Started: 2026-08-02
+- Task ID: R2L-BOOK-QA
+- Lane: product (quality audit — proofreading + categorization of the 432 PUBLISHED books; founder request 2026-08-02 "system to categorize and proofread the books, some have typos". RE-SCOPED same day when the expansion was cancelled: the audit targets the LIVE library, verdict `fixed` means a RECORDED FIX PROPOSAL — no live book text changes without Phương's per-list OK.)
+- Spec: `_ops/specs/SPEC_R2L_BOOK_QA.md` — approved by Phương 2026-08-02, re-scope note at top (decisions: auto-fix ≤5 clear typos as proposals; strict auto-reject; borderline → 🟡 founder pile).
+- Owner: Mark (backend packet, worktree `mark-bookqa`). Buffet reviews. Elon integrates and runs the real 432-book audit.
+- Problem: StoryWeaver books are community-written — typos, grammar errors, and off-tone content exist, and 432 of these books are in front of Phương's real students TODAY with no proofread ever done. The pre-publish hard gate still lands so any future publishing (if the founder ever reopens expansion) cannot spend TTS money on an unchecked book.
+- Approach: new `backend/book_qa.py` — 4 gates per book (mechanical reuse, AI proofread, kid-appropriateness, 12-topic categorization) via ONE whole-book Gemini free-tier call (OpenRouter fallback); verdicts pass/fixed/quarantine/reject; auto-fixes recorded per page + CC-BY change note; `qa_state/<slug>.json` + `--resume` checkpoint + `--report` founder markdown; HARD GATE in `process_books.py`: no TTS/enrich/publish without verdict pass/fixed (missing state = refused). Source corpus dirs never mutated. Full detail in spec.
+- Acceptance criteria: the 7 bite tests in spec §Bite tests (seeded typo→fixed with exact corrections; 12-typo→quarantine; violent→reject; sad-ending→quarantine; clean→pass; publish-path refusal with NO TTS call for reject/missing-state; malformed LLM JSON→quarantine after one retry); report shows counts + full 🟡 list + 10-random-✅ spot-check sample; existing pipeline behavior unchanged for books with pass/fixed state.
+- Files owned: Mark — `backend/book_qa.py` (NEW), `backend/process_books.py` (publish-path gate only), Python tests per backend convention (e.g. `backend/test_book_qa.py`). Elon — this CONTROL.md + the spec. No app/frontend files.
+- Non-goals: no app changes (topic-filter UI is later); no re-shelving logic (reading-load system untouched); no TTS/audio work (separate task, funding decision open); no admin review page (markdown report first); no changes to already-published 432 books in this packet (back-QA of published corpus is a follow-up decision).
+- Stop condition: bite tests pass + Buffet SHIP + founder gates PASS; then a REAL 20-book pilot run whose report Phương reads before any full-corpus run.
+- Cost ceiling: Claude team (Max plan, not metered). Runtime ≈ $0 (Gemini free tier; OpenRouter fallback pennies; explicitly NO TTS spend in this task).
+- Reuse survey (rule 21): (1) existing enrichment LLM client/whole-book-call pattern in process_books.py — ADOPTED for the QA call; (2) existing mechanical validation (PIL verify, attribution hard-fail, page parser) — ADOPTED, extended not duplicated; (3) existing checkpoint/--resume convention — ADOPTED; (4) book_quarantine:<level> KV keys — NOT used yet (QA state stays file-local until publish; KV quarantine is a later integration); (5) external spell-check libs (aspell/hunspell) — REJECTED: the LLM call already covers typos in context, a wordlist can't (proper nouns, invented kid-words like "Chikkiri"); (6) building a web review UI — REJECTED for now, markdown report suffices for one founder.
+- State inventory: per book — pass / fixed(≤5) / quarantine(>5 typos, heavy grammar, borderline content) / reject(strict list) / missing-state (publish refused) / LLM-malformed (retry once → quarantine) / LLM-unavailable (book skipped, checkpoint not advanced — never silently passed). Report states: batch with 0 🟡 (say so explicitly), reject-rate spike >2× running average (flagged in report per Tradeoff watch).
+- Operational reality: the AI is sorting content for real Vietnamese children learning English; a wrong ✅ puts a violent or broken story in front of a 6-year-old with narration, and nobody will file a bug — the parent just quietly loses trust. That is why reject/quarantine fail toward the founder's eyes, why malformed output can never become pass, and why every batch report carries a random-✅ spot-check sample so a drifting model gets caught by skim, not by incident.
+- Runtime bindings/secrets: GOOGLE_API_KEY (Gemini free tier) + OPENROUTER_API_KEY fallback — both already used by enrichment, locations per existing runbook. No new secrets, no Cloudflare bindings.
+
+## Previous task — R2L-OPEN-ACCESS (backend)
+
+- Status: complete — and the LAUNCH IS CANCELLED (founder ruling 2026-08-02: students-only; endpoint stays dark PERMANENTLY; spec marked CLOSED; welcome page/Turnstile/edge-rule/flag-on all void). Code remains merged on production (abb34a8), reviewed and harmless — reopening someday needs only the spec's checklist.
 - Started: 2026-08-01
 - Task ID: R2L-OPEN-ACCESS
 - Lane: product (growth — self-serve free signup; removes the founder-as-signup-endpoint bottleneck)
