@@ -65,7 +65,8 @@ const bundle = await build({entryPoints: [entry], bundle: true, write: false, fo
 const mime = {'.mjs': 'text/javascript', '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.mp3': 'audio/mpeg', '.woff2': 'font/woff2'};
 async function serveFrom(root, pathname, ownRoot) {
   const name0 = path.resolve(root, '.' + pathname);
-  if (!name0.startsWith(path.resolve(root))) return new Response(null, {status: 404});
+  const rootAbs = path.resolve(root);
+  if (name0 !== rootAbs && !name0.startsWith(rootAbs + path.sep)) return new Response(null, {status: 404});
   try {
     let name = name0;
     if ((await fs.stat(name)).isDirectory()) name = path.join(name, 'index.html');

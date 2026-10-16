@@ -125,17 +125,19 @@ def check_build_env(env_file, dist):
             raise ReleaseError("build-env has PUBLIC_R2L_V3 unset but dist flags chunk is hard-ON: dist was built with a different env")
         verified.append("PUBLIC_R2L_V3")
     else:
-        notes.append("no dist/_astro/flags.*.js found; PUBLIC_R2L_V3 not verifiable")
+        raise ReleaseError("dist/_astro/flags.*.js not found: cannot verify the build env against dist (refusing to skip)")
     lesson = dist / "read2lead/lesson/index.html"
-    if lesson.exists():
-        t = lesson.read_text()
-        for var, attr in (("PUBLIC_R2L_W1", "data-r2l-w1-ssr"), ("PUBLIC_R2L_V21", "data-r2l-v21-ssr")):
-            m = re.search(attr + r'="([01])"', t)
-            if m:
-                want = "1" if values.get(var) == "1" else "0"
-                if m.group(1) != want:
-                    raise ReleaseError("build-env %s implies %s=%s but dist lesson page has %s: dist built with a different env" % (var, attr, want, m.group(1)))
-                verified.append(var)
+    if not lesson.exists():
+        raise ReleaseError("dist/read2lead/lesson/index.html not found: cannot verify the build env against dist (refusing to skip)")
+    t = lesson.read_text()
+    for var, attr in (("PUBLIC_R2L_W1", "data-r2l-w1-ssr"), ("PUBLIC_R2L_V21", "data-r2l-v21-ssr")):
+        m = re.search(attr + r'="([01])"', t)
+        if not m:
+            raise ReleaseError("marker %s not found in dist lesson page: cannot verify %s (refusing to skip)" % (attr, var))
+        want = "1" if values.get(var) == "1" else "0"
+        if m.group(1) != want:
+            raise ReleaseError("build-env %s implies %s=%s but dist lesson page has %s: dist built with a different env" % (var, attr, want, m.group(1)))
+        verified.append(var)
     return {"env": values, "verifiedAgainstDist": verified, "notes": notes, "file": str(env_file)}
 
 
@@ -284,6 +286,13 @@ def build(a):
         raise ReleaseError("base manifest missing: %s" % (base / MANIFEST_REL))
     if not base_cfg.is_file():
         raise ReleaseError("base wrangler config missing: %s" % base_cfg)
+    bc = load_json(base_cfg, "base wrangler config")
+    if bc.get("name") != "read2lead-story-private-preview":
+        raise ReleaseError("base config is not the production Worker config (name=%r, expected 'read2lead-story-private-preview'); a candidate's own wrangler.json is a local stub" % bc.get("name"))
+    if "R2L_PREVIEW_STATE" not in [b.get("name") for b in (bc.get("durable_objects") or {}).get("bindings", [])]:
+        raise ReleaseError("base config lacks the R2L_PREVIEW_STATE durable object binding: not the production Worker config")
+    if not isinstance(bc.get("assets"), dict):
+        raise ReleaseError("base config has no assets block")
     if out.exists():
         raise ReleaseError("out already exists (refusing to overwrite): %s" % out)
     if out == base or base in out.parents or out in base.parents:
@@ -293,9 +302,10 @@ def build(a):
     if not dist.is_dir():
         raise ReleaseError("repo dist/ missing: run the build first (%s)" % dist)
     head_time = int(git(repo, "log", "-1", "--format=%ct"))
-    if dist.stat().st_mtime < head_time:
-        raise ReleaseError("dist/ is older than the repo HEAD commit: rebuild it (dist %s < HEAD %s)" % (
-            time.strftime("%F %T", time.localtime(dist.stat().st_mtime)), time.strftime("%F %T", time.localtime(head_time))))
+    newest = max([f.stat().st_mtime for f in dist.rglob("*") if f.is_file()] or [0])
+    if newest < head_time:
+        raise ReleaseError("dist/ is older than the repo HEAD commit: rebuild it (newest dist file %s < HEAD %s)" % (
+            time.strftime("%F %T", time.localtime(newest)), time.strftime("%F %T", time.localtime(head_time))))
     head = git(repo, "rev-parse", "HEAD")
     if not a.allow_dirty:
         dirty = git(repo, "status", "--porcelain", "--untracked-files=no", "--", *SOURCE_DIRS)
@@ -408,19 +418,6 @@ def build(a):
         if base_priv != out_priv:
             raise ReleaseError("protected file set changed: %s" % sorted(base_priv ^ out_priv)[:5])
 
-        # --- base guard: nothing in base moved, changed or appeared
-        after = snapshot_stat(base)
-        if after != before:
-            moved = sorted(set(before) ^ set(after)) + sorted(k for k in before if k in after and before[k] != after[k])
-            raise ReleaseError("BASE CANDIDATE WAS MODIFIED (hard-link write-through?): %s" % moved[:10])
-        for rel, h in base_sha_log.items():
-            if sha256_file(base / rel) != h:
-                raise ReleaseError("BASE FILE CONTENT CHANGED for %s" % rel)
-        if full_before is not None:
-            for r, h in full_before.items():
-                if sha256_file(base / r) != h:
-                    raise ReleaseError("BASE FILE CONTENT CHANGED (full verify) for %s" % r)
-
         # --- wrangler config
         cfg = load_json(base_cfg, "base wrangler config")
         manifest_sha = sha256_file(out / MANIFEST_REL)
@@ -428,7 +425,10 @@ def build(a):
         cfg["assets"]["directory"] = str(out / "assets")
         cfg.setdefault("vars", {})["R2L_PREVIEW_PACKAGE_SHA256"] = manifest_sha
         cfg_path = out / "wrangler.release.json"
-        cfg_path.write_text(json.dumps(cfg, indent=2) + "\n")
+        for name in ("wrangler.release.json", "candidate-proof.json"):
+            if (base / name).is_file():  # generation 2+: these are hard-linked from the previous release
+                base_sha_log[name] = sha256_file(base / name)
+        put(cfg_path, (json.dumps(cfg, indent=2) + "\n").encode())
 
         proof = {
             "status": "PASS",
@@ -456,7 +456,21 @@ def build(a):
             },
             "wranglerConfig": str(cfg_path),
         }
-        (out / "candidate-proof.json").write_text(json.dumps(proof, indent=2) + "\n")
+        put(out / "candidate-proof.json", (json.dumps(proof, indent=2) + "\n").encode())
+
+        # --- base guard (LAST step: runs after every write this tool makes):
+        # nothing in base moved, changed or appeared
+        after = snapshot_stat(base)
+        if after != before:
+            moved = sorted(set(before) ^ set(after)) + sorted(k for k in before if k in after and before[k] != after[k])
+            raise ReleaseError("BASE CANDIDATE WAS MODIFIED (hard-link write-through?): %s" % moved[:10])
+        for rel, h in base_sha_log.items():
+            if sha256_file(base / rel) != h:
+                raise ReleaseError("BASE FILE CONTENT CHANGED for %s" % rel)
+        if full_before is not None:
+            for r, h in full_before.items():
+                if sha256_file(base / r) != h:
+                    raise ReleaseError("BASE FILE CONTENT CHANGED (full verify) for %s" % r)
         return proof, cfg_path
     except BaseException:
         if out.exists() and not a.keep_failed:

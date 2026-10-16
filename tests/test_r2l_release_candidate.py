@@ -16,7 +16,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-TOOL = Path(__file__).resolve().parent.parent / "scripts/r2l-release/build_candidate.py"
+TOOL = Path(os.environ.get("R2L_RELEASE_TOOL") or Path(__file__).resolve().parent.parent / "scripts/r2l-release/build_candidate.py")
 UNSAFE = "R2L_RELEASE_UNSAFE_WRITE_THROUGH_FOR_BITE_TEST"
 
 
@@ -68,6 +68,7 @@ class Fixture:
         self.base_config.write_text(json.dumps({
             "name": "read2lead-story-private-preview", "main": "/old/worker.mjs",
             "assets": {"directory": "/old/assets", "binding": "ASSETS"},
+            "durable_objects": {"bindings": [{"name": "R2L_PREVIEW_STATE", "class_name": "Read2LeadPrivatePreview"}]},
             "vars": {"R2L_PREVIEW_PACKAGE_SHA256": "old", "KEEP": "me"},
         }))
         # --- repo (a git repo with the 5 source dirs and a fresh dist/)
@@ -83,6 +84,7 @@ class Fixture:
         w(r / "dist/read2lead/index.html", PAGE_NEW)
         w(r / "dist/_astro/app.NEW.js", "console.log('new')")
         w(r / "dist/_astro/flags.abc.js", 'function e(){return typeof window<"u"?new URLSearchParams(window.location.search).get("v3")==="1":!1}export{e as i};')
+        w(r / "dist/read2lead/lesson/index.html", '<main data-r2l-w1-ssr="0" data-r2l-v21-ssr="0"></main>')
         self.build_env = t / "build-env.json"
         self.build_env.write_text("{}")
         # dist must be newer than the commit
@@ -199,6 +201,8 @@ class ReleaseCandidateTests(unittest.TestCase):
 
     def test_stale_dist_fails(self):
         old = 1_000_000_000
+        for p in (self.f.repo / "dist").rglob("*"):
+            os.utime(p, (old, old))
         os.utime(self.f.repo / "dist", (old, old))
         r = self.f.run()
         self.assertNotEqual(r.returncode, 0)
@@ -236,6 +240,68 @@ class ReleaseCandidateTests(unittest.TestCase):
         self.assertNotEqual(r.returncode, 0, "write-through must not pass silently")
         self.assertIn("BASE", r.stderr)
         self.assertFalse(self.f.out.exists())
+
+
+    def test_two_generations_do_not_touch_release_one(self):
+        # Release 2 is built with --base = release 1 (the runbook's normal path). Release 1's rollback
+        # config and proof are hard-linked into release 2 and must be REPLACED, never written through.
+        r1 = self.f.run()
+        self.assertEqual(r1.returncode, 0, r1.stdout + r1.stderr)
+        out1 = self.f.out
+        names = ("wrangler.release.json", "candidate-proof.json")
+        before = {n: ((out1 / n).read_bytes(), os.stat(out1 / n).st_ino) for n in names}
+        before_all = tree_hashes(out1)
+        out2 = self.f.tmp / "out2"
+        (self.f.repo / "dist/read2lead/index.html").write_text(PAGE_NEW.replace("window.a=2", "window.a=3"))
+        r2 = self.f.run(base=out1, base_config=out1 / "wrangler.release.json", out=out2)
+        self.assertEqual(r2.returncode, 0, r2.stdout + r2.stderr)
+        for n in names:
+            self.assertEqual((out1 / n).read_bytes(), before[n][0], n + " of release 1 was rewritten")
+            self.assertEqual(os.stat(out1 / n).st_ino, before[n][1])
+        self.assertEqual(tree_hashes(out1), before_all)
+        cfg1 = json.loads((out1 / "wrangler.release.json").read_text())
+        cfg2 = json.loads((out2 / "wrangler.release.json").read_text())
+        self.assertEqual(cfg1["main"], str(out1 / "source/cloudflare/read2lead-private-preview/worker.mjs"))
+        self.assertEqual(cfg2["main"], str(out2 / "source/cloudflare/read2lead-private-preview/worker.mjs"))
+        self.assertFalse(os.path.samefile(out1 / "wrangler.release.json", out2 / "wrangler.release.json"))
+
+    def test_stub_base_config_rejected(self):
+        # a candidate's own wrangler.json is a local stub: wrong name / no durable object binding
+        self.f.base_config.write_text(json.dumps({"name": "local-stub", "assets": {"directory": "x"}, "vars": {}}))
+        r = self.f.run()
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("not the production Worker config", r.stderr)
+        cfg = json.loads(self.f.base_config.read_text())
+        cfg["name"] = "read2lead-story-private-preview"
+        self.f.base_config.write_text(json.dumps(cfg))
+        r = self.f.run()
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("R2L_PREVIEW_STATE", r.stderr)
+
+    def test_build_env_unverifiable_dist_fails(self):
+        (self.f.repo / "dist/_astro/flags.abc.js").unlink()
+        r = self.f.run()
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("flags", r.stderr)
+        (self.f.repo / "dist/_astro/flags.abc.js").write_text('get("v3")==="1"')
+        (self.f.repo / "dist/read2lead/lesson/index.html").write_text("<main></main>")
+        r = self.f.run()
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("marker data-r2l-w1-ssr not found", r.stderr)
+        (self.f.repo / "dist/read2lead/lesson/index.html").unlink()
+        r = self.f.run()
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("lesson/index.html not found", r.stderr)
+
+    def test_stale_dist_uses_newest_file_not_dir_mtime(self):
+        old = 1_000_000_000
+        for p in (self.f.repo / "dist").rglob("*"):
+            os.utime(p, (old, old))
+        # directory mtime is fresh but every file is old: must still be refused
+        os.utime(self.f.repo / "dist", None)
+        r = self.f.run()
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("older than the repo HEAD", r.stderr)
 
 
 if __name__ == "__main__":
