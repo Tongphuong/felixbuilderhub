@@ -60,3 +60,19 @@ export function renderEggHtml(
     </button>
   `;
 }
+
+/**
+ * Which avatar the hồ sơ hero shows. Companions are free: a child who has a
+ * saved monster sees THAT monster at every level, and never needs the
+ * `?v3=1` preview flag to see it (that flag used to hide the saved monster
+ * behind the generic placeholder). Only a child with no saved monster who is
+ * explicitly still in the egg stage sees the egg.
+ */
+export function resolveHubAvatarView(state: {
+  avatar_stage?: unknown;
+  avatar?: { monster?: unknown } | null;
+} | null | undefined): 'monster' | 'egg' | 'placeholder' {
+  if (state?.avatar?.monster && typeof state.avatar.monster === 'object') return 'monster';
+  if (state?.avatar_stage === 'egg') return 'egg';
+  return 'placeholder';
+}

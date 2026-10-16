@@ -7,7 +7,7 @@ import { escapeHtml, firstName, qs } from './ho-so';
 
 import { isV3Enabled } from '../../config/flags';
 import { buildHeroCta, defaultMonsterSvg, PROFILE_TIERS, statusMeta } from '../../lib/r2l-hero';
-import { renderEggHtml } from '../../lib/egg-renderer';
+import { renderEggHtml, resolveHubAvatarView } from '../../lib/egg-renderer';
 import { renderGiftGoalCard, type GiftGoalItem, type GiftGoalRedemption } from '../../lib/gift-goal-card';
 import { renderMonster, type EquippedDisplayItem } from '../../lib/monster-avatar';
 import { monsterBuilderHtml, mountMonsterBuilder } from '../../lib/monster-builder';
@@ -606,10 +606,13 @@ export function renderKidView(_container: Element, data: ProgressPayload, access
   const monsterSlot = qs<HTMLElement>('[data-hub-monster]', heroHost);
   const v3 = isV3Enabled();
   const avatarStage = String(state.avatar_stage || 'basic');
-  if (v3 && avatarStage === 'egg' && monsterSlot) {
+  // Companions are free: a saved monster shows at every level, with or without the v3 preview flag.
+  const hubAvatar = resolveHubAvatarView(state as Parameters<typeof resolveHubAvatarView>[0]);
+  if (hubAvatar === 'monster' && monsterSlot) renderHubMonster(monsterSlot, state);
+  else if (hubAvatar === 'egg' && monsterSlot) {
     monsterSlot.innerHTML = renderEggHtml(name, String(state.current_level || 'L1'), Number(state.packs_until_level_up || 0));
     monsterSlot.querySelector('[data-r2l-egg]')?.addEventListener('click', () => kidToast('Con lên hạng Bạc thì trứng sẽ nở nhé!'));
-  } else if (v3 && (state.avatar as { monster?: unknown } | undefined)?.monster && monsterSlot) renderHubMonster(monsterSlot, state);
+  }
 
   const builderRoot = extrasHost.querySelector('[data-r2l-monster-builder-root]');
   if (v3 && avatarStage === 'custom' && builderRoot instanceof HTMLElement) mountMonsterBuilder(builderRoot, accessCode, state, (nextState) => { if (monsterSlot && nextState.avatar?.monster) renderHubMonster(monsterSlot, nextState as Record<string, unknown>); });
