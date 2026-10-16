@@ -10,6 +10,19 @@ import '../styles/read2lead-child-home.css';
   </header>
   <p id="home-speaking-note" class="reading-home__speaking-note" hidden>Minny luyện nói cùng con trong mỗi câu chuyện. Bài đã lưu của con vẫn còn.</p>
   <section id="home-loading" class="reading-home__notice" role="status">Đang mở góc đọc sách của con…</section>
+  <section id="home-entry" class="reading-home__entry" aria-labelledby="home-entry-title" hidden>
+    <span class="reading-home__book" aria-hidden="true">✦</span>
+    <h1 id="home-entry-title">Góc đọc sách đang chờ con</h1>
+    <p>Nhập mã học sinh để mở truyện của con nhé.</p>
+    <form id="home-entry-form">
+      <label for="home-code">Mã học sinh của con</label>
+      <input id="home-code" name="student-code" type="text" maxlength="100" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="R2L-…" aria-describedby="home-entry-message" data-clarity-mask="true" required />
+      <p id="home-entry-message" role="alert"></p>
+      <button id="home-entry-submit" class="reading-home__primary" type="submit">Mở góc đọc sách <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="reading-home__entry-note">Con cũng có thể mở link riêng Coach Felix đã gửi.</p>
+    <a class="reading-home__help" href={ZALO_URL}>Nhờ ba mẹ nhận mã từ Coach Felix</a>
+  </section>
   <section id="home-error" class="reading-home__notice" hidden>
     <h1>Mình cùng mở góc đọc sách nhé</h1><p id="home-error-message" role="alert"></p>
     <button id="home-retry" class="reading-home__primary" type="button" hidden>Thử lại</button>

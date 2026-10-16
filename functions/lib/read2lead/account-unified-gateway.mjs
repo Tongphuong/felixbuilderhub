@@ -43,6 +43,15 @@ export async function unifiedAccountGateway(context) {
     (context.data??={}).clearRead2LeadAccountCookies=true;
     return null;
   }
+  // Bare entry address (no explicit code): a device with NO reader session gets the
+  // public static shell (friendly code form, no student data); a device WITH a session
+  // cookie still goes to the account host, which decides if it is valid (see below).
+  // Exact paths only; any explicit code/access_code goes to the account host as before.
+  const hasReaderCookie=(request.headers.get('cookie')||'').split(';').some(value=>value.trim().startsWith('__Host-r2l_account='));
+  const bareEntry=mode===UNIFIED_MODE&&['GET','HEAD'].includes(request.method)&&
+    ['/read2lead','/read2lead/','/ho-so','/ho-so/'].includes(url.pathname)&&
+    !url.searchParams.has('code')&&!url.searchParams.has('access_code');
+  if (bareEntry&&!hasReaderCookie) return null;
   // The account HTML, hashed build assets and retelling pictures share one bundle.
   // Cookie presence selects transport only; the host authenticates the token.
   const accountAsset=mode===UNIFIED_MODE&&['GET','HEAD'].includes(request.method)&&
@@ -69,6 +78,11 @@ export async function unifiedAccountGateway(context) {
     // Only this static-file path may fall back, never an account API or page.
     if(accountAsset&&[401,404].includes(response.status)){
       await response.body?.cancel();return null;
+    }
+    // Stale/unknown reader cookie on the bare entry address: show the public code
+    // form and drop the dead cookie, not the account host's bare 401 text.
+    if(bareEntry&&response.status===401){
+      await response.body?.cancel();(context.data??={}).clearRead2LeadAccountCookies=true;return null;
     }
     return response;
   } catch { return unavailable(); }

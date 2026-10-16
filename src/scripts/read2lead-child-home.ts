@@ -1,19 +1,26 @@
 import { requestLessonAssignment } from './read2lead-lesson-help.mjs';
 import { buildHeroCta, statusMeta } from '../lib/r2l-hero';
 import { renderMonster } from '../lib/monster-avatar';
+import { normalizeStudentCode, studentEntry } from '../lib/read2lead/student-entry.mjs';
 
 const root = document.querySelector<HTMLElement>('[data-child-home]');
 if (root) {
   const el = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
   const button = el<HTMLButtonElement>('home-open');
-  let accessCode = '', busy = false;
+  let accessCode = '', busy = false, loadId = 0;
   const number = (value: unknown) => new Intl.NumberFormat('vi-VN').format(Math.max(0, Number(value) || 0));
   const phase = (name: string) => {
-    for (const key of ['loading', 'ready', 'error']) el('home-' + key).hidden = key !== name;
+    for (const key of ['loading', 'ready', 'error', 'entry']) el('home-' + key).hidden = key !== name;
     root.setAttribute('aria-busy', String(name === 'loading'));
   };
   const error = (message: string, retry = true) => {
     el('home-error-message').textContent = message; el('home-retry').hidden = !retry; phase('error');
+  };
+  const entry = (message = '') => {
+    accessCode = ''; el('home-wallet').hidden = true;
+    el('home-entry-message').textContent = message;
+    el<HTMLInputElement>('home-code').setAttribute('aria-invalid', String(Boolean(message)));
+    phase('entry');
   };
   const readJson = async (response: Response) => {
     const data = await response.json();
@@ -49,21 +56,33 @@ if (root) {
     } catch { /* keep the tappable card with its default text */ }
   }
   async function load() {
+    const id = ++loadId;
+    let wasRemembered = false;
     phase('loading'); el('home-wallet').hidden = true;
     try {
       const params = new URLSearchParams(location.search);
       el('home-speaking-note').hidden = params.get('from') !== 'speaking';
+      // Only the bare /read2lead address reopens the child THIS tab already signed in as;
+      // /r2l/start and any explicit code or link never use a remembered identity.
+      let remembered = '';
+      try { remembered = sessionStorage.getItem('r2l_access_code') || ''; } catch { remembered = ''; }
+      const requested = studentEntry(params, { allowRemembered: location.pathname.replace(/\/$/, '') === '/read2lead', remembered });
+      wasRemembered = requested.kind === 'remembered';
+      if (requested.kind === 'manual') {
+        try { sessionStorage.removeItem('r2l_access_code'); } catch { /* Nothing stored to read. */ }
+        entry(); return;
+      }
       // Invalid explicit personal links never fall back to another stored identity.
-      if (params.has('t') || location.pathname.replace(/\/$/, '') === '/r2l/start') {
-        const token = params.get('t');
-        if (!token) { error('Link này thiếu mã. Ba mẹ nhắn Coach Felix để nhận link của con nhé.', false); return; }
-        const identity = await readJson(await fetch('/api/r2l-link?token=' + encodeURIComponent(token)));
+      if (requested.kind === 'link') {
+        if (!requested.token) { entry('Link này chưa đủ mã. Con nhập mã học sinh bên dưới nhé.'); return; }
+        const identity = await readJson(await fetch('/api/r2l-link?token=' + encodeURIComponent(requested.token)));
+        if (id !== loadId) return;
         accessCode = identity.access_code || '';
-      } else if (params.has('code')) accessCode = (params.get('code') || '').trim();
-      else { try { accessCode = sessionStorage.getItem('r2l_access_code') || ''; } catch { accessCode = ''; } }
-      if (!accessCode) { error('Mở link riêng của con để bắt đầu đọc nhé.', false); return; }
+      } else accessCode = requested.code;
+      if (!accessCode) { entry('Con kiểm tra lại mã học sinh nhé. Mã bắt đầu bằng R2L-.'); return; }
       const code = encodeURIComponent(accessCode);
       const data = await readJson(await fetch('/api/read2lead-progress?code=' + code));
+      if (id !== loadId) return;
       try { sessionStorage.setItem('r2l_access_code', accessCode); } catch { /* Storage is optional. */ }
       const state = data.read2lead_state || {}, progress = data.progress || {};
       el('home-name').textContent = progress.student_name || data.student_name || 'con';
@@ -90,9 +109,23 @@ if (root) {
       }
       phase('ready');
     } catch (cause: any) {
-      error(cause instanceof TypeError ? 'Mất kết nối. Con kiểm tra mạng rồi thử lại nhé.' : cause.message, ![400,401,403,404,410].includes(cause.status));
+      if (id !== loadId) return;
+      // A remembered child that the server no longer accepts: forget it, show the plain code form.
+      if (wasRemembered && cause.status && cause.status < 500) { try { sessionStorage.removeItem('r2l_access_code'); } catch { /* ignore */ } entry(); return; }
+      entry(cause instanceof TypeError ? 'Chưa kết nối được. Con kiểm tra mạng rồi thử lại nhé.' : [400,401,403,404,410].includes(cause.status) ? 'Mình chưa mở được bằng mã hoặc link này. Con kiểm tra lại mã, hoặc nhờ ba mẹ giúp nhé.' : 'Chưa mở được góc đọc sách. Con thử lại sau một chút nhé.');
     }
   }
+  el('home-entry-form').addEventListener('submit', async event => {
+    event.preventDefault();
+    const submit = el<HTMLButtonElement>('home-entry-submit');
+    if (submit.disabled) return;
+    const code = normalizeStudentCode(el<HTMLInputElement>('home-code').value);
+    if (!code) { entry('Con kiểm tra lại mã học sinh nhé. Mã bắt đầu bằng R2L-.'); el('home-code').focus(); return; }
+    el<HTMLInputElement>('home-code').value = code;
+    submit.disabled = true;
+    history.replaceState({}, '', '/read2lead?code=' + encodeURIComponent(code));
+    try { await load(); } finally { submit.disabled = false; }
+  });
   button.addEventListener('click', async () => {
     if (busy || !accessCode) return;
     busy = true; button.disabled = true; el('home-action-status').textContent = 'Đang mở truyện của con…';

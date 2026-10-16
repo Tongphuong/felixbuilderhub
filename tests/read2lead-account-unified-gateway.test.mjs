@@ -118,3 +118,78 @@ test('frozen APIs and page mutations retain JSON errors and never dispatch',asyn
     assert.equal(response.headers.get('Cache-Control'),'no-store');assert.equal(f.calls.length,0);assert.equal(f.nextCalls(),0);assert.deepEqual(f.reads,[]);
   }
 });
+
+const BARE=['/read2lead','/read2lead/','/read2lead/?from=speaking','/read2lead/?done=1','/ho-so','/ho-so/'];
+test('E1: no reader session + bare entry address gets the public shell (200), never the account host or a 401',async()=>{
+  for(const method of ['GET','HEAD'])for(const path of BARE) {
+    const f=fixture({status:401});const r=await f.run(path,{method});
+    assert.equal(r.status,200,path);if(method==='GET')assert.equal(await r.text(),'public-site');
+    assert.equal(f.calls.length,0,path);assert.equal(f.nextCalls(),1);assert.equal(r.headers.getSetCookie().length,0);assert.deepEqual(f.reads,[]);
+  }
+});
+test('E1: personal-link shell /r2l/start/ (no token) is public too and clears old cookies',async()=>{
+  const f=fixture({status:401});const r=await f.run('/r2l/start/',{headers:{cookie:'__Host-r2l_account=OLD'}});
+  assert.equal(r.status,200);assert.equal(f.calls.length,0);assert.equal(r.headers.getSetCookie().length,2);
+});
+test('E3: bare entry address WITH a reader cookie still goes to the account host and keeps the cookie',async()=>{
+  for(const path of BARE) {
+    const f=fixture();const r=await f.run(path,{headers:{cookie:'other=1; __Host-r2l_account='+'c'.repeat(64)}});
+    assert.equal(r.status,200,path);assert.equal(await r.text(),'account-host');assert.equal(f.calls.length,1);assert.equal(f.nextCalls(),0);
+    assert.equal(r.headers.getSetCookie().length,0,'a valid session is never cleared on entry');
+  }
+});
+test('stale or unknown reader cookie on the bare address falls back to the public shell and drops the dead cookie',async()=>{
+  for(const path of BARE) {
+    const f=fixture({status:401});const r=await f.run(path,{headers:{cookie:'__Host-r2l_account=OLD'}});
+    assert.equal(r.status,200,path);assert.equal(await r.text(),'public-site');assert.equal(f.calls.length,1);
+    const cookies=r.headers.getSetCookie();assert.equal(cookies.length,2);assert.ok(cookies.every(value=>/Max-Age=0/.test(value)));
+  }
+  const f=fixture({status:500});const r=await f.run('/read2lead/',{headers:{cookie:'__Host-r2l_account=OLD'}});
+  assert.equal(r.status,500,'only 401 falls back; a host failure is never hidden');assert.equal(f.nextCalls(),0);
+});
+test('E2: an explicit code or access_code always goes to the account host (no public fallback, no remembered student)',async()=>{
+  for(const path of ['/read2lead?code=OTHER','/read2lead/?code=OTHER','/read2lead/?access_code=OTHER','/ho-so?code=OTHER','/ho-so/?access_code=OTHER'])for(const cookie of [undefined,'__Host-r2l_account=OLD']) {
+    const f=fixture({status:401});const r=await f.run(path,{headers:cookie?{cookie}:{}});
+    assert.equal(r.status,401,path);assert.equal(f.calls.length,1);assert.equal(f.nextCalls(),0);assert.equal(r.headers.getSetCookie().length,0);
+  }
+});
+test('E5: only the exact bare entry GET/HEAD is public; every other page, API, media and method stays protected',async()=>{
+  const paths=['/read2lead/lesson','/read2lead/companion','/read2lead/leaderboard','/read2lead/gifts','/read2lead/index.html','/read2lead//','/read2lead/extra','/ho-so/extra','/api/read2lead-progress','/api/read2lead-progress?code=','/api/read2lead-leaderboard','/api/read2lead-story-media/private','/api/read2lead-story-session','/api/parent/anything','/api/r2l-link'];
+  for(const path of paths) {
+    const f=fixture({status:401});const r=await f.run(path);
+    assert.equal(r.status,401,path);assert.equal(f.nextCalls(),0,path);assert.equal(f.calls.length,1,path);
+  }
+  for(const method of ['POST','PUT','DELETE'])for(const path of ['/read2lead/','/ho-so']) {
+    const f=fixture({status:401});const r=await f.run(path,{method,headers:{origin:'https://normal.test'}});
+    assert.equal(r.status,401,method+path);assert.equal(f.nextCalls(),0);assert.equal(f.calls.length,1);
+  }
+  const f=fixture({mode:FREEZE_MODE});const r=await f.run('/read2lead/');
+  assert.equal(r.status,503,'freeze still pauses the bare address');assert.equal(f.calls.length,0);assert.equal(f.nextCalls(),0);
+});
+test('reset clears both cookies idempotently without any backend or storage operation',async()=>{
+  for(const mode of [UNIFIED_MODE,FREEZE_MODE,null]) {
+    const f=fixture({mode,backend:false});
+    for(let i=0;i<2;i++) {
+      const r=await f.run('/api/read2lead-session-reset',{method:'POST',headers:{origin:'https://normal.test',cookie:'__Host-r2l_account=OLD; other=keep'}});
+      assert.equal(r.status,204);assert.equal(r.headers.get('cache-control'),'no-store');
+      assert.equal(r.headers.getSetCookie().length,2);
+      for(const cookie of r.headers.getSetCookie())assert.match(cookie,/HttpOnly; Secure; SameSite=Strict; Path=\/; Max-Age=0/);
+    }
+    assert.equal(f.calls.length,0);assert.equal(f.nextCalls(),0);assert.deepEqual(f.reads,[]);
+  }
+});
+test('reset rejects unsafe origins and methods without changing cookies',async()=>{
+  const f=fixture();
+  for(const options of [{method:'GET'},{method:'POST'},{method:'POST',headers:{origin:'https://other.test'}},{method:'POST',headers:{origin:'https://normal.test','sec-fetch-site':'cross-site'}}]) {
+    const r=await f.run('/api/read2lead-session-reset',options);assert.ok([403,405].includes(r.status));assert.equal(r.headers.getSetCookie().length,0);
+  }
+  assert.equal(f.calls.length,0);assert.deepEqual(f.reads,[]);
+});
+test('E4: reset expires the reader cookies by the exact name/path the Worker sets them with (no Domain)',async()=>{
+  const { ACCOUNT_COOKIE } = await import('../cloudflare/read2lead-private-preview/unified-account-app.mjs');
+  const { TEST_ACCOUNT_COOKIE } = await import('../cloudflare/read2lead-private-preview/account-app.mjs');
+  const f=fixture();const r=await f.run('/api/read2lead-session-reset',{method:'POST',headers:{origin:'https://normal.test',cookie:ACCOUNT_COOKIE+'=x'}});
+  const cookies=r.headers.getSetCookie();
+  assert.deepEqual(cookies.map(value=>value.split('=')[0]).sort(),[ACCOUNT_COOKIE,TEST_ACCOUNT_COOKIE].sort());
+  for(const value of cookies){assert.match(value,/^__Host-[a-z0-9_]+=; HttpOnly; Secure; SameSite=Strict; /);assert.match(value,/Path=\//);assert.match(value,/Max-Age=0/);assert.doesNotMatch(value,/Domain=/i);}
+});

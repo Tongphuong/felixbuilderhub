@@ -38,6 +38,16 @@ export async function onRequest(context) {
     if (context.data?.clearRead2LeadAccountCookies) headers.append('Set-Cookie', '__Host-r2l_account=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0');
     return new Response(response.body, { status: response.status, headers });
   };
+  // Browser-only reset: no account lookup, progress write or token revocation.
+  if (path === '/api/read2lead-session-reset') {
+    const headers = { 'Cache-Control': 'no-store' };
+    if (request.method !== 'POST') return new Response(null, { status: 405, headers: { ...headers, Allow: 'POST' } });
+    if (request.headers.get('origin') !== new URL(request.url).origin || request.headers.get('sec-fetch-site') === 'cross-site') {
+      return new Response(null, { status: 403, headers });
+    }
+    (context.data ??= {}).clearRead2LeadAccountCookies = true;
+    return finish(new Response(null, { status: 204, headers }));
+  }
   const needsAuth = path.startsWith('/admin') || path.startsWith('/api/admin');
 
   if (needsAuth) {

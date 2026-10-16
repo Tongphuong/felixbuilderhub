@@ -1,4 +1,5 @@
 /** Unified profile controller — code entry, role routing, errors, and history. */
+import { resetStudentSession } from '../../lib/read2lead/student-entry.mjs';
 
 const ROLE_STORAGE_PREFIX = 'r2l_profile_role:';
 const CODE_PATTERN = /^R2L-[A-Z0-9]+(?:-[A-Z0-9]+)*$/;
@@ -32,6 +33,8 @@ let selectedEntryRole: Role = 'kid';
 let entryRoleTouched = false;
 let kidViewCleanup: (() => void) | null = null;
 let loading = false;
+let switchingStudent = false;
+let identityRevision = 0;
 
 export function qs<T extends Element = Element>(sel: string, root: ParentNode = document) {
   return root.querySelector<T>(sel);
@@ -115,7 +118,8 @@ function showEntry() {
 }
 
 async function renderView(role: Role) {
-  if (!dashboardData || !currentAccessCode) return;
+  if (!dashboardData || !currentAccessCode || switchingStudent) return;
+  const revision = identityRevision;
   const previousRole = currentRole;
   if (kidViewCleanup) { kidViewCleanup(); kidViewCleanup = null; }
   currentRole = role;
@@ -129,6 +133,7 @@ async function renderView(role: Role) {
     window.location.replace('/read2lead?code=' + encodeURIComponent(currentAccessCode));
   } else {
     const { renderParentView, invalidateParentCache } = await import('./ho-so-parent-view');
+    if (revision !== identityRevision) return;
     if (previousRole === 'kid') invalidateParentCache();
     await renderParentView(qs('#ho-so-parent')!, dashboardData, currentAccessCode);
   }
@@ -141,7 +146,8 @@ function profileErrorMessage(error: string | undefined, fallback: string | undef
 }
 
 async function loadProfile() {
-  if (loading) return;
+  if (loading || switchingStudent) return;
+  const revision = identityRevision;
   const input = qs<HTMLInputElement>('#ho-so-code-input');
   const code = String(input?.value || currentAccessCode).trim().toUpperCase();
   if (!CODE_PATTERN.test(code)) {
@@ -161,6 +167,7 @@ async function loadProfile() {
   try {
     const response = await fetch(`/api/read2lead-progress?code=${encodeURIComponent(code)}`);
     const data = (await response.json()) as ProgressPayload;
+    if (revision !== identityRevision) return;
     if (!response.ok || !data.ok) {
       currentAccessCode = '';
       dashboardData = null;
@@ -179,6 +186,7 @@ async function loadProfile() {
       || selectedEntryRole;
     await renderView(role);
   } catch {
+    if (revision !== identityRevision) return;
     if (dashboardData && currentRole) {
       setVisibleState(currentRole);
       setGlobalError('Mất kết nối. Thử lại ↻');
@@ -192,7 +200,14 @@ async function loadProfile() {
   }
 }
 
-function handleChangeCode() {
+async function handleChangeCode() {
+  if (switchingStudent) return;
+  switchingStudent = true;
+  identityRevision++;
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-ho-so-change-code]');
+  buttons.forEach(button => { button.disabled = true; });
+  try {
+    await resetStudentSession(fetch, sessionStorage);
   if (currentAccessCode) clearRole(currentAccessCode);
   if (kidViewCleanup) { kidViewCleanup(); kidViewCleanup = null; }
   currentAccessCode = '';
@@ -201,13 +216,21 @@ function handleChangeCode() {
   updateUrl('', null);
   const input = qs<HTMLInputElement>('#ho-so-code-input');
   if (input) input.value = '';
+  qs('#ho-so-parent')?.replaceChildren();
+  qs('#ho-so-kid')?.replaceChildren();
   showEntry();
+  } catch {
+    setGlobalError('Chưa đổi được mã học sinh. Anh chị kiểm tra kết nối rồi thử lại nhé. Bài đã lưu vẫn còn.');
+  } finally {
+    switchingStudent = false;
+    buttons.forEach(button => { button.disabled = false; });
+  }
 }
 
 function bindDelegatedActions() {
   document.addEventListener('click', (event) => {
     const target = event.target as Element | null;
-    if (target?.closest('[data-ho-so-change-code]')) handleChangeCode();
+    if (target?.closest('[data-ho-so-change-code]')) void handleChangeCode();
     const switchButton = target?.closest<HTMLElement>('[data-ho-so-switch-role]');
     if (switchButton && dashboardData) void renderView(currentRole === 'kid' ? 'parent' : 'kid');
     if (target?.closest('[data-ho-so-print]')) window.print();
@@ -235,6 +258,7 @@ export function initHoSo() {
     input.value = initialCode;
     void loadProfile();
   } else {
+    // This tab's own signed-in child (cleared by "Change student code") reopens as before.
     const sessionCode = (() => {
       try { return sessionStorage.getItem('r2l_access_code'); } catch { return null; }
     })();

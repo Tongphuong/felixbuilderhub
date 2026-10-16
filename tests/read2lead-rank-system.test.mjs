@@ -52,7 +52,10 @@ test('child home puts reading before secondary rankings', () => {
   const source = readFileSync(join(ROOT, 'src/components/Read2LeadChildHome.astro'), 'utf8');
   assert.ok(source.indexOf('id="home-open"') < source.indexOf('id="home-rankings"'));
   assert.match(source, /Dành cho ba mẹ/);
-  assert.doesNotMatch(source, /<form|rank-medal|speak-up/);
+  assert.doesNotMatch(source, /rank-medal|speak-up/);
+  // The only form on the home is the single-field student-code entry (shown only with no session).
+  assert.deepEqual(source.match(/<form[^>]*>/g)?.map(tag => /id="home-entry-form"/.test(tag)), [true]);
+  assert.equal((source.match(/<input\b/g) || []).length, 1);
 });
 
 test('child home shows a rankings card with both boards, linking to the full leaderboard, right after the read button', () => {
