@@ -90,13 +90,16 @@ const MONSTER_SURFACES = {
   'kid home (read2lead-child-home.ts)': '../src/scripts/read2lead-child-home.ts',
   'companion page (read2lead-companion.ts)': '../src/scripts/read2lead-companion.ts',
   'leaderboard rows (read2lead-stars.ts)': '../src/scripts/read2lead-stars.ts',
+  'lesson header (lesson.astro)': '../src/pages/read2lead/lesson.astro',
 };
 // A line that both checks the v3 flag and touches the monster/avatar.
-const v3GatesMonster = (src) => src.split('\n').some((l) => /isV3Enabled\(\)|\bv3\s*&&/.test(l) && /monster|avatar|egg/i.test(l) && !/mountMonsterBuilder|showFirstHatchCeremony/.test(l)); // builder mount + hatch ceremony stay v3-gated by design
+const v3GatesMonster = (src) => src.split('\n').some((l) => /isV3Enabled\(\)|\bv3\s*&&|__r2lV3\.isEnabled/.test(l) && /monster|avatar|egg/i.test(l) && !/mountMonsterBuilder|showFirstHatchCeremony/.test(l)); // builder mount + hatch ceremony stay v3-gated by design
 
 test('KNOWN-BAD detector: the v3-gate detector flags the pre-fix Header line', () => {
   assert.equal(v3GatesMonster("if (isV3Enabled() && state.avatar?.monster) {"), true);
   assert.equal(v3GatesMonster("if (v3 && (state.avatar as { monster?: unknown } | undefined)?.monster && monsterSlot)"), true);
+  assert.equal(v3GatesMonster("if (window.__r2lV3.isEnabled?.() && read2LeadState.avatar?.monster) {"), true);
+  assert.equal(v3GatesMonster("if (read2LeadState.avatar?.monster) {"), false);
   assert.equal(v3GatesMonster("if (state.avatar?.monster) {"), false);
 });
 

@@ -8573,7 +8573,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     header.querySelector('[data-r2l-level]').textContent = read2LeadState.current_level || 'LV';
     if (window.__r2lV3?.applyHeaderRank) {
       window.__r2lV3.applyHeaderRank(read2LeadState, header);
-      if (window.__r2lV3.isEnabled?.() && read2LeadState.avatar?.monster) {
+      if (read2LeadState.avatar?.monster) {
         window.__r2lV3.applyHeaderMonster?.(read2LeadState, header);
       }
     } else {
