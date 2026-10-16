@@ -88,7 +88,7 @@ export function createStoryIllustrationReader({image,previous,next,counter,badge
     previous.hidden=next.hidden=pictures.length<2;
     previous.disabled=index===0;
     next.disabled=index>=pictures.length-1;
-    credit.textContent=pic?'Minh hoạ câu chuyện · Bản đang kiểm tra':'Minh hoạ đang được chuẩn bị';
+    credit.textContent=pic?'Minh hoạ câu chuyện':'Minh hoạ đang được chuẩn bị';
   };
   previous.onclick=()=>{if(index>0){index--;paint();}};
   next.onclick=()=>{if(index<pictures.length-1){index++;paint();}};

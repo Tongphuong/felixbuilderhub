@@ -47,7 +47,7 @@ function pictureReader(){
 const picturedLesson=()=>({id:'story-one',version:'1.2.3',illustrations:[{url:'/first.png',alt:'First original illustration'},{url:'/second.png',alt:'Second original illustration'}]});
 test('all original pictures can be reached and boundaries cannot wrap or overflow',()=>{
  const r=pictureReader();r.update(picturedLesson());
- assert.equal(r.credit.textContent,'Minh hoạ câu chuyện · Bản đang kiểm tra');
+ assert.equal(r.credit.textContent,'Minh hoạ câu chuyện');
  assert.equal(r.image.getAttribute('src'),'/first.png');assert.equal(r.previous.disabled,true);assert.equal(r.next.hidden,false);assert.equal(r.counter.textContent,'Tranh 1/2');
  r.previous.onclick();assert.equal(r.image.getAttribute('src'),'/first.png');
  r.next.onclick();assert.equal(r.image.getAttribute('src'),'/second.png');assert.equal(r.image.alt,'Second original illustration');assert.equal(r.next.disabled,true);assert.equal(r.counter.textContent,'Tranh 2/2');
