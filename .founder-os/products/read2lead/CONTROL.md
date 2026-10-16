@@ -2,7 +2,7 @@
 
 - Product: Read2Lead (SpeakUp now lives inside it)
 - Current goal: Phương 2026-10-16 — "get the site working as soon as possible"; full authority delegated to Elon on technical calls. Priorities: P1 rankings back + prominent; P2 chosen monster shown at every level; P3 student entry/switch; P4 Minny cost model for public opening.
-- Active workers: 1
+- Active workers: 0
 - Last updated: 2026-10-16
 - Operating model: Phương → Elon (plan/dispatch/review/integrate) → Mark/Steve build → Buffet reviews → Phương sees result before release. Codex retired 2026-10-16.
 - Start here: _ops/outbox/CLAUDE_TAKEOVER_MAP_2026-10-16.md (architecture, Worker deploy recipe, landmines). SQL in the Worker is authoritative; never restore KV. Worker releases: docs/R2L_WORKER_RELEASE.md (base = ~/work/r2l-releases/v99-20261016 now).
@@ -10,7 +10,7 @@
 ## Current task
 
 - Task ID: R2L-STUDENT-ENTRY (code box + clean student switch)
-- Status: active
+- Status: complete
 - Owner: Elon (Lead); builder Mark; reviewer Buffet
 - Lane: one background packet
 - Branch: claude-bg/r2l-student-entry from main afae68c (live = 24b9bfd + control-doc commit)
@@ -31,9 +31,21 @@
 - Operational reality: gateway paths run inside the Worker (SQL); every change ships as Worker candidate (scripts/r2l-release, base ~/work/r2l-releases/v99-20261016) + main push for Pages. Cookies are HttpOnly; the reader cookie name/attributes are set in account-unified-gateway.mjs.
 - Tradeoff watch: remembering a device's session keeps the shared-device risk that a sibling opens the app as the other child. SIGNAL: parent reports of the wrong child shown. QUERY: count of parent "Change student code" POSTs per week (gateway log once Workers Logs is on) vs support messages. THRESHOLD: any confirmed wrong-child report after release → add a "Not you? Đổi bạn" link on the kid home.
 - Runtime bindings/secrets: N/A — no new env.X.
-- Design self-verification: pending — rehearsal render 390/768/1280 of code form, error state, kid home, parent switch.
-- Founder handoff: pending.
+- Design self-verification: Elon rendered the exact v100 candidate in the Miniflare rehearsal at 390: code form, invalid-code kind error, lowercase+spaces code → Linh's home with monster + rankings card (_ops/.playwright-mcp/v100-0{1,2,3}-*-390.png). Then LIVE at 390 after release: bare /read2lead/ shows the form; typed wrong code shows the kind error (_ops/.playwright-mcp/live-v100-wrong-code-390.png). Parent switch could NOT be exercised in rehearsal (the harness runs the Worker + static dist, not Pages Functions middleware, so /api/read2lead-session-reset 404s there — the page correctly kept the child and showed an honest error); verified live instead: POST same-origin → 204 no-store with both `__Host-r2l_account` and `__Host-r2l_student_test` expired (HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0), cross-site → 403, GET → 405. Match. 768/1280 not rendered by Elon (Mark rendered 1280).
+- Founder handoff: plain-language report with live screenshots; no QA asked of Phương.
+- Verified commit: b885fb2eb2d4b722c7486193671d9afd06cfea04 (origin/main; Pages live — reset endpoint 204 observed; Worker read2lead-story-private-preview ab54ac40-ce98-4def-83c8-abe0239ce81c @100% with observability enabled; rollback Worker 2d22515c).
 - Founder-operated surface check: N/A — parent surface is used by parents, not the founder; covered by rehearsal.
+
+## Acceptance criteria reconciliation
+
+- PASS — E1 bare /read2lead/ and /ho-so/ with no session → 200 friendly Vietnamese code form (live curl 200 + `home-entry-form`; live screenshot).
+- PASS — E2 code trimmed/case-insensitive (rehearsal " r2l-synthetic-phone " → home); invalid code → kind retryable error, never a remembered child (live screenshot; gateway tests).
+- PASS — E3 tab-remembered child reopens home; rejected remembered child forgotten (tests; Buffet). Scope note: across NEW tabs the code form shows (HttpOnly cookie, no localStorage credential on shared devices) — Elon decision.
+- PASS — E4 parent switch clears both reader cookies server-side (live 204 + exact Set-Cookie expiry; cross-site 403; GET 405); stale responses dropped (ho-so.ts revision guard, Buffet).
+- PASS — E5 protected surfaces still refused (live: /read2lead/lesson 401, wrong-code URL 401; 16-variant gateway attack by Buffet).
+- PASS — E6 npm test 3743/3743, build PASS, new tests fail on old code (gateway 5/36, switch 10/14).
+- SKIPPED — parent switch in rehearsal (harness lacks Pages middleware) — covered live.
+- Follow-up — a raw URL with a wrong `?code=` still shows the host's bare "Student access required" (pre-existing; typed codes never hit it).
 
 ## Previous task — R2L-TAKEOVER-P1P2 (complete, live 2026-10-16)
 
