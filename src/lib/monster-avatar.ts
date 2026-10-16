@@ -5,6 +5,7 @@ import {
   type MonsterColor,
 } from './monster-manifest';
 import { getPartRarity } from './avatar-rarity';
+import { needsFallbackMonster } from './monster-fallback';
 import {
   armDualAnchor,
   armSingleAnchors,
@@ -621,10 +622,11 @@ export function renderMonster(
 
   renderDecorationLayer(container, 'frame', config.frame);
 
-  const useFallback = !hasManifestParts()
-    || CORE_MONSTER_SLOTS.some(
-      (slot) => config[slot] === 'default' || !partFile(slot, config[slot]),
-    );
+  const useFallback = needsFallbackMonster(
+    config as Record<string, string | undefined>,
+    (slot, id) => !!partFile(slot as MonsterSlot, id),
+    hasManifestParts(),
+  );
 
   if (useFallback) {
     renderFallbackMonster(stack, config);
