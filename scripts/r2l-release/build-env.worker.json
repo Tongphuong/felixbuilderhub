@@ -1,0 +1,13 @@
+{
+  "_note": "PUBLIC_* env used to build the Worker's pages. EMPTY on purpose: the live Worker pages (v98) were built with NO PUBLIC_* vars (verified 2026-10-16: flags chunk is ?v3=1-gated, data-r2l-w1-ssr=0, data-r2l-v21-ssr=0, no Clarity/Sentry ids). Pages production has PUBLIC_R2L_V3=1 and PUBLIC_R2L_W1=1, so the two surfaces differ on purpose. Turning v3 on for kids is a separate, deliberately tested change: edit this file only with Phuong's sign-off.",
+  "_unset": [
+    "PUBLIC_R2L_V3",
+    "PUBLIC_R2L_W1",
+    "PUBLIC_R2L_V21",
+    "PUBLIC_R2L_W7",
+    "PUBLIC_R2L_PROFILE",
+    "PUBLIC_CLARITY_ID",
+    "PUBLIC_SENTRY_LOADER_SRC",
+    "PUBLIC_ENV"
+  ]
+}
