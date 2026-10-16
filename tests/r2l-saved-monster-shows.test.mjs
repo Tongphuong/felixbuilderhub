@@ -81,3 +81,28 @@ test('saving a monster at L0 keeps chosen parts and does not touch any other pro
   for (const slot of CORE) assert.equal(again.avatar.monster[slot], chosen[slot]);
   assert.equal(typeof normalizeAvatarMonster, 'function');
 });
+
+// ---- Per-surface known-bad: no monster render path may depend on the v3 flag ----
+// The live Worker's assets are built WITHOUT PUBLIC_R2L_V3, so v3 is off for every kid.
+const MONSTER_SURFACES = {
+  'shared header (Header.astro)': '../src/components/Header.astro',
+  'hồ sơ hero (ho-so-kid-view.ts)': '../src/pages/ho-so/ho-so-kid-view.ts',
+  'kid home (read2lead-child-home.ts)': '../src/scripts/read2lead-child-home.ts',
+  'companion page (read2lead-companion.ts)': '../src/scripts/read2lead-companion.ts',
+  'leaderboard rows (read2lead-stars.ts)': '../src/scripts/read2lead-stars.ts',
+};
+// A line that both checks the v3 flag and touches the monster/avatar.
+const v3GatesMonster = (src) => src.split('\n').some((l) => /isV3Enabled\(\)|\bv3\s*&&/.test(l) && /monster|avatar|egg/i.test(l) && !/mountMonsterBuilder|showFirstHatchCeremony/.test(l)); // builder mount + hatch ceremony stay v3-gated by design
+
+test('KNOWN-BAD detector: the v3-gate detector flags the pre-fix Header line', () => {
+  assert.equal(v3GatesMonster("if (isV3Enabled() && state.avatar?.monster) {"), true);
+  assert.equal(v3GatesMonster("if (v3 && (state.avatar as { monster?: unknown } | undefined)?.monster && monsterSlot)"), true);
+  assert.equal(v3GatesMonster("if (state.avatar?.monster) {"), false);
+});
+
+for (const [name, path] of Object.entries(MONSTER_SURFACES)) {
+  test(`monster surface is not v3-gated: ${name}`, () => {
+    const src = readFileSync(new URL(path, import.meta.url), 'utf8');
+    assert.equal(v3GatesMonster(src), false, `${name} gates the monster on the v3 flag`);
+  });
+}

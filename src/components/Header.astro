@@ -135,7 +135,6 @@ const progressHref = '/ho-so';
   import { createProgressRefresh } from '../lib/read2lead-progress-refresh.mjs';
   import { applyV3HeaderRank } from '../lib/rank-header';
   import { applyHeaderMonsterAvatar } from '../lib/monster-avatar';
-  import { isV3Enabled } from '../config/flags';
 
   const toggle = document.getElementById('mobile-nav-toggle');
   const nav = document.getElementById('mobile-nav');
@@ -185,7 +184,7 @@ const progressHref = '/ho-so';
           };
           setText('[data-r2l-level]', state.current_level || 'LV');
           applyV3HeaderRank(state, stateHeader);
-          if (isV3Enabled() && state.avatar?.monster) {
+          if (state.avatar?.monster) {
             applyHeaderMonsterAvatar(state, stateHeader);
           }
           setText('[data-r2l-xp-label]', `⭐ ${state.xp_in_level ?? 0}/${state.xp_to_next_level ?? 60} XP`);
