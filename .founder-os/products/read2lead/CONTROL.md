@@ -9,6 +9,65 @@
 
 ## Current task
 
+- Task ID: R2L-MINNY-COST (Minny voice for 100 kids under $20/month — packets A+B)
+- Status: complete
+- Owner: Elon (Lead); builder Mark; reviewer Buffet
+- Lane: one background packet (A then B, same worktree — they share student-voice.mjs)
+- Branch: claude-bg/r2l-minny-cost from main 4c9f183 (code = live b885fb2)
+- Starting commit: 4c9f183
+- Spec: _ops/specs/SPEC_R2L_MINNY_VOICE_COST.md (Phương approved plan + decisions 2026-10-16: fixed reply lines; no kid limits, $15/month safety stop; no paid Azure)
+- Files owned: functions/lib/read2lead/story-voice.mjs; functions/lib/read2lead/student-voice.mjs; functions/lib/read2lead/story-budget.mjs; scripts/lib/read2lead-story-budget-store.mjs; scripts/r2l-voice-warmup.mjs (new); the story-voice client/result UI file(s) only for the B4 pause message and B6 pronunciation-unavailable note (Mark names the exact file in his report); scripts/r2l-release/* only if the student voice config shape changes (it does: second Mark packet on claude-bg/r2l-release-voice-grant adds a controlled --student-voice-grant option to build_candidate.py + tests/test_r2l_release_candidate.py + docs/R2L_WORKER_RELEASE.md); tests/read2lead-story-turn.test.mjs; tests/read2lead-story-authored-feedback.test.mjs (new); existing story-budget / student-voice tests.
+- Acceptance criteria:
+  - M1 student voice uses getOrSynthesize (saved audio in account SQL); a second child on the same story causes zero new synthesis for question prompts and authored lines (test with a counting fake AI).
+  - M2 interview answer turn: all criteria matched → fixed praise, NO reply/safety LLM call; confirmed-but-wrong → "Good try! " + authored correct answer, replySupport model, no LLM call; uncertain → fixed clarification; story_question/help → existing AI + safety path unchanged (tests for each, incl. known-bad: praise never spoken when any criterion is unmatched).
+  - M3 monthly pool $15 (15_000_000 µUSD), debit per claimed action per spec B2, resets each UTC month, transactional in SQL; no per-child/per-day mission limit (test: one child can start many missions while the pool has money).
+  - M4 pool exhausted → voice refused, kind Vietnamese pause message, reading + tap answers still work (test + rehearsal screenshot 390).
+  - M5 Azure free seconds exhausted → retell screen says pronunciation unavailable in Vietnamese; content score still saved (test).
+  - M6 warm-up script dry-run lists every fixed line for Sky with char count; Elon reviews all lines for correctness before release.
+  - M7 npm test + build green; student voice no longer expires 2026-10-22.
+- Stop condition: committed claude-bg branch, tests green, completion report. No push/merge/deploy/production or paid calls.
+- Cost ceiling: Claude team (Max plan, not metered); Workers AI test calls only inside the free 10k neurons/day — USD 0 metered.
+- Reuse survey: (1) existing getOrSynthesize + account-SQL TTS cache (_minny-tts.js, account-voice-metadata.mjs) — ADOPTED; (2) Workers AI MeloTTS — REJECTED: robot-quality voice, cached Aura-2 is ~free anyway; (3) Workers AI Aura-1 — REJECTED: still pays per character, the cache is free; (4) Cloudflare AI Gateway response caching — REJECTED: duplicates the in-repo per-text cache and adds a hop; (5) existing monthly budget scope in story-budget.mjs — REUSED/extended.
+- State inventory: lesson interview/non-interview × judgment correct/wrong/uncertain/story_question/help × audio cached/uncached × pool has money/exhausted/new month × Azure seconds left/exhausted/failing.
+- Operational reality: student voice runs in the Worker (SQL); ships as a Worker candidate via scripts/r2l-release (base ~/work/r2l-releases/v100-20261016) + main push for Pages. Release needs Phương's "deploy to production" in-session. Must be live before 2026-10-22 (batch grant expiry).
+- Tradeoff watch: SIGNAL monthly Workers AI paid spend; QUERY aiInferenceAdaptiveGroups sum(totalNeurons) this month minus 10k/day free × $0.011/1k; THRESHOLD $10 → alert Phương, $15 → in-code stop. Second: SIGNAL wrong/confusing authored answer line; QUERY warm-up dry-run review of all lines per released story; THRESHOLD any wrong line blocks that story's release.
+- Runtime bindings/secrets: no new env.X. R2L_STUDENT_VOICE_CONFIG value changed: the batch grant became the pool, approvalSha256 c95c7ad2…, approval record _ops/approvals/R2L_MINNY_POOL_APPROVAL_2026-10-16.json. The Worker has a single (production) environment with no Preview counterpart. Confirmed in production in two ways:
+  - the wrangler upload of version 97f8638c listed the var;
+  - the candidate proof's loaderCheck ran the shipped loader against the shipped manifest + var → enabled, pool budget.
+  Pages functions do not read this var.
+- Design self-verification: Buffet (tester) rendered the exact v101b candidate (a52cbaa) in the synthetic rehearsal harness at 390 and 768. Screens covered:
+  - mid-interview praise reply ("Great job!");
+  - retell result with the Vietnamese pronunciation-unavailable note;
+  - pool-rest screen: new text, mic hidden, no retry buttons, one "Về đọc sách" button 56px high that navigates to the reading home.
+  Elon viewed the 390 screenshots: _ops scratch rehearsal-v101/pool-02-feedback-q3.png, pool2-07-retell-result-details.png, v101b-answer-390-scrolled.png. Verdict: match to the spec wording and states. There is no Claude Design mock for these states: they are text and states inside the existing approved story reader, which is otherwise unchanged.
+- Founder handoff: plain-language report to Phương before release (what changes for kids, rehearsal numbers, rollback). He approved with "deploy to production" 2026-10-16.
+  Open asks:
+  - the 3 pronunciation-brainstorm decisions;
+  - the Testbot link for a live logged-in voice check;
+  - the Render API key.
+- Verified commit: a52cbaa0f40c8a528f9ea34b7b9feb8a6abbf93b (origin/main; Pages production 4e0878fc @ a52cbaa; Worker read2lead-story-private-preview version 97f8638c-82ea-45a3-90ee-2d7d4c9a026d @100%, candidate ~/work/r2l-releases/v101b-20261016; rollback Worker ab54ac40).
+- Founder-operated surface check: N/A — child-facing voice; no founder-operated surface.
+
+## Acceptance criteria reconciliation
+
+- PASS — M1 saved audio: unit test (counting fake AI). Rehearsal of the exact candidate through the real Worker + DO SQL: aura calls 16 after run 1, still 16 after run 2; run 2's prompts debited 0.
+- PASS — M2 authored feedback: tests for praise, wrong answer (replySupport model), uncertain, story_question/help → AI+safety, plus a known-bad (never praise when any criterion is unmatched). Buffet's old-vs-new cross-product run shows only the intended differences. Rehearsal: 24/24 replies from the fixed praise set, 0 llama calls.
+  - Limit: the harness fake grader is always correct, so the wrong-answer line was not exercised end to end; it is covered by unit tests.
+- PASS — M3 $15 pool:
+  - per-action debits match spec B2 (rehearsal: 61,000 µUSD first mission with cold cache, 13,000 µUSD warm);
+  - UTC monthly reset test;
+  - BEGIN IMMEDIATE transaction;
+  - no per-child limit test;
+  - a new mission is not offered below 50,000 µUSD remaining (boundary 111,000/110,999 verified).
+- PASS (amended) — M4 pool exhausted: voice is refused with HTTP 503 voice_pool_exhausted. "Tap answers still work" was inaccurate: the interview has no tap path. Superseded by Buffet's finding and the a52cbaa fix: honest text, plus one "Về đọc sách" button with no retry loop; new voice stories are not offered, so children get ordinary books. Test + rehearsal screenshots at 390/768.
+- PASS — M5 pronunciation-unavailable note: test + rehearsal screenshot.
+- PASS — M6 warm-up dry run of Sky: 29 lines, 1,151 chars. Elon reviewed all 12 answer lines; all correct. Q10's wording is clunky (a story content fix, not blocking).
+- PASS — M7 npm test 3763/3763, build PASS, release-tool tests 27/27. The pool works with the clock at 2026-10-23 (rehearsal). The old batch expiry is no longer a dependency.
+- SKIPPED — a live logged-in voice mission on production: no Testbot credential (asked of Phương). Production behaviour of the cache and pool is proven only on the exact candidate in rehearsal. The live probe and a per-mission neuron reading follow once the Testbot link is available.
+- Follow-up (B5) — the $10 alert is Cloudflare's own default budget alert (billing_budget_alert, $10, email, enabled; verified 2026-10-16). R4 spend check added to _ops/scripts/mcp-monitor/daily-health.prompt.md.
+
+## Previous task — R2L-STUDENT-ENTRY (complete, live 2026-10-16)
+
 - Task ID: R2L-STUDENT-ENTRY (code box + clean student switch)
 - Status: complete
 - Owner: Elon (Lead); builder Mark; reviewer Buffet
@@ -36,7 +95,7 @@
 - Verified commit: b885fb2eb2d4b722c7486193671d9afd06cfea04 (origin/main; Pages live — reset endpoint 204 observed; Worker read2lead-story-private-preview ab54ac40-ce98-4def-83c8-abe0239ce81c @100% with observability enabled; rollback Worker 2d22515c).
 - Founder-operated surface check: N/A — parent surface is used by parents, not the founder; covered by rehearsal.
 
-## Acceptance criteria reconciliation
+## Previous acceptance reconciliation — R2L-STUDENT-ENTRY
 
 - PASS — E1 bare /read2lead/ and /ho-so/ with no session → 200 friendly Vietnamese code form (live curl 200 + `home-entry-form`; live screenshot).
 - PASS — E2 code trimmed/case-insensitive (rehearsal " r2l-synthetic-phone " → home); invalid code → kind retryable error, never a remembered child (live screenshot; gateway tests).
