@@ -21,6 +21,10 @@ export const STORY_POOL_DEBIT_MICRO_USD = Object.freeze({
   aiReplyTurn: 8_000,       // story_question/help/non-interview: grader + reply + safety
   retell: 1_000,            // picture retell (grader only, no reply/TTS)
 });
+// A new voice story is offered only while the pool has at least this much left
+// this UTC month (SPEC_R2L_MINNY_VOICE_COST Packet B, Elon review: the interview
+// has no tap path, so an empty pool must not strand a child).
+export const STORY_POOL_MIN_REMAINING_MICRO_USD = 50_000;
 // Marks an audio result whose synthesis was freshly generated (not replayed
 // from saved audio). Symbol keys never serialize, so it cannot leak to clients.
 export const STORY_SYNTHESIS_FRESH = Symbol.for('r2l.story.synthesis.fresh');

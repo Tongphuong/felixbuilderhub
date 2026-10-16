@@ -176,7 +176,7 @@ test('failure during final payment rolls back question progress and reward; retr
 
 test('interview wrong answer is answered with the authored stored answer, not a model reply (Packet A2)',async()=>{
   const l=interview().lesson,task=storyRubric(l).tasks[0],calls=[];
-  const expected='Good try! '+l.questions[0].accepted_meanings[0];
+  const expected='Good try! The answer is: '+l.questions[0].accepted_meanings[0];
   const provider={
     transcribe:async()=>{calls.push('speech-to-text');return 'A clearly wrong answer.';},
     assess:async()=>{calls.push('check-answer');return {intent:'answer',reliability:'confirmed',replySupport:'none',criteria:[{id:'meaning',met:false,quote:''}]};},

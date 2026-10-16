@@ -7,7 +7,7 @@ import {STORY_PRAISE_LINES,storyWrongAnswerLine} from '../functions/lib/read2lea
 import {storyRubric,storyDiscussionTasks} from '../functions/lib/read2lead/story-rubric.mjs';
 import {StorySqlStore} from '../functions/lib/read2lead/story-store.mjs';
 import {PrivateStoryBudgetStore} from '../scripts/lib/read2lead-story-budget-store.mjs';
-import {STORY_POOL_DEBIT_MICRO_USD as DEBIT,STORY_POOL_MONTHLY_MICRO_USD} from '../functions/lib/read2lead/story-budget.mjs';
+import {STORY_POOL_DEBIT_MICRO_USD as DEBIT,STORY_POOL_MONTHLY_MICRO_USD,STORY_POOL_MIN_REMAINING_MICRO_USD} from '../functions/lib/read2lead/story-budget.mjs';
 import {createStudentSynthesizer,studentVoiceConfiguration,STUDENT_POOL_ID} from '../functions/lib/read2lead/student-voice.mjs';
 import {createPicturePronunciation} from '../functions/lib/read2lead/picture-retell-voice.mjs';
 import {PRONUNCIATION_UNAVAILABLE_VI,VOICE_POOL_REST_VI,pronunciationNote} from '../src/lib/read2lead-minny-notes.mjs';
@@ -72,7 +72,7 @@ test('A2 wrong answer: stored answer line, replySupport model, no model reply',a
   const t=turn(interviewPackage(),judgment());
   const r=await t.run();
   assert.deepEqual(t.calls,['stt','assess','tts']);
-  assert.equal(r.reply,'Good try! '+t.lesson.questions[0].accepted_meanings[0]);
+  assert.equal(r.reply,'Good try! The answer is: '+t.lesson.questions[0].accepted_meanings[0]);
   assert.equal(r.judgment.replySupport,'model');assert.deepEqual(r.judgment.matchedCriteria,[]);
   assert.equal(r.assessment,'server_validated');
 });
@@ -80,7 +80,7 @@ test('A2 wrong answer: stored answer line, replySupport model, no model reply',a
 test('A2 stored answer falls back to the correct option, and to the AI path when nothing safe exists',()=>{
   const l=interviewPackage().lesson,task={id:l.questions[0].id};
   l.questions[0].accepted_meanings=['x '.repeat(200)];// too long to speak
-  assert.equal(storyWrongAnswerLine(l,task),'Good try! '+l.questions[0].options_en[1]);
+  assert.equal(storyWrongAnswerLine(l,task),'Good try! The answer is: '+l.questions[0].options_en[1]);
   l.questions[0].options_en[1]='See https://example.com now';
   assert.equal(storyWrongAnswerLine(l,task),null);
   assert.equal(storyWrongAnswerLine(l,{id:'missing'}),null);
@@ -237,7 +237,7 @@ test('B pool exhausted: voice refused cleanly with no provider call, reading is 
   assert.match(fs.readFileSync(new URL('../functions/api/read2lead-story-turn.js',import.meta.url),'utf8'),/'voice_pool_exhausted'/);
 });
 
-test('B student config accepts the standing pool (no expiry), keeps the cap, and a resting pool does not hide stories',async t=>{
+test('B student config accepts the standing pool (no expiry), keeps the cap, and a nearly-empty pool stops offering new voice stories',async t=>{
   const f=poolFixture(t),pkg=base(),approvalSha256='a'.repeat(64),packageSha256='b'.repeat(64);
   const catalogue=await verifiedLessonCatalogue({voiceVerificationLessons:[{id:pkg.lesson.id,version:pkg.lesson.version,packageSha256:await publisherDigest(pkg)}]});
   const budget={scope:'pool',poolId:STUDENT_POOL_ID,approvedVoiceMicroUsd:STORY_POOL_MONTHLY_MICRO_USD,maxTurns:32};
@@ -260,12 +260,17 @@ test('B student config accepts the standing pool (no expiry), keeps the cap, and
   for(const bad of [{...budget,approvedVoiceMicroUsd:STORY_POOL_MONTHLY_MICRO_USD+1},{...budget,poolId:'other'},{...budget,maxTurns:31},{...budget,expiresAt:'2026-10-22T00:00:00.000Z'}]){
     assert.equal((await configure({budget:bad},bad)).config,null);
   }
-  // exhaust the pool: stories remain assignable
+  // No tap path in the interview: a new voice story is offered only while >= 50_000 remains this month.
+  assert.equal(STORY_POOL_MIN_REMAINING_MICRO_USD,50_000);
+  const small={...budget,approvedVoiceMicroUsd:100_000};
+  const low=await configure({budget:small},small);assert.equal(low.status.enabled,true);
+  assert.equal(low.canAssign(pkg.lesson),true,'plenty left');
   const s=f.store.open('kid',pkg.lesson).sessionId;
-  const small=new PrivateStoryBudgetStore(f.store,{...budget,approvedVoiceMicroUsd:1000},f.now);
-  small.claim(s,'burn');small.finish(s,'burn','failed_or_unknown');
-  assert.equal(small.poolStatus().exhausted,true);
-  assert.equal(ok.canAssign(pkg.lesson),true);
+  for(let i=0;i<5;i++){low.config.budget.claim(s,'burn'+i);low.config.budget.finish(s,'burn'+i,'failed_or_unknown');}// 55_000 used, 45_000 left
+  assert.equal(low.canAssign(pkg.lesson),false,'under 50_000 left: no new voice story offered');
+  assert.equal(ok.canAssign(pkg.lesson),true,'the real $15 pool is untouched by this small one');
+  f.clock('2026-11-01T00:00:00Z');
+  assert.equal(low.canAssign(pkg.lesson),true,'next UTC month the pool is whole again');
 });
 
 test('B6 Azure unavailable: retell says so in Vietnamese, content score still saved',async()=>{

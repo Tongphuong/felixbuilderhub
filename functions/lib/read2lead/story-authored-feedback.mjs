@@ -14,7 +14,7 @@ export const STORY_PRAISE_LINES = Object.freeze([
   'You got it!',
   "That's correct!",
 ]);
-export const STORY_TRY_PREFIX = 'Good try! ';
+export const STORY_TRY_PREFIX = 'Good try! The answer is: ';
 const MAX_REPLY = 220;
 
 /** Deterministic: the same question always gets the same line. */

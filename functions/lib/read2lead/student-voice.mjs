@@ -1,5 +1,5 @@
 import {PrivateStoryBudgetStore} from '../../../scripts/lib/read2lead-story-budget-store.mjs';
-import {validateStoryBudget,STORY_POOL_MONTHLY_MICRO_USD,STORY_SYNTHESIS_FRESH} from './story-budget.mjs';
+import {validateStoryBudget,STORY_POOL_MONTHLY_MICRO_USD,STORY_POOL_MIN_REMAINING_MICRO_USD,STORY_SYNTHESIS_FRESH} from './story-budget.mjs';
 import {createMinnyStoryProvider} from './story-voice.mjs';
 import {verifiedLessonCatalogue} from './private-voice.mjs';
 import {publisherDigest} from './self-learn/publisher-contract.mjs';
@@ -88,8 +88,8 @@ export async function studentVoiceConfiguration({store,env,packageSha256,lessonC
   }};
   const canAssign=lesson=>{
     if(!alive()||!entryFor(lesson))return false;
-    // A resting pool never hides a story: reading and tap answers keep working.
-    if(pool)return true;
+    // No tap path in the interview: offer a new voice story only while money remains.
+    if(pool){const st=budget.poolStatus();return st.capMicroUsd-st.usedMicroUsd>=STORY_POOL_MIN_REMAINING_MICRO_USD;}
     try{
       const scope='batch:'+budget.config.batchId;
       const prior=store.db.prepare('SELECT config FROM story_voice_reservations WHERE month=? LIMIT 1').get(scope);
