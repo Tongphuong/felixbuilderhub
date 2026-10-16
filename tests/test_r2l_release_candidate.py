@@ -39,7 +39,7 @@ PAGE_NEW = '<html><head><script src="/_astro/app.NEW.js"></script><script>window
 class Fixture:
     """base candidate + repo (git, with dist/) + build-env + base wrangler config, all in a temp dir."""
 
-    def __init__(self):
+    def __init__(self, with_voice=False):
         self.tmp = Path(tempfile.mkdtemp(prefix="r2l-rel-test-"))
         t = self.tmp
         self.base = t / "base"
@@ -78,6 +78,8 @@ class Fixture:
         w(r / "functions/lib/x.mjs", "export const x=1;")
         for d in ("schemas", "scripts", "src"):
             w(r / d / "keep.txt", d)
+        if with_voice:
+            self._add_voice(w)
         self.git("init", "-q")
         self.git("add", "-A")
         self.git("-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "init")
@@ -90,6 +92,54 @@ class Fixture:
         # dist must be newer than the commit
         future = Path(r / "dist")
         os.utime(future, (future.stat().st_atime, future.stat().st_mtime + 5))
+
+    def _add_voice(self, w):
+        """Give base + repo the REAL student-voice loader (and its import closure), a batch-grant manifest and a
+        matching R2L_STUDENT_VOICE_CONFIG var, so the real JS loader can be run against the candidate."""
+        sys.path.insert(0, str(TOOL.parent))
+        import build_candidate as bc  # noqa: E402
+        real = Path(__file__).resolve().parent.parent
+        files, unresolved = bc.import_closure(real, "functions/lib/read2lead/student-voice.mjs")
+        assert not unresolved, unresolved
+        for rel in sorted(files):
+            data = (real / rel).read_bytes()
+            for root in (self.base / "source", self.repo):
+                w(root / rel, data)
+        lessons = [{"id": "story-1", "version": "1.2.9", "packageSha256": "e" * 64}]
+        cat = subprocess.run(["node", "--input-type=module", "-e",
+            "import {verifiedLessonCatalogue as v} from %s;const c=await v({voiceVerificationLessons:%s});console.log(c.sha256)" % (
+                json.dumps((real / "functions/lib/read2lead/private-voice.mjs").as_uri()), json.dumps(lessons))],
+            capture_output=True, text=True, check=True).stdout.strip()
+        self.source_pkg_sha = "b" * 64
+        self.old_sha = "679110ea3d967c81b563717ea6f46cbf21ee5414dbda1b31681cc0691be113b2"
+        self.old_budget = {"scope": "batch", "batchId": "r2l-student-launch-" + self.old_sha[:32], "expiresAt": "2026-10-22T14:38:23.828Z",
+                           "approvedVoiceMicroUsd": 5000000, "worstCaseTurnMicroUsd": 70000, "maxTurns": 32}
+        mp = self.base / "assets/__private/package.json"
+        m = json.loads(mp.read_text())
+        m["sourcePackageSha256"] = self.source_pkg_sha
+        m["voiceVerificationLessons"] = lessons
+        m["studentRelease"] = {"format": "read2lead-student-release-v1", "records": [], "voiceVerificationLessons": lessons,
+                               "approvedGrant": {"approvalSha256": self.old_sha, "budget": dict(self.old_budget)}}
+        mp.write_text(json.dumps(m, separators=(",", ":")))
+        self.old_pricing = "dda818671ac0d87a5a00d697c552cff91fc6718b1527a786b26c4f1facb6af09"
+        var = {"format": "read2lead-student-voice-v1", "audience": "enrolled-students", "mode": "assessed",
+               "providerRoute": "cloudflare-only", "assessorModel": "gpt-oss-120b", "packageSha256": self.source_pkg_sha,
+               "processingApproved": True, "spendingApproved": True, "approvalSha256": self.old_sha,
+               "budget": dict(self.old_budget), "pricingEvidenceSha256": self.old_pricing,
+               "verification": {"provider": True, "assessor": True, "evidenceSha256": "d" * 64, "catalogueSha256": cat}}
+        self.var_before = json.dumps(var, separators=(",", ":"))
+        c = json.loads(self.base_config.read_text())
+        c["vars"]["R2L_STUDENT_VOICE_CONFIG"] = self.var_before
+        self.base_config.write_text(json.dumps(c))
+
+    def write_approval(self, **over):
+        ap = {"format": "read2lead-voice-approval-v1", "id": "x",
+              "budget": {"scope": "pool", "poolId": "r2l-student-pool", "approvedVoiceMicroUsd": 15000000, "maxTurns": 32},
+              "pricingEvidenceSha256": "f" * 64}
+        ap.update(over)
+        p = self.tmp / "approval.json"
+        p.write_text(json.dumps(ap, indent=2))
+        return p
 
     def git(self, *args):
         subprocess.run(["git", "-C", str(self.repo), *args], check=True, capture_output=True)
@@ -302,6 +352,142 @@ class ReleaseCandidateTests(unittest.TestCase):
         r = self.f.run()
         self.assertNotEqual(r.returncode, 0)
         self.assertIn("older than the repo HEAD", r.stderr)
+
+
+class StudentVoiceGrantTests(unittest.TestCase):
+    """--student-voice-grant: the one narrow exception to 'the manifest never changes'."""
+
+    def setUp(self):
+        self.f = Fixture(with_voice=True)
+        self.addCleanup(self.f.cleanup)
+
+    def load(self, root):
+        m = json.loads((root / "assets/__private/package.json").read_text())
+        c = json.loads((root / "wrangler.release.json").read_text())
+        return m, c, json.loads(c["vars"]["R2L_STUDENT_VOICE_CONFIG"])
+
+    def refused(self, approval, needle):
+        before = tree_hashes(self.f.base)
+        r = self.f.run(student_voice_grant=approval)
+        self.assertNotEqual(r.returncode, 0, "must be refused")
+        self.assertIn(needle, r.stderr)
+        self.assertFalse(self.f.out.exists(), "refused run must not leave a candidate")
+        self.assertEqual(tree_hashes(self.f.base), before)
+
+    def test_without_flag_nothing_about_the_grant_changes(self):
+        r = self.f.run()
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        m, cfg, var = self.load(self.f.out)
+        base_m = json.loads((self.f.base / "assets/__private/package.json").read_text())
+        self.assertEqual(m["studentRelease"], base_m["studentRelease"])
+        self.assertEqual(cfg["vars"]["R2L_STUDENT_VOICE_CONFIG"], self.f.var_before)
+        self.assertNotIn("studentVoiceGrant", json.loads((self.f.out / "candidate-proof.json").read_text()))
+
+    def test_with_flag_only_the_grant_changes(self):
+        ap = self.f.write_approval()
+        r = self.f.run(student_voice_grant=ap)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        approval_sha = sha(ap)
+        pool = {"scope": "pool", "poolId": "r2l-student-pool", "approvedVoiceMicroUsd": 15000000, "maxTurns": 32}
+        m, cfg, var = self.load(self.f.out)
+        base_m = json.loads((self.f.base / "assets/__private/package.json").read_text())
+        # manifest: ONLY studentRelease.approvedGrant (plus the usual publicAssets/scriptHashes) differs
+        self.assertEqual(m["studentRelease"]["approvedGrant"], {"approvalSha256": approval_sha, "budget": pool})
+        self.assertEqual(list(m["studentRelease"]["approvedGrant"]["budget"]), ["scope", "poolId", "approvedVoiceMicroUsd", "maxTurns"])
+        for k in base_m:
+            if k in ("publicAssets", "scriptHashes", "studentRelease"):
+                continue
+            self.assertEqual(m[k], base_m[k], k)
+        self.assertEqual({k: v for k, v in m["studentRelease"].items() if k != "approvedGrant"},
+                         {k: v for k, v in base_m["studentRelease"].items() if k != "approvedGrant"})
+        # var: budget, approvalSha256, pricingEvidenceSha256 changed; every other field identical, same key order
+        old = json.loads(self.f.var_before)
+        self.assertEqual(list(var), list(old))
+        for k in old:
+            if k in ("budget", "approvalSha256", "pricingEvidenceSha256"):
+                continue
+            self.assertEqual(var[k], old[k], k)
+        self.assertEqual(var["budget"], pool)
+        self.assertEqual(var["approvalSha256"], approval_sha)
+        self.assertEqual(var["pricingEvidenceSha256"], "f" * 64)
+        self.assertEqual(cfg["vars"]["R2L_PREVIEW_PACKAGE_SHA256"], sha(self.f.out / "assets/__private/package.json"))
+        self.assertEqual(cfg["vars"]["KEEP"], "me")
+        # proof
+        proof = json.loads((self.f.out / "candidate-proof.json").read_text())
+        g = proof["studentVoiceGrant"]
+        self.assertEqual((g["approvalSha256"], g["budget"], g["previousApprovalSha256"]), (approval_sha, pool, self.f.old_sha))
+        self.assertEqual(g["approvalFile"], str(ap.resolve()))
+        self.assertTrue(g["loaderCheck"]["enabled"])
+        # the real JS loader says enabled with the pool, long after the old batch expiry (2026-10-22)
+        c = subprocess.run(["node", str(TOOL.parent / "check_student_grant.mjs"), "--source-root", str(self.f.out / "source"),
+                            "--manifest", str(self.f.out / "assets/__private/package.json"),
+                            "--config", str(self.f.out / "wrangler.release.json")], capture_output=True, text=True)
+        res = json.loads(c.stdout)
+        self.assertTrue(res["ok"], c.stdout)
+        self.assertEqual({k: res["budget"][k] for k in pool}, pool)
+        # base untouched
+        self.assertEqual(json.loads(self.f.base_config.read_text())["vars"]["R2L_STUDENT_VOICE_CONFIG"], self.f.var_before)
+
+    def test_loader_check_bites_when_var_and_grant_disagree(self):
+        # Bite for the end-to-end check itself: a var left on the OLD approval (grant swapped, var not) must fail.
+        r = self.f.run(student_voice_grant=self.f.write_approval())
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        mp = self.f.out / "assets/__private/package.json"
+        m = json.loads(mp.read_text())
+        m["studentRelease"]["approvedGrant"]["approvalSha256"] = "9" * 64  # grant no longer matches the var
+        tmp_m = self.f.tmp / "m.json"
+        tmp_m.write_text(json.dumps(m))
+        c = subprocess.run(["node", str(TOOL.parent / "check_student_grant.mjs"), "--source-root", str(self.f.out / "source"),
+                            "--manifest", str(tmp_m), "--config", str(self.f.out / "wrangler.release.json")], capture_output=True, text=True)
+        self.assertNotEqual(c.returncode, 0)
+        self.assertIn("grant_mismatch", c.stdout)
+
+    def test_refuses_batch_budget(self):
+        ap = self.f.write_approval(budget=dict(self.f.old_budget))
+        self.refused(ap, "approval budget must be exactly the pool shape")
+
+    def test_refuses_batch_scope_with_pool_keys(self):
+        ap = self.f.write_approval(budget={"scope": "batch", "poolId": "r2l-student-pool", "approvedVoiceMicroUsd": 5000000, "maxTurns": 32})
+        self.refused(ap, "scope must be 'pool'")
+
+    def test_refuses_extra_budget_key(self):
+        ap = self.f.write_approval(budget={"scope": "pool", "poolId": "r2l-student-pool", "approvedVoiceMicroUsd": 15000000,
+                                           "maxTurns": 32, "expiresAt": "2027-01-01T00:00:00.000Z"})
+        self.refused(ap, "approval budget must be exactly the pool shape")
+
+    def test_refuses_cap_over_fifteen_dollars(self):
+        ap = self.f.write_approval(budget={"scope": "pool", "poolId": "r2l-student-pool", "approvedVoiceMicroUsd": 15000001, "maxTurns": 32})
+        self.refused(ap, "approvedVoiceMicroUsd must be an integer in 1..15000000")
+
+    def test_refuses_wrong_format_pool_id_and_turns(self):
+        self.refused(self.f.write_approval(format="read2lead-voice-approval-v0"), "approval format must be")
+        self.refused(self.f.write_approval(budget={"scope": "pool", "poolId": "other", "approvedVoiceMicroUsd": 1, "maxTurns": 32}), "poolId must be")
+        self.refused(self.f.write_approval(budget={"scope": "pool", "poolId": "r2l-student-pool", "approvedVoiceMicroUsd": 1, "maxTurns": 31}), "maxTurns must be exactly 32")
+
+    def test_other_manifest_key_change_still_refused_with_flag(self):
+        # The tool never edits other keys itself, so provoke it: patch the grant step to ALSO touch other manifest fields.
+        sys.path.insert(0, str(TOOL.parent))
+        import build_candidate as bc
+        real = bc.apply_grant_to_manifest
+        for mutate in (lambda m: m["pages"].update({"/x": "/read2lead/index.html"}),
+                       lambda m: m["studentRelease"].update({"records": [{"id": "sneaky"}]}),
+                       lambda m: m["studentRelease"].update({"extra": 1}),
+                       lambda m: m.update({"newKey": 1})):
+            def evil(manifest, sha_, budget, mutate=mutate):
+                prev = real(manifest, sha_, budget)
+                mutate(manifest)
+                return prev
+            bc.apply_grant_to_manifest = evil
+            try:
+                ns = type("A", (), dict(base=self.f.base, base_config=self.f.base_config, repo=self.f.repo, out=self.f.out,
+                                        build_env=self.f.build_env, full_verify=False, allow_dirty=False, keep_failed=False,
+                                        student_voice_grant=str(self.f.write_approval())))
+                with self.assertRaises(bc.ReleaseError) as cm:
+                    bc.build(ns)
+                self.assertRegex(str(cm.exception), "protected manifest field changed|manifest keys changed")
+                self.assertFalse(self.f.out.exists())
+            finally:
+                bc.apply_grant_to_manifest = real
 
 
 if __name__ == "__main__":

@@ -14,6 +14,11 @@ Usage:
   build_candidate.py --base <candidate dir> --base-config <wrangler json> \
       --repo <repo root with fresh dist/> --out <new candidate dir> \
       --build-env <json recording PUBLIC_* used for the build> [--full-verify] [--allow-dirty]
+      [--student-voice-grant <approval.json>]
+
+--student-voice-grant is the ONE narrow exception to "the manifest never changes except publicAssets/
+scriptHashes": it swaps only `studentRelease.approvedGrant` (and the matching fields of the
+R2L_STUDENT_VOICE_CONFIG var) to a founder-approved monthly voice pool. See docs/R2L_WORKER_RELEASE.md.
 """
 import argparse
 import base64
@@ -33,6 +38,13 @@ WORKER_ENTRY = "cloudflare/read2lead-private-preview/worker.mjs"
 MANIFEST_REL = "assets/__private/package.json"
 MUTABLE_MANIFEST_KEYS = {"publicAssets", "scriptHashes"}
 LOCAL_FILE_EXT = r"(?:js|mjs|css|png|jpe?g|webp|svg|woff2?|mp3|mp4|json|ico)"
+GRANT_CHECK_SCRIPT = Path(__file__).resolve().parent / "check_student_grant.mjs"
+VOICE_APPROVAL_FORMAT = "read2lead-voice-approval-v1"
+POOL_ID = "r2l-student-pool"
+POOL_MAX_MICRO_USD = 15_000_000
+POOL_MAX_TURNS = 32  # the student loader accepts exactly this
+POOL_KEYS = ["scope", "poolId", "approvedVoiceMicroUsd", "maxTurns"]  # canonical order the loader uses
+HEX64 = re.compile(r"^[a-f0-9]{64}$")
 # Test hook: makes put() write THROUGH hard links so the guard can be proven to bite.
 UNSAFE_ENV = "R2L_RELEASE_UNSAFE_WRITE_THROUGH_FOR_BITE_TEST"
 
@@ -100,6 +112,85 @@ def load_json(p, what):
         raise ReleaseError("%s not found: %s" % (what, p))
     except json.JSONDecodeError as e:
         raise ReleaseError("%s is not valid JSON (%s): %s" % (what, e, p))
+
+
+# ---------------------------------------------------------------- student voice grant
+
+def load_voice_grant(path):
+    """Read + validate a pool approval. Returns (approvalSha256, budget, pricingEvidenceSha256|None)."""
+    p = Path(path)
+    if not p.is_file():
+        raise ReleaseError("--student-voice-grant file not found: %s" % p)
+    raw = p.read_bytes()
+    try:
+        ap = json.loads(raw)
+    except json.JSONDecodeError as e:
+        raise ReleaseError("--student-voice-grant is not valid JSON (%s): %s" % (e, p))
+    if not isinstance(ap, dict) or ap.get("format") != VOICE_APPROVAL_FORMAT:
+        raise ReleaseError("approval format must be %r" % VOICE_APPROVAL_FORMAT)
+    b = ap.get("budget")
+    if not isinstance(b, dict) or sorted(b) != sorted(POOL_KEYS):
+        raise ReleaseError("approval budget must be exactly the pool shape %s (got %s)" % (
+            sorted(POOL_KEYS), sorted(b) if isinstance(b, dict) else b))
+    if b["scope"] != "pool":
+        raise ReleaseError("approval budget scope must be 'pool', not %r (batch grants are not allowed here)" % b["scope"])
+    if b["poolId"] != POOL_ID:
+        raise ReleaseError("approval budget poolId must be %r" % POOL_ID)
+    isint = lambda v: isinstance(v, int) and not isinstance(v, bool)
+    if not isint(b["approvedVoiceMicroUsd"]) or not (0 < b["approvedVoiceMicroUsd"] <= POOL_MAX_MICRO_USD):
+        raise ReleaseError("approvedVoiceMicroUsd must be an integer in 1..%d (got %r)" % (POOL_MAX_MICRO_USD, b["approvedVoiceMicroUsd"]))
+    if not isint(b["maxTurns"]) or b["maxTurns"] != POOL_MAX_TURNS:
+        raise ReleaseError("maxTurns must be exactly %d: the student loader accepts no other value (got %r)" % (POOL_MAX_TURNS, b["maxTurns"]))
+    pricing = ap.get("pricingEvidenceSha256")
+    if pricing is not None and not (isinstance(pricing, str) and HEX64.match(pricing)):
+        raise ReleaseError("approval pricingEvidenceSha256 must be a 64-char lowercase hex sha256")
+    return sha256_bytes(raw), {k: b[k] for k in POOL_KEYS}, pricing
+
+
+def apply_grant_to_manifest(manifest, approval_sha, budget):
+    sr = manifest.get("studentRelease")
+    if not isinstance(sr, dict) or not isinstance(sr.get("approvedGrant"), dict):
+        raise ReleaseError("base manifest has no studentRelease.approvedGrant to replace")
+    prev = sr["approvedGrant"].get("approvalSha256")
+    sr["approvedGrant"] = {"approvalSha256": approval_sha, "budget": dict(budget)}  # replaced in place, key position kept
+    return prev
+
+
+def apply_grant_to_config(cfg, approval_sha, budget, pricing):
+    raw = (cfg.get("vars") or {}).get("R2L_STUDENT_VOICE_CONFIG")
+    if not isinstance(raw, str):
+        raise ReleaseError("base config has no string vars.R2L_STUDENT_VOICE_CONFIG to update")
+    try:
+        v = json.loads(raw)
+    except json.JSONDecodeError:
+        raise ReleaseError("base R2L_STUDENT_VOICE_CONFIG is not valid JSON")
+    if not isinstance(v, dict) or v.get("format") != "read2lead-student-voice-v1":
+        raise ReleaseError("base R2L_STUDENT_VOICE_CONFIG is not a read2lead-student-voice-v1 object")
+    for k in ("budget", "approvalSha256"):
+        if k not in v:
+            raise ReleaseError("base R2L_STUDENT_VOICE_CONFIG lacks %r" % k)
+    v["budget"] = dict(budget)
+    v["approvalSha256"] = approval_sha
+    if pricing is not None:
+        v["pricingEvidenceSha256"] = pricing
+    new = json.dumps(v, separators=(",", ":"))
+    if len(new) > 4096:
+        raise ReleaseError("new R2L_STUDENT_VOICE_CONFIG is %d chars; the loader refuses more than 4096" % len(new))
+    cfg["vars"]["R2L_STUDENT_VOICE_CONFIG"] = new
+
+
+def run_grant_loader_check(out, manifest_path, cfg_path):
+    """Run the candidate's own JS loader against the produced grant + var. Must come back enabled."""
+    r = subprocess.run(["node", str(GRANT_CHECK_SCRIPT), "--source-root", str(out / "source"),
+                        "--manifest", str(manifest_path), "--config", str(cfg_path)], capture_output=True, text=True)
+    line = (r.stdout.strip().splitlines() or [""])[-1]
+    try:
+        res = json.loads(line)
+    except json.JSONDecodeError:
+        raise ReleaseError("student voice loader check crashed: %s" % (r.stderr.strip() or r.stdout.strip())[:400])
+    if r.returncode != 0 or not res.get("ok"):
+        raise ReleaseError("student voice loader check FAILED: loader says %s" % (res.get("reason") or res.get("error")))
+    return res
 
 
 # ---------------------------------------------------------------- build env
@@ -312,6 +403,7 @@ def build(a):
         if dirty:
             raise ReleaseError("repo has uncommitted changes in server source dirs (release from a clean commit, or pass --allow-dirty):\n" + dirty)
     build_env = check_build_env(a.build_env, dist)
+    grant = load_voice_grant(a.student_voice_grant) if a.student_voice_grant else None
 
     base_manifest = json.loads((base / MANIFEST_REL).read_text())
     for k in ("pages", "publicAssets", "scriptHashes"):
@@ -375,15 +467,27 @@ def build(a):
 
         check_astro_refs(assets, manifest)
 
+        # the ONE explicit exception: studentRelease.approvedGrant, only when --student-voice-grant is given
+        previous_approval = None
+        if grant:
+            previous_approval = apply_grant_to_manifest(manifest, grant[0], grant[1])
+
         # protected manifest fields
         for k in base_manifest:
-            if k not in MUTABLE_MANIFEST_KEYS and manifest[k] != base_manifest[k]:
+            if k in MUTABLE_MANIFEST_KEYS:
+                continue
+            if grant and k == "studentRelease":
+                strip = lambda d: {x: y for x, y in d.items() if x != "approvedGrant"}
+                if strip(manifest[k]) != strip(base_manifest[k]) or set(manifest[k]) != set(base_manifest[k]):
+                    raise ReleaseError("protected manifest field changed: studentRelease (beyond approvedGrant)")
+            elif manifest[k] != base_manifest[k]:
                 raise ReleaseError("protected manifest field changed: %s" % k)
         if set(manifest) != set(base_manifest):
             raise ReleaseError("manifest keys changed")
 
         manifest_changed = (manifest["publicAssets"] != base_manifest["publicAssets"]
-                            or manifest["scriptHashes"] != base_manifest["scriptHashes"])
+                            or manifest["scriptHashes"] != base_manifest["scriptHashes"]
+                            or manifest != base_manifest)
         if manifest_changed:
             base_sha_log[MANIFEST_REL] = sha256_file(out / MANIFEST_REL)
             put(out / MANIFEST_REL, json.dumps(manifest, separators=(",", ":")).encode())
@@ -424,11 +528,20 @@ def build(a):
         cfg["main"] = str(out / "source" / WORKER_ENTRY)
         cfg["assets"]["directory"] = str(out / "assets")
         cfg.setdefault("vars", {})["R2L_PREVIEW_PACKAGE_SHA256"] = manifest_sha
+        if grant:
+            apply_grant_to_config(cfg, grant[0], grant[1], grant[2])
         cfg_path = out / "wrangler.release.json"
         for name in ("wrangler.release.json", "candidate-proof.json"):
             if (base / name).is_file():  # generation 2+: these are hard-linked from the previous release
                 base_sha_log[name] = sha256_file(base / name)
         put(cfg_path, (json.dumps(cfg, indent=2) + "\n").encode())
+        grant_proof = None
+        if grant:
+            loader = run_grant_loader_check(out, out / MANIFEST_REL, cfg_path)
+            grant_proof = {"approvalFile": str(Path(a.student_voice_grant).resolve()), "approvalSha256": grant[0],
+                           "budget": grant[1], "previousApprovalSha256": previous_approval,
+                           "loaderCheck": {"enabled": loader["enabled"], "reason": loader["reason"],
+                                           "checkedAt": loader["checkedAt"]}}
 
         proof = {
             "status": "PASS",
@@ -456,6 +569,8 @@ def build(a):
             },
             "wranglerConfig": str(cfg_path),
         }
+        if grant_proof:
+            proof["studentVoiceGrant"] = grant_proof
         put(out / "candidate-proof.json", (json.dumps(proof, indent=2) + "\n").encode())
 
         # --- base guard (LAST step: runs after every write this tool makes):
@@ -501,6 +616,8 @@ def main(argv=None):
     ap.add_argument("--build-env", required=True)
     ap.add_argument("--full-verify", action="store_true", help="sha256 every base file before and after (slow on the real 6 GB base)")
     ap.add_argument("--allow-dirty", action="store_true")
+    ap.add_argument("--student-voice-grant", metavar="APPROVAL_JSON",
+                    help="swap ONLY studentRelease.approvedGrant + the matching R2L_STUDENT_VOICE_CONFIG fields to this pool approval")
     ap.add_argument("--keep-failed", action="store_true", help="keep the out dir when the run fails")
     a = ap.parse_args(argv)
     try:

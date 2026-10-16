@@ -107,6 +107,34 @@ approval). The Pages deploy and the Worker candidate must be the same commit.
     `src/`, `cloudflare/` or `schemas/`, the matching `main` commit must be deployed to Pages too, and
     vice versa. Record both in `AGENT_LOG.md`: commit sha, Pages deployment id, Worker version id.
 
+## Changing the student voice grant (`--student-voice-grant`)
+
+The student voice grant lives in TWO pinned places that must change together in one release:
+`assets/__private/package.json` -> `studentRelease.approvedGrant`, and the Worker var
+`R2L_STUDENT_VOICE_CONFIG` (its `budget`, `approvalSha256`, `pricingEvidenceSha256`). Normally the tool
+refuses any manifest change except `publicAssets`/`scriptHashes`. Pass the founder's approval file to make
+the one exception, and only then:
+
+```bash
+python3 scripts/r2l-release/build_candidate.py <the usual flags> \
+  --student-voice-grant ~/work/repos/_ops/approvals/<APPROVAL>.json
+```
+
+Use it only when a new founder-approved grant (a `read2lead-voice-approval-v1` file) must go live: moving
+from the expiring batch grant to the standing monthly pool, or changing the pool's cap. Do NOT use it on an
+ordinary release; without the flag the manifest and var are carried over unchanged.
+
+What it does: requires `format: read2lead-voice-approval-v1` and a budget that is exactly
+`{scope: pool, poolId: r2l-student-pool, approvedVoiceMicroUsd <= 15000000, maxTurns: 32}` (anything else
+is refused: batch budgets, extra keys, a higher cap); sets `approvalSha256` to the sha256 of the approval
+file's exact bytes; replaces only `approvedGrant` in the manifest and only those three fields in the var
+(`packageSha256` points at the manifest's `sourcePackageSha256`, which is untouched); re-pins
+`R2L_PREVIEW_PACKAGE_SHA256`; still asserts every other manifest key and `__private` file is unchanged;
+then runs the candidate's own JS loader (`check_student_grant.mjs`, needs `node`) against the result with the
+clock set to 2031 and fails unless it reports enabled. `candidate-proof.json` records
+`studentVoiceGrant: {approvalFile, approvalSha256, budget, previousApprovalSha256, loaderCheck}`.
+The approval file must stay byte-for-byte as approved: editing it changes the hash.
+
 ## Rollback
 
 Deploy the previous version id again:
