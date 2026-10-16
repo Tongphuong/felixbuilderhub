@@ -2,12 +2,40 @@
 
 - Product: Read2Lead (SpeakUp now lives inside it)
 - Current goal: Phương 2026-10-16 — "get the site working as soon as possible"; full authority delegated to Elon on technical calls. Priorities: P1 rankings back + prominent; P2 chosen monster shown at every level; P3 student entry/switch; P4 Minny cost model for public opening.
-- Active workers: 0
+- Active workers: 1
 - Last updated: 2026-10-16
 - Operating model: Phương → Elon (plan/dispatch/review/integrate) → Mark/Steve build → Buffet reviews → Phương sees result before release. Codex retired 2026-10-16.
-- Start here: _ops/outbox/CLAUDE_TAKEOVER_MAP_2026-10-16.md (architecture, Worker deploy recipe, landmines). SQL in the Worker is authoritative; never restore KV.
+- Start here: _ops/outbox/CLAUDE_TAKEOVER_MAP_2026-10-16.md (architecture, Worker deploy recipe, landmines). SQL in the Worker is authoritative; never restore KV. Worker releases: docs/R2L_WORKER_RELEASE.md (base = ~/work/r2l-releases/v99-20261016 now).
 
 ## Current task
+
+- Task ID: R2L-STUDENT-ENTRY (code box + clean student switch)
+- Status: active
+- Owner: Elon (Lead); builder Mark; reviewer Buffet
+- Lane: one background packet
+- Branch: claude-bg/r2l-student-entry from main afae68c (live = 24b9bfd + control-doc commit)
+- Starting commit: afae68c
+- Spec: Codex's owner-approved plan (_ops/archive/codex-student-entry-wip-2026-10-16/CODEX_PLAN.md; Phương: "two access methods (personal link and manual student code), friendly entry instead of raw 401") with ONE Elon deviation under Phương's 2026-10-16 delegation: a device that already holds a VALID student session opens straight to that child's home on the bare /read2lead/ address (kids-have-no-patience); only a device with no valid session sees the code form. The switch bug is fixed at its root: parent "Change student code" must clear the reader session cookie (same-origin POST, idempotent, no DB access), so the previous child can never come back.
+- Files owned: functions/_middleware.js; functions/lib/read2lead/account-unified-gateway.mjs; src/lib/read2lead/student-entry.mjs (new); src/components/Read2LeadChildHome.astro; src/scripts/read2lead-child-home.ts; src/styles/read2lead-child-home.css; src/pages/ho-so/ho-so.ts; src/pages/r2l/start.astro (+ its script/style if separate); tests/read2lead-account-unified-gateway.test.mjs; tests/read2lead-student-switch.test.mjs (new); the existing test asserting "child home puts reading before secondary rankings" (update its forbidden-pattern list only as needed).
+- Acceptance criteria:
+  - E1 no valid session + bare /read2lead/ (and /r2l/start/ without t) → 200 friendly navy/gold Vietnamese page with ONE code box + one button (never the bare English 401 "Student access required").
+  - E2 a valid code (trimmed, case-insensitive) or a personal link signs in exactly that student; an invalid explicit code/link never falls back to a remembered student and shows a kind retryable error.
+  - E3 valid session + bare /read2lead/ → that child's home (no regression for current kids).
+  - E4 parent "Change student code" → server clears the reader session cookie(s) via same-origin POST (idempotent, cache no-store, no DB access); old child's view cleared; next bare /read2lead/ shows the code form; a stale in-flight response cannot restore the old child.
+  - E5 protected APIs, private packages, student media stay protected (explicit negative tests: anonymous access to /api/read2lead-progress, /__private/*, media still refused).
+  - E6 npm test + build green; known-bad tests (old code shows 401 / old switch keeps cookie) fail on old code.
+- Stop condition: committed claude-bg branch, tests green, completion report. No push/merge/deploy/production tools.
+- Cost ceiling: Claude team (Max plan, not metered); USD 0 metered.
+- Reuse survey: (1) Codex's WIP patch (_ops/archive/codex-student-entry-wip-2026-10-16/source.patch) — ADOPTED as the starting point; (2) existing personal-link (/api/r2l-link) + cookie expiry mechanics — REUSED; (3) external auth (Auth0/Clerk/Cloudflare Access) — REJECTED: children use short codes, no emails/passwords; an IdP adds cost, a third party holding kids' identities and a login flow young kids can't do.
+- State inventory: session none/valid/expired/revoked × entry bare URL/?code=/personal link t=/invalid code × parent switch before/after × two tabs / back button / stale pending response.
+- Operational reality: gateway paths run inside the Worker (SQL); every change ships as Worker candidate (scripts/r2l-release, base ~/work/r2l-releases/v99-20261016) + main push for Pages. Cookies are HttpOnly; the reader cookie name/attributes are set in account-unified-gateway.mjs.
+- Tradeoff watch: remembering a device's session keeps the shared-device risk that a sibling opens the app as the other child. SIGNAL: parent reports of the wrong child shown. QUERY: count of parent "Change student code" POSTs per week (gateway log once Workers Logs is on) vs support messages. THRESHOLD: any confirmed wrong-child report after release → add a "Not you? Đổi bạn" link on the kid home.
+- Runtime bindings/secrets: N/A — no new env.X.
+- Design self-verification: pending — rehearsal render 390/768/1280 of code form, error state, kid home, parent switch.
+- Founder handoff: pending.
+- Founder-operated surface check: N/A — parent surface is used by parents, not the founder; covered by rehearsal.
+
+## Previous task — R2L-TAKEOVER-P1P2 (complete, live 2026-10-16)
 
 - Task ID: R2L-TAKEOVER-P1P2 (rankings back + chosen monster everywhere + Worker release tool)
 - Status: complete
@@ -40,7 +68,7 @@
 - Founder-operated surface check: N/A — no admin surface touched.
 - Verified commit: 24b9bfd8859b016ad156d71b8896049666411f2a (origin/main; Pages 4c4ff55b production success; Worker read2lead-story-private-preview version 2d22515c-e9bf-4795-9aab-dd4ae0fad7ad @100%; rollback Worker 97b4bceb).
 
-## Acceptance criteria reconciliation
+## Previous acceptance reconciliation — R2L-TAKEOVER-P1P2
 
 - PASS — A1 API two all-time boards over eligible real students: live `/api/read2lead-leaderboard` returns version r2l-ranks-v2, xp + diamonds, 9 participants each, ties share rank (tests read2lead-stars-board 12/12; Buffet repro).
 - PASS — A2 home card above the fold at 390 with top 3 + own rank, taps to board (rehearsal screenshot; card y≈575–730 of 844).
