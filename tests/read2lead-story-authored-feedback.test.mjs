@@ -273,6 +273,20 @@ test('B student config accepts the standing pool (no expiry), keeps the cap, and
   assert.equal(low.canAssign(pkg.lesson),true,'next UTC month the pool is whole again');
 });
 
+test('B pool canAssign fails closed: a SQL error from poolStatus means no new voice story, never a throw',async t=>{
+  const f=poolFixture(t),pkg=base(),approvalSha256='a'.repeat(64),packageSha256='b'.repeat(64);
+  const catalogue=await verifiedLessonCatalogue({voiceVerificationLessons:[{id:pkg.lesson.id,version:pkg.lesson.version,packageSha256:await publisherDigest(pkg)}]});
+  const budget={scope:'pool',poolId:STUDENT_POOL_ID,approvedVoiceMicroUsd:STORY_POOL_MONTHLY_MICRO_USD,maxTurns:32};
+  const raw={format:'read2lead-student-voice-v1',audience:'enrolled-students',mode:'assessed',providerRoute:'cloudflare-only',assessorModel:'gpt-oss-120b',
+    packageSha256,approvalSha256,processingApproved:true,spendingApproved:true,pricingEvidenceSha256:'c'.repeat(64),
+    verification:{provider:true,assessor:true,evidenceSha256:'d'.repeat(64),catalogueSha256:catalogue.sha256},budget};
+  const v=await studentVoiceConfiguration({store:f.store,env:{AI:{run(){throw Error('no');}},R2L_STUDENT_VOICE_CONFIG:JSON.stringify(raw)},
+    packageSha256,lessonCatalogue:catalogue,approvedGrant:{approvalSha256,budget},now:f.now});
+  assert.equal(v.canAssign(pkg.lesson),true,'healthy pool offers a story');
+  v.config.budget.poolStatus=()=>{throw Error('SQL error');};
+  assert.equal(v.canAssign(pkg.lesson),false);
+});
+
 test('B6 Azure unavailable: retell says so in Vietnamese, content score still saved',async()=>{
   let fetched=0;
   const env={AZURE_SPEECH_KEY:'synthetic',AZURE_SPEECH_REGION:'test',READ2LEAD_CODES:{get:async()=>18000,put:async()=>{}}};// meter full

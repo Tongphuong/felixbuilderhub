@@ -89,7 +89,10 @@ export async function studentVoiceConfiguration({store,env,packageSha256,lessonC
   const canAssign=lesson=>{
     if(!alive()||!entryFor(lesson))return false;
     // No tap path in the interview: offer a new voice story only while money remains.
-    if(pool){const st=budget.poolStatus();return st.capMicroUsd-st.usedMicroUsd>=STORY_POOL_MIN_REMAINING_MICRO_USD;}
+    if(pool){
+      try{const st=budget.poolStatus();return st.capMicroUsd-st.usedMicroUsd>=STORY_POOL_MIN_REMAINING_MICRO_USD;}
+      catch{return false;}// fail closed: a store error offers no new voice story
+    }
     try{
       const scope='batch:'+budget.config.batchId;
       const prior=store.db.prepare('SELECT config FROM story_voice_reservations WHERE month=? LIMIT 1').get(scope);
