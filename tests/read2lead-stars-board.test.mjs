@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildLearningBoards, starsEligible } from '../functions/lib/read2lead/learning-stars-board.mjs';
-import { onRequestGet } from '../functions/api/read2lead-leaderboard.js';
+import { buildLearningBoards, starsEligible, learningStarsResponse, resetLearningBoardsCache } from '../functions/lib/read2lead/learning-stars-board.mjs';
 const now = '2026-10-14T03:00:00Z';
 // Old receipts from last month: the retired weekly board would have ignored this child entirely.
 const LAST_MONTH = '2026-09-02T03:00:00Z';
@@ -43,15 +42,19 @@ test('children with zero of a metric are absent from that board but keep an unra
   assert.equal(result.boards.xp.own.rank, null); assert.equal(result.boards.xp.own.total, 0);
   assert.doesNotMatch(JSON.stringify(result), /prize|reward|wallet/);
 });
-function fixture() {
+const T0 = new Date(now);
+function fixture(extra = []) {
+  resetLearningBoardsCache();
   const code = 'R2L-REAL-STARS', other = 'R2L-OTHER-STARS';
   const records = new Map([[code, { student_profile: { student_name: 'An', level: 'L0' } }], [other, { student_profile: { student_name: 'Binh' } }],
     ['progress:' + code, { schema_version: 2, level_reset_version: 20260606, current_level: 'L0', diamonds: 70, total_xp: 120 }],
     ['progress:' + other, { schema_version: 2, level_reset_version: 20260606, current_level: 'L0', diamonds: 30, total_xp: 400 }],
     ['leaderboard-cache', { updated_at: now, leaders: [{ display_name: 'Cached bot', total: 999999 }] }]]);
-  const kv = { async list() { return { keys: [...records.keys()].map(name => ({ name })) }; }, async get(key, options) { const value = records.get(key); return value === undefined ? null : options?.type === 'json' ? value : JSON.stringify(value); }, async put(key, value) { records.set(key, JSON.parse(value)); } };
-  const call = () => onRequestGet({ request: new Request('https://fixture.test/api/read2lead-leaderboard?code=' + code), env: { READ2LEAD_CODES: kv } });
-  return { records, kv, call, code };
+  for (const [name, account, progress] of extra) { records.set(name, account); records.set('progress:' + name, progress); }
+  const counts = { list: 0, progressGets: 0 };
+  const kv = { async list() { counts.list++; await Promise.resolve(); return { keys: [...records.keys()].map(name => ({ name })) }; }, async get(key, options) { if (key.startsWith('progress:')) counts.progressGets++; const value = records.get(key); return value === undefined ? null : options?.type === 'json' ? value : JSON.stringify(value); }, async put(key, value) { records.set(key, JSON.parse(value)); } };
+  const call = (at = T0, query = '?code=' + code) => learningStarsResponse({ request: new Request('https://fixture.test/api/read2lead-leaderboard' + query), env: { READ2LEAD_CODES: kv }, now: at });
+  return { records, kv, call, code, counts };
 }
 test('real endpoint serves both all-time boards with no config key, ignores stale bot cache, and rechecks eligibility', async () => {
   const f = fixture(); f.records.set('R2L-POISON', { get progress() { throw Error('poison'); } });
@@ -61,7 +64,7 @@ test('real endpoint serves both all-time boards with no config key, ignores stal
   assert.deepEqual(result.boards.diamonds.leaders.map(r => [r.display_name, r.rank, r.total]), [['An', 1, 70], ['Binh', 2, 30]]);
   assert.equal(result.boards.xp.own.rank, 2); assert.equal(result.boards.xp.own.is_self, true);
   f.records.get(f.code).is_bot = true;
-  const changed = await (await f.call()).json(); assert.deepEqual(changed.boards.xp.leaders.map(r => r.display_name), ['Binh']); assert.equal(changed.boards.xp.own, null);
+  const changed = await (await f.call(new Date(T0.getTime() + 61_000))).json(); assert.deepEqual(changed.boards.xp.leaders.map(r => r.display_name), ['Binh']); assert.equal(changed.boards.xp.own, null);
   assert.equal(f.records.get('leaderboard-cache').leaders[0].display_name, 'Cached bot', 'historical cache left intact but never read');
 });
 test('storage outage returns retryable error instead of false empty success', async () => {
@@ -72,4 +75,47 @@ test('failed account storage read is not reported as an empty board', async () =
   const f = fixture(), get = f.kv.get;
   f.kv.get = async (key, options) => { if (key.startsWith('progress:')) throw Error('storage offline'); return get(key, options); };
   assert.equal((await f.call()).status, 503);
+});
+
+const later = ms => new Date(T0.getTime() + ms);
+const many = n => Array.from({ length: n }, (_, i) => [`R2L-KID-${String(i).padStart(3, '0')}`, { student_profile: { student_name: 'Kid' + i } }, { schema_version: 2, level_reset_version: 20260606, current_level: 'L0', diamonds: 5, total_xp: 500 + i }]);
+test('(a) two calls within 60s trigger exactly ONE scan', async () => {
+  const f = fixture();
+  assert.equal((await f.call(later(0))).status, 200); const afterFirst = { ...f.counts };
+  assert.equal(afterFirst.list, 1);
+  assert.equal((await f.call(later(59_000))).status, 200);
+  assert.deepEqual(f.counts, afterFirst, 'second call within the window touched no list/progress reads');
+});
+test('(b) a call after 60s rescans', async () => {
+  const f = fixture(); await f.call(later(0)); await f.call(later(60_000));
+  assert.equal(f.counts.list, 2);
+});
+test('(c) concurrent calls share one scan', async () => {
+  const f = fixture();
+  const responses = await Promise.all([f.call(later(0)), f.call(later(1)), f.call(later(2)), f.call(later(3))]);
+  assert.deepEqual(responses.map(r => r.status), [200, 200, 200, 200]);
+  assert.equal(f.counts.list, 1);
+});
+test('(d) own row is correct for a child outside the top N, served from cache; caller never sees codes', async () => {
+  const f = fixture(many(60));
+  const first = await (await f.call(later(0), '?limit=3&code=' + f.code)).json();
+  const listAfterFirst = f.counts.list;
+  const cached = await (await f.call(later(5_000), '?limit=3&code=' + f.code)).json();
+  assert.equal(f.counts.list, listAfterFirst, 'served from cache');
+  assert.equal(cached.boards.xp.leaders.length, 3);
+  assert.equal(cached.boards.xp.own.rank, 62); assert.equal(cached.boards.xp.own.is_self, true); assert.equal(cached.boards.xp.own.display_name, 'An');
+  assert.deepEqual(cached, first);
+  const other = await (await f.call(later(6_000), '?limit=3&code=R2L-KID-000')).json();
+  assert.equal(other.boards.xp.own.rank, 60); assert.equal(other.boards.xp.leaders.some(r => r.is_self), false);
+  assert.equal(f.counts.list, listAfterFirst);
+  assert.doesNotMatch(JSON.stringify(cached), /R2L-/);
+  const anon = await (await f.call(later(7_000), '?limit=3')).json(); assert.equal(anon.boards.xp.own, null);
+});
+test('failed recompute serves the stale cache; with no cache it is the friendly 503', async () => {
+  const f = fixture(); await f.call(later(0));
+  f.kv.list = async () => { throw Error('offline'); };
+  const stale = await f.call(later(61_000)); assert.equal(stale.status, 200);
+  assert.equal((await stale.json()).boards.xp.leaders[0].display_name, 'Binh');
+  const none = fixture(); none.kv.list = async () => { throw Error('offline'); };
+  const failed = await none.call(later(0)); assert.equal(failed.status, 503); assert.equal((await failed.json()).error, 'leaderboard_compute_failed');
 });
