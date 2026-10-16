@@ -1,4 +1,4 @@
-/* Scoped to the new contract; original reader composition remains authoritative. */
+/* Reading missions and shared lesson controls; original reader composition remains authoritative. */
 .picture-retell-board[hidden] { display:none !important; }
 .picture-retell-board { display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.65rem;align-content:start;padding:.5rem; }
 .picture-retell-card { position:relative;grid-column:span 2;min-width:0;border:3px solid var(--cream);border-radius:1rem;overflow:hidden;background:var(--cream);padding:0;cursor:zoom-in;align-self:start; }
@@ -211,18 +211,18 @@ body[data-story-mission] #progress-part-label, body[data-story-mission] #progres
 }
 
 /* Keep reading actions in the main site's night-sky palette. */
-[data-story-mission] .r2l-primary {
+body .r2l-primary {
   background:var(--gold);color:var(--navy-950);border-color:var(--gold);
   box-shadow:0 4px 0 var(--navy-950);
 }
-[data-story-mission] .r2l-primary:hover:not(:disabled) {
+body .r2l-primary:hover:not(:disabled) {
   background:var(--gold-light);border-color:var(--gold-light);
 }
-[data-story-mission] .r2l-secondary {
+body .r2l-secondary {
   background:var(--navy-850);color:var(--cream);border-color:var(--cream-muted);
 }
-[data-story-mission] .r2l-secondary:hover:not(:disabled) { background:var(--navy-800); }
-[data-story-mission] :is(.r2l-primary,.r2l-secondary):focus-visible {
+body .r2l-secondary:hover:not(:disabled) { background:var(--navy-800); }
+body :is(.r2l-primary,.r2l-secondary):focus-visible {
   outline:3px solid var(--gold-light);outline-offset:4px;
 }
 [data-story-mission] .story-mission-controls .spk-rec-btn:not(.is-recording) {
