@@ -230,3 +230,7 @@ body :is(.r2l-primary,.r2l-secondary):focus-visible {
   border-color:var(--gold-light);box-shadow:var(--shadow-card);
 }
 [data-story-mission] .spk-rec-btn:not(.is-recording) .spk-rec-btn__icon { background:var(--navy-950); }
+
+/* The shared lesson header follows the same night-sky palette. */
+body .lesson-child-header { background:var(--navy-950);color:var(--gold-light); }
+body .lesson-child-header :is(a,button):focus-visible { outline-color:var(--gold-light); }
