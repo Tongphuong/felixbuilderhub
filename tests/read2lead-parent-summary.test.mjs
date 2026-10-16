@@ -34,6 +34,17 @@ test('saved content feedback and validated pronunciation provide a factual next 
   const result=summary(pack({story_complete:true,story_session:{complete:true,assessment_summary:assessment}}));
   assert.equal(result.next_step.kind,'retry_content');assert.match(result.next_step.text,/Why the uncle/);assert.deepEqual(result.entries[0].pronunciation,{accuracy_percent:82});assert.equal(JSON.stringify(result).includes('private'),false);
 });
+test('actual saved Azure retelling reaches parent summary without exposing provider payloads',()=>{
+  const saved={status:'complete',speech:'azure',meanings:[{label:'A saved idea',met:true}],pronunciation:{accuracy:93,fluency:86,seconds:26.15},transcript:'private recording text'};
+  const projection=safeStoryAssessment({pictureRetellResult:saved});
+  assert.deepEqual(projection.pronunciation,{scorer:'azure_pronunciation_unscripted',accuracy_percent:93});
+  const result=summary(pack({story_session:{complete:true,picture_retell_complete:true,assessment_summary:projection}}));
+  assert.deepEqual(result.entries[0].pronunciation,{accuracy_percent:93});
+  assert.equal(JSON.stringify(result).includes('private recording text'),false);
+  for(const change of [{status:'unassessed'},{speech:'understood'},{speech:'transcript'},{speech:null},{pronunciation:{accuracy:93}},{pronunciation:{accuracy:101,fluency:86,seconds:26.15}},{pronunciation:{accuracy:93,fluency:null,seconds:26.15}},{pronunciation:{accuracy:93,fluency:86,seconds:0}}]) {
+    assert.equal(safeStoryAssessment({pictureRetellResult:{...saved,...change}}).pronunciation,null);
+  }
+});
 test('missing history and unknown old retelling remain honest, and ordering keeps current work first',()=>{
   assert.deepEqual(buildParentSummary({},{}).entries,[]);assert.equal(buildParentSummary({},{}).next_step.kind,'start');
   const old=summary(pack({picture_retell_required:undefined,story_complete:true}));assert.equal(old.entries[0].retell,'unknown');assert.equal(old.entries[0].question_total,null);assert.equal(old.next_step.kind,'check_retell');

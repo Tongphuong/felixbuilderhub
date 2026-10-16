@@ -8,9 +8,18 @@ const date = value => typeof value === 'string' && Number.isFinite(Date.parse(va
 export function safeStoryAssessment(state) {
   const retell = state?.pictureRetellResult;
   const assessed = ['complete', 'needs_practice'].includes(retell?.status);
-  const pronunciation = assessed && ['azure_pronunciation', 'azure_pronunciation_unscripted'].includes(retell?.pronunciation?.scorer)
-    && percent(retell.pronunciation.accuracy_percent) !== null
-    ? { scorer: retell.pronunciation.scorer, accuracy_percent: percent(retell.pronunciation.accuracy_percent) } : null;
+  const savedPronunciation = retell?.pronunciation;
+  // Current retelling stores acoustic scores with the provider on the result.
+  // Keep the legacy scorer shape readable, without deriving scores from text.
+  const acoustic = retell?.speech === 'azure'
+    && percent(savedPronunciation?.accuracy) !== null
+    && percent(savedPronunciation?.fluency) !== null
+    && Number.isFinite(savedPronunciation?.seconds) && savedPronunciation.seconds > 0
+    ? { scorer: 'azure_pronunciation_unscripted', accuracy_percent: percent(savedPronunciation.accuracy) }
+    : savedPronunciation;
+  const pronunciation = assessed && ['azure_pronunciation', 'azure_pronunciation_unscripted'].includes(acoustic?.scorer)
+    && percent(acoustic?.accuracy_percent) !== null
+    ? { scorer: acoustic.scorer, accuracy_percent: percent(acoustic.accuracy_percent) } : null;
   return {
     question_score: state?.missionResult?.assessment?.status === 'complete' ? percent(state.missionResult.assessment.scorePercent) : null,
     retell_status: ['complete', 'needs_practice', 'unassessed'].includes(retell?.status) ? retell.status : null,
