@@ -45,7 +45,8 @@
   - LIVE after release: Elon opened "Rain" on the Minhdt test account without ?w1. data-r2l-w1-ssr="1", "Trang 1 / 8", "I love water.", illustration and play button shown: _ops/.playwright-mcp/live-v102-minhdt-rain-390.png (rendered at a 1280 viewport).
   - Verdict: match; the blank page is gone.
 - Founder handoff: plain-language report with the rehearsal finish screen; Phương said "deploy to production" 2026-10-17.
-- Verified commit: a60f3a0d245c219a8b9d04085f1dc4f91a96b202. Deployed state:
+- Verified commit: a60f3a0d245c219a8b9d04085f1dc4f91a96b202
+- Deployed state:
   - origin/main;
   - Pages production 72e72930 @ a60f3a0;
   - Worker read2lead-story-private-preview version 06a9ae7a-5709-4e17-bf05-842066de6047 @100%, candidate ~/work/r2l-releases/v102b-20261016;
