@@ -4293,6 +4293,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
       ? (data.review_only ? 'Con đã ôn lại câu chuyện. Bài ôn không cộng thêm thưởng.' : 'Bài đã kết thúc. Phần nói được bỏ qua nên con không nhận sao hay điểm; con có thể nghỉ hoặc đọc thêm truyện.')
       : `Con nhận 💎 ${rewardDiamonds} và ⭐ ${rewards.xp || 0} XP cho nhiệm vụ này.`;
     qs('#completion-card').classList.remove('hidden');
+    dismissFinishOverlays();
     if (state.accessCode) {
       qs('#completion-done').href = `/read2lead/?code=${encodeURIComponent(state.accessCode)}&done=1`;
       qs('#completion-new-pack').href = `/read2lead/?code=${encodeURIComponent(state.accessCode)}`;
@@ -4910,6 +4911,27 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     toast.style.opacity = '1';
     clearTimeout(toast._hideTimer);
     toast._hideTimer = setTimeout(() => { toast.style.opacity = '0'; }, durationMs);
+  }
+
+  // Finish card: clear anything left over from the last speaking attempt
+  // (retry toast, combo badge, per-card speaking feedback) so it is not
+  // visible under "Bài đọc xong rồi!".
+  function dismissFinishOverlays() {
+    const toast = document.querySelector('#r2l-toast');
+    if (toast) {
+      clearTimeout(toast._hideTimer);
+      toast.style.opacity = '0';
+      toast.textContent = '';
+    }
+    const combo = document.querySelector('.w2-combo-counter');
+    if (combo) {
+      combo.dataset.visible = 'false';
+      combo.setAttribute('aria-hidden', 'true');
+    }
+    document.querySelectorAll('[data-speak-feedback]').forEach((slot) => {
+      slot.textContent = '';
+      slot.classList.add('hidden');
+    });
   }
 
   init();
@@ -6190,7 +6212,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     );
     if (nextPending >= 0) return 'Tiếp phần sau →';
     return state.bookReader.pageIndex >= state.lesson.book_images.length - 1
-      ? 'Lưu chiến công'
+      ? 'Hoàn thành trang →'
       : 'Trang tiếp →';
   }
 
@@ -6352,7 +6374,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     const next = qs('#book-reader-next');
     if (!next) return;
     next.disabled = false;
-    next.textContent = pageIndex >= total - 1 ? 'Hoàn thành →' : 'Trang tiếp →';
+    next.textContent = pageIndex >= total - 1 ? 'Lưu chiến công 💾' : 'Trang tiếp →';
   }
 
   function bookRenderAttribution() {
@@ -8760,7 +8782,8 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   body[data-lesson-finished="true"] #completion-card{order:-1;background:#fffaf0;color:#17364e;border-radius:24px;padding:2rem 1.25rem}
   body[data-lesson-finished="true"] #completion-title{color:#17364e;font-size:1.6rem;line-height:1.4}
   body[data-lesson-finished="true"] #completion-copy{color:#405b6d;line-height:1.7}
-  body[data-lesson-finished="true"] #completion-new-pack{color:#17364e;border-color:#b9c9d1}
+  body[data-lesson-finished="true"] #completion-new-pack{background:#fff;color:#17364e;border:2px solid #17364e;min-height:48px}
+  body[data-lesson-finished="true"] #completion-new-pack:hover:not([aria-disabled="true"]){background:#eef3f6}
   body[data-lesson-finished="true"] #w1-book-reader-phase{padding:1rem;width:100%;margin:0;min-height:0;transform:none}
 
 </style>
