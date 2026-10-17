@@ -182,3 +182,14 @@ over SQL.
 python3 -m unittest tests/test_r2l_release_candidate.py -v   # tiny synthetic base, runs in about 1 s
 npm test                                                     # JS suite; Python tests are run separately (as for tests/test_*.py)
 ```
+
+## Changing the voice grader model (`--student-voice-assessor`)
+
+`--student-voice-assessor {gpt-oss-120b,gpt-oss-20b}` rewrites ONLY `assessorModel` inside the Worker var
+`R2L_STUDENT_VOICE_CONFIG`. It records the before and after values in `candidate-proof.json` and re-runs
+the loader check. Without the flag the var is carried over byte-identical.
+
+**Do not use it to switch to `gpt-oss-20b` without a fresh, passing comparison.** Run
+`scripts/r2l-assessor-compare.mjs --execute` on the released stories; it must report ZERO disagreements.
+The 2026-10-17 run found 9 disagreements in 65 Sky cases, so production stays on `gpt-oss-120b`. That
+report is in `_ops/outbox/assessor-compare-2026-10-17/`.

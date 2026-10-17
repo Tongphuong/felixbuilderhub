@@ -16,3 +16,7 @@ _worker.bundle
 _claude/
 public/assets/monsters/_qa-*.png
 .aider*
+
+# Python bytecode (tests write these under scripts/__pycache__; never commit)
+__pycache__/
+*.pyc
