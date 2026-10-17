@@ -524,5 +524,79 @@ class StudentVoiceGrantTests(unittest.TestCase):
                 bc.apply_grant_to_manifest = real
 
 
+class StudentVoiceAssessorTests(unittest.TestCase):
+    """--student-voice-assessor: rewrites ONLY assessorModel in R2L_STUDENT_VOICE_CONFIG (T3, prepared but off)."""
+
+    POOL = {"scope": "pool", "poolId": "r2l-student-pool", "approvedVoiceMicroUsd": 15000000, "maxTurns": 32}
+
+    def setUp(self):
+        self.f = Fixture(with_voice=True)
+        self.addCleanup(self.f.cleanup)
+        # make the BASE already carry a pool grant, as production does, so the loader check passes with no grant flag
+        sha_ = "a" * 64
+        mp = self.f.base / "assets/__private/package.json"
+        m = json.loads(mp.read_text())
+        m["studentRelease"]["approvedGrant"] = {"approvalSha256": sha_, "budget": dict(self.POOL)}
+        mp.write_text(json.dumps(m, separators=(",", ":")))
+        c = json.loads(self.f.base_config.read_text())
+        v = json.loads(c["vars"]["R2L_STUDENT_VOICE_CONFIG"])
+        v["approvalSha256"] = sha_
+        v["budget"] = dict(self.POOL)
+        self.f.var_before = json.dumps(v, separators=(",", ":"))
+        c["vars"]["R2L_STUDENT_VOICE_CONFIG"] = self.f.var_before
+        self.f.base_config.write_text(json.dumps(c))
+
+    def var_out(self):
+        c = json.loads((self.f.out / "wrangler.release.json").read_text())
+        return c["vars"]["R2L_STUDENT_VOICE_CONFIG"]
+
+    def test_without_flag_output_unchanged(self):
+        r = self.f.run()
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        self.assertEqual(self.var_out(), self.f.var_before)
+        self.assertNotIn("studentVoiceAssessor", json.loads((self.f.out / "candidate-proof.json").read_text()))
+
+    def test_with_flag_only_that_field_changes(self):
+        r = self.f.run(student_voice_assessor="gpt-oss-20b")
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        old, new = json.loads(self.f.var_before), json.loads(self.var_out())
+        self.assertEqual(list(new), list(old))
+        self.assertEqual(new["assessorModel"], "gpt-oss-20b")
+        self.assertEqual({k: v for k, v in new.items() if k != "assessorModel"}, {k: v for k, v in old.items() if k != "assessorModel"})
+        # manifest untouched apart from the usual publicAssets/scriptHashes
+        m = json.loads((self.f.out / "assets/__private/package.json").read_text())
+        bm = json.loads((self.f.base / "assets/__private/package.json").read_text())
+        for k in bm:
+            if k not in ("publicAssets", "scriptHashes"):
+                self.assertEqual(m[k], bm[k], k)
+        p = json.loads((self.f.out / "candidate-proof.json").read_text())["studentVoiceAssessor"]
+        self.assertEqual((p["assessorModel"], p["previousAssessorModel"], p["loaderCheck"]["enabled"]), ("gpt-oss-20b", "gpt-oss-120b", True))
+        self.assertEqual(json.loads(self.f.base_config.read_text())["vars"]["R2L_STUDENT_VOICE_CONFIG"], self.f.var_before)
+
+    def test_unknown_model_refused(self):
+        before = tree_hashes(self.f.base)
+        r = self.f.run(student_voice_assessor="gpt-oss-1b")
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("invalid choice", r.stderr)
+        self.assertFalse(self.f.out.exists())
+        self.assertEqual(tree_hashes(self.f.base), before)
+
+    def test_real_loader_refuses_an_unsupported_model_in_the_var(self):
+        # Bite for the loader itself: a var carrying an unknown grader must come back disabled.
+        r = self.f.run(student_voice_assessor="gpt-oss-20b")
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        cfgp = self.f.out / "wrangler.release.json"
+        c = json.loads(cfgp.read_text())
+        v = json.loads(c["vars"]["R2L_STUDENT_VOICE_CONFIG"])
+        v["assessorModel"] = "gpt-oss-1b"
+        c["vars"]["R2L_STUDENT_VOICE_CONFIG"] = json.dumps(v, separators=(",", ":"))
+        cfgp.write_text(json.dumps(c))
+        out = subprocess.run(["node", str(TOOL.parent / "check_student_grant.mjs"), "--source-root", str(self.f.out / "source"),
+                              "--manifest", str(self.f.out / "assets/__private/package.json"), "--config", str(cfgp)],
+                             capture_output=True, text=True)
+        self.assertNotEqual(out.returncode, 0)
+        self.assertEqual(json.loads(out.stdout)["reason"], "package_or_policy_mismatch")
+
+
 if __name__ == "__main__":
     unittest.main()

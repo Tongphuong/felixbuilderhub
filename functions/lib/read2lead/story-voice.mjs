@@ -1,5 +1,5 @@
 import {isStoryInterview} from '../../../src/lib/read2lead-story-mission.mjs';
-import {createStoryEvidenceAssessor,STORY_INTENT_INSTRUCTIONS} from './story-assessor.mjs';
+import {createStoryEvidenceAssessor,STORY_ASSESSOR_MODELS,STORY_INTENT_INSTRUCTIONS} from './story-assessor.mjs';
 import { requestMinnyReply } from '../../api/_minny-provider.js';
 import { transcribeAudio } from '../../api/read2lead-speaking-check.js';
 import { getOrSynthesize, synthesizeWithAura2, resolveOpenAiApiKey } from '../../api/_minny-tts.js';
@@ -140,7 +140,7 @@ function createJudgmentProvider(ai,jsonCall) {
 /** Existing SpeakUp providers; activation and calibrated grading stay separate gates. */
 export function createMinnyStoryProvider({env,fetchFn=fetch,onAttempt=()=>{},assessor='legacy',cloudflareTimeoutMs=4000}) {
   if(!env?.AI)throw Error('story_ai_binding_required');
-  if(!['legacy','gpt-oss-120b'].includes(assessor))throw Error('story_assessor_not_supported');
+  if(!['legacy',...Object.keys(STORY_ASSESSOR_MODELS)].includes(assessor))throw Error('story_assessor_not_supported');
   const jsonCall=async(messages,maxTokens,signal)=>{
     const {rawReply}=await requestMinnyReply(env,messages,{fetchFn,maxTokens,temperature:0,strict:true,onAttempt,signal,cloudflareTimeoutMs});
     if(!rawReply)throw Error('story_model_unavailable');
@@ -149,7 +149,7 @@ export function createMinnyStoryProvider({env,fetchFn=fetch,onAttempt=()=>{},ass
     return value;
   };
   return {...createJudgmentProvider(env.AI,jsonCall),
-    ...(assessor==='gpt-oss-120b'?{assess:createStoryEvidenceAssessor({ai:env.AI,onAttempt}),assessmentTimeoutMs:30000}:{}),
+    ...(assessor!=='legacy'?{assess:createStoryEvidenceAssessor({ai:env.AI,onAttempt,model:STORY_ASSESSOR_MODELS[assessor]}),assessmentTimeoutMs:30000}:{}),
     transcribe:audio=>transcribeAudio(audio,{ai:env.AI,openaiApiKey:resolveOpenAiApiKey(env)}),
     picturePronunciation:createPicturePronunciation({env,fetchFn}),
     synthesize:text=>getOrSynthesize(env,text,{fetchFn}),validateAudio:validateStoryPcmAudio};

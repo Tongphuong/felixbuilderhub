@@ -12,14 +12,14 @@ export const STORY_MAX_BATCH_VOICE_ACTIONS = 32;
 // runaway safety stop, NOT a per-child allowance: nothing is reserved per
 // mission, every action is debited when it is actually claimed. Amounts are
 // measured cost plus margin; the 10k/day free neurons are ignored on purpose,
-// so the meter over-counts. These are the ONLY place the numbers live.
+// so the meter over-counts. Addendum 2026-10-17: live-measured cost x 1.25. These are the ONLY place the numbers live.
 export const STORY_POOL_MONTHLY_MICRO_USD = 15_000_000;
 export const STORY_POOL_DEBIT_MICRO_USD = Object.freeze({
   cachedPlayback: 0,        // question/authored line served from saved audio
-  freshSynthesis: 3_000,    // any text-to-speech actually generated (additive)
-  authoredAnswerTurn: 1_000,// interview answer turn: grader only, fixed reply
-  aiReplyTurn: 8_000,       // story_question/help/non-interview: grader + reply + safety
-  retell: 1_000,            // picture retell (grader only, no reply/TTS)
+  freshSynthesis: 1_700,    // any text-to-speech actually generated (additive)
+  authoredAnswerTurn: 700,// interview answer turn: grader only, fixed reply
+  aiReplyTurn: 5_000,       // story_question/help/non-interview: grader + reply + safety
+  retell: 700,               // picture retell (grader only, no reply/TTS)
 });
 // A new voice story is offered only while the pool has at least this much left
 // this UTC month (SPEC_R2L_MINNY_VOICE_COST Packet B, Elon review: the interview

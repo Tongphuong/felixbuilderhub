@@ -1,6 +1,7 @@
 import {PrivateStoryBudgetStore} from '../../../scripts/lib/read2lead-story-budget-store.mjs';
 import {validateStoryBudget,STORY_POOL_MONTHLY_MICRO_USD,STORY_POOL_MIN_REMAINING_MICRO_USD,STORY_SYNTHESIS_FRESH} from './story-budget.mjs';
 import {createMinnyStoryProvider} from './story-voice.mjs';
+import {STORY_ASSESSOR_MODELS} from './story-assessor.mjs';
 import {verifiedLessonCatalogue} from './private-voice.mjs';
 import {publisherDigest} from './self-learn/publisher-contract.mjs';
 import {getOrSynthesize} from '../../api/_minny-tts.js';
@@ -42,7 +43,7 @@ export async function studentVoiceConfiguration({store,env,packageSha256,lessonC
     value=JSON.parse(raw);grant=structuredClone(approvedGrant);
   }catch{return disabled('invalid_configuration');}
   if(value?.format!=='read2lead-student-voice-v1'||value.audience!=='enrolled-students'||
-    value.mode!=='assessed'||value.providerRoute!=='cloudflare-only'||value.assessorModel!=='gpt-oss-120b'||
+    value.mode!=='assessed'||value.providerRoute!=='cloudflare-only'||!Object.hasOwn(STORY_ASSESSOR_MODELS,value.assessorModel)||
     !hash(packageSha256)||value.packageSha256!==packageSha256)return disabled('package_or_policy_mismatch');
   if(value.processingApproved!==true||value.spendingApproved!==true)return disabled('approval_missing');
   const pool=grant?.budget?.scope==='pool',keys=pool?poolKeys:batchKeys;
@@ -76,7 +77,7 @@ export async function studentVoiceConfiguration({store,env,packageSha256,lessonC
   try{budget=new PrivateStoryBudgetStore(store,budgetConfig,now);}catch{return disabled('budget_unavailable');}
   const provider=createMinnyStoryProvider({env:{AI:env.AI,AZURE_SPEECH_KEY:env.AZURE_SPEECH_KEY,
     AZURE_SPEECH_REGION:env.AZURE_SPEECH_REGION,READ2LEAD_CODES:env.READ2LEAD_CODES},
-    fetchFn,assessor:'gpt-oss-120b',cloudflareTimeoutMs:10000});
+    fetchFn,assessor:value.assessorModel,cloudflareTimeoutMs:10000});
   provider.synthesize=createStudentSynthesizer({AI:env.AI,READ2LEAD_CODES:env.READ2LEAD_CODES},fetchFn);
   const scoped={provider,budget,practiceTrial:false,activation:{externalProcessingApproved:true,
     spendingApproved:true,providerVerified:true,assessorValidated:true}};

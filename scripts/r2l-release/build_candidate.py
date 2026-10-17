@@ -14,11 +14,15 @@ Usage:
   build_candidate.py --base <candidate dir> --base-config <wrangler json> \
       --repo <repo root with fresh dist/> --out <new candidate dir> \
       --build-env <json recording PUBLIC_* used for the build> [--full-verify] [--allow-dirty]
-      [--student-voice-grant <approval.json>]
+      [--student-voice-grant <approval.json>] [--student-voice-assessor {gpt-oss-120b,gpt-oss-20b}]
 
 --student-voice-grant is the ONE narrow exception to "the manifest never changes except publicAssets/
 scriptHashes": it swaps only `studentRelease.approvedGrant` (and the matching fields of the
 R2L_STUDENT_VOICE_CONFIG var) to a founder-approved monthly voice pool. See docs/R2L_WORKER_RELEASE.md.
+
+--student-voice-assessor rewrites ONLY `assessorModel` inside vars.R2L_STUDENT_VOICE_CONFIG (nothing else
+in the config or manifest moves), records it in candidate-proof.json and re-runs the student-voice loader
+check. Without the flag the grader model is whatever the base config already says.
 """
 import argparse
 import base64
@@ -40,6 +44,7 @@ MUTABLE_MANIFEST_KEYS = {"publicAssets", "scriptHashes"}
 LOCAL_FILE_EXT = r"(?:js|mjs|css|png|jpe?g|webp|svg|woff2?|mp3|mp4|json|ico)"
 GRANT_CHECK_SCRIPT = Path(__file__).resolve().parent / "check_student_grant.mjs"
 VOICE_APPROVAL_FORMAT = "read2lead-voice-approval-v1"
+ASSESSOR_MODELS = ("gpt-oss-120b", "gpt-oss-20b")  # the only graders the student loader accepts
 POOL_ID = "r2l-student-pool"
 POOL_MAX_MICRO_USD = 15_000_000
 POOL_MAX_TURNS = 32  # the student loader accepts exactly this
@@ -177,6 +182,28 @@ def apply_grant_to_config(cfg, approval_sha, budget, pricing):
     if len(new) > 4096:
         raise ReleaseError("new R2L_STUDENT_VOICE_CONFIG is %d chars; the loader refuses more than 4096" % len(new))
     cfg["vars"]["R2L_STUDENT_VOICE_CONFIG"] = new
+
+
+def apply_assessor_to_config(cfg, model):
+    """Rewrite ONLY assessorModel in the student voice var. Returns the previous value."""
+    if model not in ASSESSOR_MODELS:
+        raise ReleaseError("--student-voice-assessor must be one of %s (got %r)" % (list(ASSESSOR_MODELS), model))
+    raw = (cfg.get("vars") or {}).get("R2L_STUDENT_VOICE_CONFIG")
+    if not isinstance(raw, str):
+        raise ReleaseError("base config has no string vars.R2L_STUDENT_VOICE_CONFIG to update")
+    try:
+        v = json.loads(raw)
+    except json.JSONDecodeError:
+        raise ReleaseError("base R2L_STUDENT_VOICE_CONFIG is not valid JSON")
+    if not isinstance(v, dict) or v.get("format") != "read2lead-student-voice-v1" or "assessorModel" not in v:
+        raise ReleaseError("base R2L_STUDENT_VOICE_CONFIG is not a read2lead-student-voice-v1 object with assessorModel")
+    previous = v["assessorModel"]
+    v["assessorModel"] = model  # same key position: only this value changes
+    new = json.dumps(v, separators=(",", ":"))
+    if len(new) > 4096:
+        raise ReleaseError("new R2L_STUDENT_VOICE_CONFIG is %d chars; the loader refuses more than 4096" % len(new))
+    cfg["vars"]["R2L_STUDENT_VOICE_CONFIG"] = new
+    return previous
 
 
 def run_grant_loader_check(out, manifest_path, cfg_path):
@@ -404,6 +431,9 @@ def build(a):
             raise ReleaseError("repo has uncommitted changes in server source dirs (release from a clean commit, or pass --allow-dirty):\n" + dirty)
     build_env = check_build_env(a.build_env, dist)
     grant = load_voice_grant(a.student_voice_grant) if a.student_voice_grant else None
+    assessor = getattr(a, "student_voice_assessor", None)
+    if assessor is not None and assessor not in ASSESSOR_MODELS:
+        raise ReleaseError("--student-voice-assessor must be one of %s (got %r)" % (list(ASSESSOR_MODELS), assessor))
 
     base_manifest = json.loads((base / MANIFEST_REL).read_text())
     for k in ("pages", "publicAssets", "scriptHashes"):
@@ -530,14 +560,20 @@ def build(a):
         cfg.setdefault("vars", {})["R2L_PREVIEW_PACKAGE_SHA256"] = manifest_sha
         if grant:
             apply_grant_to_config(cfg, grant[0], grant[1], grant[2])
+        previous_assessor = apply_assessor_to_config(cfg, assessor) if assessor else None
         cfg_path = out / "wrangler.release.json"
         for name in ("wrangler.release.json", "candidate-proof.json"):
             if (base / name).is_file():  # generation 2+: these are hard-linked from the previous release
                 base_sha_log[name] = sha256_file(base / name)
         put(cfg_path, (json.dumps(cfg, indent=2) + "\n").encode())
         grant_proof = None
+        assessor_proof = None
+        loader = run_grant_loader_check(out, out / MANIFEST_REL, cfg_path) if (grant or assessor) else None
+        if assessor:
+            assessor_proof = {"assessorModel": assessor, "previousAssessorModel": previous_assessor,
+                              "loaderCheck": {"enabled": loader["enabled"], "reason": loader["reason"],
+                                              "checkedAt": loader["checkedAt"]}}
         if grant:
-            loader = run_grant_loader_check(out, out / MANIFEST_REL, cfg_path)
             grant_proof = {"approvalFile": str(Path(a.student_voice_grant).resolve()), "approvalSha256": grant[0],
                            "budget": grant[1], "previousApprovalSha256": previous_approval,
                            "loaderCheck": {"enabled": loader["enabled"], "reason": loader["reason"],
@@ -571,6 +607,8 @@ def build(a):
         }
         if grant_proof:
             proof["studentVoiceGrant"] = grant_proof
+        if assessor_proof:
+            proof["studentVoiceAssessor"] = assessor_proof
         put(out / "candidate-proof.json", (json.dumps(proof, indent=2) + "\n").encode())
 
         # --- base guard (LAST step: runs after every write this tool makes):
@@ -618,6 +656,8 @@ def main(argv=None):
     ap.add_argument("--allow-dirty", action="store_true")
     ap.add_argument("--student-voice-grant", metavar="APPROVAL_JSON",
                     help="swap ONLY studentRelease.approvedGrant + the matching R2L_STUDENT_VOICE_CONFIG fields to this pool approval")
+    ap.add_argument("--student-voice-assessor", choices=ASSESSOR_MODELS, metavar="{gpt-oss-120b,gpt-oss-20b}",
+                    help="rewrite ONLY assessorModel in R2L_STUDENT_VOICE_CONFIG (default: leave the base value alone)")
     ap.add_argument("--keep-failed", action="store_true", help="keep the out dir when the run fails")
     a = ap.parse_args(argv)
     try:

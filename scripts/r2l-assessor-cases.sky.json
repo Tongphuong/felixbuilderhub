@@ -1,0 +1,530 @@
+{
+ "format": "r2l-assessor-cases-v1",
+ "lesson": {
+  "id": "osad-51fda697ea22c07a08f16b8f-s01",
+  "version": "1.2.9"
+ },
+ "note": "task = q1..q12 (interview question index) or 'retell' (the graded picture retell). expect* fields are the author's intended verdicts, informational only; the comparison asserts only model-vs-model agreement.",
+ "cases": [
+  {
+   "id": "q1-correct",
+   "task": "q1",
+   "type": "correct",
+   "transcript": "The uncle.",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q1-paraphrase",
+   "task": "q1",
+   "type": "paraphrase",
+   "transcript": "my uncle he send it",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q1-wrong",
+   "task": "q1",
+   "type": "wrong",
+   "transcript": "The teacher.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q1-partial",
+   "task": "q1",
+   "type": "partial",
+   "transcript": "A man sends it.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q1-help",
+   "task": "q1",
+   "type": "help",
+   "transcript": "I don't know.",
+   "expectIntent": "help",
+   "expectAllMet": false
+  },
+  {
+   "id": "q2-correct",
+   "task": "q2",
+   "type": "correct",
+   "transcript": "A picture.",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q2-paraphrase",
+   "task": "q2",
+   "type": "paraphrase",
+   "transcript": "he sending photo to him",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q2-wrong",
+   "task": "q2",
+   "type": "wrong",
+   "transcript": "A letter.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q2-partial",
+   "task": "q2",
+   "type": "partial",
+   "transcript": "A picture of a house.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q2-help",
+   "task": "q2",
+   "type": "help",
+   "transcript": "Can you give me a hint?",
+   "expectIntent": "help",
+   "expectAllMet": false
+  },
+  {
+   "id": "q3-correct",
+   "task": "q3",
+   "type": "correct",
+   "transcript": "Blue sky and white clouds.",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q3-paraphrase",
+   "task": "q3",
+   "type": "paraphrase",
+   "transcript": "I see the sky is blue and cloud is white",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q3-wrong",
+   "task": "q3",
+   "type": "wrong",
+   "transcript": "A big red car.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q3-partial",
+   "task": "q3",
+   "type": "partial",
+   "transcript": "A blue sky.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q3-help",
+   "task": "q3",
+   "type": "help",
+   "transcript": "What is a cloud?",
+   "expectIntent": "story_question",
+   "expectAllMet": false
+  },
+  {
+   "id": "q4-correct",
+   "task": "q4",
+   "type": "correct",
+   "transcript": "White.",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q4-paraphrase",
+   "task": "q4",
+   "type": "paraphrase",
+   "transcript": "the cloud it is white color",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q4-wrong",
+   "task": "q4",
+   "type": "wrong",
+   "transcript": "Black.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q4-partial",
+   "task": "q4",
+   "type": "partial",
+   "transcript": "Blue.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q4-help",
+   "task": "q4",
+   "type": "help",
+   "transcript": "I don't know.",
+   "expectIntent": "help",
+   "expectAllMet": false
+  },
+  {
+   "id": "q5-correct",
+   "task": "q5",
+   "type": "correct",
+   "transcript": "Happy.",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q5-paraphrase",
+   "task": "q5",
+   "type": "paraphrase",
+   "transcript": "He very happy and he is excite",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q5-wrong",
+   "task": "q5",
+   "type": "wrong",
+   "transcript": "Sad.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q5-partial",
+   "task": "q5",
+   "type": "partial",
+   "transcript": "He is surprised.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q5-help",
+   "task": "q5",
+   "type": "help",
+   "transcript": "What does excited mean?",
+   "expectIntent": "story_question",
+   "expectAllMet": false
+  },
+  {
+   "id": "q6-correct",
+   "task": "q6",
+   "type": "correct",
+   "transcript": "He could see a blue sky.",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q6-paraphrase",
+   "task": "q6",
+   "type": "paraphrase",
+   "transcript": "Because the sky is blue not grey so he feel happy",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q6-wrong",
+   "task": "q6",
+   "type": "wrong",
+   "transcript": "He got a new car.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q6-partial",
+   "task": "q6",
+   "type": "partial",
+   "transcript": "Because he got a picture.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q6-help",
+   "task": "q6",
+   "type": "help",
+   "transcript": "Hint please.",
+   "expectIntent": "help",
+   "expectAllMet": false
+  },
+  {
+   "id": "q7-correct",
+   "task": "q7",
+   "type": "correct",
+   "transcript": "Grey.",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q7-paraphrase",
+   "task": "q7",
+   "type": "paraphrase",
+   "transcript": "the sky in his city is gray often",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q7-wrong",
+   "task": "q7",
+   "type": "wrong",
+   "transcript": "Blue.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q7-partial",
+   "task": "q7",
+   "type": "partial",
+   "transcript": "Dark.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q7-help",
+   "task": "q7",
+   "type": "help",
+   "transcript": "I do not know.",
+   "expectIntent": "help",
+   "expectAllMet": false
+  },
+  {
+   "id": "q8-correct",
+   "task": "q8",
+   "type": "correct",
+   "transcript": "Too many cars.",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q8-paraphrase",
+   "task": "q8",
+   "type": "paraphrase",
+   "transcript": "Because have a lot of car",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q8-wrong",
+   "task": "q8",
+   "type": "wrong",
+   "transcript": "Because it is raining.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q8-partial",
+   "task": "q8",
+   "type": "partial",
+   "transcript": "Because of the smoke.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q8-help",
+   "task": "q8",
+   "type": "help",
+   "transcript": "What is pollution?",
+   "expectIntent": "story_question",
+   "expectAllMet": false
+  },
+  {
+   "id": "q9-correct",
+   "task": "q9",
+   "type": "correct",
+   "transcript": "In the uncle's city.",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q9-paraphrase",
+   "task": "q9",
+   "type": "paraphrase",
+   "transcript": "his city is the place",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q9-wrong",
+   "task": "q9",
+   "type": "wrong",
+   "transcript": "In the school.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q9-partial",
+   "task": "q9",
+   "type": "partial",
+   "transcript": "In the city.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q9-help",
+   "task": "q9",
+   "type": "help",
+   "transcript": "I forgot.",
+   "expectIntent": "help",
+   "expectAllMet": false
+  },
+  {
+   "id": "q10-correct",
+   "task": "q10",
+   "type": "correct",
+   "transcript": "Isn't the sky always blue?",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q10-paraphrase",
+   "task": "q10",
+   "type": "paraphrase",
+   "transcript": "She is wondering if sky always blue",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q10-wrong",
+   "task": "q10",
+   "type": "wrong",
+   "transcript": "Why the uncle has a car.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q10-partial",
+   "task": "q10",
+   "type": "partial",
+   "transcript": "She wonders about the sky.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q10-help",
+   "task": "q10",
+   "type": "help",
+   "transcript": "What does wonder mean?",
+   "expectIntent": "story_question",
+   "expectAllMet": false
+  },
+  {
+   "id": "q11-correct",
+   "task": "q11",
+   "type": "correct",
+   "transcript": "No.",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q11-paraphrase",
+   "task": "q11",
+   "type": "paraphrase",
+   "transcript": "No he not say that, his city is grey",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q11-wrong",
+   "task": "q11",
+   "type": "wrong",
+   "transcript": "Yes.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q11-partial",
+   "task": "q11",
+   "type": "partial",
+   "transcript": "Maybe.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q11-help",
+   "task": "q11",
+   "type": "help",
+   "transcript": "Can you say the question again?",
+   "expectIntent": "help",
+   "expectAllMet": false
+  },
+  {
+   "id": "q12-correct",
+   "task": "q12",
+   "type": "correct",
+   "transcript": "Blue instead of grey.",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q12-paraphrase",
+   "task": "q12",
+   "type": "paraphrase",
+   "transcript": "The picture it is blue but the city sky is grey always",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "q12-wrong",
+   "task": "q12",
+   "type": "wrong",
+   "transcript": "The picture has more cars.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q12-partial",
+   "task": "q12",
+   "type": "partial",
+   "transcript": "The picture is blue.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "q12-help",
+   "task": "q12",
+   "type": "help",
+   "transcript": "I don't understand, what is different?",
+   "expectIntent": "help",
+   "expectAllMet": false
+  },
+  {
+   "id": "retell-correct",
+   "task": "retell",
+   "type": "correct",
+   "transcript": "The uncle sent a picture of a blue sky with white clouds. He was happy. I wondered if the sky is always blue. The uncle said his city sky is often grey because there are too many cars.",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "retell-paraphrase",
+   "task": "retell",
+   "type": "paraphrase",
+   "transcript": "My uncle he send me photo, the sky is blue and cloud white. Uncle is very excited. I think sky is blue all the time. He tell me his city is grey because many car.",
+   "expectIntent": "answer",
+   "expectAllMet": true
+  },
+  {
+   "id": "retell-wrong",
+   "task": "retell",
+   "type": "wrong",
+   "transcript": "The uncle sent a picture of a dog. The sky was green and it was raining. He was angry.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "retell-partial",
+   "task": "retell",
+   "type": "partial",
+   "transcript": "The uncle sends a picture. The sky is blue.",
+   "expectIntent": "answer",
+   "expectAllMet": false
+  },
+  {
+   "id": "retell-help",
+   "task": "retell",
+   "type": "help",
+   "transcript": "I forget, can you tell me the first picture?",
+   "expectIntent": "help",
+   "expectAllMet": false
+  }
+ ]
+}

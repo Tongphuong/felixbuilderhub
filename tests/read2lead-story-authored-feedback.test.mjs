@@ -43,6 +43,35 @@ function turn(lessonPkg,assess,extra={}){
   return{run,calls,spoken,budget,lesson,task};
 }
 
+test('T1 debits are the live-measured x1.25 values (Addendum 2026-10-17) and the provisional hold is AI-reply + synthesis',()=>{
+  assert.deepEqual({...DEBIT},{cachedPlayback:0,freshSynthesis:1_700,authoredAnswerTurn:700,aiReplyTurn:5_000,retell:700});
+  assert.equal(DEBIT.aiReplyTurn+DEBIT.freshSynthesis,6_700);
+  assert.equal(STORY_POOL_MIN_REMAINING_MICRO_USD,50_000);
+  const f=poolFixture({after(){}}), s=f.store.open('kid',f.pkg.lesson).sessionId;
+  f.budget.claim(s,'p');f.budget.finish(s,'p','failed_or_unknown');
+  assert.equal(f.budget.poolUsed(),6_700,'a failed turn keeps the 6,700 provisional hold');
+});
+
+test('T3 assessorModel: 120b default unchanged, 20b routed to the 20b model, unknown refused',async t=>{
+  const f=poolFixture(t),pkg=base(),approvalSha256='a'.repeat(64),packageSha256='b'.repeat(64);
+  const catalogue=await verifiedLessonCatalogue({voiceVerificationLessons:[{id:pkg.lesson.id,version:pkg.lesson.version,packageSha256:await publisherDigest(pkg)}]});
+  const budget={scope:'pool',poolId:STUDENT_POOL_ID,approvedVoiceMicroUsd:STORY_POOL_MONTHLY_MICRO_USD,maxTurns:32};
+  const raw={format:'read2lead-student-voice-v1',audience:'enrolled-students',mode:'assessed',providerRoute:'cloudflare-only',assessorModel:'gpt-oss-120b',
+    packageSha256,approvalSha256,processingApproved:true,spendingApproved:true,pricingEvidenceSha256:'c'.repeat(64),
+    verification:{provider:true,assessor:true,evidenceSha256:'d'.repeat(64),catalogueSha256:catalogue.sha256},budget};
+  const models=[];
+  const configure=over=>studentVoiceConfiguration({store:f.store,env:{AI:{async run(model){models.push(model);throw Error('stop');}},
+    R2L_STUDENT_VOICE_CONFIG:JSON.stringify({...raw,...over})},packageSha256,lessonCatalogue:catalogue,approvedGrant:{approvalSha256,budget},now:f.now});
+  const task={id:'t',prompt:'Who?',criteria:[{id:'meaning',meaning:'The uncle.'}]};
+  for(const [name,id] of [['gpt-oss-120b','@cf/openai/gpt-oss-120b'],['gpt-oss-20b','@cf/openai/gpt-oss-20b']]){
+    const c=await configure({assessorModel:name});assert.equal(c.status.enabled,true,name);
+    await assert.rejects(c.config.provider.assess({task,transcript:'The uncle.'}),/stop/);
+    assert.equal(models.at(-1),id,name+' is graded by '+id);
+  }
+  for(const bad of ['gpt-oss-1b','@cf/openai/gpt-oss-20b','legacy','',undefined,null])
+    assert.equal((await configure({assessorModel:bad})).status.reason,'package_or_policy_mismatch','refused: '+bad);
+});
+
 test('A2 correct answer: one fixed praise line, zero reply and safety model calls',async()=>{
   const t=turn(interviewPackage(),judgment({criteria:[{id:'meaning',met:true,quote:'Some answer.'}]}));
   const r=await t.run();
@@ -195,9 +224,9 @@ test('B picture retell debits its own small amount',async t=>{
 });
 
 test('B pool resets on the 1st (UTC) and old rows are left alone',async t=>{
-  const f=poolFixture(t,{cap:20_000,start:'2026-10-31T23:59:00Z'}),s=f.store.open('kid',f.pkg.lesson).sessionId;
-  f.budget.claim(s,'a');f.budget.finish(s,'a','failed_or_unknown');// 11000 provisional
-  f.budget.claim(s,'b');f.budget.finish(s,'b','failed_or_unknown');// 22000 >= cap
+  const f=poolFixture(t,{cap:13_000,start:'2026-10-31T23:59:00Z'}),s=f.store.open('kid',f.pkg.lesson).sessionId;
+  f.budget.claim(s,'a');f.budget.finish(s,'a','failed_or_unknown');// 6700 provisional
+  f.budget.claim(s,'b');f.budget.finish(s,'b','failed_or_unknown');// 13400 >= cap
   assert.throws(()=>f.budget.claim(s,'c'),/voice_pool_exhausted/);
   const rows=f.db.prepare('SELECT * FROM story_voice_pool_debits ORDER BY request').all();
   f.clock('2026-11-01T00:00:00Z');
@@ -223,7 +252,7 @@ test('B no child limit: one child starts many missions while the pool has money;
 });
 
 test('B pool exhausted: voice refused cleanly with no provider call, reading is not hidden',async t=>{
-  const f=poolFixture(t,{cap:10_000}),s=f.store.open('kid',f.pkg.lesson).sessionId;
+  const f=poolFixture(t,{cap:6_000}),s=f.store.open('kid',f.pkg.lesson).sessionId;
   f.budget.claim(s,'x');f.budget.finish(s,'x','failed_or_unknown');
   let calls=0;const lesson=interviewPackage().lesson,task=storyRubric(lesson).tasks[0];
   const boom=async()=>{calls++;throw Error('provider must not be called');};
@@ -266,7 +295,7 @@ test('B student config accepts the standing pool (no expiry), keeps the cap, and
   const low=await configure({budget:small},small);assert.equal(low.status.enabled,true);
   assert.equal(low.canAssign(pkg.lesson),true,'plenty left');
   const s=f.store.open('kid',pkg.lesson).sessionId;
-  for(let i=0;i<5;i++){low.config.budget.claim(s,'burn'+i);low.config.budget.finish(s,'burn'+i,'failed_or_unknown');}// 55_000 used, 45_000 left
+  for(let i=0;i<8;i++){low.config.budget.claim(s,'burn'+i);low.config.budget.finish(s,'burn'+i,'failed_or_unknown');}// 53_600 used, 46_400 left
   assert.equal(low.canAssign(pkg.lesson),false,'under 50_000 left: no new voice story offered');
   assert.equal(ok.canAssign(pkg.lesson),true,'the real $15 pool is untouched by this small one');
   f.clock('2026-11-01T00:00:00Z');
