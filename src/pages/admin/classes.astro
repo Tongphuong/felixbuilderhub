@@ -69,7 +69,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
   <HomeworkModal />
 
   <script>
-    import { escapeHtml, signed, presetText } from '../../lib/admin-shared.mjs';
+    import { escapeHtml, signed, presetText, bigDiamondConfirmMessage } from '../../lib/admin-shared.mjs';
     import { renderMonster } from '../../lib/monster-avatar';
     import {
       fireRewardCannon,
@@ -422,6 +422,9 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
     async function applyClassReward({ code, diamondDelta, coinsDelta, reason, kind, sourceEl }: { code: string | undefined; diamondDelta: number; coinsDelta: number; reason: string; kind: string; sourceEl: HTMLElement }) {
       const klass = currentClass();
       if (!klass) return;
+      const studentName = klass.students?.find((s) => s.code === code)?.student_name || code || '';
+      const confirmMsg = bigDiamondConfirmMessage(diamondDelta, studentName);
+      if (confirmMsg && !window.confirm(confirmMsg)) return;
       const res = await fetch(`/api/admin/classes/${encodeURIComponent(klass.id)}/reward`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
