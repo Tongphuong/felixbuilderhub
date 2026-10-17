@@ -5,9 +5,74 @@
 - Active workers: 0
 - Last updated: 2026-10-16
 - Operating model: Phương → Elon (plan/dispatch/review/integrate) → Mark/Steve build → Buffet reviews → Phương sees result before release. Codex retired 2026-10-16.
-- Start here: _ops/outbox/CLAUDE_TAKEOVER_MAP_2026-10-16.md (architecture, Worker deploy recipe, landmines). SQL in the Worker is authoritative; never restore KV. Worker releases: docs/R2L_WORKER_RELEASE.md (base = ~/work/r2l-releases/v99-20261016 now).
+- Start here: _ops/outbox/CLAUDE_TAKEOVER_MAP_2026-10-16.md (architecture, Worker deploy recipe, landmines). SQL in the Worker is authoritative; never restore KV. Worker releases: docs/R2L_WORKER_RELEASE.md (base = ~/work/r2l-releases/v101b-20261016 now, live Worker 97f8638c).
 
 ## Current task
+
+- Task ID: R2L-BOOK-READER-FIX (regular-book lessons blank on the Worker)
+- Status: complete
+- Owner: Elon (Lead); builder Mark; reviewer Buffet
+- Lane: one background packet
+- Branch: claude-bg/r2l-book-reader-fix from main 7dcecdc (live code = a52cbaa)
+- Starting commit: 7dcecdc
+- Spec: plan approved by Phương 2026-10-16 (~/.claude/plans/zesty-singing-flute.md).
+  - Problem: the Worker pages are built with no PUBLIC_R2L_W1, so lesson.astro's book reader never renders for book lessons; the page is blank, with mic panel only and "Tiếp tục" disabled.
+  - Reproduced on v100 and v101b in rehearsal; live with ?w1=1 the book renders.
+  - Fix: build Worker pages with PUBLIC_R2L_W1=1 (as Pages production already does); V3 stays off.
+  - Phương's sign-off for this build-env change is the plan approval.
+- Files owned: scripts/r2l-release/build-env.worker.json; scripts/r2l-release/build_candidate.py (only if its env cross-check needs to accept the W1=1 marker); tests/test_r2l_release_candidate.py; docs/R2L_WORKER_RELEASE.md. NOT lesson.astro (protected, unchanged).
+- Acceptance criteria:
+  - K1 build-env.worker.json sets PUBLIC_R2L_W1=1 and leaves all other PUBLIC_* unset. The tool's cross-check accepts a dist with data-r2l-w1-ssr="1" and refuses a mismatch (bite test).
+  - K2 a candidate v102 built from base v101b changes only lesson-page assets (plus scriptHashes/publicAssets); the pool grant is carried over unchanged; 2092 protected files verified.
+  - K3 rehearsal at 390/768:
+    - an ordinary book lesson shows the story text and can be carried to the save screen;
+    - one quiz lesson works;
+    - the Sky voice story still works;
+    - home, rankings and the parent page are unchanged.
+  - K4 live after release: the Minhdt test account opens "Rain" with story text without ?w1=1.
+- Stop condition: committed claude-bg branch, tests green, completion report. No push/merge/deploy.
+- Cost ceiling: Claude team (Max plan, not metered); USD 0 metered.
+- Reuse survey: N/A — config flag change only. The existing W1 book reader in lesson.astro is reused as-is, and nothing new is built.
+- State inventory: lesson type book/quiz × W1 on × mic allowed/denied × first page/middle/last page/save.
+- Operational reality: ships as Worker candidate v102 (base ~/work/r2l-releases/v101b-20261016) + main push. Release needs Phương's "deploy to production". Rollback Worker 97f8638c.
+- Tradeoff watch: quiz lessons switch to the W1 flow (2 tries, quest path), which is what Pages production serves.
+  - SIGNAL: kids stuck or failing in quiz lessons.
+  - QUERY: Workers Logs count of POST /api/submit-read2lead-progress versus GET /read2lead/lesson per day.
+  - THRESHOLD: completion ratio below 50% over a week → review the W1 quiz flow.
+- Runtime bindings/secrets: N/A — no env.X change (build-time PUBLIC_ flag only).
+- Design self-verification: the W1 book reader is the existing approved lesson design. lesson.astro is unchanged; only the flag that enables it changed.
+  - Buffet's rehearsal of v102 at 390/768: a book lesson renders and completes to the finish screen. Elon viewed scratch micgate/v102a-16-summary.png ("Con đã đọc xong 'Meet the Mammals!'", +65 💎, 20 XP).
+  - LIVE after release: Elon opened "Rain" on the Minhdt test account without ?w1. data-r2l-w1-ssr="1", "Trang 1 / 8", "I love water.", illustration and play button shown: _ops/.playwright-mcp/live-v102-minhdt-rain-390.png (rendered at a 1280 viewport).
+  - Verdict: match; the blank page is gone.
+- Founder handoff: plain-language report with the rehearsal finish screen; Phương said "deploy to production" 2026-10-17.
+- Verified commit: a60f3a0d245c219a8b9d04085f1dc4f91a96b202. Deployed state:
+  - origin/main;
+  - Pages production 72e72930 @ a60f3a0;
+  - Worker read2lead-story-private-preview version 06a9ae7a-5709-4e17-bf05-842066de6047 @100%, candidate ~/work/r2l-releases/v102b-20261016;
+  - rollback Worker 97f8638c.
+- Founder-operated surface check: N/A — child-facing lesson page.
+- Known test-only issue (not fixed here): a test account holding an UNRELEASED draft story pack ("QA Phuong": "Fruit or Vegetables?") gets 409 content_unavailable and a blank story page. Real children are only assigned released stories.
+
+## Acceptance criteria reconciliation
+
+- PASS — K1:
+  - build-env.worker.json sets W1=1; V3 and the rest stay unset;
+  - the tool cross-check refuses both mismatch directions (tests);
+  - the shipped-env test bites on the old file.
+- PASS — K2 v102b proof:
+  - only assets/read2lead/lesson/index.html changed, no source changes, 2092 protected files verified;
+  - pool grant c95c7ad2 carried (manifest identical);
+  - lesson page byte-identical to the rehearsed v102.
+- PASS — K3 rehearsal:
+  - a book lesson renders and completes to save, with diamonds credited, at 390 and 768;
+  - the speak step works with a fake mic;
+  - Sky voice story 12/12 complete;
+  - home, rankings and /ho-so return 200;
+  - v101b is blank for the same lessons.
+- SKIPPED — K3 quiz lesson: the synthetic fixture only issues book packs. Quiz lessons now get the same W1 flow Pages production already serves; watched by the tradeoff watch above.
+- PASS — K4 live: Minhdt opens "Rain" with story text without ?w1. Public pages and all assets return 200. Pages @ a60f3a0.
+
+## Previous task — R2L-MINNY-COST (complete, live 2026-10-16)
 
 - Task ID: R2L-MINNY-COST (Minny voice for 100 kids under $20/month — packets A+B)
 - Status: complete
@@ -48,7 +113,7 @@
 - Verified commit: a52cbaa0f40c8a528f9ea34b7b9feb8a6abbf93b (origin/main; Pages production 4e0878fc @ a52cbaa; Worker read2lead-story-private-preview version 97f8638c-82ea-45a3-90ee-2d7d4c9a026d @100%, candidate ~/work/r2l-releases/v101b-20261016; rollback Worker ab54ac40).
 - Founder-operated surface check: N/A — child-facing voice; no founder-operated surface.
 
-## Acceptance criteria reconciliation
+## Previous acceptance reconciliation — R2L-MINNY-COST
 
 - PASS — M1 saved audio: unit test (counting fake AI). Rehearsal of the exact candidate through the real Worker + DO SQL: aura calls 16 after run 1, still 16 after run 2; run 2's prompts debited 0.
 - PASS — M2 authored feedback: tests for praise, wrong answer (replySupport model), uncertain, story_question/help → AI+safety, plus a known-bad (never praise when any criterion is unmatched). Buffet's old-vs-new cross-product run shows only the intended differences. Rehearsal: 24/24 replies from the fixed praise set, 0 llama calls.
