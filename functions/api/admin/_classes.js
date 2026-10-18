@@ -62,7 +62,7 @@ function normalizePreset(raw, fallback, index) {
     id: cleanId(raw?.id || fallbackId) || fallbackId,
     label,
     // Migrate from legacy xp_delta to diamond_delta; fall back to 0 for new presets.
-    diamond_delta: clampDelta(raw?.diamond_delta ?? base.diamond_delta ?? raw?.xp_delta ?? 0),
+    diamond_delta: presetDiamondDelta(raw?.diamond_delta ?? base.diamond_delta ?? raw?.xp_delta ?? 0),
     coins_delta: clampDelta(raw?.coins_delta ?? base.coins_delta ?? 0),
     kind,
   };
@@ -249,13 +249,35 @@ export async function enrichClass(env, klass) {
   };
 }
 
+// Coins are a retired currency: their per-gift ±2000 cap is deliberately kept.
 function clampDelta(value) {
   const parsed = Math.trunc(Number(value) || 0);
   return Math.max(-2000, Math.min(2000, parsed));
 }
 
+// Diamonds have NO business limit per gift (founder decision 2026-10-17).
+// This bound only keeps the value inside the JS safe-integer range so balance
+// arithmetic stays exact; it is a correctness guard, not a gift limit.
+export const MAX_DIAMOND_DELTA_ABS = 1e9;
+
+// Strict parse for a manual diamond gift. Absent (undefined/null) means 0.
+// Returns a finite whole number, or null when the value is not acceptable.
+export function parseDiamondDelta(value) {
+  if (value === undefined || value === null) return 0;
+  if (typeof value !== 'number' || !Number.isInteger(value)) return null;
+  if (Math.abs(value) > MAX_DIAMOND_DELTA_ABS) return null;
+  return value === 0 ? 0 : value;
+}
+
+// Presets are stored config, so stay lenient (bad value -> 0) as before.
+function presetDiamondDelta(value) {
+  const parsed = parseDiamondDelta(Math.trunc(Number(value)));
+  return parsed === null ? 0 : parsed;
+}
+
 export function applyManualReward(state, { diamondDelta = 0, coinsDelta = 0 } = {}) {
-  const diamondChange = clampDelta(diamondDelta);
+  const diamondChange = parseDiamondDelta(diamondDelta);
+  if (diamondChange === null) throw new RangeError('invalid_diamond_delta');
   let coinChange = clampDelta(coinsDelta);
   const startedRankPoints = state.rank_points;
 

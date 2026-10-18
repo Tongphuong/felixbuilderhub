@@ -57,3 +57,17 @@ export const TEST_LEVELS = [
   ['L4', 'L4 · Kim cương'],
   ['L5', 'L5 · Huyền thoại'],
 ];
+
+/** Gifts above this many diamonds need an explicit admin confirm. */
+export const DIAMOND_CONFIRM_THRESHOLD = 10000;
+
+/**
+ * Confirm text for a big diamond gift, or null when no confirm is needed
+ * (amount at or below the threshold; negatives are never confirmed).
+ */
+export function bigDiamondConfirmMessage(diamonds, studentName) {
+  const n = Number(diamonds);
+  if (!Number.isFinite(n) || n <= DIAMOND_CONFIRM_THRESHOLD) return null;
+  const formatted = new Intl.NumberFormat('vi-VN').format(n);
+  return `Tặng ${formatted} 💎 cho ${studentName}?`;
+}

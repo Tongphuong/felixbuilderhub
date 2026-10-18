@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { applyManualReward, DEFAULT_POSITIVE_PRESETS, DEFAULT_NEEDS_WORK_PRESETS } from '../functions/api/admin/_classes.js';
+import { applyManualReward, parseDiamondDelta, DEFAULT_POSITIVE_PRESETS, DEFAULT_NEEDS_WORK_PRESETS } from '../functions/api/admin/_classes.js';
+import { bigDiamondConfirmMessage } from '../src/lib/admin-shared.mjs';
 import { normalizeProgressState, publicProgressState, progressKey } from '../functions/api/_read2lead-v2-state.js';
 import { onRequestPost as giftsRedeem } from '../functions/api/read2lead-gifts-redeem.js';
 
@@ -116,11 +117,36 @@ test('a 1,000💎 manual award now lands as 1,000 (not silently halved to 500)',
   assert.equal(result.diamonds, 1000);
 });
 
-test('clampDelta still caps at the new ±2000 bound (does not become unbounded)', () => {
+test('diamond gifts have no per-gift cap: 100,000 applies exactly, 2,001 is not clipped', () => {
   const state = makeBaseState();
-  const result = applyManualReward(state, { diamondDelta: 5000, coinsDelta: -9999 });
-  assert.equal(result.diamonds, 2000);
-  assert.equal(result.coins, 0, 'a -2000 clamp floored at 0 coins from a 0 starting balance');
+  assert.equal(applyManualReward(state, { diamondDelta: 100000 }).diamonds, 100000);
+  assert.equal(applyManualReward(state, { diamondDelta: 2001 }).diamonds, 2001);
+});
+
+test('a negative diamond gift floors the balance at 0 (-5,000 on 3,000)', () => {
+  const state = { ...makeBaseState(), diamonds: 3000 };
+  assert.equal(applyManualReward(state, { diamondDelta: -5000 }).diamonds, 0);
+});
+
+test('non-number / non-whole / out-of-range diamond deltas are rejected', () => {
+  const state = makeBaseState();
+  for (const bad of ['abc', '100', NaN, Infinity, -Infinity, 1.5, {}, [], 2e9]) {
+    assert.throws(() => applyManualReward(state, { diamondDelta: bad }), /invalid_diamond_delta/, String(bad));
+    assert.equal(parseDiamondDelta(bad), null, String(bad));
+  }
+  assert.equal(parseDiamondDelta(undefined), 0);
+});
+
+test('coins keep their retired-currency ±2000 cap', () => {
+  const state = { ...makeBaseState(), coins: 0 };
+  assert.equal(applyManualReward(state, { coinsDelta: 9999 }).coins, 2000);
+});
+
+test('big-gift confirm: 10,000 no confirm, 10,001 confirms with vi-VN formatting', () => {
+  assert.equal(bigDiamondConfirmMessage(10000, 'Danny'), null);
+  assert.equal(bigDiamondConfirmMessage(-50000, 'Danny'), null);
+  assert.equal(bigDiamondConfirmMessage(10001, 'Danny'), 'Tặng 10.001 💎 cho Danny?');
+  assert.equal(bigDiamondConfirmMessage(100000, 'Bé An'), 'Tặng 100.000 💎 cho Bé An?');
 });
 
 /**

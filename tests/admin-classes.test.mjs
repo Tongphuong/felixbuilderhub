@@ -159,4 +159,25 @@ test('class APIs manage membership, attendance, and shared Read2Lead rewards', a
   assert.equal(clamped.body.read2lead_state.coins, 0);
   assert.equal(clamped.body.read2lead_state.diamonds, 0);
   assert.equal(records.get(`progress:${code}`).rank_points, 42);
+
+  const bad = await jsonResponse(rewardClassStudent, {
+    method: 'POST',
+    path: `/api/admin/classes/${classId}/reward`,
+    params: { id: classId },
+    body: { code, diamond_delta: 'lots', reason: 'x', kind: 'positive' },
+    env,
+  });
+  assert.equal(bad.response.status, 400);
+  assert.equal(bad.body.error, 'invalid_diamond_delta');
+
+  const big = await jsonResponse(rewardClassStudent, {
+    method: 'POST',
+    path: `/api/admin/classes/${classId}/reward`,
+    params: { id: classId },
+    body: { code, diamond_delta: 100000, reason: 'Quà lớn', kind: 'positive' },
+    env,
+  });
+  assert.equal(big.response.status, 200);
+  assert.equal(big.body.read2lead_state.diamonds, 100000);
+  assert.equal(big.body.applied.diamond_delta, 100000);
 });
