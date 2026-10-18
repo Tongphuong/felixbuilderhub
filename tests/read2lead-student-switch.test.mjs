@@ -27,7 +27,7 @@ function controller(kind,{search='',path,fetcher,storage=memory({'r2l_access_cod
   const context={document,location,sessionStorage:storage,localStorage:memory(),exports,URL,URLSearchParams,Intl,Number,String,Error,TypeError,console,
     matchMedia:()=>({matches:true}),fetch:async(...args)=>{calls.push(args);return fetcher(...args);},
     history:{replaceState(_,__,url){const u=new URL(url,location.href);location.search=u.search;location.href=u.href;location.pathname=u.pathname;}},
-    require(path){if(path.includes('student-entry'))return entryModule;if(path.includes('r2l-hero'))return {buildHeroCta:()=>({action:'lesson'}),statusMeta:()=>({label:'Saved'})};if(path.includes('monster-avatar'))return {renderMonster(){}};if(path.includes('lesson-help'))return {requestLessonAssignment:async()=>({})};if(path.includes('parent-view'))return {invalidateParentCache(){},renderParentView:async(root,data,code)=>{root.textContent=code;}};throw Error(path);}};
+    require(path){if(path.includes('student-entry'))return entryModule;if(path.includes('r2l-hero'))return {buildHeroCta:()=>({action:'lesson'}),statusMeta:()=>({label:'Saved'})};if(path.includes('monster-avatar'))return {renderMonster(){}};if(path.includes('r2l-ranks')){const m={};vm.runInNewContext(ts.transpileModule(readFileSync('src/lib/r2l-ranks.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,{exports:m,document,Intl,Number,String,Promise,require:()=>({renderMonster(){}})});return m;}if(path.includes('lesson-help'))return {requestLessonAssignment:async()=>({})};if(path.includes('parent-view'))return {invalidateParentCache(){},renderParentView:async(root,data,code)=>{root.textContent=code;}};throw Error(path);}};
   context.window={location,history:context.history,scrollTo(){},addEventListener:(k,f)=>{events[k]=f;}};
   const file=kind==='home'?'src/scripts/read2lead-child-home.ts':'src/pages/ho-so/ho-so.ts';
   vm.runInNewContext(ts.transpileModule(readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,context);
@@ -57,11 +57,11 @@ test('reset failure never claims success or erases unrelated browser work',async
 });
 test('E1: home with NO remembered child shows the code form with zero requests',async()=>{
   const f=controller('home',{storage:memory({unrelated:'keep'}),fetcher:()=>{throw Error('unexpected request');}});await settle();
-  assert.equal(f.get('home-entry').hidden,false);assert.equal(f.get('home-ready').hidden,true);assert.equal(f.calls.length,0);assert.equal(f.storage.getItem('unrelated'),'keep');
+  assert.equal(f.get('home-entry').hidden,false);assert.equal(f.get('home-ready').hidden,true);assert.equal(idCalls(f).length,0);assert.equal(f.storage.getItem('unrelated'),'keep');
 });
 test('E1: /r2l/start (personal-link shell) without a token never uses a remembered child',async()=>{
   const f=controller('home',{path:'/r2l/start',fetcher:()=>{throw Error('unexpected request');}});await settle();
-  assert.equal(f.get('home-entry').hidden,false);assert.equal(f.get('home-ready').hidden,true);assert.equal(f.calls.length,0);assert.equal(f.storage.getItem('r2l_access_code'),null);assert.equal(f.storage.getItem('unrelated'),'keep');
+  assert.equal(f.get('home-entry').hidden,false);assert.equal(f.get('home-ready').hidden,true);assert.equal(idCalls(f).length,0);assert.equal(f.storage.getItem('r2l_access_code'),null);assert.equal(f.storage.getItem('unrelated'),'keep');
 });
 test('E3: bare /read2lead with this tab\'s remembered child A opens A\'s home with no typing',async()=>{
   const f=controller('home',{fetcher:async url=>progress(new URL(url,'https://app.test').searchParams.get('code'))});await settle();
@@ -82,9 +82,9 @@ test('actual code form normalizes B, loads only B and retains saved results',asy
   assert.equal(f.get('home-name').textContent,'R2L-B-2');assert.equal(f.get('home-diamonds').textContent,'250');assert.equal(f.get('home-heading').textContent,'Saved story');assert.equal(f.storage.getItem('r2l_access_code'),'R2L-B-2');
 });
 test('invalid manual code does not call API; invalid personal link offers code entry without fallback',async()=>{
-  const f=controller('home',{storage:memory(),fetcher:()=>{throw Error('unexpected');}});await f.submit('bad');assert.equal(f.calls.length,0);assert.ok(f.get('home-entry-message').textContent);
+  const f=controller('home',{storage:memory(),fetcher:()=>{throw Error('unexpected');}});await f.submit('bad');assert.equal(idCalls(f).length,0);assert.ok(f.get('home-entry-message').textContent);
   const g=controller('home',{search:'?t=invalid',fetcher:async()=>Response.json({ok:false},{status:404})});await settle();
-  assert.equal(g.calls.length,1);assert.match(g.calls[0][0],/^\/api\/r2l-link/);assert.equal(g.get('home-entry').hidden,false);assert.equal(g.get('home-ready').hidden,true);
+  assert.equal(idCalls(g).length,1);assert.match(idCalls(g)[0][0],/^\/api\/r2l-link/);assert.equal(g.get('home-entry').hidden,false);assert.equal(g.get('home-ready').hidden,true);
 });
 test('personal link resolves before progress and does not use remembered A',async()=>{
   const f=controller('home',{search:'?t=valid',fetcher:async url=>url.startsWith('/api/r2l-link')?Response.json({access_code:'R2L-B-2'}):progress('B')});await settle();
