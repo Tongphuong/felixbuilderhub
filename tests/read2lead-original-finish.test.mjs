@@ -10,7 +10,7 @@ function finish(data){
  const qs=id=>{if(!nodes.has(id))nodes.set(id,{textContent:'',prepend(node){this.firstChild=node;},classList:{add(){},remove(){}},scrollIntoView(){}});return nodes.get(id);};
  const document={body:{dataset:{}},dispatchEvent(){throw Error('completion must not promote gift shopping');}};
  const context={document,qs,state:{accessCode:'CHILD & 1'},isW1:()=>true,isBookLesson:()=>true,
-  _r2lTriviaState:{},SFX:{},playSfx:()=>effects.push('sound'),playSfxSequence:()=>effects.push('sequence'),
+  dismissFinishOverlays(){},_r2lTriviaState:{},SFX:{},playSfx:()=>effects.push('sound'),playSfxSequence:()=>effects.push('sequence'),
   pickVoiceClip:()=>'',showDiamondTicker:()=>effects.push('diamonds'),showLevelUp:()=>{},showReward:()=>effects.push('reward'),
   window:{__r2lJuice:{showComboBadge:level=>comboLevels.push(level),fireLessonPassConfetti:()=>effects.push('confetti'),showXpTicker:()=>effects.push('xp')},__r2lV3:{showRankUp(){throw Error('retired rank must not be promoted');}}}};
  vm.runInNewContext(source.slice(start,end)+'\n_r2lShowCompletionAfterTrivia(input)',{...context,input:data});
