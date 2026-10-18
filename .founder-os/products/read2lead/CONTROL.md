@@ -2,12 +2,107 @@
 
 - Product: Read2Lead (SpeakUp now lives inside it)
 - Current goal: Phương 2026-10-16 — "get the site working as soon as possible"; full authority delegated to Elon on technical calls. Priorities: P1 rankings back + prominent; P2 chosen monster shown at every level; P3 student entry/switch; P4 Minny cost model for public opening.
-- Active workers: 0
-- Last updated: 2026-10-16
+- Active workers: 2 (Mark — R2L-MINNY-TUNE; Steve — R2L-BOOK-FINISH)
+- Last updated: 2026-10-17
 - Operating model: Phương → Elon (plan/dispatch/review/integrate) → Mark/Steve build → Buffet reviews → Phương sees result before release. Codex retired 2026-10-16.
-- Start here: _ops/outbox/CLAUDE_TAKEOVER_MAP_2026-10-16.md (architecture, Worker deploy recipe, landmines). SQL in the Worker is authoritative; never restore KV. Worker releases: docs/R2L_WORKER_RELEASE.md (base = ~/work/r2l-releases/v101b-20261016 now, live Worker 97f8638c).
+- Start here: _ops/outbox/CLAUDE_TAKEOVER_MAP_2026-10-16.md (architecture, Worker deploy recipe, landmines). SQL in the Worker is authoritative; never restore KV. Worker releases: docs/R2L_WORKER_RELEASE.md (base = ~/work/r2l-releases/v102b-20261016 now, live Worker 06a9ae7a).
 
 ## Current task
+
+- Task ID: R2L-TUNE-FINISH (release v103). Four packets:
+  - 1 R2L-MINNY-TUNE (Mark);
+  - 2 R2L-BOOK-FINISH (Steve);
+  - 3 R2L-PUBLIC-HOME (Steve, worktree steve-home);
+  - 4 R2L-DIAMOND-UNLIMITED (Mark, worktree mark-diamond).
+  Packets 3 and 4 were added 2026-10-17 by Phương's approved plan: public page with rankings, built from approved parts; no admin diamond cap, with a confirm above 10,000.
+  - Files owned, packet 3: src/components/Read2LeadChildHome.astro; src/scripts/read2lead-child-home.ts; src/styles/read2lead-child-home.css; its tests.
+  - Files owned, packet 4: functions/api/admin/_classes.js; src/pages/admin/classes.astro; any same-purpose admin diamond cap found (reported); its tests.
+  - Acceptance, packet 3:
+    - P1 the logged-out /read2lead/ shows Minny + the approved one-liner + the 3-step strip + the live top-3 rankings + the unchanged code box;
+    - P2 a rankings failure never blanks the page;
+    - P3 the logged-in home is unchanged (screenshots before and after);
+    - P4 Steve's screenshots at 390/768/1024/1280 are shown to Phương before release.
+  - Acceptance, packet 4:
+    - D1 no ±2000 clamp; 100,000 is applied exactly; non-numbers are rejected; the balance floors at 0;
+    - D2 an admin confirm appears above 10,000;
+    - D3 live: a 100,000 gift lands on the test account Minhdt.
+- Owner: Elon (Lead); builders Mark (packet 1), Steve (packet 2); reviewer Buffet
+- Lane: two background packets in parallel, separate worktrees, disjoint files
+- Branches:
+  - claude-bg/r2l-minny-tune (worktree mark-tune);
+  - claude-bg/r2l-book-finish (worktree steve-finish);
+  - both from main bf5a4e7 (live code = a60f3a0).
+- Starting commit: bf5a4e7
+- Spec:
+  - _ops/specs/SPEC_R2L_MINNY_VOICE_COST.md, addendum 2026-10-17 (live costs, B2 debits, C grader comparison);
+  - _ops/specs/SPEC_R2L_BOOK_FINISH.md (protected lesson.astro edit).
+  - Phương approved the plan 2026-10-17.
+- Files owned:
+  - Mark: functions/lib/read2lead/story-budget.mjs; functions/lib/read2lead/story-assessor.mjs; functions/lib/read2lead/student-voice.mjs; scripts/r2l-assessor-compare.mjs (new); scripts/r2l-release/build_candidate.py; tests/test_r2l_release_candidate.py; docs/R2L_WORKER_RELEASE.md; tests for budget/assessor/student-voice.
+  - Steve: src/pages/read2lead/lesson.astro (protected; spec above); src/styles/read2lead-story-mission.css (only if the button style lives there); a new or updated lesson finish test.
+- Acceptance criteria:
+  - T1 debit constants = spec addendum values; tests updated; the 50k floor unchanged.
+  - T2 the comparison script runs both models on ≥60 Sky cases; the report is saved to _ops/outbox/; the disagreement count is stated.
+  - T3 20b is enabled only if disagreements = 0, via loader + --student-voice-assessor flag with bite tests; otherwise 120b stays and the report says why.
+  - F1 last-page labels: "Hoàn thành trang →" and the real submit "Lưu chiến công 💾"; save logic unchanged (still one submit request).
+  - F2 "Đọc thêm truyện" readable (≥4.5:1, ≥44px) or explained if inert.
+  - F3 toasts/overlays cleared when the finish card shows.
+  - F4 Steve's rule-18 screenshots at 390/768/1024/1280, before and after.
+  - R rehearsal of v103 (book to save; Sky voice story; meter charges), then live on Minhdt with a Cloudflare cost reading.
+- Stop condition: committed claude-bg branches, tests green, completion reports. No push/merge/deploy.
+- Cost ceiling: Claude team (Max plan, not metered); comparison script live Workers AI calls ≤ ~5k neurons (free tier, ≤ USD 0.05).
+- Reuse survey:
+  - (1) the existing story-assessor + validateStoryJudgment — REUSED as the comparison harness core;
+  - (2) Workers AI gpt-oss-20b — the CANDIDATE, adopted only on zero disagreements;
+  - (3) Workers AI qwen3-30b-a3b (STORY_QWEN_MODEL already wired) — NOT this round: one candidate at a time, so the cheapest-with-same-family model is tried first;
+  - finish-screen fixes reuse the existing r2l-primary/r2l-secondary classes, with no new UI.
+- State inventory: grader 120b/20b × answer correct/paraphrase/wrong/partial/help × question 1–12/retell; book last page × shadow-continue pending/done × submit in-flight/done × toast visible/not.
+- Operational reality: one Worker candidate v103 (base ~/work/r2l-releases/v102b-20261016) + main push. Release needs Phương's "deploy to production". Rollback Worker 06a9ae7a.
+- Tradeoff watch: the cheaper grader could grade differently on real child speech than on TTS/synthetic transcripts.
+  - SIGNAL: share of interview answers judged confirmed-correct per week.
+  - QUERY: story_voice_turns judgments (SQL) or Workers Logs on story-turn, compared with the 4 weeks before the switch.
+  - THRESHOLD: a shift > 10 points → revert to 120b (one config value).
+- Runtime bindings/secrets: N/A — no new env.X. R2L_STUDENT_VOICE_CONFIG.assessorModel value may change via the release flag; the Worker has a single production environment.
+- Status: complete
+- Design self-verification:
+  - The public page reuses approved pieces: the monster, the site one-liner, the #home-steps copy and the #home-rankings card.
+  - Steve rendered before/after at 390/768/1024/1280 (scratchpad public-home/), and Elon viewed 390 and 1280. After Elon's review, a polish round made the step strip into cards and the card widths equal.
+  - Book finish before/after at 390/768/1024/1280 (scratchpad finish/). Elon viewed 390 before/after: the button is readable and the toast is gone.
+  - Rehearsal of the REAL v103 candidate: scratchpad v103/anon-{390,768,1024,1280}.png, home-in-390.png, v103-*-{390..1280}.png.
+  - LIVE after release, fresh browser at 390 and 1280: scratchpad v103/live/live-anon-390.png. It shows the h1 one-liner, 3 step cards, live XP and diamond boards (real data), the code box, no overflow and no page errors.
+  - Verdict: match.
+- Founder handoff:
+  - Plain-language report with the rehearsal screenshot paths: public page 390/1280, finish card 390.
+  - Asks: (1) "deploy to production", which Phương gave 2026-10-18 via AskUserQuestion; (2) project-recovery cleanup, approved; (3) $15→$20 pool, NOT answered, so it stays $15.
+- Verified commit: ab0e0ff4fda315674303a19d01de1075764b55cf
+- Deployed state:
+  - origin/main = ab0e0ff (Pages);
+  - Worker read2lead-story-private-preview version b91235ef-2582-42f9-83a6-91e100134035 @100%, candidate ~/work/r2l-releases/v103-20261018;
+  - rollback Worker 06a9ae7a.
+- Founder-operated surface check: NOT DONE live. The admin gift (packet 4) could not be exercised on production because /admin needs the production admin password, which Elon does not hold (401).
+  - Covered instead by Buffet: he ran the real applyClassReward in a VM, confirming a number is sent, the confirm appears at 10,001 but not 10,000, and cancel sends nothing; and the real reward handler, confirming 100000 is applied exactly.
+  - Phương's first large gift on /admin/classes is the human check, and it is flagged to him.
+
+## Acceptance criteria reconciliation
+
+- PASS — T1: debits are the measured ×1.25 values; a test bites on revert; the 50k floor is unchanged.
+- PASS — T2: 65 Sky cases compared, report in _ops/outbox/assessor-compare-2026-10-17/, 9 disagreements.
+- PASS — T3: 20b is NOT enabled (9 ≠ 0). The loader and the --student-voice-assessor flag ship OFF, with bite tests.
+- PASS — F1: the live rehearsal shows "Hoàn thành trang →" on page 7/7, then "Lưu chiến công 💾"; exactly 1 submit POST.
+- PASS — F2: white #fff / #17364e (~11:1), 52px; the button is a real action (not inert).
+- PASS — F3: dismissFinishOverlays; the rehearsal shows toast opacity 0 on the finish card.
+- PASS — F4: before/after at 4 widths (Steve).
+- PASS — P1: live page shows the one-liner, 3 steps, top-3 rankings and the code box.
+- PASS — P2: fetch failure, empty or non-JSON results hide only the card (tests).
+- PASS — P3: logged-in home is pixel-identical at 1280; at 390 only the monster animation box differs.
+- PASS — P4: screenshots were presented before release.
+- PASS — D1: Buffet ran the handler: 100000 exact, the floor holds, >1e9 and strings get 400.
+- PASS — D2: the confirm fires above 10,000 (VM run plus a helper test).
+- SKIPPED — D3: the live 100k gift to Minhdt was not done, for lack of the production admin password (see Founder-operated surface check).
+- PASS (partial) — R: the rehearsal covered a book to save and Sky voice (2 missions, 12/12, 0 errors); the meter debits are unit-tested.
+  - SKIPPED: a live voice run on Minhdt with a Cloudflare cost reading. The session was ended by Phương after the deploy; the daily-health R4 spend check watches the pool.
+
+## Previous task — R2L-BOOK-READER-FIX (complete, live 2026-10-17)
 
 - Task ID: R2L-BOOK-READER-FIX (regular-book lessons blank on the Worker)
 - Status: complete
@@ -54,7 +149,7 @@
 - Founder-operated surface check: N/A — child-facing lesson page.
 - Known test-only issue (not fixed here): a test account holding an UNRELEASED draft story pack ("QA Phuong": "Fruit or Vegetables?") gets 409 content_unavailable and a blank story page. Real children are only assigned released stories.
 
-## Acceptance criteria reconciliation
+## Previous acceptance reconciliation — R2L-BOOK-READER-FIX
 
 - PASS — K1:
   - build-env.worker.json sets W1=1; V3 and the rest stay unset;
