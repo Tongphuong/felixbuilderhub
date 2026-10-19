@@ -180,11 +180,17 @@ if (root) {
         sitekey: siteKey, language: 'vi', theme: 'dark',
         callback: (token: string) => { turnstileToken = token; if (el('signup-message').textContent === WATCHDOG_MESSAGE) signupMessage(''); },
         'expired-callback': () => { turnstileToken = ''; },
-        'error-callback': () => { turnstileToken = ''; },
+        // Turnstile's own failure signals: tell the family right away.
+        'error-callback': () => { turnstileToken = ''; signupMessage(WATCHDOG_MESSAGE); },
+        'unsupported-callback': () => { turnstileToken = ''; signupMessage(WATCHDOG_MESSAGE); },
       });
-      // The script can load yet never draw the box (a content filter blocking the iframe fires no error).
+      // Fallback for a silent block: Turnstile keeps its iframe in a CLOSED shadow root, so it cannot be
+      // looked up. Judge by size instead: a drawn widget (managed checkbox ~65px) gives its host element
+      // height. A visible-but-unclicked widget is therefore never flagged.
       setTimeout(() => {
-        if (!turnstileToken && !el('signup-turnstile').querySelector('iframe')) signupMessage(WATCHDOG_MESSAGE);
+        const host = el('signup-turnstile').firstElementChild as HTMLElement | null;
+        const drawn = host ? host.getBoundingClientRect().height > 40 : false;
+        if (!turnstileToken && !drawn) signupMessage(WATCHDOG_MESSAGE);
       }, 10000);
     } catch { signupReady = false; signupMessage('Chưa tải được ô xác minh. Con tải lại trang hoặc nhờ ba mẹ giúp nhé.'); }
   }

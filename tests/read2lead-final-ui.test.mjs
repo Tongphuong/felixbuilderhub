@@ -13,7 +13,7 @@ function element() {
   const events = {}, attrs = {};
   return { events, hidden: false, disabled: false, checked: false, value: '', textContent: '', children: [], classList: { toggle() {} },
     setAttribute(k, v) { attrs[k] = v; }, getAttribute: k => attrs[k] ?? null, addEventListener: (k, f) => { events[k] = f; },
-    append() {}, appendChild(n) { this.children.push(n); setImmediate(() => n.onload && n.onload()); }, replaceChildren() {}, focus() {}, querySelector() { return null; } };
+    append() {}, appendChild(n) { this.children.push(n); setImmediate(() => n.onload && n.onload()); }, replaceChildren() {}, focus() {}, querySelector() { return null; }, firstElementChild: null, getBoundingClientRect: () => ({ height: 0 }) };
 }
 const settle = async () => { for (let i = 0; i < 12; i++) await new Promise(r => setImmediate(r)); };
 const mem = () => { const m = new Map(); return { getItem: k => m.get(k) ?? null, setItem: (k, v) => m.set(k, v), removeItem: k => m.delete(k) }; };
@@ -239,4 +239,38 @@ test('donation content, public-name note, privacy sentence, and the QR is byte-i
   assert.ok(!/\[Tên/.test(src));
   assert.match(readFileSync('src/pages/privacy.astro', 'utf8'), /Khi ba mẹ tự tạo mã Read2Lead, tên con \(như ba mẹ nhập\) và quái vật của con sẽ hiện trên bảng xếp hạng công khai\./);
   assert.equal(createHash('sha256').update(readFileSync('public/donate-qr.png')).digest('hex'), '80287b00654b197614aa59aabe4f0b4a4c5d5368924c2a954eb3ff2bce64fdd8');
+});
+
+// Live bug (v104): Turnstile draws its iframe inside a CLOSED shadow root, so looking for an iframe flagged a
+// perfectly visible widget. Judge by Turnstile's own callbacks and by the widget host's rendered size.
+test('a visibly rendered but not-yet-clicked widget never triggers the warning (host has height, shadow iframe invisible to us)', async () => {
+  const p = page({ signup: async () => Response.json({ ok: true }) });
+  await settle();
+  p.get('signup-turnstile').firstElementChild = { getBoundingClientRect: () => ({ height: 65 }) };
+  p.timers.find(t => t.ms === 10000).f();
+  assert.equal(p.get('signup-message').textContent, '');
+});
+
+test('widget host has no height after 10s (silently blocked): the warning shows', async () => {
+  const p = page({ signup: async () => Response.json({ ok: true }) });
+  await settle();
+  p.get('signup-turnstile').firstElementChild = { getBoundingClientRect: () => ({ height: 0 }) };
+  p.timers.find(t => t.ms === 10000).f();
+  assert.match(p.get('signup-message').textContent, /Ô xác minh chưa hiện được/);
+});
+
+test('Turnstile error-callback and unsupported-callback show the message immediately; a token clears it', async () => {
+  for (const name of ['error-callback', 'unsupported-callback']) {
+    const p = page({ signup: async () => Response.json({ ok: true }) });
+    await settle();
+    assert.equal(p.get('signup-message').textContent, '');
+    p.renders[0][name]();
+    assert.match(p.get('signup-message').textContent, /Ô xác minh chưa hiện được/);
+    p.renders[0].callback('late');
+    assert.equal(p.get('signup-message').textContent, '');
+  }
+});
+
+test('source never looks for an iframe', () => {
+  assert.ok(!/querySelector\(['"]iframe/.test(readFileSync('src/scripts/read2lead-child-home.ts', 'utf8')));
 });
