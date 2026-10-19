@@ -609,6 +609,7 @@ test('D r2l driver is idempotent on a used rehearsal server (existing pack reuse
   } finally { await new Promise(r => server.close(r)); }
 });
 
+const pct95 = (have, price) => Math.round((have / price) * 100) >= 95;
 test('Release-2 samples: values come from the mocks, real shapes are kept, alt differs everywhere', async () => {
   const D = await import('../scripts/design/drivers/r2l.mjs');
   const { SAMPLE, loadSample, sampleLeaderboardFull, sampleLibrary, sampleGifts, sampleCompanion, bindingExpectations, ALT_SAMPLE_PATH } = D;
@@ -623,7 +624,12 @@ test('Release-2 samples: values come from the mocks, real shapes are kept, alt d
   assert.ok(lib.includes(`${SAMPLE.library.counts.stories} câu chuyện · ${SAMPLE.library.counts.books} quyển sách`));
   const shop = text('08-shop-1280.html');
   assert.ok(shop.includes(String(SAMPLE.shop.diamonds)));
-  for (const g of SAMPLE.shop.gifts.slice(0, 4)) { assert.ok(shop.includes(g.name_vi), g.name_vi); assert.ok(shop.includes(`${g.price_diamonds} kim cương`), g.name_vi); }
+  for (const g of SAMPLE.shop.gifts.slice(0, 4)) {
+    assert.ok(shop.includes(g.name_vi), g.name_vi);
+    // the one deliberate difference: the mock says 60 for the near-miss gift (55/60 = 92%), but the product's near-miss rule starts at 95%, so the sample uses 57
+    if (g.id !== 'pencils') assert.ok(shop.includes(`${g.price_diamonds} kim cương`), g.name_vi);
+    else assert.ok(shop.includes('60 kim cương') && g.price_diamonds === 57 && pct95(SAMPLE.shop.diamonds, g.price_diamonds));
+  }
   assert.ok(shop.includes('46%'));
   // shapes: leaderboard keeps avatar / extra keys, the child sits at its rank with is_self, the other board is untouched
   const av = { monster: { body: 'x' } };
@@ -636,7 +642,7 @@ test('Release-2 samples: values come from the mocks, real shapes are kept, alt d
   assert.deepEqual(Object.keys(libj.stories[0]).sort(), ['audio', 'bookId', 'id', 'number', 'pages', 'title']);
   assert.ok(Array.isArray(libj.stories[0].audio) && libj.stories[0].audio.length === 1 && libj.stories[3].audio.length === 0, 'audio availability = audio[] non-empty');
   const gj = sampleGifts({ ok: true, items: [{ id: 'sticker', name_vi: 'Sticker', emoji: 'x', image_key: null, image_url: null, price_diamonds: 1000, limit_total: null, redeemed_count: 0, active: true, can_afford: false, available: true, progress_percent: 27 }], diamonds: 270, redemptions: [], gift_goal: null });
-  assert.equal(gj.diamonds, 55); assert.equal(gj.gift_goal, 'sticker'); assert.equal(gj.items.find(i => i.id === 'sticker').progress_percent, 46); assert.equal(gj.items.find(i => i.id === 'pencils').progress_percent, 92);
+  assert.equal(gj.diamonds, 55); assert.equal(gj.gift_goal, 'sticker'); assert.equal(gj.items.find(i => i.id === 'sticker').progress_percent, 46); assert.equal(gj.items.find(i => i.id === 'pencils').progress_percent, 96); // 55/57: clears the product's 95% near-miss rule
   assert.deepEqual(gj.redemptions.map(r => [r.gift_id, r.status]), [['bookmark', 'delivered'], ['gift_box', 'requested']]);
   assert.ok(gj.items.every(i => i.can_afford === (i.price_diamonds <= 55)));
   assert.ok(!gj.items.some(i => i.id === 'bookmark'), 'a received gift is ONE card (its received card), not also an ordinary item');
@@ -652,8 +658,8 @@ test('Release-2 samples: values come from the mocks, real shapes are kept, alt d
   alt.shop.gifts.forEach((g, i) => { assert.notEqual(g.name_vi, SAMPLE.shop.gifts[i].name_vi); assert.notEqual(g.price_diamonds, SAMPLE.shop.gifts[i].price_diamonds); });
   assert.notEqual(alt.shop.diamonds, SAMPLE.shop.diamonds);
   const e = bindingExpectations(alt, 'shop-goal', SAMPLE);
-  assert.ok(e.expect.includes('88') && e.expect.includes('Thước kẻ') && e.expect.includes('150 kim cương') && e.expect.includes('59%') && e.expect.includes('62') && e.expect.includes('Còn thiếu 8 kim cương'));
-  assert.ok(e.absent.includes('55') && e.absent.includes('Sticker') && e.absent.includes('120 kim cương') && e.absent.includes('65') && e.absent.includes('Còn thiếu 5 kim cương'));
+  assert.ok(e.expect.includes('88') && e.expect.includes('Thước kẻ') && e.expect.includes('150 kim cương') && e.expect.includes('59%') && e.expect.includes('62') && e.expect.includes('Còn thiếu 4 kim cương'));
+  assert.ok(e.absent.includes('55') && e.absent.includes('Sticker') && e.absent.includes('120 kim cương') && e.absent.includes('65') && e.absent.includes('Còn thiếu 2 kim cương'));
   // prices only on ordinary cards (the received and pending cards show none), so they are never expected; and no collision with the mock's numbers
   assert.ok(!e.expect.includes('70 kim cương') && !e.expect.includes('300 kim cương'), 'received (Cục tẩy 70) and pending (Quà bất ngờ 300) show no price');
   assert.ok(!e.expect.some(x => e.absent.includes(x)), 'no string is both expected and gone');
@@ -671,8 +677,8 @@ test('Release-2 samples: values come from the mocks, real shapes are kept, alt d
   assert.deepEqual(bindingExpectations(alt, 'rank-up', SAMPLE), { expect: ['Vàng ★'], absent: ['Bạc ★★★'] });
   // shop: goal price/percent/remaining, the nearly-affordable gift, status strings
   const sp = bindingExpectations(alt, 'shop-goal', SAMPLE);
-  for (const x of ['62', 'Còn thiếu 8 kim cương', 'Sắp đổi được!', '✓ Đã nhận quà', 'Đang chờ Coach Felix duyệt', 'Đặt làm mục tiêu ★', '96 kim cương']) assert.ok(sp.expect.includes(x), x);
-  for (const x of ['65', 'Còn thiếu 5 kim cương', '60 kim cương']) assert.ok(sp.absent.includes(x), x);
+  for (const x of ['62', 'Còn thiếu 4 kim cương', 'Sắp đổi được!', '✓ Đã nhận quà', 'Đang chờ Coach Felix duyệt', 'Đặt làm mục tiêu ★', '92 kim cương']) assert.ok(sp.expect.includes(x), x);
+  for (const x of ['65', 'Còn thiếu 2 kim cương', '57 kim cương']) assert.ok(sp.absent.includes(x), x);
 });
 
 test('region own-pixels: an element that renders nothing fails even when the backdrop edges look like the mock (rule 28)', async t => {

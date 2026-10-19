@@ -139,7 +139,7 @@ export function bindingExpectations(S, state, Base = null, width = 1280) {
       list.push(vn(s.shop.diamonds), `${vn(g.price_diamonds)} kim cương`, `${pct(s.shop.diamonds, g.price_diamonds)}%`, vn(g.price_diamonds - s.shop.diamonds));
       for (const x of V.gifts) list.push(x.name_vi);                                           // every card shows its name
       for (const x of V.priced) list.push(`${vn(x.price_diamonds)} kim cương`);                // ordinary cards show a price; received / pending cards do not
-      const near = V.priced.find(x => x.id !== s.shop.goal_id && x.price_diamonds > s.shop.diamonds && pct(s.shop.diamonds, x.price_diamonds) >= 90);
+      const near = V.priced.find(x => x.id !== s.shop.goal_id && x.price_diamonds > s.shop.diamonds && pct(s.shop.diamonds, x.price_diamonds) >= NEAR_MISS_PERCENT);
       if (near) list.push(`Còn thiếu ${vn(near.price_diamonds - s.shop.diamonds)} kim cương`);
       return list;
     };
@@ -147,7 +147,7 @@ export function bindingExpectations(S, state, Base = null, width = 1280) {
     for (const x of mine) add(expect, x);
     for (const x of theirs) if (!mine.includes(x)) add(absent, x);
     const V = shopView(S, w);
-    const near = V.priced.find(x => x.id !== S.shop.goal_id && x.price_diamonds > S.shop.diamonds && pct(S.shop.diamonds, x.price_diamonds) >= 90);
+    const near = V.priced.find(x => x.id !== S.shop.goal_id && x.price_diamonds > S.shop.diamonds && pct(S.shop.diamonds, x.price_diamonds) >= NEAR_MISS_PERCENT);
     if (near) add(expect, 'Sắp đổi được!');
     if (V.redemptions.some(r => r.status === 'delivered')) { add(expect, '✓ Đã nhận quà'); add(expect, 'Con đã nhận từ Coach Felix ở lớp'); }
     if (V.redemptions.some(r => r.status === 'requested')) { add(expect, 'Đang chờ Coach Felix duyệt'); add(expect, 'Con đã gửi yêu cầu. Coach Felix sẽ xem nhé.'); }
@@ -158,6 +158,8 @@ export function bindingExpectations(S, state, Base = null, width = 1280) {
 }
 
 // ---- Release-2 screens: values replaced inside the REAL response shapes -----------------------
+// the product's near-miss rule (deriveGiftCardState, shared and tested): "Sắp đổi được!" appears from 95% of the price
+const NEAR_MISS_PERCENT = 95;
 const pct = (have, price) => Math.max(0, Math.min(100, Math.round((have / price) * 100)));
 export const R2_STATES = ['companion', 'leaderboard-xp', 'library', 'shop-goal'];
 
