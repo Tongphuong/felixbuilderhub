@@ -10,7 +10,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { readFile } from 'node:fs/promises';
-import { onRequestPost as signup, checkStudentName } from '../functions/api/signup.js';
+import { onRequestPost as signup, checkStudentName, signTurnstileMarker } from '../functions/api/signup.js';
 import { onRequestGet as resolveLink } from '../functions/api/r2l-link.js';
 import { isAccessCodeKey } from '../functions/api/_read2lead-v2-state.js';
 
@@ -659,7 +659,6 @@ test('BITE: Zalgo - 19 stacked combining marks on one letter is refused; a norma
   assert.equal(checkStudentName('Ngọc Ánh'), null);
 });
 
-const GATEWAY_ENV = { R2L_ACCOUNT_MODE: 'unified-v1' };
 async function callWithMarker({ marker, env = {}, fetchImpl, body } = {}) {
   const kv = makeKv({ 'config:signup_enabled': true });
   const request = new Request('https://felixbuilderhub.com/api/signup', {
@@ -672,15 +671,18 @@ async function callWithMarker({ marker, env = {}, fetchImpl, body } = {}) {
 }
 test('gateway-verified marker inside the account host skips siteverify (single-use tokens are not re-verified)', async () => {
   let fetched = 0;
-  const { res } = await callWithMarker({ marker: '1', env: GATEWAY_ENV, fetchImpl: async () => { fetched += 1; return new Response('{}'); } });
+  const { res } = await callWithMarker({ marker: await signTurnstileMarker('s'), env: { TURNSTILE_SECRET_KEY: 's' }, fetchImpl: async () => { fetched += 1; return new Response('{}'); } });
   assert.equal(res.status, 200);
   assert.equal(fetched, 0);
 });
-test('BITE: the marker is NOT trusted outside the account host (forged on the Pages path -> still needs Turnstile)', async () => {
-  const { res, body } = await callWithMarker({ marker: '1', env: { TURNSTILE_SECRET_KEY: 's' }, fetchImpl: passingFetch() });
-  assert.equal(res.status, 400);
-  assert.equal(body.error, 'turnstile_required');
-  const noSecret = await callWithMarker({ marker: '1' });
+test('BITE: a forged, wrong-secret, stale or malformed marker is NOT trusted (still needs Turnstile)', async () => {
+  const forged = ['1', 'true', await signTurnstileMarker('other-secret'), await signTurnstileMarker('s', Date.now() - 120000), `${Date.now()}.${'0'.repeat(64)}`];
+  for (const marker of forged) {
+    const { res, body } = await callWithMarker({ marker, env: { TURNSTILE_SECRET_KEY: 's' }, fetchImpl: passingFetch() });
+    assert.equal(res.status, 400, marker);
+    assert.equal(body.error, 'turnstile_required', marker);
+  }
+  const noSecret = await callWithMarker({ marker: await signTurnstileMarker('s') });
   assert.equal(noSecret.body.error, 'turnstile_not_configured');
 });
 test('without the marker the handler still verifies itself, with a timeout signal on siteverify', async () => {

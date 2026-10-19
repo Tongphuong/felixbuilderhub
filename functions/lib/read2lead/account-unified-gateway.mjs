@@ -1,6 +1,6 @@
 import { ACCOUNT_ROUTES } from './account-routes.mjs';
 import { EXISTING_TEST_OBJECT, VERIFIED_ADMIN_HEADER } from './account-gateway.mjs';
-import { verifyTurnstile, turnstileRefusal, turnstileTokenProblem, TURNSTILE_VERIFIED_HEADER } from '../../api/signup.js';
+import { verifyTurnstile, turnstileRefusal, turnstileTokenProblem, signTurnstileMarker, TURNSTILE_VERIFIED_HEADER } from '../../api/signup.js';
 import { getClientIp } from '../../api/_rate-limit.js';
 
 export const UNIFIED_MODE = 'unified-v1';
@@ -86,7 +86,7 @@ export async function unifiedAccountGateway(context) {
       let passed=false;
       try { passed=await verifyTurnstile(secret,token,getClientIp(request),context.fetchImpl||fetch); } catch { passed=false; }
       if (!passed) return turnstileRefusal('turnstile_failed');
-      headers.set(TURNSTILE_VERIFIED_HEADER,'1');
+      headers.set(TURNSTILE_VERIFIED_HEADER,await signTurnstileMarker(secret));
     }
     const response=await namespace.get(namespace.idFromName(EXISTING_TEST_OBJECT)).fetch(new Request(request,{headers}));
     if (response.headers.get('X-R2L-Account-Host')!==EXISTING_TEST_OBJECT||

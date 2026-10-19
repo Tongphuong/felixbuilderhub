@@ -141,10 +141,32 @@ export async function verifyTurnstile(secret, token, ip, fetchImpl = fetch) {
 }
 
 // The unified gateway verifies Turnstile OUTSIDE the serialized account lane, then marks the
-// forwarded request with this header. The gateway deletes any incoming copy of it on EVERY
-// request, and signup.js only honours it in the account host (R2L_ACCOUNT_MODE set), so a
-// client can never forge it. Tokens are single-use, so a verified request is not re-verified.
+// forwarded request with this header. The gateway deletes any incoming copy on EVERY request,
+// and the value is `<ms timestamp>.<HMAC-SHA256(TURNSTILE_SECRET_KEY, "r2l-signup-verified:"+ts)>`,
+// so even on a path with no gateway a client cannot forge it without the secret (the account
+// host strips R2L_ACCOUNT_MODE from its env, so the mode cannot be the trust anchor). Valid for
+// 60s. Tokens are single-use, so a verified request is not re-verified here.
 export const TURNSTILE_VERIFIED_HEADER = 'x-r2l-turnstile-verified';
+const MARKER_TTL_MS = 60 * 1000;
+async function markerMac(secret, ts) {
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(`r2l-signup-verified:${ts}`));
+  return Array.from(new Uint8Array(sig), (b) => b.toString(16).padStart(2, '0')).join('');
+}
+export async function signTurnstileMarker(secret, now = Date.now()) {
+  return `${now}.${await markerMac(secret, now)}`;
+}
+export async function verifyTurnstileMarker(secret, value, now = Date.now()) {
+  if (!secret || typeof value !== 'string') return false;
+  const m = /^(\d{10,16})\.([a-f0-9]{64})$/.exec(value);
+  if (!m) return false;
+  const ts = Number(m[1]);
+  if (!(now - ts >= 0 && now - ts <= MARKER_TTL_MS)) return false;
+  const expected = await markerMac(secret, ts);
+  let diff = 0;
+  for (let i = 0; i < 64; i += 1) diff |= expected.charCodeAt(i) ^ m[2].charCodeAt(i);
+  return diff === 0;
+}
 const TURNSTILE_TIMEOUT_MS = 3000;
 const TURNSTILE_TOKEN_MAX = 2048;
 
@@ -253,7 +275,7 @@ export async function onRequestPost(context) {
 
   // --- Turnstile. Already verified by the gateway (outside the account lane)? Trust only the
   // gateway-set marker, and only inside the account host. Otherwise verify here (Pages path/tests).
-  const gatewayVerified = env.R2L_ACCOUNT_MODE === 'unified-v1' && request.headers.get(TURNSTILE_VERIFIED_HEADER) === '1';
+  const gatewayVerified = await verifyTurnstileMarker(env.TURNSTILE_SECRET_KEY, request.headers.get(TURNSTILE_VERIFIED_HEADER));
   if (!gatewayVerified) {
     // Fail closed: flag on + no secret configured = refuse.
     const secret = env.TURNSTILE_SECRET_KEY;

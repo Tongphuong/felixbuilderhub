@@ -4,6 +4,7 @@ import { onRequest } from '../functions/_middleware.js';
 import { UNIFIED_MODE, FREEZE_MODE, ACCOUNT_MODE_HEADER, ACCOUNT_PLAN_HEADER, isUnifiedAccountPath } from '../functions/lib/read2lead/account-unified-gateway.mjs';
 import { EXISTING_TEST_OBJECT, VERIFIED_ADMIN_HEADER } from '../functions/lib/read2lead/account-gateway.mjs';
 import { ACCOUNT_ROUTES } from '../functions/lib/read2lead/account-routes.mjs';
+import { verifyTurnstileMarker } from '../functions/api/signup.js';
 
 const pin='a'.repeat(64);
 function fixture({mode=UNIFIED_MODE,status=200,backend=true,headers={},body='account-host'}={}) {
@@ -260,7 +261,7 @@ test('a valid token is verified exactly once, with a timeout signal, then forwar
   const f=fixture();const {response,verifyCalls}=await signupCall(f,{token:'good'});
   assert.equal(response.status,200);assert.equal(verifyCalls.length,1);assert.ok(verifyCalls[0].signal,'siteverify must carry an abort/timeout signal');
   assert.equal(verifyCalls[0].form.get('remoteip'),'3.3.3.3');assert.equal(verifyCalls[0].form.get('secret'),'sec');
-  assert.equal(f.calls.length,1);assert.equal(f.calls[0].request.headers.get(SIGNUP_HEADER),'1');
+  assert.equal(f.calls.length,1);assert.equal(await verifyTurnstileMarker('sec',f.calls[0].request.headers.get(SIGNUP_HEADER)),true,'a signed, short-lived marker is forwarded');
   assert.equal(JSON.parse(f.calls[0].body).student_name,'Minh','the body still reaches the account object intact');
 });
 test('a timed-out or failing siteverify fails CLOSED without entering the account object',async()=>{
