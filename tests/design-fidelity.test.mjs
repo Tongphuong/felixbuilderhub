@@ -3,7 +3,7 @@
 // so every check below is fed a known-BAD page and must flag THAT check by name; a known-GOOD
 // page must pass everything (positive control).
 //
-// Fast part (default): a synthetic mock + ~16 built-page variants served from a local http
+// Fast part (default): a synthetic mock + ~17 built-page variants served from a local http
 // server, all in ONE browser launch. Real-design part: the real home mock rendered against
 // itself must give a pixel diff of exactly 0.
 // Opt-in part (DESIGN_BITE_NAVY=1): TODAY's navy home, served by scripts/r2l-release/rehearse.mjs,
@@ -26,7 +26,7 @@ const NO_BROWSER = process.env.DESIGN_NO_BROWSER === '1';
 
 // ---- synthetic page factory ---------------------------------------------------------
 // opts: marks (bool), dropFoot, swap, dupPrimary, noPrimary, primaryH, wide, lowContrast,
-//       smallTap, anim ('bad'|'safe'), shift
+//       smallTap, anim ('bad'|'safe'), shift, sunButton, sunBar
 function page(o = {}) {
   const d = (id) => (o.marks === false ? '' : ` data-design="${id}"`);
   const top = `<header${d('t.top')} style="height:60px;padding:16px">Xin chào</header>`;
@@ -36,7 +36,9 @@ function page(o = {}) {
   const foot = o.dropFoot ? '' : `<footer${d('t.foot')} style="height:60px;padding:16px">Dành cho ba mẹ</footer>`;
   const seq = o.swap ? [top, foot, hero, primary] : [top, hero, primary, foot];
   const cols = o.cols ? `<div style="display:flex"><div${o.marks === false ? '' : ' data-design-col'} style="flex:1">a</div>${o.cols > 1 ? `<div data-design-col style="flex:1">b</div>` : ''}</div>` : '';
-  const extra = (o.wide ? '<div style="width:900px;height:10px;background:red"></div>' : '')
+  const extra = (o.sunButton ? '<a href="#" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center">Thêm</a>' : '')
+    + (o.sunBar ? '<div style="width:20px;height:10px;background:#FFC83D"></div>' : '')
+    + (o.wide ? '<div style="width:900px;height:10px;background:red"></div>' : '')
     + (o.smallTap ? '<a href="#" style="display:block;height:30px">nhỏ xíu</a>' : '')
     + (o.anim === 'bad' ? '<div style="width:10px;height:10px;background:#000;animation:spin 1s linear infinite"></div>' : '')
     + (o.anim === 'safe' ? '<div class="s" style="width:10px;height:10px;background:#000"></div>' : '');
@@ -62,6 +64,8 @@ const VARIANTS = {
   'anim-safe': { anim: 'safe' },
   'right-columns': { cols: 2 },
   perturbed: { shift: 8 },
+  'two-sun-buttons': { sunButton: true },
+  'sun-button-plus-sun-bar': { sunBar: true },
   'unmarked-copy-of-mock': { marks: false },
 };
 
@@ -82,6 +86,8 @@ const EXPECT_FAIL = {
   'anim-safe': [], // motion wrapped in no-preference: the reduced-motion check must PASS
   'right-columns': [],
   perturbed: ['pixel-diff'],
+  'two-sun-buttons': ['primary', 'pixel-diff'], // second sun CONTROL => FAIL
+  'sun-button-plus-sun-bar': [], // sun progress bar is not interactive => PASS
 };
 
 let fixture;

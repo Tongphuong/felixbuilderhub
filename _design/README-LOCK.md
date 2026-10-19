@@ -53,7 +53,7 @@ Everything runs with `prefers-reduced-motion` emulated, at width x the contract'
 | state-driver | the driver could not reach `built.state` |
 | order | an `order` id (`[data-design="..."]`) is missing, hidden, or out of order. Single-column widths: DOM order AND top-to-bottom. Widths where `layout.columns > 1`: DOM order only. Ids in `optional` may be absent. |
 | texts | a `texts` / `texts_<w>` string is not in the visible text (`innerText`, whitespace collapsed, NFC, case-sensitive). `data_bound` strings are not checked. |
-| primary | not exactly one `[data-design=<primary.id>]`, not visible, text lacks `primary.text`, or height < `min_height[w]`. (Warning only: other visible controls painted sun `#FFC83D`.) |
+| primary | not exactly one `[data-design=<primary.id>]`, not visible, text lacks `primary.text`, or height < `min_height[w]`. Also exactly ONE visible interactive control (`a, button, [role=button], input[type=submit]`) may have the sun fill `#FFC83D` (+-6 per channel on the background), and it must be the primary or inside it. Non-interactive sun fills (bars, badges, tags, tiles) are allowed. |
 | columns | visible `[data-design-col]` count != `layout[w].columns` |
 | contrast>=4.5 | a visible text element's colour vs its effective background < 4.5:1 |
 | tap>=48px | a visible `a, button, input, select, textarea, [role=button]` is under 48px tall |
@@ -74,7 +74,7 @@ Everything runs with `prefers-reduced-motion` emulated, at width x the contract'
 ## Tests
 - `tests/design-lock.test.mjs` (fast) - manifest + bite on a scratch copy.
 - `tests/design-tokens.test.mjs` (fast) - token/font equality + bite.
-- `tests/design-fidelity.test.mjs` (~30 s, launches Chrome) - 15 synthetic pages, each isolating one check
+- `tests/design-fidelity.test.mjs` (~30 s, launches Chrome) - 17 synthetic pages, each isolating one check
   (must fail exactly that check; the good ones must pass), real mock vs itself = 0 px diff.
   Opt-in `DESIGN_BITE_NAVY=1` (or `scripts/design/bite-navy.sh`): today's navy home must fail the real contract.
   No Chrome = the test FAILS (rule 28b); `DESIGN_NO_BROWSER=1` skips explicitly.

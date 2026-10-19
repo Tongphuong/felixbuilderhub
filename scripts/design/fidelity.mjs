@@ -147,7 +147,6 @@ export async function runFidelity(opts) {
           res.checks.push(check('texts', cc.texts.missing.length === 0, cc.texts.missing.length ? 'missing visible text: ' + cc.texts.missing.map(t => `"${t}"`).join(', ') : `${texts.length} strings present`));
           if (cc.primary) {
             res.checks.push(check('primary', cc.primary.problems.length === 0, cc.primary.problems.length ? cc.primary.problems.join('; ') : `"${cc.primary.text}" ${cc.primary.height.toFixed(0)}px`));
-            if (cc.primary.sunLookalikes.length) res.warnings.push('other visible controls use the sun fill (possible 2nd primary): ' + cc.primary.sunLookalikes.map(t => `"${t}"`).join(', '));
           }
           if (cc.columns) res.checks.push(check('columns', cc.columns.actual === cc.columns.expected, `expected ${cc.columns.expected}, found ${cc.columns.actual} [data-design-col]`));
 

@@ -66,10 +66,18 @@ export function contractChecks(args) {
       if (!text.includes(norm(args.primary.text))) p.push('primary text "' + text + '" does not include "' + args.primary.text + '"');
       if (args.primary.minHeight != null && height < args.primary.minHeight - 0.5) p.push('primary height ' + height.toFixed(1) + 'px < min ' + args.primary.minHeight + 'px');
     }
-    // Soft signal only (reported as a warning): other visible buttons/links painted in the sun fill.
-    const sun = 'rgb(255, 200, 61)';
-    const sunOthers = [...document.querySelectorAll('a,button,[role=button]')].filter(e => visible(e) && getComputedStyle(e).backgroundColor === sun && !all.includes(e) && !all.some(a => a.contains(e) || e.contains(a)));
-    out.primary = { problems: p, height, text, sunLookalikes: sunOthers.map(e => norm(e.innerText || '').slice(0, 40)) };
+    // "Exactly one sun primary": among INTERACTIVE controls only, exactly one visible element may be
+    // painted with the sun fill (#FFC83D, +-6 per channel), and it must be the primary (or inside it).
+    // Non-interactive sun fills (progress bars, badges, tags, tiles) are allowed.
+    const isSun = e => {
+      const m = /^rgba?\(\s*(\d+)[,\s]+(\d+)[,\s]+(\d+)(?:[,\s/]+([\d.]+))?\s*\)$/.exec(getComputedStyle(e).backgroundColor);
+      return !!m && (m[4] == null || parseFloat(m[4]) >= 0.99) && Math.abs(+m[1] - 255) <= 6 && Math.abs(+m[2] - 200) <= 6 && Math.abs(+m[3] - 61) <= 6;
+    };
+    const sunControls = [...document.querySelectorAll('a,button,[role=button],input[type=submit]')].filter(e => visible(e) && isSun(e));
+    const sunLabel = e => '"' + norm(e.innerText || e.value || '').slice(0, 30) + '"';
+    if (sunControls.length !== 1) p.push('expected exactly 1 sun-filled interactive control, found ' + sunControls.length + (sunControls.length ? ': ' + sunControls.map(sunLabel).join(', ') : ''));
+    else if (!all.some(a => a === sunControls[0] || a.contains(sunControls[0]) || sunControls[0].contains(a))) p.push('the only sun-filled control ' + sunLabel(sunControls[0]) + ' is not the primary [data-design="' + args.primary.id + '"]');
+    out.primary = { problems: p, height, text };
   }
 
   // -- columns -----------------------------------------------------------
