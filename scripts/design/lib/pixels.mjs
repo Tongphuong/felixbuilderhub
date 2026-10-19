@@ -39,3 +39,33 @@ export async function writeComposite(browser, outPath, { title, ok, design, buil
   await page.screenshot({ path: outPath, fullPage: true });
   await ctx.close();
 }
+
+// Pad a PNG (bottom) to `height` with a solid colour so mock and built compare over the same area.
+export function padPng(buf, height, color) {
+  const src = PNG.sync.read(buf);
+  if (src.height >= height) return buf;
+  const out = new PNG({ width: src.width, height });
+  for (let i = 0; i < out.data.length; i += 4) { out.data[i] = color[0]; out.data[i + 1] = color[1]; out.data[i + 2] = color[2]; out.data[i + 3] = 255; }
+  PNG.bitblt(src, out, 0, 0, src.width, src.height, 0, 0);
+  return PNG.sync.write(out);
+}
+
+// Background colour of a screenshot = its bottom-left pixel.
+export function cornerColor(buf) {
+  const p = PNG.sync.read(buf);
+  const i = ((p.height - 1) * p.width) * 4;
+  return [p.data[i], p.data[i + 1], p.data[i + 2]];
+}
+
+export function pngHeight(buf) { return PNG.sync.read(buf).height; }
+
+// Force a screenshot to exactly `width` px wide (crop the overflow / pad with white), so a page that
+// scrolls horizontally still diffs (the no-h-scroll check reports the overflow separately).
+export function fitWidth(buf, width) {
+  const src = PNG.sync.read(buf);
+  if (src.width === width) return buf;
+  const out = new PNG({ width, height: src.height });
+  out.data.fill(255);
+  PNG.bitblt(src, out, 0, 0, Math.min(width, src.width), src.height, 0, 0);
+  return PNG.sync.write(out);
+}
