@@ -48,7 +48,19 @@ export async function onRequest(context) {
     (context.data ??= {}).clearRead2LeadAccountCookies = true;
     return finish(new Response(null, { status: 204, headers }));
   }
-  const needsAuth = path.startsWith('/admin') || path.startsWith('/api/admin');
+  // The Pages router matches paths case-insensitively, so decide on a normalised path
+  // (decoded once, lower-cased, repeated slashes collapsed); any variant of /admin or /api/admin needs auth.
+  let normalised = path;
+  try {
+    normalised = decodeURIComponent(path);
+  } catch {
+    // Malformed escape somewhere: still decode every VALID %XX so an encoded "admin" cannot hide behind it.
+    normalised = path.replace(/%[0-9a-f]{2}/gi, (s) => { try { return decodeURIComponent(s); } catch { return s; } });
+  }
+  normalised = normalised.toLowerCase().replace(/\/{2,}/g, '/');
+  // Belt and braces: a stray % that survives decoding next to the word "admin" is treated as admin (fail closed).
+  const needsAuth = normalised.startsWith('/admin') || normalised.startsWith('/api/admin') ||
+    (normalised.includes('%') && normalised.includes('admin'));
 
   if (needsAuth) {
     if (!env.ADMIN_PASSWORD) {
