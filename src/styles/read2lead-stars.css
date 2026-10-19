@@ -76,5 +76,3 @@
 .lb-head h1{margin-top:4px}
 .stars-name{display:block}
 .stars-personal{margin-top:0}
-/* the harness rule is "buttons use Baloo 2" (the mock sets Nunito on tabs) */
-.lb-tabs .r2l-tab{font-family:var(--r2l-font-display);font-weight:800}

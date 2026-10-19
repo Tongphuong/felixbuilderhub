@@ -139,5 +139,4 @@ body:has(.qt-page) { background: var(--r2l-sky); }
 @media (min-width: 1000px) { .qt-gift-card--goal .r2l-btn-sun { font-size: 24px; } }
 .qt-head h1 { margin-top: 4px; }
 @media (max-width: 420px) { .qt-gift-card .r2l-btn-sm { font-size: 15px; padding: 0 4px; } }
-.qt-gift-card--goal .qt-clear-goal { font-family: var(--r2l-font-display); font-weight: 800; font-size: 18px; }
 .still .qt-pulse, .still .qt-float { animation: none; }
