@@ -58,14 +58,15 @@ const navCards = [
       <h2 id="signup-cfg-title" class="font-display text-xl font-bold text-cream">Đăng ký công khai</h2>
       <p class="mt-1 text-sm text-cream-muted">Cho phép ba mẹ tự tạo mã Read2Lead trên trang chủ.</p>
       <p id="signup-cfg-status" class="signup-cfg__status mt-4 font-display text-3xl font-bold" data-state="off" role="status">Đang tải…</p>
-      <button id="signup-cfg-toggle" type="button" class="signup-cfg__btn mt-4">Bật đăng ký</button>
-      <p id="signup-cfg-count" class="mt-5 text-cream">Hôm nay: 0 / 50 mã mới</p>
+      <button id="signup-cfg-retry" type="button" class="signup-cfg__btn signup-cfg__btn--quiet mt-4" hidden>Thử lại</button>
+      <button id="signup-cfg-toggle" type="button" class="signup-cfg__btn mt-4" disabled>Bật đăng ký</button>
+      <p id="signup-cfg-count" class="mt-5 text-cream"></p>
       <form id="signup-cfg-form" class="mt-3 flex flex-wrap items-end gap-3" novalidate>
         <div>
           <label for="signup-cfg-cap" class="block text-sm font-semibold text-cream-muted">Số mã mới tối đa mỗi ngày (0 = tạm dừng)</label>
-          <input id="signup-cfg-cap" type="number" inputmode="numeric" min="0" max="500" step="1" value="50" class="signup-cfg__input mt-1" />
+          <input id="signup-cfg-cap" type="number" inputmode="numeric" min="0" max="500" step="1" value="" class="signup-cfg__input mt-1" disabled />
         </div>
-        <button id="signup-cfg-save" type="submit" class="signup-cfg__btn signup-cfg__btn--quiet">Lưu</button>
+        <button id="signup-cfg-save" type="submit" class="signup-cfg__btn signup-cfg__btn--quiet" disabled>Lưu</button>
       </form>
       <p id="signup-cfg-message" class="mt-3 min-h-[1.5rem] text-sm font-semibold text-accent" role="alert"></p>
     </div>

@@ -100,3 +100,60 @@ test('markup: card on the admin home with big status, 44px+ targets, cap input a
   assert.match(page, /min-height: 48px/);
   assert.match(page, /mountSignupSwitch/);
 });
+
+// The dangerous direction for a kill switch: never show MỞ/ĐÓNG or a cap that was not read from the server.
+test('before the first GET: "Đang tải…", all controls disabled, no ĐÓNG/MỞ from defaults', () => {
+  const s = setup(() => new Promise(() => {}));
+  assert.equal(s.byId('signup-cfg-status').textContent, 'Đang tải…');
+  assert.equal(s.byId('signup-cfg-toggle').disabled, true);
+  assert.equal(s.byId('signup-cfg-save').disabled, true);
+  assert.equal(s.byId('signup-cfg-cap').disabled, true);
+  assert.equal(s.byId('signup-cfg-cap').value, '');
+  assert.equal(s.byId('signup-cfg-count').textContent, '');
+});
+
+test('failed first GET: never MỞ/ĐÓNG, controls stay disabled, retry shown; clicks and saves do nothing', async () => {
+  const s = setup(() => { throw new TypeError('offline'); });
+  await s.api.load();
+  const status = s.byId('signup-cfg-status').textContent;
+  assert.equal(status, 'Không đọc được trạng thái đăng ký.');
+  assert.ok(!/MỞ|ĐÓNG/.test(status));
+  assert.equal(s.byId('signup-cfg-retry').hidden, false);
+  assert.equal(s.byId('signup-cfg-toggle').disabled, true);
+  assert.equal(s.byId('signup-cfg-save').disabled, true);
+  assert.equal(s.byId('signup-cfg-cap').disabled, true);
+  await s.click(); await s.save('50');
+  assert.equal(s.calls.length, 1);
+  assert.equal(s.confirms.length, 0);
+});
+
+test('a malformed 200 on the first GET is also a failure, not a default state', async () => {
+  const s = setup(() => ok({}));
+  await s.api.load();
+  assert.equal(s.byId('signup-cfg-status').textContent, 'Không đọc được trạng thái đăng ký.');
+  assert.equal(s.byId('signup-cfg-toggle').disabled, true);
+});
+
+test('retry then success renders the REAL state and enables the controls', async () => {
+  let attempt = 0;
+  const s = setup(() => { if (attempt++ === 0) throw new TypeError('offline'); return ok({ enabled: true, daily_cap: 25, today_count: 4 }); });
+  await s.api.load();
+  await s.byId('signup-cfg-retry').events.click(); await settle();
+  assert.equal(s.byId('signup-cfg-status').textContent, 'Đang MỞ');
+  assert.equal(s.byId('signup-cfg-count').textContent, 'Hôm nay: 4 / 25 mã mới');
+  assert.equal(s.byId('signup-cfg-cap').value, '25');
+  assert.equal(s.byId('signup-cfg-retry').hidden, true);
+  assert.equal(s.byId('signup-cfg-toggle').disabled, false);
+  assert.equal(s.byId('signup-cfg-save').disabled, false);
+  assert.equal(s.byId('signup-cfg-cap').disabled, false);
+});
+
+test('a later POST failure keeps the last known real state and controls', async () => {
+  const s = setup((u, init) => init ? Response.json({ ok: false, message: 'Không lưu được.' }, { status: 500 }) : ok({ enabled: true, daily_cap: 40, today_count: 3 }));
+  await s.api.load();
+  await s.save('10');
+  assert.equal(s.byId('signup-cfg-status').textContent, 'Đang MỞ');
+  assert.equal(s.byId('signup-cfg-count').textContent, 'Hôm nay: 3 / 40 mã mới');
+  assert.equal(s.byId('signup-cfg-toggle').disabled, false);
+  assert.equal(s.byId('signup-cfg-retry').hidden, true);
+});

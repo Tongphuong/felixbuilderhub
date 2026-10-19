@@ -7,23 +7,37 @@ export function mountSignupSwitch(
   byId: (id: string) => any,
   deps: { fetch: typeof fetch; confirm: (message: string) => boolean },
 ) {
-  let state: SignupConfig = { enabled: false, daily_cap: 50, today_count: 0 };
+  // null until the first successful GET: the card never shows MỞ/ĐÓNG or a cap from made-up defaults.
+  let state: SignupConfig | null = null;
+  let loadFailed = false;
   let busy = false;
   const FALLBACK = 'Chưa kết nối được. Anh thử lại nhé.';
   const VIETNAMESE = /[àáảãạâầấẩẫậăằắẳẵặèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]/i;
   const say = (text: string) => { byId('signup-cfg-message').textContent = text; };
 
   const render = () => {
+    byId('signup-cfg-retry').hidden = !(loadFailed && !state);
+    if (!state) {
+      byId('signup-cfg-status').textContent = loadFailed ? 'Không đọc được trạng thái đăng ký.' : 'Đang tải…';
+      byId('signup-cfg-status').setAttribute('data-state', 'unknown');
+      byId('signup-cfg-toggle').textContent = 'Bật đăng ký';
+      byId('signup-cfg-count').textContent = '';
+      byId('signup-cfg-cap').value = '';
+      return;
+    }
     byId('signup-cfg-status').textContent = state.enabled ? 'Đang MỞ' : 'Đang ĐÓNG';
     byId('signup-cfg-status').setAttribute('data-state', state.enabled ? 'on' : 'off');
     byId('signup-cfg-toggle').textContent = state.enabled ? 'Tắt đăng ký' : 'Bật đăng ký';
     byId('signup-cfg-count').textContent = `Hôm nay: ${state.today_count} / ${state.daily_cap} mã mới`;
     byId('signup-cfg-cap').value = String(state.daily_cap);
   };
+  // Controls stay disabled while a request is in flight AND until a real state has been read.
   const lock = (value: boolean) => {
     busy = value;
-    byId('signup-cfg-toggle').disabled = value;
-    byId('signup-cfg-save').disabled = value;
+    const off = value || !state;
+    byId('signup-cfg-toggle').disabled = off;
+    byId('signup-cfg-save').disabled = off;
+    byId('signup-cfg-cap').disabled = off;
   };
   async function call(init?: { method: 'POST'; body: unknown }): Promise<boolean> {
     lock(true);
@@ -33,34 +47,41 @@ export function mountSignupSwitch(
       } : undefined);
       let data: any = {};
       try { data = await response.json(); } catch { data = {}; }
-      if (!response.ok || data.ok === false) {
-        say(typeof data.message === 'string' && VIETNAMESE.test(data.message) ? data.message : FALLBACK);
+      if (!response.ok || data.ok === false || typeof data.enabled !== 'boolean' || !Number.isFinite(Number(data.daily_cap))) {
+        fail(typeof data.message === 'string' && VIETNAMESE.test(data.message) ? data.message : FALLBACK);
         return false;
       }
       state = {
-        enabled: data.enabled === true,
-        daily_cap: Number.isFinite(Number(data.daily_cap)) ? Number(data.daily_cap) : state.daily_cap,
+        enabled: data.enabled,
+        daily_cap: Number(data.daily_cap),
         today_count: Number.isFinite(Number(data.today_count)) ? Number(data.today_count) : 0,
       };
+      loadFailed = false;
       render(); say('');
       return true;
-    } catch { say(FALLBACK); return false; } finally { lock(false); }
+    } catch { fail(FALLBACK); return false; } finally { lock(false); }
+  }
+  // A failure keeps whatever REAL state we last read; if there is none yet, the card says so and offers a retry.
+  function fail(message: string) {
+    say(message);
+    if (!state) { loadFailed = true; render(); }
   }
 
   byId('signup-cfg-toggle').addEventListener('click', async () => {
-    if (busy) return;
+    if (busy || !state) return;
     const turningOn = !state.enabled;
     if (turningOn && !deps.confirm('Mở đăng ký công khai cho mọi người?')) return;
     if (await call({ method: 'POST', body: { enabled: turningOn } }) && turningOn) say('Đã mở đăng ký công khai.');
   });
   byId('signup-cfg-form').addEventListener('submit', async (event: { preventDefault(): void }) => {
     event.preventDefault();
-    if (busy) return;
+    if (busy || !state) return;
     const raw = String(byId('signup-cfg-cap').value).trim();
     const cap = Number(raw);
     if (!raw || !Number.isInteger(cap) || cap < 0 || cap > 500) { say('Số mã mỗi ngày phải là số nguyên từ 0 đến 500.'); return; }
     if (await call({ method: 'POST', body: { daily_cap: cap } })) say('Đã lưu.');
   });
-  render();
+  byId('signup-cfg-retry').addEventListener('click', () => { if (!busy) { say(''); void call(); } });
+  render(); lock(false);
   return { load: () => call() };
 }
