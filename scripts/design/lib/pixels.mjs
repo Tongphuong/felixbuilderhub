@@ -15,7 +15,7 @@ export function diffPngs(bufA, bufB, threshold = 0.1) {
 
 // Composite: design | built | diff, with a title bar. Rendered by the browser itself
 // (no font/canvas dependency): an HTML sheet with three data-URI images.
-export async function writeComposite(browser, outPath, { title, ok, design, built, diff }) {
+export async function writeComposite(browser, outPath, { title, ok, design, built, diff, regions = [] }) {
   const uri = b => 'data:image/png;base64,' + b.toString('base64');
   const w = PNG.sync.read(design).width;
   const ctx = await browser.newContext({ viewport: { width: w * 3 + 60, height: 400 } });
@@ -34,7 +34,8 @@ export async function writeComposite(browser, outPath, { title, ok, design, buil
     <div class="col"><span>design (mock)</span><img src="${uri(design)}"></div>
     <div class="col"><span>built</span><img src="${uri(built)}"></div>
     <div class="col"><span>diff (pixelmatch 0.1)</span><img src="${uri(diff)}"></div>
-  </div>`);
+  </div>${regions.map(g => `<div class="bar" style="background:${g.ok ? '#237A41' : '#B3261E'}"><b style="color:${g.ok ? '#237A41' : '#B3261E'}">${g.ok ? 'PASS' : 'FAIL'}</b><span>region ${g.label.replace(/[<&]/g, '')}</span></div>
+  <div class="row"><img src="${uri(g.mock)}"><img src="${uri(g.built)}"><img src="${uri(g.diff)}"></div>`).join('')}`);
   await page.waitForFunction(() => [...document.images].every(i => i.complete));
   await page.screenshot({ path: outPath, fullPage: true });
   await ctx.close();

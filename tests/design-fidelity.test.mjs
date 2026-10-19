@@ -39,9 +39,11 @@ const IMG = 'data:image/gif;base64,R0lGODlhAQABAAAAACw=';
 function page(o = {}) {
   const mk = id => (o.marks === false ? '' : ` data-design="${id}"`);
   const fontLink = o.fontsHref ? `<link rel="stylesheet" href="${o.fontsHref}">` : '';
-  const top = `<header${mk('t.top')} style="height:60px;padding:16px"><p style="margin:0">Xin chào</p></header>`;
+  const top = o.topSmall
+    ? `<header style="height:60px;padding:16px"><p${mk('t.top')} style="margin:0;width:150px;height:20px">Xin chào</p></header>`
+    : `<header${mk('t.top')} style="height:60px;padding:16px"><p style="margin:0">Xin chào</p></header>`;
   const heroStyle = `height:${o.heroH || 200}px;padding:16px;${o.shift ? 'margin-top:' + o.shift + 'px;' : ''}${o.lowContrast ? 'color:#aaa;background:#fff;' : ''}${o.gradient === 'low' ? 'background:linear-gradient(#fff,#fff);color:#ccc;' : ''}${o.gradient === 'ok' ? 'background:linear-gradient(#17324D,#17324D);color:#fff;' : ''}`;
-  const hero = `<main${mk('t.hero')} style="${heroStyle}"><h2 style="margin:0${o.wrongFont ? ';font-family:Arial' : ''}">Đọc truyện nào</h2></main>`;
+  const hero = `<main${mk('t.hero')} style="${heroStyle}">${o.heroBlank ? '' : o.heroRed ? '<div style="height:150px;background:#d33"></div>' : `<h2 style="margin:0${o.wrongFont ? ';font-family:Arial' : ''}">Đọc truyện nào</h2>`}</main>`;
   const pStyle = `display:block;height:${o.primaryH || 64}px;line-height:${o.primaryH || 64}px;background:#FFC83D;text-align:center`;
   const primary = o.noPrimary ? '' : `<a href="#" role="button"${mk('t.primary')} style="${pStyle}">Mở truyện</a>`
     + (o.dupPrimary ? `<a href="#" role="button"${mk('t.primary')} style="${pStyle}">Mở truyện</a>` : '');
@@ -70,6 +72,7 @@ function page(o = {}) {
     + (o.animZero ? '<div style="width:10px;height:10px;background:#000;animation:fade 0s both"></div>' : '')
     + (o.raf ? '<div id="m" style="width:10px;height:10px;background:#000"></div><script>let x=0;const d=document.getElementById("m");(function f(){x=(x+3)%120;d.style.marginLeft=x+"px";requestAnimationFrame(f)})()</script>' : '')
     + (o.svgLow ? '<svg width="200" height="40" style="display:block"><rect width="200" height="40" fill="#fff"/><text x="4" y="28" fill="#ddd" font-size="20">Sáng chói</text></svg>' : '')
+    + (o.belowFar ? '<div style="height:600px"></div><div style="height:300px;background:#d33"></div><i data-design="t.below" style="display:block;height:1px"></i>' : '')
     + (o.below === 'big' ? '<div style="height:600px;background:#d33"></div>' : '')
     + (o.below === 'small' ? '<div style="height:100px;background:#d33"></div>' : '')
     + (o.fakeMarks ? ['t.top', 't.hero', 't.primary', 't.foot'].map(id => `<i data-design="${id}" style="display:block;height:1px"></i>`).join('') : '');
@@ -135,6 +138,14 @@ const V = {
   'wrong-heading-font': [{ wrongFont: true }, { must: ['fonts'], may: ['pixel-diff'] }],
   'unmarked-copy-of-mock': [{ marks: false }, ['order', 'primary', 'geometry']],
 };
+V['below-far'] = [{ belowFar: true }, { must: ['height', 'order'], may: ['pixel-diff'] }];
+V['below-far-viewport'] = [{ belowFar: true }, []]; // contract capture:viewport: the same page passes
+V['region-ok'] = [{}, []];
+V['region-empty'] = [{ heroBlank: true }, { must: ['region:t.hero'], may: ['texts', 'pixel-diff', 'geometry'] }];
+V['region-wrong'] = [{ heroRed: true }, { must: ['region:t.hero'], may: ['texts', 'pixel-diff', 'geometry'] }];
+V['region-no-element'] = [{ marks: false }, { must: ['region:t.hero'], may: ['order', 'primary', 'geometry'] }];
+V['small-order-default'] = [{ topSmall: true }, ['order']];
+V['small-order-override'] = [{ topSmall: true }, []];
 V['no-fonts'] = [{ noFontLink: true }, { must: ['fonts'], may: ['pixel-diff'] }];
 
 const ANCHORS = { 't.top': 'Xin chào', 't.hero': 'Đọc truyện nào', 't.primary': 'Mở truyện', 't.foot': 'Dành cho ba mẹ' };
@@ -186,7 +197,14 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
     const wr = (id, extra) => fs.writeFileSync(path.join(contracts, id + '.json'), JSON.stringify({ ...BASE_CONTRACT, id, built: { path: '/' + (extra.__path || id), state: 'first-visit' }, ...Object.fromEntries(Object.entries(extra).filter(([k]) => k !== '__path')) }));
     for (const name of Object.keys(V)) {
       const cols = name === 'wrong-columns' || name === 'right-columns' ? { layout: { 390: { columns: 2 } } } : {};
-      wr(name, cols);
+      const extra = { ...cols };
+      if (name.startsWith('region-')) extra.regions = [{ id: 't.hero', mock_box: { 390: [0, 92, 390, 232] }, ceiling: 0.05 }];
+      if (name === 'below-far-viewport') extra.capture = 'viewport';
+      if (name === 'below-far' || name === 'below-far-viewport') extra.order = ['t.top', 't.hero', 't.primary', 't.foot', 't.below'];
+      if (name === 'below-far' || name === 'below-far-viewport') extra.anchors_exempt = { 't.below': 'marker below the fold' };
+      if (name.startsWith('small-order')) { extra.anchors = { 't.hero': 'Đọc truyện nào', 't.primary': 'Mở truyện', 't.foot': 'Dành cho ba mẹ' }; extra.anchors_exempt = { 't.top': 'small label inside the header card' }; }
+      if (name === 'small-order-override') extra.min_size = { 't.top': [100, 16] };
+      wr(name, extra);
     }
     wr('no-anchors', { __path: 'ok', anchors: undefined });
     const A3 = { 't.top': 'Xin chào', 't.hero': 'Đọc truyện nào', 't.primary': 'Mở truyện' };
@@ -199,7 +217,7 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
     wr('width-override-text', { __path: 'ok', anchors: { ...ANCHORS, 't.hero': 'Không có chữ này' }, anchors_390: { 't.hero': 'Đọc truyện nào' } });
     wr('width-no-override-bad-anchor', { __path: 'ok', anchors: { ...ANCHORS, 't.hero': 'Không có chữ này' } });
     wr('partial-anchors', { __path: 'ok', anchors: { 't.top': 'Xin chào' } });
-    const report = await runFidelity({ design, contracts, base, out: path.join(tmp, 'out'), composites: 'fail', 'state-driver': GOTO, 'require-anchors': true, concurrency: 6 });
+    const report = await runFidelity({ design, contracts, base, out: path.join(tmp, 'out'), composites: 'fail', 'state-driver': GOTO, 'require-anchors': true, concurrency: 10 });
     const by = Object.fromEntries(report.results.map(r => [r.contract, r]));
 
     for (const [name, [, exp]] of Object.entries(V)) {
@@ -263,6 +281,26 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
       assert.deepEqual(failed(by['width-no-override-bad-anchor']), ['geometry']);
       assert.match(by['width-no-override-bad-anchor'].checks.find(c => c.name === 'geometry').detail, /not found in the MOCK/);
       assert.match(fs.readFileSync(path.join(tmp, 'out', 'report.md'), 'utf8'), /- t\.hero: no card at this width/);
+    });
+    await t.test('capture:viewport: content below the fold does not fail height; without it the same page does', () => {
+      assert.deepEqual(failed(by['below-far-viewport']), []);
+      assert.equal(by['below-far-viewport'].checks.some(c => c.name === 'height'), false, 'no height check in viewport capture');
+      assert.ok(failed(by['below-far']).includes('height'));
+      assert.match(by['below-far'].checks.find(c => c.name === 'order').detail, /t\.below is 390x1px/);
+      assert.equal(by['below-far-viewport'].diff.mockHeight, 700);
+      assert.equal(by['below-far-viewport'].diff.builtHeight, 700);
+    });
+    await t.test('regions: a correct region passes; an EMPTY and a WRONG one fail; a missing element fails; reported in report.md', () => {
+      assert.equal(by['region-ok'].checks.find(c => c.name === 'region:t.hero').pass, true);
+      assert.match(by['region-empty'].checks.find(c => c.name === 'region:t.hero').detail, /region empty/);
+      assert.match(by['region-wrong'].checks.find(c => c.name === 'region:t.hero').detail, /% differing/);
+      assert.match(by['region-no-element'].checks.find(c => c.name === 'region:t.hero').detail, /no visible built element/);
+      assert.match(fs.readFileSync(path.join(tmp, 'out', 'report.md'), 'utf8'), /Regions:\n- FAIL t\.hero/);
+      assert.ok(fs.existsSync(path.join(tmp, 'out', 'region-empty-390.png')));
+    });
+    await t.test('min_size: a small labelled element fails the default 40x24 but passes with a per-id override', () => {
+      assert.match(by['small-order-default'].checks.find(c => c.name === 'order').detail, /t\.top is 150x20px \(min 40x24/);
+      assert.equal(by['small-order-override'].checks.find(c => c.name === 'order').pass, true);
     });
     await t.test('a failing contract writes a composite, report.json and report.md; verdict is false', () => {
       assert.equal(report.ok, false);
@@ -328,6 +366,47 @@ test('per-width anchors: override replaces, null removes, exemptions override; b
   const c = { anchors: { a: 'A', b: 'B' }, anchors_exempt: { x: 'why' }, anchors_390: { a: 'A390', b: null }, anchors_exempt_390: { b: 'moved to exempt at 390', x: null } };
   assert.deepEqual(effectiveAnchors(c, 390), { anchors: { a: 'A390' }, exempt: { b: 'moved to exempt at 390' } });
   assert.deepEqual(effectiveAnchors(c, 1280), { anchors: { a: 'A', b: 'B' }, exempt: { x: 'why' } });
+});
+
+test('region/crop helpers: uniform crops are "empty", resize keeps content, identical crops diff 0', async () => {
+  const { compareRegion, stddev, cropPng } = await import('../scripts/design/lib/regions.mjs');
+  const mk = (w, h, f) => { const p = new PNG({ width: w, height: h }); for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) p.data.set(f(x, y), (y * w + x) * 4); return PNG.sync.write(p); };
+  const checker = mk(40, 40, (x, y) => ((x >> 2) + (y >> 2)) % 2 ? [0, 0, 0, 255] : [255, 255, 255, 255]);
+  const blank = mk(40, 40, () => [200, 200, 200, 255]);
+  assert.ok(stddev(cropPng(checker, { x: 0, y: 0, w: 40, h: 40 })) > 100);
+  assert.ok(stddev(cropPng(blank, { x: 0, y: 0, w: 40, h: 40 })) < 1);
+  const box = { x: 0, y: 0, w: 40, h: 40 };
+  assert.equal(compareRegion(checker, checker, box, box, 0.01).pass, true);
+  const empty = compareRegion(checker, blank, box, box, 0.5);
+  assert.equal(empty.pass, false); assert.match(empty.problems.join('|'), /region empty/);
+  // built element twice as big as the mock box: resized back before diffing
+  const big = mk(80, 80, (x, y) => ((x >> 3) + (y >> 3)) % 2 ? [0, 0, 0, 255] : [255, 255, 255, 255]);
+  assert.equal(compareRegion(checker, big, box, { x: 0, y: 0, w: 80, h: 80 }, 0.05).pass, true);
+});
+
+test('r2l driver sample data: values come from the mocks, shapes are preserved', async () => {
+  const { SAMPLE, sampleProgress, sampleBoards, sampleSession } = await import('../scripts/design/drivers/r2l.mjs');
+  const fmt = n => new Intl.NumberFormat('vi-VN').format(n);
+  const mock1280 = fs.readFileSync(path.join(REAL_DESIGN, 'mocks', '01-home-1280.html'), 'utf8').replace(/<[^>]+>/g, ' ');
+  for (const row of [...SAMPLE.leaderboard.xp, ...SAMPLE.leaderboard.diamonds]) { assert.ok(mock1280.includes(row.display_name), row.display_name); assert.ok(mock1280.includes(fmt(row.total)), fmt(row.total)); }
+  assert.ok(mock1280.includes('Chào ' + SAMPLE.child.name));
+  assert.ok(mock1280.includes(SAMPLE.story.title));
+  const rew = fs.readFileSync(path.join(REAL_DESIGN, 'mocks', '04-reward-390.html'), 'utf8').replace(/<[^>]+>/g, ' ');
+  assert.ok(rew.includes('+' + SAMPLE.reward.diamonds) && rew.includes('+' + SAMPLE.reward.xp));
+  // shape preservation: unknown keys survive, only values change
+  const p = sampleProgress({ ok: true, extra: 1, progress: { foo: 'bar', current_pack: { x: 1 } }, read2lead_state: { keep: 1, diamonds: 270, rank_ladder: { label_vi: 'Đồng', tier_color: '#f00' } } }, 'first-visit');
+  assert.equal(p.extra, 1); assert.equal(p.progress.foo, 'bar'); assert.equal(p.read2lead_state.keep, 1);
+  assert.equal(p.read2lead_state.diamonds, 55); assert.equal(p.progress.student_name, 'Minh'); assert.equal(p.read2lead_state.rank_ladder.tier_color, '#f00'); assert.equal(p.read2lead_state.rank_ladder.stars, 2);
+  assert.equal(p.progress.current_pack.story_title, 'The Sky Is Blue!'); assert.equal(p.progress.current_pack.story_session, null);
+  assert.equal(sampleProgress({ progress: {}, read2lead_state: {} }, 'mid-story').progress.current_pack.story_session.complete, false);
+  assert.equal(sampleProgress({ progress: {}, read2lead_state: {} }, 'no-story').progress.current_pack, null);
+  const av = { monster: { body: 'x' } };
+  const b = sampleBoards({ ok: true, boards: { xp: { leaders: [], participants: 0, own: { rank: 3, display_name: 'Linh' } }, diamonds: { leaders: [{ rank: 1, display_name: 'An', total: 1, avatar: av, is_self: false }] } } });
+  assert.deepEqual(b.boards.xp.leaders.map(r => [r.rank, r.display_name, r.total]), [[1, 'Hoang', 1080], [2, 'Hieuenzo', 900], [3, 'Percy', 890]]);
+  assert.equal(b.boards.xp.leaders[0].avatar, av, 'avatar shape borrowed from a real row');
+  assert.equal(b.boards.diamonds.leaders[0].total, 39444); assert.equal(b.boards.xp.own.rank, null);
+  const sess = sampleSession({ ok: true, view: { session: { id: 's', awarded: { diamonds: 5, xp: 1 }, pictureRetell: { status: 'complete', award: { diamonds: 200 } } } } });
+  assert.deepEqual([sess.view.session.awarded.diamonds, sess.view.session.awarded.xp, sess.view.session.pictureRetell.award.diamonds], [35, 20, 0]);
 });
 
 test('pixel sampler: dominant background wins over heavy glyph pixels', () => {

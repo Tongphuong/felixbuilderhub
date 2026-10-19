@@ -23,6 +23,7 @@ import { chromium } from 'playwright-core';
 import { contractChecks, tapChecks, overflowCheck, motionCheck, addStillClass, fontCheck, fontUsage, mockBoxes, builtBoxes, scanText } from './lib/in-page.mjs';
 import { diffPngs, writeComposite, padPng, cornerColor, pngHeight, fitWidth } from './lib/pixels.mjs';
 import { analyseText, textOf, collapse } from './lib/text.mjs';
+import { compareRegion } from './lib/regions.mjs';
 
 const OVERFLOW_WIDTHS = [360, 390, 768, 1024, 1280];
 const BOOLEAN_FLAGS = new Set(['require-anchors']);
@@ -87,6 +88,15 @@ export function validateContract(c) {
     if (both.length) throw new InfraError(`contract ${c.id}: id(s) listed in BOTH anchors and anchors_exempt at ${w}px: ${both.join(', ')}`);
   }
   const widths = new Set(Object.keys(c.mock));
+  if (c.capture != null && c.capture !== 'viewport' && c.capture !== 'full') throw new InfraError(`contract ${c.id}: capture must be "viewport" or "full"`);
+  for (const r of c.regions || []) {
+    if (!r.id || typeof r.ceiling !== 'number' || !r.mock_box || typeof r.mock_box !== 'object') throw new InfraError(`contract ${c.id}: each region needs id, mock_box {width:[x,y,w,h]} and a numeric ceiling`);
+    for (const [rw, b] of Object.entries(r.mock_box)) {
+      if (!widths.has(rw)) throw new InfraError(`contract ${c.id}: region ${r.id} mock_box.${rw} is for a width with no mock`);
+      if (!Array.isArray(b) || b.length !== 4 || b.some(n => typeof n !== 'number') || b[2] <= 0 || b[3] <= 0) throw new InfraError(`contract ${c.id}: region ${r.id} mock_box.${rw} must be [x, y, w, h]`);
+    }
+  }
+  for (const [id, sz] of Object.entries(c.min_size || {})) if (!Array.isArray(sz) || sz.length !== 2 || sz.some(n => typeof n !== 'number')) throw new InfraError(`contract ${c.id}: min_size.${id} must be [w, h]`);
   for (const k of Object.keys(c)) {
     const m = /^(?:order|texts)_(\d+)$/.exec(k);
     if (m && !widths.has(m[1])) throw new InfraError(`contract ${c.id}: "${k}" is for a width with no mock`);
@@ -114,7 +124,7 @@ async function settle(page, { network = true } = {}) {
   await page.waitForTimeout(network ? 250 : 80);
 }
 
-const shot = async (page, animations = 'disabled') => fitWidth(await page.screenshot({ fullPage: true, animations, caret: 'hide' }), page.viewportSize().width);
+const shot = async (page, animations = 'disabled', full = true) => fitWidth(await page.screenshot({ fullPage: full, animations, caret: 'hide' }), page.viewportSize().width);
 
 export async function runFidelity(opts) {
   const { design, contracts: contractsDir, base: baseRaw, out } = opts;
@@ -148,6 +158,9 @@ export async function runFidelity(opts) {
       });
     }
     const runTask = async ({ contract, w, res, first }) => {
+      // contract "capture":"viewport": single-screen snapshots/overlays compare the viewport only.
+      const full = contract.capture !== 'viewport';
+      const sh = (pg, anim = 'disabled') => shot(pg, anim, full);
       {
         const viewport = { width: w, height: contract.viewport[String(w)] };
         try {
@@ -160,7 +173,7 @@ export async function runFidelity(opts) {
           await settle(mpage, { network: false });
           const badFonts = (await mpage.evaluate(fontCheck)).filter(f => f.status === 'error');
           if (badFonts.length) throw new InfraError('mock fonts failed to load: ' + badFonts.map(f => f.family).join(', '));
-          const mockPng0 = await shot(mpage);
+          const mockPng0 = await sh(mpage);
           const eff = effectiveAnchors(contract, w);
           const anchors = Object.keys(eff.anchors).length ? eff.anchors : null;
           const exempt = eff.exempt;
@@ -186,25 +199,26 @@ export async function runFidelity(opts) {
           // The last two must be pixel-identical. The odd second interval stops a looping mover whose period
           // is ~600ms from aliasing to "identical"; a page that merely finished settling between t0 and +600ms
           // (late font swap, slow image) still passes, which the detail text says.
-          const s1 = await shot(page, 'allow');
+          const s1 = await sh(page, 'allow');
           await page.waitForTimeout(600);
-          const s2 = await shot(page, 'allow');
+          const s2 = await sh(page, 'allow');
           await page.waitForTimeout(370);
-          const s3 = await shot(page, 'allow');
+          const s3 = await sh(page, 'allow');
           const moved = (a, b) => (pngHeight(a) !== pngHeight(b) ? -1 : diffPngs(a, b, 0).count);
           const mv = moved(s2, s3), early = moved(s1, s2);
           let motionOk = true;
           let motionDetail = early === 0 ? 'three samples over ~1s identical' : 'page settled after the first sample, then identical';
           if (mv === -1) { motionOk = false; motionDetail = 'page height changed between samples'; }
           else if (mv > 0) { motionOk = false; motionDetail = `${mv} pixels still changing between samples with reduced motion on (JS/rAF/video motion)`; }
-          const builtPng0 = await shot(page);
+          const builtPng0 = await sh(page);
 
           // (c) contract checks ------------------------------------------
           const orderIds = contract[`order_${w}`] || contract.order || [];
           const texts = [...(contract.texts || []), ...(contract[`texts_${w}`] || [])];
           const primary = contract.primary ? { id: contract.primary.id, text: contract.primary.text, minHeight: (contract.primary.min_height || {})[String(w)] ?? null } : null;
           const colsExpected = contract.layout && contract.layout[String(w)] && contract.layout[String(w)].columns;
-          const cc = await page.evaluate(contractChecks, { order: orderIds, primary, columns: colsExpected ? { expected: colsExpected } : null });
+          const minSize = contract.min_size || {};
+          const cc = await page.evaluate(contractChecks, { order: orderIds, primary, columns: colsExpected ? { expected: colsExpected } : null, minSize, viewportOnly: !full });
           const optional = new Set(Object.keys(contract.optional || {}));
           const orderProblems = cc.order.problems.filter(p => {
             const m = /^(missing|present but not visible): (.+)$/.exec(p);
@@ -286,6 +300,7 @@ export async function runFidelity(opts) {
               const b = bg.boxes[id];
               if (!m) { gp.push(`${id}: anchor text "${anchors[id]}" not found in the MOCK (contract bug)`); continue; }
               if (!b) { if (!optional.has(id)) gp.push(`${id}: no visible built element`); continue; }
+              if (!full && (b.y >= viewport.height || b.y + b.h <= 0 || m.y >= viewport.height || m.y + m.h <= 0)) continue; // below the fold of a viewport snapshot
               const tol = Math.max(24, 0.04 * mockGeo.docH);
               const why = [];
               if (Math.abs(b.y - m.y) > tol) why.push(`top ${Math.round(b.y)} vs mock ${Math.round(m.y)} (+-${Math.round(tol)})`);
@@ -296,22 +311,38 @@ export async function runFidelity(opts) {
             res.checks.push(check('geometry', gp.length === 0, gp.length ? gp.join('; ') : `${Object.keys(anchors).length} sections within tolerance of the mock`));
           }
 
+          // regions: per-box comparison against the mock (catches an empty monster box a whole-screen ceiling hides)
+          const regionOut = [];
+          const regions = (contract.regions || []).filter(r => r.mock_box && r.mock_box[String(w)]);
+          if (regions.length) {
+            const rb = await page.evaluate(builtBoxes, regions.map(r => r.id));
+            for (const r of regions) {
+              const mb = r.mock_box[String(w)];
+              const b = rb.boxes[r.id];
+              if (!b) { res.checks.push(check('region:' + r.id, false, 'no visible built element')); continue; }
+              const cmp = compareRegion(mockPng0, builtPng0, { x: mb[0], y: mb[1], w: mb[2], h: mb[3] }, b, r.ceiling);
+              res.checks.push(check('region:' + r.id, cmp.pass, cmp.pass ? `${(cmp.fraction * 100).toFixed(1)}% differing (ceiling ${(r.ceiling * 100).toFixed(1)}%), built stddev ${cmp.builtSd.toFixed(0)}` : cmp.problems.join('; ')));
+              regionOut.push({ id: r.id, ok: cmp.pass, label: `${r.id} ${(cmp.fraction * 100).toFixed(1)}%`, mock: cmp.mock, built: cmp.built, diff: cmp.diff });
+              (res.regions = res.regions || []).push({ id: r.id, pass: cmp.pass, fraction: +cmp.fraction.toFixed(4), ceiling: r.ceiling, builtStddev: +cmp.builtSd.toFixed(1) });
+            }
+          }
+
           // height (below-the-fold) + (d) pixel diff on the FULL page ----------
           const hM = pngHeight(mockPng0), hB = pngHeight(builtPng0);
           const allowed = Math.max(0.10 * hM, 120);
-          res.checks.push(check('height', hB - hM <= allowed, `built page ${hB}px vs mock ${hM}px (built may exceed the mock by at most ${Math.round(allowed)}px)`));
+          if (full) res.checks.push(check('height', hB - hM <= allowed, `built page ${hB}px vs mock ${hM}px (built may exceed the mock by at most ${Math.round(allowed)}px)`));
           const H = Math.max(hM, hB);
           const mockPng = padPng(mockPng0, H, cornerColor(mockPng0));
           const builtPng = padPng(builtPng0, H, cornerColor(builtPng0));
           const d = diffPngs(mockPng, builtPng, 0.1);
           const ceiling = contract.diff_ceiling[String(w)];
           res.diff = { fraction: +d.fraction.toFixed(5), pixels: d.count, total: d.total, ceiling, pass: d.fraction <= ceiling, mockHeight: hM, builtHeight: hB };
-          res.checks.push(check('pixel-diff', res.diff.pass, `${(d.fraction * 100).toFixed(2)}% differing over the full ${H}px page (ceiling ${(ceiling * 100).toFixed(1)}%)`));
+          res.checks.push(check('pixel-diff', res.diff.pass, `${(d.fraction * 100).toFixed(2)}% differing over the ${full ? 'full' : 'viewport'} ${H}px ${full ? 'page' : 'capture'} (ceiling ${(ceiling * 100).toFixed(1)}%)`));
 
           // .still twin: forcing the still class on the root must change nothing
           await page.evaluate(addStillClass);
           await page.waitForTimeout(120);
-          const stillPng = await shot(page);
+          const stillPng = await sh(page);
           let stillOk = pngHeight(stillPng) === hB;
           let stillDetail = '.still class on root renders identically';
           if (!stillOk) stillDetail = `.still changed the page height (${hB} -> ${pngHeight(stillPng)})`;
@@ -323,7 +354,7 @@ export async function runFidelity(opts) {
           const ok = res.checks.every(x => x.pass);
           if (ok && opts.composites === 'fail') return;
           const name = `${contract.id}-${w}.png`;
-          await writeComposite(browser, path.join(out, name), { title: `${contract.id} @ ${w}px  diff ${(d.fraction * 100).toFixed(2)}%`, ok, design: mockPng, built: builtPng, diff: d.diffPng });
+          await writeComposite(browser, path.join(out, name), { title: `${contract.id} @ ${w}px  diff ${(d.fraction * 100).toFixed(2)}%`, ok, design: mockPng, built: builtPng, diff: d.diffPng, regions: regionOut });
           res.composite = name;
         } catch (e) {
           if (e instanceof InfraError) throw e;
@@ -360,6 +391,7 @@ function renderMd(report) {
     if (r.composite) L.push(`Composite: \`${r.composite}\``, '');
     for (const c of r.checks) L.push(`- ${c.pass ? 'PASS' : 'FAIL'} **${c.name}** ${c.detail}`);
     for (const w of r.warnings) L.push(`- WARN ${w}`);
+    if (r.regions) { L.push('', 'Regions:'); for (const g of r.regions) L.push(`- ${g.pass ? 'PASS' : 'FAIL'} ${g.id}: ${(g.fraction * 100).toFixed(1)}% differing (ceiling ${(g.ceiling * 100).toFixed(1)}%), built stddev ${g.builtStddev}`); }
     if (r.exempt && Object.keys(r.exempt).length) { L.push('', 'Geometry NOT checked (anchors_exempt, as in force at this width):'); for (const [id, why] of Object.entries(r.exempt)) L.push(`- ${id}: ${why || '(NO REASON GIVEN)'}`); }
     if (r.anchorBoxes) { L.push('', 'Anchored mock boxes (x, y, w, h):'); for (const [id, b] of Object.entries(r.anchorBoxes)) L.push(`- ${id}: ${b ? `${b.x}, ${b.y}, ${b.w}, ${b.h}` : 'ANCHOR TEXT NOT FOUND'}`); }
     L.push('');

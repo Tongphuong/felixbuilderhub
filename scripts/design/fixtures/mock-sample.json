@@ -1,0 +1,13 @@
+{
+  "_source": "Sample data shown in the locked mocks (_design/read2lead-dao-phieu-luu/mocks/01-home-*.html, S1-home-mid-story-390.html, 04-reward-*.html, S3-rank-up-390.html). The r2l driver puts these VALUES into the real API response SHAPES so the page's own code renders them and the pixel diff measures design, not data.",
+  "child": { "name": "Minh", "diamonds": 55, "streak_days": 3 },
+  "rank": { "tier_index": 1, "tier_name_vi": "Bạc", "stars": 2, "stars_per_division": 3, "stars_to_next": 1, "next_label_vi": "Bạc ★★★" },
+  "story": { "title": "The Sky Is Blue!", "level": "L1", "pages": 6 },
+  "leaderboard": {
+    "xp": [ { "display_name": "Hoang", "total": 1080 }, { "display_name": "Hieuenzo", "total": 900 }, { "display_name": "Percy", "total": 890 } ],
+    "diamonds": [ { "display_name": "Percy", "total": 39444 }, { "display_name": "Hoang", "total": 31391 }, { "display_name": "Hieuenzo", "total": 29480 } ]
+  },
+  "reward": { "diamonds": 35, "xp": 20 },
+  "rank_up": { "label": "Bạc ★★★", "name": "Minh" },
+  "no_story_message": "Chưa có truyện phù hợp lúc này. Bài đã lưu của con vẫn còn. Con quay lại sau nhé."
+}

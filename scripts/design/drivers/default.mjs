@@ -21,12 +21,12 @@
 import { stateProbe } from '../lib/in-page.mjs';
 
 // Each home state is identified by the label of its one primary button.
-const PRIMARY_LABEL = { 'first-visit': 'Mở truyện', 'mid-story': 'Đọc tiếp', empty: 'Mở thư viện' };
+export const PRIMARY_LABEL = { 'first-visit': 'Mở truyện', 'mid-story': 'Đọc tiếp', empty: 'Mở thư viện', 'no-story': 'Mở thư viện' };
 
 export default async function defaultDriver(page, contract, base, ctx = {}) {
   const opts = ctx.opts || {};
   const state = contract.built && contract.built.state;
-  if (!['first-visit', 'mid-story', 'empty', 'reward', 'rank-up'].includes(state)) throw new Error(`default driver: unknown built.state "${state}"`);
+  if (!['first-visit', 'mid-story', 'empty', 'no-story', 'reward', 'rank-up'].includes(state)) throw new Error(`default driver: unknown built.state "${state}"`);
   if (state === 'reward') {
     // TODO(next packet): drive one full story mission until stage=reward
     // (pattern: scratchpad v104/mission.mjs); the view is rendered by the story-voice script.
@@ -51,7 +51,11 @@ export default async function defaultDriver(page, contract, base, ctx = {}) {
   await page.goto(base + p, { waitUntil: 'load' });
   await page.waitForLoadState('networkidle').catch(() => {});
 
-  // ---- state verification ----
+  await verifyHomeState(page, contract, state, opts);
+}
+
+// Logged in + the state's primary label visible + the other states' labels absent. Throws otherwise.
+export async function verifyHomeState(page, contract, state, opts = {}) {
   // The home renders asynchronously after the session loads: poll (default up to 8s, opts.greetingWaitMs) for the logged-in greeting.
   let probe = await page.evaluate(stateProbe);
   const deadline = Date.now() + Number(opts.greetingWaitMs ?? 8000);
@@ -65,8 +69,9 @@ export default async function defaultDriver(page, contract, base, ctx = {}) {
     throw new Error(`contract ${contract.id}: primary.text "${contract.primary.text}" does not match the "${state}" state label "${want}"`);
   }
   if (!has(want)) throw new Error(`wrong state: expected a visible "${want}" button for "${state}" but found [${probe.labels.slice(0, 8).join(' | ')}]`);
+  const group = l => (l === 'no-story' ? 'empty' : l);
   for (const [other, label] of Object.entries(PRIMARY_LABEL)) {
-    if (other !== state && has(label)) throw new Error(`wrong state: a "${label}" button (state "${other}") is visible while expecting "${state}"`);
+    if (group(other) !== group(state) && has(label)) throw new Error(`wrong state: a "${label}" button (state "${other}") is visible while expecting "${state}"`);
   }
   // TODO(next packet): force the state on the fixture account (it is only VERIFIED here).
 }

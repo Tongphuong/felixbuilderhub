@@ -49,6 +49,12 @@ and must leave the page in `contract.built.state` or **throw** (a throw is recor
   a "Chào <name>!" heading and no code-entry form; first-visit shows "Mở truyện", mid-story "Đọc tiếp",
   empty "Mở thư viện", and the other states' labels are absent). Reward and rank-up are TODO hooks that
   throw "not implemented". Forcing the state on the fixture account is still a TODO (it is verified only).
+- `drivers/r2l.mjs` (use this for the real screens): logs in with the rehearsal magic link (`--token`, default 32 x "b"),
+  reaches first-visit / mid-story / no-story / reward / rank-up, and makes the page render the MOCK SAMPLE DATA
+  (`fixtures/mock-sample.json`: Minh, 55 diamonds, Bạc ★★, streak 3, the Hoang/Hieuenzo/Percy boards, "The Sky Is Blue!",
+  reward +35/+20) by fetching each real account API response and replacing only VALUES, so shapes stay real and the page's own code
+  renders them. Reward drives a real story mission through the rehearsal API; rank-up shows the real modal markup. Each state's
+  marker (primary label) is asserted. The rehearsal's own "LOCAL REHEARSAL" banner is hidden. Real avatars remain the one data difference.
 - `drivers/mock-self.mjs`: loads the mock itself (calibration; `DESIGN_PERTURB=tiny|shift`).
 - `drivers/goto-path.mjs`: only navigates (the harness's own synthetic pages; never for real screens).
 
@@ -87,6 +93,13 @@ screenshots are FULL-PAGE on both sides, so anything below the fold is compared.
 - `anchors_<w>` / `anchors_exempt_<w>` override the base maps at that width only; in `anchors_<w>` a `null` value removes the base
   anchor for that width (same for `anchors_exempt_<w>`). Both-at-one-width (after merging) is exit 2, and so is a key for a width
   with no mock. `report.md` shows the maps as in force at each width, plus the resolved mock boxes.
+- `capture: "viewport"` (optional): single-screen snapshots and overlays. Both sides are screenshotted at the viewport size only,
+  the `height` check is skipped, and order/size/geometry ignore elements wholly outside the viewport.
+- `regions` (optional): `[{ "id": "rankup.monster", "mock_box": { "390": [x, y, w, h] }, "ceiling": 0.15 }]`. For each region the
+  MOCK is cropped at `mock_box`, the BUILT page at the `[data-design=id]` element's box (resized to the mock box size), and the
+  built crop FAILS as "region empty" when blank or uniform (luminance stddev < 4), and when its pixel diff exceeds `ceiling`.
+  Results appear per region in `report.md` and under the composite. A region has its own check, `region:<id>`.
+- `min_size` (optional): `{ "<id>": [w, h] }` overrides the default 40x24 minimum of an `order` element.
 - `reduced_motion_allow` (optional): animation names exempt from the `animation-name` rule.
 - Width-keyed fields must agree: `mock`, `viewport`, `diff_ceiling` (and `reference` if present) list exactly the same widths;
   `order_<w>`, `texts_<w>`, `layout` and `primary.min_height` may only name those widths. Otherwise the harness exits 2.

@@ -123,7 +123,10 @@ export function scanText() {
 
 // ---------------------------------------------------------------------------
 // Contract checks that need the DOM: order (+ minimum size), primary, sun rule, columns.
-//   args = { order: string[], primary: {id,minHeight}|null, columns: {expected}|null }
+//   args = { order: string[], primary: {id,minHeight}|null, columns: {expected}|null,
+//            minSize: {id: [w,h]} (per-id override of the default 40x24), viewportOnly: bool }
+//   viewportOnly (contract "capture":"viewport"): ids whose box lies wholly outside the viewport are neither
+//   ordered nor size-checked (they are below the fold of a single-screen snapshot).
 export function contractChecks(args) {
   function visible(el) {
     for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
@@ -146,7 +149,9 @@ export function contractChecks(args) {
     const vis = all.find(visible);
     if (!vis) { hidden.push(id); continue; }
     const r = vis.getBoundingClientRect();
-    if (r.width < 40 || r.height < 24) tiny.push(id + ' is ' + Math.round(r.width) + 'x' + Math.round(r.height) + 'px (min 40x24; a 1px mark is not a section)');
+    if (args.viewportOnly && (r.top >= window.innerHeight || r.bottom <= 0)) continue;
+    const [mw, mh] = (args.minSize && args.minSize[id]) || [40, 24];
+    if (r.width < mw || r.height < mh) tiny.push(id + ' is ' + Math.round(r.width) + 'x' + Math.round(r.height) + 'px (min ' + mw + 'x' + mh + '; a 1px mark is not a section)');
     found.push({ id, top: r.top + window.scrollY, el: vis });
   }
   const orderProblems = [];
