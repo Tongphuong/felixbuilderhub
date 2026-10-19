@@ -17,6 +17,13 @@ test('BITE: every case/encoding/slash variant of an admin path is 401 without cr
     assert.equal(response.status,401,path);assert.match(response.headers.get('WWW-Authenticate')||'',/Basic/,path);assert.equal(nextCalls,0,path);
   }
 });
+test('BITE: a malformed escape cannot hide an encoded admin path (fail closed)',async()=>{
+  for(const path of ['/api/%61dmin/x%zz','/api/%61dmin/%','/%61dmin%zz','/API/%41DMIN/%E0%A4%A','/api/admin%zz/codes','/foo/adm%69n%/bar']) {
+    const {response,nextCalls}=await run(path);
+    assert.equal(response.status,401,path);assert.equal(nextCalls,0,path);
+  }
+  const ok=await run('/api/%61dmin/x%zz',{auth:true});assert.equal(ok.nextCalls,1,'with credentials it is allowed through');
+});
 test('with correct credentials the admin paths (any case) still work',async()=>{
   for(const path of ['/api/admin/codes','/Api/Admin/codes','/admin']) {
     const {response,nextCalls}=await run(path,{auth:true});
