@@ -119,7 +119,7 @@ export function showRankUpModal(rankUp: RankUpPayload, ladder?: RankLadderView, 
 
   modal.classList.remove('hidden');
   modal.classList.add('flex');
-  window.setTimeout(() => document.getElementById('rank-up-share')?.focus(), 0);
+  window.setTimeout(() => document.getElementById('rank-up-close')?.focus(), 0);
   void fireRankUpConfetti(ladder, rankUp.tier_changed);
 }
 

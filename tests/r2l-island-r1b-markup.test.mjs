@@ -19,7 +19,10 @@ test('home carries every design id from the home contracts, in contract order', 
     last = at;
   }
   assert.equal((ready.match(/data-design-col/g) || []).length, 3, 'three top-level columns');
-  assert.ok(!ready.includes('data-design="home.rank-progress"'), 'no XP-to-next-star data exists, so the rank-progress card is omitted, not invented');
+  // Rank progress is built from the real ladder: stars / stars_per_division / next_label_vi (never invented XP).
+  assert.ok(ready.indexOf('data-design="home.map"') < ready.indexOf('data-design="home.rank-progress"'));
+  assert.ok(ready.indexOf('data-design="home.rank-progress"') < ready.indexOf('data-design="home.leaderboard"'));
+  assert.match(homeScript, /stars_per_division/); assert.match(homeScript, /next_label_vi/); assert.doesNotMatch(homeScript, /XP-to-next/);
 });
 
 test('home primary id is moved onto exactly one control by the script', () => {

@@ -32,6 +32,7 @@ if (root) {
     el('home-cover').hidden = empty;
     el('home-map').hidden = empty || name === 'rest';
     el('home-rankings').closest('aside')!.hidden = empty;
+    if (empty) el('home-rank-progress').hidden = true;
     el('home-map').hidden = empty || name === 'rest';
     el('home-personal-progress').hidden = empty;
     el('home-zz').hidden = !empty;
@@ -141,6 +142,16 @@ if (root) {
       el('home-name').textContent = progress.student_name || data.student_name || 'con';
       el('home-diamonds').textContent = number(state.diamonds); el('home-wallet').hidden = false;
       rankChip(state.rank_ladder, state.rank_title);
+      // "Sắp lên {next}" + a bar at stars / stars_per_division: the real ladder fields, never invented XP.
+      const ladder = state.rank_ladder, per = Number(ladder?.stars_per_division) || 0;
+      const showRank = per > 0 && !ladder?.is_apex && Boolean(ladder?.next_label_vi);
+      el('home-rank-progress').hidden = !showRank;
+      if (showRank) {
+        const stars = Math.max(0, Math.min(per, Number(ladder.stars) || 0));
+        el('home-rank-next').textContent = 'Sắp lên ' + ladder.next_label_vi;
+        el('home-rank-stars').textContent = stars + ' / ' + per + ' ★';
+        el('home-rank-fill').style.width = Math.round((stars / per) * 100) + '%';
+      }
       const streak = Number(state.streak_days ?? progress.streak_days) || 0;
       el('home-streak-text').textContent = number(streak) + ' ngày'; el('home-streak').hidden = streak < 1;
       const pack = progress.current_pack, cta = buildHeroCta(pack, data, accessCode, params.get('done') === '1');

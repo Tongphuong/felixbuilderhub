@@ -257,7 +257,9 @@ html.rw-open body > :not(.rw):not(#rank-up-modal):not(script):not(style):not(lin
 .rw__finish { display:flex; flex-direction:column; align-items:flex-start; gap:8px; padding:12px 14px; width:100%; }
 .rw__ticks { display:flex; gap:4px; }
 .rw__tick { width:26px; height:26px; border-width:2px; }
-.rw__finish { flex-direction:row; align-items:center; gap:8px; }
+.rw__finish { flex-direction:column; align-items:stretch; gap:8px; }
+.rw__finish-row { display:flex; align-items:center; gap:8px; }
+.rw__count { margin-left:auto; font-weight:900; }
 .rw__finish-text { margin-left:4px; font-weight:900; }
 .rw__wide { display:none; }
 .rw__note { margin:0; text-align:center; font-weight:800; }
@@ -282,7 +284,10 @@ html.rw-open body > :not(.rw):not(#rank-up-modal):not(script):not(style):not(lin
   .rw__tile { flex-direction:row; align-items:center; gap:14px; padding:18px; }
   .rw__txt { align-items:flex-start; }
   .rw__num { font-size:48px; }
-  .rw__finish { flex-direction:row; justify-content:space-between; }
+  .rw__finish-row { justify-content:space-between; }
+  .rw__ticks { display:none; }
+  .rw__finish-text { margin-left:0; }
+  .rw__count { margin-left:0; }
   .rw__wide { display:inline; }
   .rw__actions { flex-direction:row; gap:16px; margin-top:0; }
   .rw__actions .r2l-btn { flex:1; }

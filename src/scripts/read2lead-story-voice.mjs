@@ -184,9 +184,9 @@ export async function mountStoryMission() {
 <div class="r2l-card r2l-m-pop rw__tile" style="animation-delay:.5s"><svg aria-hidden="true" width="44" height="44" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z" fill="#3CC8F0" stroke="#17324D" stroke-width="1.6" stroke-linejoin="round"></path><path d="M2 9h20M9 3l3 18 3-18" stroke="#17324D" stroke-width="1.2" fill="none"></path></svg><span class="rw__txt"><span class="rw__num r2l-d rw__diamonds"></span><span class="rw__unit">kim cương</span></span></div>
 <div class="r2l-card r2l-m-pop rw__tile" style="animation-delay:.8s"><svg aria-hidden="true" width="44" height="44" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.5 1.3 6.5L12 17l-5.9 3.3 1.3-6.5L2.5 9.3l6.6-.8z" fill="#FFC83D" stroke="#17324D" stroke-width="1.6" stroke-linejoin="round"></path></svg><span class="rw__txt"><span class="rw__num r2l-d rw__xp"></span><span class="rw__unit">XP</span></span></div>
 </div>
-<div class="r2l-card-f rw__finish" data-design="reward.finish"><span class="rw__ticks">${['','',''].map(()=>`<span class="r2l-node r2l-n-done rw__tick">${RW_TICK}</span>`).join('')}</span><b class="rw__finish-text">Về đích!<span class="rw__wide"> Cả 3 bước đã xong</span></b></div>
-<p class="rw__note" role="status"></p>
+<div class="r2l-card-f rw__finish" data-design="reward.finish"><div class="rw__finish-row"><span class="rw__ticks">${['','',''].map(()=>`<span class="r2l-node r2l-n-done rw__tick">${RW_TICK}</span>`).join('')}</span><b class="rw__finish-text">Về đích!<span class="rw__wide"> Cả 3 bước đã xong</span></b><b class="rw__count" hidden></b></div><div class="r2l-bar r2l-m-fill rw__bar" hidden><i></i></div></div>
 <div class="rw__actions" data-design="reward.actions"></div>
+<p class="rw__note" role="status"></p>
 <div class="rw__more"></div>
 </div></div>`;
     rw.querySelector('.rw__story').textContent='“'+(info.title||'')+'”';
@@ -205,7 +205,17 @@ export async function mountStoryMission() {
     // The reward replaces the whole page (design 04): everything else steps aside while it is up.
     document.documentElement.classList.add('rw-open');const shell=$('lesson-shell');if(shell)shell.inert=true;
     // The child's own companion dances (design: r2l-m-dance); the cheering Minny stays as the fallback.
-    import('../lib/r2l-child-avatar').then(m=>m.mountChildAvatar(rw.querySelector('.rw__monster'),params.get('code')||undefined)).catch(()=>{});
+    // Same read-only state also gives the real rank stars for the finish bar ("x / y ★"); no number is invented.
+    import('../lib/r2l-child-avatar').then(async m=>{
+      const state=await m.loadChildState(params.get('code')||undefined);
+      m.drawChildAvatar(rw.querySelector('.rw__monster'),state);
+      const lp=m.ladderProgress(state);
+      if(lp&&!lp.apex){
+        const count=rw.querySelector('.rw__count'),bar=rw.querySelector('.rw__bar');
+        count.textContent=lp.stars+' / '+lp.perDivision+' ★';count.hidden=false;
+        bar.querySelector('i').style.width=Math.round(lp.stars/lp.perDivision*100)+'%';bar.hidden=false;
+      }
+    }).catch(()=>{});
     rw.tabIndex=-1;rw.focus({preventScroll:true});
     return rw;
   }

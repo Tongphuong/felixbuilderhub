@@ -38,6 +38,9 @@
 .rh__story { order: 2; }
 .rh__map { order: 3; }
 .rh__board { order: 4; }
+.rh__rank-card { order: 4; margin: 18px 0 0; display: flex; flex-direction: column; gap: 8px; }
+.rh__rank-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.rh__rank-count { font-weight: 900; }
 .rh__progress { order: 5; }
 .rh__comp { order: 6; }
 .rh__parents { order: 7; }
@@ -146,8 +149,8 @@
 .rh__board-head { display: flex; align-items: center; gap: 6px; font-weight: 900; font-size: 16px; padding-left: 4px; }
 .rh__rows { display: flex; flex-direction: column; gap: 8px; }
 .rh__own { margin: 0; color: #fff; font-weight: 800; text-align: center; }
-.rh__board-link { margin: 0; color: #fff; font-weight: 800; font-size: 16px; text-align: center; min-height: 48px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; column-gap: 6px; }
-.rh__board-link a { color: #fff; text-decoration: underline; text-underline-offset: 4px; display: inline-flex; align-items: center; min-height: 48px; }
+.rh__board-link { margin: 0; color: #fff; font-weight: 800; font-size: 16px; text-align: center; padding: 6px 0; line-height: 1.5; }
+.rh__board-link a { color: #fff; text-decoration: underline; text-underline-offset: 4px; display: inline; padding: 14px 0; }
 .rh__dot { white-space: pre; }
 /* rows drawn by src/lib/r2l-ranks.ts (shared with the public card) */
 .rh .reading-home__rank-row { display: grid; grid-template-columns: 26px 34px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 5px; align-items: center; line-height: 1.15; }
@@ -179,17 +182,18 @@
   .rh__top { padding: 20px 24px 0; max-width: 1200px; margin: 0 auto; }
   .rh__grid { display: grid; max-width: 1200px; margin: 0 auto; padding: 0 24px; gap: 18px 24px; align-items: start;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-areas: "hero hero" "story board" "map board" "prog board" "comp parents"; }
+    grid-template-areas: "hero hero" "story rank" "map board" "prog board" "comp parents"; }
   .rh__hero { grid-area: hero; }
   .rh__story { grid-area: story; margin-top: -16px; }
   .rh__map { grid-area: map; margin-top: 0; }
-  .rh__board { grid-area: board; margin-top: -16px; }
+  .rh__board { grid-area: board; margin-top: 0; }
+  .rh__rank-card { grid-area: rank; margin-top: -16px; }
   .rh__progress { grid-area: prog; margin: 0; }
   .rh__comp { grid-area: comp; margin: 0; }
   .rh__parents { grid-area: parents; margin: 0; }
   .rh[data-home-state="no-story"] .rh__grid { grid-template-areas: "hero hero" "story story" "comp parents"; }
   .rh[data-home-state="no-story"] .rh__story { max-width: 520px; width: 100%; justify-self: center; }
-  .rh[data-home-state="mid-story"] .rh__grid { grid-template-areas: "hero hero" "story board" "map board" "prog board" "comp parents"; }
+  .rh[data-home-state="mid-story"] .rh__grid { grid-template-areas: "hero hero" "story rank" "map board" "prog board" "comp parents"; }
 }
 
 /* ---- 1024 / 1280: three columns, 300 | 1fr | 300 ---- */
@@ -201,7 +205,12 @@
   .rh__top { gap: 12px; padding: 20px 0; }
   .rh__grid, .rh[data-home-state="mid-story"] .rh__grid, .rh[data-home-state="no-story"] .rh__grid { padding: 0; gap: 18px 28px; grid-template-columns: 300px minmax(0, 1fr) 300px; grid-template-rows: auto 1fr auto; grid-template-areas: none; }
   .rh__colwrap { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
-  .rh__hero, .rh__story, .rh__map, .rh__board, .rh__progress, .rh__comp, .rh__parents { grid-area: auto; order: 0; }
+  .rh__hero, .rh__story, .rh__map, .rh__board, .rh__rank-card, .rh__progress, .rh__comp, .rh__parents { grid-area: auto; order: 0; }
+  .rh__rank-card { margin-top: 0; }
+  .rh__rank-card .rh__rank-row { display: contents; }
+  .rh__rank-card #home-rank-next { order: 1; }
+  .rh__rank-card .r2l-bar { order: 2; }
+  .rh__rank-card .rh__rank-count { order: 3; }
   /* three real columns; the companion button sits under the monster, "Dành cho ba mẹ" under the board */
   .rh__col-a { grid-column: 1; grid-row: 1; }
   .rh__col-b { grid-column: 2; grid-row: 1 / 4; }
@@ -256,7 +265,7 @@
   .rh .reading-home__rank-name { flex: 1; font-size: 16px; }
   .rh .reading-home__rank-value { font-size: 16px; }
   .rh .reading-home__rank-row.is-self { outline-offset: 3px; }
-  .rh__board-link { flex-direction: column; }
+  .rh__board-link { display: flex; flex-direction: column; align-items: center; }
   .rh__dot { display: none; }
   /* companion + parents as plain, centred controls */
   .rh__comp { height: auto; min-height: 52px; justify-content: center; align-self: start; }

@@ -130,8 +130,8 @@ const TURNSTILE_SITE_KEY = String(import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '
           <div id="home-cover" class="rh__cover" aria-hidden="true"><svg viewBox="0 0 112 112" width="100%" height="100%"><circle cx="82" cy="30" r="16" fill="#FFD95A"></circle><ellipse cx="34" cy="38" rx="20" ry="8" fill="#fff"></ellipse><path d="M30 56 q6 -6 12 0 q6 -6 12 0" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round"></path><path d="M0 84 C30 66 60 80 112 70 L112 112 L0 112Z" fill="#4FB868"></path><path d="M20 90 l6-18 6 18z" fill="#237A41"></path></svg></div>
           <div id="home-nostory-tile" class="rh__tile" aria-hidden="true" hidden><svg width="64" height="64" viewBox="0 0 24 24"><path d="M2 5c3-1 7-1 10 1 3-2 7-2 10-1v14c-3-1-7-1-10 1-3-2-7-2-10-1z" fill="#fff" stroke="#17324D" stroke-width="1.6" stroke-linejoin="round"></path><path d="M12 6v14" stroke="#17324D" stroke-width="1.6"></path><path d="M18 2l.8 1.7L20.5 4.5l-1.7.8L18 7l-.8-1.7-1.7-.8 1.7-.8z" fill="#FFC83D" stroke="#17324D" stroke-width="1"></path></svg></div>
           <div class="rh__story-text">
-            <div id="home-tags" class="rh__tags"><span class="r2l-tag r2l-tag-sun rh__new rh__new--wide">Mới</span><span id="home-level-tag" class="r2l-tag" hidden></span></div>
             <h2 id="home-heading" class="r2l-d r2l-t-2 rh__title">Hôm nay mình đọc nhé!</h2>
+            <div id="home-tags" class="rh__tags"><span class="r2l-tag r2l-tag-sun rh__new rh__new--wide">Mới</span><span id="home-level-tag" class="r2l-tag" hidden></span></div>
             <p id="home-instruction" class="r2l-b-l rh__sub">Một câu chuyện đang chờ con.</p>
           </div>
         </div>
@@ -172,6 +172,13 @@ const TURNSTILE_SITE_KEY = String(import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '
       </div>
 
       <div class="rh__colwrap rh__col-c" data-design-col>
+      <section id="home-rank-progress" class="rh__rank-card r2l-card-f" data-design="home.rank-progress" aria-labelledby="home-rank-next" hidden>
+        <div class="rh__rank-row">
+          <span id="home-rank-next" class="r2l-d r2l-t-4"></span>
+          <b id="home-rank-stars" class="rh__rank-count"></b>
+        </div>
+        <div class="r2l-bar r2l-m-fill"><i id="home-rank-fill" style="width:0"></i></div>
+      </section>
       <aside class="rh__board r2l-card-f r2l-card-leaf" data-design="home.leaderboard" aria-labelledby="home-board-title">
         <span id="home-board-title" class="r2l-d r2l-t-3">Bảng xếp hạng</span>
         <div id="home-rankings" class="rh__board-cols">
