@@ -2,32 +2,27 @@
    - Semantic CSS variables (surface, border, accent, status, rank tiers)
    - Spacing / radius / shadow / motion scale
    - .fx-* component primitives consumed by src/components/ui/*.astro
-   Existing tailwind utilities + base resets in global.css stay authoritative for body/headings. */
+   Existing tailwind utilities + base resets in global.css stay authoritative for body/headings.
+
+   RE-THEMED 2026-10-19 (R2L-ISLAND, "Đảo phiêu lưu"): old names are re-pointed BY ROLE onto the --r2l-* tokens
+   (src/styles/r2l-tokens.css). --navy-* are SURFACES (cream/white/sand), --cream* are TEXT (ink),
+   --gold* are the sun-yellow FILL. Change the role mapping here only; never swap values file by file. */
 
 :root {
-  /* ---- Base palette mirrors tailwind.config.mjs (single source of truth lives in the Tailwind theme) ---- */
-  --navy-950: #10273a;
-  --navy-900: #17354a;
-  --navy-850: #1d3f58;
-  --navy-800: #244a64;
+  /* ---- Role palette -> r2l tokens (the single re-point; mirrors tailwind.config.mjs) ---- */
+  --navy-950: var(--r2l-cream);
+  --navy-900: #ffffff;
+  --navy-850: var(--r2l-cream);
+  --navy-800: var(--r2l-sand);
 
-  --gold: #c88f38;
-  --gold-light: #f2cc7e;
+  --gold: var(--r2l-sun);              /* FILL role: sun-yellow button/progress fill (ink text on it) */
+  --gold-hover: var(--r2l-sun-shadow); /* FILL role: pressed/hover fill */
+  --gold-light: var(--r2l-ink);        /* TEXT role: every old `color: var(--gold-light)` (eyebrows, links,
+                                          wallet) is text on a light ground, so it resolves to ink. Never use as a fill. */
 
-  --cream: #f5e6c8;
-  --cream-muted: #d9c7a4;
-  --cream-dim: #aa9673;
-
-  /* Shared night-sky background: identical to the main website. */
-  --star-field-background: radial-gradient(circle at 50% 20%, rgba(245, 230, 200, 0.08), transparent 28rem),
-      radial-gradient(circle at 18% 28%, rgba(242, 204, 126, 0.08), transparent 18rem),
-      radial-gradient(circle at 82% 72%, rgba(245, 230, 200, 0.06), transparent 22rem),
-      radial-gradient(1px 1px at 12% 16%, rgba(245, 230, 200, 0.75), transparent 60%),
-      radial-gradient(1px 1px at 28% 34%, rgba(245, 230, 200, 0.5), transparent 60%),
-      radial-gradient(1px 1px at 44% 18%, rgba(245, 230, 200, 0.65), transparent 60%),
-      radial-gradient(1px 1px at 68% 26%, rgba(245, 230, 200, 0.55), transparent 60%),
-      radial-gradient(1px 1px at 83% 12%, rgba(245, 230, 200, 0.7), transparent 60%),
-      linear-gradient(180deg, #10273a 0%, #17354a 48%, #0e2233 100%);
+  --cream: var(--r2l-ink);
+  --cream-muted: var(--r2l-ink);
+  --cream-dim: var(--r2l-ink);
 
   /* ---- Surfaces ---- */
   --surface-page: var(--navy-950);
@@ -40,13 +35,13 @@
   --text-strong: var(--cream);
   --text-body: var(--cream-muted);
   --text-muted: var(--cream-dim);
-  --text-on-accent: var(--navy-950);
+  --text-on-accent: var(--r2l-ink);
   --text-link: var(--gold);
   --text-link-hover: var(--gold-light);
 
   /* ---- Accent ---- */
   --accent: var(--gold);
-  --accent-hover: var(--gold-light);
+  --accent-hover: var(--gold-hover);
   --accent-soft: color-mix(in srgb, var(--gold) 15%, transparent);
   --accent-border: color-mix(in srgb, var(--gold) 40%, transparent);
 
@@ -56,17 +51,17 @@
   --border-strong: color-mix(in srgb, var(--cream-dim) 40%, transparent);
 
   /* ---- Status ---- */
-  --success: #6fcf97;
-  --success-soft: color-mix(in srgb, #6fcf97 12%, transparent);
-  --danger: #f87171;
-  --danger-soft: color-mix(in srgb, #f87171 12%, transparent);
+  --success: var(--r2l-leaf);
+  --success-soft: var(--r2l-leaf-tint);
+  --danger: var(--r2l-coral); /* coral takes ink text only */
+  --danger-soft: color-mix(in srgb, var(--r2l-coral) 18%, white);
 
   /* ---- Read2Lead rank tiers ---- */
-  --rank-bronze: #c88f38;
-  --rank-silver: #cdd6df;
-  --rank-gold: #f2cc7e;
-  --rank-diamond: #8fd3ff;
-  --rank-legend: #c89bff;
+  --rank-bronze: var(--r2l-bronze);
+  --rank-silver: var(--r2l-silver);
+  --rank-gold: var(--r2l-gold);
+  --rank-diamond: var(--r2l-diamond);
+  --rank-legend: var(--r2l-minny);
 
   /* ---- Spacing (4px base) ---- */
   --space-1: 0.25rem;
@@ -91,9 +86,9 @@
   --radius-full: 9999px;
 
   /* ---- Shadow ---- */
-  --shadow-card: 0 10px 30px -12px rgba(0, 0, 0, 0.55);
-  --shadow-lg: 0 18px 40px -16px rgba(0, 0, 0, 0.6);
-  --shadow-2xl: 0 28px 60px -20px rgba(0, 0, 0, 0.7);
+  --shadow-card: var(--r2l-shadow-card);
+  --shadow-lg: 0 14px 0 -4px color-mix(in srgb, var(--r2l-ink) 35%, transparent);
+  --shadow-2xl: 0 18px 0 -4px color-mix(in srgb, var(--r2l-ink) 35%, transparent);
   --ring-accent: 0 0 0 4px color-mix(in srgb, var(--gold) 30%, transparent);
 
   /* ---- Motion ---- */
@@ -102,8 +97,8 @@
   --duration-base: 250ms;
 
   /* ---- Type families (mirror tailwind.config) ---- */
-  --font-display: 'Manrope', 'Inter', system-ui, sans-serif;
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: var(--r2l-font-display);
+  --font-sans: var(--r2l-font-body);
 
   /* ---- Weights ---- */
   --weight-regular: 400;
@@ -150,10 +145,12 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  font-family: var(--font-sans);
-  font-weight: var(--weight-semibold);
-  border-radius: var(--radius-md);
-  border: 1px solid transparent;
+  font-family: var(--font-display);
+  font-weight: var(--weight-extrabold);
+  border-radius: var(--r2l-radius-btn);
+  border: var(--r2l-border);
+  box-shadow: 0 4px 0 var(--r2l-ink);
+  min-height: var(--r2l-tap-min);
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
@@ -163,7 +160,7 @@
     color var(--duration-base) var(--ease-standard),
     transform var(--duration-fast) var(--ease-standard);
 }
-.fx-btn:active { transform: translateY(1px); }
+.fx-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--r2l-ink); }
 .fx-btn[disabled],
 .fx-btn[aria-disabled='true'] {
   opacity: 0.6;
@@ -179,33 +176,39 @@
   background: var(--accent);
   color: var(--text-on-accent);
 }
-.fx-btn--primary:hover { background: var(--accent-hover); color: var(--navy-950); }
+.fx-btn--primary:hover { background: var(--accent-hover); color: var(--r2l-ink); }
 
 .fx-btn--secondary {
-  background: transparent;
-  border-color: var(--border-strong);
-  color: var(--text-strong);
+  background: #fff;
+  border-color: var(--r2l-ink);
+  color: var(--r2l-ink);
 }
-.fx-btn--secondary:hover { border-color: var(--accent); color: var(--accent); }
+.fx-btn--secondary:hover { background: var(--r2l-sand); }
 
 .fx-btn--ghost {
   background: transparent;
-  color: var(--accent);
+  color: var(--r2l-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  border-color: transparent;
+  box-shadow: none;
   padding-left: 0;
   padding-right: 0;
 }
-.fx-btn--ghost:hover { color: var(--accent-hover); }
+.fx-btn--ghost:hover { color: var(--r2l-leaf-deep); }
 
 .fx-btn--block { display: flex; width: 100%; }
 
 /* ============================ CARD ============================ */
 .fx-card {
   background: var(--surface-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-xl);
+  background: #fff;
+  border: var(--r2l-border);
+  border-radius: var(--r2l-radius-card);
+  box-shadow: var(--r2l-shadow-card);
   padding: var(--space-6);
 }
-.fx-card--accent { border-color: var(--accent-border); }
+.fx-card--accent { background: var(--r2l-sand); }
 .fx-card--raised { background: var(--surface-raised); box-shadow: var(--shadow-card); }
 .fx-card--interactive {
   transition:
@@ -229,24 +232,24 @@
 }
 .fx-badge--accent {
   background: var(--accent-soft);
-  border-color: var(--accent-border);
-  color: var(--accent);
+  border-color: var(--r2l-ink);
+  color: var(--r2l-ink);
 }
 .fx-badge--gold {
-  background: color-mix(in srgb, var(--gold) 15%, transparent);
-  border-color: color-mix(in srgb, var(--gold) 40%, transparent);
-  color: var(--gold-light);
+  background: var(--r2l-sun);
+  border-color: var(--r2l-ink);
+  color: var(--r2l-ink);
   border-radius: var(--radius-sm);
   font-size: var(--text-xs);
 }
 .fx-badge--neutral {
-  background: color-mix(in srgb, var(--cream) 6%, transparent);
-  border-color: var(--border-subtle);
-  color: var(--text-body);
+  background: #fff;
+  border-color: var(--r2l-ink);
+  color: var(--r2l-ink);
 }
 .fx-badge--solid {
   background: var(--accent);
-  color: var(--navy-950);
+  color: var(--r2l-ink);
 }
 
 /* ============================ AVATAR ============================ */
@@ -269,27 +272,27 @@
   font-size: var(--text-sm);
   color: var(--text-body);
 }
-.fx-label__req { color: var(--danger); }
+.fx-label__req { color: var(--r2l-ink); }
 
 .fx-field {
   width: 100%;
   font-family: var(--font-sans);
   font-size: var(--text-base);
   color: var(--text-strong);
-  background: var(--surface-section);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
+  background: #fff;
+  border: var(--r2l-border);
+  border-radius: 18px;
   padding: 0.75rem 1rem;
   transition: border-color var(--duration-base) var(--ease-standard);
 }
-.fx-field::placeholder { color: color-mix(in srgb, var(--cream-dim) 80%, transparent); }
-.fx-field:focus { outline: none; border-color: var(--accent); }
+.fx-field::placeholder { color: #5D6F80; } /* the design's own input placeholder */
+.fx-field:focus { outline: none; box-shadow: 0 0 0 4px var(--r2l-sun); }
 .fx-field:disabled { opacity: 0.6; cursor: not-allowed; }
 textarea.fx-field { resize: vertical; min-height: 5.5rem; }
 select.fx-field {
   appearance: none;
   cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23aa9673' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2317324D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.9rem center;
   background-size: 1.1rem;
@@ -306,7 +309,9 @@ select.fx-field {
   display: block;
   height: 0.5rem;
   width: 100%;
-  background: color-mix(in srgb, var(--cream) 10%, transparent);
+  height: 1rem;
+  background: var(--r2l-sky-pale);
+  border: 2px solid var(--r2l-ink);
   border-radius: var(--radius-full);
   overflow: hidden;
 }
@@ -318,7 +323,7 @@ select.fx-field {
   transition: width var(--duration-base) var(--ease-standard);
 }
 .fx-progress__fill--gradient {
-  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  background: var(--gold);
 }
 
 /* ============================ RANK BADGE ============================ */
@@ -340,17 +345,18 @@ select.fx-field {
   border-radius: var(--radius-full);
   box-shadow: 0 0 8px 0 currentColor;
 }
-.fx-rank--bronze  { color: var(--rank-bronze);  border-color: color-mix(in srgb, var(--rank-bronze) 45%, transparent);  background: color-mix(in srgb, var(--rank-bronze) 12%, transparent); }
-.fx-rank--silver  { color: var(--rank-silver);  border-color: color-mix(in srgb, var(--rank-silver) 45%, transparent);  background: color-mix(in srgb, var(--rank-silver) 12%, transparent); }
-.fx-rank--gold    { color: var(--rank-gold);    border-color: color-mix(in srgb, var(--rank-gold) 45%, transparent);    background: color-mix(in srgb, var(--rank-gold) 12%, transparent); }
-.fx-rank--diamond { color: var(--rank-diamond); border-color: color-mix(in srgb, var(--rank-diamond) 45%, transparent); background: color-mix(in srgb, var(--rank-diamond) 12%, transparent); }
-.fx-rank--legend  { color: var(--rank-legend);  border-color: color-mix(in srgb, var(--rank-legend) 45%, transparent);  background: color-mix(in srgb, var(--rank-legend) 12%, transparent); }
+/* Rank tiers: the tier colour is the FILL, text is always ink (silver/gold text on cream is unreadable). */
+.fx-rank--bronze  { color: var(--r2l-ink); border-color: var(--r2l-ink); background: var(--rank-bronze); }
+.fx-rank--silver  { color: var(--r2l-ink); border-color: var(--r2l-ink); background: var(--rank-silver); }
+.fx-rank--gold    { color: var(--r2l-ink); border-color: var(--r2l-ink); background: var(--rank-gold); }
+.fx-rank--diamond { color: var(--r2l-ink); border-color: var(--r2l-ink); background: var(--rank-diamond); }
+.fx-rank--legend  { color: #fff;            border-color: var(--r2l-ink); background: var(--rank-legend); }
 
 /* ============================ FAQ / ACCORDION ============================ */
 .fx-faq {
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  background: color-mix(in srgb, var(--navy-950) 75%, transparent);
+  border: var(--r2l-border);
+  border-radius: var(--r2l-radius-card-flat);
+  background: #fff;
   padding: var(--space-5);
 }
 .fx-faq > summary {
@@ -393,18 +399,18 @@ select.fx-field {
   text-align: center;
   padding: var(--space-2);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border-subtle);
-  background: var(--surface-overlay);
+  border: var(--r2l-border);
+  background: #fff;
   color: var(--text-strong);
   cursor: pointer;
   transition:
     border-color var(--duration-base) var(--ease-standard),
     background-color var(--duration-base) var(--ease-standard);
 }
-.fx-topic:hover { border-color: var(--accent-border); background: var(--navy-800); }
+.fx-topic:hover { background: var(--navy-800); }
 .fx-topic--selected {
-  border-color: var(--accent);
-  background: var(--accent-soft);
+  border-color: var(--r2l-ink);
+  background: var(--r2l-sun);
   box-shadow: var(--ring-accent);
 }
 .fx-topic__emoji { font-size: 1.6rem; line-height: 1; }

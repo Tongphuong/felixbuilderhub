@@ -38,11 +38,11 @@ const pct = Math.min(100, Math.round((quest.progress / quest.target) * 100));
 
 <style>
   .w2-quest-card {
-    --w2-navy: #0f172a;
-    background: var(--w2-navy, #0f172a);
-    border: 2px solid rgb(255 255 255 / 0.12);
+    --w2-navy: var(--r2l-cream);
+    background: var(--w2-navy, var(--r2l-cream));
+    border: 2px solid rgb(23 50 77 / 0.2);
     border-radius: var(--r2l-radius-sm, 12px);
-    color: #f8fafc;
+    color: var(--r2l-ink);
     display: flex;
     flex-direction: column;
     font-family: var(--r2l-font-display, 'Baloo 2 Variable', system-ui, sans-serif);
@@ -59,7 +59,7 @@ const pct = Math.min(100, Math.round((quest.progress / quest.target) * 100));
   }
 
   .w2-quest-progress {
-    background: rgb(255 255 255 / 0.12);
+    background: rgb(23 50 77 / 0.2);
     border-radius: 999px;
     height: 14px;
     overflow: hidden;
@@ -82,12 +82,12 @@ const pct = Math.min(100, Math.round((quest.progress / quest.target) * 100));
   }
 
   .w2-diamond {
-    color: var(--r2l-sun, #ffc83d);
+    color: var(--r2l-ink);
     font-weight: 700;
   }
 
   .w2-rp {
-    color: var(--r2l-sky, #38bdf8);
+    color: var(--r2l-ink);
     font-weight: 600;
   }
 
@@ -111,7 +111,7 @@ const pct = Math.min(100, Math.round((quest.progress / quest.target) * 100));
   }
 
   .w2-quest-done {
-    color: var(--r2l-mint, #34d399);
+    color: var(--r2l-leaf-deep);
     font-size: 0.95rem;
     font-weight: 700;
     min-height: 44px;

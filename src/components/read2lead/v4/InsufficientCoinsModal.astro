@@ -18,10 +18,10 @@ const deficit = Math.max(0, coins_needed - current_coins);
 
 <style>
   .insufficient-modal {
-    background: #0f172a;
+    background: var(--r2l-cream);
     border: 3px solid var(--r2l-sun, #ffc83d);
     border-radius: var(--r2l-radius, 20px);
-    color: #f8fafc;
+    color: var(--r2l-ink);
     font-family: var(--r2l-font-display, 'Baloo 2 Variable', system-ui, sans-serif);
     margin: auto;
     max-width: 20rem;
@@ -68,7 +68,7 @@ const deficit = Math.max(0, coins_needed - current_coins);
   }
 
   .insufficient-close {
-    background: rgb(255 255 255 / 0.12);
-    color: #f8fafc;
+    background: rgb(23 50 77 / 0.12);
+    color: var(--r2l-ink);
   }
 </style>

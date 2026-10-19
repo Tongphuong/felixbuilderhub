@@ -38,10 +38,11 @@ export function rankStarRow(stars: number, starsPerDivision: number) {
 
 export function rankBadgeStyle(ladder: RankLadderView) {
   if (ladder.is_apex) {
-    return 'background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%); border-color: #ffd700;';
+    return 'background: var(--r2l-sun); border-color: var(--r2l-ink);';
   }
   const color = ladder.tier_color || '#c0c0c0';
-  return `border-color: ${color}; background: color-mix(in srgb, ${color} 20%, transparent);`;
+  // Tier colour is a tint on white so the ink text always clears 4.5:1; the ink border carries the outline.
+  return `border-color: var(--r2l-ink); background: color-mix(in srgb, ${color} 38%, white);`;
 }
 
 export function rankBadgeHtml(ladder: RankLadderView, variant: 'compact' | 'large' = 'compact') {

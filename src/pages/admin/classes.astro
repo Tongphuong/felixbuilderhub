@@ -17,7 +17,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
         <button id="presentation-toggle" type="button" class="rounded-lg border border-accent/40 bg-accent/10 px-3 py-2 text-sm font-semibold text-accent transition hover:bg-accent/20">
           🖥️ Presentation
         </button>
-        <button id="create-class" type="button" class="rounded-lg bg-accent px-4 py-2 font-semibold text-navy-950 transition hover:bg-accent-hover">
+        <button id="create-class" type="button" class="rounded-lg bg-accent px-4 py-2 font-semibold text-ink transition hover:bg-accent-hover">
           + Tạo lớp
         </button>
       </div>
@@ -52,7 +52,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
               <label class="mb-1 block text-sm text-cream-muted">Thêm học sinh bằng mã Read2Lead</label>
               <input name="code" maxlength="32" placeholder="R2L-LINH-A4F2" class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-3 py-2 font-mono text-cream uppercase focus:border-accent focus:outline-none" />
             </div>
-            <button type="submit" class="rounded-lg bg-gold px-4 py-2 font-semibold text-navy-950 transition hover:bg-gold-light">Thêm vào lớp</button>
+            <button type="submit" class="rounded-lg bg-gold px-4 py-2 font-semibold text-ink transition hover:bg-gold-light">Thêm vào lớp</button>
           </form>
 
           <details class="mt-4 rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
@@ -271,7 +271,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
         `;
       }
       const rewardButtons = (klass.positive_presets || []).map((preset) => `
-        <button type="button" data-class-action="reward" data-kind="positive" data-code="${escapeHtml(student.code)}" data-reason="${escapeHtml(preset.label)}" data-diamonds="${Number(preset.diamond_delta ?? (preset.xp_delta || 0))}" data-coins="${Number(preset.coins_delta || 0)}" class="reward-btn rounded-xl bg-accent px-3 py-3 text-left font-semibold text-navy-950 shadow-lg shadow-accent/10 transition hover:-translate-y-0.5 hover:bg-accent-hover">
+        <button type="button" data-class-action="reward" data-kind="positive" data-code="${escapeHtml(student.code)}" data-reason="${escapeHtml(preset.label)}" data-diamonds="${Number(preset.diamond_delta ?? (preset.xp_delta || 0))}" data-coins="${Number(preset.coins_delta || 0)}" class="reward-btn rounded-xl bg-accent px-3 py-3 text-left font-semibold text-ink shadow-lg shadow-accent/10 transition hover:-translate-y-0.5 hover:bg-accent-hover">
           <span class="block">${escapeHtml(preset.label)}</span>
           <span class="text-xs opacity-80">${escapeHtml(presetText(preset))}</span>
         </button>

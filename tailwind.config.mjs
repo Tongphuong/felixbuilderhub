@@ -1,32 +1,35 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Manrope', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['Nunito', 'system-ui', 'sans-serif'],
+        display: ['"Baloo 2"', 'system-ui', 'sans-serif'],
       },
+      // Re-themed BY ROLE (SPEC_R2L_DAO_PHIEU_LUU.md "Theme mapping rule"). The old names are kept so every
+      // existing class keeps working: navy-* are SURFACES (now cream/white/sand), cream* is TEXT (now ink),
+      // gold/accent is the sun-yellow FILL. Hex values mirror src/styles/r2l-tokens.css.
       colors: {
+        ink: '#17324D',
         accent: {
-          DEFAULT: '#c88f38',
-          hover: '#f2cc7e',
+          DEFAULT: '#FFC83D',
+          hover: '#E0A21A',
         },
         navy: {
-          950: '#10273a',
-          900: '#17354a',
-          850: '#1d3f58',
-          800: '#244a64',
+          950: '#FFF8E7',
+          900: '#FFFFFF',
+          850: '#FFF8E7',
+          800: '#FFE7A8',
         },
         cream: {
-          DEFAULT: '#f5e6c8',
-          muted: '#d9c7a4',
-          dim: '#aa9673',
+          DEFAULT: '#17324D',
+          muted: '#17324D',
+          dim: '#17324D',
         },
         gold: {
-          DEFAULT: '#c88f38',
-          light: '#f2cc7e',
+          DEFAULT: '#FFC83D',
+          light: '#E0A21A',
         },
       },
     },

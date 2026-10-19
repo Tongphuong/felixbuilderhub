@@ -10,8 +10,8 @@
   z-index: 1000;
   font-weight: 800;
   font-size: 1.5rem;
-  color: #22c55e;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  color: var(--r2l-leaf-deep);
+  text-shadow: 0 0 6px #fff, 0 0 2px #fff;
   animation: w2-xp-rise 1.8s ease-out forwards;
 }
 @keyframes w2-xp-rise {
@@ -35,8 +35,8 @@
   z-index: 1000;
   font-weight: 800;
   font-size: 1.5rem;
-  color: var(--gold-light, #f2cc7e);
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  color: var(--gold-light, #f2cc7e); /* --gold-light is the TEXT role (ink) after the R2L-ISLAND re-theme */
+  text-shadow: 0 0 6px #fff, 0 0 2px #fff;
   animation: w2-diamond-rise 1.8s ease-out forwards;
 }
 @keyframes w2-diamond-rise {
@@ -65,7 +65,7 @@
 .w2-combo-counter[data-visible="true"] { opacity: 1; transform: scale(1); }
 .w2-combo-badge {
   background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: #1e293b;
+  color: var(--r2l-ink);
   padding: 0.5rem 1rem;
   border-radius: 999px;
   font-weight: 900;
@@ -91,7 +91,7 @@
   transform: translateX(-50%) translateY(-150%);
   z-index: 1001;
   background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: #1e293b;
+  color: var(--r2l-ink);
   padding: 0.75rem 1.5rem;
   border-radius: 999px;
   font-weight: 800;
@@ -145,18 +145,18 @@
 .w2-reward-coins {
   display: block;
   font-size: 2rem;
-  color: #f59e0b;
+  color: var(--r2l-ink);
   margin: 1rem 0;
 }
 .w2-reward-part {
   display: block;
-  color: #6366f1;
+  color: var(--r2l-ink);
   font-weight: 700;
   margin-top: 0.5rem;
 }
 .w2-reward-dup {
   display: block;
-  color: #22c55e;
+  color: var(--r2l-leaf-deep);
   margin-top: 0.5rem;
 }
 .w2-chest-close {
@@ -164,7 +164,7 @@
   min-height: 48px;
   padding: 0.5rem 2rem;
   background: #fbbf24;
-  color: #1e293b;
+  color: var(--r2l-ink);
   border: none;
   border-radius: 999px;
   font-weight: 800;

@@ -40,41 +40,41 @@ const { id, type } = Astro.props;
 
 <style is:global>
   .r2l-guided-question[data-state='correct'] {
-    border-color: rgb(74 222 128 / 0.55);
-    background: rgb(74 222 128 / 0.08);
+    border-color: rgb(35 122 65 / 0.55);
+    background: rgb(35 122 65 / 0.08);
   }
   .r2l-guided-question[data-state='revealed'] {
-    border-color: rgb(212 166 78 / 0.5);
-    background: rgb(212 166 78 / 0.08);
+    border-color: rgb(224 162 26 / 0.5);
+    background: rgb(224 162 26 / 0.08);
   }
   .r2l-guided-question__option {
     min-height: 44px;
     border-radius: 8px;
-    border: 1px solid rgb(245 230 211 / 0.14);
-    background: rgb(10 14 26 / 0.45);
+    border: 1px solid rgb(23 50 77 /0.14);
+    background: rgb(255 255 255);
     padding: 0.75rem 0.9rem;
     text-align: left;
     font-weight: 700;
-    color: rgb(245 230 211);
+    color: rgb(23 50 77);
     cursor: pointer;
     transition: border-color 180ms ease, background 180ms ease;
     flex: 1 1 auto;
   }
   .r2l-guided-question__option:hover {
-    border-color: rgb(74 222 128 / 0.55);
-    background: rgb(74 222 128 / 0.14);
+    border-color: rgb(35 122 65 / 0.55);
+    background: rgb(35 122 65 / 0.14);
   }
   .r2l-guided-question__option[data-state='selected-correct'] {
-    border-color: rgb(74 222 128 / 0.7);
-    background: rgb(74 222 128 / 0.22);
+    border-color: rgb(35 122 65 / 0.7);
+    background: rgb(35 122 65 / 0.22);
   }
   .r2l-guided-question__option[data-state='selected-wrong'] {
     border-color: rgb(239 68 68 / 0.7);
     background: rgb(239 68 68 / 0.16);
   }
   .r2l-guided-question__option[data-state='revealed'] {
-    border-color: rgb(212 166 78 / 0.6);
-    background: rgb(212 166 78 / 0.16);
+    border-color: rgb(224 162 26 / 0.6);
+    background: rgb(224 162 26 / 0.16);
     opacity: 0.85;
   }
   .r2l-guided-question__option:disabled {
