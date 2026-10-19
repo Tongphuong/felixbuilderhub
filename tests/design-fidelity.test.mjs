@@ -43,7 +43,8 @@ function page(o = {}) {
     ? `<header style="height:60px;padding:16px"><p${mk('t.top')} style="margin:0;width:150px;height:20px">Xin chào</p></header>`
     : `<header${mk('t.top')} style="height:60px;padding:16px"><p style="margin:0">Xin chào</p></header>`;
   const heroStyle = `height:${o.heroH || 200}px;padding:16px;${o.shift ? 'margin-top:' + o.shift + 'px;' : ''}${o.lowContrast ? 'color:#aaa;background:#fff;' : ''}${o.gradient === 'low' ? 'background:linear-gradient(#fff,#fff);color:#ccc;' : ''}${o.gradient === 'ok' ? 'background:linear-gradient(#17324D,#17324D);color:#fff;' : ''}`;
-  const hero = `<main${mk('t.hero')} style="${heroStyle}">${o.heroBlank ? '' : o.heroRed ? '<div style="height:150px;background:#d33"></div>' : `<h2 style="margin:0${o.wrongFont ? ';font-family:Arial' : ''}">Đọc truyện nào</h2>`}</main>`;
+  const spacer = o.push ? `<div style="height:${o.push}px"></div>` : '';
+  const hero = `${spacer}<main${mk('t.hero')} style="${heroStyle}">${o.heroBlank ? '' : o.heroRed ? '<div style="height:150px;background:#d33"></div>' : `<h2 style="margin:0${o.wrongFont ? ';font-family:Arial' : ''}">Đọc truyện nào</h2>`}</main>`;
   const pStyle = `display:block;height:${o.primaryH || 64}px;line-height:${o.primaryH || 64}px;background:#FFC83D;text-align:center`;
   const primary = o.noPrimary ? '' : `<a href="#" role="button"${mk('t.primary')} style="${pStyle}">Mở truyện</a>`
     + (o.dupPrimary ? `<a href="#" role="button"${mk('t.primary')} style="${pStyle}">Mở truyện</a>` : '');
@@ -140,6 +141,8 @@ const V = {
 };
 V['below-far'] = [{ belowFar: true }, { must: ['height', 'order'], may: ['pixel-diff'] }];
 V['below-far-viewport'] = [{ belowFar: true }, []]; // contract capture:viewport: the same page passes
+V['pushed-below-fold'] = [{ push: 700 }, { must: ['order', 'primary', 'geometry'], may: ['pixel-diff', 'texts'] }]; // build pushes the content off the screen
+V['viewport-mock-below-fold'] = [{}, []]; // the MOCK itself has primary/footer below the fold (viewport 300): fine
 V['region-ok'] = [{}, []];
 V['region-empty'] = [{ heroBlank: true }, { must: ['region:t.hero'], may: ['texts', 'pixel-diff', 'geometry'] }];
 V['region-wrong'] = [{ heroRed: true }, { must: ['region:t.hero'], may: ['texts', 'pixel-diff', 'geometry'] }];
@@ -199,9 +202,9 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
       const cols = name === 'wrong-columns' || name === 'right-columns' ? { layout: { 390: { columns: 2 } } } : {};
       const extra = { ...cols };
       if (name.startsWith('region-')) extra.regions = [{ id: 't.hero', mock_box: { 390: [0, 92, 390, 232] }, ceiling: 0.05 }];
-      if (name === 'below-far-viewport') extra.capture = 'viewport';
-      if (name === 'below-far' || name === 'below-far-viewport') extra.order = ['t.top', 't.hero', 't.primary', 't.foot', 't.below'];
-      if (name === 'below-far' || name === 'below-far-viewport') extra.anchors_exempt = { 't.below': 'marker below the fold' };
+      if (name === 'below-far-viewport' || name === 'pushed-below-fold' || name === 'viewport-mock-below-fold') extra.capture = 'viewport';
+      if (name === 'viewport-mock-below-fold') extra.viewport = { 390: 300 };
+      if (name === 'below-far') { extra.order = ['t.top', 't.hero', 't.primary', 't.foot', 't.below']; extra.anchors_exempt = { 't.below': 'marker below the fold' }; }
       if (name.startsWith('small-order')) { extra.anchors = { 't.hero': 'Đọc truyện nào', 't.primary': 'Mở truyện', 't.foot': 'Dành cho ba mẹ' }; extra.anchors_exempt = { 't.top': 'small label inside the header card' }; }
       if (name === 'small-order-override') extra.min_size = { 't.top': [100, 16] };
       wr(name, extra);
@@ -289,6 +292,12 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
       assert.match(by['below-far'].checks.find(c => c.name === 'order').detail, /t\.below is 390x1px/);
       assert.equal(by['below-far-viewport'].diff.mockHeight, 700);
       assert.equal(by['below-far-viewport'].diff.builtHeight, 700);
+    });
+    await t.test('viewport skip direction: a build that PUSHES an on-screen section below the fold fails; a section the mock itself has below the fold may be there', () => {
+      assert.match(by['pushed-below-fold'].checks.find(c => c.name === 'order').detail, /pushed below the fold: t\.hero.*the mock shows it on screen/);
+      assert.match(by['pushed-below-fold'].checks.find(c => c.name === 'primary').detail, /primary pushed below the fold/);
+      assert.match(by['pushed-below-fold'].checks.find(c => c.name === 'geometry').detail, /t\.hero: pushed below the fold/);
+      assert.deepEqual(failed(by['viewport-mock-below-fold']), []);
     });
     await t.test('regions: a correct region passes; an EMPTY and a WRONG one fail; a missing element fails; reported in report.md', () => {
       assert.equal(by['region-ok'].checks.find(c => c.name === 'region:t.hero').pass, true);
@@ -397,9 +406,12 @@ test('r2l driver sample data: values come from the mocks, shapes are preserved',
   const p = sampleProgress({ ok: true, extra: 1, progress: { foo: 'bar', current_pack: { x: 1 } }, read2lead_state: { keep: 1, diamonds: 270, rank_ladder: { label_vi: 'Đồng', tier_color: '#f00' } } }, 'first-visit');
   assert.equal(p.extra, 1); assert.equal(p.progress.foo, 'bar'); assert.equal(p.read2lead_state.keep, 1);
   assert.equal(p.read2lead_state.diamonds, 55); assert.equal(p.progress.student_name, 'Minh'); assert.equal(p.read2lead_state.rank_ladder.tier_color, '#f00'); assert.equal(p.read2lead_state.rank_ladder.stars, 2);
-  assert.equal(p.progress.current_pack.story_title, 'The Sky Is Blue!'); assert.equal(p.progress.current_pack.story_session, null);
-  assert.equal(sampleProgress({ progress: {}, read2lead_state: {} }, 'mid-story').progress.current_pack.story_session.complete, false);
-  assert.equal(sampleProgress({ progress: {}, read2lead_state: {} }, 'no-story').progress.current_pack, null);
+  // the pack and session are REAL (from the API); only the title/level VALUES are replaced, and nothing is fabricated
+  assert.equal(p.progress.current_pack.x, 1); assert.equal(p.progress.current_pack.story_title, 'The Sky Is Blue!'); assert.equal(p.progress.current_pack.level, 'L1');
+  const real = sampleProgress({ progress: { current_pack: { story_session: { stage: 'read', complete: false } } }, read2lead_state: {} }, 'mid-story');
+  assert.deepEqual(real.progress.current_pack.story_session, { stage: 'read', complete: false });
+  assert.equal(sampleProgress({ progress: {}, read2lead_state: {} }, 'mid-story').progress.current_pack ?? null, null, 'no pack is invented');
+  assert.equal(sampleProgress({ progress: { current_pack: { story_title: 'x' } }, read2lead_state: {} }, 'no-story').progress.current_pack, null, 'no-story is the one fabricated state');
   const av = { monster: { body: 'x' } };
   const b = sampleBoards({ ok: true, boards: { xp: { leaders: [], participants: 0, own: { rank: 3, display_name: 'Linh' } }, diamonds: { leaders: [{ rank: 1, display_name: 'An', total: 1, avatar: av, is_self: false }] } } });
   assert.deepEqual(b.boards.xp.leaders.map(r => [r.rank, r.display_name, r.total]), [[1, 'Hoang', 1080], [2, 'Hieuenzo', 900], [3, 'Percy', 890]]);
@@ -407,6 +419,80 @@ test('r2l driver sample data: values come from the mocks, shapes are preserved',
   assert.equal(b.boards.diamonds.leaders[0].total, 39444); assert.equal(b.boards.xp.own.rank, null);
   const sess = sampleSession({ ok: true, view: { session: { id: 's', awarded: { diamonds: 5, xp: 1 }, pictureRetell: { status: 'complete', award: { diamonds: 200 } } } } });
   assert.deepEqual([sess.view.session.awarded.diamonds, sess.view.session.awarded.xp, sess.view.session.pictureRetell.award.diamonds], [35, 20, 0]);
+});
+
+test('data-binding expectations: the alternate sample expects its own values and the mock values must be gone', async () => {
+  const { SAMPLE, loadSample, bindingExpectations } = await import('../scripts/design/drivers/r2l.mjs');
+  const alt = loadSample(path.join(root, 'scripts', 'design', 'fixtures', 'mock-sample-alt.json'));
+  // every alternate value really differs from the mock's (otherwise the bite proves nothing)
+  assert.notEqual(alt.child.name, SAMPLE.child.name); assert.notEqual(alt.child.diamonds, SAMPLE.child.diamonds); assert.notEqual(alt.child.streak_days, SAMPLE.child.streak_days);
+  assert.notEqual(alt.reward.diamonds, SAMPLE.reward.diamonds); assert.notEqual(alt.reward.xp, SAMPLE.reward.xp);
+  for (const kind of ['xp', 'diamonds']) alt.leaderboard[kind].forEach((r, i) => { assert.notEqual(r.total, SAMPLE.leaderboard[kind][i].total); });
+  const home = bindingExpectations(alt, 'first-visit', SAMPLE);
+  assert.ok(home.expect.includes('Chào Bảo!') && home.expect.includes('187') && home.expect.includes('9 ngày') && home.expect.includes('Red Apples Fall') && home.expect.includes('2.310') && home.expect.includes('52.718'));
+  assert.ok(home.absent.includes('Chào Minh!') && home.absent.includes('55') && home.absent.includes('1.080') && home.absent.includes('39.444'));
+  const rw = bindingExpectations(alt, 'reward', SAMPLE);
+  assert.deepEqual(rw.expect, ['+47', '+28']); assert.deepEqual(rw.absent, ['+35', '+20']);
+  assert.deepEqual(bindingExpectations(SAMPLE, 'reward').absent, [], 'no absent list against itself');
+});
+
+test('data-binding check: a page that binds the values passes; one that hard-codes the mock values FAILS (rule 28)', async t => {
+  if (skipNoChrome(t)) return;
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'design-bind-'));
+  const server = http.createServer((req, res) => {
+    const u = new URL(req.url, 'http://x');
+    const name = u.searchParams.get('name'), dia = u.searchParams.get('dia');
+    const body = u.pathname === '/bound' ? `<h1>Chào ${name}!</h1><p>${dia}</p>` : '<h1>Chào Minh!</h1><p>55</p>';
+    res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }).end(`<!doctype html><meta charset="utf-8"><body style="font:20px sans-serif">${body}`);
+  });
+  await new Promise(r => server.listen(0, '127.0.0.1', r));
+  try {
+    const design = writeFixtureDesign(tmp);
+    fs.writeFileSync(path.join(tmp, 'driver.mjs'), `export default async (page, c, base) => { await page.goto(base + c.built.path); return { dataBinding: { expect: ['Chào Bảo!', '187'], absent: ['Chào Minh!', '55'] } }; };\n`);
+    const contracts = path.join(tmp, 'c'); fs.mkdirSync(contracts);
+    const mk = (id, p) => fs.writeFileSync(path.join(contracts, id + '.json'), JSON.stringify({ ...BASE_CONTRACT, id, anchors: undefined, built: { path: p, state: 'first-visit' } }));
+    mk('bound', '/bound?name=Bảo&dia=187'); mk('hardcoded', '/hard?name=Bảo&dia=187');
+    const base = 'http://127.0.0.1:' + server.address().port;
+    const bo = await runFidelity({ design, contracts, base, out: path.join(tmp, 'o1'), 'state-driver': path.join(tmp, 'driver.mjs'), 'binding-only': true });
+    const by = Object.fromEntries(bo.results.map(r => [r.contract, r]));
+    assert.deepEqual(by.bound.checks.map(c => [c.name, c.pass]), [['state-driver', true], ['data-binding', true]]);
+    assert.equal(by.hardcoded.checks.find(c => c.name === 'data-binding').pass, false);
+    assert.match(by.hardcoded.checks.find(c => c.name === 'data-binding').detail, /does not show: "Chào Bảo!", "187"; still shows the OLD value \(hard-coded\?\): "Chào Minh!", "55"/);
+    assert.equal(by.bound.checks.length, 2, 'binding-only skips every other check');
+    // also part of a normal full run
+    const full = await runFidelity({ design, contracts, base, out: path.join(tmp, 'o2'), only: 'hardcoded', 'state-driver': path.join(tmp, 'driver.mjs') });
+    assert.ok(full.results[0].checks.some(c => c.name === 'data-binding' && !c.pass));
+    // a driver that gives no expectations cannot silently pass --binding-only
+    fs.writeFileSync(path.join(tmp, 'plain.mjs'), `export default async (page, c, base) => { await page.goto(base + c.built.path); };\n`);
+    const none = await runFidelity({ design, contracts, base, out: path.join(tmp, 'o3'), only: 'bound', 'state-driver': path.join(tmp, 'plain.mjs'), 'binding-only': true });
+    assert.match(none.results[0].checks.find(c => c.name === 'data-binding').detail, /provided no dataBinding/);
+  } finally { await new Promise(r => server.close(r)); fs.rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test('region edge energy: a blank box inside the backdrop rays FAILS clearly, a different-but-real subject passes', async () => {
+  const { compareRegion, edgeEnergy, cropPng, EDGE_MIN_RATIO } = await import('../scripts/design/lib/regions.mjs');
+  const W = 150;
+  // backdrop: green with lighter diagonal rays (non-zero stddev, some edges), like the rank-up burst
+  const rays = (x, y) => (((x + y) >> 4) % 3 === 0 ? [46, 139, 78, 255] : [35, 122, 65, 255]);
+  const disc = (x, y, cx, cy, r) => (x - cx) ** 2 + (y - cy) ** 2 < r * r;
+  const subject = (x, y, cx = 75, cy = 75) => {
+    if (disc(x, y, cx - 18, cy - 10, 8) || disc(x, y, cx + 18, cy - 10, 8)) return [20, 40, 60, 255]; // eyes
+    if (Math.abs(x - cx) < 14 && y > cy + 12 && y < cy + 20) return [200, 40, 60, 255]; // mouth
+    if (Math.abs(x - cx) < 40 && Math.abs(y - cy) < 36) return [235, 235, 235, 255]; // body
+    return null;
+  };
+  const mk = f => { const p = new PNG({ width: W, height: W }); for (let y = 0; y < W; y++) for (let x = 0; x < W; x++) p.data.set(f(x, y), (y * W + x) * 4); return PNG.sync.write(p); };
+  const mock = mk((x, y) => subject(x, y) || rays(x, y));
+  const blank = mk((x, y) => rays(x, y));                       // the monster box emptied: only rays remain
+  const other = mk((x, y) => subject(x, y, 80, 70) || rays(x, y)); // a different real subject, a little off
+  const box = { x: 0, y: 0, w: W, h: W };
+  const em = edgeEnergy(cropPng(mock, box)), eb = edgeEnergy(cropPng(blank, box)), eo = edgeEnergy(cropPng(other, box));
+  assert.ok(eb / em < 0.5 * EDGE_MIN_RATIO + 0.2, `blank ratio ${(eb / em).toFixed(2)}`);
+  assert.ok(eo / em > 0.8, `real-other ratio ${(eo / em).toFixed(2)}`);
+  const rBlank = compareRegion(mock, blank, box, box, 1.0);
+  assert.equal(rBlank.pass, false); assert.match(rBlank.problems.join('|'), /region empty: built crop has only \d+% of the mock's edge energy/);
+  assert.ok(rBlank.builtSd > 4, 'the blank box is NOT uniform (rays), so the stddev check alone would pass it');
+  assert.equal(compareRegion(mock, other, box, box, 1.0).pass, true);
 });
 
 test('pixel sampler: dominant background wins over heavy glyph pixels', () => {

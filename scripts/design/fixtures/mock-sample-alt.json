@@ -1,0 +1,62 @@
+{
+  "_source": "ALTERNATE sample for the data-binding run: every value differs from mock-sample.json. A page that hard-codes the mock's values shows the OLD ones and fails the `data-binding` check.",
+  "child": {
+    "name": "Bảo",
+    "diamonds": 187,
+    "streak_days": 9
+  },
+  "rank": {
+    "tier_index": 1,
+    "tier_name_vi": "Bạc",
+    "stars": 1,
+    "stars_per_division": 3,
+    "stars_to_next": 2,
+    "next_label_vi": "Bạc ★★"
+  },
+  "story": {
+    "title": "Red Apples Fall",
+    "level": "L1",
+    "pages": 8
+  },
+  "leaderboard": {
+    "xp": [
+      {
+        "display_name": "Quyên",
+        "total": 2310
+      },
+      {
+        "display_name": "Tuấn",
+        "total": 1745
+      },
+      {
+        "display_name": "Mây",
+        "total": 1200
+      }
+    ],
+    "diamonds": [
+      {
+        "display_name": "Tuấn",
+        "total": 52718
+      },
+      {
+        "display_name": "Mây",
+        "total": 41090
+      },
+      {
+        "display_name": "Quyên",
+        "total": 38002
+      }
+    ]
+  },
+  "reward": {
+    "diamonds": 47,
+    "xp": 28
+  },
+  "rank_up": {
+    "label": "Vàng ★",
+    "from_label": "Bạc ★★★",
+    "tier_color": "#FFC83D",
+    "name": "Bảo"
+  },
+  "no_story_message": "Chưa có truyện phù hợp lúc này. Bài đã lưu của con vẫn còn. Con quay lại sau nhé."
+}

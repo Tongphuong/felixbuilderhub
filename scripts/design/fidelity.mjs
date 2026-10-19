@@ -3,7 +3,7 @@
 //
 //   node scripts/design/fidelity.mjs --design <designDir> --contracts <contractsDir> \
 //        --base <url-of-built-site> --out <dir> [--only <contractId>] [--state-driver <module>] \
-//        [--token <magic-link-token> | --login-url <url>] [--chrome <path>] [--composites all|fail] [--require-anchors] [--concurrency N]
+//        [--token <magic-link-token> | --login-url <url>] [--chrome <path>] [--composites all|fail] [--require-anchors] [--concurrency N] [--binding-only] [--sample <json>]
 //
 // For each contract x viewport width:
 //   (a) render the mock (file://, fonts included) at width x contract.viewport[width], FULL-PAGE screenshot it
@@ -26,7 +26,7 @@ import { analyseText, textOf, collapse } from './lib/text.mjs';
 import { compareRegion } from './lib/regions.mjs';
 
 const OVERFLOW_WIDTHS = [360, 390, 768, 1024, 1280];
-const BOOLEAN_FLAGS = new Set(['require-anchors']);
+const BOOLEAN_FLAGS = new Set(['require-anchors', 'binding-only']);
 const CHROME_CANDIDATES = [
   process.env.CHROME_PATH,
   '/usr/bin/google-chrome', '/usr/bin/google-chrome-stable', '/usr/bin/chromium', '/usr/bin/chromium-browser',
@@ -185,8 +185,9 @@ export async function runFidelity(opts) {
           // (b) built -----------------------------------------------------
           const bctx = await browser.newContext({ viewport, reducedMotion: 'reduce', deviceScaleFactor: 1 });
           const page = await bctx.newPage();
+          let drvRes;
           try {
-            await driver(page, contract, base, { width: w, designDir, opts });
+            drvRes = await driver(page, contract, base, { width: w, designDir, opts });
             await settle(page);
           } catch (e) {
             res.checks.push(check('state-driver', false, `could not reach state "${contract.built && contract.built.state}": ${e.message}`));
@@ -194,6 +195,24 @@ export async function runFidelity(opts) {
             return;
           }
           res.checks.push(check('state-driver', true, `reached "${contract.built.state}" at ${page.url()}`));
+          // data-binding: the driver (given an alternate sample) says which values the page MUST show and which old ones must be gone.
+          const bindingCheck = stream => {
+            const db = drvRes && drvRes.dataBinding;
+            if (!db) return null;
+            const miss = db.expect.filter(t => !stream.includes(collapse(t)));
+            const stale = (db.absent || []).filter(t => stream.includes(collapse(t)));
+            const bad = [];
+            if (miss.length) bad.push('does not show: ' + miss.map(t => `"${t}"`).join(', '));
+            if (stale.length) bad.push('still shows the OLD value (hard-coded?): ' + stale.map(t => `"${t}"`).join(', '));
+            return check('data-binding', bad.length === 0, bad.length ? bad.join('; ') : `${db.expect.length} bound values shown${db.absent && db.absent.length ? `, ${db.absent.length} old values gone` : ''}`);
+          };
+          if (opts['binding-only']) {
+            const an0 = analyseText((await page.evaluate(scanText)).items, null);
+            const bc = bindingCheck(an0.stream);
+            res.checks.push(bc || check('data-binding', false, 'the state driver provided no dataBinding expectations (use --state-driver scripts/design/drivers/r2l.mjs)'));
+            await bctx.close();
+            return;
+          }
 
           // reduced motion, behavioural half (JS/rAF/video motion). Three full-page samples: t0, +600ms, +~370ms.
           // The last two must be pixel-identical. The odd second interval stops a looping mover whose period
@@ -218,7 +237,13 @@ export async function runFidelity(opts) {
           const primary = contract.primary ? { id: contract.primary.id, text: contract.primary.text, minHeight: (contract.primary.min_height || {})[String(w)] ?? null } : null;
           const colsExpected = contract.layout && contract.layout[String(w)] && contract.layout[String(w)].columns;
           const minSize = contract.min_size || {};
-          const cc = await page.evaluate(contractChecks, { order: orderIds, primary, columns: colsExpected ? { expected: colsExpected } : null, minSize, viewportOnly: !full });
+          // ids the MOCK itself shows below the fold of a viewport snapshot (the only ones allowed to be off-screen)
+          const mockBelowFold = [];
+          if (!full) {
+            for (const [id, b] of Object.entries((mockGeo && mockGeo.boxes) || {})) if (b && b.y >= viewport.height) mockBelowFold.push(id);
+            for (const r of contract.regions || []) { const mb = r.mock_box && r.mock_box[String(w)]; if (mb && mb[1] >= viewport.height) mockBelowFold.push(r.id); }
+          }
+          const cc = await page.evaluate(contractChecks, { order: orderIds, primary, columns: colsExpected ? { expected: colsExpected } : null, minSize, viewportOnly: !full, mockBelowFold });
           const optional = new Set(Object.keys(contract.optional || {}));
           const orderProblems = cc.order.problems.filter(p => {
             const m = /^(missing|present but not visible): (.+)$/.exec(p);
@@ -231,6 +256,7 @@ export async function runFidelity(opts) {
           const missing = texts.filter(t => !an.stream.includes(collapse(t)));
           res.checks.push(check('texts', missing.length === 0, missing.length ? 'missing VISIBLE text: ' + missing.map(t => `"${t}"`).join(', ') : `${texts.length} strings present in visible text nodes`));
 
+          { const bc = bindingCheck(an.stream); if (bc) res.checks.push(bc); }
           if (cc.primary) {
             const probs = [...cc.primary.problems];
             if (!textOf(scan.items, primary.id).includes(collapse(primary.text))) probs.push(`primary visible text "${textOf(scan.items, primary.id)}" does not include "${primary.text}"`);
@@ -300,7 +326,8 @@ export async function runFidelity(opts) {
               const b = bg.boxes[id];
               if (!m) { gp.push(`${id}: anchor text "${anchors[id]}" not found in the MOCK (contract bug)`); continue; }
               if (!b) { if (!optional.has(id)) gp.push(`${id}: no visible built element`); continue; }
-              if (!full && (b.y >= viewport.height || b.y + b.h <= 0 || m.y >= viewport.height || m.y + m.h <= 0)) continue; // below the fold of a viewport snapshot
+              if (!full && m.y >= viewport.height) continue; // the MOCK has it below the fold of a viewport snapshot
+              if (!full && (b.y >= viewport.height || b.y + b.h <= 0)) { gp.push(`${id}: pushed below the fold (built y ${Math.round(b.y)}, viewport ${viewport.height}px) but the mock shows it on screen`); continue; }
               const tol = Math.max(24, 0.04 * mockGeo.docH);
               const why = [];
               if (Math.abs(b.y - m.y) > tol) why.push(`top ${Math.round(b.y)} vs mock ${Math.round(m.y)} (+-${Math.round(tol)})`);
@@ -320,10 +347,10 @@ export async function runFidelity(opts) {
               const mb = r.mock_box[String(w)];
               const b = rb.boxes[r.id];
               if (!b) { res.checks.push(check('region:' + r.id, false, 'no visible built element')); continue; }
-              const cmp = compareRegion(mockPng0, builtPng0, { x: mb[0], y: mb[1], w: mb[2], h: mb[3] }, b, r.ceiling);
-              res.checks.push(check('region:' + r.id, cmp.pass, cmp.pass ? `${(cmp.fraction * 100).toFixed(1)}% differing (ceiling ${(r.ceiling * 100).toFixed(1)}%), built stddev ${cmp.builtSd.toFixed(0)}` : cmp.problems.join('; ')));
+              const cmp = compareRegion(mockPng0, builtPng0, { x: mb[0], y: mb[1], w: mb[2], h: mb[3] }, b, r.ceiling, r.min_edge_ratio);
+              res.checks.push(check('region:' + r.id, cmp.pass, cmp.pass ? `${(cmp.fraction * 100).toFixed(1)}% differing (ceiling ${(r.ceiling * 100).toFixed(1)}%), edges ${(cmp.edgeRatio * 100).toFixed(0)}% of the mock's` : cmp.problems.join('; ')));
               regionOut.push({ id: r.id, ok: cmp.pass, label: `${r.id} ${(cmp.fraction * 100).toFixed(1)}%`, mock: cmp.mock, built: cmp.built, diff: cmp.diff });
-              (res.regions = res.regions || []).push({ id: r.id, pass: cmp.pass, fraction: +cmp.fraction.toFixed(4), ceiling: r.ceiling, builtStddev: +cmp.builtSd.toFixed(1) });
+              (res.regions = res.regions || []).push({ id: r.id, pass: cmp.pass, fraction: +cmp.fraction.toFixed(4), ceiling: r.ceiling, builtStddev: +cmp.builtSd.toFixed(1), edgeRatio: +cmp.edgeRatio.toFixed(3) });
             }
           }
 
@@ -391,7 +418,7 @@ function renderMd(report) {
     if (r.composite) L.push(`Composite: \`${r.composite}\``, '');
     for (const c of r.checks) L.push(`- ${c.pass ? 'PASS' : 'FAIL'} **${c.name}** ${c.detail}`);
     for (const w of r.warnings) L.push(`- WARN ${w}`);
-    if (r.regions) { L.push('', 'Regions:'); for (const g of r.regions) L.push(`- ${g.pass ? 'PASS' : 'FAIL'} ${g.id}: ${(g.fraction * 100).toFixed(1)}% differing (ceiling ${(g.ceiling * 100).toFixed(1)}%), built stddev ${g.builtStddev}`); }
+    if (r.regions) { L.push('', 'Regions:'); for (const g of r.regions) L.push(`- ${g.pass ? 'PASS' : 'FAIL'} ${g.id}: ${(g.fraction * 100).toFixed(1)}% differing (ceiling ${(g.ceiling * 100).toFixed(1)}%), built stddev ${g.builtStddev}, edge ${(g.edgeRatio * 100).toFixed(0)}% of the mock's`); }
     if (r.exempt && Object.keys(r.exempt).length) { L.push('', 'Geometry NOT checked (anchors_exempt, as in force at this width):'); for (const [id, why] of Object.entries(r.exempt)) L.push(`- ${id}: ${why || '(NO REASON GIVEN)'}`); }
     if (r.anchorBoxes) { L.push('', 'Anchored mock boxes (x, y, w, h):'); for (const [id, b] of Object.entries(r.anchorBoxes)) L.push(`- ${id}: ${b ? `${b.x}, ${b.y}, ${b.w}, ${b.h}` : 'ANCHOR TEXT NOT FOUND'}`); }
     L.push('');

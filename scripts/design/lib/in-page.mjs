@@ -124,9 +124,10 @@ export function scanText() {
 // ---------------------------------------------------------------------------
 // Contract checks that need the DOM: order (+ minimum size), primary, sun rule, columns.
 //   args = { order: string[], primary: {id,minHeight}|null, columns: {expected}|null,
-//            minSize: {id: [w,h]} (per-id override of the default 40x24), viewportOnly: bool }
-//   viewportOnly (contract "capture":"viewport"): ids whose box lies wholly outside the viewport are neither
-//   ordered nor size-checked (they are below the fold of a single-screen snapshot).
+//            minSize: {id: [w,h]} (per-id override of the default 40x24), viewportOnly: bool, mockBelowFold: string[] }
+//   viewportOnly (contract "capture":"viewport"): an id may sit below the fold ONLY if its MOCK box does
+//   (mockBelowFold: ids, from anchors / region mock boxes); then it is neither ordered nor size-checked.
+//   Any other id that the build pushes below the fold or off-screen FAILS ("pushed below the fold").
 export function contractChecks(args) {
   function visible(el) {
     for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
@@ -142,19 +143,22 @@ export function contractChecks(args) {
   const out = {};
   const sel = id => '[data-design="' + id.replace(/"/g, '\\"') + '"]';
 
-  const found = [], missing = [], hidden = [], tiny = [];
+  const found = [], missing = [], hidden = [], tiny = [], orderProblems0 = [];
   for (const id of args.order) {
     const all = [...document.querySelectorAll(sel(id))];
     if (!all.length) { missing.push(id); continue; }
     const vis = all.find(visible);
     if (!vis) { hidden.push(id); continue; }
     const r = vis.getBoundingClientRect();
-    if (args.viewportOnly && (r.top >= window.innerHeight || r.bottom <= 0)) continue;
+    if (args.viewportOnly && (r.top >= window.innerHeight || r.bottom <= 0)) {
+      if (!(args.mockBelowFold || []).includes(id)) orderProblems0.push('pushed below the fold: ' + id + ' (y=' + Math.round(r.top + window.scrollY) + ', viewport ' + window.innerHeight + 'px) but the mock shows it on screen');
+      continue;
+    }
     const [mw, mh] = (args.minSize && args.minSize[id]) || [40, 24];
     if (r.width < mw || r.height < mh) tiny.push(id + ' is ' + Math.round(r.width) + 'x' + Math.round(r.height) + 'px (min ' + mw + 'x' + mh + '; a 1px mark is not a section)');
     found.push({ id, top: r.top + window.scrollY, el: vis });
   }
-  const orderProblems = [];
+  const orderProblems = [...orderProblems0];
   for (const id of missing) orderProblems.push('missing: ' + id);
   for (const id of hidden) orderProblems.push('present but not visible: ' + id);
   for (const t of tiny) orderProblems.push('too small: ' + t);
@@ -176,7 +180,9 @@ export function contractChecks(args) {
     const el = vis[0] || all[0];
     let height = null;
     if (el) {
-      height = el.getBoundingClientRect().height;
+      const pr = el.getBoundingClientRect();
+      height = pr.height;
+      if (args.viewportOnly && (pr.top >= window.innerHeight || pr.bottom <= 0) && !(args.mockBelowFold || []).includes(args.primary.id)) p.push('primary pushed below the fold (y=' + Math.round(pr.top + window.scrollY) + ', viewport ' + window.innerHeight + 'px)');
       if (args.primary.minHeight != null && height < args.primary.minHeight - 0.5) p.push('primary height ' + height.toFixed(1) + 'px < min ' + args.primary.minHeight + 'px');
     }
     // "Exactly one sun primary": among everything CLICKABLE, exactly one visible element may be

@@ -44,17 +44,39 @@ export function stddev(png) {
 
 export const EMPTY_STDDEV = 4; // luminance stddev below this = "blank or uniform"
 
-export function compareRegion(mockBuf, builtBuf, mockBox, builtBox, ceiling) {
+// Edge energy: mean Sobel gradient magnitude of the luminance. A box with a real subject (monster, shield, stars) has
+// far more edges than the same box showing only its backdrop (rays, gradient), which still has a non-zero stddev.
+export function edgeEnergy(png) {
+  const { width: w, height: h } = png;
+  if (w < 3 || h < 3) return 0;
+  const L = new Float32Array(w * h);
+  for (let i = 0; i < w * h; i++) L[i] = 0.2126 * png.data[i * 4] + 0.7152 * png.data[i * 4 + 1] + 0.0722 * png.data[i * 4 + 2];
+  let sum = 0;
+  for (let y = 1; y < h - 1; y++) for (let x = 1; x < w - 1; x++) {
+    const i = y * w + x;
+    const gx = -L[i - w - 1] - 2 * L[i - 1] - L[i + w - 1] + L[i - w + 1] + 2 * L[i + 1] + L[i + w + 1];
+    const gy = -L[i - w - 1] - 2 * L[i - w] - L[i - w + 1] + L[i + w - 1] + 2 * L[i + w] + L[i + w + 1];
+    sum += Math.sqrt(gx * gx + gy * gy);
+  }
+  return sum / ((w - 2) * (h - 2));
+}
+// The built crop must carry at least this share of the MOCK crop's edge energy ("region empty" otherwise).
+// Calibrated in tests/design-fidelity.test.mjs and recorded in README-LOCK.md.
+export const EDGE_MIN_RATIO = 0.5;
+
+export function compareRegion(mockBuf, builtBuf, mockBox, builtBox, ceiling, minEdgeRatio = EDGE_MIN_RATIO) {
   const mockCrop = cropPng(mockBuf, mockBox);
   const w = mockCrop.width, h = mockCrop.height;
   const builtCrop = resizePng(cropPng(builtBuf, builtBox), w, h);
   const mockSd = stddev(mockCrop), builtSd = stddev(builtCrop);
+  const mockEdge = edgeEnergy(mockCrop), builtEdge = edgeEnergy(builtCrop), edgeRatio = mockEdge > 0 ? builtEdge / mockEdge : 1;
   const diff = new PNG({ width: w, height: h });
   const count = pixelmatch(mockCrop.data, builtCrop.data, diff.data, w, h, { threshold: 0.1 });
   const fraction = count / (w * h);
   const problems = [];
   if (mockSd < EMPTY_STDDEV) problems.push(`MOCK region is uniform (stddev ${mockSd.toFixed(1)}): contract box is wrong`);
   if (builtSd < EMPTY_STDDEV) problems.push(`region empty: built crop is blank or uniform (stddev ${builtSd.toFixed(1)} < ${EMPTY_STDDEV})`);
+  else if (mockEdge > 0.5 && edgeRatio < minEdgeRatio) problems.push(`region empty: built crop has only ${(edgeRatio * 100).toFixed(0)}% of the mock's edge energy (min ${(minEdgeRatio * 100).toFixed(0)}%): the subject is missing`);
   if (fraction > ceiling) problems.push(`${(fraction * 100).toFixed(1)}% differing (ceiling ${(ceiling * 100).toFixed(1)}%)`);
-  return { pass: problems.length === 0, fraction, problems, mockSd, builtSd, mock: PNG.sync.write(mockCrop), built: PNG.sync.write(builtCrop), diff: PNG.sync.write(diff), w, h };
+  return { pass: problems.length === 0, fraction, problems, mockSd, builtSd, mockEdge, builtEdge, edgeRatio, mock: PNG.sync.write(mockCrop), built: PNG.sync.write(builtCrop), diff: PNG.sync.write(diff), w, h };
 }

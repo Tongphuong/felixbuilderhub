@@ -49,12 +49,26 @@ and must leave the page in `contract.built.state` or **throw** (a throw is recor
   a "Chào <name>!" heading and no code-entry form; first-visit shows "Mở truyện", mid-story "Đọc tiếp",
   empty "Mở thư viện", and the other states' labels are absent). Reward and rank-up are TODO hooks that
   throw "not implemented". Forcing the state on the fixture account is still a TODO (it is verified only).
-- `drivers/r2l.mjs` (use this for the real screens): logs in with the rehearsal magic link (`--token`, default 32 x "b"),
-  reaches first-visit / mid-story / no-story / reward / rank-up, and makes the page render the MOCK SAMPLE DATA
-  (`fixtures/mock-sample.json`: Minh, 55 diamonds, Bạc ★★, streak 3, the Hoang/Hieuenzo/Percy boards, "The Sky Is Blue!",
-  reward +35/+20) by fetching each real account API response and replacing only VALUES, so shapes stay real and the page's own code
-  renders them. Reward drives a real story mission through the rehearsal API; rank-up shows the real modal markup. Each state's
-  marker (primary label) is asserted. The rehearsal's own "LOCAL REHEARSAL" banner is hidden. Real avatars remain the one data difference.
+- `drivers/r2l.mjs` (use this for the real screens): reaches first-visit / mid-story / no-story / reward / rank-up on the rehearsal
+  Worker and makes the page render the MOCK SAMPLE DATA (`fixtures/mock-sample.json`: Minh, 55 diamonds, Bạc ★★, streak 3,
+  the Hoang/Hieuenzo/Percy boards, "The Sky Is Blue!", reward +35/+20). Each account API response is fetched from the real
+  server first and only VALUES are replaced, so shapes stay real and the page's own code renders them. Real avatars remain the one
+  data difference. Each state's marker (primary label) is asserted. The rehearsal's own "LOCAL REHEARSAL" banner is hidden.
+  - REAL account state, through the rehearsal API, one synthetic child per state so concurrent contracts never collide:
+    first-visit = a generated pack never opened (THIRD); mid-story = a pack with an opened session and `audio_started` (FOURTH);
+    reward = a full mission driven to completion (DESKTOP); rank-up = FOURTH's opened lesson page (see below).
+  - FABRICATED, and only here: **no-story** (the rehearsal would generate a story, so the generate call is answered with the real
+    503 the live site gives), plus the VALUES listed above (name, diamonds, streak, rank ladder, leaderboards, reward numbers, the
+    pack's title/level) inside real response shapes.
+  - **Rank-up uses the product's own code**: on the lesson page opened with `?v3=1`, the driver calls `window.__r2lV3.showRankUp`,
+    which runs the product's `showRankUpModal` and fills the real modal. Nothing is written into the modal by the driver; the page
+    BENEATH the overlay is hidden because it is out of scope for the screen under test. LIMITS, plainly: the real trigger is a lesson
+    submit response containing `rank_up` (lesson.astro, `_r2lTriviaState.pendingRankUp`), and the story-mission flow never produces
+    one; there is no stored "last-seen rank" to seed. So the driver calls the product's exported hook directly instead of replaying a
+    completed submit. The modal says "Con" instead of the child's name because the hook passes no kid name.
+  - `--sample <json>` swaps in another sample (`fixtures/mock-sample-alt.json`: every value differs). With `--binding-only` the
+    harness runs ONLY the state driver and the `data-binding` check: the page must show the alternate values, and the mock's old
+    values must be gone, so a hard-coded "Minh" or "55" fails. Run it as a second pass over every home and reward contract.
 - `drivers/mock-self.mjs`: loads the mock itself (calibration; `DESIGN_PERTURB=tiny|shift`).
 - `drivers/goto-path.mjs`: only navigates (the harness's own synthetic pages; never for real screens).
 
@@ -75,6 +89,8 @@ screenshots are FULL-PAGE on both sides, so anything below the fold is compared.
 | fonts | headings (h1-h6) and buttons do not resolve to Baloo 2, `p`/`li` text to Nunito, or `document.fonts` does not report both families loaded (none errored). |
 | no-h-scroll | page is wider than the viewport at 360/390/768/1024/1280 (once per contract). An overflowing page is cropped to the viewport width before diffing. |
 | geometry | (only when the contract has `anchors`) a built section's top, height or width is off the mock's. |
+| data-binding | (driver returns expectations, e.g. `r2l.mjs --sample ...`) a bound value is not shown, or an old value is still shown. |
+| region:<id> | see "Regions" below. |
 | anchors-present | (only with `--require-anchors`) the contract has no `anchors`, or an `order` id (not in `optional`) has none. |
 | height | the built page is taller than the mock by more than max(10%, 120px). The shorter side is padded with its own background colour, so extra or missing area counts in the diff. |
 | pixel-diff | pixelmatch (threshold 0.1) differing fraction over the full padded page > `diff_ceiling[w]` |
@@ -103,6 +119,20 @@ screenshots are FULL-PAGE on both sides, so anything below the fold is compared.
 - `reduced_motion_allow` (optional): animation names exempt from the `animation-name` rule.
 - Width-keyed fields must agree: `mock`, `viewport`, `diff_ceiling` (and `reference` if present) list exactly the same widths;
   `order_<w>`, `texts_<w>`, `layout` and `primary.min_height` may only name those widths. Otherwise the harness exits 2.
+
+## Viewport capture (`"capture": "viewport"`)
+Single-screen snapshots and overlays. Both sides are screenshotted at the viewport size only (no full page), and there is no
+`height` check. A section may sit below the fold ONLY if the MOCK has it there (known from its `anchors` or `regions` mock box);
+any other id that the build pushes below the fold or off-screen FAILS as "pushed below the fold", in `order`, `geometry` and (for the
+primary) `primary`. An id with no known mock position must therefore be on screen.
+
+## Regions are anti-blank guards, not fidelity
+A region compares one mock box with the built `[data-design=id]` element. Its `ceiling` is deliberately loose: it exists to catch a
+blank or missing subject, not to judge looks (the whole-screen `diff_ceiling` and the human review judge looks). A region fails when
+(1) the built crop is uniform (luminance stddev < 4), (2) its EDGE ENERGY (mean Sobel magnitude) is below `EDGE_MIN_RATIO` = 50% of
+the mock crop's, which catches an emptied box that still shows backdrop rays, or (3) the diff exceeds `ceiling`. Calibration on the
+real rank-up screen: real avatar 95% / real shield 85% of the mock's edge energy; an emptied shield box 10%; an emptied monster box
+0% (uniform). The per-region override is `min_edge_ratio`. Mock monsters are stand-in PNGs, so monster regions need a high ceiling.
 
 ## Known limits
 - Contrast outside plain backgrounds relies on sampling: text over a photo or busy gradient is judged against the most common
