@@ -182,14 +182,21 @@ export async function runFidelity(opts) {
           }
           res.checks.push(check('state-driver', true, `reached "${contract.built.state}" at ${page.url()}`));
 
-          // reduced motion, behavioural half: two samples 600ms apart must be pixel-identical (JS/rAF motion)
+          // reduced motion, behavioural half (JS/rAF/video motion). Three full-page samples: t0, +600ms, +~370ms.
+          // The last two must be pixel-identical. The odd second interval stops a looping mover whose period
+          // is ~600ms from aliasing to "identical"; a page that merely finished settling between t0 and +600ms
+          // (late font swap, slow image) still passes, which the detail text says.
           const s1 = await shot(page, 'allow');
           await page.waitForTimeout(600);
           const s2 = await shot(page, 'allow');
-          let motionDetail = 'two samples 600ms apart identical';
+          await page.waitForTimeout(370);
+          const s3 = await shot(page, 'allow');
+          const moved = (a, b) => (pngHeight(a) !== pngHeight(b) ? -1 : diffPngs(a, b, 0).count);
+          const mv = moved(s2, s3), early = moved(s1, s2);
           let motionOk = true;
-          if (pngHeight(s1) !== pngHeight(s2)) { motionOk = false; motionDetail = 'page height changed between samples'; }
-          else { const m = diffPngs(s1, s2, 0); if (m.count) { motionOk = false; motionDetail = `${m.count} pixels changed in 600ms with reduced motion on (JS/rAF/video motion)`; } }
+          let motionDetail = early === 0 ? 'three samples over ~1s identical' : 'page settled after the first sample, then identical';
+          if (mv === -1) { motionOk = false; motionDetail = 'page height changed between samples'; }
+          else if (mv > 0) { motionOk = false; motionDetail = `${mv} pixels still changing between samples with reduced motion on (JS/rAF/video motion)`; }
           const builtPng0 = await shot(page);
 
           // (c) contract checks ------------------------------------------

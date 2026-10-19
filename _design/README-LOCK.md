@@ -65,7 +65,7 @@ screenshots are FULL-PAGE on both sides, so anything below the fold is compared.
 | columns | visible `[data-design-col]` count != `layout[w].columns` |
 | contrast>=4.5 | a visible text item (HTML and SVG `<text>`) is under 4.5:1. Plain-colour backdrops are computed from the DOM; where an ancestor has a gradient/image, or for SVG text, the backdrop is SAMPLED from the screenshot (dominant colour in the text box, ignoring glyph-coloured pixels). Also fails if more than 3 items, or more than 10% of the measured items, cannot be measured at all. |
 | tap>=48px | a visible `a, button, input, select, textarea, [role=button]` is under 48px tall |
-| reduced-motion | (1) a CSS/Web animation is still `running`; (2) any element has a CSS `animation-name` other than `none` with a non-zero duration (zero-duration fades pass; contract field `reduced_motion_allow: [names]` exempts named ones); (3) two full-page samples 600 ms apart are not pixel-identical (catches JS/rAF/video motion). |
+| reduced-motion | (1) a CSS/Web animation is still `running`; (2) any element has a CSS `animation-name` other than `none` with a non-zero duration (zero-duration fades pass; contract field `reduced_motion_allow: [names]` exempts named ones); (3) full-page samples at t0, +600 ms and +~370 ms: the last two must be pixel-identical (catches JS/rAF/video motion; a page that merely settled after the first sample passes). |
 | fonts | headings (h1-h6) and buttons do not resolve to Baloo 2, `p`/`li` text to Nunito, or `document.fonts` does not report both families loaded (none errored). |
 | no-h-scroll | page is wider than the viewport at 360/390/768/1024/1280 (once per contract). An overflowing page is cropped to the viewport width before diffing. |
 | geometry | (only when the contract has `anchors`) a built section's top, height or width is off the mock's. |
@@ -81,6 +81,12 @@ screenshots are FULL-PAGE on both sides, so anything below the fold is compared.
   The built `[data-design=id]` element must have: top within +-max(24px, 4% of the mock page height), height within +-30%,
   width within +-15% (at widths <= 430 a built width >= 90% of the viewport also passes). Ids in `optional` may be absent.
   Choose a string whose nearest card IS the section (a heading inside it).
+- `anchors_exempt` (optional): `{ "<id>": "<reason>" }`. Under `--require-anchors` an order id passes `anchors-present` if it is
+  anchored OR exempt with a non-blank reason. An id in both is a contract error (exit 2). Exempt ids and reasons are printed in
+  `report.md`; a contract with every order id exempt reports "geometry: pixel-only".
+- `anchors_<w>` / `anchors_exempt_<w>` override the base maps at that width only; in `anchors_<w>` a `null` value removes the base
+  anchor for that width (same for `anchors_exempt_<w>`). Both-at-one-width (after merging) is exit 2, and so is a key for a width
+  with no mock. `report.md` shows the maps as in force at each width, plus the resolved mock boxes.
 - `reduced_motion_allow` (optional): animation names exempt from the `animation-name` rule.
 - Width-keyed fields must agree: `mock`, `viewport`, `diff_ceiling` (and `reference` if present) list exactly the same widths;
   `order_<w>`, `texts_<w>`, `layout` and `primary.min_height` may only name those widths. Otherwise the harness exits 2.

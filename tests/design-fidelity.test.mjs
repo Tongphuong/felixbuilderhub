@@ -199,7 +199,7 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
     wr('width-override-text', { __path: 'ok', anchors: { ...ANCHORS, 't.hero': 'Không có chữ này' }, anchors_390: { 't.hero': 'Đọc truyện nào' } });
     wr('width-no-override-bad-anchor', { __path: 'ok', anchors: { ...ANCHORS, 't.hero': 'Không có chữ này' } });
     wr('partial-anchors', { __path: 'ok', anchors: { 't.top': 'Xin chào' } });
-    const report = await runFidelity({ design, contracts, base, out: path.join(tmp, 'out'), composites: 'fail', 'state-driver': GOTO, 'require-anchors': true, concurrency: 12 });
+    const report = await runFidelity({ design, contracts, base, out: path.join(tmp, 'out'), composites: 'fail', 'state-driver': GOTO, 'require-anchors': true, concurrency: 6 });
     const by = Object.fromEntries(report.results.map(r => [r.contract, r]));
 
     for (const [name, [, exp]] of Object.entries(V)) {
@@ -234,7 +234,7 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
       assert.match(by['svg-low-contrast'].checks.find(c => c.name === 'contrast>=4.5').detail, /Sáng chói.*svg/);
     });
     await t.test('M7 behavioural motion: a requestAnimationFrame mover is caught by the two-sample check', () => {
-      assert.match(by['raf-motion'].checks.find(c => c.name === 'reduced-motion').detail, /pixels changed in 600ms/);
+      assert.match(by['raf-motion'].checks.find(c => c.name === 'reduced-motion').detail, /pixels still changing between samples/);
     });
     await t.test('M10 --require-anchors: a contract with no anchors, or an order id without one, FAILS', () => {
       assert.deepEqual(failed(by['no-anchors']), ['anchors-present']);
