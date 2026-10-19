@@ -61,7 +61,7 @@ test('parent stats view has no coin card — diamonds state their sources and us
   assert.doesNotMatch(parent, /Xu thưởng/);
   assert.doesNotMatch(parent, /\bxu\b/);
   assert.match(parent, /Kim cương/);
-  assert.match(parent, /Kiếm khi đọc bài & buổi coaching, dùng để trang trí quái vật & đổi quà thật/);
+  assert.match(parent, /Kiếm khi đọc bài & buổi coaching, dùng để trang trí quái vật & vào shop đổi quà/);
 });
 
 test('rank modal keeps lesson contract and adds truthful optional context', () => {

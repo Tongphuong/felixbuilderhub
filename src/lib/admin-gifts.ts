@@ -576,7 +576,7 @@ export function initGiftManager(hooks: GiftManagerHooks): void {
   let saveResetTimer: ReturnType<typeof setTimeout> | undefined;
 
   const setCount = (n: number) => {
-    if (countLabel) countLabel.textContent = `Quà thật — ${n} món`;
+    if (countLabel) countLabel.textContent = `Shop đổi quà — ${n} món`;
   };
 
   const render = (gifts: AdminGift[]) => {

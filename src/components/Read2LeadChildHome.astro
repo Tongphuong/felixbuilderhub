@@ -2,6 +2,9 @@
 import { defaultMonsterSvg } from '../lib/r2l-hero';
 import { ZALO_URL } from '../config/contact';
 import '../styles/read2lead-child-home.css';
+// Public Turnstile site key (safe to expose). Falls back to Cloudflare's official always-pass TEST key
+// for rehearsal; the real key is set as PUBLIC_TURNSTILE_SITE_KEY at build time.
+const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA';
 ---
 <main id="main" data-child-home class="reading-home" aria-busy="true">
   <header class="reading-home__header">
@@ -37,6 +40,35 @@ import '../styles/read2lead-child-home.css';
       </form>
       <p class="reading-home__entry-note">Con cũng có thể mở link riêng Coach Felix đã gửi.</p>
       <a class="reading-home__help" href={ZALO_URL}>Nhờ ba mẹ nhận mã từ Coach Felix</a>
+    </div>
+    <div id="signup-card" class="reading-home__codebox reading-home__signup" data-turnstile-sitekey={TURNSTILE_SITE_KEY}>
+      <span class="reading-home__book" aria-hidden="true">🌟</span>
+      <h2 id="signup-title">Chưa có mã? Tạo mã miễn phí</h2>
+      <p>Con điền vài thông tin nhỏ, Minny sẽ mở góc đọc sách cho con ngay.</p>
+      <form id="signup-form" novalidate>
+        <label for="signup-name">Tên của con</label>
+        <input id="signup-name" name="student-name" type="text" maxlength="20" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Ví dụ: Ngọc Anh" data-clarity-mask="true" required />
+        <label for="signup-age">Con mấy tuổi?</label>
+        <select id="signup-age" name="student-age" required>
+          <option value="">Chọn tuổi của con</option>
+          {[5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(age => <option value={age}>{age} tuổi</option>)}
+        </select>
+        <fieldset class="reading-home__gender">
+          <legend>Con là</legend>
+          <label class="reading-home__gender-opt"><input id="signup-gender-boy" type="radio" name="child-gender" value="boy" /><span>Bé trai</span></label>
+          <label class="reading-home__gender-opt"><input id="signup-gender-girl" type="radio" name="child-gender" value="girl" /><span>Bé gái</span></label>
+        </fieldset>
+        <div id="signup-turnstile" class="reading-home__turnstile"></div>
+        <p id="signup-message" role="alert"></p>
+        <button id="signup-submit" class="reading-home__primary" type="submit">Tạo mã miễn phí <span aria-hidden="true">→</span></button>
+      </form>
+    </div>
+    <div id="donate-card" class="reading-home__codebox reading-home__donate">
+      <h2 id="donate-title">Dành cho ba mẹ</h2>
+      <p>Read2Lead miễn phí cho mọi bạn nhỏ. Nếu ba mẹ thấy hữu ích, có thể ủng hộ để duy trì trang 💛</p>
+      <img class="reading-home__qr" src="/donate-qr.png" width="240" height="240" alt="Mã QR chuyển khoản ủng hộ Read2Lead" loading="lazy" decoding="async" />
+      <p class="reading-home__donate-line"><strong>Chủ tài khoản:</strong> <span id="donate-account-name">[Tên chủ tài khoản]</span></p>
+      <p class="reading-home__donate-line"><strong>Ngân hàng:</strong> <span id="donate-bank">[Tên ngân hàng · số tài khoản]</span></p>
     </div>
   </section>
   <section id="home-error" class="reading-home__notice" hidden>

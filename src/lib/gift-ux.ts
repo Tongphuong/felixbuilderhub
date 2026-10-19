@@ -545,7 +545,7 @@ function renderEmptyState(): string {
     <div class="qt-empty-state">
       <span style="font-size:44px;" aria-hidden="true">🎁</span>
       <strong style="font-family:var(--font-display); color:var(--cream); font-size:16px;">Chưa có quà nào</strong>
-      <p style="margin:0; color:var(--cream-muted); font-size:13px; line-height:1.55;">Coach Felix đang chọn thêm quà thật cho các con. Quay lại sau nhé!</p>
+      <p style="margin:0; color:var(--cream-muted); font-size:13px; line-height:1.55;">Coach Felix đang chọn thêm quà cho Shop đổi quà của các con. Quay lại sau nhé!</p>
       <a href="/ho-so" class="fx-btn fx-btn--secondary" style="margin-top:6px; min-height:44px;">Về hồ sơ của con</a>
     </div>
   `;

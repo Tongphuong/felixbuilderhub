@@ -23,6 +23,7 @@ if (root) {
     el<HTMLInputElement>('home-code').setAttribute('aria-invalid', String(Boolean(message)));
     phase('entry');
     void loadPublicRanks();
+    void initSignup();
   };
   const readJson = async (response: Response) => {
     const data = await response.json();
@@ -141,6 +142,86 @@ if (root) {
       el('home-action-status').textContent = cause instanceof TypeError ? 'Mất kết nối. Con thử lại nhé; bài đã lưu vẫn còn.' : cause.message;
       busy = false; button.disabled = false;
     }
+  });
+  // --- Free sign-up card (logged-out only). The card lives inside #home-entry, so it is hidden whenever
+  // the child is signed in; Turnstile is only loaded when the logged-out state is actually shown.
+  const TURNSTILE_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+  let turnstileToken = '', turnstileWidget: unknown = null, turnstileLoading: Promise<void> | null = null, signupBusy = false;
+  const signupMessage = (text: string) => {
+    el('signup-message').textContent = text;
+  };
+  const resetTurnstile = () => {
+    turnstileToken = '';
+    const t = (window as any).turnstile;
+    try { if (t && turnstileWidget !== null) t.reset(turnstileWidget); } catch { /* widget gone; next render recreates it */ }
+  };
+  function loadTurnstile(): Promise<void> {
+    if ((window as any).turnstile) return Promise.resolve();
+    if (turnstileLoading) return turnstileLoading;
+    turnstileLoading = new Promise<void>((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = TURNSTILE_SRC; script.async = true; script.defer = true;
+      script.onload = () => resolve();
+      script.onerror = () => { turnstileLoading = null; reject(new Error('turnstile_load_failed')); };
+      (document.head || document.body || root).appendChild(script);
+    });
+    return turnstileLoading;
+  }
+  let signupReady = false;
+  async function initSignup() {
+    if (signupReady || !document.getElementById('signup-card')) return;
+    signupReady = true;
+    try {
+      await loadTurnstile();
+      const t = (window as any).turnstile, siteKey = el('signup-card').getAttribute?.('data-turnstile-sitekey');
+      if (!t || !siteKey) throw new Error('turnstile_missing');
+      turnstileWidget = t.render(el('signup-turnstile'), {
+        sitekey: siteKey, language: 'vi', theme: 'dark',
+        callback: (token: string) => { turnstileToken = token; },
+        'expired-callback': () => { turnstileToken = ''; },
+        'error-callback': () => { turnstileToken = ''; },
+      });
+    } catch { signupReady = false; signupMessage('Chưa tải được ô xác minh. Con tải lại trang hoặc nhờ ba mẹ giúp nhé.'); }
+  }
+  // Server messages are shown only when they are Vietnamese; anything else gets a kind fallback.
+  const VIETNAMESE = /[àáảãạâầấẩẫậăằắẳẵặèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]/i;
+  const kindSignupMessage = (message: unknown) => typeof message === 'string' && VIETNAMESE.test(message) ? message : 'Mình chưa tạo được mã. Con thử lại sau một chút nhé.';
+  const safeSignupTarget = (link: unknown) => {
+    try {
+      const target = new URL(String(link || ''), location.origin);
+      return target.origin === location.origin ? target.href : '';
+    } catch { return ''; }
+  };
+  el('signup-form')?.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (signupBusy) return;
+    const name = el<HTMLInputElement>('signup-name').value.trim().replace(/\s+/g, ' ');
+    const age = Number(el<HTMLSelectElement>('signup-age').value);
+    const gender = el<HTMLInputElement>('signup-gender-boy').checked ? 'boy' : el<HTMLInputElement>('signup-gender-girl').checked ? 'girl' : '';
+    if (!name || name.length > 20) { signupMessage(name ? 'Tên của con dài quá. Con viết tối đa 20 chữ nhé.' : 'Con nhập tên của con nhé.'); el('signup-name').setAttribute('aria-invalid', 'true'); el('signup-name').focus(); return; }
+    if (!Number.isInteger(age) || age < 5 || age > 14) { signupMessage('Con chọn tuổi của con nhé.'); el('signup-age').focus(); return; }
+    if (!gender) { signupMessage('Con chọn bé trai hay bé gái nhé.'); return; }
+    if (!turnstileToken) { signupMessage('Con bấm vào ô xác minh "Tôi là người thật" ở trên nhé.'); void initSignup(); return; }
+    signupMessage(''); signupBusy = true;
+    const submit = el<HTMLButtonElement>('signup-submit');
+    submit.disabled = true;
+    try {
+      const response = await fetch('/api/signup', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ student_name: name, student_age: age, child_gender: gender, turnstile_token: turnstileToken }),
+      });
+      let data: any = {};
+      try { data = await response.json(); } catch { data = {}; }
+      if (response.ok && data.ok === true) {
+        const target = safeSignupTarget(data.link);
+        if (target) { location.assign(target); return; }
+        signupMessage('Mã đã tạo nhưng mình chưa mở được link. Con thử lại nhé.'); resetTurnstile(); return;
+      }
+      // 503 signup_disabled and every other refusal: show the message; the code box above stays usable.
+      signupMessage(kindSignupMessage(data.message)); resetTurnstile();
+    } catch {
+      signupMessage('Chưa kết nối được. Con kiểm tra mạng rồi thử lại nhé.'); resetTurnstile();
+    } finally { signupBusy = false; submit.disabled = false; }
   });
   el('home-retry').addEventListener('click', load);
   window.addEventListener('pageshow', event => {

@@ -53,7 +53,7 @@ function renderStats(data: ProgressPayload) {
   // wording stays plain and truthful (no celebration copy) — the Kim cuong
   // caption now states both real sources (reading + coaching) and both uses
   // (decoration + real gifts), since diamonds now cover what coins used to.
-  return `<article class="fx-card ho-so-p-stat"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">📦</span>Bài đã hoàn thành</div><strong>${Number(progress.completed_packs || 0)}</strong><small>${Number(growth.this_week_packs || 0)} bài trong tuần này</small></article><article class="fx-card ho-so-p-stat"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">🔥</span>Chuỗi ngày</div><strong>${Number(state.streak_days || 0)} <small>ngày liên tiếp</small></strong><small>${Number(state.streak_freeze_tokens || 0)} lượt giữ chuỗi</small></article><article class="fx-card ho-so-p-stat"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">💎</span>Kim cương</div><strong>${Number(state.diamonds || 0)} <small>kim cương</small></strong><small>Kiếm khi đọc bài & buổi coaching, dùng để trang trí quái vật & đổi quà thật</small></article>`;
+  return `<article class="fx-card ho-so-p-stat"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">📦</span>Bài đã hoàn thành</div><strong>${Number(progress.completed_packs || 0)}</strong><small>${Number(growth.this_week_packs || 0)} bài trong tuần này</small></article><article class="fx-card ho-so-p-stat"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">🔥</span>Chuỗi ngày</div><strong>${Number(state.streak_days || 0)} <small>ngày liên tiếp</small></strong><small>${Number(state.streak_freeze_tokens || 0)} lượt giữ chuỗi</small></article><article class="fx-card ho-so-p-stat"><div class="ho-so-p-stat__label"><span class="ho-so-p-stat__icon">💎</span>Kim cương</div><strong>${Number(state.diamonds || 0)} <small>kim cương</small></strong><small>Kiếm khi đọc bài & buổi coaching, dùng để trang trí quái vật & vào shop đổi quà</small></article>`;
 }
 
 /**
@@ -247,7 +247,7 @@ function renderSavedParentSummary(container: Element, data: ProgressPayload, cod
     <section class="parent-next"><h2>Bước tiếp theo</h2><p>${escapeHtml(summary.next_step.text)}</p><a href="${home}">Cùng con tiếp tục →</a></section>
     <section class="parent-recent"><h2>Những truyện gần đây</h2>${cards || '<p class="parent-empty">Chưa có truyện được mở. Sau khi con bắt đầu, kết quả đã lưu sẽ hiện ở đây.</p>'}</section>
     <p class="parent-evidence-note">Mở truyện hoặc ghi âm chưa có nghĩa là con đã hiểu bài. Báo cáo chỉ hiển thị kết quả đã được lưu.</p>
-    <nav class="parent-secondary" aria-label="Thông tin khác"><a href="/read2lead/gifts?code=${encodeURIComponent(code)}">Quà thật của con</a><button type="button" data-ho-so-change-code>Đổi mã học sinh</button></nav>
+    <nav class="parent-secondary" aria-label="Thông tin khác"><a href="/read2lead/gifts?code=${encodeURIComponent(code)}">Shop đổi quà của con</a><button type="button" data-ho-so-change-code>Đổi mã học sinh</button></nav>
   </div>`;
 
 }

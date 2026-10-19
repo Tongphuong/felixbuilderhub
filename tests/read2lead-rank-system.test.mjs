@@ -53,9 +53,11 @@ test('child home puts reading before secondary rankings', () => {
   assert.ok(source.indexOf('id="home-open"') < source.indexOf('id="home-rankings"'));
   assert.match(source, /Dành cho ba mẹ/);
   assert.doesNotMatch(source, /rank-medal|speak-up/);
-  // The only form on the home is the single-field student-code entry (shown only with no session).
-  assert.deepEqual(source.match(/<form[^>]*>/g)?.map(tag => /id="home-entry-form"/.test(tag)), [true]);
-  assert.equal((source.match(/<input\b/g) || []).length, 1);
+  // The only forms on the home are the student-code entry and (R2L-FINAL) the free sign-up card,
+  // both inside the logged-out section, which is hidden once a session exists.
+  assert.deepEqual(source.match(/<form[^>]*>/g)?.map(tag => tag.match(/id="([^"]+)"/)[1]), ['home-entry-form', 'signup-form']);
+  const ready = source.slice(source.indexOf('id="home-ready"'));
+  assert.ok(!/<form|<input/.test(ready));
 });
 
 test('child home shows a rankings card with both boards, linking to the full leaderboard, right after the read button', () => {

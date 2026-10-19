@@ -41,6 +41,8 @@ test('both entry routes use the same uncluttered home with no collection selecti
   const page=readFileSync(path,'utf8');assert.match(page,/<Read2LeadChildHome/);assert.match(page,/childHome/);
  }
  const page=readFileSync('src/components/Read2LeadChildHome.astro','utf8');
- assert.doesNotMatch(page,/<select|speak-up|rank-medal|coin|Tạo bài/);
+ assert.doesNotMatch(page,/speak-up|rank-medal|coin|Tạo bài/);
+ // R2L-FINAL: the only <select> is the sign-up card's age picker (no collection selection).
+ assert.equal((page.match(/<select\b/g)||[]).length,1);assert.ok(page.indexOf('<select')>page.indexOf('id="signup-card"'));
  assert.match(page,/home-open/);assert.match(page,/Dành cho ba mẹ/);
 });

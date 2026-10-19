@@ -43,7 +43,7 @@ const adminLayout = readFileSync('src/layouts/AdminLayout.astro', 'utf8');
 
 test('admin dashboard exposes a nav card for the gift tools', () => {
   assert.match(adminIndexPage, /href: '\/admin\/gifts'/);
-  assert.match(adminIndexPage, /title: 'Quà thật'/);
+  assert.match(adminIndexPage, /title: 'Shop đổi quà'/);
 });
 
 test('gifts.astro wraps in AdminLayout and IS reachable from the admin nav', () => {
@@ -54,7 +54,7 @@ test('gifts.astro wraps in AdminLayout and IS reachable from the admin nav', () 
   // forbidden from touching it and the test guarded that boundary. That session
   // has merged, the tab is added, and the guard now pins the real requirement —
   // an admin page nobody can navigate to is an admin page that does not exist.
-  assert.match(adminLayout, /href: '\/admin\/gifts'/, 'AdminLayout must expose the Quà thật tab');
+  assert.match(adminLayout, /href: '\/admin\/gifts'/, 'AdminLayout must expose the Shop đổi quà tab');
 });
 
 test('gifts.astro wires both the gift manager and the redemption queue on one page', () => {
