@@ -1,13 +1,8 @@
 ---
-// "Quà thật" (Real Gifts) shop — R2L-REAL-GIFTS §1. Clones the shell shape
-// of src/pages/read2lead/shop.astro (BaseLayout + Header + code-entry +
-// shell + error div), but this is a SEPARATE economy from the monster shop:
-// diamonds (💎) only, no preview-flag gate — the diamond price is the only
-// gate here — and none of the monster shop's legacy kid-scoped classes or
-// its old warm-accent display-font styling.
+// Shop đổi quà — Đảo phiêu lưu release 2 (design 08). A SEPARATE economy from the monster shop: diamonds only, no
+// preview-flag gate. Full-screen kid page (no site header/footer) like the other Đảo phiêu lưu screens; all styling lives
+// in src/styles/qua-that.css and every state is rendered by src/lib/gift-ux.ts.
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
 import GiftConfirmModal from '../../components/read2lead/gifts/GiftConfirmModal.astro';
 import GiftSuccessModal from '../../components/read2lead/gifts/GiftSuccessModal.astro';
 import '../../styles/qua-that.css';
@@ -17,69 +12,55 @@ import '../../styles/qua-that.css';
   title="Shop đổi quà | Read2Lead | Felix Coaching"
   description="Con dùng kim cương đổi lấy một món quà trong shop đổi quà — Coach Felix mua và trao tận tay ở lớp."
   robots="noindex, follow"
+  childHome
 >
-  <Header read2LeadState={false} />
-
-  <main id="main" class="flex-1 bg-navy-950 px-4 py-8 sm:px-6">
-    <section class="mx-auto max-w-5xl">
-      <div class="qt-topbar">
-        <a href="/ho-so" aria-label="Quay lại" class="qt-back">‹</a>
-        <div class="qt-topbar__title">
-          <p class="fx-eyebrow" style="color:var(--gold-light);">Shop đổi quà</p>
-          <p class="qt-topbar__heading">Cửa hàng của con</p>
-        </div>
-        <div id="gifts-balance-pill" class="qt-balance-pill hidden">
-          <span aria-hidden="true">💎</span>
-          <div>
-            <span class="qt-balance-pill__label">Kim cương của con</span>
-            <strong id="gifts-balance-pill-value">0</strong>
+  <main id="main" class="qt-page r2l">
+    <div class="qt-wrap">
+      <div class="qt-top">
+        <a id="gifts-home" class="r2l-back" href="/read2lead" data-design="shop.back"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path d="M19 12H6M11 6l-6 6 6 6" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Về đọc sách</a>
+        <header class="qt-head" data-design="shop.header">
+          <div class="qt-title"><span class="r2l-lab">Quà từ Coach Felix</span><h1 class="r2l-d">Shop đổi quà</h1></div>
+          <svg class="qt-head-gift" aria-hidden="true" width="72" height="72" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" rx="2" fill="#FF7A3D" stroke="#17324D" stroke-width="1.6"/><rect x="2" y="6" width="20" height="4" rx="1.5" fill="#FFC83D" stroke="#17324D" stroke-width="1.6"/><path d="M12 6v15M12 6c-2-4-7-4-6-1s6 1 6 1c2-4 7-4 6-1s-6 1-6 1" stroke="#17324D" stroke-width="1.6" fill="none"/></svg>
+        </header>
+        <div id="gifts-balance-pill" class="qt-wallet r2l-card-f hidden" data-design="shop.wallet">
+          <svg aria-hidden="true" width="52" height="52" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z" fill="#3CC8F0" stroke="#17324D" stroke-width="1.6" stroke-linejoin="round"/><path d="M2 9h20M9 3l3 18 3-18" stroke="#17324D" stroke-width="1.2" fill="none"/></svg>
+          <div class="qt-wallet-text">
+            <span class="r2l-lab">Kim cương của con</span>
+            <strong id="gifts-balance-pill-value" class="r2l-d">0</strong>
           </div>
         </div>
       </div>
 
-      <!-- Linking work (founder decision, narrow authorization — single link
-           element only, nothing else on this page changes): kids must be
-           able to find the monster shop too. -->
-      <a href="/read2lead/shop" style="display:inline-block; margin-top:8px; font-size:13px; font-weight:800; color:var(--r2l-ink);">🛒 Con cũng có thể đổi kim cương lấy phụ kiện quái vật</a>
-
-      <div id="gifts-entry" class="qt-entry">
-        <label for="gifts-code" class="fx-label">Mã học sinh</label>
+      <div id="gifts-entry" class="qt-entry r2l-card-f">
+        <label for="gifts-code" class="r2l-lab">Mã học sinh</label>
         <div class="qt-entry__row">
-          <input
-            id="gifts-code"
-            maxlength="40"
-            autocomplete="off"
-            placeholder="R2L-..."
-            class="fx-field qt-entry__input"
-          />
-          <button id="gifts-load" type="button" class="fx-btn fx-btn--primary qt-entry__button">Vào cửa hàng</button>
+          <input id="gifts-code" maxlength="40" autocomplete="off" placeholder="R2L-..." class="r2l-inp qt-entry__input" />
+          <button id="gifts-load" type="button" class="r2l-btn r2l-btn-sun qt-entry__button">Vào cửa hàng</button>
         </div>
       </div>
 
-      <div id="gifts-error" class="qt-error hidden"></div>
+      <div id="gifts-error" class="qt-error hidden" role="alert"></div>
 
       <div id="gifts-shell" class="qt-shell hidden">
-        <div class="qt-balance-hero">
-          <p class="fx-eyebrow" style="color:var(--cream-muted);">Kim cương của con</p>
-          <p class="qt-balance-hero__value">💎 <span id="gifts-balance-hero-value">0</span></p>
-          <p class="qt-balance-hero__hint">Kim cương đến từ <strong style="color:var(--cream);">lớp học</strong> — Coach Felix thưởng mỗi buổi.</p>
+        <p class="qt-note r2l-b-m">Kim cương đến từ <b>lớp học</b> — Coach Felix thưởng mỗi buổi. Con đổi kim cương lấy quà, Coach Felix trao tận tay ở lớp.</p>
+        <div class="qt-main">
+          <div id="gifts-goal" class="qt-goal-slot hidden" data-design="shop.goal"></div>
+          <section class="qt-listcol" aria-labelledby="qt-all-title">
+            <h2 id="qt-all-title" class="r2l-d r2l-t-3">Tất cả quà</h2>
+            <div class="qt-gridwrap" data-design="shop.grid">
+              <div id="gifts-inflight" class="qt-inflight-slot hidden"></div>
+              <div id="gifts-bands" class="qt-bands"></div>
+              <div id="gifts-trophy" class="qt-trophy-slot hidden"></div>
+              <a id="gifts-accessory" class="qt-accessory" href="/read2lead/shop" data-design="shop.accessory-link"><img src="/assets/minny/minny_face.png" alt="" width="44" height="44" /><span>Đổi kim cương lấy phụ kiện quái vật</span></a>
+            </div>
+          </section>
         </div>
-
-        <div id="gifts-inflight" class="qt-inflight-slot hidden"></div>
-
-        <div id="gifts-goal" class="qt-goal-slot hidden"></div>
-
-        <div id="gifts-bands" class="qt-bands"></div>
-
-        <div id="gifts-trophy" class="qt-trophy-slot hidden"></div>
       </div>
-    </section>
+    </div>
   </main>
 
   <GiftConfirmModal />
   <GiftSuccessModal />
-
-  <Footer />
 </BaseLayout>
 
 <script>
@@ -101,128 +82,3 @@ import '../../styles/qua-that.css';
     document.querySelector('#gifts-bands')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 </script>
-
-<style>
-  .qt-topbar {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .qt-back {
-    width: 44px;
-    height: 44px;
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    border-radius: 999px;
-    border: 1px solid var(--border-subtle);
-    color: var(--cream);
-    font-size: 20px;
-  }
-  .qt-back:hover { border-color: var(--r2l-ink); color: var(--r2l-ink); background: var(--r2l-sand); }
-  .qt-topbar__title { flex: 1; min-width: 0; }
-  .qt-topbar__heading {
-    margin: 2px 0 0;
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 20px;
-    color: var(--cream);
-  }
-
-  .qt-balance-pill {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 18px;
-    border-radius: 999px;
-    border: 1px solid var(--accent-border);
-    background: color-mix(in srgb, var(--gold) 14%, transparent);
-    font-size: 22px;
-  }
-  .qt-balance-pill__label {
-    display: block;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--cream-muted);
-    font-weight: 800;
-  }
-  .qt-balance-pill strong {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 24px;
-    color: var(--gold-light);
-    font-variant-numeric: tabular-nums;
-  }
-  @media (max-width: 719px) {
-    .qt-balance-pill { display: none; }
-  }
-
-  .qt-entry {
-    margin-top: 24px;
-    border-radius: 1rem;
-    border: 1px solid var(--border-subtle);
-    background: var(--surface-card);
-    padding: 1.25rem;
-  }
-  .qt-entry__row {
-    margin-top: 0.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .qt-entry__input {
-    min-height: 64px;
-    width: 100%;
-    text-transform: uppercase;
-  }
-  .qt-entry__button { min-height: 64px; }
-  @media (min-width: 640px) {
-    .qt-entry__row { flex-direction: row; }
-  }
-
-  .qt-error {
-    margin-top: 1rem;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(248, 113, 113, 0.4);
-    background: rgba(248, 113, 113, 0.1);
-    padding: 0.75rem 1rem;
-    font-size: 0.875rem;
-    color: #fecaca;
-  }
-
-  .qt-shell {
-    margin-top: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-  }
-
-  .qt-balance-hero {
-    padding: 20px;
-    border-radius: 20px;
-    border: 1px solid var(--accent-border);
-    background: linear-gradient(135deg, color-mix(in srgb, var(--gold) 16%, transparent), color-mix(in srgb, var(--navy-900) 82%, transparent) 60%);
-    text-align: center;
-  }
-  .qt-balance-hero__value {
-    margin: 8px 0 0;
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 44px;
-    line-height: 1;
-    color: var(--gold-light);
-    font-variant-numeric: tabular-nums;
-  }
-  .qt-balance-hero__hint {
-    margin: 10px 0 0;
-    color: var(--cream-muted);
-    font-size: 12.5px;
-  }
-  @media (min-width: 720px) {
-    .qt-balance-hero { display: none; }
-  }
-
-  .qt-bands { display: flex; flex-direction: column; }
-</style>

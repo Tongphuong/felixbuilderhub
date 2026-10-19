@@ -1,349 +1,139 @@
-/* "Quà thật" (Real Gifts) — genuinely-new styles only, per
-   Read2Lead Real Gifts Shop/HANDOFF.md §1. Everything else (buttons, cards,
-   badges, progress bars, eyebrows) reuses the existing .fx-* primitives from
-   design-system.css — do not re-style raw HTML to imitate them here.
+/* Shop đổi quà — Đảo phiêu lưu release 2 (design 08).
+   Built on the shared r2l-* components + tokens (src/styles/r2l-components.css, r2l-tokens.css). This file only holds what the shop
+   adds: page layout, the gift tile (GiftPhotoWell), the gift card states, the goal card, the grid, the accessory link.
+   Markup comes from src/lib/gift-ux.ts (every card state) and src/pages/read2lead/gifts.astro. */
 
-   Contents: GiftPhotoWell, GiftCard (+ band grid), band headers, the
-   GiftGoalCard used on the shop page, the empty state, and the three
-   qt-pulse / qt-shimmer / qt-float keyframes — all gated by
-   prefers-reduced-motion. */
+body:has(.qt-page) { background: var(--r2l-sky); }
+.qt-page { background: var(--r2l-sky); min-height: 100svh; padding: 16px; box-sizing: border-box; overflow: visible; flex: 1; }
+.qt-page *, .qt-page *::before, .qt-page *::after { box-sizing: border-box; }
+.qt-page :focus-visible { outline: 4px solid var(--r2l-ink-deep); outline-offset: 3px; }
+.qt-wrap { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+.qt-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-/* ============================ GiftPhotoWell (HANDOFF §2) ============================ */
-.qt-photo-well {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  border-radius: 12px;
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-  background: var(--r2l-sky-pale);
-  border-bottom: 3px solid var(--r2l-ink);
-}
-.qt-photo-well--banner { aspect-ratio: 16 / 9; }
+/* ---- top: back pill, title, wallet ---- */
+.qt-top { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+.qt-head { display: flex; align-items: center; gap: 12px; width: 100%; }
+.qt-title { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.qt-head h1 { margin: 0; font-size: var(--r2l-fs-h1); }
+.qt-head-gift { flex: none; }
+.qt-wallet { display: flex; align-items: center; gap: 12px; border-radius: 24px; width: 100%; }
+.qt-wallet-text { display: flex; flex-direction: column; }
+.qt-wallet-text strong { font-size: 40px; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.qt-note { margin: 0; }
 
-.qt-photo-well__emoji {
-  font-size: 56px;
-  line-height: 1;
-}
+/* ---- code entry (only when the child did not arrive with ?code=) ---- */
+.qt-entry__row { margin-top: 8px; display: flex; flex-direction: column; gap: 12px; }
+.qt-entry__input { text-transform: uppercase; }
+.qt-error { border: 3px solid var(--r2l-coral); border-radius: 18px; background: #fff; padding: 12px 16px; font-weight: 800; color: var(--r2l-ink); }
+
+/* ---- shell: goal + grid ---- */
+.qt-shell { display: flex; flex-direction: column; gap: 14px; }
+.qt-main { display: flex; flex-direction: column; gap: 14px; }
+.qt-listcol { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.qt-listcol h2 { margin: 0; }
+.qt-goal-slot { min-width: 0; }
+.qt-gridwrap { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+/* band / in-flight / received sections all flow into ONE grid ("Tất cả quà"); their headings stay for screen readers only */
+.qt-gridwrap > div:not(.hidden), .qt-band, .qt-band-grid, .qt-bands { display: contents; }
+.qt-empty-state { grid-column: 1 / -1; }
+
+/* ---- gift tile (GiftPhotoWell) ---- */
+.qt-photo-well { position: relative; height: 86px; border: 3px solid var(--r2l-ink); border-radius: 14px; background: var(--r2l-sky-pale); display: grid; place-items: center; overflow: hidden; width: 100%; }
+.qt-photo-well__emoji { font-size: 44px; line-height: 1; }
 .qt-photo-well--lg .qt-photo-well__emoji { font-size: 66px; }
-.qt-photo-well--sm .qt-photo-well__emoji { font-size: 44px; }
-
-/* Real photo (Shopee/Lazada white cut-out): contain + padding so the white
-   edge doesn't glare against navy. <img onerror> removes itself, revealing
-   the emoji fallback already sitting underneath. */
-.qt-photo-well__img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 12%;
-  box-sizing: border-box;
-}
-
-/* The emoji is a FALLBACK, not a permanent underlay — only hidden once a
-   real photo has actually decoded (img onload adds this class). A
-   broken/near-transparent photo (e.g. a mostly-transparent campaign PNG)
-   never triggers onerror, so without this the emoji would render stacked
-   underneath a photo that looks broken. onerror removes the <img> outright,
-   which never adds this class, so the emoji fallback still works exactly
-   as before for a truly failed load. */
+.qt-photo-well__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 8%; }
 .qt-photo-well--has-img .qt-photo-well__emoji { display: none; }
+.qt-photo-well--warm { background: var(--r2l-sky-pale); }
+.qt-photo-well--pending, .qt-photo-well--delivered { background: #fff; }
+.qt-photo-well--unavailable { background: var(--r2l-sky-rest); }
+.qt-photo-well--shimmer { background: var(--r2l-sand); }
+.qt-photo-well--delivered .qt-photo-well__emoji, .qt-photo-well--unavailable .qt-photo-well__emoji { opacity: .9; }
+/* the confirm dialog (GiftConfirmModal) shows the photo well in a banner shape */
+.qt-confirm-photo .qt-photo-well { height: auto; aspect-ratio: 16 / 9; border-radius: 0; border-width: 0 0 3px; }
 
-.qt-photo-well__badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-}
-.qt-photo-well__badge--corner {
-  top: 10px;
-  left: auto;
-  right: 10px;
-  font-size: 18px;
-}
+/* ---- gift card ---- */
+.qt-gift-card { padding: 10px; display: flex; flex-direction: column; gap: 6px; border-radius: 22px; min-width: 0; }
+.qt-gift-card__top { display: flex; flex-direction: column; gap: 6px; }
+.qt-gift-card__id { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.qt-gift-card__name { font-family: var(--r2l-font-display); font-weight: 800; font-size: var(--r2l-fs-h4); line-height: 1.05; overflow-wrap: anywhere; }
+.qt-gift-card__price { font-weight: 900; }
+.qt-gift-card__body { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; min-width: 0; }
+.qt-gift-card__note { margin: 0; font-size: 14px; font-weight: 800; line-height: 1.3; }
+.qt-gift-card__sub { margin: 0; font-size: 13px; font-weight: 800; }
+.qt-gift-card__caption { font-size: var(--r2l-fs-small); line-height: 1.35; font-weight: 700; }
+.qt-gift-card .r2l-tag { white-space: normal; }
+.qt-tag-coral { background: var(--r2l-coral); color: var(--r2l-ink); }
+.qt-gift-card .r2l-btn-sm { width: 100%; min-height: 48px; font-size: 16px; padding: 0 8px; }
+.qt-gift-card[data-state='pending'] { background: #FFF3D6; }
+.qt-gift-card[data-state='preparing'] { background: #FFF3D6; }
+.qt-gift-card[data-state='delivered'] { background: var(--r2l-leaf-tint); }
+.qt-bar { display: block; width: 100%; }
+.qt-bar--full > i { background: var(--r2l-leaf) !important; }
+.qt-pulse { animation: r-halo var(--r2l-dur-halo) ease-out infinite; }
 
-/* Near-miss: warmer glow behind the well. */
-.qt-photo-well--warm {
-  background: var(--r2l-sand);
-}
+/* ---- the pinned goal (cream card, sun tag) ---- */
+.qt-gift-card--goal { padding: 18px; gap: 12px; border-radius: var(--r2l-radius-card); }
+.qt-gift-card--goal > .r2l-tag { align-self: flex-start; border: 2px solid var(--r2l-ink); }
+.qt-gift-card--goal .qt-gift-card__top { flex-direction: row; align-items: center; gap: 12px; }
+.qt-gift-card--goal .qt-photo-well { width: 96px; height: 96px; flex: none; border-radius: 20px; background: var(--r2l-sand); }
+.qt-gift-card--goal .qt-photo-well--pending, .qt-gift-card--goal .qt-photo-well--delivered { background: #fff; }
+.qt-gift-card--goal .qt-gift-card__name { font-size: var(--r2l-fs-h3); }
+.qt-gift-card--goal .qt-gift-card__price { font-size: var(--r2l-fs-body); }
+.qt-gift-card--goal .qt-gift-card__body { gap: 12px; align-items: stretch; }
+.qt-gift-card--goal .r2l-btn-sun { min-height: var(--r2l-btn-primary); font-size: 26px; padding: 0 24px; }
+.qt-gift-card--goal .qt-gift-card__note { font-size: var(--r2l-fs-small); }
+.qt-gift-card--goal .qt-clear-goal { align-self: center; background: none; border: 0; cursor: pointer; font-family: var(--r2l-font-body); }
 
-/* Pending ("Đang chờ Coach Felix duyệt"): dimmer, waiting-room tone. */
-.qt-photo-well--pending {
-  background: var(--r2l-sky-rest);
-}
-.qt-photo-well--pending .qt-photo-well__emoji { opacity: 0.85; }
+/* ---- accessory (monster) shop link ---- */
+.qt-accessory { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 4px 18px 4px 10px; background: #fff; border: 3px solid var(--r2l-ink); border-radius: 18px; box-shadow: 0 4px 0 var(--r2l-ink); text-decoration: none; color: var(--r2l-ink); font-family: var(--r2l-font-display); font-weight: 800; font-size: 18px; line-height: 1.15; }
+.qt-accessory img { width: 44px; height: 44px; flex: none; object-fit: contain; border-radius: 12px; }
 
-/* Unavailable ("Tạm thời chưa mở" — toggled off, or its budget cap is
-   exhausted; never "hết hàng"/sold-out framing, this is a pause). Same
-   dimmer, quiet tone as pending but a distinct modifier: this is not a
-   review queue, it's a gift the founder has paused. */
-.qt-photo-well--unavailable {
-  background: var(--r2l-sky-rest);
-}
-.qt-photo-well--unavailable .qt-photo-well__emoji { opacity: 0.85; }
+/* ---- empty state ---- */
+.qt-empty-state { background: #fff; border: 3px dashed var(--r2l-ink); border-radius: 22px; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 28px 20px; gap: 10px; }
+.qt-empty-icon { font-size: 44px; }
 
-/* Delivered: success-tinted hairline. */
-.qt-photo-well--delivered {
-  background: var(--r2l-leaf-tint);
-}
-
-/* Preparing: the well itself becomes the moving gold shimmer (no photo —
-   deliberately a wrapped-gift 🎁, not the product shot, during this state). */
-.qt-photo-well--shimmer {
-  background: linear-gradient(
-    100deg,
-    color-mix(in srgb, var(--gold) 8%, transparent) 20%,
-    color-mix(in srgb, var(--gold) 26%, transparent) 50%,
-    color-mix(in srgb, var(--gold) 8%, transparent) 80%
-  );
-  background-size: 200% 100%;
-  box-shadow: inset 0 0 0 2px var(--r2l-ink);
-}
-
-/* ============================ GiftCard ============================ */
-.qt-gift-card {
-  border-radius: 16px;
-  overflow: hidden;
-  background: var(--surface-card);
-  border: 1px solid var(--border-subtle);
-  transition: border-color var(--duration-base) var(--ease-standard);
-  /* Lets descendants query the CARD's own rendered width (see the
-     @container rule below), not the viewport — with auto-fill grid columns
-     (below), the same viewport width can hand this card anywhere from
-     ~168px (many columns) to full-width (goal card, empty state), so a
-     viewport media query would be the wrong tool. */
-  container-type: inline-size;
-}
-.qt-gift-card__body { padding: 14px 15px 16px; }
-.qt-gift-card__head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 10px;
-}
-.qt-gift-card__name {
-  font-family: var(--font-display);
-  font-size: 17px;
-  color: var(--cream);
-}
-.qt-gift-card__price {
-  font-family: var(--font-display);
-  font-weight: 800;
-  color: var(--gold-light);
-  font-variant-numeric: tabular-nums;
-}
-
-/* The "saving" state's progress caption ("Con đã đi được N% chặng đường ·
-   còn N 💎") — pulled out of an inline style (src/lib/gift-ux.ts) so the
-   @container rule below can trim it at the narrow end without touching the
-   number/wording it renders. */
-.qt-gift-card__caption { font-size: 13px; }
-
-/* Narrow-card adaptations. Triggers whenever THIS card's own box is ≤220px
-   — comfortably covers the ~168-195px cards auto-fill produces at every
-   width from phone to laptop (see .qt-band-grid), while leaving the
-   full-width goal card (rule 3, unaffected — it never gets this narrow)
-   and the empty state alone.
-   - name/price: space-between + baseline was fine at full card width, but
-     at ~170px a long name ("Mô hình Gundam") and the price collide: stack
-     them instead of letting them fight over one row.
-   - CTA buttons: .fx-btn sets white-space:nowrap (design-system.css) which
-     is correct at full width but would push a long label ("Đặt làm mục
-     tiêu ★") past the button/card edge at this width, causing horizontal
-     overflow. Overriding to wrap here is scoped to narrow cards only — the
-     button's min-height (set inline in gift-ux.ts, 44-56px) is a FLOOR, so
-     a wrapped 2-line label grows the button taller and never shrinks the
-     tap target below it. */
-@container (max-width: 220px) {
-  .qt-gift-card__head {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-  }
-  .qt-gift-card__name {
-    font-size: 14.5px;
-    line-height: 1.3;
-  }
-  .qt-gift-card__price { font-size: 14px; }
-  .qt-gift-card__caption {
-    font-size: 12px;
-    line-height: 1.4;
-  }
-  .qt-gift-card__body .fx-btn {
-    white-space: normal;
-    text-align: center;
-    line-height: 1.3;
-  }
-}
-
-.qt-gift-card[data-state='affordable'] {
-  border-color: color-mix(in srgb, var(--success) 40%, transparent);
-}
-.qt-gift-card[data-state='nearmiss'] {
-  border: 1.5px solid var(--gold-light);
-  background: linear-gradient(180deg, color-mix(in srgb, var(--gold) 20%, transparent), var(--surface-card) 55%);
-}
-.qt-gift-card[data-state='delivered'] {
-  border-color: color-mix(in srgb, var(--success) 40%, transparent);
-  background: linear-gradient(180deg, color-mix(in srgb, var(--success) 10%, transparent), var(--surface-card) 55%);
-}
-.qt-gift-card[data-state='preparing'] {
-  border-color: var(--accent-border);
-}
-.qt-gift-card[data-state='unavailable'] {
-  border-color: var(--border-subtle);
-}
-
-/* Card grid inside a band — and inside the "🎁 Quà của con" in-flight group,
-   which renders through this same class (see renderInFlightGroup in
-   gift-ux.ts). Intrinsically responsive: auto-fill packs as many
-   168px-minimum columns as the container allows, then stretches them
-   equally to fill the remainder — no per-device breakpoints to maintain as
-   new screen sizes show up. Founder's rule (2026-07-13, verbatim): "I want
-   the shop to be in grid mode, not list mode of product... responsive,
-   works on phone, ipad and laptop. This is a rule." The old rule jumped
-   1-column-phone straight to 3-column at 720px, which was already cramped
-   at iPad's 768px and never adapted to anything in between.
-   168px is the floor: it's the narrowest a card renders while the longest
-   catalogue name ("Mô hình Gundam") and the redeem CTA still fit without
-   clipping or shrinking below the 44px tap target — see the @container
-   rules on .qt-gift-card above, sized to match this exact floor. Because
-   the page shell caps at max-w-5xl (src/pages/read2lead/gifts.astro, not
-   in this file's scope), the realized column count/card width — MEASURED
-   via computed styles against the real production catalogue (9 gifts,
-   R2L-PILOT-CYJS), not assumed — is: 390px viewport → 2 cols @172px,
-   768px → 4 cols @170px, 1024px → 5 cols @184px, 1280px → 5 cols @194px
-   (1024 and 1280 land within a few px of each other because both exceed
-   the max-w-5xl content cap). Zero horizontal overflow and zero buttons
-   under 44px at any of the four; see the grid-{390,768,1024,1280}.png
-   screenshots taken for this change. */
-.qt-band-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
-  gap: 14px;
-}
-
-/* ============================ Band headers ============================ */
-.qt-band { margin-top: 8px; }
-.qt-band-header { margin: 26px 0 12px; }
-.qt-band-header--now { color: var(--success); }
-.qt-band-header--soon { color: var(--gold-light); }
-.qt-band-header--building { color: var(--cream-muted); }
-.qt-band-header--unavailable { color: var(--cream-dim); }
-
-/* ============================ GiftGoalCard (pinned goal on the shop page) ============================
-   NOT a separate component — it's a .qt-gift-card rendered through the exact
-   same per-state branches (see renderGiftCard's variant param in
-   src/lib/gift-ux.ts), so a goal that happens to be a near-miss or already
-   affordable gets that state's full treatment (pulse/badge/CTA), not a
-   generic "still saving" card. These rules only add the goal-specific
-   cosmetics: a bit of breathing room under the eyebrow, an accent border for
-   the plain "still saving" case (the reference's mobile pinned-goal card is
-   accent-bordered even with no special state), and a photo+body row layout
-   on wider screens. */
-.qt-goal-eyebrow { margin: 0 0 6px; }
-
-.qt-gift-card--goal[data-state='saving'] {
-  border-color: var(--accent-border);
-}
-
-@media (min-width: 640px) {
-  .qt-gift-card--goal {
-    display: flex;
-    align-items: stretch;
-  }
-  .qt-gift-card--goal .qt-photo-well {
-    width: 220px;
-    flex-shrink: 0;
-    border-radius: 0;
-  }
-  .qt-gift-card--goal .qt-gift-card__body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-
-/* ============================ Empty state ============================ */
-.qt-empty-state {
-  border-radius: 16px;
-  border: 1px dashed var(--border-strong);
-  background: color-mix(in srgb, var(--cream) 3%, transparent);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 34px 22px;
-  gap: 10px;
-}
-
-/* ============================ Trophy row ("🏆 Con đã nhận") ============================
-   Deliberately NOT a shop card — a horizontal keepsake strip (photo/emoji +
-   name + received date only, no price/CTA/progress bar) so it reads as a
-   memory, not a listing. Reuses .qt-photo-well at a small fixed width.
-   Deliberately NOT .qt-band-grid either, and this is intentional, not an
-   oversight in the 2026-07-13 grid-mode change: these are small fixed-size
-   mementos (108px), not shop cards competing for column width, so a
-   horizontally-scrolling flex strip already reads fine unchanged at any
-   viewport — there is no "1-column list mode" failure mode to fix here.
-   The "🎁 Quà của con" in-flight group, by contrast, DOES reuse
-   .qt-band-grid (via renderInFlightGroup in gift-ux.ts) and gets the same
-   responsive-grid fix as the catalogue bands below. */
-.qt-trophy-group { margin-top: 8px; }
-.qt-trophy-row {
-  display: flex;
-  gap: 14px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  scrollbar-width: thin;
-}
-.qt-trophy-item {
-  flex: 0 0 108px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 6px;
-}
-.qt-trophy-item .qt-photo-well {
-  width: 96px;
-}
-.qt-trophy-item__name {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 12.5px;
-  color: var(--cream);
-}
-.qt-trophy-item__date {
-  font-size: 11px;
-  color: var(--success);
-  font-weight: 700;
-}
-
-/* ============================ Keyframes (gated by reduced-motion) ============================ */
-@keyframes qt-shimmer {
-  from { background-position: -200% 0; }
-  to { background-position: 200% 0; }
-}
-@keyframes qt-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--gold) 55%, transparent); }
-  50% { box-shadow: 0 0 22px 4px color-mix(in srgb, var(--gold) 45%, transparent); }
-}
-@keyframes qt-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
-.qt-pulse { animation: qt-pulse 2.2s ease-in-out infinite; }
-.qt-shimmer { animation: qt-shimmer 2.4s linear infinite; }
+/* ---- motion (still twins: reduced motion turns every animation off) ---- */
+@keyframes qt-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 .qt-float { animation: qt-float 2.6s ease-in-out infinite; }
+.qt-page .still .qt-float, .qt-page .still .qt-pulse { animation: none; }
+@media (prefers-reduced-motion: reduce) { .qt-pulse, .qt-float { animation: none !important; } }
 
-@media (prefers-reduced-motion: reduce) {
-  .qt-pulse,
-  .qt-shimmer,
-  .qt-float {
-    animation: none !important;
-  }
+/* ---- tablet and up ---- */
+@media (min-width: 768px) {
+  .qt-page { padding: 24px; }
 }
+@media (min-width: 1000px) {
+  .qt-page { padding: 24px 40px; }
+  .qt-wrap { gap: 20px; }
+  .qt-top { flex-direction: row; align-items: flex-end; gap: 20px; }
+  .qt-head { width: auto; }
+  .qt-head h1 { font-size: 48px; }
+  .qt-head-gift { display: none; }
+  .qt-wallet { width: auto; margin-left: auto; padding: 10px 18px; border-radius: 22px; }
+  .qt-wallet > svg { width: 44px; height: 44px; }
+  .qt-wallet-text strong { font-size: 34px; }
+  .qt-note { font-size: var(--r2l-fs-body); }
+  .qt-shell { gap: 20px; }
+  .qt-main { display: grid; grid-template-columns: 400px minmax(0, 1fr); gap: 24px; align-items: start; }
+  .qt-main:has(.qt-goal-slot.hidden) { grid-template-columns: minmax(0, 1fr); }
+  .qt-listcol h2 { font-size: var(--r2l-fs-h2); }
+  .qt-gridwrap { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .qt-photo-well { height: 120px; border-radius: 16px; }
+  .qt-photo-well__emoji { font-size: 56px; }
+  .qt-gift-card { padding: 12px; border-radius: 24px; }
+  .qt-gift-card__name { font-size: var(--r2l-fs-h3); }
+  .qt-gift-card__note { font-size: 15px; }
+  .qt-gift-card--goal { padding: 18px; gap: 14px; }
+  .qt-gift-card--goal .qt-gift-card__top { flex-direction: column; align-items: stretch; gap: 14px; }
+  .qt-gift-card--goal .qt-photo-well { width: 100%; height: 180px; border-radius: 22px; }
+  .qt-gift-card--goal .qt-photo-well__emoji { font-size: 96px; }
+  .qt-gift-card--goal .qt-gift-card__name { font-size: var(--r2l-fs-h2); }
+  .qt-gift-card--goal .qt-gift-card__price { font-size: 18px; }
+  .qt-accessory { grid-column: auto; flex-direction: column; justify-content: center; text-align: center; gap: 8px; padding: 12px; border-radius: 24px; box-shadow: none; font-size: var(--r2l-fs-h4); background: #fff; }
+  .qt-accessory img { width: 96px; height: 96px; }
+  .qt-entry__row { flex-direction: row; }
+}
+.qt-gridwrap { align-items: start; }
+.qt-accessory { align-self: stretch; }
+.qt-gift-card--goal .r2l-btn-sun { font-size: 22px; padding: 0 12px; text-align: center; line-height: 1.1; }
+@media (min-width: 1000px) { .qt-gift-card--goal .r2l-btn-sun { font-size: 24px; } }

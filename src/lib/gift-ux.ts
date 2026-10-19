@@ -204,9 +204,9 @@ export function renderPhotoWell(opts: PhotoWellOptions): string {
 
 function progressBarHtml(percent: number, gradient = true, colorVar?: string): string {
   const width = Math.max(0, Math.min(100, Math.round(percent)));
-  const fillClass = gradient ? 'fx-progress__fill fx-progress__fill--gradient' : 'fx-progress__fill';
+  // Đảo phiêu lưu bar: ink-ringed track, sun fill (a finished bar goes leaf-green).
   const style = colorVar ? ` style="width:${width}%; background:${colorVar};"` : ` style="width:${width}%;"`;
-  return `<span class="fx-progress"><span class="${fillClass}"${style}></span></span>`;
+  return `<span class="r2l-bar r2l-m-fill qt-bar${gradient ? '' : ' qt-bar--full'}" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${width}"><i${style}></i></span>`;
 }
 
 type GiftCardVariant = 'band' | 'goal';
@@ -240,12 +240,25 @@ export function renderGiftCard(
   const price = formatDiamonds(item.price_diamonds);
   const img = photoSrc(item);
   const isGoal = variant === 'goal';
-  const aspect = isGoal ? '16/9' as const : undefined;
-  const cardClass = isGoal ? 'qt-gift-card qt-gift-card--goal' : 'qt-gift-card';
-  const goalEyebrow = isGoal ? '<p class="fx-eyebrow qt-goal-eyebrow">★ Mục tiêu của con</p>' : '';
+  const aspect = undefined;
+  // Đảo phiêu lưu shop (design 08): a band card is .r2l-card-f; the pinned goal is the cream .r2l-card with a sun tag.
+  const cardClass = isGoal ? 'qt-gift-card qt-gift-card--goal r2l-card' : 'qt-gift-card r2l-card-f';
+  const goalEyebrow = isGoal ? '<span class="r2l-tag r2l-tag-sun qt-goal-eyebrow">★ Mục tiêu của con</span>' : '';
+  const priceHtml = `<span class="qt-gift-card__price">${price} kim cương</span>`;
+  // image + name + price: stacked on a band card, side by side on the phone goal card (CSS decides).
+  const cardTop = (well: string, withPrice = true) => `
+        <div class="qt-gift-card__top">
+          ${well}
+          <div class="qt-gift-card__id">
+            <strong class="qt-gift-card__name">${escapeHtml(name)}</strong>
+            ${withPrice ? priceHtml : ''}
+          </div>
+        </div>`;
   const savingAction = isGoal
-    ? '<button type="button" class="fx-btn fx-btn--secondary fx-btn--block qt-clear-goal" style="margin-top:11px; min-height:44px;">Đổi mục tiêu</button>'
-    : `<button type="button" class="fx-btn fx-btn--secondary fx-btn--block qt-set-goal" data-gift-id="${escapeHtml(item.id)}" style="margin-top:11px; min-height:44px;">Đặt làm mục tiêu ★</button>`;
+    ? '<button type="button" class="r2l-lnk qt-clear-goal">Đổi mục tiêu</button>'
+    : `<button type="button" class="r2l-btn r2l-btn-sm qt-set-goal" data-gift-id="${escapeHtml(item.id)}">Đặt làm mục tiêu ★</button>`;
+  // The goal card's main action while the gift is out of reach: go and earn diamonds (href gets the child's code on the page).
+  const earnAction = isGoal ? '<a class="r2l-btn r2l-btn-sun r2l-btn-w r2l-m-ring qt-goal-read" href="/read2lead">Đọc truyện kiếm kim cương</a>' : '';
 
   if (state === 'pending') {
     const well = renderPhotoWell({
@@ -253,19 +266,13 @@ export function renderGiftCard(
       name,
       aspect,
       modifier: 'pending',
-      badgeHtml: '<span class="fx-badge fx-badge--neutral qt-photo-well__badge">⏳ Đang chờ Coach Felix duyệt</span>',
     });
     return `
       <article class="${cardClass}" data-state="pending" data-gift-id="${escapeHtml(item.id)}">
-        ${well}
+        ${goalEyebrow}${cardTop(well, false)}
         <div class="qt-gift-card__body">
-          ${goalEyebrow}
-          <div class="qt-gift-card__head">
-            <strong class="qt-gift-card__name">${escapeHtml(name)}</strong>
-            <span class="qt-gift-card__price" style="color:var(--cream-dim);">−${price} 💎</span>
-          </div>
-          <p style="margin:10px 0 0; color:var(--cream-muted); font-size:12.5px; line-height:1.5;">Con đã gửi yêu cầu. Coach Felix sẽ xem và chuẩn bị quà cho con nhé.</p>
-          <button type="button" class="fx-btn fx-btn--secondary fx-btn--block" disabled aria-disabled="true" style="margin-top:11px; min-height:44px;">Đã gửi yêu cầu</button>
+          <span class="r2l-tag r2l-tag-ink">Đang chờ Coach Felix duyệt</span>
+          <p class="qt-gift-card__note">Con đã gửi yêu cầu. Coach Felix sẽ xem nhé.</p>
         </div>
       </article>
     `;
@@ -278,16 +285,14 @@ export function renderGiftCard(
       aspect,
       modifier: 'shimmer',
       animateEmoji: true,
-      badgeHtml: '<span class="fx-badge qt-photo-well__badge" style="background:color-mix(in srgb,var(--gold) 90%,#fff); color:var(--r2l-ink); font-weight:800;">🎁 Coach Felix đang chuẩn bị</span>',
     });
     return `
       <article class="${cardClass}" data-state="preparing" data-gift-id="${escapeHtml(item.id)}">
-        ${well}
+        ${goalEyebrow}${cardTop(well, false)}
         <div class="qt-gift-card__body">
-          ${goalEyebrow}
-          <strong class="qt-gift-card__name">${escapeHtml(name)}</strong>
-          <p style="margin:9px 0 0; color:var(--cream); font-size:13.5px; line-height:1.55; font-weight:600;">Coach Felix đang chuẩn bị quà cho con — sắp mang tới lớp rồi! 💛</p>
-          <p style="margin:6px 0 0; color:var(--cream-dim); font-size:12px;">Coach Felix nhận yêu cầu ${escapeHtml(daysAgoVi(redemption?.updated_at || redemption?.ts))}</p>
+          <span class="r2l-tag r2l-tag-sun">🎁 Coach Felix đang chuẩn bị</span>
+          <p class="qt-gift-card__note">Coach Felix đang chuẩn bị quà cho con — sắp mang tới lớp rồi!</p>
+          <p class="qt-gift-card__sub">Coach Felix nhận yêu cầu ${escapeHtml(daysAgoVi(redemption?.updated_at || redemption?.ts))}</p>
         </div>
       </article>
     `;
@@ -300,17 +305,14 @@ export function renderGiftCard(
       aspect,
       imageSrc: img,
       modifier: 'delivered',
-      badgeHtml: '<span class="fx-badge qt-photo-well__badge" style="background:var(--success); color:var(--r2l-ink); font-weight:800;">✓ Đã nhận quà</span>',
-      cornerHtml: '<span class="qt-photo-well__badge qt-photo-well__badge--corner" aria-hidden="true">🏆</span>',
     });
     return `
       <article class="${cardClass}" data-state="delivered" data-gift-id="${escapeHtml(item.id)}">
-        ${well}
+        ${goalEyebrow}${cardTop(well, false)}
         <div class="qt-gift-card__body">
-          ${goalEyebrow}
-          <strong class="qt-gift-card__name">${escapeHtml(name)}</strong>
-          <p style="margin:9px 0 0; color:var(--cream-muted); font-size:13px;">Con đã nhận từ Coach Felix ở lớp 💛</p>
-          <p style="margin:5px 0 0; color:var(--success); font-size:12.5px; font-weight:700;">Nhận ngày ${escapeHtml(formatDateVi(redemption?.updated_at || redemption?.ts))}</p>
+          <span class="r2l-tag">✓ Đã nhận quà</span>
+          <p class="qt-gift-card__note">Con đã nhận từ Coach Felix ở lớp</p>
+          <p class="qt-gift-card__sub">Nhận ngày ${escapeHtml(formatDateVi(redemption?.updated_at || redemption?.ts))}</p>
         </div>
       </article>
     `;
@@ -332,7 +334,6 @@ export function renderGiftCard(
       aspect,
       imageSrc: img,
       modifier: 'unavailable',
-      badgeHtml: '<span class="fx-badge fx-badge--neutral qt-photo-well__badge">Tạm thời chưa mở</span>',
     });
     const percent = Math.max(0, Math.min(100, Math.round(item.progress_percent)));
     // Goal variant: this gift IS already the child's pinned goal (it went
@@ -348,19 +349,15 @@ export function renderGiftCard(
     // already explains the situation; an action that always fails is worse
     // than no action.
     const action = isGoal
-      ? '<button type="button" class="fx-btn fx-btn--secondary fx-btn--block qt-clear-goal" style="margin-top:11px; min-height:44px;">Chọn mục tiêu khác ★</button>'
+      ? '<button type="button" class="r2l-btn r2l-btn-sm qt-clear-goal">Chọn mục tiêu khác ★</button>'
       : '';
     return `
       <article class="${cardClass}" data-state="unavailable" data-gift-id="${escapeHtml(item.id)}">
-        ${well}
+        ${goalEyebrow}${cardTop(well)}
         <div class="qt-gift-card__body">
-          ${goalEyebrow}
-          <div class="qt-gift-card__head">
-            <strong class="qt-gift-card__name">${escapeHtml(name)}</strong>
-            <span class="qt-gift-card__price">💎 ${price}</span>
-          </div>
+          <span class="r2l-tag r2l-tag-white">Tạm thời chưa mở</span>
           ${progressBarHtml(percent)}
-          <p style="margin:9px 0 0; color:var(--cream-muted); font-size:13px; line-height:1.5;">Món quà này tạm thời chưa đổi được. Coach Felix sẽ mở lại sau nhé!</p>
+          <p class="qt-gift-card__note">Món quà này tạm thời chưa đổi được. Coach Felix sẽ mở lại sau nhé!</p>
           ${action}
         </div>
       </article>
@@ -373,22 +370,17 @@ export function renderGiftCard(
       name,
       aspect,
       imageSrc: img,
-      badgeHtml: '<span class="fx-badge fx-badge--solid qt-photo-well__badge" style="background:var(--success); color:var(--r2l-ink); font-weight:800;">Đổi được rồi!</span>',
     });
     return `
       <article class="${cardClass}" data-state="affordable" data-gift-id="${escapeHtml(item.id)}">
-        ${well}
+        ${goalEyebrow}${cardTop(well)}
         <div class="qt-gift-card__body">
-          ${goalEyebrow}
-          <div class="qt-gift-card__head">
-            <strong class="qt-gift-card__name">${escapeHtml(name)}</strong>
-            <span class="qt-gift-card__price">💎 ${price}</span>
-          </div>
-          ${progressBarHtml(100, false, 'var(--success)')}
+          <span class="r2l-tag">Đổi được rồi!</span>
+          ${isGoal ? progressBarHtml(100, false, 'var(--r2l-leaf)') : ''}
           ${blocked
-            ? '<p style="margin:8px 0 0; color:var(--cream-muted); font-size:12.5px; line-height:1.5;">Con đang chờ Coach Felix duyệt một món quà rồi. Nhận quà xong con đổi tiếp nhé!</p>'
-            : '<p style="margin:8px 0 0; color:var(--success); font-size:12.5px;">Con đủ kim cương rồi 🎉</p>'}
-          <button type="button" class="fx-btn fx-btn--primary fx-btn--block qt-redeem" data-gift-id="${escapeHtml(item.id)}"${blocked ? ' disabled aria-disabled="true"' : ''} style="margin-top:11px; min-height:56px; font-weight:800; font-size:16px;">Đổi quà ngay 💎</button>
+            ? '<p class="qt-gift-card__note">Con đang chờ Coach Felix duyệt một món quà rồi. Nhận quà xong con đổi tiếp nhé!</p>'
+            : '<p class="qt-gift-card__note">Con đủ kim cương rồi 🎉</p>'}
+          <button type="button" class="r2l-btn r2l-btn-sun r2l-btn-sm qt-redeem${isGoal ? ' r2l-btn-w r2l-m-ring' : ''}" data-gift-id="${escapeHtml(item.id)}"${blocked ? ' disabled aria-disabled="true"' : ''}>Đổi quà ngay 💎</button>
         </div>
       </article>
     `;
@@ -402,21 +394,20 @@ export function renderGiftCard(
       aspect,
       imageSrc: img,
       modifier: 'warm',
-      animateEmoji: true,
-      badgeHtml: '<span class="fx-badge qt-photo-well__badge" style="background:var(--gold); color:var(--r2l-ink); font-weight:800;">🔥 Sắp đổi được!</span>',
     });
+    const nearPercent = Math.max(0, Math.min(100, Math.round(item.progress_percent)));
+    // Goal card: bar + "N% chặng đường · còn M kim cương" + the earn action. Band card: coral tag + what is missing.
+    const nearBody = isGoal
+      ? `${progressBarHtml(nearPercent)}
+          <span class="qt-gift-card__caption"><b>${nearPercent}%</b> chặng đường · còn <b>${escapeHtml(formatDiamonds(deficit))}</b> kim cương</span>
+          ${earnAction}`
+      : `<span class="r2l-tag qt-tag-coral">Sắp đổi được!</span>
+          <span class="qt-gift-card__note">Còn thiếu ${escapeHtml(formatDiamonds(deficit))} kim cương</span>`;
     return `
       <article class="${cardClass} qt-pulse" data-state="nearmiss" data-gift-id="${escapeHtml(item.id)}">
-        ${well}
+        ${goalEyebrow}${cardTop(well)}
         <div class="qt-gift-card__body">
-          ${goalEyebrow}
-          <div class="qt-gift-card__head">
-            <strong class="qt-gift-card__name">${escapeHtml(name)}</strong>
-            <span class="qt-gift-card__price">💎 ${price}</span>
-          </div>
-          ${progressBarHtml(item.progress_percent)}
-          <p style="margin:9px 0 0; color:var(--gold-light); font-size:14px; font-weight:700;">Chỉ còn ${escapeHtml(formatDiamonds(deficit))} 💎 nữa thôi! 🔥</p>
-          <p style="margin:4px 0 0; color:var(--cream-muted); font-size:12px;">Buổi học tới của con là đủ rồi!</p>
+          ${nearBody}
           ${savingAction}
         </div>
       </article>
@@ -427,20 +418,15 @@ export function renderGiftCard(
   const well = renderPhotoWell({ emoji: item.emoji, name, aspect, imageSrc: img });
   const percent = Math.max(0, Math.min(100, Math.round(item.progress_percent)));
   const deficit = Math.max(0, item.price_diamonds - diamonds);
-  const caption = percent >= 50
-    ? `Con đã đi được <strong style="color:var(--gold-light);">${percent}%</strong> chặng đường · còn <strong style="color:var(--gold-light);">${escapeHtml(formatDiamonds(deficit))} 💎</strong>`
-    : `Con đã đi được <strong style="color:var(--gold-light);">${percent}%</strong> chặng đường`;
+  const caption = `<b>${percent}%</b> chặng đường · còn <b>${escapeHtml(formatDiamonds(deficit))}</b> kim cương`;
+  // A band card in the design is just image, name, price and "Đặt làm mục tiêu ★"; only the goal card shows the journey.
   return `
     <article class="${cardClass}" data-state="saving" data-gift-id="${escapeHtml(item.id)}">
-      ${well}
+      ${goalEyebrow}${cardTop(well)}
       <div class="qt-gift-card__body">
-        ${goalEyebrow}
-        <div class="qt-gift-card__head">
-          <strong class="qt-gift-card__name">${escapeHtml(name)}</strong>
-          <span class="qt-gift-card__price">💎 ${price}</span>
-        </div>
-        ${progressBarHtml(percent)}
-        <p class="qt-gift-card__caption" style="margin:9px 0 0; color:var(--cream-muted);">${caption}</p>
+        ${isGoal ? `${progressBarHtml(percent)}
+        <span class="qt-gift-card__caption">${caption}</span>
+        ${earnAction}` : ''}
         ${savingAction}
       </div>
     </article>
@@ -464,7 +450,7 @@ function renderBandSection(band: GiftBand, items: GiftItem[], redemptions: GiftR
     .join('');
   return `
     <section class="qt-band" data-band="${band}">
-      <p class="fx-eyebrow qt-band-header ${label.className}">${label.title}</p>
+      <p class="qt-band-header qt-sr ${label.className}">${label.title}</p>
       <div class="qt-band-grid">${cards}</div>
     </section>
   `;
@@ -487,7 +473,7 @@ function renderInFlightGroup(items: GiftItem[], redemptions: GiftRedemption[], d
     .join('');
   return `
     <section class="qt-band" data-band="inflight">
-      <p class="fx-eyebrow qt-band-header qt-band-header--now">🎁 Quà của con</p>
+      <p class="qt-band-header qt-sr qt-band-header--now">🎁 Quà của con</p>
       <div class="qt-band-grid">${cards}</div>
     </section>
   `;
@@ -509,33 +495,21 @@ function renderTrophyGroup(redemptions: GiftRedemption[], items: GiftItem[]): st
     .sort((a, b) => (Date.parse(b.updated_at || b.ts) || 0) - (Date.parse(a.updated_at || a.ts) || 0));
   if (!delivered.length) return '';
   const itemsById = new Map(items.map((item) => [item.id, item]));
+  // Design 08 shows a received gift as an ordinary card in the grid ("✓ Đã nhận quà · Con đã nhận từ Coach Felix ở lớp"),
+  // so each delivered redemption is rendered through the same card as every other gift.
   const chips = delivered
     .map((entry) => {
-      const item = itemsById.get(entry.gift_id);
-      const emoji = item?.emoji || '🎁';
-      const name = item?.name_vi || entry.name_vi;
-      const img = item ? photoSrc(item) : null;
-      const well = renderPhotoWell({
-        emoji,
-        name,
-        imageSrc: img,
-        size: 'sm',
-        modifier: 'delivered',
-        cornerHtml: '<span class="qt-photo-well__badge qt-photo-well__badge--corner" aria-hidden="true">🏆</span>',
-      });
-      return `
-        <div class="qt-trophy-item">
-          ${well}
-          <strong class="qt-trophy-item__name">${escapeHtml(name)}</strong>
-          <span class="qt-trophy-item__date">Nhận ngày ${escapeHtml(formatDateVi(entry.updated_at || entry.ts))}</span>
-        </div>
-      `;
+      const item: GiftItem = itemsById.get(entry.gift_id) || {
+        id: entry.gift_id, name_vi: entry.name_vi, emoji: '🎁', image_key: null, image_url: null,
+        price_diamonds: entry.price_diamonds, can_afford: false, available: true, progress_percent: 0,
+      };
+      return renderGiftCard(item, 'delivered', entry, 0, 'band');
     })
     .join('');
   return `
-    <section class="qt-trophy-group">
-      <p class="fx-eyebrow qt-band-header qt-band-header--now">🏆 Con đã nhận</p>
-      <div class="qt-trophy-row">${chips}</div>
+    <section class="qt-trophy-group qt-band" data-band="delivered">
+      <p class="qt-band-header qt-sr">Con đã nhận</p>
+      <div class="qt-band-grid">${chips}</div>
     </section>
   `;
 }
@@ -543,10 +517,10 @@ function renderTrophyGroup(redemptions: GiftRedemption[], items: GiftItem[]): st
 function renderEmptyState(): string {
   return `
     <div class="qt-empty-state">
-      <span style="font-size:44px;" aria-hidden="true">🎁</span>
-      <strong style="font-family:var(--font-display); color:var(--cream); font-size:16px;">Chưa có quà nào</strong>
-      <p style="margin:0; color:var(--cream-muted); font-size:13px; line-height:1.55;">Coach Felix đang chọn thêm quà cho Shop đổi quà của các con. Quay lại sau nhé!</p>
-      <a href="/ho-so" class="fx-btn fx-btn--secondary" style="margin-top:6px; min-height:44px;">Về hồ sơ của con</a>
+      <span class="qt-empty-icon" aria-hidden="true">🎁</span>
+      <strong class="r2l-d r2l-t-3">Chưa có quà nào</strong>
+      <p class="qt-gift-card__note">Coach Felix đang chọn thêm quà cho Shop đổi quà của các con. Quay lại sau nhé!</p>
+      <a href="/ho-so" class="r2l-btn r2l-btn-sm">Về hồ sơ của con</a>
     </div>
   `;
 }
@@ -651,6 +625,9 @@ export function initGiftsPage(hooks: GiftsPageHooks): void {
   // can't be band-only.
   const bindCardActions = (host: Element | null) => {
     if (!host) return;
+    host.querySelectorAll<HTMLAnchorElement>('.qt-goal-read').forEach((link) => {
+      link.href = '/read2lead?code=' + encodeURIComponent(accessCode);
+    });
     host.querySelectorAll<HTMLButtonElement>('.qt-redeem').forEach((button) => {
       button.addEventListener('click', () => {
         const giftId = button.dataset.giftId || '';
@@ -873,6 +850,12 @@ export function initGiftsPage(hooks: GiftsPageHooks): void {
     // The reference goes straight from the top bar to the balance hero once
     // loaded — a child who arrived via ?code= should never see a form
     // re-asking for the code they just used.
+    // Child-facing links keep the child's code (back to reading, the monster accessory shop).
+    const withCode = (path: string) => `${path}?code=${encodeURIComponent(accessCode)}`;
+    const homeLink = qs('#gifts-home') as HTMLAnchorElement | null;
+    if (homeLink) homeLink.href = withCode('/read2lead');
+    const accessoryLink = qs('#gifts-accessory') as HTMLAnchorElement | null;
+    if (accessoryLink) accessoryLink.href = withCode('/read2lead/shop');
     qs('#gifts-entry')?.classList.add('hidden');
     qs('#gifts-shell')?.classList.remove('hidden');
     qs('#gifts-balance-pill')?.classList.remove('hidden');

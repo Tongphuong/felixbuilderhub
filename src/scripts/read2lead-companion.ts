@@ -1,4 +1,4 @@
-import { mountMonsterBuilder, monsterBuilderHtml } from '../lib/monster-builder';
+import { mountMonsterBuilder, monsterBuilderIslandHtml } from '../lib/monster-builder';
 
 const message = document.getElementById('companion-message')!;
 const retry = document.getElementById('companion-retry') as HTMLButtonElement;
@@ -25,7 +25,7 @@ async function load() {
     });
     const data = await response.json();
     if (!response.ok || !data.ok) throw Error(data.message || 'Chưa mở được. Con thử lại nhé.');
-    host.innerHTML = monsterBuilderHtml(data.read2lead_state.student_name || 'con');
+    host.innerHTML = monsterBuilderIslandHtml(data.read2lead_state.student_name || 'con');
     mountMonsterBuilder(host.firstElementChild as HTMLElement, code, data.read2lead_state);
     message.hidden = true;
   } catch (error) {
