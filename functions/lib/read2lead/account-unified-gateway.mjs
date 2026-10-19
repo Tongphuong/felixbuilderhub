@@ -74,6 +74,14 @@ export async function unifiedAccountGateway(context) {
         (response.status>=300&&response.status<400)) {
       await response.body?.cancel();return unavailable();
     }
+    // Logged-out (or expired/unknown-session) visitor opening a student PAGE, e.g. a shared
+    // /read2lead/library link: send them to the public page with sign-up instead of a bare 401.
+    // Not for APIs, admin, private paths, assets, non-GET/HEAD, or an explicit code (those keep 401).
+    if(response.status===401&&['GET','HEAD'].includes(request.method)&&!accountAsset&&!bareEntry&&
+       !url.searchParams.has('code')&&!url.searchParams.has('access_code')&&
+       !url.pathname.startsWith('/api/')&&!url.pathname.startsWith('/admin')&&!url.pathname.startsWith('/__private/')){
+      await response.body?.cancel();return new Response(null,{status:303,headers:{'Location':'/read2lead/','Cache-Control':'no-store'}});
+    }
     // Public pages can request their own assets with an old student cookie.
     // Only this static-file path may fall back, never an account API or page.
     if(accountAsset&&[401,404].includes(response.status)){
