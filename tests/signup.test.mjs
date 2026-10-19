@@ -515,3 +515,56 @@ test('CONCURRENCY (global fence): N requests from N different IPs over the cap n
   assert.ok(max <= N, 'successes can never exceed the number of concurrent requests fired');
   assert.ok(successCounts.some((s) => s < N), `expected the recheck to catch at least one over-cap mint across ${TRIALS} trials; got ${JSON.stringify(successCounts)}`);
 });
+
+// ---------------------------------------------------------------------------
+// R2L-FINAL name rules (addendum 2026-10-19) — bite tests
+// ---------------------------------------------------------------------------
+
+test('BITE: 21-character name → 400 student_name_invalid, no code minted', async () => {
+  const { res, body, kv } = await callSignup({ body: requestBody({ student_name: 'a'.repeat(21) }), fetchImpl: passingFetch() });
+  assert.equal(res.status, 400);
+  assert.equal(body.error, 'student_name_invalid');
+  assert.match(body.message, /Tên/);
+  assert.equal([...kv.store.keys()].some((k) => isAccessCodeKey(k)), false);
+});
+
+test('BITE: symbol-only / emoji / punctuation / double-space names → student_name_invalid', async () => {
+  for (const name of ['!!!', '😀', 'An<script>', 'An-Binh', 'Bảo  2', '   ']) {
+    const { res, body } = await callSignup({ body: requestBody({ student_name: name }), fetchImpl: passingFetch() });
+    assert.equal(res.status, 400, `name ${JSON.stringify(name)}`);
+    assert.ok(['student_name_invalid', 'student_name_required'].includes(body.error), `name ${JSON.stringify(name)} got ${body.error}`);
+  }
+});
+
+test('BITE: blocklisted names (English, Vietnamese, accented, spaced) → 400 student_name_blocked', async () => {
+  for (const name of ['Fuck', 'F u c k', 'SHIT', 'Địt', 'Cặc', 'Đm', 'dmm', 'Đụ má', 'Lồn', 'Con chó', 'Bitch99']) {
+    const { res, body } = await callSignup({ body: requestBody({ student_name: name }), fetchImpl: passingFetch() });
+    assert.equal(res.status, 400, `name ${name}`);
+    assert.equal(body.error, 'student_name_blocked', `name ${name}`);
+    assert.match(body.message, /tên/i);
+  }
+});
+
+test('normal Vietnamese names pass: Ngọc Anh, An, Bảo 2, Diễm, Du, Di, Đạt, Cassidy, Hancock', async () => {
+  let n = 0;
+  for (const name of ['Ngọc Anh', 'An', 'Bảo 2', 'Diễm', 'Du', 'Di', 'Đạt', 'Cassidy', 'Hancock', 'Phương Thảo']) {
+    const { res, body } = await callSignup({ body: requestBody({ student_name: name }), ip: `9.9.9.${++n}`, fetchImpl: passingFetch() });
+    assert.equal(res.status, 200, `name ${name}: ${JSON.stringify(body)}`);
+    assert.equal(body.record.student_profile.student_name, name);
+  }
+});
+
+test('a 20-character name is accepted (boundary)', async () => {
+  const name = 'a'.repeat(20);
+  const { res } = await callSignup({ body: requestBody({ student_name: name }), fetchImpl: passingFetch() });
+  assert.equal(res.status, 200);
+});
+
+test('a refused name does not burn the per-IP allowance', async () => {
+  const kv = makeKv({ 'config:signup_enabled': true });
+  for (let i = 0; i < 5; i++) {
+    await callSignup({ kv, body: requestBody({ student_name: 'Fuck' }), fetchImpl: passingFetch() });
+  }
+  const { res } = await callSignup({ kv, fetchImpl: passingFetch() });
+  assert.equal(res.status, 200);
+});

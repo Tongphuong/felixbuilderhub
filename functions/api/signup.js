@@ -39,6 +39,64 @@ function json(body, status = 200) {
   });
 }
 
+// --- Name rules (R2L-FINAL addendum 2026-10-19): the name is shown on public
+// rankings as typed, so it is length/charset checked and run past a small
+// built-in rude-word blocklist. English entries follow the LDNOOBW list (most
+// severe terms); Vietnamese entries are hand-picked. Matching is
+// accent-insensitive. Ambiguous short words that are also real names or common
+// words (Du, Di, Diễm, Cho, Ngư...) are deliberately NOT listed alone.
+const NAME_MAX_LENGTH = 20;
+const NAME_PATTERN = /^[\p{L}\p{N}]+(?: [\p{L}\p{N}]+)*$/u;
+
+// Matched anywhere inside the name with spaces removed (catches "f u c k").
+const BLOCKED_SUBSTRINGS = [
+  'fuck', 'shit', 'cunt', 'bitch', 'nigger', 'nigga', 'pussy', 'asshole',
+  'whore', 'faggot', 'dildo', 'rapist', 'hitler', 'bastard',
+  'dumay', 'ditme', 'concac', 'cailon', 'buoi',
+];
+// Matched only as whole words (or whole word sequences).
+const BLOCKED_WORDS = [
+  'dick', 'cock', 'slut', 'twat', 'wank', 'piss', 'cum', 'ass', 'arse', 'anus',
+  'fag', 'retard', 'rape', 'porn', 'sex', 'sexy', 'nude', 'tits', 'boob', 'nazi',
+  'dit', 'lon', 'cac', 'deo', 'dm', 'dmm', 'vcl', 'vkl', 'cl', 'cc', 'ml',
+  'du ma', 'du me', 'di me', 'con di', 'con cho', 'thang cho', 'oc cho',
+  'khon nan', 'mat day', 'suc vat', 'thang ngu', 'con ngu', 'do ngu', 'vo hoc',
+];
+
+function foldName(name) {
+  return name
+    .replace(/[đĐ]/g, 'd')
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .toLowerCase();
+}
+
+// Exported for tests.
+export function isBlockedName(name) {
+  const folded = foldName(name);
+  const compact = folded.replace(/ /g, '');
+  if (BLOCKED_SUBSTRINGS.some((w) => compact.includes(w))) return true;
+  const padded = ` ${folded} `;
+  return BLOCKED_WORDS.some((w) => padded.includes(` ${w} `));
+}
+
+// Exported for tests. Returns null when OK, else { error, message }.
+export function checkStudentName(name) {
+  if (!name || name.length > NAME_MAX_LENGTH || !NAME_PATTERN.test(name)) {
+    return {
+      error: 'student_name_invalid',
+      message: 'Tên của bạn nên dài 1–20 ký tự, chỉ gồm chữ cái, số và dấu cách nhé. Bạn thử nhập lại tên nhé!',
+    };
+  }
+  if (isBlockedName(name)) {
+    return {
+      error: 'student_name_blocked',
+      message: 'Tên này chưa phù hợp để hiển thị. Bạn hãy chọn một tên thân thiện khác nhé!',
+    };
+  }
+  return null;
+}
+
 function todayKey() {
   return new Date().toISOString().slice(0, 10);
 }
@@ -176,13 +234,17 @@ export async function onRequestPost(context) {
   // --- Field validation (same fields/bounds admin already requires) — before
   // the rate-limit reservations, so an invalid/malformed request never burns
   // a legitimate parent's daily allowance. ---
-  const student_name = (body.student_name || '').trim().slice(0, 50);
+  const student_name = (typeof body.student_name === 'string' ? body.student_name : '').trim();
   const student_age = parseInt(body.student_age, 10);
   const child_gender = ['boy', 'girl'].includes(body.child_gender) ? body.child_gender : '';
   const parent_zalo = (body.parent_zalo || '').trim().slice(0, 30);
 
   if (!student_name) {
     return json({ ok: false, error: 'student_name_required', message: 'student_name is required' }, 400);
+  }
+  const nameProblem = checkStudentName(student_name);
+  if (nameProblem) {
+    return json({ ok: false, error: nameProblem.error, message: nameProblem.message }, 400);
   }
   if (!Number.isFinite(student_age) || student_age < 5 || student_age > 14) {
     return json({ ok: false, error: 'student_age_invalid', message: 'student_age must be 5-14' }, 400);
