@@ -87,8 +87,8 @@
 
   /* ---- Shadow ---- */
   --shadow-card: var(--r2l-shadow-card);
-  --shadow-lg: 0 14px 0 -4px color-mix(in srgb, var(--r2l-ink) 35%, transparent);
-  --shadow-2xl: 0 18px 0 -4px color-mix(in srgb, var(--r2l-ink) 35%, transparent);
+  --shadow-lg: var(--r2l-shadow-card);
+  --shadow-2xl: var(--r2l-shadow-card);
   --ring-accent: 0 0 0 4px color-mix(in srgb, var(--gold) 30%, transparent);
 
   /* ---- Motion ---- */

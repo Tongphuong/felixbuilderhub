@@ -339,10 +339,10 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   .r2l-primary {
     min-height: 44px;
     border-radius: 8px;
-    background: rgb(74 222 128);
+    background: rgb(255 200 61);
     padding: 0.75rem 1rem;
     font-weight: 800;
-    color: rgb(10 14 26);
+    color: rgb(23 50 77);
     transition:
       transform 180ms ease,
       opacity 180ms ease;
@@ -360,11 +360,11 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   .r2l-secondary {
     min-height: 44px;
     border-radius: 8px;
-    border: 1px solid rgb(245 230 211 / 0.24);
-    background: rgb(245 230 211 / 0.05);
+    border: 1px solid rgb(23 50 77 /0.24);
+    background: rgb(23 50 77 /0.05);
     padding: 0.75rem 1rem;
     font-weight: 800;
-    color: rgb(245 230 211);
+    color: rgb(23 50 77);
   }
 
   .r2l-secondary:disabled {
@@ -375,23 +375,23 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   .r2l-step {
     min-height: 44px;
     border-radius: 8px;
-    border: 1px solid rgb(245 230 211 / 0.14);
+    border: 1px solid rgb(23 50 77 /0.14);
     padding: 0.75rem;
     text-align: left;
     font-weight: 700;
-    color: rgb(245 230 211 / 0.72);
+    color: rgb(23 50 77);
   }
 
   .r2l-step[data-active='true'],
   .r2l-step[data-state='active'] {
-    border-color: rgb(212 166 78 / 0.5);
-    color: rgb(212 166 78);
+    border-color: rgb(224 162 26 / 0.5);
+    color: rgb(23 50 77);
   }
 
   .r2l-step[data-done='true'],
   .r2l-step[data-state='done'] {
-    border-color: rgb(74 222 128 / 0.55);
-    color: rgb(74 222 128);
+    border-color: rgb(35 122 65 / 0.55);
+    color: rgb(27 97 54);
   }
 
   .r2l-step[data-state='locked'] {
@@ -404,39 +404,39 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: rgb(245 230 211 / 0.15);
+    background: rgb(23 50 77 /0.15);
     transition: background 300ms ease, transform 300ms ease;
   }
 
   .r2l-dot[data-state='done'] {
-    background: rgb(74 222 128);
+    background: rgb(255 200 61);
   }
 
   .r2l-dot[data-state='active'] {
-    background: rgb(212 166 78);
+    background: rgb(224 162 26);
     transform: scale(1.3);
   }
 
   .r2l-dot[data-state='locked'] {
-    background: rgb(245 230 211 / 0.15);
+    background: rgb(23 50 77 /0.15);
   }
 
   .r2l-story-dock {
-    border-bottom: 1px solid rgb(245 230 211 / 0.1);
-    background: rgb(245 230 211 / 0.03);
+    border-bottom: 1px solid rgb(23 50 77 /0.1);
+    background: rgb(23 50 77 /0.03);
     transition: max-height 300ms ease;
   }
 
   .r2l-story-dock [data-highlight='true'] {
-    background: rgb(212 166 78 / 0.2);
+    background: rgb(224 162 26 / 0.2);
     border-radius: 4px;
     padding: 0 4px;
   }
 
   .r2l-activity {
     border-radius: 8px;
-    border: 1px solid rgb(245 230 211 / 0.12);
-    background: rgb(245 230 211 / 0.04);
+    border: 1px solid rgb(23 50 77 /0.12);
+    background: rgb(23 50 77 /0.04);
     padding: 1.25rem;
   }
 
@@ -445,16 +445,16 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     font-family: Manrope, Inter, sans-serif;
     font-size: clamp(1.35rem, 2vw, 1.75rem);
     font-weight: 800;
-    color: rgb(245 230 211);
+    color: rgb(23 50 77);
   }
 
   .r2l-activity-head p {
-    color: rgb(245 230 211 / 0.72);
+    color: rgb(23 50 77);
   }
 
   .r2l-identity {
     font-weight: 800;
-    color: rgb(212 166 78) !important;
+    color: rgb(23 50 77) !important;
   }
 
   .r2l-option,
@@ -462,28 +462,28 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   .r2l-sentence {
     min-height: 44px;
     border-radius: 8px;
-    border: 1px solid rgb(245 230 211 / 0.14);
-    background: rgb(10 14 26 / 0.45);
+    border: 1px solid rgb(23 50 77 /0.14);
+    background: rgb(255 255 255);
     padding: 0.75rem 0.9rem;
     text-align: left;
-    color: rgb(245 230 211);
+    color: rgb(23 50 77);
   }
 
   .r2l-option[data-state='correct'],
   .r2l-token[data-picked='true'],
   .r2l-sentence:hover {
-    border-color: rgb(74 222 128 / 0.7);
-    background: rgb(74 222 128 / 0.14);
+    border-color: rgb(35 122 65 / 0.7);
+    background: rgb(35 122 65 / 0.14);
   }
 
   .r2l-option[data-state='retry'] {
-    border-color: rgb(212 166 78 / 0.75);
-    background: rgb(212 166 78 / 0.14);
+    border-color: rgb(224 162 26 / 0.75);
+    background: rgb(224 162 26 / 0.14);
   }
 
   .r2l-option[data-state='revealed'] {
-    border-color: rgb(74 222 128 / 0.5);
-    background: rgb(74 222 128 / 0.1);
+    border-color: rgb(35 122 65 / 0.5);
+    background: rgb(35 122 65 / 0.1);
     opacity: 0.85;
   }
 
@@ -496,34 +496,34 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   .r2l-order-slot {
     min-height: 48px;
     border-radius: 8px;
-    border: 1px dashed rgb(245 230 211 / 0.24);
-    background: rgb(245 230 211 / 0.05);
+    border: 1px dashed rgb(23 50 77 /0.24);
+    background: rgb(23 50 77 /0.05);
     padding: 0.7rem 0.8rem;
     text-align: center;
     font-weight: 700;
-    color: rgb(245 230 211 / 0.82);
+    color: rgb(23 50 77);
   }
 
   .r2l-order-slot[data-filled='true'] {
     border-style: solid;
-    border-color: rgb(74 222 128 / 0.52);
-    background: rgb(74 222 128 / 0.12);
-    color: rgb(245 230 211);
+    border-color: rgb(35 122 65 / 0.52);
+    background: rgb(35 122 65 / 0.12);
+    color: rgb(23 50 77);
   }
 
   .r2l-order-slot[data-drop-active='true'] {
-    border-color: rgb(212 166 78 / 0.85);
-    background: rgb(212 166 78 / 0.14);
+    border-color: rgb(224 162 26 / 0.85);
+    background: rgb(224 162 26 / 0.14);
   }
 
   .r2l-order-slot[data-correct='true'] {
-    border-color: rgb(74 222 128 / 0.85);
-    background: rgb(74 222 128 / 0.18);
+    border-color: rgb(35 122 65 / 0.85);
+    background: rgb(35 122 65 / 0.18);
   }
 
   .r2l-order-slot[data-misplaced='true'] {
-    border-color: rgb(239 68 68 / 0.7);
-    background: rgb(239 68 68 / 0.12);
+    border-color: rgb(255 122 61 /0.7);
+    background: rgb(255 122 61 /0.12);
     animation: pulse-hint 0.6s ease-in-out;
   }
 
@@ -557,34 +557,34 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   .r2l-rec-btn {
     padding: 8px 12px;
     border-radius: 6px;
-    border: 1px solid rgba(245, 239, 224, 0.3);
-    background: #0f172a;
-    color: #f5efe0;
+    border: 1px solid rgb(23 50 77 / 0.3);
+    background: #ffffff;
+    color: var(--r2l-ink);
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
   }
 
   .r2l-rec-btn:hover {
-    background: #1e293b;
+    background: var(--r2l-sky-pale);
   }
 
   .r2l-rec-start,
   .r2l-rec-play {
-    border-color: rgba(16, 185, 129, 0.5);
+    border-color: rgb(35 122 65 / 0.5);
   }
 
   .r2l-rec-stop {
-    border-color: rgba(239, 68, 68, 0.6);
-    background: rgba(127, 29, 29, 0.3);
+    border-color: rgb(255 122 61 / 0.7);
+    background: rgb(255 122 61 / 0.16);
   }
 
   .r2l-rec-redo {
-    border-color: rgba(245, 158, 11, 0.4);
+    border-color: rgb(224 162 26 / 0.5);
   }
 
   .r2l-rec-indicator {
-    color: #f87171;
+    color: var(--r2l-ink);
     font-size: 0.85rem;
     animation: r2l-pulse 1.2s infinite;
   }
@@ -615,19 +615,19 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   }
 
   .r2l-speaking-word[data-tone='good'] {
-    background: rgb(74 222 128 / 0.18);
-    color: rgb(187 247 208);
+    background: rgb(35 122 65 / 0.18);
+    color: rgb(27 97 54);
   }
 
   .r2l-speaking-word[data-tone='close'] {
-    background: rgb(212 166 78 / 0.18);
-    color: rgb(253 230 138);
+    background: rgb(224 162 26 / 0.18);
+    color: rgb(23 50 77);
   }
 
   .r2l-speaking-word[data-tone='miss'] {
-    border-color: rgb(239 68 68 / 0.65);
-    background: rgb(239 68 68 / 0.28);
-    color: #fee2e2;
+    border-color: rgb(255 122 61 /0.65);
+    background: rgb(255 122 61 /0.28);
+    color: var(--r2l-ink);
   }
 
   .r2l-speaking-word-list {
@@ -655,10 +655,10 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   .r2l-replay-rate {
     min-height: 44px;
     border-radius: 999px;
-    border: 1px solid rgb(242 204 126 / 0.45);
-    background: rgb(15 23 42 / 0.72);
+    border: 1px solid rgb(23 50 77 /0.45);
+    background: rgb(255 255 255);
     padding: 0.25rem 0.7rem;
-    color: #f5efe0;
+    color: var(--r2l-ink);
     font-size: 0.8rem;
     font-weight: 800;
   }
@@ -666,8 +666,8 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   .r2l-wave-panel {
     margin-top: 0.75rem;
     border-radius: 8px;
-    border: 1px solid rgb(245 239 224 / 0.12);
-    background: rgb(15 23 42 / 0.42);
+    border: 1px solid rgb(23 50 77 /0.12);
+    background: rgb(255 255 255);
     padding: 0.75rem;
   }
 
@@ -684,7 +684,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
 
   .r2l-wave-label,
   .r2l-wave-status {
-    color: rgb(245 239 224 / 0.72);
+    color: rgb(23 50 77);
     font-size: 0.75rem;
     font-weight: 800;
   }
@@ -721,19 +721,19 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     font-size: clamp(1.35rem, 3vw, 1.85rem);
     font-weight: 800;
     line-height: 1.45;
-    color: rgb(245 230 211);
+    color: rgb(23 50 77);
   }
 
   .r2l-minny-sentence-vi {
     margin-top: 0.5rem;
     font-size: 0.95rem;
-    color: rgb(245 230 211 / 0.65);
+    color: rgb(23 50 77);
   }
 
   .r2l-minny-sentence-card {
     border-radius: 12px;
-    border: 1px solid rgb(245 230 211 / 0.12);
-    background: rgb(10 14 26 / 0.45);
+    border: 1px solid rgb(23 50 77 /0.12);
+    background: rgb(255 255 255);
     padding: 1.25rem;
   }
 
@@ -768,20 +768,20 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   }
 
   .minny-btn--listen {
-    background: rgb(200 143 56 / 0.18);
-    color: rgb(242 204 126);
-    border-color: rgb(200 143 56 / 0.45);
+    background: rgb(224 162 26 / 0.18);
+    color: rgb(23 50 77);
+    border-color: rgb(224 162 26 / 0.45);
   }
 
   .minny-btn--listen:hover:not(:disabled) {
-    background: rgb(200 143 56 / 0.28);
+    background: rgb(224 162 26 / 0.28);
   }
 
   .minny-btn--record {
-    background: rgb(212 166 78);
-    color: rgb(10 14 26);
-    border-color: rgb(250 220 160);
-    box-shadow: 0 3px 0 rgb(120 90 40);
+    background: rgb(224 162 26);
+    color: rgb(23 50 77);
+    border-color: rgb(23 50 77);
+    box-shadow: 0 3px 0 rgb(23 50 77);
   }
 
   .minny-btn--record:hover:not(:disabled) {
@@ -822,26 +822,26 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     align-items: center;
     gap: 0.35rem;
     border-radius: 999px;
-    border: 2px solid rgb(245 230 211 / 0.2);
+    border: 2px solid rgb(23 50 77 /0.2);
     padding: 0.35rem 0.85rem;
     font-size: 0.875rem;
     font-weight: 700;
-    color: rgb(245 230 211 / 0.65);
+    color: rgb(23 50 77);
   }
 
   .r2l-w1-chip[data-done='true'] {
-    border-color: rgb(74 222 128 / 0.55);
-    color: rgb(74 222 128);
+    border-color: rgb(35 122 65 / 0.55);
+    color: rgb(27 97 54);
   }
 
   .r2l-w1-story-card {
     border-radius: 12px;
-    border: 1px solid rgb(245 230 211 / 0.12);
-    background: rgb(10 14 26 / 0.55);
+    border: 1px solid rgb(23 50 77 /0.12);
+    background: rgb(255 255 255);
     padding: 1.25rem;
     font-size: 1.125rem;
     line-height: 1.75;
-    color: rgb(245 230 211);
+    color: rgb(23 50 77);
   }
 
   .r2l-w1-karaoke {
@@ -852,8 +852,8 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   }
 
   .r2l-option[data-state='wrong-w1'] {
-    border-color: rgb(248 113 113 / 0.65);
-    background: rgb(248 113 113 / 0.12);
+    border-color: rgb(255 122 61 /0.65);
+    background: rgb(255 122 61 /0.12);
   }
 
   .r2l-option[data-disabled-w1='true'] {
@@ -876,16 +876,16 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   }
 
   .r2l-order-slot[data-misplaced='true'] {
-    outline: 2px solid rgb(251 146 60);
-    background: rgb(251 146 60 / 0.15);
+    outline: 3px solid rgb(23 50 77);
+    background: rgb(255 122 61 / 0.18);
   }
 
   .r2l-w1-copy-ghost {
     margin-top: 0.5rem;
     padding: 0.5rem 0.75rem;
     border-radius: 8px;
-    border: 1px dashed rgb(245 230 211 / 0.25);
-    color: rgb(245 230 211 / 0.75);
+    border: 1px dashed rgb(23 50 77 /0.25);
+    color: rgb(23 50 77);
     font-style: italic;
   }
 
@@ -916,7 +916,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     background: transparent;
     cursor: pointer;
     font-weight: 700;
-    color: rgb(245 230 211 / 0.7);
+    color: rgb(23 50 77);
   }
 
   .r2l-kid-quest-path__btn:disabled {
@@ -931,12 +931,12 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     width: 44px;
     height: 44px;
     border-radius: 999px;
-    background: rgb(245 230 211 / 0.08);
+    background: rgb(23 50 77 /0.08);
     font-size: 1.1rem;
   }
 
   .r2l-kid-quest-path__node--current .r2l-kid-quest-path__icon {
-    outline: 2px solid rgb(56 189 248);
+    outline: 3px solid rgb(23 50 77);
   }
 
   #w1-hud-story-btn {
@@ -949,9 +949,9 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   }
 
   .r2l-book-reader {
-    border: 1px solid rgb(200 143 56 / 0.35);
+    border: 1px solid rgb(224 162 26 / 0.35);
     border-radius: 16px;
-    background: rgb(23 53 74 / 0.72);
+    background: rgb(255 255 255);
     padding: 1rem;
   }
 
@@ -963,9 +963,9 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     display: grid;
     grid-template-rows: auto auto;
     overflow: hidden;
-    border: 1px solid rgb(245 230 200 / 0.18);
+    border: 2px solid rgb(23 50 77);
     border-radius: 14px;
-    background: rgb(16 39 58);
+    background: rgb(255 255 255);
   }
 
   .r2l-book-page__art {
@@ -973,7 +973,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     height: clamp(18rem, min(52vw, 58vh), 36rem);
     min-height: 0;
     overflow: hidden;
-    background: rgb(16 39 58);
+    background: rgb(227 241 250);
   }
 
   .r2l-book-page img {
@@ -990,14 +990,13 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-gutter: stable;
-    border-top: 1px solid rgb(245 230 200 / 0.18);
-    background: rgb(16 39 58 / 0.98);
+    border-top: 2px solid rgb(23 50 77);
+    background: rgb(255 248 231);
     padding: 1rem 1.25rem;
     font-size: clamp(1rem, 2.2vw, 1.35rem);
     font-weight: 700;
     line-height: 1.65;
-    color: rgb(245 230 200);
-    text-shadow: 0 1px 2px rgb(0 0 0 / 0.8);
+    color: rgb(23 50 77);
   }
 
   .r2l-book-gate {
@@ -1005,23 +1004,23 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     flex-wrap: wrap;
     align-items: center;
     gap: 0.75rem;
-    border: 1px solid rgb(200 143 56 / 0.28);
+    border: 1px solid rgb(224 162 26 / 0.28);
     border-radius: 12px;
-    background: rgb(200 143 56 / 0.08);
+    background: rgb(224 162 26 / 0.08);
     padding: 1rem;
   }
 
   .r2l-book-attribution {
-    border-top: 1px solid rgb(245 230 200 / 0.14);
+    border-top: 2px solid rgb(23 50 77 / 0.3);
     padding-top: 0.75rem;
-    color: rgb(217 199 164);
+    color: rgb(23 50 77);
   }
 
   .r2l-book-attribution summary {
     min-height: 44px;
     cursor: pointer;
     font-weight: 800;
-    color: rgb(242 204 126);
+    color: rgb(23 50 77);
   }
 
   @media (max-width: 639px) {
@@ -1054,7 +1053,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     height: 100%;
     width: 0%;
     border-radius: var(--radius-full, 9999px);
-    background: linear-gradient(90deg, var(--gold, #c88f38), var(--gold-light, #f2cc7e));
+    background: linear-gradient(90deg, var(--gold, #c88f38), var(--gold-hover, #e0a21a));
     transition: width 400ms ease;
   }
 
@@ -1100,7 +1099,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   }
 
   .r2l-book-trail__node[data-state='completed']::before {
-    background: linear-gradient(90deg, var(--gold, #c88f38), var(--gold-light, #f2cc7e));
+    background: linear-gradient(90deg, var(--gold, #c88f38), var(--gold-hover, #e0a21a));
     background-image: none;
   }
 
@@ -1140,7 +1139,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   .r2l-book-trail__node[data-state='completed'] .r2l-book-trail__icon {
     border: 2px solid var(--gold, #c88f38);
     background: var(--gold, #c88f38);
-    color: var(--navy-950, #10273a);
+    color: var(--r2l-ink, #17324d);
   }
 
   .r2l-book-trail__node[data-state='active'] .r2l-book-trail__icon {
@@ -1161,7 +1160,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     position: absolute;
     top: -6px;
     background: var(--gold, #c88f38);
-    color: var(--navy-950, #10273a);
+    color: var(--r2l-ink, #17324d);
     font-size: 0.65rem;
     font-weight: 800;
     padding: 1px 6px;
@@ -1310,7 +1309,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
   }
 
   .r2l-book-trail-bar__fill {
-    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    background: var(--gold);
     box-shadow: 0 0 16px color-mix(in srgb, var(--gold) 55%, transparent);
   }
 
@@ -1359,7 +1358,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
 
   .r2l-book-trail__node[data-state='completed'] .r2l-book-trail__icon {
     border-color: var(--gold-light);
-    background: linear-gradient(160deg, var(--gold-light), var(--gold));
+    background: var(--gold);
     box-shadow: 0 0 0 4px var(--navy-850), var(--shadow-md);
   }
 
@@ -1793,7 +1792,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     place-items: center;
     border: 2px solid var(--gold-light);
     border-radius: var(--radius-full);
-    background: linear-gradient(160deg, var(--gold-light), var(--gold));
+    background: var(--gold);
     box-shadow: 0 0 0 8px color-mix(in srgb, var(--gold) 10%, transparent), var(--shadow-lg);
     color: var(--navy-950);
     font-size: 1.65rem;
@@ -1859,7 +1858,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     width: 0;
     height: 100%;
     border-radius: inherit;
-    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    background: var(--gold);
   }
 
   .r2l-book-audio__excerpt {
@@ -1872,7 +1871,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     min-height: 52px;
     border: 1px solid var(--gold-light);
     border-radius: var(--radius-xl);
-    background: linear-gradient(160deg, var(--gold-light), var(--gold));
+    background: var(--gold);
     box-shadow: 0 8px 0 color-mix(in srgb, var(--gold) 55%, var(--navy-950)), var(--shadow-md);
     padding: 0 var(--space-6);
     color: var(--navy-950);
@@ -2113,7 +2112,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     inset: auto 0 0;
     width: 100% !important;
     height: 6%;
-    background: linear-gradient(180deg, var(--gold-light), var(--gold));
+    background: var(--gold);
     transition: height 100ms linear;
   }
 
@@ -2130,7 +2129,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     width: 4px;
     height: 8px;
     border-radius: var(--radius-full);
-    background: var(--gold-light);
+    background: var(--gold);
     transition: height 90ms linear;
   }
 
@@ -2204,7 +2203,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     height: 112px;
     margin-inline: auto;
     clip-path: polygon(50% 0%, 61% 34%, 97% 36%, 68% 57%, 78% 92%, 50% 72%, 22% 92%, 32% 57%, 3% 36%, 39% 34%);
-    background: linear-gradient(160deg, var(--gold-light), var(--gold));
+    background: var(--gold);
     box-shadow: 0 0 34px color-mix(in srgb, var(--gold) 48%, transparent);
     animation: r2l-book-minny-bob 1.3s ease-in-out infinite;
   }
@@ -2241,7 +2240,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     width: 7px;
     height: 7px;
     border-radius: var(--radius-full);
-    background: var(--gold-light);
+    background: var(--gold);
     animation: r2l-book-spark 1.4s ease-out infinite;
   }
   .r2l-book-reward__sparkles i:nth-child(1) { left: 15%; top: 25%; }
@@ -2371,7 +2370,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     }
 
     .r2l-book-trail__node[data-state='completed']::before {
-      background: linear-gradient(180deg, var(--gold), var(--gold-light));
+      background: var(--gold);
     }
 
     .r2l-book-trail__btn {

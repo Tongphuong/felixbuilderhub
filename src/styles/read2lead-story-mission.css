@@ -1,7 +1,7 @@
 /* Reading missions and shared lesson controls; original reader composition remains authoritative. */
 .picture-retell-board[hidden] { display:none !important; }
 .picture-retell-board { display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.65rem;align-content:start;padding:.5rem; }
-.picture-retell-card { position:relative;grid-column:span 2;min-width:0;border:3px solid var(--cream);border-radius:1rem;overflow:hidden;background:var(--cream);padding:0;cursor:zoom-in;align-self:start; }
+.picture-retell-card { position:relative;grid-column:span 2;min-width:0;border:3px solid var(--r2l-ink);border-radius:1rem;overflow:hidden;background:var(--r2l-sand);padding:0;cursor:zoom-in;align-self:start; }
 .picture-retell-card:nth-of-type(4),.picture-retell-card:nth-of-type(5) { grid-column:span 3; }
 .picture-retell-art { display:block;position:relative;overflow:hidden;width:100%; }
 .picture-retell-art img { position:absolute;height:auto; }
