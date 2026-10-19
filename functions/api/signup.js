@@ -46,7 +46,11 @@ function json(body, status = 200) {
 // accent-insensitive. Ambiguous short words that are also real names or common
 // words (Du, Di, Diễm, Cho, Ngư...) are deliberately NOT listed alone.
 const NAME_MAX_LENGTH = 20;
-const NAME_PATTERN = /^[\p{L}\p{N}]+(?: [\p{L}\p{N}]+)*$/u;
+// Letters and single spaces only, NO digits: every accepted name must also pass
+// the pack generator's BACKEND_CHILD_NAME_RE (generate-read2lead-pack.js), or a
+// child could sign up but never start a lesson. A strict subset of that regex
+// (it also allows - and '); tests cross-check the two so they cannot drift.
+const NAME_PATTERN = /^\p{L}[\p{L}\p{M}]*(?: \p{L}[\p{L}\p{M}]*)*$/u;
 
 // Matched anywhere inside the name with spaces removed (catches "f u c k").
 const BLOCKED_SUBSTRINGS = [
@@ -85,7 +89,7 @@ export function checkStudentName(name) {
   if (!name || name.length > NAME_MAX_LENGTH || !NAME_PATTERN.test(name)) {
     return {
       error: 'student_name_invalid',
-      message: 'Tên của bạn nên dài 1–20 ký tự, chỉ gồm chữ cái, số và dấu cách nhé. Bạn thử nhập lại tên nhé!',
+      message: 'Tên của bạn nên dài 1–20 ký tự, chỉ gồm chữ cái và dấu cách (không dùng số) nhé. Bạn thử nhập lại tên nhé!',
     };
   }
   if (isBlockedName(name)) {

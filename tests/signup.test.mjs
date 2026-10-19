@@ -9,7 +9,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { onRequestPost as signup } from '../functions/api/signup.js';
+import { readFile } from 'node:fs/promises';
+import { onRequestPost as signup, checkStudentName } from '../functions/api/signup.js';
 import { onRequestGet as resolveLink } from '../functions/api/r2l-link.js';
 import { isAccessCodeKey } from '../functions/api/_read2lead-v2-state.js';
 
@@ -30,6 +31,9 @@ function makeKv(initial = {}) {
     },
   };
 }
+
+// Signup names are letters only (no digits), so uniquifying suffixes are letters.
+const letterName = (prefix, ...nums) => prefix + nums.map((n) => String.fromCharCode(97 + (n % 26))).join('');
 
 const GOOD_TOKEN = 'good-turnstile-token';
 
@@ -148,7 +152,7 @@ test('BITE: a 4th signup from the same IP on the same day is refused; the first 
   for (let i = 0; i < 3; i += 1) {
     // eslint-disable-next-line no-await-in-loop
     const res = await signup({
-      request: makeRequest(requestBody({ student_name: `Kid${i}` }), { ip }),
+      request: makeRequest(requestBody({ student_name: letterName('Kid', i) }), { ip }),
       env,
       fetchImpl: passingFetch(),
     });
@@ -438,7 +442,7 @@ test('CONCURRENCY (per-IP fence): N requests over the cap never leave an orphane
       [`rl-signup:${ip}`]: { count: 2, first_at: Math.floor(Date.now() / 1000) }, // 1 slot remaining
     });
     const env = { READ2LEAD_CODES: kv, TURNSTILE_SECRET_KEY: 'test-secret' };
-    const bodies = Array.from({ length: N }, (_, i) => requestBody({ student_name: `Race${trial}x${i}` }));
+    const bodies = Array.from({ length: N }, (_, i) => requestBody({ student_name: letterName('Race', trial, i) }));
 
     // eslint-disable-next-line no-await-in-loop
     const results = await Promise.all(bodies.map((b) => signup({
@@ -487,7 +491,7 @@ test('CONCURRENCY (global fence): N requests from N different IPs over the cap n
       [`signup-global:${today}`]: 1, // 1 slot remaining
     });
     const env = { READ2LEAD_CODES: kv, TURNSTILE_SECRET_KEY: 'test-secret' };
-    const bodies = Array.from({ length: N }, (_, i) => requestBody({ student_name: `Global${trial}x${i}` }));
+    const bodies = Array.from({ length: N }, (_, i) => requestBody({ student_name: letterName('Global', trial, i) }));
 
     // eslint-disable-next-line no-await-in-loop
     const results = await Promise.all(bodies.map((b, i) => signup({
@@ -537,7 +541,7 @@ test('BITE: symbol-only / emoji / punctuation / double-space names → student_n
 });
 
 test('BITE: blocklisted names (English, Vietnamese, accented, spaced) → 400 student_name_blocked', async () => {
-  for (const name of ['Fuck', 'F u c k', 'SHIT', 'Địt', 'Cặc', 'Đm', 'dmm', 'Đụ má', 'Lồn', 'Con chó', 'Bitch99']) {
+  for (const name of ['Fuck', 'F u c k', 'SHIT', 'Địt', 'Cặc', 'Đm', 'dmm', 'Đụ má', 'Lồn', 'Con chó', 'Bitch']) {
     const { res, body } = await callSignup({ body: requestBody({ student_name: name }), fetchImpl: passingFetch() });
     assert.equal(res.status, 400, `name ${name}`);
     assert.equal(body.error, 'student_name_blocked', `name ${name}`);
@@ -545,9 +549,31 @@ test('BITE: blocklisted names (English, Vietnamese, accented, spaced) → 400 st
   }
 });
 
-test('normal Vietnamese names pass: Ngọc Anh, An, Bảo 2, Diễm, Du, Di, Đạt, Cassidy, Hancock', async () => {
+const PASS_NAMES = ['Ngọc Anh', 'An', 'Bảo Anh', 'Diễm', 'Du', 'Di', 'Đạt', 'Cassidy', 'Hancock', 'Phương Thảo'];
+
+test('BITE: a name with a digit is refused with student_name_invalid (pack generator would reject it)', async () => {
   let n = 0;
-  for (const name of ['Ngọc Anh', 'An', 'Bảo 2', 'Diễm', 'Du', 'Di', 'Đạt', 'Cassidy', 'Hancock', 'Phương Thảo']) {
+  for (const name of ['Bảo 2', 'Minh1', '2', 'An 3 Binh']) {
+    const { res, body } = await callSignup({ body: requestBody({ student_name: name }), ip: `8.8.8.${++n}`, fetchImpl: passingFetch() });
+    assert.equal(res.status, 400, `name ${name}`);
+    assert.equal(body.error, 'student_name_invalid', `name ${name}`);
+  }
+});
+
+test('CROSS-CHECK (rule 31): every name signup accepts is also accepted by the real pack-generator name check', async () => {
+  const src = await readFile(new URL('../functions/api/generate-read2lead-pack.js', import.meta.url), 'utf8');
+  const m = src.match(/const BACKEND_CHILD_NAME_RE = \/(.+)\/([a-z]*);/);
+  assert.ok(m, 'could not find BACKEND_CHILD_NAME_RE in generate-read2lead-pack.js');
+  const backendRe = new RegExp(m[1], m[2]);
+  for (const name of PASS_NAMES) {
+    assert.ok(backendRe.test(name.normalize('NFC').trim()), `pack generator rejects ${name}`);
+    assert.equal(checkStudentName(name), null, `signup rejects ${name}`);
+  }
+});
+
+test('normal Vietnamese names pass: Ngọc Anh, An, Bảo Anh, Diễm, Du, Di, Đạt, Cassidy, Hancock', async () => {
+  let n = 0;
+  for (const name of PASS_NAMES) {
     const { res, body } = await callSignup({ body: requestBody({ student_name: name }), ip: `9.9.9.${++n}`, fetchImpl: passingFetch() });
     assert.equal(res.status, 200, `name ${name}: ${JSON.stringify(body)}`);
     assert.equal(body.record.student_profile.student_name, name);
