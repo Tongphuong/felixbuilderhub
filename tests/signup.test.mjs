@@ -163,7 +163,7 @@ test('BITE: a 4th signup from the same IP on the same day is refused; the first 
   }
 
   const fourth = await signup({
-    request: makeRequest(requestBody({ student_name: 'Kid3' }), { ip }),
+    request: makeRequest(requestBody({ student_name: 'Kiddy' }), { ip }),
     env,
     fetchImpl: passingFetch(),
   });
