@@ -5,15 +5,6 @@ import {createPrivateContent} from '../../functions/lib/read2lead/private-conten
 
 const LOGIN='/private-rehearsal/login', COOKIE='__Host-r2l_preview';
 const landing='/read2lead/lesson/?mission=story-mission-v1';
-// A logged-out visitor opening a student PAGE (shared link) is sent to the public page with sign-up.
-// APIs, non-GET/HEAD methods, admin and private paths keep their plain 401; the public page itself never redirects.
-const PUBLIC_HOME='/read2lead/';
-function loggedOutPageRequest(request,url){
-  if(!['GET','HEAD'].includes(request.method))return false;
-  const p=url.pathname;
-  if(p==='/read2lead'||p==='/read2lead/')return false;
-  return !(p.startsWith('/api/')||p==='/admin'||p.startsWith('/admin/')||p.startsWith('/__private/'));
-}
 const hex=bytes=>Array.from(new Uint8Array(bytes),b=>b.toString(16).padStart(2,'0')).join('');
 const digest=async text=>hex(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text)));
 const loginPage='<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Read2Lead private preview</title><h1>Read2Lead private preview</h1><p>Adult review of unpublished lessons. Separate test progress.</p><form method="post" action="'+LOGIN+'"><label>Private access key <input name="access_secret" type="password" autocomplete="current-password" required></label><button>Open private preview</button></form></html>';
@@ -130,7 +121,7 @@ export function createPreviewApp({store,assets,accessKey,packageSha256,voiceConf
         const target=(await manifest()).existingSite?'/read2lead/?code='+PRIVATE_SITE_CODE:landing;
         return reply('',303,{'Location':target,'Set-Cookie':`${COOKIE}=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=900`});
       }
-      if(!await authenticate(request))return accountRuntime?(loggedOutPageRequest(request,url)?reply('',303,{'Location':PUBLIC_HOME}):reply('Student access required',401)):url.pathname.startsWith('/api/')?reply('Private access required',401):reply('',303,{'Location':LOGIN});
+      if(!await authenticate(request))return accountRuntime?reply('Student access required',401):url.pathname.startsWith('/api/')?reply('Private access required',401):reply('',303,{'Location':LOGIN});
       if(url.pathname.startsWith('/__private/'))return reply('Not found',404);
       const m=await manifest(),pkg=m.package;
       if(url.pathname==='/api/read2lead-library'||url.pathname.startsWith('/api/read2lead-library-media/')){
