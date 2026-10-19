@@ -52,19 +52,26 @@ const NAME_MAX_LENGTH = 20;
 // (it also allows - and '); tests cross-check the two so they cannot drift.
 const NAME_PATTERN = /^\p{L}[\p{L}\p{M}]*(?: \p{L}[\p{L}\p{M}]*)*$/u;
 
-// Matched anywhere inside the name with spaces removed (catches "f u c k").
+// Long, unambiguous English stems: matched inside any single word of the name
+// (never across words, so "Võ Học" cannot join into something else). Short stems
+// such as "shit" are whole-word only because they sit inside real names (Kshitij).
 const BLOCKED_SUBSTRINGS = [
-  'fuck', 'shit', 'cunt', 'bitch', 'nigger', 'nigga', 'pussy', 'asshole',
+  'fuck', 'cunt', 'bitch', 'nigger', 'nigga', 'pussy', 'asshole',
   'whore', 'faggot', 'dildo', 'rapist', 'hitler', 'bastard',
-  'dumay', 'ditme', 'concac', 'cailon', 'buoi',
 ];
-// Matched only as whole words (or whole word sequences).
-const BLOCKED_WORDS = [
-  'dick', 'cock', 'slut', 'twat', 'wank', 'piss', 'cum', 'ass', 'arse', 'anus',
+// Whole words / exact phrases on the ACCENT-FOLDED form. Nothing here may fold to
+// a common real name (so no lon/deo/buoi/vo hoc/du ma/thang ngu ...).
+const BLOCKED_WORDS_FOLDED = [
+  'dick', 'cock', 'slut', 'twat', 'wank', 'piss', 'cum', 'ass', 'arse', 'anus', 'shit', 'shitty',
   'fag', 'retard', 'rape', 'porn', 'sex', 'sexy', 'nude', 'tits', 'boob', 'nazi',
-  'dit', 'lon', 'cac', 'deo', 'dm', 'dmm', 'vcl', 'vkl', 'cl', 'cc', 'ml',
-  'du ma', 'du me', 'di me', 'con di', 'con cho', 'thang cho', 'oc cho',
-  'khon nan', 'mat day', 'suc vat', 'thang ngu', 'con ngu', 'do ngu', 'vo hoc',
+  'dm', 'dmm', 'vcl', 'vkl', 'cl', 'cc', 'ml',
+  'dit me', 'khon nan', 'mat day', 'suc vat', 'con cho', 'thang cho', 'oc cho',
+];
+// Vietnamese terms whose ACCENT-FREE spelling is a real name (lồn/Lôn/Lớn, đụ/Dư, ngu/Ngư):
+// matched on the exact typed form (lower-cased, NFC) as whole words or phrases only.
+const BLOCKED_WORDS_EXACT = [
+  'lồn', 'cặc', 'buồi', 'địt', 'địt mẹ', 'đụ má', 'đụ mẹ', 'đéo', 'đĩ', 'con đĩ', 'cứt',
+  'thằng ngu', 'con ngu', 'đồ ngu', 'thang ngu', 'con ngu', 'do ngu', 'dit', 'cac',
 ];
 
 function foldName(name) {
@@ -75,18 +82,29 @@ function foldName(name) {
     .toLowerCase();
 }
 
+const hasSubstring = (word) => BLOCKED_SUBSTRINGS.some((w) => word.includes(w));
+
 // Exported for tests.
 export function isBlockedName(name) {
   const folded = foldName(name);
-  const compact = folded.replace(/ /g, '');
-  if (BLOCKED_SUBSTRINGS.some((w) => compact.includes(w))) return true;
-  const padded = ` ${folded} `;
-  return BLOCKED_WORDS.some((w) => padded.includes(` ${w} `));
+  const tokens = folded.split(' ');
+  if (tokens.some(hasSubstring)) return true;
+  // Spaced-out single letters ("f u c k"): join each run of 3+ one-letter words.
+  const runs = folded.match(/(?:^| )(?:\S(?: |$)){3,}/g) || [];
+  for (const run of runs) {
+    const joined = run.replace(/ /g, '');
+    if (hasSubstring(joined) || BLOCKED_WORDS_FOLDED.includes(joined)) return true;
+  }
+  const paddedFolded = ` ${folded} `;
+  if (BLOCKED_WORDS_FOLDED.some((w) => paddedFolded.includes(` ${w} `))) return true;
+  const paddedExact = ` ${name.toLowerCase().normalize('NFC')} `;
+  return BLOCKED_WORDS_EXACT.some((w) => paddedExact.includes(` ${w} `));
 }
 
 // Exported for tests. Returns null when OK, else { error, message }.
 export function checkStudentName(name) {
-  if (!name || name.length > NAME_MAX_LENGTH || !NAME_PATTERN.test(name)) {
+  // After NFC at most ONE combining mark per letter (no stacked "Zalgo" names).
+  if (!name || name.length > NAME_MAX_LENGTH || !NAME_PATTERN.test(name) || /\p{M}{2,}/u.test(name)) {
     return {
       error: 'student_name_invalid',
       message: 'Tên của bạn nên dài 1–20 ký tự, chỉ gồm chữ cái và dấu cách (không dùng số) nhé. Bạn thử nhập lại tên nhé!',
@@ -116,9 +134,36 @@ export async function verifyTurnstile(secret, token, ip, fetchImpl = fetch) {
   form.append('secret', secret);
   form.append('response', token);
   if (ip) form.append('remoteip', ip);
-  const res = await fetchImpl(TURNSTILE_VERIFY_URL, { method: 'POST', body: form });
+  // Hard 3s ceiling: a hung siteverify must never hold a request (or a lane) open.
+  const res = await fetchImpl(TURNSTILE_VERIFY_URL, { method: 'POST', body: form, signal: AbortSignal.timeout(TURNSTILE_TIMEOUT_MS) });
   const data = await res.json();
   return data?.success === true;
+}
+
+// The unified gateway verifies Turnstile OUTSIDE the serialized account lane, then marks the
+// forwarded request with this header. The gateway deletes any incoming copy of it on EVERY
+// request, and signup.js only honours it in the account host (R2L_ACCOUNT_MODE set), so a
+// client can never forge it. Tokens are single-use, so a verified request is not re-verified.
+export const TURNSTILE_VERIFIED_HEADER = 'x-r2l-turnstile-verified';
+const TURNSTILE_TIMEOUT_MS = 3000;
+const TURNSTILE_TOKEN_MAX = 2048;
+
+// One source of truth for the refusal bodies (signup.js and the gateway answer identically).
+const TURNSTILE_REFUSALS = {
+  turnstile_not_configured: [503, 'Đăng ký chưa sẵn sàng. Nhắn Zalo Felix nhé.'],
+  turnstile_required: [400, 'Bạn hãy hoàn thành bước xác minh trước khi đăng ký nhé.'],
+  turnstile_failed: [403, 'Xác minh không thành công. Vui lòng thử lại.'],
+  invalid_json: [400, 'Mình chưa đọc được thông tin bạn gửi. Bạn thử lại nhé.'],
+};
+export function turnstileRefusal(error) {
+  const [status, message] = TURNSTILE_REFUSALS[error];
+  return json({ ok: false, error, message }, status);
+}
+// Cheap shape check before any network call. Returns a refusal code or null.
+export function turnstileTokenProblem(token) {
+  if (!token || typeof token !== 'string') return 'turnstile_required';
+  if (token.length > TURNSTILE_TOKEN_MAX) return 'turnstile_failed';
+  return null;
 }
 
 // Global-cap reserve (mirrors reserveSignupIp in _rate-limit.js, but keyed by
@@ -202,38 +247,32 @@ export async function onRequestPost(context) {
   try {
     body = await request.json();
   } catch {
-    return json({ ok: false, error: 'invalid_json', message: 'Mình chưa đọc được thông tin bạn gửi. Bạn thử lại nhé.' }, 400);
+    return turnstileRefusal('invalid_json');
   }
+  if (!body || typeof body !== 'object' || Array.isArray(body)) return turnstileRefusal('invalid_json');
 
-  // --- Turnstile — fail closed: flag on + no secret configured = refuse ---
-  const secret = env.TURNSTILE_SECRET_KEY;
-  if (!secret) {
-    return json({
-      ok: false,
-      error: 'turnstile_not_configured',
-      message: 'Đăng ký chưa sẵn sàng. Nhắn Zalo Felix nhé.',
-    }, 503);
+  // --- Turnstile. Already verified by the gateway (outside the account lane)? Trust only the
+  // gateway-set marker, and only inside the account host. Otherwise verify here (Pages path/tests).
+  const gatewayVerified = env.R2L_ACCOUNT_MODE === 'unified-v1' && request.headers.get(TURNSTILE_VERIFIED_HEADER) === '1';
+  if (!gatewayVerified) {
+    // Fail closed: flag on + no secret configured = refuse.
+    const secret = env.TURNSTILE_SECRET_KEY;
+    if (!secret) return turnstileRefusal('turnstile_not_configured');
+
+    const turnstileToken = body.turnstile_token || body['cf-turnstile-response'];
+    const tokenProblem = turnstileTokenProblem(turnstileToken);
+    if (tokenProblem) return turnstileRefusal(tokenProblem);
+
+    const ip = getClientIp(request);
+    let turnstileOk = false;
+    try {
+      turnstileOk = await verifyTurnstile(secret, turnstileToken, ip, context.fetchImpl || fetch);
+    } catch {
+      turnstileOk = false; // network/API failure/timeout => fail closed, never treat as pass
+    }
+    if (!turnstileOk) return turnstileRefusal('turnstile_failed');
   }
-
-  const turnstileToken = body.turnstile_token || body['cf-turnstile-response'];
-  if (!turnstileToken || typeof turnstileToken !== 'string') {
-    return json({ ok: false, error: 'turnstile_required', message: 'Bạn hãy hoàn thành bước xác minh trước khi đăng ký nhé.' }, 400);
-  }
-
   const ip = getClientIp(request);
-  let turnstileOk = false;
-  try {
-    turnstileOk = await verifyTurnstile(secret, turnstileToken, ip, context.fetchImpl || fetch);
-  } catch {
-    turnstileOk = false; // network/API failure => fail closed, never treat as pass
-  }
-  if (!turnstileOk) {
-    return json({
-      ok: false,
-      error: 'turnstile_failed',
-      message: 'Xác minh không thành công. Vui lòng thử lại.',
-    }, 403);
-  }
 
   // --- Field validation (same fields/bounds admin already requires) — before
   // the rate-limit reservations, so an invalid/malformed request never burns

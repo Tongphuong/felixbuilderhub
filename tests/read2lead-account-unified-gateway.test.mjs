@@ -231,3 +231,52 @@ test('RULE 30: a child with an EXPIRED/unknown session cookie on /read2lead/libr
 test('the personal-link entry /r2l/start still loads (200) for a logged-out visitor',async()=>{
   for(const path of ['/r2l/start/','/r2l/start?t='+'b'.repeat(32)]) {const f=fixture({status:401});const r=await f.run(path);assert.equal(r.status,200,path);assert.equal(f.calls.length,0);}
 });
+
+// ---- R2L-FINAL: Turnstile for /api/signup is verified in the gateway, OUTSIDE the account lane ----
+const SIGNUP_HEADER='x-r2l-turnstile-verified';
+async function signupCall(f,{body,token='good',headers={},fetchImpl,secret='sec',rawBody}={}) {
+  f.env.TURNSTILE_SECRET_KEY=secret;
+  const verifyCalls=[];
+  const impl=fetchImpl||(async (url,init)=>{verifyCalls.push({url,form:init.body,signal:init.signal});return new Response(JSON.stringify({success:init.body.get('response')==='good'}));});
+  const payload=rawBody!==undefined?rawBody:JSON.stringify(body??{student_name:'Minh',student_age:9,child_gender:'boy',turnstile_token:token});
+  const response=await onRequest({env:f.env,fetchImpl:impl,request:new Request('https://normal.test/api/signup',{method:'POST',headers:{'Content-Type':'application/json',origin:'https://normal.test','CF-Connecting-IP':'3.3.3.3',...headers},body:payload}),next:async()=>new Response('public-site')});
+  return {response,verifyCalls,json:await response.clone().json().catch(()=>null)};
+}
+test('BITE: a junk Turnstile token is refused in the gateway and NEVER reaches the account object',async()=>{
+  const f=fixture();const {response,json}=await signupCall(f,{token:'junk'});
+  assert.equal(response.status,403);assert.equal(json.error,'turnstile_failed');assert.match(json.message,/[^\x00-\x7F]/);
+  assert.equal(f.calls.length,0,'account dispatch must not be entered');
+});
+test('a forged x-r2l-turnstile-verified header from the client is stripped: a junk token is still refused',async()=>{
+  const f=fixture();const {response,json}=await signupCall(f,{token:'junk',headers:{[SIGNUP_HEADER]:'1'}});
+  assert.equal(response.status,403);assert.equal(json.error,'turnstile_failed');assert.equal(f.calls.length,0);
+});
+test('the forged header is stripped on EVERY request, including other account routes',async()=>{
+  const f=fixture();await f.run('/api/read2lead-progress?code=SYNTHETIC',{headers:{[SIGNUP_HEADER]:'1'}});
+  await f.run('/read2lead/library/',{headers:{[SIGNUP_HEADER]:'1'}});
+  assert.equal(f.calls.length,2);for(const {request} of f.calls)assert.equal(request.headers.get(SIGNUP_HEADER),null);
+});
+test('a valid token is verified exactly once, with a timeout signal, then forwarded with the gateway marker',async()=>{
+  const f=fixture();const {response,verifyCalls}=await signupCall(f,{token:'good'});
+  assert.equal(response.status,200);assert.equal(verifyCalls.length,1);assert.ok(verifyCalls[0].signal,'siteverify must carry an abort/timeout signal');
+  assert.equal(verifyCalls[0].form.get('remoteip'),'3.3.3.3');assert.equal(verifyCalls[0].form.get('secret'),'sec');
+  assert.equal(f.calls.length,1);assert.equal(f.calls[0].request.headers.get(SIGNUP_HEADER),'1');
+  assert.equal(JSON.parse(f.calls[0].body).student_name,'Minh','the body still reaches the account object intact');
+});
+test('a timed-out or failing siteverify fails CLOSED without entering the account object',async()=>{
+  for(const fetchImpl of [async()=>{throw new DOMException('timed out','TimeoutError');},async()=>new Response('nope',{status:500}),()=>new Promise((_,rej)=>setTimeout(()=>rej(new Error('aborted')),5))]) {
+    const f=fixture();const {response,json}=await signupCall(f,{fetchImpl});
+    assert.equal(response.status,403);assert.equal(json.error,'turnstile_failed');assert.equal(f.calls.length,0);
+  }
+});
+test('missing secret, missing token, bad JSON and oversized token are refused in the gateway with the Vietnamese shapes',async()=>{
+  const cases=[[{secret:''},503,'turnstile_not_configured'],[{body:{student_name:'Minh'}},400,'turnstile_required'],[{rawBody:'{nope'},400,'invalid_json'],[{token:'x'.repeat(2049)},403,'turnstile_failed']];
+  for(const [opts,status,error] of cases) {
+    const f=fixture();const {response,json,verifyCalls}=await signupCall(f,opts);
+    assert.equal(response.status,status,error);assert.equal(json.error,error);assert.match(json.message,/[^\x00-\x7F]/);
+    assert.equal(f.calls.length,0,error);assert.equal(verifyCalls.length,0,'no siteverify call for a malformed request: '+error);
+  }
+});
+test('GET /api/signup and other API calls are not Turnstile-gated by the gateway',async()=>{
+  const f=fixture();const r=await f.run('/api/read2lead-progress?code=SYNTHETIC');assert.equal(r.status,200);assert.equal(f.calls[0].request.headers.get(SIGNUP_HEADER),null);
+});

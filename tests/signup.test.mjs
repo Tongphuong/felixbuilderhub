@@ -637,3 +637,62 @@ test('BITE: every parent-reachable refusal carries a Vietnamese message (never A
   const noKv = await signup({ request: makeRequest(requestBody()), env: {} });
   assert.match((await noKv.json()).message, /[^\x00-\x7F]/);
 });
+
+// ---------------------------------------------------------------------------
+// R2L-FINAL review fixes: blocklist false positives, Zalgo, gateway-verified Turnstile marker
+// ---------------------------------------------------------------------------
+
+const REAL_NAMES = ['Bưởi', 'Lớn', 'Lợn', 'Lôn', 'Đèo', 'Dẻo', 'Võ Học', 'Vô Học', 'Đỗ Ngữ', 'Đỗ Ngư', 'Thắng Ngữ', 'Du Mây', 'Dư Mã', 'Kshitij', 'Ngọc Ánh', 'Ngọc Anh'];
+test('real names that look like rude words once accents are dropped all pass (no false positives)', () => {
+  for (const name of REAL_NAMES) assert.equal(checkStudentName(name), null, name);
+});
+test('BITE: true positives are still refused (English, Vietnamese, spaced-out letters)', () => {
+  for (const name of ['Fuck', 'F u c k', 'SHIT', 'Shit', 'Địt', 'Địt mẹ', 'Cặc', 'Đm', 'dmm', 'Đụ má', 'Lồn', 'Con chó', 'Thằng ngu', 'Bitch', 'Hitler', 'S E X', 'Motherfucker']) {
+    assert.equal(checkStudentName(name)?.error, 'student_name_blocked', name);
+  }
+});
+test('BITE: Zalgo - 19 stacked combining marks on one letter is refused; a normal accented name passes', () => {
+  const zalgo = 'A' + '́'.repeat(19);
+  assert.ok(zalgo.normalize('NFC').length >= 19 && zalgo.normalize('NFC').length <= 20);
+  assert.equal(checkStudentName(zalgo.normalize('NFC'))?.error, 'student_name_invalid');
+  assert.equal(checkStudentName('Ạ́'.normalize('NFC') + 'b' + '̀́')?.error, 'student_name_invalid');
+  assert.equal(checkStudentName('Ngọc Ánh'), null);
+});
+
+const GATEWAY_ENV = { R2L_ACCOUNT_MODE: 'unified-v1' };
+async function callWithMarker({ marker, env = {}, fetchImpl, body } = {}) {
+  const kv = makeKv({ 'config:signup_enabled': true });
+  const request = new Request('https://felixbuilderhub.com/api/signup', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': '1.2.3.4', ...(marker ? { 'x-r2l-turnstile-verified': marker } : {}) },
+    body: JSON.stringify(body ?? requestBody({ turnstile_token: undefined })),
+  });
+  const res = await signup({ request, env: { READ2LEAD_CODES: kv, ...env }, fetchImpl });
+  return { res, body: await res.json() };
+}
+test('gateway-verified marker inside the account host skips siteverify (single-use tokens are not re-verified)', async () => {
+  let fetched = 0;
+  const { res } = await callWithMarker({ marker: '1', env: GATEWAY_ENV, fetchImpl: async () => { fetched += 1; return new Response('{}'); } });
+  assert.equal(res.status, 200);
+  assert.equal(fetched, 0);
+});
+test('BITE: the marker is NOT trusted outside the account host (forged on the Pages path -> still needs Turnstile)', async () => {
+  const { res, body } = await callWithMarker({ marker: '1', env: { TURNSTILE_SECRET_KEY: 's' }, fetchImpl: passingFetch() });
+  assert.equal(res.status, 400);
+  assert.equal(body.error, 'turnstile_required');
+  const noSecret = await callWithMarker({ marker: '1' });
+  assert.equal(noSecret.body.error, 'turnstile_not_configured');
+});
+test('without the marker the handler still verifies itself, with a timeout signal on siteverify', async () => {
+  let signal;
+  const { res } = await callWithMarker({ env: { TURNSTILE_SECRET_KEY: 's' }, body: requestBody(), fetchImpl: async (u, init) => { signal = init.signal; return new Response(JSON.stringify({ success: true })); } });
+  assert.equal(res.status, 200);
+  assert.ok(signal, 'siteverify carries an AbortSignal');
+});
+test('an oversized Turnstile token is refused before any network call', async () => {
+  let fetched = 0;
+  const { res, body } = await callWithMarker({ env: { TURNSTILE_SECRET_KEY: 's' }, body: requestBody({ turnstile_token: 'x'.repeat(3000) }), fetchImpl: async () => { fetched += 1; return new Response('{}'); } });
+  assert.equal(res.status, 403);
+  assert.equal(body.error, 'turnstile_failed');
+  assert.equal(fetched, 0);
+});
