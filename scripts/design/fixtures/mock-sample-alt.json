@@ -6,16 +6,17 @@
     "streak_days": 9
   },
   "rank": {
-    "tier_index": 1,
-    "tier_name_vi": "Bạc",
+    "tier_index": 2,
+    "tier_name_vi": "Vàng",
+    "label_vi": "Vàng",
     "stars": 1,
     "stars_per_division": 3,
     "stars_to_next": 2,
-    "next_label_vi": "Bạc ★★"
+    "next_label_vi": "Vàng ★★"
   },
   "story": {
     "title": "Red Apples Fall",
-    "level": "L1",
+    "level": "L2",
     "pages": 8
   },
   "leaderboard": {
@@ -115,59 +116,59 @@
     },
     "books": [
       {
-        "id": "c1-b01",
+        "id": "c1-b05",
         "collection": 1,
-        "month": 1
+        "month": 5
       },
       {
-        "id": "c1-b02",
+        "id": "c1-b06",
         "collection": 1,
-        "month": 2
+        "month": 6
       },
       {
-        "id": "c1-b03",
+        "id": "c1-b07",
         "collection": 1,
-        "month": 3
+        "month": 7
       },
       {
-        "id": "c1-b04",
+        "id": "c1-b08",
         "collection": 1,
-        "month": 4
+        "month": 8
       }
     ],
     "stories": [
       {
-        "id": "c1-b02-s04",
-        "bookId": "c1-b02",
-        "number": 4,
+        "id": "c1-b06-s07",
+        "bookId": "c1-b06",
+        "number": 7,
         "title": "Red Apples Fall",
         "audio": true
       },
       {
-        "id": "c1-b02-s03",
-        "bookId": "c1-b02",
-        "number": 3,
+        "id": "c1-b06-s06",
+        "bookId": "c1-b06",
+        "number": 6,
         "title": "The Quiet Lake",
         "audio": true
       },
       {
-        "id": "c1-b02-s02",
-        "bookId": "c1-b02",
-        "number": 2,
+        "id": "c1-b06-s05",
+        "bookId": "c1-b06",
+        "number": 5,
         "title": "Moon and Muffin",
         "audio": false
       },
       {
-        "id": "c1-b02-s01",
-        "bookId": "c1-b02",
-        "number": 1,
+        "id": "c1-b06-s04",
+        "bookId": "c1-b06",
+        "number": 4,
         "title": "Seven Little Kites",
         "audio": true
       },
       {
-        "id": "c1-b01-s06",
-        "bookId": "c1-b01",
-        "number": 6,
+        "id": "c1-b05-s09",
+        "bookId": "c1-b05",
+        "number": 9,
         "title": "The Road to Town",
         "audio": true
       }
@@ -190,7 +191,7 @@
         "id": "stamps",
         "name_vi": "Con dấu",
         "emoji": "🔏",
-        "price_diamonds": 100
+        "price_diamonds": 98
       },
       {
         "id": "comic",

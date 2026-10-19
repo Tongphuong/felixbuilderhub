@@ -480,7 +480,7 @@ test('data-binding expectations: the alternate sample expects its own values and
   assert.ok(home.expect.includes('Chào Bảo!') && home.expect.includes('187') && home.expect.includes('9 ngày') && home.expect.includes('Red Apples Fall') && home.expect.includes('2.310') && home.expect.includes('52.718'));
   assert.ok(home.absent.includes('Chào Minh!') && home.absent.includes('55') && home.absent.includes('1.080') && home.absent.includes('39.444'));
   const rw = bindingExpectations(alt, 'reward', SAMPLE);
-  assert.deepEqual(rw.expect, ['+47', '+28']); assert.deepEqual(rw.absent, ['+35', '+20']);
+  assert.deepEqual(rw.expect, ['+47', '+28', '“Red Apples Fall”']); assert.deepEqual(rw.absent, ['+35', '+20', '“The Sky Is Blue!”']);
   assert.deepEqual(bindingExpectations(SAMPLE, 'reward').absent, [], 'no absent list against itself');
 });
 
@@ -624,8 +624,19 @@ test('Release-2 samples: values come from the mocks, real shapes are kept, alt d
   assert.ok(e.expect.includes('90') && e.expect.includes('Thước kẻ') && e.expect.includes('150 kim cương') && e.expect.includes('60%'));
   assert.ok(e.absent.includes('55') && e.absent.includes('Sticker') && e.absent.includes('120 kim cương'));
   const le = bindingExpectations(alt, 'leaderboard-xp', SAMPLE);
-  assert.ok(le.expect.includes('Quyên') && le.expect.includes('2.310') && le.absent.includes('Hoang') && le.absent.includes('1.080'));
-  assert.ok(bindingExpectations(alt, 'library', SAMPLE).expect.includes('64 câu chuyện · 8 quyển sách'));
+  assert.ok(le.expect.includes('Quyên') && le.expect.includes('2.310 XP') && le.expect.includes('#8') && le.absent.includes('Hoang') && le.absent.includes('1.080 XP'));
+  const libx = bindingExpectations(alt, 'library', SAMPLE);
+  assert.ok(libx.expect.includes('64 câu chuyện · 8 quyển sách') && libx.expect.includes('Quyển 6 · Bài 7') && libx.expect.includes('Quyển 5') && libx.absent.includes('Quyển 2 · Bài 4') && libx.absent.includes('Quyển 1') && libx.absent.includes('A Forest Adventure'));
+  // home: rank chip, rank-progress card and level tag follow the sample
+  const hm = bindingExpectations(alt, 'first-visit', SAMPLE);
+  assert.ok(hm.expect.includes('Vàng ★') && hm.expect.includes('Sắp lên Vàng ★★') && hm.expect.includes('1 / 3 ★') && hm.expect.includes('L2') && hm.expect.includes('#'.slice(1) + '9 ngày'));
+  assert.ok(hm.absent.includes('Bạc ★★') && hm.absent.includes('Sắp lên Bạc ★★★') && hm.absent.includes('2 / 3 ★') && hm.absent.includes('L1') && hm.absent.includes('3 ngày'));
+  assert.ok(!bindingExpectations(alt, 'mid-story', SAMPLE).expect.includes('L2'), 'the level tag is first-visit only');
+  assert.deepEqual(bindingExpectations(alt, 'rank-up', SAMPLE), { expect: ['Vàng ★'], absent: ['Bạc ★★★'] });
+  // shop: goal price/percent/remaining, the nearly-affordable gift, status strings
+  const sp = bindingExpectations(alt, 'shop-goal', SAMPLE);
+  for (const x of ['60', 'Còn thiếu 8 kim cương', 'Sắp đổi được!', '✓ Đã nhận quà', 'Đang chờ Coach Felix duyệt', 'Đặt làm mục tiêu ★', '98 kim cương']) assert.ok(sp.expect.includes(x), x);
+  for (const x of ['65', 'Còn thiếu 5 kim cương', '60 kim cương']) assert.ok(sp.absent.includes(x), x);
 });
 
 test('region own-pixels: an element that renders nothing fails even when the backdrop edges look like the mock (rule 28)', async t => {
@@ -664,6 +675,45 @@ test('region own-pixels: an element that renders nothing fails even when the bac
     assert.equal(by.blank.pass, false);
     assert.match(by.blank.detail, /hiding the element changes only 0\.0% of its box/);
     assert.ok(!/edge energy/.test(by.blank.detail) && !/uniform/.test(by.blank.detail), 'the OTHER empty checks pass: only own-pixels catches it: ' + by.blank.detail);
+  } finally { await new Promise(r => server.close(r)); fs.rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test('every data_bound value is bound or declared unbound with a reason (classifyDataBound)', async () => {
+  const { classifyDataBound } = await import('../scripts/design/lib/binding.mjs');
+  const c = { data_bound: ['Chào Minh!', '55', 'Đã đọc', '2 / 21'], unbound: { 'Đã đọc': 'no such data', '2 / 21': '   ' } };
+  const r = classifyDataBound(c, { expect: ['Chào Bảo!', '187'], absent: ['Chào Minh!', '55'] });
+  assert.deepEqual(r.bound, ['Chào Minh!', '55']); assert.deepEqual(r.declared, ['Đã đọc']); assert.deepEqual(r.undeclared, ['2 / 21']); assert.deepEqual(r.noReason, ['2 / 21']);
+  const empty = classifyDataBound({ data_bound: ['Chào Minh!'] }, { expect: [], absent: [] });
+  assert.deepEqual(empty.undeclared, ['Chào Minh!'], 'empty expectations bind nothing');
+  assert.deepEqual(classifyDataBound({ data_bound: ['1.080 XP'] }, { expect: ['2.310 XP'], absent: ['1.080 XP'] }).bound, ['1.080 XP']);
+  assert.deepEqual(classifyDataBound({ data_bound: ['[Tên quà] Sticker'] }, { expect: [], absent: ['Sticker'] }).bound, ['[Tên quà] Sticker'], 'placeholder prefix of a bound name');
+  assert.deepEqual(classifyDataBound({ data_bound: ['55'] }, { expect: ['5'], absent: [] }).undeclared, ['55'], 'a 1-character expectation does not cover everything');
+});
+
+test('data_bound coverage in the harness: empty expectations FAIL; an unbound value with a reason passes, without a reason fails', async t => {
+  if (skipNoChrome(t)) return;
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'design-unbound-'));
+  const server = http.createServer((req, res) => { res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }).end('<!doctype html><meta charset="utf-8"><body style="font:20px sans-serif"><h1>Chào Bảo!</h1><p>187</p><p>Mũ tiệc</p>'); });
+  await new Promise(r => server.listen(0, '127.0.0.1', r));
+  try {
+    const design = writeFixtureDesign(tmp);
+    const mkDriver = (name, db) => fs.writeFileSync(path.join(tmp, name + '.mjs'), `export default async (page, c, base, ctx) => { await page.goto(base + '/x'); return { dataBinding: ${JSON.stringify(db)}, altSample: ctx.opts.sample ? undefined : 'ALT.json' }; };\n`);
+    mkDriver('empty', { expect: [], absent: [] });
+    mkDriver('good', { expect: ['Chào Bảo!', '187'], absent: ['Chào Minh!', '55'] });
+    const run = async (id, driver, extra) => {
+      const dir = path.join(tmp, 'c-' + id); fs.mkdirSync(dir);
+      fs.writeFileSync(path.join(dir, id + '.json'), JSON.stringify({ ...BASE_CONTRACT, id, anchors: undefined, built: { path: '/x', state: 'first-visit' }, ...extra }));
+      const rep = await runFidelity({ design, contracts: dir, base: 'http://127.0.0.1:' + server.address().port, out: path.join(tmp, 'o-' + id), 'state-driver': path.join(tmp, driver + '.mjs') });
+      return rep.results[0].checks.find(c => c.name === 'data-binding');
+    };
+    const e = await run('e1', 'empty', { data_bound: ['Chào Minh!'] });
+    assert.equal(e.pass, false); assert.match(e.detail, /data_bound value not bound and not declared unbound: "Chào Minh!"/);
+    const okBound = await run('e2', 'good', { data_bound: ['Chào Minh!', '55', 'Mũ tiệc'], unbound: { 'Mũ tiệc': 'catalogue part name' } });
+    assert.equal(okBound.pass, true, okBound.detail); assert.match(okBound.detail, /data_bound: 2 bound, 1 declared unbound/);
+    const noReason = await run('e3', 'good', { data_bound: ['Chào Minh!', '55', 'Mũ tiệc'], unbound: { 'Mũ tiệc': '' } });
+    assert.equal(noReason.pass, false); assert.match(noReason.detail, /not bound and not declared unbound: "Mũ tiệc"/); assert.match(noReason.detail, /unbound without a reason: "Mũ tiệc"/);
+    const missing = await run('e4', 'good', { data_bound: ['Chào Minh!', '55', 'Mũ tiệc'] });
+    assert.equal(missing.pass, false); assert.match(missing.detail, /not declared unbound: "Mũ tiệc"/);
   } finally { await new Promise(r => server.close(r)); fs.rmSync(tmp, { recursive: true, force: true }); }
 });
 

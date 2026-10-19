@@ -23,6 +23,7 @@ import { chromium } from 'playwright-core';
 import { contractChecks, tapChecks, overflowCheck, motionCheck, addStillClass, removeStillClass, layoutSanity, fontCheck, fontUsage, mockBoxes, builtBoxes, scanText } from './lib/in-page.mjs';
 import { diffPngs, writeComposite, padPng, cornerColor, pngHeight, fitWidth } from './lib/pixels.mjs';
 import { analyseText, textOf, collapse } from './lib/text.mjs';
+import { classifyDataBound } from './lib/binding.mjs';
 import { compareRegion, ownPixelFraction, OWN_MIN_FRACTION } from './lib/regions.mjs';
 
 const OVERFLOW_WIDTHS = [360, 390, 768, 1024, 1280];
@@ -205,7 +206,12 @@ export async function runFidelity(opts) {
             const bad = [];
             if (miss.length) bad.push('does not show: ' + miss.map(t => `"${t}"`).join(', '));
             if (stale.length) bad.push('still shows the OLD value (hard-coded?): ' + stale.map(t => `"${t}"`).join(', '));
-            return check('data-binding', bad.length === 0, bad.length ? bad.join('; ') + label : `${db.expect.length} bound values shown${db.absent && db.absent.length ? `, ${db.absent.length} old values gone` : ''}${label}`);
+            // every data_bound value must be bound (covered by an expectation above) or declared `unbound` with a reason
+            const cls = classifyDataBound(contract, db);
+            if (cls.undeclared.length) bad.push('data_bound value not bound and not declared unbound: ' + cls.undeclared.map(t => `"${t}"`).join(', '));
+            if (cls.noReason.length) bad.push('unbound without a reason: ' + cls.noReason.map(t => `"${t}"`).join(', '));
+            const tally = (contract.data_bound || []).length ? `; data_bound: ${cls.bound.length} bound, ${cls.declared.length} declared unbound` : '';
+            return check('data-binding', bad.length === 0, bad.length ? bad.join('; ') + label : `${db.expect.length} bound values shown${db.absent && db.absent.length ? `, ${db.absent.length} old values gone` : ''}${tally}${label}`);
           };
           const bindingCheck = stream => bindingOf(drvRes && drvRes.dataBinding, stream);
           if (opts['binding-only']) {

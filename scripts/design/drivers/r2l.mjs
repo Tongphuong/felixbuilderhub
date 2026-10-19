@@ -37,12 +37,24 @@ const SAMPLE_DIR = path.join(here, '..', 'fixtures');
 export const ALT_SAMPLE_PATH = path.join(here, '..', 'fixtures', 'mock-sample-alt.json');
 export function loadSample(file) { return JSON.parse(fs.readFileSync(path.resolve(file || path.join(SAMPLE_DIR, 'mock-sample.json')), 'utf8')); }
 
-export function sampleProgress(json, state, S = SAMPLE) {
+// Replace every string equal to `from` with `to`, anywhere in a JSON value (shape untouched).
+export function replaceStrings(v, from, to) {
+  if (typeof v === 'string') return v === from ? to : v;
+  if (Array.isArray(v)) return v.map(x => replaceStrings(x, from, to));
+  if (v && typeof v === 'object') { for (const k of Object.keys(v)) v[k] = replaceStrings(v[k], from, to); return v; }
+  return v;
+}
+export function sampleProgress(json, state, S = SAMPLE, seen = null) {
   const j = json, s = j.read2lead_state || (j.read2lead_state = {});
   j.progress = j.progress || {};
   j.progress.student_name = S.child.name;
   const pack = j.progress.current_pack;
-  if (pack) { pack.story_title = S.story.title; pack.level = S.story.level; }
+  if (pack) {
+    const real = pack.story_title;
+    if (seen && real) seen.title = real;
+    if (real) replaceStrings(j, real, S.story.title); // the real title appears several times (title, topic, ...): all of them
+    pack.story_title = S.story.title; pack.level = S.story.level;
+  }
   // no-story is the one state the rehearsal cannot reach for real (it would generate a story): fabricated.
   if (state === 'no-story') { j.progress.current_pack = null; j.state = 'no_pack'; }
   s.diamonds = S.child.diamonds;
@@ -63,7 +75,8 @@ export function sampleBoards(json, S = SAMPLE, skip = []) {
   }
   return json;
 }
-export function sampleSession(json, S = SAMPLE) {
+export function sampleSession(json, S = SAMPLE, realTitle = null) {
+  if (realTitle) replaceStrings(json, realTitle, S.story.title);
   const view = json.view || json;
   const s = view && view.session;
   if (!s) return json;
@@ -77,31 +90,67 @@ const vn = n => new Intl.NumberFormat('vi-VN').format(n);
 export function bindingExpectations(S, state, Base = null) {
   const expect = [], absent = [];
   const add = (list, v) => { if (v != null && v !== '') list.push(String(v)); };
-  if (state === 'first-visit' || state === 'mid-story' || state === 'no-story') {
-    add(expect, `Chào ${S.child.name}!`); add(expect, vn(S.child.diamonds)); add(expect, `${S.child.streak_days} ngày`);
+  const both = (get, fmt = x => x) => { // expect the sample's value, and (against another sample) that the mock's differing value is gone
+    add(expect, fmt(get(S)));
+    if (Base && String(get(S)) !== String(get(Base))) add(absent, fmt(get(Base)));
+  };
+  const stars = r => '★'.repeat(Math.max(0, Number(r.stars) || 0));
+  const isHome = state === 'first-visit' || state === 'mid-story' || state === 'no-story';
+  if (isHome) {
+    both(s => s.child.name, n => `Chào ${n}!`);
+    both(s => s.child.diamonds, vn);
+    both(s => s.child.streak_days, n => `${n} ngày`);
+    both(s => `${s.rank.label_vi} ${stars(s.rank)}`);                       // the rank chip: "Bạc ★★"
   }
   if (state === 'first-visit' || state === 'mid-story') {
-    add(expect, S.story.title);
-    for (const kind of ['xp', 'diamonds']) for (const row of S.leaderboard[kind]) { add(expect, row.display_name); add(expect, vn(row.total)); }
+    both(s => s.story.title);
+    both(s => `Sắp lên ${s.rank.next_label_vi}`);                           // the rank-progress card
+    both(s => `${s.rank.stars} / ${s.rank.stars_per_division} ★`);          // its stars line
+    for (const kind of ['xp', 'diamonds']) S.leaderboard[kind].forEach((row, i) => {
+      add(expect, row.display_name); add(expect, vn(row.total));
+      if (Base) { const o = Base.leaderboard[kind][i]; if (o.display_name !== row.display_name) add(absent, o.display_name); if (o.total !== row.total) add(absent, vn(o.total)); }
+    });
   }
-  if (state === 'leaderboard-xp') for (const [name, total] of S.leaderboard_full.xp) { add(expect, name); add(expect, vn(total)); }
-  if (state === 'library') { for (const st of S.library.stories) add(expect, st.title); add(expect, `${S.library.counts.stories} câu chuyện · ${S.library.counts.books} quyển sách`); }
-  if (state === 'shop-goal') { add(expect, vn(S.shop.diamonds)); for (const g of S.shop.gifts) { add(expect, g.name_vi); add(expect, `${vn(g.price_diamonds)} kim cương`); } const goal = S.shop.gifts.find(g => g.id === S.shop.goal_id); add(expect, `${pct(S.shop.diamonds, goal.price_diamonds)}%`); }
-  // companion: names and options come from the product's own catalogue, so only the child's name is a sample value (not displayed in the mock)
-  // (the reward title comes from the real pack, not from the sample, so it is not asserted)
-  if (state === 'reward') { add(expect, `+${vn(S.reward.diamonds)}`); add(expect, `+${vn(S.reward.xp)}`); }
-  // Against another sample: the BASE sample's values that differ must be gone (a hard-coded "Minh" or "55" fails here).
-  if (Base) {
-    const gone = (a, b, fmt = x => x) => { if (String(a) !== String(b)) add(absent, fmt(b)); };
-    if (state === 'first-visit' || state === 'mid-story' || state === 'no-story') { gone(S.child.name, Base.child.name, n => `Chào ${n}!`); gone(S.child.diamonds, Base.child.diamonds, vn); }
-    if (state === 'first-visit' || state === 'mid-story') {
-      for (const kind of ['xp', 'diamonds']) Base.leaderboard[kind].forEach((row, i) => { gone(S.leaderboard[kind][i].display_name, row.display_name); gone(S.leaderboard[kind][i].total, row.total, vn); });
-    }
-    if (state === 'leaderboard-xp') Base.leaderboard_full.xp.forEach(([n, t], i) => { gone(S.leaderboard_full.xp[i][0], n); gone(S.leaderboard_full.xp[i][1], t, vn); });
-    if (state === 'library') Base.library.stories.forEach((st, i) => gone(S.library.stories[i].title, st.title));
-    if (state === 'shop-goal') { Base.shop.gifts.forEach((g, i) => { gone(S.shop.gifts[i].name_vi, g.name_vi); gone(S.shop.gifts[i].price_diamonds, g.price_diamonds, p => `${vn(p)} kim cương`); }); gone(S.shop.diamonds, Base.shop.diamonds, vn); }
-    if (state === 'reward') { gone(S.reward.diamonds, Base.reward.diamonds, n => `+${vn(n)}`); gone(S.reward.xp, Base.reward.xp, n => `+${vn(n)}`); }
+  if (state === 'first-visit') both(s => s.story.level);                      // the level tag (hidden once the story is started)
+  if (state === 'reward') {
+    both(s => s.reward.diamonds, n => `+${vn(n)}`);
+    both(s => s.reward.xp, n => `+${vn(n)}`);
+    both(s => s.story.title, t => `“${t}”`);
   }
+  if (state === 'rank-up') both(s => s.rank_up.label);
+  if (state === 'leaderboard-xp') S.leaderboard_full.xp.forEach(([name, total], i) => {
+    add(expect, name); add(expect, `${vn(total)} XP`); add(expect, `#${i + 1}`);
+    if (Base) { const [bn, bt] = Base.leaderboard_full.xp[i]; if (bn !== name) add(absent, bn); if (bt !== total) add(absent, `${vn(bt)} XP`); }
+  });
+  if (state === 'library') {
+    both(s => `${s.library.counts.stories} câu chuyện · ${s.library.counts.books} quyển sách`);
+    const label = (s, st) => { const b = s.library.books.find(x => x.id === st.bookId); return `Quyển ${b.month} · Bài ${st.number}`; };
+    S.library.stories.forEach((st, i) => {
+      add(expect, st.title); add(expect, label(S, st));
+      if (Base) { const o = Base.library.stories[i]; if (o.title !== st.title) add(absent, o.title); if (label(Base, o) !== label(S, st)) add(absent, label(Base, o)); }
+    });
+    S.library.books.forEach((b, i) => { add(expect, `Quyển ${b.month}`); if (Base && Base.library.books[i].month !== b.month) add(absent, `Quyển ${Base.library.books[i].month}`); });
+  }
+  if (state === 'shop-goal') {
+    const goal = s => s.shop.gifts.find(g => g.id === s.shop.goal_id);
+    both(s => s.shop.diamonds, vn);
+    both(s => `${vn(goal(s).price_diamonds)} kim cương`);                   // the goal's price
+    both(s => `${pct(s.shop.diamonds, goal(s).price_diamonds)}%`);          // its progress
+    both(s => goal(s).price_diamonds - s.shop.diamonds, vn);                // "còn N kim cương"
+    S.shop.gifts.forEach((g, i) => {
+      add(expect, g.name_vi); add(expect, `${vn(g.price_diamonds)} kim cương`);
+      if (Base) { const o = Base.shop.gifts[i]; if (o.name_vi !== g.name_vi) add(absent, o.name_vi); if (o.price_diamonds !== g.price_diamonds) add(absent, `${vn(o.price_diamonds)} kim cương`); }
+    });
+    // the nearly-affordable gift: "Còn thiếu N kim cương" with N from the sample's wallet and that gift's price
+    const near = s => s.shop.gifts.filter(g => g.id !== s.shop.goal_id && g.price_diamonds > s.shop.diamonds && pct(s.shop.diamonds, g.price_diamonds) >= 90)[0];
+    if (near(S)) { both(s => near(s).price_diamonds - s.shop.diamonds, n => `Còn thiếu ${vn(n)} kim cương`); add(expect, 'Sắp đổi được!'); }
+    // status strings of the gift states the mock shows (they follow the sample's redemptions / goal)
+    const has = (s, st) => s.shop.redemptions.some(r => r.status === st);
+    if (has(S, 'delivered')) { add(expect, '✓ Đã nhận quà'); add(expect, 'Con đã nhận từ Coach Felix ở lớp'); }
+    if (has(S, 'requested')) { add(expect, 'Đang chờ Coach Felix duyệt'); add(expect, 'Con đã gửi yêu cầu. Coach Felix sẽ xem nhé.'); }
+    add(expect, 'Đặt làm mục tiêu ★');
+  }
+  // companion: the option lists and counter ("N / 21") are the product's own catalogue; the contract declares them `unbound`.
   return { expect, absent };
 }
 
@@ -153,7 +202,9 @@ export function sampleCompanion(json, S = SAMPLE) {
   return json;
 }
 
+const SAMPLE_REAL_TITLE = 'The Sky Is Blue!'; // the rehearsal's generated story
 export async function installRoutes(page, state, S) {
+  const seen = { title: null }; // the REAL pack title, learned from the progress response
   // The rehearsal Worker appends its own "LOCAL REHEARSAL ... Not production" banner; it is the test rig, not the product.
   await page.addInitScript(() => { const st = document.createElement('style'); st.textContent = 'aside[data-synthetic-rehearsal]{display:none!important}'; document.addEventListener('DOMContentLoaded', () => document.head.append(st)); });
   // Fetch the REAL response, replace values only. Errors after the page closed (a request still in flight) are ignored.
@@ -164,7 +215,7 @@ export async function installRoutes(page, state, S) {
       await r.fulfill({ response: res, json: mutate(j) });
     } catch { /* page or context closed mid-request */ }
   });
-  await valueRoute('**/api/read2lead-progress*', j => sampleProgress(j, R2_STATES.includes(state) ? 'first-visit' : state, S));
+  await valueRoute('**/api/read2lead-progress*', j => sampleProgress(j, R2_STATES.includes(state) ? 'first-visit' : state, S, seen));
   if (state !== 'leaderboard-xp') await valueRoute('**/api/read2lead-leaderboard*', j => sampleBoards(j, S));
   if (state === 'leaderboard-xp') await valueRoute('**/api/read2lead-leaderboard*', j => sampleLeaderboardFull(j, S));
   if (state === 'library') await valueRoute('**/api/read2lead-library', j => sampleLibrary(j, S));
@@ -174,7 +225,7 @@ export async function installRoutes(page, state, S) {
     await page.route('**/api/generate-read2lead-pack', r => r.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ ok: false, error: 'account_generation_job_not_integrated', message: S.no_story_message }) }));
   }
   if (state === 'reward') {
-    for (const pattern of ['**/api/read2lead-story-session*', '**/api/read2lead-story-turn*']) await valueRoute(pattern, j => sampleSession(j, S));
+    for (const pattern of ['**/api/read2lead-story-session*', '**/api/read2lead-story-turn*']) await valueRoute(pattern, j => sampleSession(j, S, seen.title || SAMPLE_REAL_TITLE));
   }
 }
 
