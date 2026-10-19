@@ -7,7 +7,7 @@
 // The values live in ../fixtures/mock-sample.json (sourced from the mocks). Real avatars stay real: the
 // only data difference left.
 //
-// States (contract built.state): first-visit, mid-story, no-story, reward, rank-up.
+// States (contract built.state): first-visit, mid-story, no-story, reward, rank-up, and (Release 2) companion, leaderboard-xp, library, shop-goal.
 // The account state is REAL, produced through the rehearsal API (one synthetic child per state, see ACCOUNTS):
 //   first-visit  a real generated pack, never opened          mid-story  a real pack with an opened session + audio_started
 //   reward       a real, completed story mission               rank-up    a real opened lesson; the PRODUCT's own showRankUpModal
@@ -34,6 +34,7 @@ export const SAMPLE = JSON.parse(fs.readFileSync(path.join(here, '..', 'fixtures
 // ---- value replacement (shape-preserving) ----------------------------------------------------
 // The REAL pack / session state comes from the rehearsal API (see prepare*). Only VALUES are replaced here.
 const SAMPLE_DIR = path.join(here, '..', 'fixtures');
+export const ALT_SAMPLE_PATH = path.join(here, '..', 'fixtures', 'mock-sample-alt.json');
 export function loadSample(file) { return JSON.parse(fs.readFileSync(path.resolve(file || path.join(SAMPLE_DIR, 'mock-sample.json')), 'utf8')); }
 
 export function sampleProgress(json, state, S = SAMPLE) {
@@ -50,9 +51,10 @@ export function sampleProgress(json, state, S = SAMPLE) {
   s.rank_ladder = { ...(s.rank_ladder || {}), ...S.rank };
   return j;
 }
-export function sampleBoards(json, S = SAMPLE) {
+export function sampleBoards(json, S = SAMPLE, skip = []) {
   const boards = json.boards || (json.boards = {});
   for (const kind of ['xp', 'diamonds']) {
+    if (skip.includes(kind)) continue;
     const board = boards[kind] || (boards[kind] = {});
     const template = (board.leaders && board.leaders[0]) || (boards.xp?.leaders || [])[0] || (boards.diamonds?.leaders || [])[0] || { avatar: {} };
     board.leaders = S.leaderboard[kind].map((row, i) => ({ ...template, rank: i + 1, display_name: row.display_name, total: row.total, is_self: false }));
@@ -82,6 +84,10 @@ export function bindingExpectations(S, state, Base = null) {
     add(expect, S.story.title);
     for (const kind of ['xp', 'diamonds']) for (const row of S.leaderboard[kind]) { add(expect, row.display_name); add(expect, vn(row.total)); }
   }
+  if (state === 'leaderboard-xp') for (const [name, total] of S.leaderboard_full.xp) { add(expect, name); add(expect, vn(total)); }
+  if (state === 'library') { for (const st of S.library.stories) add(expect, st.title); add(expect, `${S.library.counts.stories} câu chuyện · ${S.library.counts.books} quyển sách`); }
+  if (state === 'shop-goal') { add(expect, vn(S.shop.diamonds)); for (const g of S.shop.gifts) { add(expect, g.name_vi); add(expect, `${vn(g.price_diamonds)} kim cương`); } const goal = S.shop.gifts.find(g => g.id === S.shop.goal_id); add(expect, `${pct(S.shop.diamonds, goal.price_diamonds)}%`); }
+  // companion: names and options come from the product's own catalogue, so only the child's name is a sample value (not displayed in the mock)
   // (the reward title comes from the real pack, not from the sample, so it is not asserted)
   if (state === 'reward') { add(expect, `+${vn(S.reward.diamonds)}`); add(expect, `+${vn(S.reward.xp)}`); }
   // Against another sample: the BASE sample's values that differ must be gone (a hard-coded "Minh" or "55" fails here).
@@ -91,12 +97,63 @@ export function bindingExpectations(S, state, Base = null) {
     if (state === 'first-visit' || state === 'mid-story') {
       for (const kind of ['xp', 'diamonds']) Base.leaderboard[kind].forEach((row, i) => { gone(S.leaderboard[kind][i].display_name, row.display_name); gone(S.leaderboard[kind][i].total, row.total, vn); });
     }
+    if (state === 'leaderboard-xp') Base.leaderboard_full.xp.forEach(([n, t], i) => { gone(S.leaderboard_full.xp[i][0], n); gone(S.leaderboard_full.xp[i][1], t, vn); });
+    if (state === 'library') Base.library.stories.forEach((st, i) => gone(S.library.stories[i].title, st.title));
+    if (state === 'shop-goal') { Base.shop.gifts.forEach((g, i) => { gone(S.shop.gifts[i].name_vi, g.name_vi); gone(S.shop.gifts[i].price_diamonds, g.price_diamonds, p => `${vn(p)} kim cương`); }); gone(S.shop.diamonds, Base.shop.diamonds, vn); }
     if (state === 'reward') { gone(S.reward.diamonds, Base.reward.diamonds, n => `+${vn(n)}`); gone(S.reward.xp, Base.reward.xp, n => `+${vn(n)}`); }
   }
   return { expect, absent };
 }
 
-async function installRoutes(page, state, S) {
+// ---- Release-2 screens: values replaced inside the REAL response shapes -----------------------
+const pct = (have, price) => Math.max(0, Math.min(100, Math.round((have / price) * 100)));
+export const R2_STATES = ['companion', 'leaderboard-xp', 'library', 'shop-goal'];
+
+// GET /api/read2lead-leaderboard : boards.xp.leaders = the FULL board, the sample child inside it at its rank (is_self)
+export function sampleLeaderboardFull(json, S = SAMPLE) {
+  const boards = json.boards || (json.boards = {});
+  const xp = boards.xp || (boards.xp = {});
+  const template = (xp.leaders || [])[0] || (boards.diamonds?.leaders || [])[0] || xp.own || { avatar: {} };
+  const rows = S.leaderboard_full.xp.map(([name, total], i) => ({ ...template, rank: i + 1, display_name: name, total, is_self: i + 1 === S.leaderboard_full.own_rank }));
+  xp.leaders = rows;
+  xp.participants = rows.length;
+  xp.own = { ...(xp.own || template), ...rows[S.leaderboard_full.own_rank - 1] };
+  return sampleBoards(json, S, ['xp']); // the XP board is the one just built; the diamonds tab gets the home sample
+}
+// GET /api/read2lead-library : catalogue {books, stories, counts}; story = {id, bookId, number, title, pages[], audio[]}
+export function sampleLibrary(json, S = SAMPLE) {
+  const L = S.library;
+  const book = b => ({ pages: 60, pdf: '/api/read2lead-library-media/sample', tracks: [], ...b });
+  json.books = L.books.map(book);
+  json.stories = L.stories.map(st => ({ id: st.id, bookId: st.bookId, number: st.number, title: st.title, pages: [1, 2, 3, 4, 5, 6], audio: st.audio ? ['/api/read2lead-library-media/sample-audio'] : [] }));
+  json.counts = { ...(json.counts || {}), ...L.counts };
+  return json;
+}
+// POST /api/read2lead-gifts-list : {items[], diamonds, redemptions[], gift_goal}
+export function sampleGifts(json, S = SAMPLE) {
+  const G = S.shop;
+  const template = (json.items || [])[0] || {};
+  json.items = G.gifts.map(g => ({
+    ...template, id: g.id, name_vi: g.name_vi, emoji: g.emoji, image_key: null, image_url: null, price_diamonds: g.price_diamonds,
+    limit_total: null, redeemed_count: 0, active: true, available: true, can_afford: G.diamonds >= g.price_diamonds, progress_percent: pct(G.diamonds, g.price_diamonds),
+  }));
+  json.diamonds = G.diamonds;
+  json.redemptions = G.redemptions.map((r, i) => {
+    const g = G.gifts.find(x => x.id === r.gift_id);
+    return { id: 'r' + (i + 1), gift_id: r.gift_id, name_vi: g.name_vi, price_diamonds: g.price_diamonds, status: r.status, ts: '2026-10-01T09:00:00.000Z', updated_at: '2026-10-02T09:00:00.000Z' };
+  });
+  json.gift_goal = G.goal_id;
+  return json;
+}
+// POST /api/read2lead-shop {action:list} : read2lead_state carries the child's name and wallet
+export function sampleCompanion(json, S = SAMPLE) {
+  const st = json.read2lead_state || (json.read2lead_state = {});
+  st.student_name = S.companion.name;
+  st.diamonds = S.child.diamonds;
+  return json;
+}
+
+export async function installRoutes(page, state, S) {
   // The rehearsal Worker appends its own "LOCAL REHEARSAL ... Not production" banner; it is the test rig, not the product.
   await page.addInitScript(() => { const st = document.createElement('style'); st.textContent = 'aside[data-synthetic-rehearsal]{display:none!important}'; document.addEventListener('DOMContentLoaded', () => document.head.append(st)); });
   // Fetch the REAL response, replace values only. Errors after the page closed (a request still in flight) are ignored.
@@ -107,8 +164,12 @@ async function installRoutes(page, state, S) {
       await r.fulfill({ response: res, json: mutate(j) });
     } catch { /* page or context closed mid-request */ }
   });
-  await valueRoute('**/api/read2lead-progress*', j => sampleProgress(j, state, S));
-  await valueRoute('**/api/read2lead-leaderboard*', j => sampleBoards(j, S));
+  await valueRoute('**/api/read2lead-progress*', j => sampleProgress(j, R2_STATES.includes(state) ? 'first-visit' : state, S));
+  if (state !== 'leaderboard-xp') await valueRoute('**/api/read2lead-leaderboard*', j => sampleBoards(j, S));
+  if (state === 'leaderboard-xp') await valueRoute('**/api/read2lead-leaderboard*', j => sampleLeaderboardFull(j, S));
+  if (state === 'library') await valueRoute('**/api/read2lead-library', j => sampleLibrary(j, S));
+  if (state === 'shop-goal') await valueRoute('**/api/read2lead-gifts-list*', j => sampleGifts(j, S));
+  if (state === 'companion') await valueRoute('**/api/read2lead-shop*', j => sampleCompanion(j, S));
   if (state === 'no-story') {
     await page.route('**/api/generate-read2lead-pack', r => r.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ ok: false, error: 'account_generation_job_not_integrated', message: S.no_story_message }) }));
   }
@@ -123,7 +184,9 @@ async function installRoutes(page, state, S) {
 //   no-story    PHONE (no pack)                          reward    DESKTOP (a full mission completed)
 //   rank-up     FOURTH too (its opened, unfinished lesson page; the real modal is then triggered on it)
 const ACCOUNTS = {
-  'first-visit': ['THIRD', 'e'], 'mid-story': ['FOURTH', 'f'], 'no-story': ['PHONE', 'b'], reward: ['DESKTOP', 'c'], 'rank-up': ['FOURTH', 'f'],
+  'first-visit': ['THIRD', 'e'], 'mid-story': ['FOURTH', 'f'],
+  // Release 2: pages that need only a logged-in child with today's story (the pack on THIRD)
+  companion: ['THIRD', 'e'], 'leaderboard-xp': ['THIRD', 'e'], library: ['THIRD', 'e'], 'shop-goal': ['THIRD', 'e'], 'no-story': ['PHONE', 'b'], reward: ['DESKTOP', 'c'], 'rank-up': ['FOURTH', 'f'],
 };
 function wav() {
   const b = new Uint8Array(32044), v = new DataView(b.buffer);
@@ -192,6 +255,20 @@ async function prepare(base, state) {
 const prepared = new Map();
 const lessonUrl = p => `/read2lead/lesson?code=${p.code}&pack_id=${p.packId}&mission=story-mission-v1&session=${p.sessionId}`;
 
+// text present in a VISIBLE text node anywhere on the page (ancestors' textContent would also count hidden descendants)
+async function expectTextOnPage(page, text, what) {
+  const got = await page.evaluate(t => {
+    const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let n = w.nextNode(); n; n = w.nextNode()) {
+      if (!n.nodeValue.replace(/\s+/g, ' ').includes(t)) continue;
+      const e = n.parentElement; if (!e) continue;
+      const r = e.getBoundingClientRect(); const cs = getComputedStyle(e);
+      if (r.width > 0 && r.height > 0 && cs.visibility !== 'hidden' && cs.display !== 'none') return true;
+    }
+    return false;
+  }, text);
+  if (!got) throw new Error(`wrong state: ${what} ("${text}") is not visible on the page`);
+}
 async function expectVisibleText(page, selector, text, what) {
   const got = await page.evaluate(({ selector, text }) => [...document.querySelectorAll(selector)].some(e => { const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0 && (e.textContent || '').includes(text); }), { selector, text });
   if (!got) throw new Error(`wrong state: ${what} (a visible "${text}" in ${selector}) is not on the page`);
@@ -204,10 +281,11 @@ export default async function r2lDriver(page, contract, base, ctx = {}) {
   const S = opts.sample ? loadSample(opts.sample) : SAMPLE;
   const Base = opts.sample ? SAMPLE : null;
   await installRoutes(page, state, S);
+  const progressState = R2_STATES.includes(state) ? 'first-visit' : state;
   const letter = ACCOUNTS[state][1];
   const loginUrl = opts.loginUrl || `${base}/r2l/start/?t=${encodeURIComponent(opts.token || letter.repeat(32))}`;
   // rank-up shares mid-story's account and preparation, so concurrent contracts never prepare one account twice
-  const prepState = state === 'rank-up' ? 'mid-story' : state;
+  const prepState = state === 'rank-up' ? 'mid-story' : R2_STATES.includes(state) ? 'first-visit' : state;
   const key = base + '|' + prepState;
   if (!prepared.has(key)) prepared.set(key, prepare(base, prepState));
   const prep = await prepared.get(key);
@@ -220,7 +298,26 @@ export default async function r2lDriver(page, contract, base, ctx = {}) {
     if (state === 'no-story') { await page.click('#home-open'); await page.waitForSelector('#home-library:not([hidden])', { timeout: 6000 }).catch(() => { throw new Error('wrong state: the empty (no story) screen did not appear after "Mở truyện"'); }); }
     await verifyHomeState(page, contract, state, opts);
     await page.waitForTimeout(600);
-    return { dataBinding: binding };
+    return { dataBinding: binding, altSample: opts.sample ? undefined : ALT_SAMPLE_PATH };
+  }
+
+  if (R2_STATES.includes(state)) {
+    // Release-2 screens: log in (sets the session), then open the page for that child. All values are replaced in the real responses.
+    await page.goto(loginUrl, { waitUntil: 'networkidle' }).catch(() => {});
+    const url = base + contract.built.path + (contract.built.path.includes('?') ? '&' : '?') + 'code=' + encodeURIComponent(prep.code);
+    await page.goto(url, { waitUntil: 'networkidle' });
+    if (state === 'companion') {
+      // hat category selected, option 2 previewed, NOT saved
+      await page.getByRole('button', { name: 'Mũ', exact: true }).first().click({ timeout: 8000 }).catch(() => { throw new Error('wrong state: no "Mũ" category button on the companion page'); });
+      await page.getByRole('button', { name: /→/ }).first().click({ timeout: 5000 }).catch(() => { throw new Error('wrong state: no "→" option button on the companion page'); });
+      await page.waitForTimeout(400);
+      await expectTextOnPage(page, '2 / ', 'option counter "2 / N"');
+      await expectTextOnPage(page, 'Chưa lưu', 'the unsaved hint');
+    }
+    const MUST = { companion: ['Lưu bạn đồng hành'], 'leaderboard-xp': ['Con đây!'], library: ['Truyện hôm nay'], 'shop-goal': ['★ Mục tiêu của con'] }[state];
+    for (const t of [contract.primary?.text, ...MUST]) if (t) await expectTextOnPage(page, t, `marker "${t}"`);
+    await page.waitForTimeout(600);
+    return { dataBinding: binding, altSample: opts.sample ? undefined : ALT_SAMPLE_PATH };
   }
 
   await page.goto(loginUrl, { waitUntil: 'networkidle' }).catch(() => {});
@@ -230,7 +327,7 @@ export default async function r2lDriver(page, contract, base, ctx = {}) {
     await page.waitForFunction(() => { const i = [...document.querySelectorAll('.rw__monster img')]; return i.length > 0 && i.every(x => x.complete) && !!document.querySelector('.rw__monster .r2l-monster'); }, null, { timeout: 8000 }).catch(() => {});
     await expectVisibleText(page, '[data-design="reward.primary"]', contract.primary?.text || 'Xong hôm nay', 'reward primary');
     await page.waitForTimeout(800);
-    return { dataBinding: binding };
+    return { dataBinding: binding, altSample: opts.sample ? undefined : ALT_SAMPLE_PATH };
   }
 
   // rank-up: the PRODUCT's own showRankUpModal (via window.__r2lV3.showRankUp, enabled by ?v3=1) opens and fills the real modal.
@@ -244,5 +341,5 @@ export default async function r2lDriver(page, contract, base, ctx = {}) {
   await page.evaluate(({ from, to, tier }) => window.__r2lV3.showRankUp({ changed: true, from_label: from, to_label: to, tier_changed: false }, { tier_color: tier }), { from: SAMPLE.rank_up.from_label, to: S.rank_up.label, tier: S.rank_up.tier_color });
   await expectVisibleText(page, '#rank-up-close, [data-design="rankup.primary"]', contract.primary?.text || 'Tuyệt vời!', 'rank-up primary');
   await page.waitForTimeout(800);
-  return { dataBinding: binding };
+  return { dataBinding: binding, altSample: opts.sample ? undefined : ALT_SAMPLE_PATH };
 }

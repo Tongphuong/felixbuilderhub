@@ -80,3 +80,16 @@ export function compareRegion(mockBuf, builtBuf, mockBox, builtBox, ceiling, min
   if (fraction > ceiling) problems.push(`${(fraction * 100).toFixed(1)}% differing (ceiling ${(ceiling * 100).toFixed(1)}%)`);
   return { pass: problems.length === 0, fraction, problems, mockSd, builtSd, mockEdge, builtEdge, edgeRatio, mock: PNG.sync.write(mockCrop), built: PNG.sync.write(builtCrop), diff: PNG.sync.write(diff), w, h };
 }
+
+// "Own pixels": how much of the region's box CHANGES when the region's own element is hidden (visibility:hidden on it and its subtree).
+// An element that renders nothing visible (a blank monster box over backdrop rays that look like the mock's) changes ~0%, whatever
+// the backdrop is, so this catches what stddev and edge energy cannot (home monster at 390 has bubble and hills edges inside the box).
+export const OWN_MIN_FRACTION = 0.005; // 0.5%: a text-only element is a few percent of its box; an empty one is exactly 0. Monster regions should set min_own_pixels ~0.10.
+export function ownPixelFraction(withBuf, withoutBuf, box) {
+  const a = cropPng(withBuf, box), b = cropPng(withoutBuf, box);
+  const w = Math.min(a.width, b.width), h = Math.min(a.height, b.height);
+  const A = new PNG({ width: w, height: h }), B = new PNG({ width: w, height: h });
+  PNG.bitblt(a, A, 0, 0, w, h, 0, 0); PNG.bitblt(b, B, 0, 0, w, h, 0, 0);
+  const out = new PNG({ width: w, height: h });
+  return pixelmatch(A.data, B.data, out.data, w, h, { threshold: 0.1 }) / (w * h);
+}

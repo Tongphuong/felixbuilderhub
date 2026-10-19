@@ -93,13 +93,13 @@ screenshots are FULL-PAGE on both sides, so anything below the fold is compared.
 | fonts | headings (h1-h6) and buttons do not resolve to Baloo 2, `p`/`li` text to Nunito, or `document.fonts` does not report both families loaded (none errored). |
 | no-h-scroll | page is wider than the viewport at 360/390/768/1024/1280 (once per contract). An overflowing page is cropped to the viewport width before diffing. |
 | geometry | (only when the contract has `anchors`) a built section's top, height or width is off the mock's. |
-| data-binding | (driver returns expectations, e.g. `r2l.mjs --sample ...`) a bound value is not shown, or an old value is still shown. |
+| data-binding | Runs AUTOMATICALLY in a normal run. When the driver offers an alternate sample (`altSample`), a second pass loads the page with it: every alternate value must show and none of the mock's values may remain (a hard-coded "Minh" or "55" fails). A contract that lists `data_bound` values but whose driver offers no alternate sample FAILS as "binding not run". (`--binding-only` still runs just this pass.) |
 | region:<id> | see "Regions" below. |
 | anchors-present | (only with `--require-anchors`) the contract has no `anchors`, or an `order` id (not in `optional`) has none. |
 | height | the built page is taller than the mock by more than max(10%, 120px). The shorter side is padded with its own background colour, so extra or missing area counts in the diff. |
 | pixel-diff | pixelmatch (threshold 0.1) differing fraction over the full padded page > `diff_ceiling[w]` |
 | still-twin | adding the `still` class to `html`, `body` and every `.r2l` changes the built render at all. Runs BEFORE the width cycle below (a viewport cycle re-rasterises edges and used to make it fail falsely, 60-70px on reward@390). |
-| layout-sanity | the mocks exist only at 390/1280, so the BUILT page is checked at 360, 768, 1024 and the contract's own widths, in the same state (once per contract): (a) two text lines of different text nodes overlap by more than 2px (glyph band = central 78% of the font size, so tight line-heights do not false-alarm; clipped `.sr-only` text is ignored); (b) a control (`a, button, input, select, textarea, summary, [role=button]`) or `[data-design]` element sticks out of its nearest card (an ancestor with a border or background) by more than 2px, unless it or its card matches the contract's `overflow_allow` (data-design ids or CSS selectors); (c) a line break falls inside a word; (d) text is cut off by `overflow:hidden|clip`, except `text-overflow: ellipsis`. Each offender (selector + width) is listed in `report.md`, and a screenshot of each failing width is saved as `<contract>-layout-<width>.png`. |
+| layout-sanity | the mocks exist only at 390/1280, so the BUILT page is checked at 360, 768, 1024 and the contract's own widths, in the same state (once per contract): (a) the INK boxes of two text lines of different text nodes overlap by more than 1px (ink = the baseline plus the real ascent/descent of that text in that font, from canvas `measureText`; a font-size fallback of 90% if the metrics are missing; so a tight line-height does not false-alarm but a 5px collision fails; clipped `.sr-only` text is ignored; `clip` is honoured only on absolute/fixed boxes of 2px or less); (b) a control (`a, button, input, select, textarea, summary, [role=button]`) or `[data-design]` element sticks out of its nearest card (an ancestor with a border or background) by more than 2px, unless it or its card matches the contract's `overflow_allow` (data-design ids or CSS selectors); (c) a line break falls inside a word; (d) text is cut off by `overflow:hidden|clip`. `text-overflow: ellipsis` is allowed for ordinary content (a data-bound name in a list) but is an OFFENDER when the element is a `[data-design]`, an interactive control, or contains one of the contract's `texts` / primary strings. Each offender (selector + width) is listed in `report.md`, and a screenshot of each failing width is saved as `<contract>-layout-<width>.png`. |
 
 ### Contract fields the harness reads (beyond the contracts README)
 - `anchors` (optional; required by `--require-anchors`): `{ "<data-design id>": "<a text string that appears inside that section of the MOCK>" }`.
@@ -135,10 +135,33 @@ primary) `primary`. An id with no known mock position must therefore be on scree
 ## Regions are anti-blank guards, not fidelity
 A region compares one mock box with the built `[data-design=id]` element. Its `ceiling` is deliberately loose: it exists to catch a
 blank or missing subject, not to judge looks (the whole-screen `diff_ceiling` and the human review judge looks). A region fails when
+(0) hiding its element changes less than `min_own_pixels` (default 0.5%, own-pixels check, below),
 (1) the built crop is uniform (luminance stddev < 4), (2) its EDGE ENERGY (mean Sobel magnitude) is below `EDGE_MIN_RATIO` = 50% of
 the mock crop's, which catches an emptied box that still shows backdrop rays, or (3) the diff exceeds `ceiling`. Calibration on the
 real rank-up screen: real avatar 95% / real shield 85% of the mock's edge energy; an emptied shield box 10%; an emptied monster box
 0% (uniform). The per-region override is `min_edge_ratio`. Mock monsters are stand-in PNGs, so monster regions need a high ceiling.
+
+## Own pixels: the check that catches an empty monster box
+Edge energy cannot always tell a blank box from a real subject: where the box also holds backdrop edges (the home monster box at 390
+contains the speech bubble and hills; the reward starburst) a blank box still scores 80%+. So every region also hides its own element
+(`visibility:hidden` on `[data-design=id]` and its subtree) and counts how much of the box changes. An element that renders nothing
+changes 0% whatever the backdrop is. Calibration on the live release-1 build (real avatar vs element hidden): home.monster 37-43% vs
+0%; rankup.monster 43% vs 0%; reward.monster 41-43% vs 0%; rankup.shield 48%. Default minimum 0.5% (a text-only element is only a few percent of its box; an empty one is exactly 0); recommended `min_own_pixels: 0.10`
+for monster regions. Edge-ratio calibration, same builds: rank-up monster real 0.95 vs blank 0.00, shield 0.88 vs 0.10 (so the default
+`min_edge_ratio` 0.5 is right); home monster at 1280 (tight box [85,274,210,210]) 1.24 vs 0.45 (use 0.8); home monster at 390 and the
+reward monster do NOT separate by edges (1.7-2.0 vs 1.7; 0.9 vs 1.1), so rely on own pixels there (set `min_edge_ratio: 0.3` to avoid false fails).
+
+## Release-2 driver states
+`drivers/r2l.mjs` also reaches `companion`, `leaderboard-xp`, `library` and `shop-goal` (contract `built.state`; the page is opened as
+`built.path?code=<child>` for the THIRD synthetic child, whose real pack is today's story "The Sky Is Blue!"). All values are replaced inside
+the REAL response shapes (fixtures `mock-sample.json` / `mock-sample-alt.json`, sourced from mocks 05-08):
+- leaderboard: `GET /api/read2lead-leaderboard` -> the full 11-row XP board, the sample child at #8 with `is_self` ("Con đây!"); the other tab keeps the home sample.
+- library: `GET /api/read2lead-library` -> `books` / `stories` / `counts` (stories carry `audio[]` non-empty = "Có bài nghe"); counts 48 stories / 6 books.
+- shop: `POST /api/read2lead-gifts-list` -> `items`, `diamonds` 55, `redemptions` (delivered + requested) and `gift_goal` = the 120-diamond gift at 46%.
+- companion: `POST /api/read2lead-shop` -> the child's name/wallet; the driver then clicks the "Mũ" category and "→" once (option 2) and does NOT save.
+LIMITS, plainly: the option lists (hats, "N / 21") and the library's "Đã đọc" status come from the product's own code/state, not from a response the
+driver can reshape, so they are asserted only as visible markers ("2 / ", "Chưa lưu", "Truyện hôm nay"), not bound to the alternate sample. The drivers
+were written against the release-1 page flow; they are verified end to end only once the Release-2 pages exist.
 
 ## Known limits
 - Contrast outside plain backgrounds relies on sampling: text over a photo or busy gradient is judged against the most common

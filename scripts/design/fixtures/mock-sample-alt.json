@@ -58,5 +58,177 @@
     "tier_color": "#FFC83D",
     "name": "Bảo"
   },
-  "no_story_message": "Chưa có truyện phù hợp lúc này. Bài đã lưu của con vẫn còn. Con quay lại sau nhé."
+  "no_story_message": "Chưa có truyện phù hợp lúc này. Bài đã lưu của con vẫn còn. Con quay lại sau nhé.",
+  "leaderboard_full": {
+    "xp": [
+      [
+        "Quyên",
+        2310
+      ],
+      [
+        "Tuấn",
+        1745
+      ],
+      [
+        "Mây",
+        1200
+      ],
+      [
+        "Lam",
+        990
+      ],
+      [
+        "Nhi",
+        870
+      ],
+      [
+        "Khoa",
+        760
+      ],
+      [
+        "Vy",
+        640
+      ],
+      [
+        "Bảo",
+        410
+      ],
+      [
+        "Sơn",
+        330
+      ],
+      [
+        "Hà",
+        190
+      ],
+      [
+        "Dũng",
+        95
+      ]
+    ],
+    "own_rank": 8
+  },
+  "library": {
+    "counts": {
+      "stories": 64,
+      "books": 8
+    },
+    "books": [
+      {
+        "id": "c1-b01",
+        "collection": 1,
+        "month": 1
+      },
+      {
+        "id": "c1-b02",
+        "collection": 1,
+        "month": 2
+      },
+      {
+        "id": "c1-b03",
+        "collection": 1,
+        "month": 3
+      },
+      {
+        "id": "c1-b04",
+        "collection": 1,
+        "month": 4
+      }
+    ],
+    "stories": [
+      {
+        "id": "c1-b02-s04",
+        "bookId": "c1-b02",
+        "number": 4,
+        "title": "Red Apples Fall",
+        "audio": true
+      },
+      {
+        "id": "c1-b02-s03",
+        "bookId": "c1-b02",
+        "number": 3,
+        "title": "The Quiet Lake",
+        "audio": true
+      },
+      {
+        "id": "c1-b02-s02",
+        "bookId": "c1-b02",
+        "number": 2,
+        "title": "Moon and Muffin",
+        "audio": false
+      },
+      {
+        "id": "c1-b02-s01",
+        "bookId": "c1-b02",
+        "number": 1,
+        "title": "Seven Little Kites",
+        "audio": true
+      },
+      {
+        "id": "c1-b01-s06",
+        "bookId": "c1-b01",
+        "number": 6,
+        "title": "The Road to Town",
+        "audio": true
+      }
+    ],
+    "read_titles": [
+      "Moon and Muffin"
+    ]
+  },
+  "shop": {
+    "diamonds": 90,
+    "goal_id": "ruler",
+    "gifts": [
+      {
+        "id": "ruler",
+        "name_vi": "Thước kẻ",
+        "emoji": "📏",
+        "price_diamonds": 150
+      },
+      {
+        "id": "stamps",
+        "name_vi": "Con dấu",
+        "emoji": "🔏",
+        "price_diamonds": 100
+      },
+      {
+        "id": "comic",
+        "name_vi": "Truyện tranh",
+        "emoji": "📖",
+        "price_diamonds": 500
+      },
+      {
+        "id": "robot",
+        "name_vi": "Rô bốt",
+        "emoji": "🤖",
+        "price_diamonds": 1200
+      },
+      {
+        "id": "eraser",
+        "name_vi": "Cục tẩy",
+        "emoji": "🧽",
+        "price_diamonds": 70
+      },
+      {
+        "id": "surprise",
+        "name_vi": "Quà bất ngờ",
+        "emoji": "🎀",
+        "price_diamonds": 300
+      }
+    ],
+    "redemptions": [
+      {
+        "gift_id": "eraser",
+        "status": "delivered"
+      },
+      {
+        "gift_id": "surprise",
+        "status": "requested"
+      }
+    ]
+  },
+  "companion": {
+    "name": "Bảo"
+  }
 }

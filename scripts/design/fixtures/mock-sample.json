@@ -1,5 +1,5 @@
 {
-  "_source": "Sample data shown in the locked mocks (_design/read2lead-dao-phieu-luu/mocks/01-home-*.html, S1-home-mid-story-390.html, 04-reward-*.html, S3-rank-up-390.html). The r2l driver puts these VALUES into the real API response SHAPES so the page's own code renders them and the pixel diff measures design, not data.",
+  "_source": "Sample data shown in the locked mocks (_design/read2lead-dao-phieu-luu/mocks/01-home-*.html, S1-home-mid-story-390.html, 04-reward-*.html, 05-companion-*.html, 06-leaderboard-*.html, 07-library-*.html, 08-shop-*.html, S3-rank-up-390.html). The r2l driver puts these VALUES into the real API response SHAPES so the page's own code renders them and the pixel diff measures design, not data.",
   "child": {
     "name": "Minh",
     "diamonds": 55,
@@ -58,5 +58,177 @@
     "tier_color": "#C9D3DE",
     "name": "Minh"
   },
-  "no_story_message": "Chưa có truyện phù hợp lúc này. Bài đã lưu của con vẫn còn. Con quay lại sau nhé."
+  "no_story_message": "Chưa có truyện phù hợp lúc này. Bài đã lưu của con vẫn còn. Con quay lại sau nhé.",
+  "leaderboard_full": {
+    "xp": [
+      [
+        "Hoang",
+        1080
+      ],
+      [
+        "Hieuenzo",
+        900
+      ],
+      [
+        "Percy",
+        890
+      ],
+      [
+        "Phuc",
+        825
+      ],
+      [
+        "DangNemo",
+        780
+      ],
+      [
+        "Danny",
+        680
+      ],
+      [
+        "Vodka",
+        580
+      ],
+      [
+        "Minhdt",
+        320
+      ],
+      [
+        "Mina",
+        260
+      ],
+      [
+        "TuAnh",
+        160
+      ],
+      [
+        "KhanhVy",
+        80
+      ]
+    ],
+    "own_rank": 8
+  },
+  "library": {
+    "counts": {
+      "stories": 48,
+      "books": 6
+    },
+    "books": [
+      {
+        "id": "c1-b01",
+        "collection": 1,
+        "month": 1
+      },
+      {
+        "id": "c1-b02",
+        "collection": 1,
+        "month": 2
+      },
+      {
+        "id": "c1-b03",
+        "collection": 1,
+        "month": 3
+      },
+      {
+        "id": "c1-b04",
+        "collection": 1,
+        "month": 4
+      }
+    ],
+    "stories": [
+      {
+        "id": "c1-b02-s04",
+        "bookId": "c1-b02",
+        "number": 4,
+        "title": "The Sky Is Blue!",
+        "audio": true
+      },
+      {
+        "id": "c1-b02-s03",
+        "bookId": "c1-b02",
+        "number": 3,
+        "title": "A Forest Adventure",
+        "audio": true
+      },
+      {
+        "id": "c1-b02-s02",
+        "bookId": "c1-b02",
+        "number": 2,
+        "title": "A Fish and a Gift",
+        "audio": true
+      },
+      {
+        "id": "c1-b02-s01",
+        "bookId": "c1-b02",
+        "number": 1,
+        "title": "A Little Help for Cumulo",
+        "audio": false
+      },
+      {
+        "id": "c1-b01-s06",
+        "bookId": "c1-b01",
+        "number": 6,
+        "title": "A Tale of Two Mice",
+        "audio": true
+      }
+    ],
+    "read_titles": [
+      "A Fish and a Gift"
+    ]
+  },
+  "shop": {
+    "diamonds": 55,
+    "goal_id": "sticker",
+    "gifts": [
+      {
+        "id": "sticker",
+        "name_vi": "Sticker",
+        "emoji": "🌟",
+        "price_diamonds": 120
+      },
+      {
+        "id": "pencils",
+        "name_vi": "Bút màu",
+        "emoji": "🖍️",
+        "price_diamonds": 60
+      },
+      {
+        "id": "picture_book",
+        "name_vi": "Sách tranh",
+        "emoji": "📚",
+        "price_diamonds": 400
+      },
+      {
+        "id": "teddy",
+        "name_vi": "Gấu bông",
+        "emoji": "🧸",
+        "price_diamonds": 900
+      },
+      {
+        "id": "bookmark",
+        "name_vi": "Kẹp sách",
+        "emoji": "🔖",
+        "price_diamonds": 80
+      },
+      {
+        "id": "gift_box",
+        "name_vi": "Hộp quà",
+        "emoji": "🎁",
+        "price_diamonds": 200
+      }
+    ],
+    "redemptions": [
+      {
+        "gift_id": "bookmark",
+        "status": "delivered"
+      },
+      {
+        "gift_id": "gift_box",
+        "status": "requested"
+      }
+    ]
+  },
+  "companion": {
+    "name": "Minh"
+  }
 }

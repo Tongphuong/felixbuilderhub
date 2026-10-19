@@ -58,7 +58,8 @@ export function scanText() {
         }
         if (/^(circle|ellipse)\(\s*0(px|%)?[\s)]/.test(cs.clipPath)) return 'clip-path of zero size';
       }
-      if (cs.clip && cs.clip !== 'auto') {
+      // `clip` only applies to absolutely/fixed positioned boxes; honour it only for the tiny ".sr-only" kind (<= 2px box)
+      if (cs.clip && cs.clip !== 'auto' && (cs.position === 'absolute' || cs.position === 'fixed') && nb.width <= 2 && nb.height <= 2) {
         const nums = (cs.clip.match(/-?[\d.]+/g) || []).map(Number);
         if (nums.length === 4 && (nums[0] >= nums[2] || nums[3] >= nums[1])) return 'clip: rect() of zero area';
       }
@@ -368,7 +369,9 @@ export function stateProbe() {
 //                   except text-overflow: ellipsis
 export function layoutSanity(args) {
   const allow = args.allow || [];
-  const TOL = 2;
+  const TOL = 2;        // escape (b) tolerance
+  const OVERLAP_TOL = 1; // text ink overlap (a) tolerance
+  const mustShow = (args.texts || []).map(t => String(t).replace(/[\s\u00a0]+/g, ' ').trim()).filter(Boolean);
   const sel = e => {
     let s = e.tagName.toLowerCase();
     if (e.id) s += '#' + e.id;
@@ -390,7 +393,7 @@ export function layoutSanity(args) {
       const cs = getComputedStyle(n);
       const nb = n.getBoundingClientRect();
       if ((cs.overflowX !== 'visible' || cs.overflowY !== 'visible') && (nb.width <= 2 || nb.height <= 2)) return true;
-      if (cs.clip && cs.clip !== 'auto') { const nums = (cs.clip.match(/-?[\d.]+/g) || []).map(Number); if (nums.length === 4 && (nums[0] >= nums[2] || nums[3] >= nums[1])) return true; }
+      if (cs.clip && cs.clip !== 'auto' && (cs.position === 'absolute' || cs.position === 'fixed') && nb.width <= 2 && nb.height <= 2) { const nums = (cs.clip.match(/-?[\d.]+/g) || []).map(Number); if (nums.length === 4 && (nums[0] >= nums[2] || nums[3] >= nums[1])) return true; }
       if (cs.clipPath && /^inset\(\s*(50|[6-9]\d|100)%/.test(cs.clipPath)) return true;
     }
     return false;
@@ -409,10 +412,25 @@ export function layoutSanity(args) {
     const rects = [...range.getClientRects()].filter(r => r.width > 1 && r.height > 1);
     if (!rects.length) continue;
     if (rects.every(r => r.right <= 0 || r.bottom <= 0 || r.left >= document.documentElement.clientWidth + 5)) continue;
-    // Range rects are the font's content area, taller than the glyphs; with a tight line-height they overlap harmlessly.
-    // Compare the central 78% of the font size instead (where the glyphs are).
-    const fs = parseFloat(getComputedStyle(el).fontSize) || 16;
-    const glyphs = rects.map(r => { const h = Math.min(r.height, fs * 0.78), cy = r.top + r.height / 2; return { left: r.left, right: r.right, top: cy - h / 2, bottom: cy + h / 2 }; });
+    // Range rects are the font's content area, taller than the glyphs. Use the real INK box: the baseline sits fontBoundingBoxAscent
+    // below the rect top, and the ink reaches actualBoundingBoxAscent above / actualBoundingBoxDescent below it (canvas measureText
+    // of this very text in this very font). Falls back to 90% of the font size when the metrics are missing.
+    const cst = getComputedStyle(el);
+    const fs = parseFloat(cst.fontSize) || 16;
+    let inkAsc = null, inkDesc = null, fontAsc = null;
+    try {
+      const ctx2 = (layoutSanity._cv = layoutSanity._cv || document.createElement('canvas').getContext('2d'));
+      ctx2.font = `${cst.fontStyle} ${cst.fontWeight} ${cst.fontSize} ${cst.fontFamily}`;
+      let txt = n.nodeValue.replace(/\s+/g, ' ').trim();
+      if (cst.textTransform === 'uppercase') txt = txt.toUpperCase(); else if (cst.textTransform === 'lowercase') txt = txt.toLowerCase();
+      const m = ctx2.measureText(txt);
+      if (m.actualBoundingBoxAscent != null && m.fontBoundingBoxAscent != null) { inkAsc = m.actualBoundingBoxAscent; inkDesc = m.actualBoundingBoxDescent; fontAsc = m.fontBoundingBoxAscent; }
+    } catch { /* fall back below */ }
+    const glyphs = rects.map(r => {
+      if (inkAsc != null) { const base = r.top + fontAsc; return { left: r.left, right: r.right, top: base - inkAsc, bottom: base + inkDesc }; }
+      const h = Math.min(r.height, fs * 0.9), cy = r.top + r.height / 2;
+      return { left: r.left, right: r.right, top: cy - h / 2, bottom: cy + h / 2 };
+    });
     nodes.push({ n, el, rects, glyphs });
   }
 
@@ -424,7 +442,7 @@ export function layoutSanity(args) {
     let hit = null;
     for (const ra of a.glyphs) { for (const rb of b.glyphs) {
       const w = Math.min(ra.right, rb.right) - Math.max(ra.left, rb.left), h = Math.min(ra.bottom, rb.bottom) - Math.max(ra.top, rb.top);
-      if (w > TOL && h > TOL) { hit = { w, h }; break; }
+      if (w > OVERLAP_TOL && h > OVERLAP_TOL) { hit = { w, h }; break; }
     } if (hit) break; }
     if (hit) {
       const key = sel(a.el) + '|' + sel(b.el);
@@ -482,14 +500,16 @@ export function layoutSanity(args) {
     const cs = getComputedStyle(e);
     if (!/(hidden|clip)/.test(cs.overflowX + cs.overflowY)) continue;
     if (!(e.textContent || '').trim() || e.closest('svg')) continue;
-    if (cs.textOverflow === 'ellipsis') continue;
+    const required = e.hasAttribute('data-design') || e.matches('a,button,input,select,textarea,summary,[role=button]')
+      || (mustShow.length > 0 && mustShow.some(t => (e.textContent || '').replace(/[\s\u00a0]+/g, ' ').includes(t)));
+    if (cs.textOverflow === 'ellipsis' && !required) continue; // by design for data-bound names in lists, never for required text
     const cutX = /(hidden|clip)/.test(cs.overflowX) && e.scrollWidth > e.clientWidth + 1;
     const cutY = /(hidden|clip)/.test(cs.overflowY) && e.scrollHeight > e.clientHeight + 1;
     if (!(cutX || cutY) || e.clientWidth === 0 || e.clientHeight === 0) continue;
     // only text that is really cut: a text node that lies partly outside the element's box
     const eb = e.getBoundingClientRect();
     const cut = nodes.some(({ el, rects }) => e.contains(el) && rects.some(r => r.right > eb.right + 1 || r.bottom > eb.bottom + 1 || r.left < eb.left - 1 || r.top < eb.top - 1));
-    if (cut) out.push({ kind: 'clipped', sel: sel(e), detail: `text cut off by overflow (content ${e.scrollWidth}x${e.scrollHeight}px in a ${e.clientWidth}x${e.clientHeight}px box)` });
+    if (cut) out.push({ kind: 'clipped', sel: sel(e), detail: `text cut off by overflow${cs.textOverflow === 'ellipsis' ? ' (ellipsis on REQUIRED text)' : ''} (content ${e.scrollWidth}x${e.scrollHeight}px in a ${e.clientWidth}x${e.clientHeight}px box)` });
   }
   return out;
 }

@@ -23,7 +23,7 @@ import { chromium } from 'playwright-core';
 import { contractChecks, tapChecks, overflowCheck, motionCheck, addStillClass, removeStillClass, layoutSanity, fontCheck, fontUsage, mockBoxes, builtBoxes, scanText } from './lib/in-page.mjs';
 import { diffPngs, writeComposite, padPng, cornerColor, pngHeight, fitWidth } from './lib/pixels.mjs';
 import { analyseText, textOf, collapse } from './lib/text.mjs';
-import { compareRegion } from './lib/regions.mjs';
+import { compareRegion, ownPixelFraction, OWN_MIN_FRACTION } from './lib/regions.mjs';
 
 const OVERFLOW_WIDTHS = [360, 390, 768, 1024, 1280];
 const LAYOUT_WIDTHS = [360, 768, 1024]; // plus every width the contract has a mock for
@@ -198,16 +198,16 @@ export async function runFidelity(opts) {
           }
           res.checks.push(check('state-driver', true, `reached "${contract.built.state}" at ${page.url()}`));
           // data-binding: the driver (given an alternate sample) says which values the page MUST show and which old ones must be gone.
-          const bindingCheck = stream => {
-            const db = drvRes && drvRes.dataBinding;
+          const bindingOf = (db, stream, label = '') => {
             if (!db) return null;
             const miss = db.expect.filter(t => !stream.includes(collapse(t)));
             const stale = (db.absent || []).filter(t => stream.includes(collapse(t)));
             const bad = [];
             if (miss.length) bad.push('does not show: ' + miss.map(t => `"${t}"`).join(', '));
             if (stale.length) bad.push('still shows the OLD value (hard-coded?): ' + stale.map(t => `"${t}"`).join(', '));
-            return check('data-binding', bad.length === 0, bad.length ? bad.join('; ') : `${db.expect.length} bound values shown${db.absent && db.absent.length ? `, ${db.absent.length} old values gone` : ''}`);
+            return check('data-binding', bad.length === 0, bad.length ? bad.join('; ') + label : `${db.expect.length} bound values shown${db.absent && db.absent.length ? `, ${db.absent.length} old values gone` : ''}${label}`);
           };
+          const bindingCheck = stream => bindingOf(drvRes && drvRes.dataBinding, stream);
           if (opts['binding-only']) {
             const an0 = analyseText((await page.evaluate(scanText)).items, null);
             const bc = bindingCheck(an0.stream);
@@ -258,7 +258,25 @@ export async function runFidelity(opts) {
           const missing = texts.filter(t => !an.stream.includes(collapse(t)));
           res.checks.push(check('texts', missing.length === 0, missing.length ? 'missing VISIBLE text: ' + missing.map(t => `"${t}"`).join(', ') : `${texts.length} strings present in visible text nodes`));
 
-          { const bc = bindingCheck(an.stream); if (bc) res.checks.push(bc); }
+          {
+            // data-binding runs AUTOMATICALLY: when the driver offers an alternate sample, a second pass loads the page with it and the
+            // page must show the alternate values (and none of the mock's). A contract with data_bound values but no such pass FAILS.
+            let bc = null;
+            if (drvRes && drvRes.altSample) {
+              const ctx2 = await browser.newContext({ viewport, reducedMotion: 'reduce', deviceScaleFactor: 1 });
+              try {
+                const pg2 = await ctx2.newPage();
+                const r2 = await driver(pg2, contract, base, { width: w, designDir, opts: { ...opts, sample: drvRes.altSample } });
+                await settle(pg2);
+                const an2 = analyseText((await pg2.evaluate(scanText)).items, null);
+                bc = bindingOf(r2 && r2.dataBinding, an2.stream, ' (alternate-sample pass)') || check('data-binding', false, 'alternate-sample pass: the driver returned no expectations');
+              } catch (e) {
+                bc = check('data-binding', false, 'alternate-sample pass could not run: ' + e.message);
+              } finally { await ctx2.close(); }
+            } else bc = bindingCheck(an.stream);
+            if (!bc && contract.data_bound && contract.data_bound.length) bc = check('data-binding', false, 'binding not run: the contract has data_bound values but the driver offers no alternate sample to test them against');
+            if (bc) res.checks.push(bc);
+          }
           if (cc.primary) {
             const probs = [...cc.primary.problems];
             if (!textOf(scan.items, primary.id).includes(collapse(primary.text))) probs.push(`primary visible text "${textOf(scan.items, primary.id)}" does not include "${primary.text}"`);
@@ -337,9 +355,19 @@ export async function runFidelity(opts) {
               const b = rb.boxes[r.id];
               if (!b) { res.checks.push(check('region:' + r.id, false, 'no visible built element')); continue; }
               const cmp = compareRegion(mockPng0, builtPng0, { x: mb[0], y: mb[1], w: mb[2], h: mb[3] }, b, r.ceiling, r.min_edge_ratio);
-              res.checks.push(check('region:' + r.id, cmp.pass, cmp.pass ? `${(cmp.fraction * 100).toFixed(1)}% differing (ceiling ${(r.ceiling * 100).toFixed(1)}%), edges ${(cmp.edgeRatio * 100).toFixed(0)}% of the mock's` : cmp.problems.join('; ')));
+              // own pixels: hide the region's element and see how much of its box changes (an element that renders nothing changes ~0%)
+              const sel = `[data-design="${String(r.id).replace(/"/g, '\\"')}"]`;
+              await page.addStyleTag({ content: `${sel}, ${sel} * { visibility: hidden !important; }` }).then(async handle => {
+                await page.waitForTimeout(60);
+                const without = await sh(page);
+                await handle.evaluate(n => n.remove());
+                cmp.own = ownPixelFraction(builtPng0, without, b);
+              });
+              const ownMin = r.min_own_pixels ?? OWN_MIN_FRACTION;
+              if (cmp.own < ownMin) { cmp.pass = false; cmp.problems.push(`region empty: hiding the element changes only ${(cmp.own * 100).toFixed(1)}% of its box (min ${(ownMin * 100).toFixed(0)}%): it renders nothing visible`); }
+              res.checks.push(check('region:' + r.id, cmp.pass, cmp.pass ? `${(cmp.fraction * 100).toFixed(1)}% differing (ceiling ${(r.ceiling * 100).toFixed(1)}%), edges ${(cmp.edgeRatio * 100).toFixed(0)}% of the mock's, own pixels ${(cmp.own * 100).toFixed(0)}%` : cmp.problems.join('; ')));
               regionOut.push({ id: r.id, ok: cmp.pass, label: `${r.id} ${(cmp.fraction * 100).toFixed(1)}%`, mock: cmp.mock, built: cmp.built, diff: cmp.diff });
-              (res.regions = res.regions || []).push({ id: r.id, pass: cmp.pass, fraction: +cmp.fraction.toFixed(4), ceiling: r.ceiling, builtStddev: +cmp.builtSd.toFixed(1), edgeRatio: +cmp.edgeRatio.toFixed(3) });
+              (res.regions = res.regions || []).push({ id: r.id, pass: cmp.pass, fraction: +cmp.fraction.toFixed(4), ceiling: r.ceiling, builtStddev: +cmp.builtSd.toFixed(1), edgeRatio: +cmp.edgeRatio.toFixed(3), ownPixels: +cmp.own.toFixed(3) });
             }
           }
 
@@ -380,7 +408,7 @@ export async function runFidelity(opts) {
                 if (o.scrollWidth > o.innerWidth) bad.push(`${vw}px: content ${o.scrollWidth}px wide`);
               }
               if (layoutWidths.has(vw)) {
-                const offenders = await page.evaluate(layoutSanity, { allow: contract.overflow_allow || [] });
+                const offenders = await page.evaluate(layoutSanity, { allow: contract.overflow_allow || [], texts: [...(contract.texts || []), ...(contract['texts_' + w] || []), ...(contract.primary ? [contract.primary.text] : [])] });
                 if (offenders.length) {
                   res.layout[vw] = offenders;
                   const shotName = `${contract.id}-layout-${vw}.png`;
@@ -437,7 +465,7 @@ function renderMd(report) {
     for (const c of r.checks) L.push(`- ${c.pass ? 'PASS' : 'FAIL'} **${c.name}** ${c.detail}`);
     for (const w of r.warnings) L.push(`- WARN ${w}`);
     if (r.layout && Object.keys(r.layout).length) { L.push('', 'Layout-sanity offenders:'); for (const [vw, list] of Object.entries(r.layout)) for (const o of list) L.push(`- @${vw}px ${o.kind} ${o.sel}: ${o.detail}`); }
-    if (r.regions) { L.push('', 'Regions:'); for (const g of r.regions) L.push(`- ${g.pass ? 'PASS' : 'FAIL'} ${g.id}: ${(g.fraction * 100).toFixed(1)}% differing (ceiling ${(g.ceiling * 100).toFixed(1)}%), built stddev ${g.builtStddev}, edge ${(g.edgeRatio * 100).toFixed(0)}% of the mock's`); }
+    if (r.regions) { L.push('', 'Regions:'); for (const g of r.regions) L.push(`- ${g.pass ? 'PASS' : 'FAIL'} ${g.id}: ${(g.fraction * 100).toFixed(1)}% differing (ceiling ${(g.ceiling * 100).toFixed(1)}%), built stddev ${g.builtStddev}, edge ${(g.edgeRatio * 100).toFixed(0)}% of the mock's, own pixels ${(g.ownPixels * 100).toFixed(0)}%`); }
     if (r.exempt && Object.keys(r.exempt).length) { L.push('', 'Geometry NOT checked (anchors_exempt, as in force at this width):'); for (const [id, why] of Object.entries(r.exempt)) L.push(`- ${id}: ${why || '(NO REASON GIVEN)'}`); }
     if (r.anchorBoxes) { L.push('', 'Anchored mock boxes (x, y, w, h):'); for (const [id, b] of Object.entries(r.anchorBoxes)) L.push(`- ${id}: ${b ? `${b.x}, ${b.y}, ${b.w}, ${b.h}` : 'ANCHOR TEXT NOT FOUND'}`); }
     L.push('');

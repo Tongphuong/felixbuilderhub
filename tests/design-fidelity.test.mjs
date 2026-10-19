@@ -46,7 +46,7 @@ function page(o = {}) {
   const spacer = o.push ? `<div style="height:${o.push}px"></div>` : '';
   const hero = `${spacer}<main${mk('t.hero')} style="${heroStyle}">${o.heroBlank ? '' : o.heroRed ? '<div style="height:150px;background:#d33"></div>' : `<h2 style="margin:0${o.wrongFont ? ';font-family:Arial' : ''}">Đọc truyện nào</h2>`}</main>`;
   const pStyle = `display:block;height:${o.primaryH || 64}px;line-height:${o.primaryH || 64}px;background:#FFC83D;text-align:center`;
-  const primary = o.noPrimary ? '' : `<a href="#" role="button"${mk('t.primary')} style="${pStyle}">Mở truyện</a>`
+  const primary = o.noPrimary ? '' : `<a href="#" role="button"${mk('t.primary')} style="${pStyle}">${o.ellipsisPrimary ? '<span style="display:block;margin:0 auto;width:40px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Mở truyện</span>' : 'Mở truyện'}</a>`
     + (o.dupPrimary ? `<a href="#" role="button"${mk('t.primary')} style="${pStyle}">Mở truyện</a>` : '');
   const footInner = {
     alt: `<img alt="Dành cho ba mẹ" width="1" height="1" src="${IMG}">`,
@@ -73,6 +73,11 @@ function page(o = {}) {
     + (o.animZero ? '<div style="width:10px;height:10px;background:#000;animation:fade 0s both"></div>' : '')
     + (o.raf ? '<div id="m" style="width:10px;height:10px;background:#000"></div><script>let x=0;const d=document.getElementById("m");(function f(){x=(x+3)%120;d.style.marginLeft=x+"px";requestAnimationFrame(f)})()</script>' : '')
     + (o.svgLow ? '<svg width="200" height="40" style="display:block"><rect width="200" height="40" fill="#fff"/><text x="4" y="28" fill="#ddd" font-size="20">Sáng chói</text></svg>' : '')
+    + (o.lineOverlap != null ? `<div style="position:relative"><p id="l1" style="margin:0;font:700 24px/24px sans-serif">Gg Ứỹ lọc</p><p id="l2" style="margin:0;font:700 24px/24px sans-serif">Ếg Ứỹ lọc</p></div><script>(function(){const c=document.createElement('canvas').getContext('2d');c.font='700 24px sans-serif';const m=c.measureText('Gg Ứỹ lọc'),n=c.measureText('Ếg Ứỹ lọc');const asc=n.actualBoundingBoxAscent,desc=m.actualBoundingBoxDescent;document.getElementById('l2').style.marginTop=((asc+desc-(${o.lineOverlap}))-24)+'px';})()</script>` : '')
+    + (o.ellipsisPrimary ? '' : '')
+    + (o.ellipsisName ? '<ul style="margin:0;padding:0;list-style:none"><li style="width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Bạn có một cái tên dài</li></ul>' : '')
+    + (o.staticClip ? '<div style="position:relative;height:0"><p style="margin:0;position:relative;top:-70px;left:16px;width:200px;clip:rect(0,0,0,0)">Hiện dù có clip</p></div>' : '')
+    + (o.srOnly ? '<div style="position:relative;height:0"><p style="margin:0;position:absolute;top:-70px;left:16px;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Chỉ đọc</p></div>' : '')
     + (o.layoutOverlap ? '<div style="position:relative;height:0"><p style="position:absolute;top:-70px;left:16px;margin:0">Chồng chữ</p></div>' : '')
     + (o.layoutEscape ? '<div style="border:2px solid #17324D;width:120px;padding:4px"><button style="width:300px;height:48px;font-family:inherit">Nút tràn</button></div>' : '')
     + (o.layoutMidword ? '<div style="width:60px;word-break:break-all">Xin chào các bạn</div>' : '')
@@ -159,6 +164,12 @@ V['layout-escape'] = [{ layoutEscape: true }, { must: ['layout-sanity'], may: ['
 V['layout-midword'] = [{ layoutMidword: true }, { must: ['layout-sanity'], may: ['pixel-diff'] }];
 V['layout-clipped'] = [{ layoutClipped: true }, { must: ['layout-sanity'], may: ['pixel-diff'] }];
 V['layout-ellipsis'] = [{ layoutEllipsis: true }, { must: [], may: ['pixel-diff'] }]; // ellipsis truncation is by design: passes
+V['lines-overlap-5px'] = [{ lineOverlap: 5 }, { must: ['layout-sanity'], may: ['pixel-diff', 'contrast>=4.5', 'fonts'] }];
+V['lines-gap-8px'] = [{ lineOverlap: -8 }, { must: [], may: ['pixel-diff', 'fonts'] }];
+V['ellipsis-primary-label'] = [{ ellipsisPrimary: true }, { must: ['layout-sanity'], may: ['pixel-diff'] }];
+V['ellipsis-bound-name-in-list'] = [{ ellipsisName: true }, { must: [], may: ['pixel-diff'] }];
+V['static-clip-is-not-hidden'] = [{ staticClip: true }, { must: ['layout-sanity'], may: ['pixel-diff'] }];
+V['sr-only-clip-is-hidden'] = [{ srOnly: true }, { must: [], may: ['pixel-diff'] }];
 V['no-fonts'] = [{ noFontLink: true }, { must: ['fonts'], may: ['pixel-diff'] }];
 
 const ANCHORS = { 't.top': 'Xin chào', 't.hero': 'Đọc truyện nào', 't.primary': 'Mở truyện', 't.foot': 'Dành cho ba mẹ' };
@@ -333,6 +344,15 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
       assert.ok(fs.existsSync(path.join(tmp, 'out', 'layout-escape-layout-360.png')), 'a screenshot of each failing width is saved');
       assert.match(fs.readFileSync(path.join(tmp, 'out', 'report.md'), 'utf8'), /Layout-sanity offenders:\n- @360px escape button/);
     });
+    await t.test('LOW fixes: 5px line collisions fail, an 8px gap passes; truncated required text fails, a truncated list name passes; clip honoured only on tiny absolute boxes', () => {
+      const d = n => by[n].checks.find(c => c.name === 'layout-sanity').detail;
+      assert.match(d('lines-overlap-5px'), /overlap p#l1 x p#l2: .* by \d+x[3-7]px/);
+      assert.equal(by['lines-gap-8px'].checks.find(c => c.name === 'layout-sanity').pass, true);
+      assert.match(d('ellipsis-primary-label'), /clipped .*ellipsis on REQUIRED text/);
+      assert.equal(by['ellipsis-bound-name-in-list'].checks.find(c => c.name === 'layout-sanity').pass, true);
+      assert.match(d('static-clip-is-not-hidden'), /overlap/);
+      assert.equal(by['sr-only-clip-is-hidden'].checks.find(c => c.name === 'layout-sanity').pass, true);
+    });
     await t.test('A still-twin runs BEFORE the width cycle (a viewport cycle re-rasterises edges and used to make it fail falsely)', () => {
       const names = by.ok.checks.map(c => c.name);
       assert.ok(names.indexOf('still-twin') < names.indexOf('layout-sanity') && names.indexOf('still-twin') < names.findIndex(n => n.startsWith('no-h-scroll')), names.join(','));
@@ -470,7 +490,10 @@ test('data-binding check: a page that binds the values passes; one that hard-cod
   const server = http.createServer((req, res) => {
     const u = new URL(req.url, 'http://x');
     const name = u.searchParams.get('name'), dia = u.searchParams.get('dia');
-    const body = u.pathname === '/bound' ? `<h1>Chào ${name}!</h1><p>${dia}</p>` : '<h1>Chào Minh!</h1><p>55</p>';
+    const alt = u.searchParams.get('alt') === '1';
+    const body = u.pathname === '/bound2' ? (alt ? '<h1>Chào Bảo!</h1><p>187</p>' : '<h1>Chào Minh!</h1><p>55</p>')
+      : u.pathname === '/hard2' ? '<h1>Chào Minh!</h1><p>55</p>'
+      : u.pathname === '/bound' ? `<h1>Chào ${name}!</h1><p>${dia}</p>` : '<h1>Chào Minh!</h1><p>55</p>';
     res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }).end(`<!doctype html><meta charset="utf-8"><body style="font:20px sans-serif">${body}`);
   });
   await new Promise(r => server.listen(0, '127.0.0.1', r));
@@ -490,8 +513,21 @@ test('data-binding check: a page that binds the values passes; one that hard-cod
     // also part of a normal full run
     const full = await runFidelity({ design, contracts, base, out: path.join(tmp, 'o2'), only: 'hardcoded', 'state-driver': path.join(tmp, 'driver.mjs') });
     assert.ok(full.results[0].checks.some(c => c.name === 'data-binding' && !c.pass));
-    // a driver that gives no expectations cannot silently pass --binding-only
+    // AUTOMATIC second pass: the driver offers an alternate sample; a normal run (no --binding-only) loads the page with it
+    fs.writeFileSync(path.join(tmp, 'alt-driver.mjs'), `export default async (page, c, base, ctx) => { const alt = !!(ctx.opts && ctx.opts.sample); await page.goto(base + c.built.path + (alt ? '&alt=1' : '')); return alt ? { dataBinding: { expect: ['Chào Bảo!', '187'], absent: ['Chào Minh!', '55'] } } : { dataBinding: { expect: ['Chào Minh!', '55'] }, altSample: 'ALT.json' }; };\n`);
+    const c2 = path.join(tmp, 'c2'); fs.mkdirSync(c2);
     fs.writeFileSync(path.join(tmp, 'plain.mjs'), `export default async (page, c, base) => { await page.goto(base + c.built.path); };\n`);
+    const mk2 = (id, p, extra = {}) => fs.writeFileSync(path.join(c2, id + '.json'), JSON.stringify({ ...BASE_CONTRACT, id, anchors: undefined, built: { path: p, state: 'first-visit' }, ...extra }));
+    mk2('auto-bound', '/bound2?x=1', { data_bound: ['Minh'] }); mk2('auto-hard', '/hard2?x=1', { data_bound: ['Minh'] }); mk2('auto-nodriver', '/bound2?x=1', { data_bound: ['Minh'] });
+    const autoRun = await runFidelity({ design, contracts: c2, base, out: path.join(tmp, 'o4'), 'state-driver': path.join(tmp, 'alt-driver.mjs') });
+    const ab = Object.fromEntries(autoRun.results.map(r => [r.contract, r]));
+    assert.match(ab['auto-bound'].checks.find(c => c.name === 'data-binding').detail, /alternate-sample pass/);
+    assert.equal(ab['auto-bound'].checks.find(c => c.name === 'data-binding').pass, true, 'a page that binds follows the alternate sample');
+    assert.equal(ab['auto-hard'].checks.find(c => c.name === 'data-binding').pass, false, 'a hard-coded page FAILS in a NORMAL run');
+    // a contract with data_bound values and a driver that offers no alternate sample: FAIL "binding not run"
+    const noAlt = await runFidelity({ design, contracts: c2, base, out: path.join(tmp, 'o5'), only: 'auto-nodriver', 'state-driver': path.join(tmp, 'plain.mjs') });
+    assert.match(noAlt.results[0].checks.find(c => c.name === 'data-binding').detail, /binding not run/);
+    // a driver that gives no expectations cannot silently pass --binding-only
     const none = await runFidelity({ design, contracts, base, out: path.join(tmp, 'o3'), only: 'bound', 'state-driver': path.join(tmp, 'plain.mjs'), 'binding-only': true });
     assert.match(none.results[0].checks.find(c => c.name === 'data-binding').detail, /provided no dataBinding/);
   } finally { await new Promise(r => server.close(r)); fs.rmSync(tmp, { recursive: true, force: true }); }
@@ -545,6 +581,90 @@ test('D r2l driver is idempotent on a used rehearsal server (existing pack reuse
     mode = 'fail';
     await assert.rejects(ensurePack(base, 'C'), /could not generate a real pack/);
   } finally { await new Promise(r => server.close(r)); }
+});
+
+test('Release-2 samples: values come from the mocks, real shapes are kept, alt differs everywhere', async () => {
+  const D = await import('../scripts/design/drivers/r2l.mjs');
+  const { SAMPLE, loadSample, sampleLeaderboardFull, sampleLibrary, sampleGifts, sampleCompanion, bindingExpectations, ALT_SAMPLE_PATH } = D;
+  const text = f => fs.readFileSync(path.join(REAL_DESIGN, 'mocks', f), 'utf8').replace(/<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+  const fmt = n => new Intl.NumberFormat('vi-VN').format(n);
+  const lb = text('06-leaderboard-1280.html');
+  assert.equal(SAMPLE.leaderboard_full.xp.length, 11);
+  for (const [name, total] of SAMPLE.leaderboard_full.xp) { assert.ok(lb.includes(name), name); assert.ok(lb.includes(fmt(total) + ' XP'), name + ' ' + total); }
+  assert.ok(lb.includes('Minhdt Con đây!') || /Minhdt[^#]*Con đây!/.test(lb));
+  const lib = text('07-library-1280.html');
+  for (const st of SAMPLE.library.stories) assert.ok(lib.includes(st.title), st.title);
+  assert.ok(lib.includes(`${SAMPLE.library.counts.stories} câu chuyện · ${SAMPLE.library.counts.books} quyển sách`));
+  const shop = text('08-shop-1280.html');
+  assert.ok(shop.includes(String(SAMPLE.shop.diamonds)));
+  for (const g of SAMPLE.shop.gifts.slice(0, 4)) { assert.ok(shop.includes(g.name_vi), g.name_vi); assert.ok(shop.includes(`${g.price_diamonds} kim cương`), g.name_vi); }
+  assert.ok(shop.includes('46%'));
+  // shapes: leaderboard keeps avatar / extra keys, the child sits at its rank with is_self, the other board is untouched
+  const av = { monster: { body: 'x' } };
+  const lbj = sampleLeaderboardFull({ ok: true, version: 'v', boards: { xp: { leaders: [{ rank: 1, display_name: 'a', total: 1, avatar: av, is_self: false, extra: 1 }], participants: 1, own: { rank: null, display_name: 'Linh', avatar: av, total: 0, is_self: true } }, diamonds: { leaders: [], participants: 0 } } });
+  assert.equal(lbj.version, 'v'); assert.equal(lbj.boards.xp.leaders.length, 11); assert.equal(lbj.boards.xp.leaders[7].is_self, true); assert.equal(lbj.boards.xp.leaders[7].display_name, 'Minhdt');
+  assert.equal(lbj.boards.xp.leaders[0].avatar, av); assert.equal(lbj.boards.xp.leaders[0].extra, 1); assert.equal(lbj.boards.xp.own.rank, 8); assert.equal(lbj.boards.xp.participants, 11);
+  assert.equal(lbj.boards.diamonds.leaders.length, 3, 'the other tab gets the home sample');
+  const libj = sampleLibrary({ books: [{ id: 'old' }], stories: [{ id: 'old' }], counts: { stories: 1095, books: 36, other: 1 }, extra: 'keep' });
+  assert.equal(libj.extra, 'keep'); assert.equal(libj.counts.stories, 48); assert.equal(libj.counts.other, 1); assert.equal(libj.stories.length, 5);
+  assert.deepEqual(Object.keys(libj.stories[0]).sort(), ['audio', 'bookId', 'id', 'number', 'pages', 'title']);
+  assert.ok(Array.isArray(libj.stories[0].audio) && libj.stories[0].audio.length === 1 && libj.stories[3].audio.length === 0, 'audio availability = audio[] non-empty');
+  const gj = sampleGifts({ ok: true, items: [{ id: 'sticker', name_vi: 'Sticker', emoji: 'x', image_key: null, image_url: null, price_diamonds: 1000, limit_total: null, redeemed_count: 0, active: true, can_afford: false, available: true, progress_percent: 27 }], diamonds: 270, redemptions: [], gift_goal: null });
+  assert.equal(gj.diamonds, 55); assert.equal(gj.gift_goal, 'sticker'); assert.equal(gj.items.find(i => i.id === 'sticker').progress_percent, 46); assert.equal(gj.items.find(i => i.id === 'pencils').progress_percent, 92);
+  assert.deepEqual(gj.redemptions.map(r => [r.gift_id, r.status]), [['bookmark', 'delivered'], ['gift_box', 'requested']]);
+  assert.ok(gj.items.every(i => i.can_afford === (i.price_diamonds <= 55)));
+  assert.equal(sampleCompanion({ ok: true, read2lead_state: { keep: 1, student_name: 'Linh' } }).read2lead_state.keep, 1);
+  // alternate sample: every R2 value differs (otherwise the binding pass proves nothing)
+  const alt = loadSample(ALT_SAMPLE_PATH);
+  alt.leaderboard_full.xp.forEach(([n, t], i) => { assert.notEqual(n, SAMPLE.leaderboard_full.xp[i][0]); assert.notEqual(t, SAMPLE.leaderboard_full.xp[i][1]); });
+  alt.library.stories.forEach((st, i) => assert.notEqual(st.title, SAMPLE.library.stories[i].title));
+  alt.shop.gifts.forEach((g, i) => { assert.notEqual(g.name_vi, SAMPLE.shop.gifts[i].name_vi); assert.notEqual(g.price_diamonds, SAMPLE.shop.gifts[i].price_diamonds); });
+  assert.notEqual(alt.shop.diamonds, SAMPLE.shop.diamonds);
+  const e = bindingExpectations(alt, 'shop-goal', SAMPLE);
+  assert.ok(e.expect.includes('90') && e.expect.includes('Thước kẻ') && e.expect.includes('150 kim cương') && e.expect.includes('60%'));
+  assert.ok(e.absent.includes('55') && e.absent.includes('Sticker') && e.absent.includes('120 kim cương'));
+  const le = bindingExpectations(alt, 'leaderboard-xp', SAMPLE);
+  assert.ok(le.expect.includes('Quyên') && le.expect.includes('2.310') && le.absent.includes('Hoang') && le.absent.includes('1.080'));
+  assert.ok(bindingExpectations(alt, 'library', SAMPLE).expect.includes('64 câu chuyện · 8 quyển sách'));
+});
+
+test('region own-pixels: an element that renders nothing fails even when the backdrop edges look like the mock (rule 28)', async t => {
+  const { ownPixelFraction, OWN_MIN_FRACTION } = await import('../scripts/design/lib/regions.mjs');
+  // unit: the fraction of the box that changes when the element is hidden
+  const mk = f => { const p = new PNG({ width: 60, height: 60 }); for (let y = 0; y < 60; y++) for (let x = 0; x < 60; x++) p.data.set(f(x, y), (y * 60 + x) * 4); return PNG.sync.write(p); };
+  const stripes = (x, y) => (((x + y) >> 3) % 2 ? [46, 139, 78, 255] : [35, 122, 65, 255]);
+  const withSubject = mk((x, y) => ((x - 30) ** 2 + (y - 30) ** 2 < 400 ? [235, 235, 235, 255] : stripes(x, y)));
+  const without = mk(stripes);
+  const box = { x: 0, y: 0, w: 60, h: 60 };
+  assert.ok(ownPixelFraction(withSubject, without, box) > 0.15, 'a real subject changes a lot when hidden');
+  assert.equal(ownPixelFraction(without, without, box), 0, 'an element that renders nothing changes nothing');
+  assert.equal(OWN_MIN_FRACTION, 0.005);
+  // integration: mock = stripes + disc, built = stripes + an EMPTY element: edge energy, stddev and diff all pass, own pixels must fail
+  if (skipNoChrome(t)) return;
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'design-own-'));
+  const band = '<style>body{margin:0;height:300px;background:repeating-linear-gradient(45deg,#237A41 0 8px,#2E8B4E 8px 16px)}</style>';
+  const disc = 'position:absolute;left:100px;top:60px;width:180px;height:180px;border-radius:50%';
+  const server = http.createServer((req, res) => {
+    const u = req.url.split('?')[0];
+    const body = u === '/ok' ? `<div data-design="t.m" style="${disc};background:#eee"></div>` : u === '/blank' ? `<div data-design="t.m" style="${disc}"></div>` : '';
+    res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }).end(`<!doctype html><meta charset="utf-8">${band}${body}`);
+  });
+  await new Promise(r => server.listen(0, '127.0.0.1', r));
+  try {
+    const design = path.join(tmp, 'design'); fs.mkdirSync(path.join(design, 'mocks'), { recursive: true });
+    fs.writeFileSync(path.join(design, 'mocks', 'band.html'), `<!doctype html><meta charset="utf-8">${band}<div style="${disc};background:#eee"></div>`);
+    const contracts = path.join(tmp, 'c'); fs.mkdirSync(contracts);
+    for (const id of ['ok', 'blank']) fs.writeFileSync(path.join(contracts, id + '.json'), JSON.stringify({
+      id, release: 0, mock: { 390: 'mocks/band.html' }, viewport: { 390: 300 }, built: { path: '/' + id, state: 'first-visit' }, order: [], texts: [],
+      regions: [{ id: 't.m', mock_box: { 390: [100, 60, 180, 180] }, ceiling: 1.0 }], diff_ceiling: { 390: 1 }, capture: 'viewport',
+    }));
+    const report = await runFidelity({ design, contracts, base: 'http://127.0.0.1:' + server.address().port, out: path.join(tmp, 'o'), 'state-driver': GOTO });
+    const by = Object.fromEntries(report.results.map(r => [r.contract, r.checks.find(c => c.name === 'region:t.m')]));
+    assert.equal(by.ok.pass, true, by.ok.detail);
+    assert.equal(by.blank.pass, false);
+    assert.match(by.blank.detail, /hiding the element changes only 0\.0% of its box/);
+    assert.ok(!/edge energy/.test(by.blank.detail) && !/uniform/.test(by.blank.detail), 'the OTHER empty checks pass: only own-pixels catches it: ' + by.blank.detail);
+  } finally { await new Promise(r => server.close(r)); fs.rmSync(tmp, { recursive: true, force: true }); }
 });
 
 test('pixel sampler: dominant background wins over heavy glyph pixels', () => {
