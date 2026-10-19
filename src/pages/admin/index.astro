@@ -54,6 +54,22 @@ const navCards = [
       ))}
     </div>
 
+    <div id="signup-cfg" class="admin-chrome mt-8 rounded-2xl border border-cream-dim/15 bg-navy-900/60 p-6" aria-labelledby="signup-cfg-title">
+      <h2 id="signup-cfg-title" class="font-display text-xl font-bold text-cream">Đăng ký công khai</h2>
+      <p class="mt-1 text-sm text-cream-muted">Cho phép ba mẹ tự tạo mã Read2Lead trên trang chủ.</p>
+      <p id="signup-cfg-status" class="signup-cfg__status mt-4 font-display text-3xl font-bold" data-state="off" role="status">Đang tải…</p>
+      <button id="signup-cfg-toggle" type="button" class="signup-cfg__btn mt-4">Bật đăng ký</button>
+      <p id="signup-cfg-count" class="mt-5 text-cream">Hôm nay: 0 / 50 mã mới</p>
+      <form id="signup-cfg-form" class="mt-3 flex flex-wrap items-end gap-3" novalidate>
+        <div>
+          <label for="signup-cfg-cap" class="block text-sm font-semibold text-cream-muted">Số mã mới tối đa mỗi ngày (0 = tạm dừng)</label>
+          <input id="signup-cfg-cap" type="number" inputmode="numeric" min="0" max="500" step="1" value="50" class="signup-cfg__input mt-1" />
+        </div>
+        <button id="signup-cfg-save" type="submit" class="signup-cfg__btn signup-cfg__btn--quiet">Lưu</button>
+      </form>
+      <p id="signup-cfg-message" class="mt-3 min-h-[1.5rem] text-sm font-semibold text-accent" role="alert"></p>
+    </div>
+
     <div class="admin-chrome mt-10">
       <div class="rounded-2xl border border-cream-dim/15 bg-navy-900/50 p-6">
         <h2 class="font-display text-lg font-bold text-cream">Mẹo sử dụng</h2>
@@ -75,3 +91,24 @@ const navCards = [
     </div>
   </section>
 </AdminLayout>
+
+<style is:global>
+  .signup-cfg__status[data-state='on'] { color: #4ade80; }
+  .signup-cfg__status[data-state='off'] { color: var(--cream-muted); }
+  .signup-cfg__btn { min-height: 48px; min-width: 160px; padding: 10px 24px; border-radius: 14px; border: 0; background: var(--gold); color: var(--navy-950); font-weight: 800; font-size: 16px; cursor: pointer; }
+  .signup-cfg__btn--quiet { background: transparent; border: 2px solid var(--gold); color: var(--gold-light); min-width: 100px; }
+  .signup-cfg__btn:disabled { opacity: .6; cursor: wait; }
+  .signup-cfg__input { min-height: 48px; width: 140px; border-radius: 12px; border: 1px solid var(--gold); background: var(--navy-950); color: var(--cream); padding: 8px 14px; font-size: 18px; }
+  .signup-cfg__btn:focus-visible, .signup-cfg__input:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 3px; }
+</style>
+
+<script>
+  import { mountSignupSwitch } from '../../lib/admin-signup';
+  if (document.getElementById('signup-cfg')) {
+    const card = mountSignupSwitch(id => document.getElementById(id), {
+      fetch: (input, init) => fetch(input, init),
+      confirm: message => window.confirm(message),
+    });
+    void card.load();
+  }
+</script>
