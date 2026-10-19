@@ -58,4 +58,7 @@
 .reading-home__signup #signup-message{margin:10px 0 0;color:var(--gold-light)}.reading-home__signup #signup-message:empty{display:none}
 .reading-home__donate img.reading-home__qr{display:block;width:min(100%,240px);min-width:200px;height:auto;aspect-ratio:1;margin:18px auto;border-radius:16px;background:#fff;border:1px solid var(--border-default)}
 .reading-home__donate .reading-home__donate-line{margin:6px 0}
-.reading-home__donate h2{margin-top:0}.reading-home__entry .reading-home__help{font-size:14px;padding:12px 0;min-height:44px}
+.reading-home__donate h2{margin-top:0}
+.reading-home__entry .reading-home__field-note{margin:8px 0 0;font-size:14px;line-height:1.5;color:var(--cream-muted)}
+.reading-home__donate img.reading-home__qr{image-rendering:pixelated;image-rendering:crisp-edges}
+.reading-home__entry .reading-home__help{font-size:14px;padding:12px 0;min-height:44px}

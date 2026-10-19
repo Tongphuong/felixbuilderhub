@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import vm from 'node:vm';
+import { createHash } from 'node:crypto';
 import ts from 'typescript';
 import * as entryModule from '../src/lib/read2lead/student-entry.mjs';
 
@@ -24,7 +25,8 @@ function page({ signup, remembered = '', scriptFails = false }) {
   const location = { search: '', pathname: '/read2lead', origin: 'https://app.test', href: 'https://app.test/read2lead', assign: u => assigned.push(u), replace() {} };
   const document = { querySelector: s => get(s === '[data-child-home]' ? 'root' : s.replace(/^#/, '')), getElementById: get, createElement: element, head: Object.assign(element(), { appendChild(n) { if (scriptFails) return void setImmediate(() => n.onerror && n.onerror()); window.turnstile = turnstile; setImmediate(() => n.onload && n.onload()); } }), querySelectorAll: () => [], addEventListener() {} };
   const turnstile = { render: (_c, opts) => { renders.push(opts); return 'w1'; }, reset: id => resets.push(id) };
-  const window = { location, addEventListener() {}, turnstile: undefined };
+  const listeners = {};
+  const window = { location, addEventListener: (k, f) => { listeners[k] = f; }, turnstile: undefined };
   const exportsRanks = {};
   const base = { document, Intl, Number, String, Error, TypeError, Promise, console };
   vm.runInNewContext(transpile('src/lib/r2l-ranks.ts'), { ...base, exports: exportsRanks, require: p => { if (p.includes('monster-avatar')) return { renderMonster() {} }; throw Error(p); } });
@@ -43,7 +45,7 @@ function page({ signup, remembered = '', scriptFails = false }) {
     get('signup-name').value = name; get('signup-age').value = age;
     get('signup-gender-boy').checked = gender === 'boy'; get('signup-gender-girl').checked = gender === 'girl';
   };
-  return { get, calls, assigned, timers, renders, resets, window, turnstile, fill,
+  return { get, calls, assigned, timers, listeners, renders, resets, window, turnstile, fill,
     async submit() { await get('signup-form').events.submit({ preventDefault() {} }); await settle(); } };
 }
 const signupCalls = p => p.calls.filter(c => c.url === '/api/signup');
@@ -205,4 +207,36 @@ test('script fails to load: kind Vietnamese message, no POST, code box usable; a
   assert.equal(signupCalls(p).length, 0);
   assert.equal(p.get('home-entry').hidden, false);
   assert.equal(p.get('home-entry-submit').disabled, false);
+});
+
+test('bfcache restore (pageshow persisted) re-enables the sign-up after a successful submit', async () => {
+  const p = page({ signup: async () => Response.json({ ok: true, link: 'https://app.test/r2l/start?link=abc' }) });
+  await settle(); p.fill(); p.renders[0].callback('t');
+  await p.submit();
+  assert.equal(p.get('signup-submit').disabled, true);
+  p.listeners.pageshow({ persisted: true }); await settle();
+  assert.equal(p.get('signup-submit').disabled, false);
+  assert.deepEqual(p.resets, ['w1']);
+  p.fill(); p.renders[0].callback('t2');
+  await p.submit();
+  assert.equal(signupCalls(p).length, 2);
+});
+
+test('the watchdog message clears when the Turnstile token arrives late', async () => {
+  const p = page({ signup: async () => Response.json({ ok: true }) });
+  await settle();
+  p.timers.find(t => t.ms === 10000).f();
+  assert.match(p.get('signup-message').textContent, /Ô xác minh chưa hiện được/);
+  p.renders[0].callback('late');
+  assert.equal(p.get('signup-message').textContent, '');
+});
+
+test('donation content, public-name note, privacy sentence, and the QR is byte-identical to the approved file', () => {
+  const src = readFileSync('src/components/Read2LeadChildHome.astro', 'utf8');
+  assert.match(src, /Chủ tài khoản:<\/strong> <span id="donate-account-name">TONG MINH PHUONG</);
+  assert.match(src, /Ngân hàng:<\/strong> <span id="donate-bank">MB Bank · 0396868675</);
+  assert.match(src, /Tên con sẽ hiện trên bảng xếp hạng công khai\./);
+  assert.ok(!/\[Tên/.test(src));
+  assert.match(readFileSync('src/pages/privacy.astro', 'utf8'), /Khi ba mẹ tự tạo mã Read2Lead, tên con \(như ba mẹ nhập\) và quái vật của con sẽ hiện trên bảng xếp hạng công khai\./);
+  assert.equal(createHash('sha256').update(readFileSync('public/donate-qr.png')).digest('hex'), '80287b00654b197614aa59aabe4f0b4a4c5d5368924c2a954eb3ff2bce64fdd8');
 });

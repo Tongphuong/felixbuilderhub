@@ -167,6 +167,7 @@ if (root) {
     });
     return turnstileLoading;
   }
+  const WATCHDOG_MESSAGE = 'Ô xác minh chưa hiện được. Ba mẹ tải lại trang hoặc nhắn Zalo Felix nhé.';
   let signupReady = false;
   async function initSignup() {
     if (signupReady || !document.getElementById('signup-card')) return;
@@ -177,13 +178,13 @@ if (root) {
       if (!t || !siteKey) throw new Error('turnstile_missing');
       turnstileWidget = t.render(el('signup-turnstile'), {
         sitekey: siteKey, language: 'vi', theme: 'dark',
-        callback: (token: string) => { turnstileToken = token; },
+        callback: (token: string) => { turnstileToken = token; if (el('signup-message').textContent === WATCHDOG_MESSAGE) signupMessage(''); },
         'expired-callback': () => { turnstileToken = ''; },
         'error-callback': () => { turnstileToken = ''; },
       });
       // The script can load yet never draw the box (a content filter blocking the iframe fires no error).
       setTimeout(() => {
-        if (!turnstileToken && !el('signup-turnstile').querySelector('iframe')) signupMessage('Ô xác minh chưa hiện được. Ba mẹ tải lại trang hoặc nhắn Zalo Felix nhé.');
+        if (!turnstileToken && !el('signup-turnstile').querySelector('iframe')) signupMessage(WATCHDOG_MESSAGE);
       }, 10000);
     } catch { signupReady = false; signupMessage('Chưa tải được ô xác minh. Con tải lại trang hoặc nhờ ba mẹ giúp nhé.'); }
   }
@@ -230,7 +231,13 @@ if (root) {
   });
   el('home-retry').addEventListener('click', load);
   window.addEventListener('pageshow', event => {
-    if (event.persisted) { busy = false; el('home-action-status').textContent = ''; void load(); }
+    if (event.persisted) {
+      // Back/forward cache: a sign-up that navigated away must be usable again (a fresh token is needed).
+      signupNavigating = false; signupBusy = false;
+      const signupButton = document.getElementById('signup-submit') as HTMLButtonElement | null;
+      if (signupButton) signupButton.disabled = false;
+      resetTurnstile();
+      busy = false; el('home-action-status').textContent = ''; void load(); }
   });
   void load();
 }
