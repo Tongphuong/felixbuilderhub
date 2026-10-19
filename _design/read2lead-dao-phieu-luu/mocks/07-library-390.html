@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Thư viện — Mỗi ngày một câu chuyện</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../design-system/fonts/fonts.css">
+<link rel="stylesheet" href="../design-system/r2l.css">
+</head>
+<body>
+
+
+
+<style>body{margin:0}a{color:#17324D}a:hover{color:#0B1E30}</style>
+
+<div class="r2l" style="width: 390px; min-height: 1320px; background: #9BDDFF; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+  <a href="#" class="back" style="align-self: flex-start"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path d="M19 12H6M11 6l-6 6 6 6" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>Về đọc sách</a>
+  <div style="display: flex; align-items: flex-end; justify-content: space-between">
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <span class="lab">Thư viện của con</span>
+      <h1 class="d t-1" style="margin: 0">Mỗi ngày một câu chuyện</h1>
+      <span class="b-m">48 câu chuyện · 6 quyển sách</span>
+    </div>
+    <img src="../assets/monsters-mock/mon-happy.png" alt="" style="width: 76px; height: 76px; flex: none">
+  </div>
+
+  <label style="display: flex; flex-direction: column; gap: 6px">
+    <span class="lab">Tìm truyện theo tên</span>
+    <input class="inp" placeholder="Ví dụ: Forest">
+  </label>
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <button class="tab tab-on" style="border: 2px solid #17324D">Tất cả các quyển</button>
+    <button class="tab" style="background: #fff; color: #17324D; border: 2px solid #17324D">Quyển 1</button>
+    <button class="tab" style="background: #fff; color: #17324D; border: 2px solid #17324D">Quyển 2</button>
+    <button class="tab" style="background: #fff; color: #17324D; border: 2px solid #17324D">Quyển 3</button>
+  </div>
+
+  <!-- featured -->
+  <div class="card" style="display: flex; flex-direction: column; gap: 12px; padding: 14px">
+    <div style="position: relative; height: 150px; border: 3px solid #17324D; border-radius: 20px; overflow: hidden; background: #6CC7F5">
+      <svg aria-hidden="true" width="100%" height="150" viewBox="0 0 330 150" preserveAspectRatio="xMidYMid slice"><circle cx="260" cy="44" r="24" fill="#FFD95A"></circle><ellipse cx="80" cy="50" rx="40" ry="14" fill="#fff"></ellipse><path d="M150 76 q12 -12 24 0 q12 -12 24 0" stroke="#17324D" stroke-width="4" fill="none" stroke-linecap="round"></path><path d="M0 116 C70 94 150 112 230 100 C290 92 320 100 330 98 L330 150 L0 150Z" fill="#4FB868"></path></svg>
+      <span class="tag tag-sun" style="position: absolute; left: 10px; top: 10px; border: 2px solid #17324D">Truyện hôm nay</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <span class="d t-2" lang="en">The Sky Is Blue!</span>
+      <span class="b-m">Bộ 1 · Quyển 2 · Bài 4</span>
+      <div style="display: flex; gap: 6px"><span class="tag">Có bài nghe</span><span class="tag tag-white">L1</span></div>
+    </div>
+    <a href="#" class="btn btn-sun btn-w m-ring">Đọc và nghe <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+  </div>
+
+  <span class="d t-3">Chọn truyện khác</span>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+    <a href="#" class="card-f" style="padding: 10px; display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: #17324D; border-radius: 22px; box-shadow: 0 4px 0 #17324D">
+      <div style="height: 96px; border: 3px solid #17324D; border-radius: 14px; background: #4FB868; display: flex; align-items: flex-end; justify-content: center"><svg aria-hidden="true" width="120" height="80" viewBox="0 0 120 80"><path d="M20 80 l20 -60 20 60z M60 80 l18 -50 18 50z" fill="#237A41" stroke="#17324D" stroke-width="3"></path></svg></div>
+      <span class="d t-4" lang="en">A Forest Adventure</span>
+      <span style="font-size: 14px; font-weight: 800">Quyển 2 · Bài 3</span>
+      <span class="tag" style="align-self: flex-start">Có bài nghe</span>
+    </a>
+    <a href="#" class="card-f" style="padding: 10px; display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: #17324D; border-radius: 22px; box-shadow: 0 4px 0 #17324D">
+      <div style="height: 96px; border: 3px solid #17324D; border-radius: 14px; background: #3CC8F0; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="80" height="50" viewBox="0 0 80 50"><path d="M10 25 q30 -30 55 0 q-25 30 -55 0z M65 25 l12 -12 v24z" fill="#FF7A3D" stroke="#17324D" stroke-width="3" stroke-linejoin="round"></path><circle cx="24" cy="22" r="3" fill="#17324D"></circle></svg></div>
+      <span class="d t-4" lang="en">A Fish and a Gift</span>
+      <span style="font-size: 14px; font-weight: 800">Quyển 2 · Bài 2</span>
+      <span class="tag tag-ink" style="align-self: flex-start">Đã đọc</span>
+    </a>
+    <a href="#" class="card-f" style="padding: 10px; display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: #17324D; border-radius: 22px; box-shadow: 0 4px 0 #17324D">
+      <div style="height: 96px; border: 3px solid #17324D; border-radius: 14px; background: #E3F1FA; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="90" height="50" viewBox="0 0 90 50"><path d="M10 40 q-6 -22 18 -22 q6 -16 26 -10 q22 -4 24 18 q12 4 4 14z" fill="#fff" stroke="#17324D" stroke-width="3" stroke-linejoin="round"></path></svg></div>
+      <span class="d t-4" lang="en">A Little Help for Cumulo</span>
+      <span style="font-size: 14px; font-weight: 800">Quyển 2 · Bài 1</span>
+      <span class="tag tag-white" style="align-self: flex-start">Chưa có bài nghe</span>
+    </a>
+    <a href="#" class="card-f" style="padding: 10px; display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: #17324D; border-radius: 22px; box-shadow: 0 4px 0 #17324D">
+      <div style="height: 96px; border: 3px solid #17324D; border-radius: 14px; background: #FFE7A8; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="90" height="50" viewBox="0 0 90 50"><ellipse cx="28" cy="32" rx="18" ry="12" fill="#C9D3DE" stroke="#17324D" stroke-width="3"></ellipse><circle cx="16" cy="18" r="6" fill="#C9D3DE" stroke="#17324D" stroke-width="3"></circle><ellipse cx="64" cy="32" rx="18" ry="12" fill="#E8A06B" stroke="#17324D" stroke-width="3"></ellipse><circle cx="76" cy="18" r="6" fill="#E8A06B" stroke="#17324D" stroke-width="3"></circle></svg></div>
+      <span class="d t-4" lang="en">A Tale of Two Mice</span>
+      <span style="font-size: 14px; font-weight: 800">Quyển 1 · Bài 6</span>
+      <span class="tag" style="align-self: flex-start">Có bài nghe</span>
+    </a>
+  </div>
+</div>
+
+
+</body>
+</html>

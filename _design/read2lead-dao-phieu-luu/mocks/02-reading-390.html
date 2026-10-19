@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Đọc sách — giữa truyện</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../design-system/fonts/fonts.css">
+<link rel="stylesheet" href="../design-system/r2l.css">
+</head>
+<body>
+
+
+
+<style>body{margin:0}a{color:#17324D}a:hover{color:#0B1E30}</style>
+
+<div class="r2l" style="width: 390px; min-height: 1060px; background: #9BDDFF; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+
+  <!-- top: back + page progress -->
+  <div style="display: flex; align-items: center; gap: 10px">
+    <a href="#" class="back"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path d="M19 12H6M11 6l-6 6 6 6" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>Về nhà</a>
+    <div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+      <div style="display: flex; gap: 4px">
+        <span style="flex: 1; height: 12px; border-radius: 6px; background: #237A41; border: 2px solid #17324D"></span>
+        <span style="flex: 1; height: 12px; border-radius: 6px; background: #237A41; border: 2px solid #17324D"></span>
+        <span style="flex: 1; height: 12px; border-radius: 6px; background: #FFC83D; border: 2px solid #17324D"></span>
+        <span style="flex: 1; height: 12px; border-radius: 6px; background: #FFF8E7; border: 2px solid #17324D"></span>
+        <span style="flex: 1; height: 12px; border-radius: 6px; background: #FFF8E7; border: 2px solid #17324D"></span>
+        <span style="flex: 1; height: 12px; border-radius: 6px; background: #FFF8E7; border: 2px solid #17324D"></span>
+      </div>
+      <span style="font-weight: 900; font-size: 15px; text-align: right">Trang 3 / 6</span>
+    </div>
+  </div>
+
+  <!-- picture -->
+  <div style="position: relative; height: 250px; border: 3px solid #17324D; border-radius: 26px; overflow: hidden; background: #6CC7F5; box-shadow: 0 6px 0 #17324D">
+    <svg role="img" aria-label="Tranh: bầu trời xanh, một chú chim nhỏ bay lên" width="352" height="250" viewBox="0 0 352 250" preserveAspectRatio="xMidYMid slice"><circle cx="280" cy="60" r="34" fill="#FFD95A"></circle><g class="m-drift"><ellipse cx="80" cy="70" rx="46" ry="16" fill="#fff"></ellipse><ellipse cx="104" cy="58" rx="28" ry="18" fill="#fff"></ellipse></g><g class="m-bob"><path d="M170 120 q14 -16 28 0 q14 -16 28 0" stroke="#17324D" stroke-width="5" fill="none" stroke-linecap="round"></path><circle cx="198" cy="124" r="9" fill="#FF7A3D" stroke="#17324D" stroke-width="3"></circle></g><path d="M0 196 C70 168 150 190 230 176 C290 166 330 176 352 172 L352 250 L0 250Z" fill="#4FB868"></path><path d="M40 206 l12 -38 12 38z" fill="#237A41" stroke="#17324D" stroke-width="3"></path><path d="M290 210 l10 -30 10 30z" fill="#237A41" stroke="#17324D" stroke-width="3"></path></svg>
+    <span class="tag tag-white" style="position: absolute; left: 12px; top: 12px">The Sky Is Blue!</span>
+  </div>
+
+  <!-- story text -->
+  <div class="card" style="position: relative; padding: 18px 18px 16px">
+    <p lang="en" style="margin: 0; font-family: 'Nunito'; font-weight: 800; font-size: 25px; line-height: 1.5">The sky is <span style="background: #FFE7A8; border-radius: 6px; padding: 0 4px">blue</span>. A little bird flies up, up, up!</p>
+    <img src="../assets/monsters-mock/mon-happy.png" alt="" style="position: absolute; right: -6px; bottom: -22px; width: 64px; height: 64px">
+  </div>
+
+  <!-- voice buttons -->
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 6px">
+    <button class="btn btn-sm" style="flex-direction: column; gap: 2px; min-height: 84px; font-size: 19px; padding: 8px"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="#E0362C" stroke="#17324D" stroke-width="2"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8" stroke="#17324D" stroke-width="2.2" fill="none" stroke-linecap="round"></path></svg>Con nói</button>
+    <button class="btn btn-sm" style="flex-direction: column; gap: 2px; min-height: 84px; font-size: 19px; padding: 8px; line-height: 1.1"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#3CC8F0" stroke="#17324D" stroke-width="2" stroke-linejoin="round"></path><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" stroke="#17324D" stroke-width="2.2" fill="none" stroke-linecap="round"></path></svg>Nghe Minny đọc lại</button>
+  </div>
+
+  <!-- 2-option question -->
+  <div class="card-f" style="display: flex; flex-direction: column; gap: 10px; border-radius: 26px">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <img src="../assets/minny/minny-face.svg" alt="Minny" style="width: 48px; height: 48px; border-radius: 50%; border: 3px solid #E0362C; object-fit: cover">
+      <div style="display: flex; flex-direction: column">
+        <span class="lab">Minny hỏi · chọn 1 nhé</span>
+        <span lang="en" class="d t-4">What colour is the sky?</span>
+      </div>
+    </div>
+    <button class="opt opt-ok"><span class="node n-done" style="width: 40px; height: 40px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span lang="en" style="flex: 1">Blue</span><span class="m-pop" style="font-family: 'Baloo 2'; font-size: 18px; color: #1B6136">Giỏi lắm!</span></button>
+    <button class="opt"><span class="node" style="width: 40px; height: 40px; background: #FFF8E7; font-family: 'Baloo 2'; font-size: 20px">B</span><span lang="en">Green</span></button>
+  </div>
+
+  <a href="#" class="btn btn-sun btn-w m-ring" style="margin-top: 4px">Trang tiếp <svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+</div>
+
+
+</body>
+</html>

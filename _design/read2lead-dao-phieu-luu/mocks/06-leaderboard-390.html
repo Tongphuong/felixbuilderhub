@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Bảng xếp hạng</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../design-system/fonts/fonts.css">
+<link rel="stylesheet" href="../design-system/r2l.css">
+</head>
+<body>
+
+
+
+<style>body{margin:0}a{color:#17324D}a:hover{color:#0B1E30}</style>
+
+<div class="r2l" style="width: 390px; min-height: 1400px; background: #9BDDFF; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+  <a href="#" class="back" style="align-self: flex-start"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path d="M19 12H6M11 6l-6 6 6 6" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>Về đọc sách</a>
+  <div style="display: flex; flex-direction: column; gap: 2px">
+    <span class="lab">Tất cả các bạn cùng đọc</span>
+    <h1 class="d t-1" style="margin: 0">Bảng xếp hạng</h1>
+    <span class="b-l">Đọc thêm một truyện, con leo thêm một bậc nhé!</span>
+  </div>
+  <div class="tabs" style="align-self: stretch"><button class="tab tab-on" style="flex: 1; min-height: 52px; font-size: 18px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.5 1.3 6.5L12 17l-5.9 3.3 1.3-6.5L2.5 9.3l6.6-.8z" fill="#FFF8E7" stroke="#17324D" stroke-width="1.6"></path></svg>XP</button><button class="tab" style="flex: 1; min-height: 52px; font-size: 18px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z" fill="#3CC8F0" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"></path></svg>Kim cương</button></div>
+  <span class="b-m" style="text-align: center">Xếp hạng tất cả các bạn, tính từ trước đến nay.</span>
+
+  <!-- podium -->
+  <div class="card-f card-leaf" style="border-radius: 28px; padding: 16px 12px 0; overflow: hidden">
+    <div style="display: flex; align-items: flex-end; gap: 8px">
+      <div style="flex: 1; display: flex; flex-direction: column; align-items: center"><img src="../assets/monsters-mock/mon-green.png" alt="" style="width: 84px; height: 84px"><span style="font-weight: 900; font-size: 16px">Hieuenzo</span><div style="width: 100%; height: 84px; margin-top: 4px; background: #C9D3DE; color: #17324D; border: 3px solid #17324D; border-bottom: 0; border-radius: 16px 16px 0 0; display: flex; flex-direction: column; align-items: center; justify-content: center"><b class="d" style="font-size: 30px">#2</b><span style="font-weight: 900">900 XP</span></div></div>
+      <div style="flex: 1; display: flex; flex-direction: column; align-items: center"><img src="../assets/ref/crown.svg" alt="" style="width: 34px; height: 34px; filter: drop-shadow(0 0 0 #17324D) drop-shadow(2px 2px 0 #17324D)"><img class="m-bob" src="../assets/monsters-mock/mon-red.png" alt="" style="width: 96px; height: 96px"><span style="font-weight: 900; font-size: 16px">Hoang</span><div style="width: 100%; height: 118px; margin-top: 4px; background: #FFC83D; color: #17324D; border: 3px solid #17324D; border-bottom: 0; border-radius: 16px 16px 0 0; display: flex; flex-direction: column; align-items: center; justify-content: center"><b class="d" style="font-size: 36px">#1</b><span style="font-weight: 900">1.080 XP</span></div></div>
+      <div style="flex: 1; display: flex; flex-direction: column; align-items: center"><img src="../assets/monsters-mock/mon-yellow.png" alt="" style="width: 80px; height: 80px"><span style="font-weight: 900; font-size: 16px">Percy</span><div style="width: 100%; height: 64px; margin-top: 4px; background: #F2B98C; color: #17324D; border: 3px solid #17324D; border-bottom: 0; border-radius: 16px 16px 0 0; display: flex; flex-direction: column; align-items: center; justify-content: center"><b class="d" style="font-size: 26px">#3</b><span style="font-weight: 900">890 XP</span></div></div>
+    </div>
+  </div>
+
+  <!-- list -->
+  <div class="card-f" style="padding: 8px; display: flex; flex-direction: column; gap: 4px; border-radius: 26px">
+    <div style="display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 0 10px"><b class="d" style="width: 40px; font-size: 22px">#4</b><img src="../assets/monsters-mock/mon-green.png" alt="" style="width: 48px; height: 48px"><span style="flex: 1; font-weight: 900; font-size: 18px">Phuc</span><span style="font-weight: 900">825 XP</span></div>
+    <div style="display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 0 10px; background: #F4F8FB; border-radius: 16px"><b class="d" style="width: 40px; font-size: 22px">#5</b><img src="../assets/monsters-mock/mon-oops.png" alt="" style="width: 48px; height: 48px"><span style="flex: 1; font-weight: 900; font-size: 18px">DangNemo</span><span style="font-weight: 900">780 XP</span></div>
+    <div style="display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 0 10px"><b class="d" style="width: 40px; font-size: 22px">#6</b><img src="../assets/monsters-mock/mon-happy.png" alt="" style="width: 48px; height: 48px"><span style="flex: 1; font-weight: 900; font-size: 18px">Danny</span><span style="font-weight: 900">680 XP</span></div>
+    <div style="display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 0 10px; background: #F4F8FB; border-radius: 16px"><b class="d" style="width: 40px; font-size: 22px">#7</b><img src="../assets/monsters-mock/mon-acc.png" alt="" style="width: 48px; height: 48px"><span style="flex: 1; font-weight: 900; font-size: 18px">Vodka</span><span style="font-weight: 900">580 XP</span></div>
+    <div class="m-pop" style="display: flex; align-items: center; gap: 12px; min-height: 72px; padding: 0 10px; background: #FFC83D; border: 3px solid #17324D; border-radius: 18px; box-shadow: 0 4px 0 #17324D; margin: 4px 0"><b class="d" style="width: 40px; font-size: 24px">#8</b><img class="m-bob" src="../assets/monsters-mock/mon-cheer.png" alt="" style="width: 56px; height: 56px"><div style="flex: 1; display: flex; flex-direction: column"><span style="font-weight: 900; font-size: 18px">Minhdt</span><span class="tag tag-ink" style="align-self: flex-start">Con đây!</span></div><span style="font-weight: 900">320 XP</span></div>
+    <div style="display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 0 10px"><b class="d" style="width: 40px; font-size: 22px">#9</b><img src="../assets/monsters-mock/mon-acc2.png" alt="" style="width: 48px; height: 48px"><span style="flex: 1; font-weight: 900; font-size: 18px">Mina</span><span style="font-weight: 900">260 XP</span></div>
+    <div style="display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 0 10px; background: #F4F8FB; border-radius: 16px"><b class="d" style="width: 40px; font-size: 22px">#10</b><img src="../assets/monsters-mock/mon-blue.png" alt="" style="width: 48px; height: 48px"><span style="flex: 1; font-weight: 900; font-size: 18px">TuAnh</span><span style="font-weight: 900">160 XP</span></div>
+    <div style="display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 0 10px"><b class="d" style="width: 40px; font-size: 22px">#11</b><img src="../assets/monsters-mock/mon-yellow.png" alt="" style="width: 48px; height: 48px"><span style="flex: 1; font-weight: 900; font-size: 18px">KhanhVy</span><span style="font-weight: 900">80 XP</span></div>
+  </div>
+
+  <span class="b-m" style="text-align: center">XP tính tổng từ trước đến nay. Kim cương là số con đang có. Bảng này không tặng thêm kim cương.</span>
+  <a href="#" class="btn btn-sun btn-w">Đọc truyện để leo bảng</a>
+</div>
+
+
+</body>
+</html>

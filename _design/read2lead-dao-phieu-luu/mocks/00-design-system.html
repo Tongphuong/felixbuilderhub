@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Đảo phiêu lưu — Design system</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../design-system/fonts/fonts.css">
+<link rel="stylesheet" href="../design-system/r2l.css">
+</head>
+<body>
+
+
+
+<style>body{margin:0}a{color:#17324D}a:hover{color:#0B1E30}</style>
+
+<div class="r2l" style="width: 1280px; min-height: 3500px; background: #FFF8E7; padding: 56px 64px; display: flex; flex-direction: column; gap: 48px">
+
+  <!-- Header -->
+  <div style="display: flex; align-items: center; gap: 32px">
+    <img class="m-bob" src="../assets/monsters-mock/mon-cheer.png" alt="" style="width: 150px; height: 150px">
+    <div style="display: flex; flex-direction: column; gap: 10px; flex: 1">
+      <span class="lab" style="letter-spacing: .08em">READ2LEAD · DESIGN SYSTEM v1</span>
+      <h1 class="d" style="margin: 0; font-size: 60px">Đảo phiêu lưu</h1>
+      <p class="b-l" style="margin: 0; max-width: 760px; font-weight: 700">Every day is a short trip across an island: <b>Đọc → Trả lời Minny → Kể qua tranh</b>, then the flag. Bright daylight, chunky ink outlines, one juicy yellow button per screen. Reading stays the hero; the monster cheers, it never sells.</p>
+    </div>
+    <img src="../assets/minny/minny-face.svg" alt="Minny" style="width: 130px; height: 130px; border-radius: 50%; border: 4px solid #17324D; object-fit: cover">
+  </div>
+
+  <!-- Principles -->
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+    <div class="card-f"><span class="d t-4">1 · One next step</span><p class="b-m" style="margin: 8px 0 0">Each screen has exactly one yellow button. Everything else is white or a link.</p></div>
+    <div class="card-f"><span class="d t-4">2 · Words + icons</span><p class="b-m" style="margin: 8px 0 0">Every icon carries a Vietnamese word. Body text ≥ 16 px, kid copy 18 px.</p></div>
+    <div class="card-f"><span class="d t-4">3 · Never shame</span><p class="b-m" style="margin: 8px 0 0">No “sai”, no red X, no timers. Wrong answers get “Gần đúng rồi!” + the answer.</p></div>
+    <div class="card-f"><span class="d t-4">4 · Calm when asked</span><p class="b-m" style="margin: 8px 0 0">Every motion has a still twin. Reduce-motion users lose nothing but movement.</p></div>
+  </div>
+
+  <!-- Colour -->
+  <div class="sec">
+    <h2 class="d t-1" style="margin: 0">Colour</h2>
+    <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px">
+      <div style="display: flex; flex-direction: column; gap: 6px"><div style="height: 96px; border-radius: 18px; background: #17324D; border: 3px solid #17324D"></div><b>Mực · Ink</b><span class="b-m">#17324D · all text, outlines, hard shadows</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><div style="height: 96px; border-radius: 18px; background: #FFC83D; border: 3px solid #17324D"></div><b>Nắng · Sun</b><span class="b-m">#FFC83D · the one primary button, progress fill, #1</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><div style="height: 96px; border-radius: 18px; background: #9BDDFF; border: 3px solid #17324D"></div><b>Trời · Sky</b><span class="b-m">#9BDDFF · page ground on kid screens</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><div style="height: 96px; border-radius: 18px; background: #237A41; border: 3px solid #17324D"></div><b>Lá · Leaf</b><span class="b-m">#237A41 · done steps, success, white text 5.3:1</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><div style="height: 96px; border-radius: 18px; background: #FFF8E7; border: 3px solid #17324D"></div><b>Kem · Cream</b><span class="b-m">#FFF8E7 · cards, reading page</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><div style="height: 96px; border-radius: 18px; background: #FFE7A8; border: 3px solid #17324D"></div><b>Cát · Sand</b><span class="b-m">#FFE7A8 · map path, secondary panels</span></div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px">
+      <div style="display: flex; align-items: center; gap: 10px"><div style="width: 44px; height: 44px; border-radius: 12px; background: #4FB868; border: 3px solid #17324D"></div><span class="b-m">Đồi #4FB868 / #7BD389 · decor only</span></div>
+      <div style="display: flex; align-items: center; gap: 10px"><div style="width: 44px; height: 44px; border-radius: 12px; background: #FF7A3D; border: 3px solid #17324D"></div><span class="b-m">San hô #FF7A3D · flag, streak; ink text only</span></div>
+      <div style="display: flex; align-items: center; gap: 10px"><div style="width: 44px; height: 44px; border-radius: 12px; background: #E0362C; border: 3px solid #17324D"></div><span class="b-m">Minny #E0362C · Minny only</span></div>
+      <div style="display: flex; align-items: center; gap: 10px"><div style="width: 44px; height: 44px; border-radius: 12px; background: #E8A06B; border: 3px solid #17324D"></div><span class="b-m">Đồng #E8A06B</span></div>
+      <div style="display: flex; align-items: center; gap: 10px"><div style="width: 44px; height: 44px; border-radius: 12px; background: #C9D3DE; border: 3px solid #17324D"></div><span class="b-m">Bạc #C9D3DE</span></div>
+      <div style="display: flex; align-items: center; gap: 10px"><div style="width: 44px; height: 44px; border-radius: 12px; background: #FFC83D; border: 3px solid #17324D"></div><span class="b-m">Vàng #FFC83D</span></div>
+    </div>
+    <p class="b-m" style="margin: 0">Contrast: ink on sun 8.9:1, ink on sky 8.6:1, ink on cream 12:1, white on leaf 5.3:1. Never put white text on sun, sky, coral or hill green. Parent page uses the same tokens with cream ground and less decoration.</p>
+  </div>
+
+  <!-- Type -->
+  <div style="display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px">
+    <div class="sec">
+      <h2 class="d t-1" style="margin: 0">Chữ · Type</h2>
+      <div lang="vi" style="display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; align-items: baseline; gap: 16px"><span class="lab" style="width: 120px">Display 46</span><span class="d t-xl">Chào Minh!</span></div>
+        <div style="display: flex; align-items: baseline; gap: 16px"><span class="lab" style="width: 120px">H1 34</span><span class="d t-1">Con đã đọc xong!</span></div>
+        <div style="display: flex; align-items: baseline; gap: 16px"><span class="lab" style="width: 120px">H2 26</span><span class="d t-2">Chuyến phiêu lưu hôm nay</span></div>
+        <div style="display: flex; align-items: baseline; gap: 16px"><span class="lab" style="width: 120px">H3 22</span><span class="d t-3">Bảng xếp hạng</span></div>
+        <div style="display: flex; align-items: baseline; gap: 16px"><span class="lab" style="width: 120px">Body 18</span><span class="b-l">Con đọc to trang này rồi bấm Trang tiếp nhé.</span></div>
+        <div style="display: flex; align-items: baseline; gap: 16px"><span class="lab" style="width: 120px">Small 16</span><span class="b-m">Dành cho ba mẹ</span></div>
+        <div style="display: flex; align-items: baseline; gap: 16px"><span class="lab" style="width: 120px">Story 24</span><span lang="en" style="font-family: 'Nunito'; font-weight: 800; font-size: 24px; line-height: 1.5">The sky is blue. I see a bird.</span></div>
+      </div>
+    </div>
+    <div class="card-f card-sky" style="display: flex; flex-direction: column; gap: 10px">
+      <span class="d t-3">Rules</span>
+      <span class="b-m">• <b>Baloo 2</b> 800 for headings, buttons, numbers. <b>Nunito</b> 700–900 for everything else. Both have full Vietnamese diacritics.</span>
+      <span class="b-m">• Minimum 16 px anywhere a child looks; 15 px only for 900-weight labels.</span>
+      <span class="b-m">• English story text: Nunito 800, 24 px on phone / 30 px on desktop, line-height 1.5, max 2–3 sentences per page view.</span>
+      <span class="b-m">• Never grey text. Secondary text stays ink at weight 700.</span>
+      <span class="b-m">• Numbers use Vietnamese grouping: 1.080 XP, 39.444.</span>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="sec">
+    <h2 class="d t-1" style="margin: 0">Nút · Buttons</h2>
+    <div lang="vi" style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px">
+      <a href="#" class="btn btn-sun btn-xl m-ring">Mở truyện <svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      <a href="#" class="btn btn-sun">Trang tiếp <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      <a href="#" class="btn btn-leaf">Lưu chiến công <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3" fill="#3CC8F0" stroke="#fff" stroke-width="2"></rect><rect x="7" y="13" width="10" height="8" rx="1" fill="#fff"></rect></svg></a>
+      <a href="#" class="btn">Đọc thêm truyện</a>
+      <a href="#" class="btn btn-sm">Đổi bạn đồng hành</a>
+      <span class="btn btn-off">Minny đang nghỉ</span>
+    </div>
+    <div lang="vi" style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px">
+      <button class="btn btn-sm" style="font-size: 20px"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="#E0362C" stroke="#17324D" stroke-width="2"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8" stroke="#17324D" stroke-width="2.2" fill="none" stroke-linecap="round"></path></svg>Con nói</button>
+      <button class="btn btn-sm" style="font-size: 20px"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#3CC8F0" stroke="#17324D" stroke-width="2" stroke-linejoin="round"></path><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" stroke="#17324D" stroke-width="2.2" fill="none" stroke-linecap="round"></path></svg>Nghe Minny đọc lại</button>
+      <a href="#" class="back"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path d="M19 12H6M11 6l-6 6 6 6" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>Về đọc sách</a>
+      <a href="#" class="lnk">Dành cho ba mẹ</a>
+    </div>
+    <p class="b-m" style="margin: 0">Primary 64 px tall (72 px hero), 3 px ink border, 6 px hard ink shadow that collapses to 2 px on press — the tactile “squish”. Secondary is white. Disabled is dashed and says why in words, never just greyed. Tap targets ≥ 48 px everywhere; primary ≥ 64.</p>
+  </div>
+
+  <!-- Cards, chips, badges -->
+  <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px" lang="vi">
+    <div class="sec">
+      <h2 class="d t-1" style="margin: 0">Thẻ · Cards</h2>
+      <div class="card" style="display: flex; flex-direction: column; gap: 8px"><span class="d t-3">Adventure card</span><span class="b-m">Cream, 28 px radius, 6 px ink shadow. Only for the one thing to do now.</span></div>
+      <div class="card-f"><span class="d t-3">Flat card</span><br><span class="b-m">White, no shadow. Information: rank progress, lists.</span></div>
+      <div class="card-f card-sand"><span class="d t-3">Map panel</span><br><span class="b-m">Sand. The 3-step path and the finish flag.</span></div>
+      <div class="card-f card-leaf" style="border-color: #17324D"><span class="d t-3">Leaderboard panel</span><br><span class="b-m">Leaf with white text — the “hill” where friends stand.</span></div>
+    </div>
+    <div class="sec">
+      <h2 class="d t-1" style="margin: 0">Chip &amp; huy hiệu</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; background: #9BDDFF; padding: 16px; border-radius: 20px">
+        <span class="chip"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z" fill="#3CC8F0" stroke="#17324D" stroke-width="1.6" stroke-linejoin="round"></path><path d="M2 9h20M9 3l3 18 3-18" stroke="#17324D" stroke-width="1.2" fill="none"></path></svg>55 kim cương</span>
+        <span class="chip"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.5 1.3 6.5L12 17l-5.9 3.3 1.3-6.5L2.5 9.3l6.6-.8z" fill="#FFC83D" stroke="#17324D" stroke-width="1.6" stroke-linejoin="round"></path></svg>320 XP</span>
+        <span class="chip"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path d="M12 2c1 4 4 6 4 10a4 4 0 0 1-8 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-2-5 0-9z" fill="#FF7A3D"></path></svg>3 ngày</span>
+      </div>
+      <div style="display: flex; gap: 16px; align-items: flex-end">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><svg aria-hidden="true" width="72" height="80" viewBox="0 0 32 36"><path d="M16 2l13 5v10c0 9-6 15-13 17C9 32 3 26 3 17V7z" fill="#E8A06B" stroke="#17324D" stroke-width="2"></path><path d="M16 11l2 4.2 4.6.6-3.4 3.2.9 4.6L16 21.3l-4.1 2.3.9-4.6-3.4-3.2 4.6-.6z" fill="#FFF8E7" stroke="#17324D" stroke-width="1.4"></path></svg><b>Đồng ★</b></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><svg aria-hidden="true" width="80" height="90" viewBox="0 0 32 36"><path d="M16 2l13 5v10c0 9-6 15-13 17C9 32 3 26 3 17V7z" fill="#C9D3DE" stroke="#17324D" stroke-width="2"></path><path d="M16 11l2 4.2 4.6.6-3.4 3.2.9 4.6L16 21.3l-4.1 2.3.9-4.6-3.4-3.2 4.6-.6z" fill="#FFF8E7" stroke="#17324D" stroke-width="1.4"></path></svg><b>Bạc ★★</b></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><svg class="m-tw" aria-hidden="true" width="88" height="100" viewBox="0 0 32 36"><path d="M16 2l13 5v10c0 9-6 15-13 17C9 32 3 26 3 17V7z" fill="#FFC83D" stroke="#17324D" stroke-width="2"></path><path d="M16 11l2 4.2 4.6.6-3.4 3.2.9 4.6L16 21.3l-4.1 2.3.9-4.6-3.4-3.2 4.6-.6z" fill="#FFF8E7" stroke="#17324D" stroke-width="1.4"></path></svg><b>Vàng ★★★</b></div>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-left: 12px">
+          <span class="tag">L1</span><span class="tag tag-ink">Con đang ở đây</span><span class="tag tag-sun">Mới</span><span class="tag tag-white">Đã đọc</span>
+        </div>
+      </div>
+      <p class="b-m" style="margin: 0">Rank is a shield, colour = tier, stars written as ★ text so it reads aloud. Badges from the game system (first_story, streak_3 …) reuse the shield with their emoji swapped for a drawn icon.</p>
+    </div>
+  </div>
+
+  <!-- Map nodes + characters -->
+  <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 32px" lang="vi">
+    <div class="sec">
+      <h2 class="d t-1" style="margin: 0">Bản đồ 3 bước</h2>
+      <div class="card-f card-sand" style="display: flex; justify-content: space-around; align-items: flex-start">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; width: 110px"><div class="node n-done" style="width: 64px; height: 64px"><svg aria-hidden="true" width="32" height="32" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><b>Xong</b><span class="b-m" style="text-align: center">leaf + tick</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; width: 110px"><div class="node n-now m-halo" style="width: 78px; height: 78px"><img src="../assets/minny/minny-face.svg" alt="" style="width: 100%; height: 100%; object-fit: cover"></div><b>Bây giờ</b><span class="b-m" style="text-align: center">white, 4 px, halo pulse</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; width: 110px"><div class="node n-next" style="width: 64px; height: 64px"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" stroke="#17324D" stroke-width="2.2" fill="none"></rect><circle cx="9" cy="10" r="2" fill="#17324D"></circle><path d="M4 18l5-5 4 4 3-3 4 4" stroke="#17324D" stroke-width="2.2" fill="none"></path></svg></div><b>Tiếp theo</b><span class="b-m" style="text-align: center">dashed, never locked</span></div>
+      </div>
+    </div>
+    <div class="sec">
+      <h2 class="d t-1" style="margin: 0">Nhân vật · Expressions</h2>
+      <div class="card-f card-sky" style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; text-align: center">
+        <div><img src="../assets/monsters-mock/mon-happy.png" alt="" style="width: 100%"><b>Vui</b><br><span class="b-m">idle, lists</span></div>
+        <div><img src="../assets/monsters-mock/mon-cheer.png" alt="" style="width: 100%"><b>Vẫy chào</b><br><span class="b-m">arrival</span></div>
+        <div><img src="../assets/monsters-mock/mon-wow.png" alt="" style="width: 100%"><b>Wow!</b><br><span class="b-m">reward, rank-up</span></div>
+        <div><img src="../assets/monsters-mock/mon-oops.png" alt="" style="width: 100%"><b>Ối!</b><br><span class="b-m">errors</span></div>
+        <div><img src="../assets/monsters-mock/mon-sleep.png" alt="" style="width: 100%"><b>Mơ màng</b><br><span class="b-m">empty, resting</span></div>
+        <div><img src="../assets/minny/minny-face.svg" alt="" style="width: 100%; border-radius: 50%; border: 3px solid #17324D"><b>Minny</b><br><span class="b-m">voice, questions</span></div>
+      </div>
+      <p class="b-m" style="margin: 0">Monsters are the child's own avatar built from the existing Kenney parts — only the mouth/eyes/arms swap per expression. Minny always appears in a round porthole with a red ring; she speaks, the monster reacts.</p>
+      <div class="card-f" style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; text-align: center; align-items: end">
+        <div><img src="../assets/minny/minny-face.svg" alt="" style="width: 100%; border-radius: 50%; border: 3px solid #E0362C"><b>Mặt · idle</b><br><span class="b-m">avatars, map</span></div>
+        <div><img src="../assets/minny/minny-face-talk.svg" alt="" style="width: 100%; border-radius: 50%; border: 3px solid #E0362C"><b>Đang nói</b><br><span class="b-m">asking</span></div>
+        <div><img src="../assets/minny/minny-face-sleep.svg" alt="" style="width: 100%; border-radius: 50%; border: 3px solid #17324D"><b>Đang ngủ</b><br><span class="b-m">voice resting</span></div>
+        <div><img src="../assets/minny/minny-idle.svg" alt="" style="width: 100%"><b>Đứng</b><br><span class="b-m">intro, parents</span></div>
+        <div><img src="../assets/minny/minny-listen.svg" alt="" style="width: 100%"><b>Lắng nghe</b><br><span class="b-m">recording</span></div>
+        <div><img src="../assets/minny/minny-cheer.svg" alt="" style="width: 100%"><b>Reo mừng</b><br><span class="b-m">Great job!</span></div>
+      </div>
+      <p class="b-m" style="margin: 0"><b>Minny is drawn flat</b> (vector, ink outline, same style as the monsters) so every pose is a tiny SVG that scales and loads fast on cheap phones — no 3D renders needed. Red #E0362C body, dark visor, glowing orange eyes, heart on her chest.</p>
+    </div>
+  </div>
+
+  <!-- Motion -->
+  <div class="sec" lang="vi">
+    <h2 class="d t-1" style="margin: 0">Chuyển động · Motion</h2>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+      <div class="card-f" style="display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center"><img class="m-bob" src="../assets/monsters-mock/mon-happy.png" alt="" style="width: 96px"><b>Thở · bob</b><span class="b-m">2.6 s loop, ±10 px, ±2°. Avatar on home.<br><b>Still:</b> static, same pose.</span></div>
+      <div class="card-f" style="display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center"><img class="m-dance" src="../assets/monsters-mock/mon-wow.png" alt="" style="width: 96px"><b>Nhảy · dance</b><span class="b-m">1.1 s, 3 loops then stop. Reward, rank-up.<br><b>Still:</b> “Wow!” face + arms up.</span></div>
+      <div class="card-f" style="display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center"><div class="node n-now m-halo" style="width: 80px; height: 80px; background: #FFC83D"></div><b>Gọi · halo</b><span class="b-m">1.6 s ring on the one next thing.<br><b>Still:</b> thicker 6 px sun outline.</span></div>
+      <div class="card-f" style="display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center"><div style="position: relative; width: 96px; height: 96px"><svg class="m-burst" aria-hidden="true" width="96" height="96" viewBox="0 0 96 96"><g stroke="#FF7A3D" stroke-width="6" stroke-linecap="round"><path d="M48 8v16M48 72v16M8 48h16M72 48h16M20 20l10 10M66 66l10 10M76 20L66 30M30 66L20 76"></path></g><circle cx="48" cy="48" r="14" fill="#FFC83D" stroke="#17324D" stroke-width="3"></circle></svg></div><b>Bùng · burst</b><span class="b-m">0.9 s once + confetti 2.4 s ×2.<br><b>Still:</b> burst drawn, confetti placed.</span></div>
+    </div>
+    <p class="b-m" style="margin: 0">Only <b>transform</b> and <b>opacity</b> animate (cheap on low-end Android). Max 3 moving things on a screen. No loops over 1 per screen except the halo on the next action. Sound cue points: arrival “ding”, answer “pling”, reward “ta-da”, rank-up fanfare — every sound has a visual twin and is muted by the parent switch. Toggle <b>Chuyển động</b> in Tweaks to see the still versions on every artboard; the same switch follows <i>prefers-reduced-motion</i>.</p>
+  </div>
+
+  <!-- Layout -->
+  <div class="sec">
+    <h2 class="d t-1" style="margin: 0">Bố cục · Layout</h2>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+      <div class="card-f"><span class="d t-3">390</span><p class="b-m" style="margin: 6px 0 0">1 column, 16 px gutters, sky scene on top, primary button inside the first 700 px.</p></div>
+      <div class="card-f"><span class="d t-3">768</span><p class="b-m" style="margin: 6px 0 0">2 columns: adventure + map left, rank + friends right. 24 px gutters.</p></div>
+      <div class="card-f"><span class="d t-3">1024</span><p class="b-m" style="margin: 6px 0 0">Same as 1280 at 960 content; side columns 280 px.</p></div>
+      <div class="card-f"><span class="d t-3">1280</span><p class="b-m" style="margin: 6px 0 0">3 columns in a 1200 container: monster | adventure + map | rank + friends. Reading screen goes picture-left, text-right.</p></div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
