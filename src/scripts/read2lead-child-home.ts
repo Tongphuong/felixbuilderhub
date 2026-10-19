@@ -57,7 +57,8 @@ if (root) {
     (el('home-step-1').querySelector('.rh__here') as HTMLElement).hidden = compact || step !== 0;
   };
   const rankChip = (ladder: any, fallback: string) => {
-    const name = String(ladder?.tier_name_vi || fallback || '').trim();
+    // One rank notation everywhere: the ladder's own label ("Bạc III"), same as "Sắp lên {next_label_vi}".
+    const name = String(ladder?.label_vi || ladder?.tier_name_vi || fallback || '').trim();
     if (!name) return;
     const stars = Math.max(0, Number(ladder?.stars) || 0);
     el('home-rank-text').textContent = name + (stars ? ' ' + '★'.repeat(stars) : '');

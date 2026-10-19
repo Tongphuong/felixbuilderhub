@@ -43,7 +43,7 @@ export function applyV3HeaderRank(state: Read2LeadHeaderState, root: ParentNode 
   legacyBlock?.classList.remove('hidden');
   levelChip?.classList.remove('hidden');
   readingLevel?.classList.add('hidden');
-  if (rankText) rankText.textContent = state.rank_title || 'Read2Lead';
+  if (rankText) rankText.textContent = state.rank_ladder?.label_vi || state.rank_title || 'Read2Lead';
   if (rankImage && state.rank_asset_url) {
     rankImage.src = state.rank_asset_url;
     rankImage.alt = `Rank ${state.rank_title || state.current_level || 'Read2Lead'}`;

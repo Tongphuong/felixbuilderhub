@@ -30,6 +30,8 @@
 .rh__rank { margin-right: auto; padding-left: 8px; text-decoration: none; }
 .rh__rank svg, .rh__streak svg, .rh__wallet svg { flex: none; }
 .rh__wide { display: none; }
+/* a full label such as "Vàng III ★★" is wider than "Bạc ★★": slimmer chips on the narrowest phones so the bar never overflows */
+@media (max-width: 389px) { .rh__top { gap: 6px; padding-left: 12px; padding-right: 12px; } .rh__top .r2l-chip { padding: 0 9px; gap: 4px; font-size: 17px; } .rh__rank { padding-left: 6px; } }
 .rh__streak { margin-left: 0; }
 
 /* ---- grid ---- */
