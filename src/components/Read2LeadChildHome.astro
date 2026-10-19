@@ -2,9 +2,9 @@
 import { defaultMonsterSvg } from '../lib/r2l-hero';
 import { ZALO_URL } from '../config/contact';
 import '../styles/read2lead-child-home.css';
-// Public Turnstile site key (safe to expose). Falls back to Cloudflare's official always-pass TEST key
-// for rehearsal; the real key is set as PUBLIC_TURNSTILE_SITE_KEY at build time.
-const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA';
+// Public Turnstile site key (safe to expose), set as PUBLIC_TURNSTILE_SITE_KEY at build time.
+// NO fallback: without a key the sign-up card is not rendered at all (code box and donation card stay).
+const TURNSTILE_SITE_KEY = String(import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '').trim();
 ---
 <main id="main" data-child-home class="reading-home" aria-busy="true">
   <header class="reading-home__header">
@@ -41,7 +41,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '1x00000
       <p class="reading-home__entry-note">Con cũng có thể mở link riêng Coach Felix đã gửi.</p>
       <a class="reading-home__help" href={ZALO_URL}>Nhờ ba mẹ nhận mã từ Coach Felix</a>
     </div>
-    <div id="signup-card" class="reading-home__codebox reading-home__signup" data-turnstile-sitekey={TURNSTILE_SITE_KEY}>
+    {TURNSTILE_SITE_KEY && <div id="signup-card" class="reading-home__codebox reading-home__signup" data-turnstile-sitekey={TURNSTILE_SITE_KEY}>
       <span class="reading-home__book" aria-hidden="true">🌟</span>
       <h2 id="signup-title">Chưa có mã? Tạo mã miễn phí</h2>
       <p>Con điền vài thông tin nhỏ, Minny sẽ mở góc đọc sách cho con ngay.</p>
@@ -62,7 +62,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '1x00000
         <p id="signup-message" role="alert"></p>
         <button id="signup-submit" class="reading-home__primary" type="submit">Tạo mã miễn phí <span aria-hidden="true">→</span></button>
       </form>
-    </div>
+    </div>}
     <div id="donate-card" class="reading-home__codebox reading-home__donate">
       <h2 id="donate-title">Dành cho ba mẹ</h2>
       <p>Read2Lead miễn phí cho mọi bạn nhỏ. Nếu ba mẹ thấy hữu ích, có thể ủng hộ để duy trì trang 💛</p>

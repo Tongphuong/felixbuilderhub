@@ -141,3 +141,27 @@ test('no user-visible "Quà thật" remains in the built site (skipped if dist i
   walk('dist');
   assert.deepEqual(bad, []);
 });
+
+// Bite on the old silent fallback: shipped code must never contain the always-pass test key, and a build
+// without PUBLIC_TURNSTILE_SITE_KEY must drop the sign-up card but keep the code box and donation card.
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+test('no test-key fallback in src; build without a site key has no sign-up card', () => {
+  const src = readFileSync('src/components/Read2LeadChildHome.astro', 'utf8') + readFileSync('src/scripts/read2lead-child-home.ts', 'utf8');
+  assert.ok(!src.includes('1x00000000000000000000AA'));
+  const build = key => {
+    const out = mkdtempSync(join(tmpdir(), 'r2l-final-'));
+    const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => !k.startsWith('PUBLIC_')));
+    env.PUBLIC_R2L_W1 = '1';
+    if (key) env.PUBLIC_TURNSTILE_SITE_KEY = key;
+    const r = spawnSync('npx', ['astro', 'build', '--outDir', out], { env, encoding: 'utf8' });
+    assert.equal(r.status, 0, r.stderr || r.stdout);
+    return readFileSync(join(out, 'read2lead/index.html'), 'utf8');
+  };
+  const without = build('');
+  assert.ok(!without.includes('id="signup-card"') && !without.includes('signup-form'));
+  assert.ok(without.includes('id="home-entry-form"') && without.includes('id="donate-card"'));
+  const withKey = build('1x00000000000000000000AA'); // the test key is passed explicitly via env, never shipped
+  assert.ok(withKey.includes('id="signup-card"') && withKey.includes('data-turnstile-sitekey="1x00000000000000000000AA"'));
+});
