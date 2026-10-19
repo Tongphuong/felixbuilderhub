@@ -4,6 +4,7 @@ import { onRequest } from '../functions/_middleware.js';
 import { UNIFIED_MODE, FREEZE_MODE, ACCOUNT_MODE_HEADER, ACCOUNT_PLAN_HEADER, isUnifiedAccountPath } from '../functions/lib/read2lead/account-unified-gateway.mjs';
 import { EXISTING_TEST_OBJECT, VERIFIED_ADMIN_HEADER } from '../functions/lib/read2lead/account-gateway.mjs';
 import { ACCOUNT_ROUTES } from '../functions/lib/read2lead/account-routes.mjs';
+import { verifyTurnstileMarker } from '../functions/api/signup.js';
 
 const pin='a'.repeat(64);
 function fixture({mode=UNIFIED_MODE,status=200,backend=true,headers={},body='account-host'}={}) {
@@ -154,7 +155,12 @@ test('E2: an explicit code or access_code always goes to the account host (no pu
   }
 });
 test('E5: only the exact bare entry GET/HEAD is public; every other page, API, media and method stays protected',async()=>{
-  const paths=['/read2lead/lesson','/read2lead/companion','/read2lead/leaderboard','/read2lead/gifts','/read2lead/index.html','/read2lead//','/read2lead/extra','/ho-so/extra','/api/read2lead-progress','/api/read2lead-progress?code=','/api/read2lead-leaderboard','/api/read2lead-story-media/private','/api/read2lead-story-session','/api/parent/anything','/api/r2l-link'];
+  // Logged-out PAGE requests (R2L-FINAL): GET/HEAD -> 303 to the public page, never the account host's bare 401.
+  for(const method of ['GET','HEAD'])for(const path of ['/read2lead/lesson','/read2lead/companion','/read2lead/leaderboard','/read2lead/gifts','/read2lead/library','/read2lead/shop','/read2lead/index.html','/read2lead//','/read2lead/extra','/ho-so/extra']) {
+    const f=fixture({status:401});const r=await f.run(path,{method});
+    assert.equal(r.status,303,method+path);assert.equal(r.headers.get('Location'),'/read2lead/',method+path);assert.equal(f.nextCalls(),0,path);assert.equal(f.calls.length,1,path);
+  }
+  const paths=['/api/read2lead-progress','/api/read2lead-progress?code=','/api/read2lead-leaderboard','/api/read2lead-story-media/private','/api/read2lead-story-session','/api/parent/anything','/api/r2l-link'];
   for(const path of paths) {
     const f=fixture({status:401});const r=await f.run(path);
     assert.equal(r.status,401,path);assert.equal(f.nextCalls(),0,path);assert.equal(f.calls.length,1,path);
@@ -192,4 +198,86 @@ test('E4: reset expires the reader cookies by the exact name/path the Worker set
   const cookies=r.headers.getSetCookie();
   assert.deepEqual(cookies.map(value=>value.split('=')[0]).sort(),[ACCOUNT_COOKIE,TEST_ACCOUNT_COOKIE].sort());
   for(const value of cookies){assert.match(value,/^__Host-[a-z0-9_]+=; HttpOnly; Secure; SameSite=Strict; /);assert.match(value,/Path=\//);assert.match(value,/Max-Age=0/);assert.doesNotMatch(value,/Domain=/i);}
+});
+
+// ---- R2L-FINAL: logged-out page requests redirect to the public page --------------------------
+test('BITE: logged-out GET of /read2lead/library, /gifts, /shop, /leaderboard -> 303 /read2lead/ (unpatched gateway returned the bare 401)',async()=>{
+  for(const path of ['/read2lead/library','/read2lead/library/','/read2lead/gifts/','/read2lead/shop/','/read2lead/leaderboard/']) {
+    const f=fixture({status:401});const r=await f.run(path);
+    assert.equal(r.status,303,path);assert.equal(r.headers.get('Location'),'/read2lead/',path);assert.equal(r.headers.get('Cache-Control'),'no-store');
+  }
+});
+test('logged-out redirect never fires for /read2lead/ itself (no loop), APIs, admin, private paths or non-GET methods',async()=>{
+  for(const path of ['/read2lead','/read2lead/','/ho-so/']) {
+    const f=fixture({status:401});const r=await f.run(path);assert.equal(r.status,200,path);assert.equal(r.headers.get('Location'),null,path);
+  }
+  for(const path of ['/api/read2lead-library','/api/read2lead-progress','/api/read2lead-library-media/x','/api/signup','/__private/package.json']) {
+    const f=fixture({status:401});const r=await f.run(path);assert.notEqual(r.status,303,path);assert.equal(r.headers.get('Location'),null,path);
+  }
+  const g=fixture({status:401});assert.equal((await g.run('/api/admin/codes')).status,401);assert.equal(g.calls.length,0,'admin auth precedes dispatch');
+  const h=fixture({status:401});const post=await h.run('/read2lead/library/',{method:'POST',headers:{origin:'https://normal.test'}});
+  assert.equal(post.status,401);assert.equal(post.headers.get('Location'),null);
+});
+test('an explicit code keeps the account host 401 (not silently redirected)',async()=>{
+  const f=fixture({status:401});const r=await f.run('/read2lead/library/?code=OTHER');assert.equal(r.status,401);assert.equal(r.headers.get('Location'),null);
+});
+test('RULE 30: a child with an EXPIRED/unknown session cookie on /read2lead/library gets 303, and following it does not loop',async()=>{
+  const cookie='__Host-r2l_account='+'e'.repeat(64);
+  const f=fixture({status:401});const first=await f.run('/read2lead/library/',{headers:{cookie}});
+  assert.equal(first.status,303);assert.equal(first.headers.get('Location'),'/read2lead/');
+  const second=await f.run('/read2lead/',{headers:{cookie}});
+  assert.equal(second.status,200,'the public page loads for the dead cookie');assert.equal(await second.text(),'public-site');
+  assert.ok(second.headers.getSetCookie().every(v=>/Max-Age=0/.test(v)),'dead cookie is dropped');
+});
+test('the personal-link entry /r2l/start still loads (200) for a logged-out visitor',async()=>{
+  for(const path of ['/r2l/start/','/r2l/start?t='+'b'.repeat(32)]) {const f=fixture({status:401});const r=await f.run(path);assert.equal(r.status,200,path);assert.equal(f.calls.length,0);}
+});
+
+// ---- R2L-FINAL: Turnstile for /api/signup is verified in the gateway, OUTSIDE the account lane ----
+const SIGNUP_HEADER='x-r2l-turnstile-verified';
+async function signupCall(f,{body,token='good',headers={},fetchImpl,secret='sec',rawBody}={}) {
+  f.env.TURNSTILE_SECRET_KEY=secret;
+  const verifyCalls=[];
+  const impl=fetchImpl||(async (url,init)=>{verifyCalls.push({url,form:init.body,signal:init.signal});return new Response(JSON.stringify({success:init.body.get('response')==='good'}));});
+  const payload=rawBody!==undefined?rawBody:JSON.stringify(body??{student_name:'Minh',student_age:9,child_gender:'boy',turnstile_token:token});
+  const response=await onRequest({env:f.env,fetchImpl:impl,request:new Request('https://normal.test/api/signup',{method:'POST',headers:{'Content-Type':'application/json',origin:'https://normal.test','CF-Connecting-IP':'3.3.3.3',...headers},body:payload}),next:async()=>new Response('public-site')});
+  return {response,verifyCalls,json:await response.clone().json().catch(()=>null)};
+}
+test('BITE: a junk Turnstile token is refused in the gateway and NEVER reaches the account object',async()=>{
+  const f=fixture();const {response,json}=await signupCall(f,{token:'junk'});
+  assert.equal(response.status,403);assert.equal(json.error,'turnstile_failed');assert.match(json.message,/[^\x00-\x7F]/);
+  assert.equal(f.calls.length,0,'account dispatch must not be entered');
+});
+test('a forged x-r2l-turnstile-verified header from the client is stripped: a junk token is still refused',async()=>{
+  const f=fixture();const {response,json}=await signupCall(f,{token:'junk',headers:{[SIGNUP_HEADER]:'1'}});
+  assert.equal(response.status,403);assert.equal(json.error,'turnstile_failed');assert.equal(f.calls.length,0);
+});
+test('the forged header is stripped on EVERY request, including other account routes',async()=>{
+  const f=fixture();await f.run('/api/read2lead-progress?code=SYNTHETIC',{headers:{[SIGNUP_HEADER]:'1'}});
+  await f.run('/read2lead/library/',{headers:{[SIGNUP_HEADER]:'1'}});
+  assert.equal(f.calls.length,2);for(const {request} of f.calls)assert.equal(request.headers.get(SIGNUP_HEADER),null);
+});
+test('a valid token is verified exactly once, with a timeout signal, then forwarded with the gateway marker',async()=>{
+  const f=fixture();const {response,verifyCalls}=await signupCall(f,{token:'good'});
+  assert.equal(response.status,200);assert.equal(verifyCalls.length,1);assert.ok(verifyCalls[0].signal,'siteverify must carry an abort/timeout signal');
+  assert.equal(verifyCalls[0].form.get('remoteip'),'3.3.3.3');assert.equal(verifyCalls[0].form.get('secret'),'sec');
+  assert.equal(f.calls.length,1);assert.equal(await verifyTurnstileMarker('sec',f.calls[0].request.headers.get(SIGNUP_HEADER)),true,'a signed, short-lived marker is forwarded');
+  assert.equal(JSON.parse(f.calls[0].body).student_name,'Minh','the body still reaches the account object intact');
+});
+test('a timed-out or failing siteverify fails CLOSED without entering the account object',async()=>{
+  for(const fetchImpl of [async()=>{throw new DOMException('timed out','TimeoutError');},async()=>new Response('nope',{status:500}),()=>new Promise((_,rej)=>setTimeout(()=>rej(new Error('aborted')),5))]) {
+    const f=fixture();const {response,json}=await signupCall(f,{fetchImpl});
+    assert.equal(response.status,403);assert.equal(json.error,'turnstile_failed');assert.equal(f.calls.length,0);
+  }
+});
+test('missing secret, missing token, bad JSON and oversized token are refused in the gateway with the Vietnamese shapes',async()=>{
+  const cases=[[{secret:''},503,'turnstile_not_configured'],[{body:{student_name:'Minh'}},400,'turnstile_required'],[{rawBody:'{nope'},400,'invalid_json'],[{token:'x'.repeat(2049)},403,'turnstile_failed']];
+  for(const [opts,status,error] of cases) {
+    const f=fixture();const {response,json,verifyCalls}=await signupCall(f,opts);
+    assert.equal(response.status,status,error);assert.equal(json.error,error);assert.match(json.message,/[^\x00-\x7F]/);
+    assert.equal(f.calls.length,0,error);assert.equal(verifyCalls.length,0,'no siteverify call for a malformed request: '+error);
+  }
+});
+test('GET /api/signup and other API calls are not Turnstile-gated by the gateway',async()=>{
+  const f=fixture();const r=await f.run('/api/read2lead-progress?code=SYNTHETIC');assert.equal(r.status,200);assert.equal(f.calls[0].request.headers.get(SIGNUP_HEADER),null);
 });

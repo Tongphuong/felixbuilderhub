@@ -9,7 +9,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { onRequestPost as signup } from '../functions/api/signup.js';
+import { readFile } from 'node:fs/promises';
+import { onRequestPost as signup, checkStudentName, signTurnstileMarker } from '../functions/api/signup.js';
 import { onRequestGet as resolveLink } from '../functions/api/r2l-link.js';
 import { isAccessCodeKey } from '../functions/api/_read2lead-v2-state.js';
 
@@ -30,6 +31,9 @@ function makeKv(initial = {}) {
     },
   };
 }
+
+// Signup names are letters only (no digits), so uniquifying suffixes are letters.
+const letterName = (prefix, ...nums) => prefix + nums.map((n) => String.fromCharCode(97 + (n % 26))).join('');
 
 const GOOD_TOKEN = 'good-turnstile-token';
 
@@ -148,7 +152,7 @@ test('BITE: a 4th signup from the same IP on the same day is refused; the first 
   for (let i = 0; i < 3; i += 1) {
     // eslint-disable-next-line no-await-in-loop
     const res = await signup({
-      request: makeRequest(requestBody({ student_name: `Kid${i}` }), { ip }),
+      request: makeRequest(requestBody({ student_name: letterName('Kid', i) }), { ip }),
       env,
       fetchImpl: passingFetch(),
     });
@@ -159,7 +163,7 @@ test('BITE: a 4th signup from the same IP on the same day is refused; the first 
   }
 
   const fourth = await signup({
-    request: makeRequest(requestBody({ student_name: 'Kid3' }), { ip }),
+    request: makeRequest(requestBody({ student_name: 'Kiddy' }), { ip }),
     env,
     fetchImpl: passingFetch(),
   });
@@ -438,7 +442,7 @@ test('CONCURRENCY (per-IP fence): N requests over the cap never leave an orphane
       [`rl-signup:${ip}`]: { count: 2, first_at: Math.floor(Date.now() / 1000) }, // 1 slot remaining
     });
     const env = { READ2LEAD_CODES: kv, TURNSTILE_SECRET_KEY: 'test-secret' };
-    const bodies = Array.from({ length: N }, (_, i) => requestBody({ student_name: `Race${trial}x${i}` }));
+    const bodies = Array.from({ length: N }, (_, i) => requestBody({ student_name: letterName('Race', trial, i) }));
 
     // eslint-disable-next-line no-await-in-loop
     const results = await Promise.all(bodies.map((b) => signup({
@@ -487,7 +491,7 @@ test('CONCURRENCY (global fence): N requests from N different IPs over the cap n
       [`signup-global:${today}`]: 1, // 1 slot remaining
     });
     const env = { READ2LEAD_CODES: kv, TURNSTILE_SECRET_KEY: 'test-secret' };
-    const bodies = Array.from({ length: N }, (_, i) => requestBody({ student_name: `Global${trial}x${i}` }));
+    const bodies = Array.from({ length: N }, (_, i) => requestBody({ student_name: letterName('Global', trial, i) }));
 
     // eslint-disable-next-line no-await-in-loop
     const results = await Promise.all(bodies.map((b, i) => signup({
@@ -514,4 +518,183 @@ test('CONCURRENCY (global fence): N requests from N different IPs over the cap n
 
   assert.ok(max <= N, 'successes can never exceed the number of concurrent requests fired');
   assert.ok(successCounts.some((s) => s < N), `expected the recheck to catch at least one over-cap mint across ${TRIALS} trials; got ${JSON.stringify(successCounts)}`);
+});
+
+// ---------------------------------------------------------------------------
+// R2L-FINAL name rules (addendum 2026-10-19) — bite tests
+// ---------------------------------------------------------------------------
+
+test('BITE: 21-character name → 400 student_name_invalid, no code minted', async () => {
+  const { res, body, kv } = await callSignup({ body: requestBody({ student_name: 'a'.repeat(21) }), fetchImpl: passingFetch() });
+  assert.equal(res.status, 400);
+  assert.equal(body.error, 'student_name_invalid');
+  assert.match(body.message, /Tên/);
+  assert.equal([...kv.store.keys()].some((k) => isAccessCodeKey(k)), false);
+});
+
+test('BITE: symbol-only / emoji / punctuation / double-space names → student_name_invalid', async () => {
+  for (const name of ['!!!', '😀', 'An<script>', 'An-Binh', 'Bảo  2', '   ']) {
+    const { res, body } = await callSignup({ body: requestBody({ student_name: name }), fetchImpl: passingFetch() });
+    assert.equal(res.status, 400, `name ${JSON.stringify(name)}`);
+    assert.ok(['student_name_invalid', 'student_name_required'].includes(body.error), `name ${JSON.stringify(name)} got ${body.error}`);
+  }
+});
+
+test('BITE: blocklisted names (English, Vietnamese, accented, spaced) → 400 student_name_blocked', async () => {
+  for (const name of ['Fuck', 'F u c k', 'SHIT', 'Địt', 'Cặc', 'Đm', 'dmm', 'Đụ má', 'Lồn', 'Con chó', 'Bitch']) {
+    const { res, body } = await callSignup({ body: requestBody({ student_name: name }), fetchImpl: passingFetch() });
+    assert.equal(res.status, 400, `name ${name}`);
+    assert.equal(body.error, 'student_name_blocked', `name ${name}`);
+    assert.match(body.message, /tên/i);
+  }
+});
+
+const PASS_NAMES = ['Ngọc Anh', 'An', 'Bảo Anh', 'Diễm', 'Du', 'Di', 'Đạt', 'Cassidy', 'Hancock', 'Phương Thảo'];
+
+test('BITE: a name with a digit is refused with student_name_invalid (pack generator would reject it)', async () => {
+  let n = 0;
+  for (const name of ['Bảo 2', 'Minh1', '2', 'An 3 Binh']) {
+    const { res, body } = await callSignup({ body: requestBody({ student_name: name }), ip: `8.8.8.${++n}`, fetchImpl: passingFetch() });
+    assert.equal(res.status, 400, `name ${name}`);
+    assert.equal(body.error, 'student_name_invalid', `name ${name}`);
+  }
+});
+
+test('CROSS-CHECK (rule 31): every name signup accepts is also accepted by the real pack-generator name check', async () => {
+  const src = await readFile(new URL('../functions/api/generate-read2lead-pack.js', import.meta.url), 'utf8');
+  const m = src.match(/const BACKEND_CHILD_NAME_RE = \/(.+)\/([a-z]*);/);
+  assert.ok(m, 'could not find BACKEND_CHILD_NAME_RE in generate-read2lead-pack.js');
+  const backendRe = new RegExp(m[1], m[2]);
+  for (const name of PASS_NAMES) {
+    assert.ok(backendRe.test(name.normalize('NFC').trim()), `pack generator rejects ${name}`);
+    assert.equal(checkStudentName(name), null, `signup rejects ${name}`);
+  }
+});
+
+test('normal Vietnamese names pass: Ngọc Anh, An, Bảo Anh, Diễm, Du, Di, Đạt, Cassidy, Hancock', async () => {
+  let n = 0;
+  for (const name of PASS_NAMES) {
+    const { res, body } = await callSignup({ body: requestBody({ student_name: name }), ip: `9.9.9.${++n}`, fetchImpl: passingFetch() });
+    assert.equal(res.status, 200, `name ${name}: ${JSON.stringify(body)}`);
+    assert.equal(body.record.student_profile.student_name, name);
+  }
+});
+
+test('a 20-character name is accepted (boundary)', async () => {
+  const name = 'a'.repeat(20);
+  const { res } = await callSignup({ body: requestBody({ student_name: name }), fetchImpl: passingFetch() });
+  assert.equal(res.status, 200);
+});
+
+test('a refused name does not burn the per-IP allowance', async () => {
+  const kv = makeKv({ 'config:signup_enabled': true });
+  for (let i = 0; i < 5; i++) {
+    await callSignup({ kv, body: requestBody({ student_name: 'Fuck' }), fetchImpl: passingFetch() });
+  }
+  const { res } = await callSignup({ kv, fetchImpl: passingFetch() });
+  assert.equal(res.status, 200);
+});
+
+test('a decomposed (NFD) Vietnamese name is normalised to NFC and accepted', async () => {
+  const nfd = 'Ngọc Anh'.normalize('NFD');
+  assert.notEqual(nfd, 'Ngọc Anh');
+  const { res, body } = await callSignup({ body: requestBody({ student_name: nfd }), fetchImpl: passingFetch() });
+  assert.equal(res.status, 200);
+  assert.equal(body.record.student_profile.student_name, 'Ngọc Anh');
+});
+
+test('BITE: every parent-reachable refusal carries a Vietnamese message (never ASCII-only English)', async () => {
+  const today = new Date().toISOString().slice(0, 10);
+  const cases = [
+    ['signup_disabled', { kv: makeKv() }],
+    ['turnstile_not_configured', { env: { TURNSTILE_SECRET_KEY: '' } }],
+    ['turnstile_required', { body: requestBody({ turnstile_token: undefined }) }],
+    ['turnstile_failed', { fetchImpl: failingFetch() }],
+    ['student_name_required', { body: requestBody({ student_name: '' }) }],
+    ['student_name_invalid', { body: requestBody({ student_name: '!!!' }) }],
+    ['student_name_blocked', { body: requestBody({ student_name: 'Fuck' }) }],
+    ['student_age_invalid', { body: requestBody({ student_age: 4 }) }],
+    ['child_gender_required', { body: requestBody({ child_gender: 'x' }) }],
+    ['global_cap', { kv: makeKv({ 'config:signup_enabled': true, 'config:signup_daily_cap': 1, [`signup-global:${today}`]: 1 }) }],
+  ];
+  for (const [code, opts] of cases) {
+    const { res, body } = await callSignup({ fetchImpl: passingFetch(), ...opts });
+    assert.ok(res.status >= 400, code);
+    assert.equal(body.error, code);
+    assert.equal(typeof body.message, 'string', `${code} has no message`);
+    assert.match(body.message, /[^\x00-\x7F]/, `${code} message is ASCII-only: ${body.message}`);
+  }
+  // per-IP limit (4th request) and invalid JSON / missing KV
+  const kv = makeKv({ 'config:signup_enabled': true });
+  let last;
+  for (let i = 0; i < 4; i += 1) last = await callSignup({ kv, body: requestBody({ student_name: letterName('Ip', i) }), ip: '4.4.4.4', fetchImpl: passingFetch() });
+  assert.equal(last.body.error, 'rate_limited');
+  assert.match(last.body.message, /[^\x00-\x7F]/);
+  const badJson = await signup({ request: new Request('https://x.test/api/signup', { method: 'POST', body: '{nope' }), env: { READ2LEAD_CODES: makeKv({ 'config:signup_enabled': true }), TURNSTILE_SECRET_KEY: 's' } });
+  const bj = await badJson.json();
+  assert.equal(bj.error, 'invalid_json');
+  assert.match(bj.message, /[^\x00-\x7F]/);
+  const noKv = await signup({ request: makeRequest(requestBody()), env: {} });
+  assert.match((await noKv.json()).message, /[^\x00-\x7F]/);
+});
+
+// ---------------------------------------------------------------------------
+// R2L-FINAL review fixes: blocklist false positives, Zalgo, gateway-verified Turnstile marker
+// ---------------------------------------------------------------------------
+
+const REAL_NAMES = ['Bưởi', 'Lớn', 'Lợn', 'Lôn', 'Đèo', 'Dẻo', 'Võ Học', 'Vô Học', 'Đỗ Ngữ', 'Đỗ Ngư', 'Thắng Ngữ', 'Du Mây', 'Dư Mã', 'Kshitij', 'Ngọc Ánh', 'Ngọc Anh'];
+test('real names that look like rude words once accents are dropped all pass (no false positives)', () => {
+  for (const name of REAL_NAMES) assert.equal(checkStudentName(name), null, name);
+});
+test('BITE: true positives are still refused (English, Vietnamese, spaced-out letters)', () => {
+  for (const name of ['Fuck', 'F u c k', 'SHIT', 'Shit', 'Địt', 'Địt mẹ', 'Cặc', 'Đm', 'dmm', 'Đụ má', 'Lồn', 'Con chó', 'Thằng ngu', 'Bitch', 'Hitler', 'S E X', 'Motherfucker']) {
+    assert.equal(checkStudentName(name)?.error, 'student_name_blocked', name);
+  }
+});
+test('BITE: Zalgo - 19 stacked combining marks on one letter is refused; a normal accented name passes', () => {
+  const zalgo = 'A' + '́'.repeat(19);
+  assert.ok(zalgo.normalize('NFC').length >= 19 && zalgo.normalize('NFC').length <= 20);
+  assert.equal(checkStudentName(zalgo.normalize('NFC'))?.error, 'student_name_invalid');
+  assert.equal(checkStudentName('Ạ́'.normalize('NFC') + 'b' + '̀́')?.error, 'student_name_invalid');
+  assert.equal(checkStudentName('Ngọc Ánh'), null);
+});
+
+async function callWithMarker({ marker, env = {}, fetchImpl, body } = {}) {
+  const kv = makeKv({ 'config:signup_enabled': true });
+  const request = new Request('https://felixbuilderhub.com/api/signup', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': '1.2.3.4', ...(marker ? { 'x-r2l-turnstile-verified': marker } : {}) },
+    body: JSON.stringify(body ?? requestBody({ turnstile_token: undefined })),
+  });
+  const res = await signup({ request, env: { READ2LEAD_CODES: kv, ...env }, fetchImpl });
+  return { res, body: await res.json() };
+}
+test('gateway-verified marker inside the account host skips siteverify (single-use tokens are not re-verified)', async () => {
+  let fetched = 0;
+  const { res } = await callWithMarker({ marker: await signTurnstileMarker('s'), env: { TURNSTILE_SECRET_KEY: 's' }, fetchImpl: async () => { fetched += 1; return new Response('{}'); } });
+  assert.equal(res.status, 200);
+  assert.equal(fetched, 0);
+});
+test('BITE: a forged, wrong-secret, stale or malformed marker is NOT trusted (still needs Turnstile)', async () => {
+  const forged = ['1', 'true', await signTurnstileMarker('other-secret'), await signTurnstileMarker('s', Date.now() - 120000), `${Date.now()}.${'0'.repeat(64)}`];
+  for (const marker of forged) {
+    const { res, body } = await callWithMarker({ marker, env: { TURNSTILE_SECRET_KEY: 's' }, fetchImpl: passingFetch() });
+    assert.equal(res.status, 400, marker);
+    assert.equal(body.error, 'turnstile_required', marker);
+  }
+  const noSecret = await callWithMarker({ marker: await signTurnstileMarker('s') });
+  assert.equal(noSecret.body.error, 'turnstile_not_configured');
+});
+test('without the marker the handler still verifies itself, with a timeout signal on siteverify', async () => {
+  let signal;
+  const { res } = await callWithMarker({ env: { TURNSTILE_SECRET_KEY: 's' }, body: requestBody(), fetchImpl: async (u, init) => { signal = init.signal; return new Response(JSON.stringify({ success: true })); } });
+  assert.equal(res.status, 200);
+  assert.ok(signal, 'siteverify carries an AbortSignal');
+});
+test('an oversized Turnstile token is refused before any network call', async () => {
+  let fetched = 0;
+  const { res, body } = await callWithMarker({ env: { TURNSTILE_SECRET_KEY: 's' }, body: requestBody({ turnstile_token: 'x'.repeat(3000) }), fetchImpl: async () => { fetched += 1; return new Response('{}'); } });
+  assert.equal(res.status, 403);
+  assert.equal(body.error, 'turnstile_failed');
+  assert.equal(fetched, 0);
 });

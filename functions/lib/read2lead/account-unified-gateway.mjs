@@ -1,5 +1,7 @@
 import { ACCOUNT_ROUTES } from './account-routes.mjs';
 import { EXISTING_TEST_OBJECT, VERIFIED_ADMIN_HEADER } from './account-gateway.mjs';
+import { verifyTurnstile, turnstileRefusal, turnstileTokenProblem, signTurnstileMarker, TURNSTILE_VERIFIED_HEADER } from '../../api/signup.js';
+import { getClientIp } from '../../api/_rate-limit.js';
 
 export const UNIFIED_MODE = 'unified-v1';
 export const FREEZE_MODE = 'freeze-v1';
@@ -68,11 +70,37 @@ export async function unifiedAccountGateway(context) {
     if (url.pathname.startsWith('/api/admin/')) headers.set(VERIFIED_ADMIN_HEADER,'1');
     headers.set(ACCOUNT_MODE_HEADER,UNIFIED_MODE);
     headers.set(ACCOUNT_PLAN_HEADER,pin);
+    // Turnstile for public sign-up is verified HERE, outside the serialized account lane, with a
+    // hard timeout; junk or hung verification never enters the account object. The marker is
+    // stripped from EVERY incoming request first, so a client can never forge it.
+    headers.delete(TURNSTILE_VERIFIED_HEADER);
+    if (request.method==='POST'&&url.pathname==='/api/signup') {
+      const secret=env.TURNSTILE_SECRET_KEY;
+      if (!secret) return turnstileRefusal('turnstile_not_configured');
+      let body;
+      try { body=await request.clone().json(); } catch { return turnstileRefusal('invalid_json'); }
+      if (!body||typeof body!=='object'||Array.isArray(body)) return turnstileRefusal('invalid_json');
+      const token=body.turnstile_token||body['cf-turnstile-response'];
+      const problem=turnstileTokenProblem(token);
+      if (problem) return turnstileRefusal(problem);
+      let passed=false;
+      try { passed=await verifyTurnstile(secret,token,getClientIp(request),context.fetchImpl||fetch); } catch { passed=false; }
+      if (!passed) return turnstileRefusal('turnstile_failed');
+      headers.set(TURNSTILE_VERIFIED_HEADER,await signTurnstileMarker(secret));
+    }
     const response=await namespace.get(namespace.idFromName(EXISTING_TEST_OBJECT)).fetch(new Request(request,{headers}));
     if (response.headers.get('X-R2L-Account-Host')!==EXISTING_TEST_OBJECT||
         response.headers.get(ACCOUNT_MODE_HEADER)!==UNIFIED_MODE||response.headers.get(ACCOUNT_PLAN_HEADER)!==pin||
         (response.status>=300&&response.status<400)) {
       await response.body?.cancel();return unavailable();
+    }
+    // Logged-out (or expired/unknown-session) visitor opening a student PAGE, e.g. a shared
+    // /read2lead/library link: send them to the public page with sign-up instead of a bare 401.
+    // Not for APIs, admin, private paths, assets, non-GET/HEAD, or an explicit code (those keep 401).
+    if(response.status===401&&['GET','HEAD'].includes(request.method)&&!accountAsset&&!bareEntry&&
+       !url.searchParams.has('code')&&!url.searchParams.has('access_code')&&
+       !url.pathname.startsWith('/api/')&&!url.pathname.startsWith('/admin')&&!url.pathname.startsWith('/__private/')){
+      await response.body?.cancel();return new Response(null,{status:303,headers:{'Location':'/read2lead/','Cache-Control':'no-store'}});
     }
     // Public pages can request their own assets with an old student cookie.
     // Only this static-file path may fall back, never an account API or page.
