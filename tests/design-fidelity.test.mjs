@@ -18,7 +18,7 @@ import http from 'node:http';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { PNG } from 'pngjs';
-import { runFidelity, findChrome, InfraError } from '../scripts/design/fidelity.mjs';
+import { runFidelity, findChrome, InfraError, effectiveAnchors } from '../scripts/design/fidelity.mjs';
 import { sampleBackdrop } from '../scripts/design/lib/text.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -194,6 +194,10 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
     wr('exempt-no-reason', { __path: 'ok', anchors: A3, anchors_exempt: { 't.foot': '  ' } });
     wr('neither-anchored-nor-exempt', { __path: 'ok', anchors: A3 });
     wr('all-exempt', { __path: 'ok', anchors: undefined, anchors_exempt: Object.fromEntries(['t.top', 't.hero', 't.primary', 't.foot'].map(id => [id, 'full-screen background, text resolves to the page'])) });
+    // per-width: base anchors say the hero is at the mock's box; the 390 override REMOVES it (null) and exempts it
+    wr('width-null-removal', { __path: 'ok', anchors: { ...ANCHORS, 't.hero': 'Không có chữ này' }, anchors_390: { 't.hero': null }, anchors_exempt_390: { 't.hero': 'no card at this width' } });
+    wr('width-override-text', { __path: 'ok', anchors: { ...ANCHORS, 't.hero': 'Không có chữ này' }, anchors_390: { 't.hero': 'Đọc truyện nào' } });
+    wr('width-no-override-bad-anchor', { __path: 'ok', anchors: { ...ANCHORS, 't.hero': 'Không có chữ này' } });
     wr('partial-anchors', { __path: 'ok', anchors: { 't.top': 'Xin chào' } });
     const report = await runFidelity({ design, contracts, base, out: path.join(tmp, 'out'), composites: 'fail', 'state-driver': GOTO, 'require-anchors': true, concurrency: 12 });
     const by = Object.fromEntries(report.results.map(r => [r.contract, r]));
@@ -249,9 +253,16 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
       assert.ok(by['all-exempt'].warnings.some(w => /geometry: pixel-only/.test(w)));
       assert.ok(by['exempt-ok'].anchorBoxes['t.hero'].h > 0);
       const md = fs.readFileSync(path.join(tmp, 'out', 'report.md'), 'utf8');
-      assert.match(md, /Geometry NOT checked \(anchors_exempt\):\n- t\.foot: plain text row, no card/);
+      assert.match(md, /Geometry NOT checked \(anchors_exempt, as in force at this width\):\n- t\.foot: plain text row, no card/);
       assert.match(md, /WARN geometry: pixel-only/);
       assert.match(md, /Anchored mock boxes \(x, y, w, h\):\n- t\.top: 0, 0, 390, 92/);
+    });
+    await t.test('per-width anchors: null removal and override take effect; an unresolvable base anchor still fails', () => {
+      assert.deepEqual(failed(by['width-null-removal']), []);
+      assert.deepEqual(failed(by['width-override-text']), []);
+      assert.deepEqual(failed(by['width-no-override-bad-anchor']), ['geometry']);
+      assert.match(by['width-no-override-bad-anchor'].checks.find(c => c.name === 'geometry').detail, /not found in the MOCK/);
+      assert.match(fs.readFileSync(path.join(tmp, 'out', 'report.md'), 'utf8'), /- t\.hero: no card at this width/);
     });
     await t.test('a failing contract writes a composite, report.json and report.md; verdict is false', () => {
       assert.equal(report.ok, false);
@@ -304,9 +315,19 @@ test('m14 a contract whose width-keyed fields disagree with its mocks is rejecte
     await assert.rejects(run({ ...good, viewport: { 390: 700, 1280: 800 } }), e => e instanceof InfraError && /"viewport" widths/.test(e.message));
     await assert.rejects(run({ ...good, diff_ceiling: {} }), e => e instanceof InfraError && /"diff_ceiling" widths/.test(e.message));
     await assert.rejects(run({ ...good, reference: { 1280: 'x.png' } }), e => e instanceof InfraError && /"reference" widths/.test(e.message));
-    await assert.rejects(run({ ...good, anchors_exempt: { 't.top': 'also exempt' } }), e => e instanceof InfraError && /BOTH anchors and anchors_exempt: t\.top/.test(e.message));
+    await assert.rejects(run({ ...good, anchors_exempt: { 't.top': 'also exempt' } }), e => e instanceof InfraError && /BOTH anchors and anchors_exempt at 390px: t\.top/.test(e.message));
+    await assert.rejects(run({ ...good, anchors_390: { 't.foot': 'x' }, anchors_exempt: { 't.foot': 'r' } }), e => e instanceof InfraError && /BOTH anchors and anchors_exempt at 390px: t\.foot/.test(e.message));
+    await assert.rejects(run({ ...good, anchors_exempt_390: { 't.top': 'r' } }), e => e instanceof InfraError && /BOTH .* at 390px: t\.top/.test(e.message));
+    await assert.rejects(run({ ...good, anchors_1280: { 't.top': 'x' } }), e => e instanceof InfraError && /"anchors_1280" is for a width with no mock/.test(e.message));
+    await assert.rejects(run({ ...good, anchors_exempt_1280: {} }), e => e instanceof InfraError && /"anchors_exempt_1280" is for a width with no mock/.test(e.message));
     await assert.rejects(run({ ...good, texts_1280: ['x'] }), e => e instanceof InfraError && /texts_1280/.test(e.message));
   } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test('per-width anchors: override replaces, null removes, exemptions override; both-at-one-width is a contract error', () => {
+  const c = { anchors: { a: 'A', b: 'B' }, anchors_exempt: { x: 'why' }, anchors_390: { a: 'A390', b: null }, anchors_exempt_390: { b: 'moved to exempt at 390', x: null } };
+  assert.deepEqual(effectiveAnchors(c, 390), { anchors: { a: 'A390' }, exempt: { b: 'moved to exempt at 390' } });
+  assert.deepEqual(effectiveAnchors(c, 1280), { anchors: { a: 'A', b: 'B' }, exempt: { x: 'why' } });
 });
 
 test('pixel sampler: dominant background wins over heavy glyph pixels', () => {

@@ -56,6 +56,17 @@ function parseArgs(argv) {
   return o;
 }
 
+// Anchors in force at one width: the base maps, overridden per width by anchors_<w> / anchors_exempt_<w>.
+// In anchors_<w>, a null value REMOVES the base anchor for that width (same for anchors_exempt_<w>).
+export function effectiveAnchors(c, w) {
+  const merge = (base, over) => {
+    const out = { ...(base || {}) };
+    for (const [k, v] of Object.entries(over || {})) { if (v === null) delete out[k]; else out[k] = v; }
+    return out;
+  };
+  return { anchors: merge(c.anchors, c[`anchors_${w}`]), exempt: merge(c.anchors_exempt, c[`anchors_exempt_${w}`]) };
+}
+
 // A contract's width-keyed fields must all describe exactly the widths of the mocks it lists.
 export function validateContract(c) {
   const set = o => Object.keys(o || {}).sort().join(',');
@@ -65,8 +76,16 @@ export function validateContract(c) {
     if (f === 'reference' && !c.reference) continue;
     if (set(c[f]) !== want) throw new InfraError(`contract ${c.id}: "${f}" widths [${set(c[f])}] != mock widths [${want}]`);
   }
-  const both = Object.keys(c.anchors || {}).filter(id => Object.prototype.hasOwnProperty.call(c.anchors_exempt || {}, id));
-  if (both.length) throw new InfraError(`contract ${c.id}: id(s) listed in BOTH anchors and anchors_exempt: ${both.join(', ')}`);
+  const widths0 = Object.keys(c.mock);
+  for (const k of Object.keys(c)) {
+    const m = /^anchors(?:_exempt)?_(\d+)$/.exec(k);
+    if (m && !widths0.includes(m[1])) throw new InfraError(`contract ${c.id}: "${k}" is for a width with no mock`);
+  }
+  for (const w of widths0) {
+    const { anchors, exempt } = effectiveAnchors(c, w);
+    const both = Object.keys(anchors).filter(id => Object.prototype.hasOwnProperty.call(exempt, id));
+    if (both.length) throw new InfraError(`contract ${c.id}: id(s) listed in BOTH anchors and anchors_exempt at ${w}px: ${both.join(', ')}`);
+  }
   const widths = new Set(Object.keys(c.mock));
   for (const k of Object.keys(c)) {
     const m = /^(?:order|texts)_(\d+)$/.exec(k);
@@ -142,8 +161,9 @@ export async function runFidelity(opts) {
           const badFonts = (await mpage.evaluate(fontCheck)).filter(f => f.status === 'error');
           if (badFonts.length) throw new InfraError('mock fonts failed to load: ' + badFonts.map(f => f.family).join(', '));
           const mockPng0 = await shot(mpage);
-          const anchors = contract.anchors && Object.keys(contract.anchors).length ? contract.anchors : null;
-          const exempt = contract.anchors_exempt || {};
+          const eff = effectiveAnchors(contract, w);
+          const anchors = Object.keys(eff.anchors).length ? eff.anchors : null;
+          const exempt = eff.exempt;
           const mockGeo = anchors ? await mpage.evaluate(mockBoxes, anchors) : null;
           res.exempt = exempt;
           if (mockGeo) res.anchorBoxes = Object.fromEntries(Object.entries(mockGeo.boxes).map(([id, b]) => [id, b && { x: Math.round(b.x), y: Math.round(b.y), w: Math.round(b.w), h: Math.round(b.h) }]));
@@ -333,7 +353,7 @@ function renderMd(report) {
     if (r.composite) L.push(`Composite: \`${r.composite}\``, '');
     for (const c of r.checks) L.push(`- ${c.pass ? 'PASS' : 'FAIL'} **${c.name}** ${c.detail}`);
     for (const w of r.warnings) L.push(`- WARN ${w}`);
-    if (r.exempt && Object.keys(r.exempt).length) { L.push('', 'Geometry NOT checked (anchors_exempt):'); for (const [id, why] of Object.entries(r.exempt)) L.push(`- ${id}: ${why || '(NO REASON GIVEN)'}`); }
+    if (r.exempt && Object.keys(r.exempt).length) { L.push('', 'Geometry NOT checked (anchors_exempt, as in force at this width):'); for (const [id, why] of Object.entries(r.exempt)) L.push(`- ${id}: ${why || '(NO REASON GIVEN)'}`); }
     if (r.anchorBoxes) { L.push('', 'Anchored mock boxes (x, y, w, h):'); for (const [id, b] of Object.entries(r.anchorBoxes)) L.push(`- ${id}: ${b ? `${b.x}, ${b.y}, ${b.w}, ${b.h}` : 'ANCHOR TEXT NOT FOUND'}`); }
     L.push('');
   }
