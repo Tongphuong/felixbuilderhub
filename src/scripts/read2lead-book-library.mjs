@@ -23,12 +23,20 @@ let activeCollection='all';
 function listBooks(){
  const collections=[...new Set(catalogue.books.map(b=>b.collection))];
  const chips=[{text:'Tất cả các quyển',on:activeCollection==='all'&&activeBook==='all',go:()=>{activeCollection='all';activeBook='all';}},
-  ...collections.map(c=>({text:`Bộ ${c}`,on:String(c)===activeCollection&&activeBook==='all',go:()=>{activeCollection=String(c);activeBook='all';}}))];
+  ...(collections.length<2?catalogue.books.map(b=>({text:`Quyển ${b.month}`,on:b.id===activeBook,go:()=>{activeBook=b.id;}})):collections).map(c=>c.text?c:{text:`Bộ ${c}`,on:String(c)===activeCollection&&activeBook==='all',go:()=>{activeCollection=String(c);activeBook='all';}})];
  if(activeCollection!=='all')chips.push(...catalogue.books.filter(b=>String(b.collection)===activeCollection).map(b=>({text:`Quyển ${b.month}`,on:b.id===activeBook,go:()=>{activeBook=b.id;}})));
  $('book-filters').replaceChildren(...chips.map(o=>{const t=el('button','tab',o.text);t.type='button';t.setAttribute('aria-pressed',String(o.on));t.onclick=()=>{o.go();listBooks();listStories();};return t;}));
 }
 /* "Truyện hôm nay": one readable story per calendar day, the same all day (stories that have pages; audio preferred). */
+let assignedTitle='';
+/* The child's CURRENT assigned story (progress current_pack, read-only) — "Truyện hôm nay" when it is in the catalogue. */
+async function fetchAssignedTitle(){
+ try{let c='';try{c=new URLSearchParams(location.search).get('code')||sessionStorage.getItem('r2l_access_code')||'';}catch{}
+  const r=await fetch('/api/read2lead-progress'+(c?'?code='+encodeURIComponent(c):''),{credentials:'same-origin'});if(!r.ok)return '';
+  const j=await r.json();return String(j?.progress?.current_pack?.story_title||'').trim().toLowerCase();}catch{return '';}
+}
 function todayStory(){
+ const assigned=assignedTitle&&catalogue.stories.find(s=>s.pages.length&&s.title.trim().toLowerCase()===assignedTitle);if(assigned)return assigned;
  const readable=catalogue.stories.filter(s=>s.pages.length),pool=readable.filter(s=>s.audio.length).length?readable.filter(s=>s.audio.length):readable;
  if(!pool.length)return null;const now=new Date(),day=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/864e5);return pool[day%pool.length];
 }
@@ -45,13 +53,14 @@ function renderToday(){
 function listStories(){
  const book=activeBook,query=$('search').value.trim().toLocaleLowerCase();
  const stories=catalogue.stories.filter(s=>(book==='all'?(activeCollection==='all'||String(catalogue.books.find(b=>b.id===s.bookId).collection)===activeCollection):s.bookId===book)&&(!query||s.title.toLocaleLowerCase().includes(query)||String(s.number)===query));
- $('results-count').textContent=stories.length?`${stories.length.toLocaleString('vi-VN')} câu chuyện`:'Chưa tìm thấy câu chuyện. Con thử tên khác nhé.';
+ /* the design has no running count (the header already says how many stories there are): only the no-result message shows */
+ $('results-count').textContent=stories.length?'':'Chưa tìm thấy câu chuyện. Con thử tên khác nhé.';
  const today=$('today').dataset.story,rest=stories.filter(s=>s.id!==today||$('today').hidden);
  $('grid-title').hidden=!rest.length;
  $('stories-grid').replaceChildren(...rest.map(s=>{const i=Number(s.number||0)+catalogue.books.findIndex(b=>b.id===s.bookId);const a=el('a','card-f story-card');a.href='?story='+s.id;a.dataset.story=s.id;
  const pic=el('div','pic');pic.style.background=TILE_COLOURS[i%TILE_COLOURS.length];pic.innerHTML=`<svg aria-hidden="true" viewBox="0 0 120 80" preserveAspectRatio="xMidYMid meet">${TILE_ART[i%TILE_ART.length]}</svg>`;
  const title=el('strong','',s.title);title.lang='en';
- a.append(pic,title,el('span','where',`${label(catalogue.books.find(b=>b.id===s.bookId))} · Bài ${s.number}`),storyTags(s));
+ a.append(pic,title,el('span','where',`${activeCollection==='all'?label(catalogue.books.find(b=>b.id===s.bookId)):'Quyển '+catalogue.books.find(b=>b.id===s.bookId).month} · Bài ${s.number}`),storyTags(s));
  a.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();openStory(s.id);};return a;}));
 }
 function leaveReader(){
@@ -93,5 +102,5 @@ $('retry-story').onclick=()=>{if(selected)openStory(selected.id);};$('audio-vari
 audio.onerror=()=>{$('audio-status').textContent='Chưa phát được bài nghe. Con bấm “Mở lại câu chuyện” để thử lại nhé.';};
 window.addEventListener('pagehide',()=>{audio.pause();loading?.destroy().catch(()=>{});});document.addEventListener('visibilitychange',()=>{if(document.hidden)audio.pause();});
 let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>renderPage(),200);});
-try{const response=await fetch('/api/read2lead-library');if(!response.ok)throw Error();catalogue=await response.json();if(!catalogue.stories?.length)throw Error();const summary=`${catalogue.counts.stories.toLocaleString('vi-VN')} câu chuyện · ${catalogue.counts.books} quyển sách`;$('library-summary').textContent=summary;$('library-summary-lab').textContent=summary;renderToday();listBooks();listStories();const q=new URLSearchParams(location.search);if(q.has('story'))await openStory(q.get('story'));else if(q.has('book')){const book=catalogue.books.find(b=>b.id===q.get('book'));if(book){activeCollection=String(book.collection);activeBook=book.id;listBooks();listStories();}}}
+try{const response=await fetch('/api/read2lead-library');if(!response.ok)throw Error();catalogue=await response.json();if(!catalogue.stories?.length)throw Error();const summary=`${catalogue.counts.stories.toLocaleString('vi-VN')} câu chuyện · ${catalogue.counts.books} quyển sách`;$('library-summary').textContent=summary;$('library-summary-lab').textContent=summary;assignedTitle=await fetchAssignedTitle();renderToday();listBooks();listStories();const q=new URLSearchParams(location.search);if(q.has('story'))await openStory(q.get('story'));else if(q.has('book')){const book=catalogue.books.find(b=>b.id===q.get('book'));if(book){activeCollection=String(book.collection);activeBook=book.id;listBooks();listStories();}}}
 catch{status.textContent='Chưa mở được thư viện. Con tải lại trang hoặc đăng nhập lại để tiếp tục.';}

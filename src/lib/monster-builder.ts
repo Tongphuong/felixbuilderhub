@@ -305,14 +305,14 @@ function escapeHtml(value: string) {
 export function monsterBuilderIslandHtml(studentName: string): string {
   const arrow = (d: string) => `<svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24"><path d="${d}" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`;
   return `<section class="cp-editor" aria-label="Chọn bạn đồng hành" data-r2l-monster-builder-root>
-    <div class="cp-stage" data-design="companion.stage" role="img" aria-label="Bạn đồng hành của ${escapeHtml(studentName)}">
+    <div class="cp-stage" data-design="companion.stage" data-design-col role="img" aria-label="Bạn đồng hành của ${escapeHtml(studentName)}">
       <svg class="cp-hills" aria-hidden="true" viewBox="0 0 352 270" preserveAspectRatio="none"><path d="M0 210 C 80 190 270 190 352 210 L352 270 L0 270Z" fill="#7BD389"/><ellipse cx="176" cy="226" rx="90" ry="14" fill="#4FB868"/></svg>
       <img class="cp-spark cp-spark--a r2l-m-tw" src="/assets/effects/effect-spark-gold-01.webp" alt="" width="60" height="60">
       <img class="cp-spark cp-spark--b r2l-m-tw" src="/assets/effects/effect-star-gold-05.webp" alt="" width="60" height="60">
-      <div class="cp-monster r2l-m-bob"><div data-monster-preview aria-hidden="true"></div></div>
+      <div class="cp-monster r2l-m-bob" data-design="companion.avatar"><div data-monster-preview aria-hidden="true"></div></div>
       <div class="cp-bubble r2l-bubble r2l-m-pop">Đẹp quá!</div>
     </div>
-    <div class="cp-right">
+    <div class="cp-right" data-design-col>
       <div class="cp-picker r2l-card-f" data-design="companion.picker">
         <span class="r2l-d r2l-t-3 cp-q" id="cp-q">Con muốn đổi phần nào?</span>
         <div class="cp-slots" role="group" aria-labelledby="cp-q">${MONSTER_SLOTS.map(slot => `<button type="button" class="cp-slot" data-monster-slot="${slot}" aria-pressed="false">${SLOT_LABELS_VI[slot]}</button>`).join('')}</div>

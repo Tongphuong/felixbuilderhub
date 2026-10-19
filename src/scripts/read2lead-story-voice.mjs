@@ -179,7 +179,7 @@ export async function mountStoryMission() {
     const rw=node('section','','r2l rw');rw.setAttribute('role','region');rw.setAttribute('aria-labelledby','rw-title');
     rw.innerHTML=`<div class="rw__confetti" aria-hidden="true">${RW_CONFETTI.map(([l,c,w,h,r,d,t])=>`<span class="r2l-m-fall" style="left:${l};top:${t}px;width:${w};height:${h};background:${c};border-radius:${r};animation-delay:${d}s"></span>`).join('')}</div>
 <div class="rw__grid">
-<div class="rw__hero" data-design="reward.hero"><svg class="r2l-m-burst rw__burst" aria-hidden="true" viewBox="0 0 260 260"><path d="M130 6l18 70 62-38-38 62 70 18-70 18 38 62-62-38-18 70-18-70-62 38 38-62-70-18 70-18-38-62 62 38z" fill="#FFE7A8" stroke="#17324D" stroke-width="3" stroke-linejoin="round"></path></svg><div class="rw__monster r2l-m-dance"><img src="/assets/minny/vector/minny-cheer.svg" alt="" width="190" height="190"></div></div>
+<div class="rw__hero" data-design="reward.hero"><svg class="r2l-m-burst rw__burst" aria-hidden="true" viewBox="0 0 260 260"><path d="M130 6l18 70 62-38-38 62 70 18-70 18 38 62-62-38-18 70-18-70-62 38 38-62-70-18 70-18-38-62 62 38z" fill="#FFE7A8" stroke="#17324D" stroke-width="3" stroke-linejoin="round"></path></svg><div class="rw__monster r2l-m-dance" data-design="reward.monster"><img src="/assets/minny/vector/minny-cheer.svg" alt="" width="190" height="190"></div></div>
 <div class="rw__main">
 <h1 id="rw-title" class="r2l-d r2l-t-1 r2l-m-pop rw__title" data-design="reward.title"><span class="rw__done">Con đã đọc xong</span> <span class="rw__story" lang="en"></span></h1>
 <div class="rw__tiles" data-design="reward.tiles">

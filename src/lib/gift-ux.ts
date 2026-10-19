@@ -258,7 +258,7 @@ export function renderGiftCard(
     ? '<button type="button" class="r2l-lnk qt-clear-goal">Đổi mục tiêu</button>'
     : `<button type="button" class="r2l-btn r2l-btn-sm qt-set-goal" data-gift-id="${escapeHtml(item.id)}">Đặt làm mục tiêu ★</button>`;
   // The goal card's main action while the gift is out of reach: go and earn diamonds (href gets the child's code on the page).
-  const earnAction = isGoal ? '<a class="r2l-btn r2l-btn-sun r2l-btn-w r2l-m-ring qt-goal-read" href="/read2lead">Đọc truyện kiếm kim cương</a>' : '';
+  const earnAction = isGoal ? '<a class="r2l-btn r2l-btn-sun r2l-btn-w r2l-m-ring qt-goal-read" data-design="shop.primary" href="/read2lead">Đọc truyện kiếm kim cương</a>' : '';
 
   if (state === 'pending') {
     const well = renderPhotoWell({

@@ -26,7 +26,8 @@ function podiumView(row: Row) {
   col.dataset.rank = String(rank);
   if (rank === 1) { const crown = node('span', 'lb-crown'); crown.innerHTML = CROWN; col.append(crown); }
   const portrait = portraitView(row, 'stars-portrait lb-pav' + (rank === 1 ? ' r2l-m-bob' : ''), 'large');
-  const name = node('h2', 'stars-name', row.display_name);
+  if (rank === 1) portrait.dataset.design = 'lb.podium1.monster';
+  const name = node('span', 'stars-name', row.display_name);
   const step = node('div', 'lb-step');
   step.append(node('b', 'r2l-d lb-step-rank', rank ? '#' + rank : '☆'), node('span', 'lb-step-total', format(row.total) + unit()));
   col.append(portrait, name);
@@ -39,7 +40,7 @@ function rowView(row: Row, zebra: boolean) {
   const item = node('li', `stars-card stars-row${zebra ? ' is-zebra' : ''}${row.is_self ? ' is-self r2l-m-pop' : ''}`);
   item.dataset.rank = String(rank);
   const portrait = portraitView(row, 'stars-portrait' + (row.is_self ? ' r2l-m-bob' : ''), 'small');
-  const who = node('div', 'lb-who'); who.append(node('h2', 'stars-name', row.display_name)); if (row.is_self) who.append(selfTag());
+  const who = node('div', 'lb-who'); who.append(node('span', 'stars-name', row.display_name)); if (row.is_self) who.append(selfTag());
   item.append(node('b', 'r2l-d lb-rk', rank ? '#' + rank : '☆'), portrait, who, node('span', 'stars-total', format(row.total) + unit()));
   return item;
 }

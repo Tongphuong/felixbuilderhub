@@ -82,3 +82,8 @@ body:has(.companion-page){background:var(--r2l-sky)}
  .cp-picker{order:0}.cp-save{order:1}
 }
 .cp-tile-name{-webkit-line-clamp:3}
+.cp-head h1{margin-top:4px}
+@media(max-width:420px){.cp-tile-name{font-size:14px}}
+.cp-tile-name{display:block;-webkit-line-clamp:unset;overflow:visible}
+@media(min-width:1000px){.cp-monster{top:130px;height:370px}.cp-monster .r2l-monster{transform:scale(.64)}}
+.cp-slot,.cp-tile{font-family:var(--r2l-font-display);font-weight:800}
