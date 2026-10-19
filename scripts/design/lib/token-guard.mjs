@@ -101,7 +101,8 @@ export function shippedProblems(root, designCss) {
     }
   }
   // dist
-  const norm = v => v.replace(/\s+/g, '').toLowerCase();
+  // dist CSS is re-serialised by the bundler: whitespace, hex case and QUOTE style ('Baloo 2' -> "Baloo 2") are not differences
+  const norm = v => v.replace(/\s+/g, '').replace(/["']/g, '').toLowerCase();
   const checkParsed = (file, css) => {
     const seen = new Map();
     for (const d of parseCustomProps(css)) {

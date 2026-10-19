@@ -20,12 +20,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
-import { contractChecks, tapChecks, overflowCheck, motionCheck, addStillClass, fontCheck, fontUsage, mockBoxes, builtBoxes, scanText } from './lib/in-page.mjs';
+import { contractChecks, tapChecks, overflowCheck, motionCheck, addStillClass, removeStillClass, layoutSanity, fontCheck, fontUsage, mockBoxes, builtBoxes, scanText } from './lib/in-page.mjs';
 import { diffPngs, writeComposite, padPng, cornerColor, pngHeight, fitWidth } from './lib/pixels.mjs';
 import { analyseText, textOf, collapse } from './lib/text.mjs';
 import { compareRegion } from './lib/regions.mjs';
 
 const OVERFLOW_WIDTHS = [360, 390, 768, 1024, 1280];
+const LAYOUT_WIDTHS = [360, 768, 1024]; // plus every width the contract has a mock for
 const BOOLEAN_FLAGS = new Set(['require-anchors', 'binding-only']);
 const CHROME_CANDIDATES = [
   process.env.CHROME_PATH,
@@ -96,6 +97,7 @@ export function validateContract(c) {
       if (!Array.isArray(b) || b.length !== 4 || b.some(n => typeof n !== 'number') || b[2] <= 0 || b[3] <= 0) throw new InfraError(`contract ${c.id}: region ${r.id} mock_box.${rw} must be [x, y, w, h]`);
     }
   }
+  if (c.overflow_allow != null && (!Array.isArray(c.overflow_allow) || c.overflow_allow.some(x => typeof x !== 'string'))) throw new InfraError(`contract ${c.id}: overflow_allow must be a list of data-design ids or CSS selectors`);
   for (const [id, sz] of Object.entries(c.min_size || {})) if (!Array.isArray(sz) || sz.length !== 2 || sz.some(n => typeof n !== 'number')) throw new InfraError(`contract ${c.id}: min_size.${id} must be [w, h]`);
   for (const k of Object.keys(c)) {
     const m = /^(?:order|texts)_(\d+)$/.exec(k);
@@ -295,19 +297,6 @@ export async function runFidelity(opts) {
           fontProblems.push(...fu.bad.slice(0, 8));
           res.checks.push(check('fonts', fontProblems.length === 0, fontProblems.length ? fontProblems.join('; ') : `Baloo 2 on ${fu.headings} headings + ${fu.buttons} buttons, Nunito on body + ${fu.paras} paragraphs, faces loaded`));
 
-          if (first) {
-            const bad = [];
-            for (const ow of OVERFLOW_WIDTHS) {
-              await page.setViewportSize({ width: ow, height: viewport.height });
-              await page.waitForTimeout(80);
-              const o = await page.evaluate(overflowCheck);
-              if (o.scrollWidth > o.innerWidth) bad.push(`${ow}px: content ${o.scrollWidth}px wide`);
-            }
-            await page.setViewportSize(viewport);
-            await page.waitForTimeout(80);
-            res.checks.push(check('no-h-scroll@360/390/768/1024/1280', bad.length === 0, bad.length ? bad.join('; ') : 'ok'));
-          }
-
           // geometry against the mock (anchors)
           if (opts['require-anchors']) {
             const noReason = Object.entries(exempt).filter(([, r]) => typeof r !== 'string' || !r.trim()).map(([id]) => id);
@@ -375,6 +364,35 @@ export async function runFidelity(opts) {
           if (!stillOk) stillDetail = `.still changed the page height (${hB} -> ${pngHeight(stillPng)})`;
           else { const st = diffPngs(builtPng0, stillPng, 0); if (st.count) { stillOk = false; stillDetail = `.still changes ${st.count} pixels vs the reduced-motion render`; } }
           res.checks.push(check('still-twin', stillOk, stillDetail));
+          await page.evaluate(removeStillClass);
+
+          // Width cycle LAST (it re-rasterises the page, which is what used to make still-twin fail): horizontal scroll at the five
+          // widths, and layout sanity at 360 / 768 / 1024 + the contract's own widths, in the same state (once per contract).
+          if (first) {
+            const layoutWidths = new Set([...LAYOUT_WIDTHS, ...Object.keys(contract.mock).map(Number)]);
+            const bad = [], layoutBad = [];
+            res.layout = {};
+            for (const vw of [...new Set([...OVERFLOW_WIDTHS, ...layoutWidths])].sort((x, y) => x - y)) {
+              await page.setViewportSize({ width: vw, height: viewport.height });
+              await page.waitForTimeout(120);
+              if (OVERFLOW_WIDTHS.includes(vw)) {
+                const o = await page.evaluate(overflowCheck);
+                if (o.scrollWidth > o.innerWidth) bad.push(`${vw}px: content ${o.scrollWidth}px wide`);
+              }
+              if (layoutWidths.has(vw)) {
+                const offenders = await page.evaluate(layoutSanity, { allow: contract.overflow_allow || [] });
+                if (offenders.length) {
+                  res.layout[vw] = offenders;
+                  const shotName = `${contract.id}-layout-${vw}.png`;
+                  await page.screenshot({ path: path.join(out, shotName), fullPage: full, animations: 'disabled', caret: 'hide' });
+                  layoutBad.push(`${vw}px: ` + offenders.slice(0, 4).map(o => `${o.kind} ${o.sel}: ${o.detail}`).join(' | ') + (offenders.length > 4 ? ` (+${offenders.length - 4} more)` : '') + ` [${shotName}]`);
+                }
+              }
+            }
+            await page.setViewportSize(viewport);
+            res.checks.push(check('no-h-scroll@360/390/768/1024/1280', bad.length === 0, bad.length ? bad.join('; ') : 'ok'));
+            res.checks.push(check('layout-sanity', layoutBad.length === 0, layoutBad.length ? layoutBad.join('; ') : `no overlapping text, escaping control, split word or clipped text at ${[...layoutWidths].sort((x, y) => x - y).join('/')}px`));
+          }
           await bctx.close();
 
           // (e) composite -------------------------------------------------
@@ -418,6 +436,7 @@ function renderMd(report) {
     if (r.composite) L.push(`Composite: \`${r.composite}\``, '');
     for (const c of r.checks) L.push(`- ${c.pass ? 'PASS' : 'FAIL'} **${c.name}** ${c.detail}`);
     for (const w of r.warnings) L.push(`- WARN ${w}`);
+    if (r.layout && Object.keys(r.layout).length) { L.push('', 'Layout-sanity offenders:'); for (const [vw, list] of Object.entries(r.layout)) for (const o of list) L.push(`- @${vw}px ${o.kind} ${o.sel}: ${o.detail}`); }
     if (r.regions) { L.push('', 'Regions:'); for (const g of r.regions) L.push(`- ${g.pass ? 'PASS' : 'FAIL'} ${g.id}: ${(g.fraction * 100).toFixed(1)}% differing (ceiling ${(g.ceiling * 100).toFixed(1)}%), built stddev ${g.builtStddev}, edge ${(g.edgeRatio * 100).toFixed(0)}% of the mock's`); }
     if (r.exempt && Object.keys(r.exempt).length) { L.push('', 'Geometry NOT checked (anchors_exempt, as in force at this width):'); for (const [id, why] of Object.entries(r.exempt)) L.push(`- ${id}: ${why || '(NO REASON GIVEN)'}`); }
     if (r.anchorBoxes) { L.push('', 'Anchored mock boxes (x, y, w, h):'); for (const [id, b] of Object.entries(r.anchorBoxes)) L.push(`- ${id}: ${b ? `${b.x}, ${b.y}, ${b.w}, ${b.h}` : 'ANCHOR TEXT NOT FOUND'}`); }

@@ -279,6 +279,10 @@ export function addStillClass() {
   for (const e of [document.documentElement, document.body, ...document.querySelectorAll('.r2l')]) e.classList.add('still');
 }
 
+export function removeStillClass() {
+  for (const e of [document.documentElement, document.body, ...document.querySelectorAll('.r2l')]) e.classList.remove('still');
+}
+
 export function fontCheck() {
   return [...document.fonts].map(f => ({ family: f.family.replace(/^["']|["']$/g, ''), status: f.status }));
 }
@@ -350,4 +354,142 @@ export function stateProbe() {
   // The greeting may be split across inline elements ("Chào <span>Linh</span>!"), so match element text.
   const greeting = (() => { for (const e of document.querySelectorAll('h1,h2,h3,[data-design="home.hero"]')) { const t = (e.textContent || '').replace(/\s+/g, ' ').trim(); if (/^Chào\s+\S+!/.test(t) && shown(e)) return t; } return null; })();
   return { labels, entryForm, greeting, url: location.pathname };
+}
+
+// ---------------------------------------------------------------------------
+// Layout sanity on the BUILT page at the current viewport width. The mocks exist only at 390/1280, so in-between
+// widths are checked for breakage a pixel diff can never see. Returns offenders [{kind, sel, detail}].
+//   (a) overlap     two visible text LINES of different text nodes intersect by more than 2px (both axes)
+//   (b) escape      an interactive control or [data-design] element sticks out of its nearest card/section
+//                   (ancestor with a border or a background) by more than 2px; `allow` = overflow_allow list
+//                   (data-design ids or CSS selectors) exempts element or card
+//   (c) word-split  a line break falls INSIDE a word
+//   (d) clipped     overflow:hidden|clip element whose text is cut off (scroll size > client size),
+//                   except text-overflow: ellipsis
+export function layoutSanity(args) {
+  const allow = args.allow || [];
+  const TOL = 2;
+  const sel = e => {
+    let s = e.tagName.toLowerCase();
+    if (e.id) s += '#' + e.id;
+    const dd = e.getAttribute('data-design'); if (dd) s += '[data-design="' + dd + '"]';
+    else if (typeof e.className === 'string' && e.className.trim()) s += '.' + e.className.trim().split(/\s+/)[0];
+    return s;
+  };
+  const shown = e => {
+    for (let n = e; n && n.nodeType === 1; n = n.parentElement) {
+      const cs = getComputedStyle(n);
+      if (cs.display === 'none' || cs.visibility === 'hidden' || cs.visibility === 'collapse') return false;
+      if (parseFloat(cs.opacity) === 0) return false;
+    }
+    return true;
+  };
+  // visually hidden by clipping (".sr-only" pattern): the text is not on screen, so it can neither overlap nor be clipped
+  const clippedAway = e => {
+    for (let n = e; n && n !== document.body && n !== document.documentElement; n = n.parentElement) {
+      const cs = getComputedStyle(n);
+      const nb = n.getBoundingClientRect();
+      if ((cs.overflowX !== 'visible' || cs.overflowY !== 'visible') && (nb.width <= 2 || nb.height <= 2)) return true;
+      if (cs.clip && cs.clip !== 'auto') { const nums = (cs.clip.match(/-?[\d.]+/g) || []).map(Number); if (nums.length === 4 && (nums[0] >= nums[2] || nums[3] >= nums[1])) return true; }
+      if (cs.clipPath && /^inset\(\s*(50|[6-9]\d|100)%/.test(cs.clipPath)) return true;
+    }
+    return false;
+  };
+  const allowed = e => allow.some(a => { try { return e.matches('[data-design="' + a + '"]') || e.matches(a); } catch { return false; } });
+  const out = [];
+
+  // text nodes + their line rects
+  const nodes = [];
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    if (!n.nodeValue.trim()) continue;
+    const el = n.parentElement;
+    if (!el || ['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE'].includes(el.tagName) || el.closest('svg') || !shown(el) || clippedAway(el)) continue;
+    const range = document.createRange(); range.selectNodeContents(n);
+    const rects = [...range.getClientRects()].filter(r => r.width > 1 && r.height > 1);
+    if (!rects.length) continue;
+    if (rects.every(r => r.right <= 0 || r.bottom <= 0 || r.left >= document.documentElement.clientWidth + 5)) continue;
+    // Range rects are the font's content area, taller than the glyphs; with a tight line-height they overlap harmlessly.
+    // Compare the central 78% of the font size instead (where the glyphs are).
+    const fs = parseFloat(getComputedStyle(el).fontSize) || 16;
+    const glyphs = rects.map(r => { const h = Math.min(r.height, fs * 0.78), cy = r.top + r.height / 2; return { left: r.left, right: r.right, top: cy - h / 2, bottom: cy + h / 2 }; });
+    nodes.push({ n, el, rects, glyphs });
+  }
+
+  // (a) overlapping text lines of different nodes
+  const seen = new Set();
+  for (let i = 0; i < nodes.length && out.length < 40; i++) for (let j = i + 1; j < nodes.length; j++) {
+    const a = nodes[i], b = nodes[j];
+    if (a.el === b.el) continue;
+    let hit = null;
+    for (const ra of a.glyphs) { for (const rb of b.glyphs) {
+      const w = Math.min(ra.right, rb.right) - Math.max(ra.left, rb.left), h = Math.min(ra.bottom, rb.bottom) - Math.max(ra.top, rb.top);
+      if (w > TOL && h > TOL) { hit = { w, h }; break; }
+    } if (hit) break; }
+    if (hit) {
+      const key = sel(a.el) + '|' + sel(b.el);
+      if (!seen.has(key)) { seen.add(key); out.push({ kind: 'overlap', sel: sel(a.el) + ' x ' + sel(b.el), detail: `"${a.n.nodeValue.trim().slice(0, 24)}" overlaps "${b.n.nodeValue.trim().slice(0, 24)}" by ${Math.round(hit.w)}x${Math.round(hit.h)}px` }); }
+    }
+  }
+
+  // (b) controls / design elements escaping their card
+  const hasBox = cs => ['Top', 'Right', 'Bottom', 'Left'].some(s => parseFloat(cs['border' + s + 'Width']) > 0 && cs['border' + s + 'Style'] !== 'none')
+    || (cs.backgroundColor !== 'rgba(0, 0, 0, 0)' && cs.backgroundColor !== 'transparent') || cs.backgroundImage !== 'none';
+  for (const e of document.querySelectorAll('a,button,input,select,textarea,summary,[role=button],[data-design]')) {
+    if (!shown(e) || allowed(e)) continue;
+    const cs = getComputedStyle(e);
+    if (cs.position === 'fixed' || cs.position === 'sticky') continue;
+    const r = e.getBoundingClientRect();
+    if (r.width <= 1 || r.height <= 1) continue;
+    let card = null;
+    for (let p = e.parentElement; p && p !== document.body && p !== document.documentElement; p = p.parentElement) {
+      if (hasBox(getComputedStyle(p)) && p.getBoundingClientRect().width > 1) { card = p; break; }
+    }
+    if (!card || allowed(card)) continue;
+    const c = card.getBoundingClientRect();
+    const over = [];
+    if (r.left < c.left - TOL) over.push('left ' + Math.round(c.left - r.left) + 'px');
+    if (r.right > c.right + TOL) over.push('right ' + Math.round(r.right - c.right) + 'px');
+    if (r.top < c.top - TOL) over.push('top ' + Math.round(c.top - r.top) + 'px');
+    if (r.bottom > c.bottom + TOL) over.push('bottom ' + Math.round(r.bottom - c.bottom) + 'px');
+    if (over.length) out.push({ kind: 'escape', sel: sel(e) + ' in ' + sel(card), detail: 'sticks out of its card by ' + over.join(', ') });
+  }
+
+  // (c) a line break inside a word
+  for (const { n, el, rects } of nodes) {
+    if (rects.length < 2) continue;
+    const text = n.nodeValue;
+    const range = document.createRange();
+    let prev = null, prevCh = '';
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      if (/\p{M}/u.test(ch)) continue;
+      if (/\s/.test(ch)) { prev = null; prevCh = ''; continue; }
+      range.setStart(n, i); range.setEnd(n, i + 1);
+      const rr = [...range.getClientRects()].filter(r => r.width > 0 && r.height > 0)[0];
+      if (!rr) continue;
+      if (prev && prevCh && /[\p{L}\p{N}]/u.test(prevCh) && /[\p{L}\p{N}]/u.test(ch) && rr.top > prev.bottom - prev.height / 2 && rr.left < prev.left) {
+        out.push({ kind: 'word-split', sel: sel(el), detail: `line break inside a word near "${text.slice(Math.max(0, i - 5), i + 5).trim()}"` });
+        break;
+      }
+      prev = rr; prevCh = ch;
+    }
+  }
+
+  // (d) text clipped by overflow:hidden (ellipsis excepted)
+  for (const e of document.querySelectorAll('body *')) {
+    if (!shown(e) || allowed(e)) continue;
+    const cs = getComputedStyle(e);
+    if (!/(hidden|clip)/.test(cs.overflowX + cs.overflowY)) continue;
+    if (!(e.textContent || '').trim() || e.closest('svg')) continue;
+    if (cs.textOverflow === 'ellipsis') continue;
+    const cutX = /(hidden|clip)/.test(cs.overflowX) && e.scrollWidth > e.clientWidth + 1;
+    const cutY = /(hidden|clip)/.test(cs.overflowY) && e.scrollHeight > e.clientHeight + 1;
+    if (!(cutX || cutY) || e.clientWidth === 0 || e.clientHeight === 0) continue;
+    // only text that is really cut: a text node that lies partly outside the element's box
+    const eb = e.getBoundingClientRect();
+    const cut = nodes.some(({ el, rects }) => e.contains(el) && rects.some(r => r.right > eb.right + 1 || r.bottom > eb.bottom + 1 || r.left < eb.left - 1 || r.top < eb.top - 1));
+    if (cut) out.push({ kind: 'clipped', sel: sel(e), detail: `text cut off by overflow (content ${e.scrollWidth}x${e.scrollHeight}px in a ${e.clientWidth}x${e.clientHeight}px box)` });
+  }
+  return out;
 }

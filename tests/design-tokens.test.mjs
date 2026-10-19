@@ -99,7 +99,7 @@ test('BITE shipped CSS: an override in src (css, astro style, inline style, setP
     'src/styles/r2l-tokens.css': DESIGN_CSS,
     'src/styles/other.css': '.a{color:var(--r2l-ink);background:var(--r2l-sun, #fff)}',
     'src/components/A.astro': '<div style="color: var(--r2l-ink)"></div><style>.b{border:1px solid var(--r2l-ink)}</style>',
-    'dist/_astro/x.css': ':root{--r2l-ink:#17324d;--r2l-sun:#ffc83d}.a{color:var(--r2l-ink)}',
+    'dist/_astro/x.css': ':root{--r2l-ink:#17324d;--r2l-sun:#ffc83d;--r2l-font-display:"Baloo 2",system-ui,sans-serif}.a{color:var(--r2l-ink)}',  // the bundler re-quotes 'Baloo 2' as "Baloo 2": same token
   });
   const bad = (rel, text) => { const d = scratch({ 'src/styles/r2l-tokens.css': DESIGN_CSS, [rel]: text }); try { return shippedProblems(d, DESIGN_CSS); } finally { fs.rmSync(d, { recursive: true, force: true }); } };
   try {
@@ -110,6 +110,8 @@ test('BITE shipped CSS: an override in src (css, astro style, inline style, setP
     assert.ok(bad('src/scripts/d.mjs', "document.documentElement.style.setProperty('--r2l-ink', '#fff')")[0].startsWith('OVERRIDE --r2l-ink'));
     assert.ok(bad('dist/_astro/y.css', '@media (max-width:500px){:root{--r2l-sun:#000}}')[0].startsWith('DIST --r2l-sun declared inside'));
     assert.ok(bad('dist/_astro/y.css', ':root{--r2l-sun:#000}')[0].startsWith('DIST --r2l-sun has value'));
+    assert.ok(bad('dist/_astro/y.css', ':root{--r2l-font-display:"Nunito",system-ui,sans-serif}')[0].startsWith('DIST --r2l-font-display has value'), 're-quoting is not a difference, a DIFFERENT font is');
+    assert.deepEqual(bad('dist/_astro/y.css', ":root{--r2l-font-display:'Baloo 2', system-ui, sans-serif}"), []);
     assert.ok(bad('dist/_astro/y.css', ':root{--r2l-sun:#ffc83d}.x{--r2l-sun:#ffc83d}').some(p => p.includes('declared inside')));
     assert.ok(bad('dist/index.html', '<style>:root{--r2l-ink:#000}</style>')[0].startsWith('DIST --r2l-ink has value'));
   } finally { fs.rmSync(ok, { recursive: true, force: true }); }

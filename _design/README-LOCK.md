@@ -66,6 +66,10 @@ and must leave the page in `contract.built.state` or **throw** (a throw is recor
     submit response containing `rank_up` (lesson.astro, `_r2lTriviaState.pendingRankUp`), and the story-mission flow never produces
     one; there is no stored "last-seen rank" to seed. So the driver calls the product's exported hook directly instead of replaying a
     completed submit. The modal says "Con" instead of the child's name because the hook passes no kid name.
+  - **Re-runs / statefulness:** the driver is IDEMPOTENT against a rehearsal server that has already been used. It never resets or
+    restarts the server: accounts that already hold a pack are reused (nothing is generated twice), a `previous_pack_needs_review`
+    answer from the generator is resolved to the pack it names, and a completed mission is not replayed. To start from clean state,
+    restart the rehearsal server yourself.
   - `--sample <json>` swaps in another sample (`fixtures/mock-sample-alt.json`: every value differs). With `--binding-only` the
     harness runs ONLY the state driver and the `data-binding` check: the page must show the alternate values, and the mock's old
     values must be gone, so a hard-coded "Minh" or "55" fails. Run it as a second pass over every home and reward contract.
@@ -94,7 +98,8 @@ screenshots are FULL-PAGE on both sides, so anything below the fold is compared.
 | anchors-present | (only with `--require-anchors`) the contract has no `anchors`, or an `order` id (not in `optional`) has none. |
 | height | the built page is taller than the mock by more than max(10%, 120px). The shorter side is padded with its own background colour, so extra or missing area counts in the diff. |
 | pixel-diff | pixelmatch (threshold 0.1) differing fraction over the full padded page > `diff_ceiling[w]` |
-| still-twin | adding the `still` class to `html`, `body` and every `.r2l` changes the built render at all |
+| still-twin | adding the `still` class to `html`, `body` and every `.r2l` changes the built render at all. Runs BEFORE the width cycle below (a viewport cycle re-rasterises edges and used to make it fail falsely, 60-70px on reward@390). |
+| layout-sanity | the mocks exist only at 390/1280, so the BUILT page is checked at 360, 768, 1024 and the contract's own widths, in the same state (once per contract): (a) two text lines of different text nodes overlap by more than 2px (glyph band = central 78% of the font size, so tight line-heights do not false-alarm; clipped `.sr-only` text is ignored); (b) a control (`a, button, input, select, textarea, summary, [role=button]`) or `[data-design]` element sticks out of its nearest card (an ancestor with a border or background) by more than 2px, unless it or its card matches the contract's `overflow_allow` (data-design ids or CSS selectors); (c) a line break falls inside a word; (d) text is cut off by `overflow:hidden|clip`, except `text-overflow: ellipsis`. Each offender (selector + width) is listed in `report.md`, and a screenshot of each failing width is saved as `<contract>-layout-<width>.png`. |
 
 ### Contract fields the harness reads (beyond the contracts README)
 - `anchors` (optional; required by `--require-anchors`): `{ "<data-design id>": "<a text string that appears inside that section of the MOCK>" }`.
@@ -116,6 +121,7 @@ screenshots are FULL-PAGE on both sides, so anything below the fold is compared.
   built crop FAILS as "region empty" when blank or uniform (luminance stddev < 4), and when its pixel diff exceeds `ceiling`.
   Results appear per region in `report.md` and under the composite. A region has its own check, `region:<id>`.
 - `min_size` (optional): `{ "<id>": [w, h] }` overrides the default 40x24 minimum of an `order` element.
+- `overflow_allow` (optional): `["<data-design id or CSS selector>", ...]`, elements or cards allowed to overflow by design (layout-sanity b and d).
 - `reduced_motion_allow` (optional): animation names exempt from the `animation-name` rule.
 - Width-keyed fields must agree: `mock`, `viewport`, `diff_ceiling` (and `reference` if present) list exactly the same widths;
   `order_<w>`, `texts_<w>`, `layout` and `primary.min_height` may only name those widths. Otherwise the harness exits 2.

@@ -73,6 +73,11 @@ function page(o = {}) {
     + (o.animZero ? '<div style="width:10px;height:10px;background:#000;animation:fade 0s both"></div>' : '')
     + (o.raf ? '<div id="m" style="width:10px;height:10px;background:#000"></div><script>let x=0;const d=document.getElementById("m");(function f(){x=(x+3)%120;d.style.marginLeft=x+"px";requestAnimationFrame(f)})()</script>' : '')
     + (o.svgLow ? '<svg width="200" height="40" style="display:block"><rect width="200" height="40" fill="#fff"/><text x="4" y="28" fill="#ddd" font-size="20">Sáng chói</text></svg>' : '')
+    + (o.layoutOverlap ? '<div style="position:relative;height:0"><p style="position:absolute;top:-70px;left:16px;margin:0">Chồng chữ</p></div>' : '')
+    + (o.layoutEscape ? '<div style="border:2px solid #17324D;width:120px;padding:4px"><button style="width:300px;height:48px;font-family:inherit">Nút tràn</button></div>' : '')
+    + (o.layoutMidword ? '<div style="width:60px;word-break:break-all">Xin chào các bạn</div>' : '')
+    + (o.layoutClipped ? '<div style="width:80px;height:24px;overflow:hidden;white-space:nowrap">Một dòng chữ rất dài bị cắt</div>' : '')
+    + (o.layoutEllipsis ? '<div style="width:80px;height:24px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">Một dòng chữ rất dài bị cắt</div>' : '')
     + (o.belowFar ? '<div style="height:600px"></div><div style="height:300px;background:#d33"></div><i data-design="t.below" style="display:block;height:1px"></i>' : '')
     + (o.below === 'big' ? '<div style="height:600px;background:#d33"></div>' : '')
     + (o.below === 'small' ? '<div style="height:100px;background:#d33"></div>' : '')
@@ -149,6 +154,11 @@ V['region-wrong'] = [{ heroRed: true }, { must: ['region:t.hero'], may: ['texts'
 V['region-no-element'] = [{ marks: false }, { must: ['region:t.hero'], may: ['order', 'primary', 'geometry'] }];
 V['small-order-default'] = [{ topSmall: true }, ['order']];
 V['small-order-override'] = [{ topSmall: true }, []];
+V['layout-overlap'] = [{ layoutOverlap: true }, { must: ['layout-sanity'], may: ['pixel-diff', 'contrast>=4.5'] }];
+V['layout-escape'] = [{ layoutEscape: true }, { must: ['layout-sanity'], may: ['pixel-diff', 'fonts'] }];
+V['layout-midword'] = [{ layoutMidword: true }, { must: ['layout-sanity'], may: ['pixel-diff'] }];
+V['layout-clipped'] = [{ layoutClipped: true }, { must: ['layout-sanity'], may: ['pixel-diff'] }];
+V['layout-ellipsis'] = [{ layoutEllipsis: true }, { must: [], may: ['pixel-diff'] }]; // ellipsis truncation is by design: passes
 V['no-fonts'] = [{ noFontLink: true }, { must: ['fonts'], may: ['pixel-diff'] }];
 
 const ANCHORS = { 't.top': 'Xin chào', 't.hero': 'Đọc truyện nào', 't.primary': 'Mở truyện', 't.foot': 'Dành cho ba mẹ' };
@@ -310,6 +320,24 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
     await t.test('min_size: a small labelled element fails the default 40x24 but passes with a per-id override', () => {
       assert.match(by['small-order-default'].checks.find(c => c.name === 'order').detail, /t\.top is 150x20px \(min 40x24/);
       assert.equal(by['small-order-override'].checks.find(c => c.name === 'order').pass, true);
+    });
+    await t.test('B layout-sanity: overlapping text, an escaping control, a mid-word break and clipped text each fail; ellipsis passes', () => {
+      const d = n => by[n].checks.find(c => c.name === 'layout-sanity').detail;
+      assert.match(d('layout-overlap'), /overlap p x footer|overlap footer x p|overlap .*Chồng chữ/);
+      assert.match(d('layout-escape'), /escape button in div: sticks out of its card by right 1\d\dpx/);
+      assert.match(d('layout-midword'), /word-split div: line break inside a word/);
+      assert.match(d('layout-clipped'), /clipped div: text cut off by overflow/);
+      assert.equal(by['layout-ellipsis'].checks.find(c => c.name === 'layout-sanity').pass, true);
+      assert.equal(by.ok.checks.find(c => c.name === 'layout-sanity').pass, true);
+      assert.match(by['layout-escape'].checks.find(c => c.name === 'layout-sanity').detail, /360px: .*layout-escape-layout-360\.png/);
+      assert.ok(fs.existsSync(path.join(tmp, 'out', 'layout-escape-layout-360.png')), 'a screenshot of each failing width is saved');
+      assert.match(fs.readFileSync(path.join(tmp, 'out', 'report.md'), 'utf8'), /Layout-sanity offenders:\n- @360px escape button/);
+    });
+    await t.test('A still-twin runs BEFORE the width cycle (a viewport cycle re-rasterises edges and used to make it fail falsely)', () => {
+      const names = by.ok.checks.map(c => c.name);
+      assert.ok(names.indexOf('still-twin') < names.indexOf('layout-sanity') && names.indexOf('still-twin') < names.findIndex(n => n.startsWith('no-h-scroll')), names.join(','));
+      assert.equal(by.ok.checks.find(c => c.name === 'still-twin').pass, true);
+      assert.equal(by['still-twin-differs'].checks.find(c => c.name === 'still-twin').pass, false, 'a real .still layout change still fails');
     });
     await t.test('a failing contract writes a composite, report.json and report.md; verdict is false', () => {
       assert.equal(report.ok, false);
@@ -493,6 +521,30 @@ test('region edge energy: a blank box inside the backdrop rays FAILS clearly, a 
   assert.equal(rBlank.pass, false); assert.match(rBlank.problems.join('|'), /region empty: built crop has only \d+% of the mock's edge energy/);
   assert.ok(rBlank.builtSd > 4, 'the blank box is NOT uniform (rays), so the stddev check alone would pass it');
   assert.equal(compareRegion(mock, other, box, box, 1.0).pass, true);
+});
+
+test('D r2l driver is idempotent on a used rehearsal server (existing pack reused; previous_pack_needs_review resolved)', async () => {
+  const { ensurePack } = await import('../scripts/design/drivers/r2l.mjs');
+  let generates = 0, current = null, mode = 'ok';
+  const server = http.createServer((req, res) => {
+    res.setHeader('content-type', 'application/json');
+    if (req.url.startsWith('/api/read2lead-progress')) return res.end(JSON.stringify({ ok: true, progress: { current_pack: current } }));
+    generates++;
+    if (mode === 'review') return res.end(JSON.stringify({ ok: false, error: 'previous_pack_needs_review', lesson_link: '/read2lead/lesson?code=X&pack_id=p9' }));
+    if (mode === 'fail') return res.end(JSON.stringify({ ok: false, error: 'boom' }));
+    current = { pack_id: 'p1' };
+    res.end(JSON.stringify({ ok: true, pack_id: 'p1' }));
+  });
+  await new Promise(r => server.listen(0, '127.0.0.1', r));
+  const base = 'http://127.0.0.1:' + server.address().port;
+  try {
+    assert.equal(await ensurePack(base, 'C'), 'p1'); assert.equal(generates, 1);
+    assert.equal(await ensurePack(base, 'C'), 'p1'); assert.equal(generates, 1, 'second run reuses the existing pack, nothing generated');
+    current = null; mode = 'review';
+    assert.equal(await ensurePack(base, 'C'), 'p9', 'previous_pack_needs_review resolves to the pack it names');
+    mode = 'fail';
+    await assert.rejects(ensurePack(base, 'C'), /could not generate a real pack/);
+  } finally { await new Promise(r => server.close(r)); }
 });
 
 test('pixel sampler: dominant background wins over heavy glyph pixels', () => {

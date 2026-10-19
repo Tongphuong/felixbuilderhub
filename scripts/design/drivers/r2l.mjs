@@ -18,6 +18,8 @@
 // response `rank_up`), and the modal shows "Con" not the child's name because the product helper passes no kid name.
 // `--sample <json>` swaps in another sample (fixtures/mock-sample-alt.json) for the data-binding run; the driver then returns
 // `dataBinding {expect, absent}` for the harness `data-binding` check.
+// Re-runs: the driver is idempotent against a rehearsal server that has already been used (see ensurePack); it never resets or restarts
+// the server. To start from clean state, restart the rehearsal server yourself.
 // Login: the rehearsal synthetic magic link (letter x 32 per account, or --token). Needs the rehearsal Worker
 // (scripts/r2l-release/rehearse.mjs --serve); a synthetic, offline server, never production.
 import fs from 'node:fs';
@@ -137,13 +139,20 @@ function api(base, code) {
   const progress = async () => (await fetch(base + '/api/read2lead-progress?code=' + code, { headers: H })).json();
   return { H, J, progress };
 }
-async function ensurePack(base, code) {
+// IDEMPOTENT (this is how a second run against the SAME rehearsal server works; the server is never reset or restarted):
+// an account that already has a pack keeps it (first-visit / mid-story / reward accounts are reused, nothing is generated twice),
+// and a `previous_pack_needs_review` answer from the generator is turned into the pack it points at.
+export async function ensurePack(base, code) {
   const { J, progress } = api(base, code);
   const have = (await progress()).progress?.current_pack;
   if (have?.pack_id) return have.pack_id;
   const gen = await J('/api/generate-read2lead-pack', { access_code: code, collection: 'auto' });
-  if (!gen.pack_id) throw new Error(`could not generate a real pack for ${code}: ${JSON.stringify(gen).slice(0, 200)}`);
-  return gen.pack_id;
+  if (gen.pack_id) return gen.pack_id;
+  if (gen.error === 'previous_pack_needs_review' && gen.lesson_link) {
+    const id = new URL(gen.lesson_link, base).searchParams.get('pack_id');
+    if (id) return id;
+  }
+  throw new Error(`could not generate a real pack for ${code}: ${JSON.stringify(gen).slice(0, 200)}`);
 }
 async function openSession(base, code, packId) {
   const { J } = api(base, code);
