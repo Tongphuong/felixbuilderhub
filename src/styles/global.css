@@ -1,3 +1,6 @@
+@import './r2l-tokens.css';
+@import './r2l-fonts.css';
+@import './r2l-components.css';
 @import './design-system.css';
 
 @tailwind base;
@@ -6,23 +9,71 @@
 
 @layer base {
   html {
-    background: #10273a;
+    background: var(--r2l-cream);
   }
 
-  body.star-field {
-    background: var(--star-field-background);
-    background-attachment: fixed;
+  body {
+    font-family: var(--r2l-font-body);
+    font-weight: 700;
+    color: var(--r2l-ink);
   }
 
   :focus-visible {
-    outline: 2px solid #f2cc7e;
-    outline-offset: 4px;
+    outline: 3px solid var(--r2l-ink);
+    outline-offset: 3px;
   }
 
   ::selection {
-    background: #c88f38;
-    color: #10273a;
+    background: var(--r2l-sun);
+    color: var(--r2l-ink);
   }
+}
+
+/* ---- Role overrides (R2L-ISLAND re-theme) -------------------------------------------------------------
+   The old palette used `accent`/`gold` as TEXT on a dark ground. On the new light ground sun-yellow text is
+   unreadable, so TEXT uses of those names resolve to ink (or leaf-deep for links); FILL uses (bg-accent,
+   border-accent) stay sun. Secondary text is ink, never grey: all text-cream/NN opacity steps are full ink. */
+.text-accent,
+.text-accent\/70,
+.hover\:text-accent:hover,
+.group:hover .group-hover\:text-accent {
+  color: var(--r2l-leaf-deep);
+}
+.text-gold,
+.text-gold\/80,
+.text-gold-light,
+.text-gold-light\/70 {
+  color: var(--r2l-ink);
+}
+[class~="text-cream"],
+[class*="text-cream/"],
+[class*="text-cream-"] {
+  color: var(--r2l-ink);
+}
+.hover\:text-cream:hover,
+.hover\:text-cream\/70:hover {
+  color: var(--r2l-ink);
+}
+.placeholder\:text-cream-dim\/80::placeholder,
+.placeholder\:text-cream-dim\/50::placeholder {
+  color: #5d6f80; /* the design's own input placeholder tone */
+}
+/* Status text written for a dark ground (pale red/green/yellow/blue/amber) -> ink on light; the tinted
+   backgrounds/borders next to it carry the meaning. Success may use leaf-deep. */
+[class~="text-red-100"], [class~="text-red-200"], [class~="text-red-300"], [class~="text-red-400"],
+[class~="text-yellow-200"], [class~="text-yellow-300"], [class~="text-amber-100"], [class~="text-amber-200"],
+[class~="text-amber-300"], [class*="text-amber-100/"], [class~="text-blue-300"] {
+  color: var(--r2l-ink);
+}
+[class~="text-purple-200"], [class~="text-purple-300"], [class~="text-purple-100"] {
+  color: var(--r2l-ink);
+}
+[class~="text-green-100"], [class~="text-green-200"], [class~="text-green-300"], [class~="text-green-400"] {
+  color: var(--r2l-leaf-deep);
+}
+/* body text that was cream-at-opacity must stay readable */
+[class*="text-cream/"] {
+  font-weight: 700;
 }
 
 /* Vietnamese diacritics need room, but headings also need balanced line breaks. */

@@ -13,6 +13,59 @@ if (root) {
   const phase = (name: string) => {
     for (const key of ['loading', 'ready', 'error', 'entry']) el('home-' + key).hidden = key !== name;
     root.setAttribute('aria-busy', String(name === 'loading'));
+    root.setAttribute('data-phase', name);
+  };
+  const setLabel = (text: string) => { el('home-open-label').textContent = text; };
+  // The one yellow control per state: the story button, or "Mở thư viện" when there is no story.
+  const setHomeState = (name: 'first-visit' | 'mid-story' | 'no-story' | 'rest' | 'wait') => {
+    const home = el('home-ready');
+    home.setAttribute('data-home-state', name);
+    const empty = name === 'no-story';
+    el('home-library').hidden = !empty;
+    button.hidden = empty || name === 'rest';
+    // Exactly one element carries the design id of the single sun-yellow primary.
+    el('home-library').removeAttribute('data-design'); button.removeAttribute('data-design');
+    if (empty) el('home-library').setAttribute('data-design', 'home.primary');
+    else if (name !== 'rest') button.setAttribute('data-design', 'home.primary');
+    document.querySelectorAll<HTMLElement>('.rh__new').forEach(tag => { tag.hidden = name !== 'first-visit'; });
+    el('home-nostory-tile').hidden = !empty;
+    el('home-cover').hidden = empty;
+    el('home-map').hidden = empty || name === 'rest';
+    el('home-rankings').closest('aside')!.hidden = empty;
+    if (empty) el('home-rank-progress').hidden = true;
+    el('home-map').hidden = empty || name === 'rest';
+    el('home-personal-progress').hidden = empty;
+    el('home-zz').hidden = !empty;
+    el('home-pet').classList.toggle('r2l-m-bob', !empty);
+    const bubble = name === 'first-visit' ? 'Hôm nay có truyện mới!' : name === 'mid-story' ? 'Mình đọc tiếp nhé!' : '';
+    for (const id of ['home-bubble', 'home-bubble-phone']) { el(id).textContent = bubble; el(id).hidden = !bubble; }
+  };
+  // step: 0 = reading, 1 = Minny questions, 2 = picture retell, 3 = all done.
+  const paintMap = (step: number, compact: boolean) => {
+    el('home-map').classList.toggle('rh__map--compact', compact);
+    [1, 2, 3].forEach(n => {
+      const li = el('home-step-' + n);
+      const state = step >= n ? 'done' : step === n - 1 ? 'now' : 'next';
+      li.dataset.state = state;
+      const node = li.querySelector('.r2l-node') as HTMLElement;
+      node.classList.toggle('r2l-n-done', state === 'done');
+      node.classList.toggle('r2l-n-now', state === 'now');
+      node.classList.toggle('r2l-m-halo', state === 'now');
+      node.classList.toggle('r2l-n-next', state === 'next');
+      node.style.background = state === 'now' ? '#FFC83D' : '';
+    });
+    (el('home-step-1').querySelector('.rh__here') as HTMLElement).hidden = compact || step !== 0;
+  };
+  const rankChip = (ladder: any, fallback: string) => {
+    // One rank notation everywhere: the ladder's own label ("Bạc III"), same as "Sắp lên {next_label_vi}".
+    const name = String(ladder?.label_vi || ladder?.tier_name_vi || fallback || '').trim();
+    if (!name) return;
+    const stars = Math.max(0, Number(ladder?.stars) || 0);
+    el('home-rank-text').textContent = name + (stars ? ' ' + '★'.repeat(stars) : '');
+    // Design tiers: Đồng bronze, Bạc silver, Vàng gold; higher tiers reuse silver / diamond / Minny red.
+    const fills = ['#E8A06B', '#C9D3DE', '#FFC83D', '#C9D3DE', '#3CC8F0', '#E0362C', '#E0362C', '#E0362C'];
+    el('home-rank-shield').setAttribute('fill', fills[Math.max(0, Math.min(fills.length - 1, Number(ladder?.tier_index) || 0))]);
+    el('home-rank-chip').hidden = false;
   };
   const error = (message: string, retry = true) => {
     el('home-error-message').textContent = message; el('home-retry').hidden = !retry; phase('error');
@@ -39,8 +92,10 @@ if (root) {
       const xp = boards.xp?.own, dia = boards.diamonds?.own, parts: string[] = [];
       if (xp?.rank) parts.push('XP #' + xp.rank);
       if (dia?.rank) parts.push('💎 #' + dia.rank);
-      el('home-rank-own').textContent = parts.length ? 'Con đang hạng ' + parts.join(' · ') : 'Đọc truyện để lên bảng nhé!';
-    } catch { /* keep the tappable card with its default text */ }
+      // One wrapped run with the footer text: "Con đang hạng XP #1 · 💎 #1 · Đọc truyện để lên bảng nhé! · Xem cả bảng".
+      el('home-rank-own').textContent = parts.length ? 'Con đang hạng ' + parts.join(' · ') + ' · ' : '';
+      el('home-rank-own').hidden = !parts.length;
+    } catch { /* keep the card with its default text */ }
   }
   // Logged-out card: same renderer, no code. Empty or failed = card stays hidden; the page never blanks.
   let publicRanksLoaded = false;
@@ -88,25 +143,54 @@ if (root) {
       const state = data.read2lead_state || {}, progress = data.progress || {};
       el('home-name').textContent = progress.student_name || data.student_name || 'con';
       el('home-diamonds').textContent = number(state.diamonds); el('home-wallet').hidden = false;
+      rankChip(state.rank_ladder, state.rank_title);
+      // "Sắp lên {next}" + a bar at stars / stars_per_division: the real ladder fields, never invented XP.
+      const ladder = state.rank_ladder, per = Number(ladder?.stars_per_division) || 0;
+      const showRank = per > 0 && !ladder?.is_apex && Boolean(ladder?.next_label_vi);
+      el('home-rank-progress').hidden = !showRank;
+      if (showRank) {
+        const stars = Math.max(0, Math.min(per, Number(ladder.stars) || 0));
+        el('home-rank-next').textContent = 'Sắp lên ' + ladder.next_label_vi;
+        el('home-rank-stars').textContent = stars + ' / ' + per + ' ★';
+        el('home-rank-fill').style.width = Math.round((stars / per) * 100) + '%';
+      }
+      const streak = Number(state.streak_days ?? progress.streak_days) || 0;
+      el('home-streak-text').textContent = number(streak) + ' ngày'; el('home-streak').hidden = streak < 1;
       const pack = progress.current_pack, cta = buildHeroCta(pack, data, accessCode, params.get('done') === '1');
-      const resting = cta.action === 'rest';
-      button.hidden = resting; el('home-steps').hidden = resting;
+      const resting = cta.action === 'rest', waiting = cta.action === 'wait';
       const original = pack && pack.schema_version !== 'story-mission-v1';
       el('home-step-two').textContent = original ? 'Hiểu truyện' : 'Trả lời Minny';
       el('home-step-three').textContent = original ? 'Luyện nói' : 'Kể qua tranh';
-      button.textContent = cta.action === 'lesson' ? 'Đọc tiếp →' : 'Mở truyện →'; button.disabled = cta.action === 'wait';
-      el('home-heading').textContent = resting ? 'Con đã xong hôm nay!' : cta.action === 'lesson' ? pack.story_title || 'Truyện của con' : 'Hôm nay mình đọc nhé!';
-      el('home-instruction').textContent = resting ? 'Kết quả đã được lưu. Con nghỉ nhé, hẹn gặp con lần sau!' : pack?.review_only ? 'Ôn lại truyện · Không cộng thêm thưởng' : cta.action === 'lesson' ? statusMeta(data.state, pack).label : cta.action === 'wait' ? 'Truyện đang được chuẩn bị. Con quay lại sau một chút nhé.' : 'Một câu chuyện đang chờ con.';
+      // A pack that is assigned but never opened is "first visit"; one with saved progress is "mid-story".
+      const steps = (pack?.web_lesson_steps || {}) as Record<string, unknown>;
+      const started = cta.action === 'lesson' && Boolean(pack?.story_session ? !pack.story_session.complete : steps.read_completed_at || steps.listen_completed_at);
+      const homeState = resting ? 'rest' : waiting ? 'wait' : started ? 'mid-story' : 'first-visit';
+      setHomeState(homeState);
+      setLabel(started ? 'Đọc tiếp' : 'Mở truyện'); button.disabled = waiting;
+      const title = pack?.story_title || '';
+      const hasTitle = cta.action === 'lesson' && Boolean(title);
+      el('home-heading').textContent = resting ? 'Con đã xong hôm nay!' : hasTitle ? title : 'Hôm nay mình đọc nhé!';
+      el('home-heading').toggleAttribute('lang', hasTitle); if (hasTitle) el('home-heading').setAttribute('lang', 'en');
+      el('home-instruction').textContent = resting ? 'Kết quả đã được lưu. Con nghỉ nhé, hẹn gặp con lần sau!' : pack?.review_only ? 'Ôn lại truyện · Không cộng thêm thưởng' : cta.action === 'lesson' ? statusMeta(data.state, pack).label : waiting ? 'Truyện đang được chuẩn bị. Con quay lại sau một chút nhé.' : 'Một câu chuyện đang chờ con.';
+      // First visit: the title is enough; the status line ("Đang đọc") is for a story that is already open.
+      el('home-instruction').hidden = hasTitle && !started && !pack?.review_only;
+      const level = String(pack?.level || progress.current_level || '');
+      el('home-level-tag').textContent = level; el('home-level-tag').hidden = !level || !hasTitle || started;
+      paintMap(started ? Math.min(2, statusMeta(data.state, pack).step) : 0, started);
       const count = Number(progress.completed_packs || state.completed_packs || 0);
       el('home-personal-progress').textContent = count > 0 ? `Con đã đọc ${number(count)} truyện.${resting ? '' : ' Mình tiếp tục từng bước nhé!'}` : 'Bắt đầu câu chuyện đầu tiên của con nhé.';
       el<HTMLAnchorElement>('home-companion').href = '/read2lead/companion?code=' + code;
-      el<HTMLAnchorElement>('home-rankings').href = '/read2lead/leaderboard?code=' + code;
+      el<HTMLAnchorElement>('home-board-link').href = '/read2lead/leaderboard?code=' + code;
+      el<HTMLAnchorElement>('home-library').href = '/read2lead/library?code=' + code;
       void loadRanks(code);
       el<HTMLAnchorElement>('home-parent').href = '/ho-so?code=' + code + '&role=parent';
       const monster = state.avatar?.monster;
       if (monster) {
         const child = document.createElement('div'); el('home-pet').replaceChildren(child);
-        renderMonster(child, monster, { size: 'large', animate: !matchMedia('(prefers-reduced-motion: reduce)').matches, withCosmetics: true, equipped: state.equipped, equippedDisplay: state.equipped_display });
+        // The design's r2l-m-bob (on #home-pet) does the moving; the avatar renderer's own float stays off.
+        renderMonster(child, monster, { size: 'large', animate: false, withCosmetics: true, equipped: state.equipped, equippedDisplay: state.equipped_display });
+        const mini = document.createElement('div'); el('home-comp-avatar').replaceChildren(mini);
+        renderMonster(mini, monster, { size: 'small', animate: false, withCosmetics: true, compactCosmetics: true, equipped: state.equipped, equippedDisplay: state.equipped_display });
       }
       phase('ready');
     } catch (cause: any) {
@@ -139,6 +223,18 @@ if (root) {
       }
       throw Error(data.message || 'Chưa có truyện phù hợp. Con quay lại sau một chút nhé.');
     } catch (cause: any) {
+      // The server answered "no story for you right now" (503 account_generation_job_not_integrated):
+      // show the friendly empty state (sleepy companion + "Mở thư viện") instead of a bare error line.
+      if (/^Chưa có truyện phù hợp/.test(String(cause?.message || ''))) {
+        el('home-heading').textContent = 'Truyện mới đang trên đường tới!';
+        el('home-heading').removeAttribute('lang');
+        el('home-instruction').textContent = 'Hôm nay Coach Felix chưa gửi truyện mới. Trong lúc chờ, con đọc lại một truyện con thích nhé.';
+        el('home-action-status').textContent = '';
+        el('home-level-tag').hidden = true;
+        setHomeState('no-story');
+        busy = false; button.disabled = false;
+        return;
+      }
       el('home-action-status').textContent = cause instanceof TypeError ? 'Mất kết nối. Con thử lại nhé; bài đã lưu vẫn còn.' : cause.message;
       busy = false; button.disabled = false;
     }

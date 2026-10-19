@@ -119,9 +119,9 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
     margin-top: 14px;
     padding: 10px 14px;
     border-radius: 10px;
-    border: 1px solid rgba(248, 113, 113, 0.4);
-    background: rgba(248, 113, 113, 0.1);
-    color: #fecaca;
+    border: 2px solid var(--r2l-ink);
+    background: color-mix(in srgb, var(--r2l-coral) 22%, white);
+    color: var(--r2l-ink);
     font-size: 13px;
   }
   .ag-loading { padding: 22px; color: var(--cream-dim); font-size: 13px; }
@@ -154,7 +154,7 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
      every child is the exact trap this whole task exists to close. */
   :global(#gifts-mgr-save.ag-save--dirty) {
     background: var(--gold);
-    color: var(--navy-950);
+    color: var(--r2l-ink);
     font-weight: 800;
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 28%, transparent);
   }
@@ -415,7 +415,7 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
   :global(.ag-q-lane) { padding: 16px 22px 6px; }
   :global(.ag-q-lane__head) { display: flex; align-items: center; gap: 8px; }
   :global(.ag-q-dot) { width: 9px; height: 9px; border-radius: 999px; flex-shrink: 0; }
-  :global(.ag-q-dot--new) { background: var(--gold-light); box-shadow: 0 0 8px var(--gold-light); }
+  :global(.ag-q-dot--new) { background: var(--gold); border: 2px solid var(--r2l-ink); }
   :global(.ag-q-dot--prep) { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
   :global(.ag-q-dot--done) { background: var(--success); box-shadow: 0 0 8px var(--success); }
   :global(.ag-q-lane-empty) { margin: 10px 0 0; color: var(--cream-dim); font-size: 12.5px; }

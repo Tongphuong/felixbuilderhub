@@ -278,7 +278,7 @@ export function renderGiftCard(
       aspect,
       modifier: 'shimmer',
       animateEmoji: true,
-      badgeHtml: '<span class="fx-badge qt-photo-well__badge" style="background:color-mix(in srgb,var(--gold) 90%,#fff); color:var(--navy-950); font-weight:800;">🎁 Coach Felix đang chuẩn bị</span>',
+      badgeHtml: '<span class="fx-badge qt-photo-well__badge" style="background:color-mix(in srgb,var(--gold) 90%,#fff); color:var(--r2l-ink); font-weight:800;">🎁 Coach Felix đang chuẩn bị</span>',
     });
     return `
       <article class="${cardClass}" data-state="preparing" data-gift-id="${escapeHtml(item.id)}">
@@ -300,7 +300,7 @@ export function renderGiftCard(
       aspect,
       imageSrc: img,
       modifier: 'delivered',
-      badgeHtml: '<span class="fx-badge qt-photo-well__badge" style="background:var(--success); color:var(--navy-950); font-weight:800;">✓ Đã nhận quà</span>',
+      badgeHtml: '<span class="fx-badge qt-photo-well__badge" style="background:var(--success); color:var(--r2l-ink); font-weight:800;">✓ Đã nhận quà</span>',
       cornerHtml: '<span class="qt-photo-well__badge qt-photo-well__badge--corner" aria-hidden="true">🏆</span>',
     });
     return `
@@ -373,7 +373,7 @@ export function renderGiftCard(
       name,
       aspect,
       imageSrc: img,
-      badgeHtml: '<span class="fx-badge fx-badge--solid qt-photo-well__badge" style="background:var(--success); color:var(--navy-950); font-weight:800;">Đổi được rồi!</span>',
+      badgeHtml: '<span class="fx-badge fx-badge--solid qt-photo-well__badge" style="background:var(--success); color:var(--r2l-ink); font-weight:800;">Đổi được rồi!</span>',
     });
     return `
       <article class="${cardClass}" data-state="affordable" data-gift-id="${escapeHtml(item.id)}">
@@ -403,7 +403,7 @@ export function renderGiftCard(
       imageSrc: img,
       modifier: 'warm',
       animateEmoji: true,
-      badgeHtml: '<span class="fx-badge qt-photo-well__badge" style="background:var(--gold-light); color:var(--navy-950); font-weight:800;">🔥 Sắp đổi được!</span>',
+      badgeHtml: '<span class="fx-badge qt-photo-well__badge" style="background:var(--gold); color:var(--r2l-ink); font-weight:800;">🔥 Sắp đổi được!</span>',
     });
     return `
       <article class="${cardClass} qt-pulse" data-state="nearmiss" data-gift-id="${escapeHtml(item.id)}">

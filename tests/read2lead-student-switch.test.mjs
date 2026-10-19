@@ -13,7 +13,8 @@ function element() {
   const events = {}, attrs = {};
   return { events, attrs, hidden:false, disabled:false, value:'', textContent:'', innerHTML:'',
     classList:{toggle(){}}, setAttribute:(k,v)=>{attrs[k]=v;}, addEventListener:(k,f)=>{events[k]=f;},
-    replaceChildren(){this.textContent='';}, focus(){this.focused=true;}, querySelector(){return null;} };
+    replaceChildren(){this.textContent='';}, focus(){this.focused=true;}, querySelector(){return element();},
+    closest(){return element();}, removeAttribute(){}, toggleAttribute(){}, style:{}, dataset:{} };
 }
 const settle = async () => { for(let i=0;i<8;i++) await new Promise(resolve=>setImmediate(resolve)); };
 const idCalls=f=>f.calls.filter(c=>!String(c[0]).includes('leaderboard'));
