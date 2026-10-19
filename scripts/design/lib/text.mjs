@@ -67,3 +67,26 @@ export function analyseText(items, pngBuf) {
 export function textOf(items, designId) {
   return collapse(items.filter(i => i.vis && i.designIds.includes(designId)).map(i => i.text).join(' '));
 }
+
+// Token match for the data-binding check: the token must not sit INSIDE a longer number or word. "60 kim cương" is not in
+// "1.160 kim cương" or "Bút60"; "Quyển 1" is not in "Quyển 10"; "#1" is not in "#11". (Substring checks gave false positives
+// and false stale-value hits.) Thousands separators (. or ,) between digits count as part of the number.
+const isDigit = c => !!c && c >= '0' && c <= '9';
+const isLetter = c => !!c && /\p{L}/u.test(c);
+export function containsToken(stream, token) {
+  const t = collapse(token);
+  if (!t) return true;
+  const first = t[0], last = t[t.length - 1];
+  for (let from = 0; ;) {
+    const i = stream.indexOf(t, from);
+    if (i < 0) return false;
+    const prev = stream[i - 1], prev2 = stream[i - 2], nextIdx = i + t.length, next = stream[nextIdx], next2 = stream[nextIdx + 1];
+    let ok = true;
+    if ((isDigit(first) || isLetter(first)) && prev && (isDigit(prev) || isLetter(prev))) ok = false;
+    if (ok && isDigit(first) && prev && (prev === '.' || prev === ',') && isDigit(prev2)) ok = false;
+    if (ok && (isDigit(last) || isLetter(last)) && next && (isDigit(next) || isLetter(next))) ok = false;
+    if (ok && isDigit(last) && next && (next === '.' || next === ',') && isDigit(next2)) ok = false;
+    if (ok) return true;
+    from = i + 1;
+  }
+}

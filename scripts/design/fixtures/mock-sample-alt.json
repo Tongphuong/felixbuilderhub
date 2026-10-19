@@ -178,7 +178,7 @@
     ]
   },
   "shop": {
-    "diamonds": 90,
+    "diamonds": 88,
     "goal_id": "ruler",
     "gifts": [
       {
@@ -191,7 +191,7 @@
         "id": "stamps",
         "name_vi": "Con dấu",
         "emoji": "🔏",
-        "price_diamonds": 98
+        "price_diamonds": 96
       },
       {
         "id": "comic",
@@ -225,7 +225,8 @@
       },
       {
         "gift_id": "surprise",
-        "status": "requested"
+        "status": "requested",
+        "min_width": 1280
       }
     ]
   },

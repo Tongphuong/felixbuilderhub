@@ -46,7 +46,7 @@ function page(o = {}) {
   const spacer = o.push ? `<div style="height:${o.push}px"></div>` : '';
   const hero = `${spacer}<main${mk('t.hero')} style="${heroStyle}">${o.heroBlank ? '' : o.heroRed ? '<div style="height:150px;background:#d33"></div>' : `<h2 style="margin:0${o.wrongFont ? ';font-family:Arial' : ''}">Đọc truyện nào</h2>`}</main>`;
   const pStyle = `display:block;height:${o.primaryH || 64}px;line-height:${o.primaryH || 64}px;background:#FFC83D;text-align:center`;
-  const primary = o.noPrimary ? '' : `<a href="#" role="button"${mk('t.primary')} style="${pStyle}">${o.ellipsisPrimary ? '<span style="display:block;margin:0 auto;width:40px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Mở truyện</span>' : 'Mở truyện'}</a>`
+  const primary = o.noPrimary ? '' : `<a href="#" role="button"${mk('t.primary')} style="${pStyle}${o.primaryFont ? ';font-family:' + o.primaryFont : ''}">${o.ellipsisPrimary ? '<span style="display:block;margin:0 auto;width:40px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Mở truyện</span>' : 'Mở truyện'}</a>`
     + (o.dupPrimary ? `<a href="#" role="button"${mk('t.primary')} style="${pStyle}">Mở truyện</a>` : '');
   const footInner = {
     alt: `<img alt="Dành cho ba mẹ" width="1" height="1" src="${IMG}">`,
@@ -65,6 +65,9 @@ function page(o = {}) {
     + (o.sunGradient ? '<a href="#" style="display:block;width:20px;height:48px;background:linear-gradient(#FFC83D,#FFC83D)">g</a>' : '')
     + (o.sunOnclick ? '<div onclick="void 0" style="width:20px;height:48px;background:#FFC83D">o</div>' : '')
     + (o.sunCursor ? '<div style="width:20px;height:48px;background:#FFC83D;cursor:pointer">c</div>' : '')
+    + (o.selectedTab ? '<div role="tablist"><a href="#" role="tab" aria-selected="true" style="display:inline-block;height:48px;line-height:48px;width:60px;background:#FFC83D">XP</a><a href="#" role="tab" aria-selected="false" style="display:inline-block;height:48px;line-height:48px;width:60px;background:#fff">Kim</a></div>' : '')
+    + (o.pressedToggle ? '<button type="button" aria-pressed="true" style="height:48px;width:60px;background:#FFC83D;font-family:inherit">Mũ</button>' : '')
+    + (o.unselectedSunTab ? '<div role="tablist"><a href="#" role="tab" aria-selected="false" style="display:inline-block;height:48px;line-height:48px;width:60px;background:#FFC83D">XP</a></div>' : '')
     + (o.sunBar ? '<div style="width:20px;height:10px;background:#FFC83D"></div>' : '')
     + (o.wide ? '<div style="width:900px;height:10px;background:red"></div>' : '')
     + (o.smallTap ? '<a href="#" style="display:block;height:30px">nhỏ xíu</a>' : '')
@@ -170,6 +173,10 @@ V['ellipsis-primary-label'] = [{ ellipsisPrimary: true }, { must: ['layout-sanit
 V['ellipsis-bound-name-in-list'] = [{ ellipsisName: true }, { must: [], may: ['pixel-diff'] }];
 V['static-clip-is-not-hidden'] = [{ staticClip: true }, { must: ['layout-sanity'], may: ['pixel-diff'] }];
 V['sr-only-clip-is-hidden'] = [{ srOnly: true }, { must: [], may: ['pixel-diff'] }];
+V['sun-selected-tab'] = [{ selectedTab: true }, { must: [], may: ['pixel-diff'] }];            // the active tab is sun in the mocks: not a second action
+V['sun-pressed-toggle'] = [{ pressedToggle: true }, { must: [], may: ['pixel-diff'] }];
+V['sun-unselected-tab'] = [{ unselectedSunTab: true }, { must: ['primary'], may: ['pixel-diff'] }]; // a sun toggle that is NOT selected is a second action
+V['wrong-button-font'] = [{ primaryFont: 'Arial' }, { must: ['fonts'], may: ['pixel-diff'] }];     // primary/secondary buttons must be Baloo 2
 V['no-fonts'] = [{ noFontLink: true }, { must: ['fonts'], may: ['pixel-diff'] }];
 
 const ANCHORS = { 't.top': 'Xin chào', 't.hero': 'Đọc truyện nào', 't.primary': 'Mở truyện', 't.foot': 'Dành cho ba mẹ' };
@@ -203,6 +210,12 @@ function startServer() {
   return new Promise(resolve => server.listen(0, '127.0.0.1', () => resolve({ server, base: 'http://127.0.0.1:' + server.address().port })));
 }
 
+function writeBindingDesign(tmp) {
+  const design = path.join(tmp, 'design');
+  fs.mkdirSync(path.join(design, 'mocks'), { recursive: true });
+  fs.writeFileSync(path.join(design, 'mocks', 'm.html'), '<!doctype html><meta charset="utf-8"><body style="font:20px sans-serif"><h1>Chào Minh!</h1><p>55</p><p>Mũ tiệc</p>');
+  return design;
+}
 function writeFixtureDesign(tmp) {
   const design = path.join(tmp, 'design');
   fs.mkdirSync(path.join(design, 'mocks'), { recursive: true });
@@ -353,6 +366,19 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
       assert.match(d('static-clip-is-not-hidden'), /overlap/);
       assert.equal(by['sr-only-clip-is-hidden'].checks.find(c => c.name === 'layout-sanity').pass, true);
     });
+    await t.test('sun rule: selected toggles are exempt, an unselected sun toggle and a second action are not; tabs/chips/links may be Nunito', () => {
+      assert.equal(by['sun-selected-tab'].checks.find(c => c.name === 'primary').pass, true);
+      assert.equal(by['sun-pressed-toggle'].checks.find(c => c.name === 'primary').pass, true);
+      assert.match(by['sun-unselected-tab'].checks.find(c => c.name === 'primary').detail, /exactly 1 sun-filled clickable control, found 2/);
+      assert.match(by['two-sun-buttons'].checks.find(c => c.name === 'primary').detail, /found 2/);
+      assert.equal(by['sun-selected-tab'].checks.find(c => c.name === 'fonts').pass, true, 'the Nunito tabs are fine');
+      assert.match(by['wrong-button-font'].checks.find(c => c.name === 'fonts').detail, /Arial, want Baloo 2/);
+    });
+    await t.test('still-twin runs BEFORE the region own-pixels hide/unhide (which used to leave the page 4-68px different)', () => {
+      const names = by['region-ok'].checks.map(c => c.name);
+      assert.ok(names.indexOf('still-twin') < names.indexOf('region:t.hero'), names.join(','));
+      assert.equal(by['region-ok'].checks.find(c => c.name === 'still-twin').pass, true);
+    });
     await t.test('A still-twin runs BEFORE the width cycle (a viewport cycle re-rasterises edges and used to make it fail falsely)', () => {
       const names = by.ok.checks.map(c => c.name);
       assert.ok(names.indexOf('still-twin') < names.indexOf('layout-sanity') && names.indexOf('still-twin') < names.findIndex(n => n.startsWith('no-h-scroll')), names.join(','));
@@ -498,7 +524,7 @@ test('data-binding check: a page that binds the values passes; one that hard-cod
   });
   await new Promise(r => server.listen(0, '127.0.0.1', r));
   try {
-    const design = writeFixtureDesign(tmp);
+    const design = writeBindingDesign(tmp);
     fs.writeFileSync(path.join(tmp, 'driver.mjs'), `export default async (page, c, base) => { await page.goto(base + c.built.path); return { dataBinding: { expect: ['Chào Bảo!', '187'], absent: ['Chào Minh!', '55'] } }; };\n`);
     const contracts = path.join(tmp, 'c'); fs.mkdirSync(contracts);
     const mk = (id, p) => fs.writeFileSync(path.join(contracts, id + '.json'), JSON.stringify({ ...BASE_CONTRACT, id, anchors: undefined, built: { path: p, state: 'first-visit' } }));
@@ -613,6 +639,11 @@ test('Release-2 samples: values come from the mocks, real shapes are kept, alt d
   assert.equal(gj.diamonds, 55); assert.equal(gj.gift_goal, 'sticker'); assert.equal(gj.items.find(i => i.id === 'sticker').progress_percent, 46); assert.equal(gj.items.find(i => i.id === 'pencils').progress_percent, 92);
   assert.deepEqual(gj.redemptions.map(r => [r.gift_id, r.status]), [['bookmark', 'delivered'], ['gift_box', 'requested']]);
   assert.ok(gj.items.every(i => i.can_afford === (i.price_diamonds <= 55)));
+  assert.ok(!gj.items.some(i => i.id === 'bookmark'), 'a received gift is ONE card (its received card), not also an ordinary item');
+  assert.ok(gj.items.some(i => i.id === 'gift_box'), 'the pending gift stays an item (pinned in-flight)');
+  const g390 = sampleGifts({ ok: true, items: [{ id: 'sticker' }], diamonds: 270, redemptions: [], gift_goal: null }, SAMPLE, 390);
+  assert.ok(!g390.items.some(i => i.id === 'gift_box') && !g390.redemptions.some(r => r.status === 'requested'), 'the mock shows no pending card at 390');
+  assert.deepEqual(g390.items.map(i => i.id), ['sticker', 'pencils', 'picture_book', 'teddy']);
   assert.equal(sampleCompanion({ ok: true, read2lead_state: { keep: 1, student_name: 'Linh' } }).read2lead_state.keep, 1);
   // alternate sample: every R2 value differs (otherwise the binding pass proves nothing)
   const alt = loadSample(ALT_SAMPLE_PATH);
@@ -621,8 +652,13 @@ test('Release-2 samples: values come from the mocks, real shapes are kept, alt d
   alt.shop.gifts.forEach((g, i) => { assert.notEqual(g.name_vi, SAMPLE.shop.gifts[i].name_vi); assert.notEqual(g.price_diamonds, SAMPLE.shop.gifts[i].price_diamonds); });
   assert.notEqual(alt.shop.diamonds, SAMPLE.shop.diamonds);
   const e = bindingExpectations(alt, 'shop-goal', SAMPLE);
-  assert.ok(e.expect.includes('90') && e.expect.includes('Thước kẻ') && e.expect.includes('150 kim cương') && e.expect.includes('60%'));
-  assert.ok(e.absent.includes('55') && e.absent.includes('Sticker') && e.absent.includes('120 kim cương'));
+  assert.ok(e.expect.includes('88') && e.expect.includes('Thước kẻ') && e.expect.includes('150 kim cương') && e.expect.includes('59%') && e.expect.includes('62') && e.expect.includes('Còn thiếu 8 kim cương'));
+  assert.ok(e.absent.includes('55') && e.absent.includes('Sticker') && e.absent.includes('120 kim cương') && e.absent.includes('65') && e.absent.includes('Còn thiếu 5 kim cương'));
+  // prices only on ordinary cards (the received and pending cards show none), so they are never expected; and no collision with the mock's numbers
+  assert.ok(!e.expect.includes('70 kim cương') && !e.expect.includes('300 kim cương'), 'received (Cục tẩy 70) and pending (Quà bất ngờ 300) show no price');
+  assert.ok(!e.expect.some(x => e.absent.includes(x)), 'no string is both expected and gone');
+  const e390 = bindingExpectations(alt, 'shop-goal', SAMPLE, 390);
+  assert.ok(!e390.expect.includes('Quà bất ngờ') && !e390.expect.includes('Đang chờ Coach Felix duyệt'), 'the pending card exists only at 1280');
   const le = bindingExpectations(alt, 'leaderboard-xp', SAMPLE);
   assert.ok(le.expect.includes('Quyên') && le.expect.includes('2.310 XP') && le.expect.includes('#8') && le.absent.includes('Hoang') && le.absent.includes('1.080 XP'));
   const libx = bindingExpectations(alt, 'library', SAMPLE);
@@ -635,7 +671,7 @@ test('Release-2 samples: values come from the mocks, real shapes are kept, alt d
   assert.deepEqual(bindingExpectations(alt, 'rank-up', SAMPLE), { expect: ['Vàng ★'], absent: ['Bạc ★★★'] });
   // shop: goal price/percent/remaining, the nearly-affordable gift, status strings
   const sp = bindingExpectations(alt, 'shop-goal', SAMPLE);
-  for (const x of ['60', 'Còn thiếu 8 kim cương', 'Sắp đổi được!', '✓ Đã nhận quà', 'Đang chờ Coach Felix duyệt', 'Đặt làm mục tiêu ★', '98 kim cương']) assert.ok(sp.expect.includes(x), x);
+  for (const x of ['62', 'Còn thiếu 8 kim cương', 'Sắp đổi được!', '✓ Đã nhận quà', 'Đang chờ Coach Felix duyệt', 'Đặt làm mục tiêu ★', '96 kim cương']) assert.ok(sp.expect.includes(x), x);
   for (const x of ['65', 'Còn thiếu 5 kim cương', '60 kim cương']) assert.ok(sp.absent.includes(x), x);
 });
 
@@ -696,7 +732,7 @@ test('data_bound coverage in the harness: empty expectations FAIL; an unbound va
   const server = http.createServer((req, res) => { res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }).end('<!doctype html><meta charset="utf-8"><body style="font:20px sans-serif"><h1>Chào Bảo!</h1><p>187</p><p>Mũ tiệc</p>'); });
   await new Promise(r => server.listen(0, '127.0.0.1', r));
   try {
-    const design = writeFixtureDesign(tmp);
+    const design = writeBindingDesign(tmp);
     const mkDriver = (name, db) => fs.writeFileSync(path.join(tmp, name + '.mjs'), `export default async (page, c, base, ctx) => { await page.goto(base + '/x'); return { dataBinding: ${JSON.stringify(db)}, altSample: ctx.opts.sample ? undefined : 'ALT.json' }; };\n`);
     mkDriver('empty', { expect: [], absent: [] });
     mkDriver('good', { expect: ['Chào Bảo!', '187'], absent: ['Chào Minh!', '55'] });
@@ -712,9 +748,59 @@ test('data_bound coverage in the harness: empty expectations FAIL; an unbound va
     assert.equal(okBound.pass, true, okBound.detail); assert.match(okBound.detail, /data_bound: 2 bound, 1 declared unbound/);
     const noReason = await run('e3', 'good', { data_bound: ['Chào Minh!', '55', 'Mũ tiệc'], unbound: { 'Mũ tiệc': '' } });
     assert.equal(noReason.pass, false); assert.match(noReason.detail, /not bound and not declared unbound: "Mũ tiệc"/); assert.match(noReason.detail, /unbound without a reason: "Mũ tiệc"/);
+    const elsewhere = await run('e5', 'good', { data_bound: ['Chào Minh!', '55', 'Chỉ ở 1280'] });
+    assert.equal(elsewhere.pass, true, 'a data_bound value THIS width\'s mock does not show is not required here: ' + elsewhere.detail);
     const missing = await run('e4', 'good', { data_bound: ['Chào Minh!', '55', 'Mũ tiệc'] });
     assert.equal(missing.pass, false); assert.match(missing.detail, /not declared unbound: "Mũ tiệc"/);
   } finally { await new Promise(r => server.close(r)); fs.rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test('data-binding token matching: no hits inside longer numbers or words', async () => {
+  const { containsToken } = await import('../scripts/design/lib/text.mjs');
+  assert.equal(containsToken('Sách 1.200 kim cương', '200 kim cương'), false, '"200" is the tail of 1.200');
+  assert.equal(containsToken('Sách 1.200 kim cương', '1.200 kim cương'), true);
+  assert.equal(containsToken('Quyển 10 · Bài 3', 'Quyển 1'), false); assert.equal(containsToken('Quyển 1 · Bài 3', 'Quyển 1'), true);
+  assert.equal(containsToken('#11 Mina', '#1'), false); assert.equal(containsToken('#1 Hoang #11', '#1'), true);
+  assert.equal(containsToken('1.160 kim cương', '60 kim cương'), false);
+  assert.equal(containsToken('Còn 62 kim cương', '65'), false);
+  assert.equal(containsToken('Quyên Quyển', 'Quyên'), true); assert.equal(containsToken('Quyênx', 'Quyên'), false);
+  assert.equal(containsToken('Chào Bảo! 187', '187'), true); assert.equal(containsToken('1.187', '187'), false); assert.equal(containsToken('1187', '187'), false);
+  assert.equal(containsToken('3 ngày', '3 ngày'), true); assert.equal(containsToken('13 ngày', '3 ngày'), false);
+  assert.equal(containsToken('xin chào', ''), true);
+});
+
+test('companion: the next-option step accepts the "→" text button AND the icon button named "Lựa chọn tiếp"', async t => {
+  if (skipNoChrome(t)) return;
+  const { previewHatOption2 } = await import('../scripts/design/drivers/r2l.mjs');
+  const { chromium } = await import('playwright-core');
+  const browser = await chromium.launch({ executablePath: findChrome() });
+  try {
+    for (const next of ['<button id="n">→</button>', '<button id="n" aria-label="Lựa chọn tiếp"><svg width="10" height="10"></svg></button>']) {
+      const page = await browser.newPage();
+      await page.setContent(`<body><button>Thân</button><button>Mũ</button>${next}<span id="c">1 / 21</span><span id="u" hidden>Chưa lưu</span><script>
+        document.getElementById('n').onclick=()=>{document.getElementById('c').textContent='2 / 21';document.getElementById('u').hidden=false};</script>`);
+      await previewHatOption2(page);
+      assert.equal(await page.textContent('#c'), '2 / 21', next);
+      await page.close();
+    }
+    const page = await browser.newPage();
+    await page.setContent('<body><button>Mũ</button><button>Quay lại</button>');
+    await assert.rejects(previewHatOption2(page), /no next-option button/);
+    await page.close();
+  } finally { await browser.close(); }
+});
+
+test('R1 regression (opt-in: DESIGN_R1_URL=<rehearsal url of a Release-1 build>): still-twin passes on every R1 contract again', async t => {
+  if (!process.env.DESIGN_R1_URL) return t.skip('set DESIGN_R1_URL to the URL of a rehearsal server running the Release-1 build (main 87c7080)');
+  if (skipNoChrome(t)) return;
+  const contracts = process.env.DESIGN_CONTRACTS || path.resolve(root, '..', '..', '..', '..', '_ops', 'specs', 'design-contracts', 'r2l-island');
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'design-r1-'));
+  try {
+    fs.mkdirSync(path.join(tmp, 'c'));
+    for (const id of ['home-empty', 'home-first-visit', 'home-mid-story', 'rank-up', 'reward']) fs.copyFileSync(path.join(contracts, id + '.json'), path.join(tmp, 'c', id + '.json'));
+    const rep = await runFidelity({ design: REAL_DESIGN, contracts: path.join(tmp, 'c'), base: process.env.DESIGN_R1_URL, out: process.env.DESIGN_OUT || path.join(tmp, 'o'), 'state-driver': path.join(root, 'scripts', 'design', 'drivers', 'r2l.mjs'), concurrency: 3 });
+    for (const r of rep.results) assert.equal(r.checks.find(c => c.name === 'still-twin').pass, true, `${r.contract}@${r.width}: ${r.checks.find(c => c.name === 'still-twin').detail}`);
+  } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
 });
 
 test('pixel sampler: dominant background wins over heavy glyph pixels', () => {

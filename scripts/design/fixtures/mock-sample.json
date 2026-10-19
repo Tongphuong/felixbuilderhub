@@ -225,7 +225,8 @@
       },
       {
         "gift_id": "gift_box",
-        "status": "requested"
+        "status": "requested",
+        "min_width": 1280
       }
     ]
   },

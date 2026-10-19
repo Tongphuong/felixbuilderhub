@@ -87,7 +87,7 @@ export function sampleSession(json, S = SAMPLE, realTitle = null) {
 
 // ---- data-binding expectations: what the page MUST show for a given sample ----------------------
 const vn = n => new Intl.NumberFormat('vi-VN').format(n);
-export function bindingExpectations(S, state, Base = null) {
+export function bindingExpectations(S, state, Base = null, width = 1280) {
   const expect = [], absent = [];
   const add = (list, v) => { if (v != null && v !== '') list.push(String(v)); };
   const both = (get, fmt = x => x) => { // expect the sample's value, and (against another sample) that the mock's differing value is gone
@@ -132,22 +132,25 @@ export function bindingExpectations(S, state, Base = null) {
     S.library.books.forEach((b, i) => { add(expect, `Quyển ${b.month}`); if (Base && Base.library.books[i].month !== b.month) add(absent, `Quyển ${Base.library.books[i].month}`); });
   }
   if (state === 'shop-goal') {
+    const w = width || 1280;
     const goal = s => s.shop.gifts.find(g => g.id === s.shop.goal_id);
-    both(s => s.shop.diamonds, vn);
-    both(s => `${vn(goal(s).price_diamonds)} kim cương`);                   // the goal's price
-    both(s => `${pct(s.shop.diamonds, goal(s).price_diamonds)}%`);          // its progress
-    both(s => goal(s).price_diamonds - s.shop.diamonds, vn);                // "còn N kim cương"
-    S.shop.gifts.forEach((g, i) => {
-      add(expect, g.name_vi); add(expect, `${vn(g.price_diamonds)} kim cương`);
-      if (Base) { const o = Base.shop.gifts[i]; if (o.name_vi !== g.name_vi) add(absent, o.name_vi); if (o.price_diamonds !== g.price_diamonds) add(absent, `${vn(o.price_diamonds)} kim cương`); }
-    });
-    // the nearly-affordable gift: "Còn thiếu N kim cương" with N from the sample's wallet and that gift's price
-    const near = s => s.shop.gifts.filter(g => g.id !== s.shop.goal_id && g.price_diamonds > s.shop.diamonds && pct(s.shop.diamonds, g.price_diamonds) >= 90)[0];
-    if (near(S)) { both(s => near(s).price_diamonds - s.shop.diamonds, n => `Còn thiếu ${vn(n)} kim cương`); add(expect, 'Sắp đổi được!'); }
-    // status strings of the gift states the mock shows (they follow the sample's redemptions / goal)
-    const has = (s, st) => s.shop.redemptions.some(r => r.status === st);
-    if (has(S, 'delivered')) { add(expect, '✓ Đã nhận quà'); add(expect, 'Con đã nhận từ Coach Felix ở lớp'); }
-    if (has(S, 'requested')) { add(expect, 'Đang chờ Coach Felix duyệt'); add(expect, 'Con đã gửi yêu cầu. Coach Felix sẽ xem nhé.'); }
+    const strings = s => {
+      const V = shopView(s, w), g = goal(s), list = [];
+      list.push(vn(s.shop.diamonds), `${vn(g.price_diamonds)} kim cương`, `${pct(s.shop.diamonds, g.price_diamonds)}%`, vn(g.price_diamonds - s.shop.diamonds));
+      for (const x of V.gifts) list.push(x.name_vi);                                           // every card shows its name
+      for (const x of V.priced) list.push(`${vn(x.price_diamonds)} kim cương`);                // ordinary cards show a price; received / pending cards do not
+      const near = V.priced.find(x => x.id !== s.shop.goal_id && x.price_diamonds > s.shop.diamonds && pct(s.shop.diamonds, x.price_diamonds) >= 90);
+      if (near) list.push(`Còn thiếu ${vn(near.price_diamonds - s.shop.diamonds)} kim cương`);
+      return list;
+    };
+    const mine = strings(S), theirs = Base ? strings(Base) : [];
+    for (const x of mine) add(expect, x);
+    for (const x of theirs) if (!mine.includes(x)) add(absent, x);
+    const V = shopView(S, w);
+    const near = V.priced.find(x => x.id !== S.shop.goal_id && x.price_diamonds > S.shop.diamonds && pct(S.shop.diamonds, x.price_diamonds) >= 90);
+    if (near) add(expect, 'Sắp đổi được!');
+    if (V.redemptions.some(r => r.status === 'delivered')) { add(expect, '✓ Đã nhận quà'); add(expect, 'Con đã nhận từ Coach Felix ở lớp'); }
+    if (V.redemptions.some(r => r.status === 'requested')) { add(expect, 'Đang chờ Coach Felix duyệt'); add(expect, 'Con đã gửi yêu cầu. Coach Felix sẽ xem nhé.'); }
     add(expect, 'Đặt làm mục tiêu ★');
   }
   // companion: the option lists and counter ("N / 21") are the product's own catalogue; the contract declares them `unbound`.
@@ -179,15 +182,31 @@ export function sampleLibrary(json, S = SAMPLE) {
   return json;
 }
 // POST /api/read2lead-gifts-list : {items[], diamonds, redemptions[], gift_goal}
-export function sampleGifts(json, S = SAMPLE) {
+// What the mock shows at a width: the pending card only at 1280 (a redemption may carry min_width), a received gift ONCE (as its
+// received card, so it is left out of `items`: a delivered gift would otherwise also render as an ordinary card), prices only on
+// ordinary cards (the received and pending cards show none).
+export function shopView(S, width = 1280) {
   const G = S.shop;
+  const redemptions = G.redemptions.filter(r => (r.min_width || 0) <= width);
+  const hidden = new Set(G.redemptions.filter(r => (r.min_width || 0) > width).map(r => r.gift_id));
+  const gifts = G.gifts.filter(g => !hidden.has(g.id));
+  const status = id => (redemptions.find(r => r.gift_id === id) || {}).status || null;
+  return {
+    redemptions, gifts, status,
+    items: gifts.filter(g => status(g.id) !== 'delivered'),   // the API's gift list
+    priced: gifts.filter(g => !status(g.id)),                  // cards that show a price
+  };
+}
+export function sampleGifts(json, S = SAMPLE, width = 1280) {
+  const G = S.shop;
+  const V = shopView(S, width);
   const template = (json.items || [])[0] || {};
-  json.items = G.gifts.map(g => ({
+  json.items = V.items.map(g => ({
     ...template, id: g.id, name_vi: g.name_vi, emoji: g.emoji, image_key: null, image_url: null, price_diamonds: g.price_diamonds,
     limit_total: null, redeemed_count: 0, active: true, available: true, can_afford: G.diamonds >= g.price_diamonds, progress_percent: pct(G.diamonds, g.price_diamonds),
   }));
   json.diamonds = G.diamonds;
-  json.redemptions = G.redemptions.map((r, i) => {
+  json.redemptions = V.redemptions.map((r, i) => {
     const g = G.gifts.find(x => x.id === r.gift_id);
     return { id: 'r' + (i + 1), gift_id: r.gift_id, name_vi: g.name_vi, price_diamonds: g.price_diamonds, status: r.status, ts: '2026-10-01T09:00:00.000Z', updated_at: '2026-10-02T09:00:00.000Z' };
   });
@@ -203,7 +222,14 @@ export function sampleCompanion(json, S = SAMPLE) {
 }
 
 const SAMPLE_REAL_TITLE = 'The Sky Is Blue!'; // the rehearsal's generated story
-export async function installRoutes(page, state, S) {
+// companion: select the hat category ("Mũ") and step to option 2 with the NEXT button: either the "→" text button or the icon
+// button whose accessible name is "Lựa chọn tiếp". Nothing is saved.
+export async function previewHatOption2(page) {
+  await page.getByRole('button', { name: 'Mũ', exact: true }).first().click({ timeout: 8000 }).catch(() => { throw new Error('wrong state: no "Mũ" category button on the companion page'); });
+  await page.getByRole('button', { name: /→|Lựa chọn tiếp/ }).first().click({ timeout: 5000 }).catch(() => { throw new Error('wrong state: no next-option button ("→" or "Lựa chọn tiếp") on the companion page'); });
+}
+
+export async function installRoutes(page, state, S, width = 1280) {
   const seen = { title: null }; // the REAL pack title, learned from the progress response
   // The rehearsal Worker appends its own "LOCAL REHEARSAL ... Not production" banner; it is the test rig, not the product.
   await page.addInitScript(() => { const st = document.createElement('style'); st.textContent = 'aside[data-synthetic-rehearsal]{display:none!important}'; document.addEventListener('DOMContentLoaded', () => document.head.append(st)); });
@@ -219,7 +245,7 @@ export async function installRoutes(page, state, S) {
   if (state !== 'leaderboard-xp') await valueRoute('**/api/read2lead-leaderboard*', j => sampleBoards(j, S));
   if (state === 'leaderboard-xp') await valueRoute('**/api/read2lead-leaderboard*', j => sampleLeaderboardFull(j, S));
   if (state === 'library') await valueRoute('**/api/read2lead-library', j => sampleLibrary(j, S));
-  if (state === 'shop-goal') await valueRoute('**/api/read2lead-gifts-list*', j => sampleGifts(j, S));
+  if (state === 'shop-goal') await valueRoute('**/api/read2lead-gifts-list*', j => sampleGifts(j, S, width));
   if (state === 'companion') await valueRoute('**/api/read2lead-shop*', j => sampleCompanion(j, S));
   if (state === 'no-story') {
     await page.route('**/api/generate-read2lead-pack', r => r.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ ok: false, error: 'account_generation_job_not_integrated', message: S.no_story_message }) }));
@@ -331,7 +357,7 @@ export default async function r2lDriver(page, contract, base, ctx = {}) {
   if (!ACCOUNTS[state]) throw new Error(`r2l driver: unknown state "${state}"`);
   const S = opts.sample ? loadSample(opts.sample) : SAMPLE;
   const Base = opts.sample ? SAMPLE : null;
-  await installRoutes(page, state, S);
+  await installRoutes(page, state, S, ctx.width || 1280);
   const progressState = R2_STATES.includes(state) ? 'first-visit' : state;
   const letter = ACCOUNTS[state][1];
   const loginUrl = opts.loginUrl || `${base}/r2l/start/?t=${encodeURIComponent(opts.token || letter.repeat(32))}`;
@@ -340,7 +366,7 @@ export default async function r2lDriver(page, contract, base, ctx = {}) {
   const key = base + '|' + prepState;
   if (!prepared.has(key)) prepared.set(key, prepare(base, prepState));
   const prep = await prepared.get(key);
-  const binding = bindingExpectations(S, state, Base);
+  const binding = bindingExpectations(S, state, Base, ctx.width || 1280);
 
   if (state === 'first-visit' || state === 'mid-story' || state === 'no-story') {
     await page.goto(loginUrl, { waitUntil: 'networkidle' }).catch(() => {});
@@ -359,8 +385,7 @@ export default async function r2lDriver(page, contract, base, ctx = {}) {
     await page.goto(url, { waitUntil: 'networkidle' });
     if (state === 'companion') {
       // hat category selected, option 2 previewed, NOT saved
-      await page.getByRole('button', { name: 'Mũ', exact: true }).first().click({ timeout: 8000 }).catch(() => { throw new Error('wrong state: no "Mũ" category button on the companion page'); });
-      await page.getByRole('button', { name: /→/ }).first().click({ timeout: 5000 }).catch(() => { throw new Error('wrong state: no "→" option button on the companion page'); });
+      await previewHatOption2(page);
       await page.waitForTimeout(400);
       await expectTextOnPage(page, '2 / ', 'option counter "2 / N"');
       await expectTextOnPage(page, 'Chưa lưu', 'the unsaved hint');

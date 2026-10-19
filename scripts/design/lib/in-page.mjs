@@ -212,7 +212,11 @@ export function contractChecks(args) {
       window.scrollTo(sx, sy);
       return !!hit && (hit === e || e.contains(hit));
     };
-    const cand = [...document.querySelectorAll('body *')].filter(e => visible(e) && isSun(e) && clickable(e));
+    // The mocks paint SELECTED toggles sun too (the active tab, category, option tile): they show a state, they are not the action.
+    // Exempt only elements that say they are selected; an unselected sun toggle still counts as a second sun action.
+    const SELECTED = '[role=tab][aria-selected=true],[role=option][aria-selected=true],[aria-pressed=true],[aria-current]:not([aria-current=false]),[role=radio][aria-checked=true],[role=menuitemradio][aria-checked=true],[role=checkbox][aria-checked=true],[role=switch][aria-checked=true]';
+    const isSelected = e => !!e.closest(SELECTED) || (e.matches('label') && !!e.querySelector('input:checked')) || (e.tagName === 'INPUT' && e.checked);
+    const cand = [...document.querySelectorAll('body *')].filter(e => visible(e) && isSun(e) && clickable(e) && !isSelected(e));
     const sunControls = cand.filter(e => !cand.some(o => o !== e && o.contains(e)));
     const label = e => '"' + (e.textContent || e.value || e.tagName).replace(/\s+/g, ' ').trim().slice(0, 30) + '"';
     if (sunControls.length !== 1) p.push('expected exactly 1 sun-filled clickable control, found ' + sunControls.length + (sunControls.length ? ': ' + sunControls.map(label).join(', ') : ''));
@@ -288,7 +292,7 @@ export function fontCheck() {
   return [...document.fonts].map(f => ({ family: f.family.replace(/^["']|["']$/g, ''), status: f.status }));
 }
 
-// Built-page font resolution: headings + buttons -> Baloo 2, paragraph/list text -> Nunito.
+// Built-page font resolution: headings + primary/secondary buttons -> Baloo 2, paragraph/list text -> Nunito.
 // (The body element itself is not checked: the mocks set the font on their .r2l root, not on body.)
 export function fontUsage() {
   const first = e => getComputedStyle(e).fontFamily.split(',')[0].trim().replace(/^["']|["']$/g, '');
@@ -304,7 +308,8 @@ export function fontUsage() {
     return n;
   };
   const headings = pick('h1,h2,h3,h4,h5,h6', 'Baloo 2');
-  const buttons = pick('button,[role=button],input[type=submit]', 'Baloo 2');
+  // The mocks use Baloo 2 on headings and on the primary/secondary .btn buttons; tabs, chips and text links are Nunito (or Baloo): not checked.
+  const buttons = pick('.btn,.r2l-btn,[data-design$=".primary"],[data-design$=".secondary"]', 'Baloo 2');
   const paras = pick('p,li', 'Nunito');
   return { bad, headings, buttons, paras };
 }

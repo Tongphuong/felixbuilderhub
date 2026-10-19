@@ -22,7 +22,7 @@ import { pathToFileURL, fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
 import { contractChecks, tapChecks, overflowCheck, motionCheck, addStillClass, removeStillClass, layoutSanity, fontCheck, fontUsage, mockBoxes, builtBoxes, scanText } from './lib/in-page.mjs';
 import { diffPngs, writeComposite, padPng, cornerColor, pngHeight, fitWidth } from './lib/pixels.mjs';
-import { analyseText, textOf, collapse } from './lib/text.mjs';
+import { analyseText, textOf, collapse, containsToken } from './lib/text.mjs';
 import { classifyDataBound } from './lib/binding.mjs';
 import { compareRegion, ownPixelFraction, OWN_MIN_FRACTION } from './lib/regions.mjs';
 
@@ -177,6 +177,7 @@ export async function runFidelity(opts) {
           const badFonts = (await mpage.evaluate(fontCheck)).filter(f => f.status === 'error');
           if (badFonts.length) throw new InfraError('mock fonts failed to load: ' + badFonts.map(f => f.family).join(', '));
           const mockPng0 = await sh(mpage);
+          const mockStream = analyseText((await mpage.evaluate(scanText)).items, null).stream; // what THIS width's mock shows
           const eff = effectiveAnchors(contract, w);
           const anchors = Object.keys(eff.anchors).length ? eff.anchors : null;
           const exempt = eff.exempt;
@@ -201,16 +202,17 @@ export async function runFidelity(opts) {
           // data-binding: the driver (given an alternate sample) says which values the page MUST show and which old ones must be gone.
           const bindingOf = (db, stream, label = '') => {
             if (!db) return null;
-            const miss = db.expect.filter(t => !stream.includes(collapse(t)));
-            const stale = (db.absent || []).filter(t => stream.includes(collapse(t)));
+            const miss = db.expect.filter(t => !containsToken(stream, t));
+            const stale = (db.absent || []).filter(t => containsToken(stream, t));
             const bad = [];
             if (miss.length) bad.push('does not show: ' + miss.map(t => `"${t}"`).join(', '));
             if (stale.length) bad.push('still shows the OLD value (hard-coded?): ' + stale.map(t => `"${t}"`).join(', '));
-            // every data_bound value must be bound (covered by an expectation above) or declared `unbound` with a reason
-            const cls = classifyDataBound(contract, db);
+            // every data_bound value that THIS width's mock shows must be bound (covered by an expectation above) or declared `unbound`
+            const here = { ...contract, data_bound: (contract.data_bound || []).filter(v => containsToken(mockStream, v)) };
+            const cls = classifyDataBound(here, db);
             if (cls.undeclared.length) bad.push('data_bound value not bound and not declared unbound: ' + cls.undeclared.map(t => `"${t}"`).join(', '));
             if (cls.noReason.length) bad.push('unbound without a reason: ' + cls.noReason.map(t => `"${t}"`).join(', '));
-            const tally = (contract.data_bound || []).length ? `; data_bound: ${cls.bound.length} bound, ${cls.declared.length} declared unbound` : '';
+            const tally = here.data_bound.length ? `; data_bound: ${cls.bound.length} bound, ${cls.declared.length} declared unbound` : '';
             return check('data-binding', bad.length === 0, bad.length ? bad.join('; ') + label : `${db.expect.length} bound values shown${db.absent && db.absent.length ? `, ${db.absent.length} old values gone` : ''}${tally}${label}`);
           };
           const bindingCheck = stream => bindingOf(drvRes && drvRes.dataBinding, stream);
@@ -353,6 +355,7 @@ export async function runFidelity(opts) {
 
           // regions: per-box comparison against the mock (catches an empty monster box a whole-screen ceiling hides)
           const regionOut = [];
+          const regionJobs = [];
           const regions = (contract.regions || []).filter(r => r.mock_box && r.mock_box[String(w)]);
           if (regions.length) {
             const rb = await page.evaluate(builtBoxes, regions.map(r => r.id));
@@ -361,19 +364,7 @@ export async function runFidelity(opts) {
               const b = rb.boxes[r.id];
               if (!b) { res.checks.push(check('region:' + r.id, false, 'no visible built element')); continue; }
               const cmp = compareRegion(mockPng0, builtPng0, { x: mb[0], y: mb[1], w: mb[2], h: mb[3] }, b, r.ceiling, r.min_edge_ratio);
-              // own pixels: hide the region's element and see how much of its box changes (an element that renders nothing changes ~0%)
-              const sel = `[data-design="${String(r.id).replace(/"/g, '\\"')}"]`;
-              await page.addStyleTag({ content: `${sel}, ${sel} * { visibility: hidden !important; }` }).then(async handle => {
-                await page.waitForTimeout(60);
-                const without = await sh(page);
-                await handle.evaluate(n => n.remove());
-                cmp.own = ownPixelFraction(builtPng0, without, b);
-              });
-              const ownMin = r.min_own_pixels ?? OWN_MIN_FRACTION;
-              if (cmp.own < ownMin) { cmp.pass = false; cmp.problems.push(`region empty: hiding the element changes only ${(cmp.own * 100).toFixed(1)}% of its box (min ${(ownMin * 100).toFixed(0)}%): it renders nothing visible`); }
-              res.checks.push(check('region:' + r.id, cmp.pass, cmp.pass ? `${(cmp.fraction * 100).toFixed(1)}% differing (ceiling ${(r.ceiling * 100).toFixed(1)}%), edges ${(cmp.edgeRatio * 100).toFixed(0)}% of the mock's, own pixels ${(cmp.own * 100).toFixed(0)}%` : cmp.problems.join('; ')));
-              regionOut.push({ id: r.id, ok: cmp.pass, label: `${r.id} ${(cmp.fraction * 100).toFixed(1)}%`, mock: cmp.mock, built: cmp.built, diff: cmp.diff });
-              (res.regions = res.regions || []).push({ id: r.id, pass: cmp.pass, fraction: +cmp.fraction.toFixed(4), ceiling: r.ceiling, builtStddev: +cmp.builtSd.toFixed(1), edgeRatio: +cmp.edgeRatio.toFixed(3), ownPixels: +cmp.own.toFixed(3) });
+              regionJobs.push({ r, b, cmp }); // own pixels are measured AFTER still-twin (see below): hiding and un-hiding re-rasterises the page
             }
           }
 
@@ -399,6 +390,25 @@ export async function runFidelity(opts) {
           else { const st = diffPngs(builtPng0, stillPng, 0); if (st.count) { stillOk = false; stillDetail = `.still changes ${st.count} pixels vs the reduced-motion render`; } }
           res.checks.push(check('still-twin', stillOk, stillDetail));
           await page.evaluate(removeStillClass);
+
+          // Region own pixels: hide each region's element and count how much of its box changes (an element that renders nothing
+          // changes ~0%, whatever the backdrop is). Done AFTER still-twin because hiding and un-hiding re-rasterises the page, which
+          // made still-twin differ by 4-68px on every contract that has regions. A fresh "with" screenshot is taken right before each
+          // hide, so any rasterisation noise cancels out.
+          for (const { r, b, cmp } of regionJobs) {
+            const sel = `[data-design="${String(r.id).replace(/"/g, '\\"')}"]`;
+            const withBuf = await sh(page);
+            const handle = await page.addStyleTag({ content: `${sel}, ${sel} * { visibility: hidden !important; }` });
+            await page.waitForTimeout(60);
+            const without = await sh(page);
+            await handle.evaluate(n => n.remove());
+            cmp.own = ownPixelFraction(withBuf, without, b);
+            const ownMin = r.min_own_pixels ?? OWN_MIN_FRACTION;
+            if (cmp.own < ownMin) { cmp.pass = false; cmp.problems.push(`region empty: hiding the element changes only ${(cmp.own * 100).toFixed(1)}% of its box (min ${(ownMin * 100).toFixed(1)}%): it renders nothing visible`); }
+            res.checks.push(check('region:' + r.id, cmp.pass, cmp.pass ? `${(cmp.fraction * 100).toFixed(1)}% differing (ceiling ${(r.ceiling * 100).toFixed(1)}%), edges ${(cmp.edgeRatio * 100).toFixed(0)}% of the mock's, own pixels ${(cmp.own * 100).toFixed(0)}%` : cmp.problems.join('; ')));
+            regionOut.push({ id: r.id, ok: cmp.pass, label: `${r.id} ${(cmp.fraction * 100).toFixed(1)}%`, mock: cmp.mock, built: cmp.built, diff: cmp.diff });
+            (res.regions = res.regions || []).push({ id: r.id, pass: cmp.pass, fraction: +cmp.fraction.toFixed(4), ceiling: r.ceiling, builtStddev: +cmp.builtSd.toFixed(1), edgeRatio: +cmp.edgeRatio.toFixed(3), ownPixels: +cmp.own.toFixed(3) });
+          }
 
           // Width cycle LAST (it re-rasterises the page, which is what used to make still-twin fail): horizontal scroll at the five
           // widths, and layout sanity at 360 / 768 / 1024 + the contract's own widths, in the same state (once per contract).
