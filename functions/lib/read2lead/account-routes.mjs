@@ -50,6 +50,7 @@ import * as route63 from '../../api/speakup-homework-photo.js';
 import * as route64 from '../../api/submit-read2lead-lesson.js';
 import * as route65 from '../../api/task-state.js';
 import * as route66 from '../../api/voice-quota.js';
+import * as route67 from '../../api/admin/signup-config.js';
 
 import * as hostRoute0 from '../../api/admin/classes/[id]/homework-extract.js';
 import * as hostRoute1 from '../../api/admin/classes/[id]/homework-photo.js';
@@ -88,6 +89,7 @@ export const ACCOUNT_ROUTES = Object.freeze([
   Object.freeze({ pattern: "/api/admin/portfolio/[id]", file: "functions/api/admin/portfolio/[id].js", state: "transactional", execution: "media-delete", methods: Object.freeze(["DELETE"]), reason: "Original handler and permissions; authoritative account transaction, deferred destructive media cleanup where applicable.", handlers: hostRoute5 }),
   Object.freeze({ pattern: "/api/admin/portfolio/upload", file: "functions/api/admin/portfolio/upload.js", state: "transactional", execution: "media-write", methods: Object.freeze(["POST"]), reason: "Original handler and permissions; authoritative account transaction, deferred destructive media cleanup where applicable.", handlers: hostRoute6 }),
   Object.freeze({ pattern: "/api/admin/read2lead-honors", file: "functions/api/admin/read2lead-honors.js", state: "transactional", methods: Object.freeze(["GET", "POST"]), reason: "Original ordinary handler; account reads/writes share the transaction.", handlers: route23 }),
+  Object.freeze({ pattern: "/api/admin/signup-config", file: "functions/api/admin/signup-config.js", state: "transactional", methods: Object.freeze(["GET", "POST"]), reason: "Original ordinary handler; account reads/writes share the transaction.", handlers: route67 }),
   Object.freeze({ pattern: "/api/check-generation-status", file: "functions/api/check-generation-status.js", state: "transactional", execution: "generation-status", methods: Object.freeze(["GET"]), reason: "Original account handler with explicit terminal generation cleanup; its exact marked error response may commit successful cleanup.", handlers: route24 }),
   Object.freeze({ pattern: "/api/debug-convo-flags", file: "functions/api/debug-convo-flags.js", state: "transactional", methods: Object.freeze(["GET"]), reason: "Original handler and permissions; authoritative account transaction, deferred destructive media cleanup where applicable.", handlers: hostRoute7 }),
   Object.freeze({ pattern: "/api/debug-speaking", file: "functions/api/debug-speaking.js", state: "transactional", methods: Object.freeze(["GET"]), reason: "Original handler and permissions; authoritative account transaction, deferred destructive media cleanup where applicable.", handlers: hostRoute8 }),

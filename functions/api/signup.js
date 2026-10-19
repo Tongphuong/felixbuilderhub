@@ -27,7 +27,7 @@ import { getClientIp, reserveSignupIp, readSignupIpCount, SIGNUP_IP_LIMIT } from
 
 const SIGNUP_USES_TOTAL = 3;
 const SIGNUP_EXPIRY_DAYS = 90;
-const DEFAULT_DAILY_CAP = 50;
+export const DEFAULT_DAILY_CAP = 50;
 const GLOBAL_COUNTER_TTL_SECONDS = 60 * 60 * 48; // mirrors minny-conversation.js's daily/global counter TTL
 
 const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
@@ -123,7 +123,7 @@ function todayKey() {
   return new Date().toISOString().slice(0, 10);
 }
 
-function globalCounterKey() {
+export function globalCounterKey() {
   return `signup-global:${todayKey()}`;
 }
 
@@ -333,7 +333,7 @@ export async function onRequestPost(context) {
   let dailyCap = DEFAULT_DAILY_CAP;
   try {
     const configuredCap = await kv.get('config:signup_daily_cap', { type: 'json' });
-    if (Number.isFinite(configuredCap) && configuredCap > 0) dailyCap = configuredCap;
+    if (Number.isFinite(configuredCap) && configuredCap >= 0) dailyCap = configuredCap;
   } catch {
     // best-effort read of the cap override — default stays in effect
   }
