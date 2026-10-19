@@ -167,7 +167,7 @@ export async function mountStoryMission() {
   const openAnother=createLessonAssignmentAction({code:params.get('code'),packId:params.get('pack_id'),origin:location.origin,isBusy:assignmentBusy,beforeLeave:stop});
   // Reward screen ("Đảo phiêu lưu"): markup and classes only, same two actions and handlers as before.
   // Grade F (0 kim cương / 0 XP) still celebrates: the tiles simply show +0. No XP bar: the ladder exposes none.
-  const RW_CONFETTI=[['8%','#FF7A3D','12px','18px','3px',0,10],['24%','#FFC83D','14px','14px','50%',.4,26],['38%','#237A41','10px','18px','3px',.9,6],['64%','#E0362C','12px','12px','3px',.2,16],['79%','#3CC8F0','14px','20px','3px',1.2,30],['90%','#FFC83D','12px','12px','50%',.6,8],['51%','#FF7A3D','10px','16px','3px',1.5,36]];
+  const RW_CONFETTI=[['8%','#FF7A3D','12px','18px','3px',0,10],['24%','#FFC83D','14px','14px','50%',.4,26],['38%','#237A41','10px','18px','3px',.9,6],['64%','#E0362C','12px','12px','3px',.2,96],['79%','#3CC8F0','14px','20px','3px',1.2,112],['90%','#FFC83D','12px','12px','50%',.6,132],['51%','#FF7A3D','10px','16px','3px',1.5,36]];
   const RW_TICK='<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"></path></svg>';
   // The avatar helper is fetched while the child answers questions, so the reward screen draws at once.
   let avatarModule;const loadAvatarModule=()=>avatarModule||(avatarModule=import('../lib/r2l-child-avatar'));
@@ -205,6 +205,9 @@ export async function mountStoryMission() {
     rw.querySelector('.rw__actions').append(home,another);
     document.body.append(rw);
     // The reward replaces the whole page (design 04): everything else steps aside while it is up.
+    // The rank-up modal (fixed, z-index above the reward) must stay reachable: move it out of the page body that
+    // is about to be hidden and made inert.
+    const rankUp=document.getElementById('rank-up-modal');if(rankUp&&rankUp.parentElement!==document.body)document.body.append(rankUp);
     document.documentElement.classList.add('rw-open');const shell=$('lesson-shell');if(shell)shell.inert=true;
     // The child's own companion dances (design: r2l-m-dance); the cheering Minny stays as the fallback.
     // Same read-only state also gives the real rank stars for the finish bar ("x / y ★"); no number is invented.
@@ -218,7 +221,8 @@ export async function mountStoryMission() {
         bar.querySelector('i').style.width=Math.round(lp.stars/lp.perDivision*100)+'%';bar.hidden=false;
       }
     }).catch(()=>{}).finally(()=>{rw.dataset.ready='1';});// test hook: the screen has stopped changing
-    rw.tabIndex=-1;rw.focus({preventScroll:true});
+    // Focus the primary when the reward opens (screen readers / keyboard); no ring is drawn for this programmatic focus.
+    rw.tabIndex=-1;home.focus({preventScroll:true,focusVisible:false});
     return rw;
   }
   window.addEventListener('pagehide', stop);

@@ -350,7 +350,8 @@ select.fx-field {
 .fx-rank--silver  { color: var(--r2l-ink); border-color: var(--r2l-ink); background: var(--rank-silver); }
 .fx-rank--gold    { color: var(--r2l-ink); border-color: var(--r2l-ink); background: var(--rank-gold); }
 .fx-rank--diamond { color: var(--r2l-ink); border-color: var(--r2l-ink); background: var(--rank-diamond); }
-.fx-rank--legend  { color: #fff;            border-color: var(--r2l-ink); background: var(--rank-legend); }
+/* white on Minny red is 4.44:1; a 12% darker red clears 4.5:1 */
+.fx-rank--legend  { color: #fff;            border-color: var(--r2l-ink); background: color-mix(in srgb, var(--rank-legend) 88%, #000); }
 
 /* ============================ FAQ / ACCORDION ============================ */
 .fx-faq {

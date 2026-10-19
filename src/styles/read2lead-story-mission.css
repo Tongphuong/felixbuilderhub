@@ -265,15 +265,16 @@ html.rw-open body > :not(.rw):not(#rank-up-modal):not(script):not(style):not(lin
 .rw__count { margin-left:auto; font-weight:900; }
 .rw__finish-text { margin-left:4px; font-weight:900; }
 .rw__wide { display:none; }
-/* The small note ("200 💎 … đã được cộng") lives on the bottom edge and "Xem lại kết quả" / "Luyện nói lại" in the
-   top-right corner, both fixed: they never move the designed stack and never make the overlay scroll. */
-.rw__note { position:fixed; left:0; right:0; bottom:5px; margin:0; text-align:center; font-weight:800; font-size:13px; line-height:1.3; pointer-events:none; }
+/* The note ("200 💎 … đã được cộng") sits in normal flow under the buttons (16px ink); "Xem lại kết quả" /
+   "Luyện nói lại" sit fixed in the top-right corner, where no confetti piece is placed. */
+.rw__note { position:static; margin:2px 0 0; text-align:center; font-weight:800; font-size:16px; line-height:1.4; color:var(--r2l-ink); }
 .rw__actions { display:flex; flex-direction:column; gap:12px; width:100%; margin-top:6px; }
 .rw__actions .r2l-btn { width:100%; min-height:64px; padding:0 16px; white-space:nowrap; font-family:var(--r2l-font-display); font-weight:800; font-size:26px; color:var(--r2l-ink); text-decoration:none; }
 .rw__actions .r2l-btn-sun { background:var(--r2l-sun); }
 .rw__more { position:fixed; top:8px; right:8px; z-index:4; display:flex; flex-direction:column; align-items:flex-end; gap:8px; max-width:calc(100vw - 16px); }
 .rw__more details[open] { background:#fff; border:3px solid var(--r2l-ink); border-radius:16px; padding:4px 14px 10px; max-height:70vh; overflow:auto; width:min(340px, calc(100vw - 16px)); }
 .rw__more:empty { display:none; }
+.rw__more details:not([open]) > :not(summary) { display:none; }
 .rw__more .r2l-secondary, .rw__more button { background:#fff; color:var(--r2l-ink); border:3px solid var(--r2l-ink); border-radius:18px; min-height:48px; padding:0 18px; font-weight:800; }
 .rw__more details, .rw__more details * { color:var(--r2l-ink); }
 .rw__more button { font-family:var(--r2l-font-display); }
@@ -282,7 +283,7 @@ html.rw-open body > :not(.rw):not(#rank-up-modal):not(script):not(style):not(lin
 @media (min-width: 1024px) {
   .rw__grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:center; align-content:start; gap:48px; max-width:1180px; padding:40px; min-height:100%; }
   .rw__hero { width:100%; height:560px; margin-top:0; }
-  .rw__burst { width:520px; height:520px; left:0; right:0; top:0; bottom:0; margin:auto; }
+  .rw__burst { width:min(520px,100%); height:auto; aspect-ratio:1; left:0; right:0; top:0; bottom:0; margin:auto; }
   .rw__monster { width:320px; height:320px; }
   .rw__main { gap:22px; }
   .rw__title { text-align:left; font-size:52px; }
@@ -291,6 +292,8 @@ html.rw-open body > :not(.rw):not(#rank-up-modal):not(script):not(style):not(lin
   .rw__tile { flex-direction:row; align-items:center; gap:14px; padding:18px; }
   .rw__txt { align-items:flex-start; }
   .rw__num { font-size:48px; }
+  /* the note adds no height to the vertically centred stack, so the designed stack stays where the mock puts it */
+  .rw__note { margin-bottom:-46px; }
   .rw__finish-row { justify-content:space-between; }
   .rw__ticks { display:none; }
   .rw__finish-text { margin-left:0; }
