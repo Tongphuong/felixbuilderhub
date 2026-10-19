@@ -568,3 +568,11 @@ test('a refused name does not burn the per-IP allowance', async () => {
   const { res } = await callSignup({ kv, fetchImpl: passingFetch() });
   assert.equal(res.status, 200);
 });
+
+test('a decomposed (NFD) Vietnamese name is normalised to NFC and accepted', async () => {
+  const nfd = 'Ngọc Anh'.normalize('NFD');
+  assert.notEqual(nfd, 'Ngọc Anh');
+  const { res, body } = await callSignup({ body: requestBody({ student_name: nfd }), fetchImpl: passingFetch() });
+  assert.equal(res.status, 200);
+  assert.equal(body.record.student_profile.student_name, 'Ngọc Anh');
+});

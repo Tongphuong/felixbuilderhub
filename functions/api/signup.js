@@ -234,7 +234,7 @@ export async function onRequestPost(context) {
   // --- Field validation (same fields/bounds admin already requires) — before
   // the rate-limit reservations, so an invalid/malformed request never burns
   // a legitimate parent's daily allowance. ---
-  const student_name = (typeof body.student_name === 'string' ? body.student_name : '').trim();
+  const student_name = (typeof body.student_name === 'string' ? body.student_name : '').normalize('NFC').trim();
   const student_age = parseInt(body.student_age, 10);
   const child_gender = ['boy', 'girl'].includes(body.child_gender) ? body.child_gender : '';
   const parent_zalo = (body.parent_zalo || '').trim().slice(0, 30);
