@@ -1,13 +1,102 @@
 # Control — Read2Lead (Claude company, resumed 2026-10-16)
 
 - Product: Read2Lead (SpeakUp now lives inside it)
-- Current goal: Phương 2026-10-16 — "get the site working as soon as possible"; full authority delegated to Elon on technical calls. Priorities: P1 rankings back + prominent; P2 chosen monster shown at every level; P3 student entry/switch; P4 Minny cost model for public opening.
-- Active workers: 2 (Mark — R2L-MINNY-TUNE; Steve — R2L-BOOK-FINISH)
-- Last updated: 2026-10-17
+- Current goal: Phương 2026-10-19 — FINAL VERSION.
+  - One check-up and one last release (v104).
+  - Free for everyone via self sign-up.
+  - Cheapest possible running cost.
+  - Then FROZEN: fixes only, no features.
+- **MODE: MAINTENANCE ONLY since 2026-10-19 (v105 live).** No new features. A change is allowed only to fix something broken, with the usual review and Phương's "Deploy to production". Runbook: _ops/outbox/R2L_MAINTENANCE.md.
+- Active workers: 0
+- Last updated: 2026-10-19
 - Operating model: Phương → Elon (plan/dispatch/review/integrate) → Mark/Steve build → Buffet reviews → Phương sees result before release. Codex retired 2026-10-16.
-- Start here: _ops/outbox/CLAUDE_TAKEOVER_MAP_2026-10-16.md (architecture, Worker deploy recipe, landmines). SQL in the Worker is authoritative; never restore KV. Worker releases: docs/R2L_WORKER_RELEASE.md (base = ~/work/r2l-releases/v102b-20261016 now, live Worker 06a9ae7a).
+- Start here: _ops/outbox/R2L_MAINTENANCE.md, then _ops/outbox/CLAUDE_TAKEOVER_MAP_2026-10-16.md (architecture, Worker deploy recipe, landmines).
+  - SQL in the Worker is authoritative; never restore KV.
+  - Worker releases: docs/R2L_WORKER_RELEASE.md. The base is now ~/work/r2l-releases/v105-20261019; live Worker e1883671 (rollback 40ea0816 = v104, b91235ef = v103).
 
 ## Current task
+
+- Task ID: R2L-FINAL (release v104 + freeze). Plan approved by Phương 2026-10-19 (~/.claude/plans/zesty-singing-flute.md).
+  - Spec: _ops/specs/SPEC_R2L_OPEN_ACCESS.md, addendum 2026-10-19.
+  - Packets: A Mark (signup.js name rules + blocklist, Worker/SQL sign-up proof); B Steve (sign-up card, donation card, "Quà thật" → "Shop đổi quà").
+  - Elon: read-only check-up; Turnstile widget + secret, rate-limit rule, signup switch-on.
+- Status: complete
+- Owner: Elon (Lead); builders Mark (A), Steve (B); reviewer Buffet
+- Lane: two background packets in parallel, named worktrees mark-signup / steve-final, disjoint files
+- Branches: claude-bg/r2l-signup, claude-bg/r2l-final-ui, both from main 467b586 (live code = ab0e0ff)
+- Starting commit: 467b586
+- Spec: _ops/specs/SPEC_R2L_OPEN_ACCESS.md + addendum 2026-10-19
+- Files owned:
+  - Mark: functions/api/signup.js; tests/*signup*; functions/api/admin/signup-config.js (new) + one route in functions/lib/read2lead/account-routes.mjs (founder on/off switch, 2026-10-19); functions/_middleware.js (admin auth path normalisation only, 2026-10-19); functions/lib/read2lead/account-unified-gateway.mjs (logged-out page redirect, added 2026-10-19 from the check-up; app.mjs NOT changed) + tests/read2lead-unified-account-app.test.mjs and a new redirect test.
+  - Steve:
+    - src/components/Read2LeadChildHome.astro, src/scripts/read2lead-child-home.ts and src/styles/read2lead-child-home.css (logged-out state only);
+    - public/ (donation QR image);
+    - src/pages/privacy.astro (one public-name sentence, approved 2026-10-19);
+    - the user-visible "Quà thật" strings in src/lib/admin-gifts.ts, src/lib/gift-ux.ts, src/pages/read2lead/gifts.astro, src/pages/ho-so/ho-so-kid-view.ts, src/components/Header.astro, src/pages/ho-so/ho-so-parent-view.ts, src/pages/admin/gifts.astro, src/layouts/AdminLayout.astro and src/pages/admin/index.astro;
+    - functions/api/_gifts-v2.js, functions/api/admin/gifts.js and functions/api/admin/_gifts.js (message strings only);
+    - tests for these.
+- Acceptance criteria:
+  - S1: a sign-up in rehearsal mints a code that works on the Worker: link → home → book → save.
+  - S2: the name rules and blocklist refuse bad names with kind Vietnamese messages; "Ngọc Anh" passes; bite tests.
+  - S3: Turnstile, per-IP and daily-cap fences unchanged (existing tests green).
+  - U1: the "Tạo mã miễn phí" card on the logged-out page (name, age, boy/girl, Turnstile) sends the child to their home on success; errors are shown in Vietnamese; no phone is collected.
+  - U2: the donation card is at the bottom of the logged-out page, with QR, account and wording approved by Phương.
+  - U3: no user-visible "Quà thật" remains; the shop's behaviour is unchanged.
+  - U4: screenshots at 390/768/1024/1280, logged-out and logged-in, are shown to Phương.
+  - C1: a check-up report with bills, health, safety and cancellations to approve.
+  - F1: live — a test sign-up works, then is removed.
+  - F2: CONTROL is set to maintenance-only, and a runbook exists.
+- Stop condition: committed claude-bg branches, tests green, completion reports. No push/merge/deploy.
+- Cost ceiling: Claude team (Max plan, not metered). Runtime $0 new: Turnstile and the rate-limit rule are free. The voice stays under the existing $15 pool.
+- Reuse survey:
+  - (1) the existing signup.js + rate-limit fences (Codex/Claude R2L-OPEN-ACCESS): REUSED;
+  - (2) Cloudflare Turnstile (free managed CAPTCHA): ADOPTED, already integrated server-side;
+  - (3) open-source profanity lists (e.g. LDNOOBW): their English list is the reference for the small built-in blocklist; no new dependency, since a package would add weight for ~40 words;
+  - (4) the public-page card styles from v103: REUSED for the sign-up and donation cards.
+- State inventory: signup flag off/on × Turnstile pass/fail × IP count 0–3 × daily cap below/at × name valid/empty/too long/symbols/blocked × age 4/5/14/15 × success redirect.
+- Operational reality: one Worker candidate v104 (base ~/work/r2l-releases/v103-20261018) + main push. Release needs Phương's "Deploy to production". Rollback Worker b91235ef.
+- Tradeoff watch: typed names on public rankings may include real full names or slip past the blocklist.
+  - SIGNAL: a self-serve name that is offensive or looks like a full real name.
+  - QUERY: the admin codes list filtered to origin self_serve, reviewed during any fix visit, plus the signup daily counter.
+  - THRESHOLD: any offensive name → rename it in admin and add the word to the blocklist (a fix-only change).
+- Runtime bindings/secrets: TURNSTILE_SECRET_KEY (existing env.X, documented in docs/ENV.md) to be set on the Worker by Elon; proof is the signup endpoint returning turnstile_required rather than turnstile_not_configured.
+- Design self-verification:
+  - Built from approved parts (no new design language), per Phương's plan approval.
+  - Steve rendered at 390/768/1024/1280: the public page with the sign-up card + donation card (scratchpad shots/final2-loggedout-390.png, final2-loggedout-1280.png), the shop rename (after-shop-390.png), the admin switch card (signup-switch-390.png, signup-switch-1280.png) and the privacy page (final2-privacy-390.png). Elon viewed the 390 shots.
+  - LIVE: the public page at 390@2x shows the sign-up card, the real Turnstile widget ("Xác minh bạn là con người"), the donation card and the QR (scratchpad v104/live/live-signup-card-v105.png, live-donate-390-2x.png). After 16s there is no false warning (v105). The QR decoded from the live screenshot gives VietQR 970422 / 0396868675.
+  - Verdict: match.
+- Founder handoff:
+  - Delivered the check-up report (_ops/outbox/R2L_FINAL_CHECKUP_2026-10-19.md) plus the screenshots.
+  - Phương approved: the plan, content and wording, the Render pause, "Deploy to production" for v104, and "Deploy to production" for v105.
+  - The remaining ask is for Phương to press "Bật đăng ký" on the admin home to open sign-up.
+- Verified commit: 8d63452ba14f7cc2746bf3fda40a60b0c8332530
+- Deployed state:
+  - Pages production @ 8d63452 (main);
+  - Worker read2lead-story-private-preview e1883671 @100% (candidate ~/work/r2l-releases/v105-20261019, with the TURNSTILE_SECRET_KEY identical to Pages);
+  - rollback 40ea0816 (v104), b91235ef (v103).
+- Founder-operated surface check: the admin "Đăng ký công khai" switch and the renamed admin gift pages have NOT yet been used by Phương on the live site; Elon has no production admin password.
+  - Covered instead by Buffet's rehearsal: 401 without auth, on/off/cap effects proven.
+  - Phương's first live press of "Bật đăng ký" IS the human check, flagged to him in the handoff and the runbook.
+
+## Acceptance criteria reconciliation
+
+- PASS — S1: a self-serve code works on the Worker store (rehearsal: "Ngọc Anh" and "Bưởi" sign up, get a pack and submit successfully).
+- PASS — S2: name rules + blocklist + Zalgo, with Vietnamese messages. "Ngọc Anh" passes; Bưởi, Đỗ Ngữ and Kshitij pass; true positives are refused (bite tests).
+- PASS — S3: fences intact. Turnstile is now verified in the gateway with a 3s timeout and an HMAC marker; per-IP and daily cap are serialized by the account runner.
+- PASS — U1: the sign-up card works end to end in rehearsal. Live: the real widget renders, and the API refuses a missing or junk token in Vietnamese. No phone is collected.
+- PASS — U2: the donation card has Phương's QR (verified to decode to his MB account, live), the account lines and the approved wording.
+- PASS — U3: no user-visible "Quà thật" in current pages. Stale old-hash JS files in the cumulative asset folder still contain it; they are unreferenced, so this is accepted.
+- PASS — U4: screenshots at 4 widths, logged out and logged in, were shown to Phương before release.
+- PASS — C1: check-up report delivered. Render suspended with OK; the AI spend measured is about $0–0.50 this month.
+- SKIPPED — F1: a live test sign-up. Sign-up stays OFF until Phương presses "Bật". A live sign-up needs a real human Turnstile solve, which an agent cannot do; the rehearsal plus the live API gate checks stand in.
+- PASS — F2: CONTROL is set to maintenance-only, and the runbook _ops/outbox/R2L_MAINTENANCE.md exists.
+- ADDED in-flight (all reviewed):
+  - logged-out page → 303 /read2lead/ (live 303 verified);
+  - admin path case/encoding hardening (live /Api/admin/classes → 401);
+  - founder sign-up switch API + card;
+  - v105 watchdog fix (live verified).
+
+## Previous task — R2L-TUNE-FINISH (complete, live 2026-10-18)
 
 - Task ID: R2L-TUNE-FINISH (release v103). Four packets:
   - 1 R2L-MINNY-TUNE (Mark);
@@ -83,7 +172,7 @@
   - Covered instead by Buffet: he ran the real applyClassReward in a VM, confirming a number is sent, the confirm appears at 10,001 but not 10,000, and cancel sends nothing; and the real reward handler, confirming 100000 is applied exactly.
   - Phương's first large gift on /admin/classes is the human check, and it is flagged to him.
 
-## Acceptance criteria reconciliation
+## Previous acceptance reconciliation — R2L-TUNE-FINISH
 
 - PASS — T1: debits are the measured ×1.25 values; a test bites on revert; the 50k floor is unchanged.
 - PASS — T2: 65 Sky cases compared, report in _ops/outbox/assessor-compare-2026-10-17/, 9 disagreements.
