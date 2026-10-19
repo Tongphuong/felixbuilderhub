@@ -189,6 +189,11 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
       wr(name, cols);
     }
     wr('no-anchors', { __path: 'ok', anchors: undefined });
+    const A3 = { 't.top': 'Xin chào', 't.hero': 'Đọc truyện nào', 't.primary': 'Mở truyện' };
+    wr('exempt-ok', { __path: 'ok', anchors: A3, anchors_exempt: { 't.foot': 'plain text row, no card' } });
+    wr('exempt-no-reason', { __path: 'ok', anchors: A3, anchors_exempt: { 't.foot': '  ' } });
+    wr('neither-anchored-nor-exempt', { __path: 'ok', anchors: A3 });
+    wr('all-exempt', { __path: 'ok', anchors: undefined, anchors_exempt: Object.fromEntries(['t.top', 't.hero', 't.primary', 't.foot'].map(id => [id, 'full-screen background, text resolves to the page'])) });
     wr('partial-anchors', { __path: 'ok', anchors: { 't.top': 'Xin chào' } });
     const report = await runFidelity({ design, contracts, base, out: path.join(tmp, 'out'), composites: 'fail', 'state-driver': GOTO, 'require-anchors': true, concurrency: 12 });
     const by = Object.fromEntries(report.results.map(r => [r.contract, r]));
@@ -229,9 +234,24 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
     });
     await t.test('M10 --require-anchors: a contract with no anchors, or an order id without one, FAILS', () => {
       assert.deepEqual(failed(by['no-anchors']), ['anchors-present']);
-      assert.match(by['no-anchors'].checks.find(c => c.name === 'anchors-present').detail, /no "anchors"/);
+      assert.match(by['no-anchors'].checks.find(c => c.name === 'anchors-present').detail, /neither anchored nor exempt: t\.top/);
       assert.deepEqual(failed(by['partial-anchors']), ['anchors-present']);
       assert.match(by['partial-anchors'].checks.find(c => c.name === 'anchors-present').detail, /t\.hero/);
+    });
+    await t.test('anchors_exempt: an exempt id passes; no reason fails; neither anchored nor exempt fails; all-exempt is allowed and reported pixel-only', () => {
+      assert.deepEqual(failed(by['exempt-ok']), []);
+      assert.match(by['exempt-ok'].checks.find(c => c.name === 'anchors-present').detail, /3 anchored, 1 exempt/);
+      assert.deepEqual(failed(by['exempt-no-reason']), ['anchors-present']);
+      assert.match(by['exempt-no-reason'].checks.find(c => c.name === 'anchors-present').detail, /exempt without a reason: t\.foot/);
+      assert.deepEqual(failed(by['neither-anchored-nor-exempt']), ['anchors-present']);
+      assert.match(by['neither-anchored-nor-exempt'].checks.find(c => c.name === 'anchors-present').detail, /neither anchored nor exempt: t\.foot/);
+      assert.deepEqual(failed(by['all-exempt']), []);
+      assert.ok(by['all-exempt'].warnings.some(w => /geometry: pixel-only/.test(w)));
+      assert.ok(by['exempt-ok'].anchorBoxes['t.hero'].h > 0);
+      const md = fs.readFileSync(path.join(tmp, 'out', 'report.md'), 'utf8');
+      assert.match(md, /Geometry NOT checked \(anchors_exempt\):\n- t\.foot: plain text row, no card/);
+      assert.match(md, /WARN geometry: pixel-only/);
+      assert.match(md, /Anchored mock boxes \(x, y, w, h\):\n- t\.top: 0, 0, 390, 92/);
     });
     await t.test('a failing contract writes a composite, report.json and report.md; verdict is false', () => {
       assert.equal(report.ok, false);
@@ -284,6 +304,7 @@ test('m14 a contract whose width-keyed fields disagree with its mocks is rejecte
     await assert.rejects(run({ ...good, viewport: { 390: 700, 1280: 800 } }), e => e instanceof InfraError && /"viewport" widths/.test(e.message));
     await assert.rejects(run({ ...good, diff_ceiling: {} }), e => e instanceof InfraError && /"diff_ceiling" widths/.test(e.message));
     await assert.rejects(run({ ...good, reference: { 1280: 'x.png' } }), e => e instanceof InfraError && /"reference" widths/.test(e.message));
+    await assert.rejects(run({ ...good, anchors_exempt: { 't.top': 'also exempt' } }), e => e instanceof InfraError && /BOTH anchors and anchors_exempt: t\.top/.test(e.message));
     await assert.rejects(run({ ...good, texts_1280: ['x'] }), e => e instanceof InfraError && /texts_1280/.test(e.message));
   } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
 });

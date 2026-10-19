@@ -65,6 +65,8 @@ export function validateContract(c) {
     if (f === 'reference' && !c.reference) continue;
     if (set(c[f]) !== want) throw new InfraError(`contract ${c.id}: "${f}" widths [${set(c[f])}] != mock widths [${want}]`);
   }
+  const both = Object.keys(c.anchors || {}).filter(id => Object.prototype.hasOwnProperty.call(c.anchors_exempt || {}, id));
+  if (both.length) throw new InfraError(`contract ${c.id}: id(s) listed in BOTH anchors and anchors_exempt: ${both.join(', ')}`);
   const widths = new Set(Object.keys(c.mock));
   for (const k of Object.keys(c)) {
     const m = /^(?:order|texts)_(\d+)$/.exec(k);
@@ -140,8 +142,11 @@ export async function runFidelity(opts) {
           const badFonts = (await mpage.evaluate(fontCheck)).filter(f => f.status === 'error');
           if (badFonts.length) throw new InfraError('mock fonts failed to load: ' + badFonts.map(f => f.family).join(', '));
           const mockPng0 = await shot(mpage);
-          const anchors = contract.anchors || null;
+          const anchors = contract.anchors && Object.keys(contract.anchors).length ? contract.anchors : null;
+          const exempt = contract.anchors_exempt || {};
           const mockGeo = anchors ? await mpage.evaluate(mockBoxes, anchors) : null;
+          res.exempt = exempt;
+          if (mockGeo) res.anchorBoxes = Object.fromEntries(Object.entries(mockGeo.boxes).map(([id, b]) => [id, b && { x: Math.round(b.x), y: Math.round(b.y), w: Math.round(b.w), h: Math.round(b.h) }]));
           await mctx.close();
 
           // (b) built -----------------------------------------------------
@@ -238,8 +243,14 @@ export async function runFidelity(opts) {
 
           // geometry against the mock (anchors)
           if (opts['require-anchors']) {
-            const need = orderIds.filter(id => !optional.has(id) && !(anchors && anchors[id]));
-            res.checks.push(check('anchors-present', !!anchors && need.length === 0, !anchors ? 'contract has no "anchors"' : need.length ? 'order ids without an anchor: ' + need.join(', ') : `${Object.keys(anchors).length} anchors`));
+            const noReason = Object.entries(exempt).filter(([, r]) => typeof r !== 'string' || !r.trim()).map(([id]) => id);
+            const need = orderIds.filter(id => !optional.has(id) && !(anchors && anchors[id]) && !(typeof exempt[id] === 'string' && exempt[id].trim()));
+            const probs = [];
+            if (noReason.length) probs.push('exempt without a reason: ' + noReason.join(', '));
+            if (need.length) probs.push('order ids neither anchored nor exempt: ' + need.join(', '));
+            const nA = anchors ? Object.keys(anchors).length : 0, nE = Object.keys(exempt).length;
+            res.checks.push(check('anchors-present', probs.length === 0, probs.length ? probs.join('; ') : `${nA} anchored, ${nE} exempt${nA === 0 ? ' (geometry: pixel-only)' : ''}`));
+            if (nA === 0 && probs.length === 0) res.warnings.push('geometry: pixel-only (every order id is exempt from anchors)');
           }
           if (anchors) {
             const bg = await page.evaluate(builtBoxes, Object.keys(anchors));
@@ -322,6 +333,8 @@ function renderMd(report) {
     if (r.composite) L.push(`Composite: \`${r.composite}\``, '');
     for (const c of r.checks) L.push(`- ${c.pass ? 'PASS' : 'FAIL'} **${c.name}** ${c.detail}`);
     for (const w of r.warnings) L.push(`- WARN ${w}`);
+    if (r.exempt && Object.keys(r.exempt).length) { L.push('', 'Geometry NOT checked (anchors_exempt):'); for (const [id, why] of Object.entries(r.exempt)) L.push(`- ${id}: ${why || '(NO REASON GIVEN)'}`); }
+    if (r.anchorBoxes) { L.push('', 'Anchored mock boxes (x, y, w, h):'); for (const [id, b] of Object.entries(r.anchorBoxes)) L.push(`- ${id}: ${b ? `${b.x}, ${b.y}, ${b.w}, ${b.h}` : 'ANCHOR TEXT NOT FOUND'}`); }
     L.push('');
   }
   return L.join('\n');
