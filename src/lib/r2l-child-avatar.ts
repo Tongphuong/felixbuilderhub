@@ -38,7 +38,8 @@ export function drawChildAvatar(holder: HTMLElement, state: Record<string, any> 
     holder.replaceChildren(child);
     // The design's r2l-m-* class on the holder does the moving, so the renderer's own float stays off.
     renderMonster(child, monster, { size: 'large', animate: false, withCosmetics: true, equipped: state?.equipped, equippedDisplay: state?.equipped_display });
-    child.style.width = '100%'; child.style.height = '100%'; child.style.transform = 'scale(.62)';
+    child.style.width = '100%'; child.style.height = '100%'; // Same measured fit as the home (see read2lead-home-island.css): visible height 54% of the box, standing on its bottom.
+    child.style.transform = 'translateY(7.2%) scale(.685)'; child.style.transformOrigin = '50% 92.8%';
     return true;
   } catch { return false; }
 }

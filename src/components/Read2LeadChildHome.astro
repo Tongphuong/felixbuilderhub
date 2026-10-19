@@ -109,11 +109,12 @@ const TURNSTILE_SITE_KEY = String(import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '
           <span class="r2l-lab" id="home-kicker">Góc đọc sách của con</span>
           <h1 id="home-greeting" class="r2l-d r2l-t-xl r2l-m-pop rh__h1">Chào <span id="home-name" data-clarity-mask="true">con</span>!</h1>
           <div id="home-bubble" class="r2l-bubble r2l-m-pop rh__bubble rh__bubble--wide" hidden></div>
+          <p id="home-personal-progress" class="rh__progress">Mỗi câu chuyện là một bước nhỏ.</p>
         <div class="rh__stage">
           <div id="home-bubble-phone" class="r2l-bubble r2l-m-pop rh__bubble rh__bubble--phone" hidden></div>
           <svg class="r2l-m-tw rh__twinkle" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path d="M12 1l2.5 8.5L23 12l-8.5 2.5L12 23l-2.5-8.5L1 12l8.5-2.5z" fill="#FFF3B0"></path></svg>
           <span id="home-zz" class="r2l-m-zz r2l-d rh__zz" aria-hidden="true" hidden>z</span>
-          <div id="home-pet" class="rh__pet r2l-m-bob" set:html={defaultMonsterSvg()}></div>
+          <div id="home-pet" data-design="home.monster" class="rh__pet r2l-m-bob" set:html={defaultMonsterSvg()}></div>
           <div class="rh__shadow" aria-hidden="true"></div>
         </div>
         </div>
@@ -168,7 +169,6 @@ const TURNSTILE_SITE_KEY = String(import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '
         </div>
       </section>
 
-      <p id="home-personal-progress" class="rh__progress">Mỗi câu chuyện là một bước nhỏ.</p>
       </div>
 
       <div class="rh__colwrap rh__col-c" data-design-col>
@@ -185,8 +185,7 @@ const TURNSTILE_SITE_KEY = String(import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '
           <span class="rh__board-col"><span class="rh__board-head"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.5 1.3 6.5L12 17l-5.9 3.3 1.3-6.5L2.5 9.3l6.6-.8z" fill="#FFC83D" stroke="#17324D" stroke-width="1.6" stroke-linejoin="round"></path></svg>XP</span><span id="home-rank-xp" class="rh__rows"></span></span>
           <span class="rh__board-col"><span class="rh__board-head"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z" fill="#3CC8F0" stroke="#17324D" stroke-width="1.6" stroke-linejoin="round"></path></svg>Kim cương</span><span id="home-rank-diamonds" class="rh__rows"></span></span>
         </div>
-        <p id="home-rank-own" class="rh__own" hidden></p>
-        <p class="rh__board-link"><span>Đọc truyện để lên bảng nhé!</span><span class="rh__dot" aria-hidden="true"> · </span><a id="home-board-link" href="/read2lead/leaderboard">Xem cả bảng</a></p>
+        <p class="rh__board-link"><span id="home-rank-own" hidden></span><span>Đọc truyện để lên bảng nhé!</span><span class="rh__dot" aria-hidden="true"> · </span><a id="home-board-link" href="/read2lead/leaderboard">Xem cả bảng</a></p>
       </aside>
       </div>
       <a id="home-companion" class="r2l-btn r2l-btn-sm r2l-btn-w rh__comp" data-design="home.companion" href="/ho-so"><span id="home-comp-avatar" class="rh__comp-av" aria-hidden="true"></span><span class="rh__comp-label">Đổi bạn đồng hành</span><svg class="rh__chev" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round"></path></svg></a>

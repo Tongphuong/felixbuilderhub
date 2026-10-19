@@ -54,6 +54,7 @@
       if (holder) drawChildAvatar(holder, state);
       const lp = ladderProgress(state), row = document.getElementById('rank-up-stars');
       if (lp && row) row.innerHTML = Array.from({ length: lp.perDivision }, (_, i) => star(i < lp.stars, i === lp.stars - 1)).join('');
+      modal.dataset.ready = '1'; // test hook: the modal has stopped changing
     }).observe(modal, { attributes: true, attributeFilter: ['class'] });
   }
 </script>

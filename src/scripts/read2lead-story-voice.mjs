@@ -169,6 +169,8 @@ export async function mountStoryMission() {
   // Grade F (0 kim cương / 0 XP) still celebrates: the tiles simply show +0. No XP bar: the ladder exposes none.
   const RW_CONFETTI=[['8%','#FF7A3D','12px','18px','3px',0,10],['24%','#FFC83D','14px','14px','50%',.4,26],['38%','#237A41','10px','18px','3px',.9,6],['64%','#E0362C','12px','12px','3px',.2,16],['79%','#3CC8F0','14px','20px','3px',1.2,30],['90%','#FFC83D','12px','12px','50%',.6,8],['51%','#FF7A3D','10px','16px','3px',1.5,36]];
   const RW_TICK='<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"></path></svg>';
+  // The avatar helper is fetched while the child answers questions, so the reward screen draws at once.
+  let avatarModule;const loadAvatarModule=()=>avatarModule||(avatarModule=import('../lib/r2l-child-avatar'));
   // The tile adds up exactly what the server recorded for this story: the 12 questions plus the picture retell.
   const rewardDiamonds=s=>(Number(s.awarded?.diamonds)||0)+(s.pictureRetell?.status==='complete'?Number(s.pictureRetell.award?.diamonds)||0:0);
   function finishActions(info={}) {
@@ -206,7 +208,7 @@ export async function mountStoryMission() {
     document.documentElement.classList.add('rw-open');const shell=$('lesson-shell');if(shell)shell.inert=true;
     // The child's own companion dances (design: r2l-m-dance); the cheering Minny stays as the fallback.
     // Same read-only state also gives the real rank stars for the finish bar ("x / y ★"); no number is invented.
-    import('../lib/r2l-child-avatar').then(async m=>{
+    loadAvatarModule().then(async m=>{
       const state=await m.loadChildState(params.get('code')||undefined);
       m.drawChildAvatar(rw.querySelector('.rw__monster'),state);
       const lp=m.ladderProgress(state);
@@ -215,7 +217,7 @@ export async function mountStoryMission() {
         count.textContent=lp.stars+' / '+lp.perDivision+' ★';count.hidden=false;
         bar.querySelector('i').style.width=Math.round(lp.stars/lp.perDivision*100)+'%';bar.hidden=false;
       }
-    }).catch(()=>{});
+    }).catch(()=>{}).finally(()=>{rw.dataset.ready='1';});// test hook: the screen has stopped changing
     rw.tabIndex=-1;rw.focus({preventScroll:true});
     return rw;
   }
@@ -429,6 +431,7 @@ export async function mountStoryMission() {
     document.querySelector('.rw')?.remove();const lessonShell=$('lesson-shell');if(lessonShell)lessonShell.inert=false;document.documentElement.classList.remove('rw-open');
     releaseReply();
     review.disabled=false;
+    if(view?.session?.stage==='understand')loadAvatarModule().catch(()=>{});
     if(view.schemaVersion!==STORY_MISSION_VERSION)throw Error('unsupported_contract');
     const {lesson:l,session:s}=view;
     const interview=!!view.policy.interview;

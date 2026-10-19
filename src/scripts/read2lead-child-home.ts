@@ -91,7 +91,8 @@ if (root) {
       const xp = boards.xp?.own, dia = boards.diamonds?.own, parts: string[] = [];
       if (xp?.rank) parts.push('XP #' + xp.rank);
       if (dia?.rank) parts.push('💎 #' + dia.rank);
-      el('home-rank-own').textContent = parts.length ? 'Con đang hạng ' + parts.join(' · ') : '';
+      // One wrapped run with the footer text: "Con đang hạng XP #1 · 💎 #1 · Đọc truyện để lên bảng nhé! · Xem cả bảng".
+      el('home-rank-own').textContent = parts.length ? 'Con đang hạng ' + parts.join(' · ') + ' · ' : '';
       el('home-rank-own').hidden = !parts.length;
     } catch { /* keep the card with its default text */ }
   }

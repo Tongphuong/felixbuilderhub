@@ -58,7 +58,9 @@
 .rh__pet { width: 180px; height: 180px; margin-top: 30px; display: flex; align-items: center; justify-content: center; }
 .rh__pet > svg { width: 100%; height: 100%; }
 /* the avatar renderer's parts spill outside its box; the old home scaled it the same way */
-.rh__pet > .r2l-monster { width: 100%; height: 100%; transform: scale(.68); transform-origin: center 62%; }
+.rh__pet > .r2l-monster { width: 100%; height: 100%; transform: translateY(7.2%) scale(.685); transform-origin: 50% 92.8%; }
+/* measured: the design's companion fills 92% x 54% of its box, standing on the box bottom; the real avatar
+   (89.6% x 78.8%, bottom at 92.8%) is scaled and dropped so its visible body has the same height and base */
 .rh__pet .r2l-monster { filter: none; }
 .rh__shadow { width: 120px; height: 14px; border-radius: 50%; background: #2F8E4A; opacity: .45; margin-top: -10px; }
 
@@ -166,7 +168,8 @@
 .rh .reading-home__rank-empty { font-weight: 800; font-size: 15px; color: var(--r2l-ink); padding: 0 4px; }
 
 /* ---- below the fold ---- */
-.rh__progress { margin: 16px 0 0; text-align: center; font-weight: 800; font-size: 16px; }
+/* "Con đã đọc N truyện…" / first-visit message: lives in the greeting's empty lower-left corner (no height added) */
+.rh__progress { position: absolute; left: 0; bottom: 6px; width: 180px; margin: 0; text-align: left; font-weight: 800; font-size: 14px; line-height: 1.3; }
 .rh__comp { margin-top: 18px; height: 64px; justify-content: flex-start; text-decoration: none; }
 .rh__comp-av { width: 44px; height: 44px; flex: none; display: flex; align-items: center; justify-content: center; }
 .rh__comp-av .r2l-monster { width: 44px; height: 44px; filter: none; }
@@ -188,7 +191,6 @@
   .rh__map { grid-area: map; margin-top: 0; }
   .rh__board { grid-area: board; margin-top: 0; }
   .rh__rank-card { grid-area: rank; margin-top: -16px; }
-  .rh__progress { grid-area: prog; margin: 0; }
   .rh__comp { grid-area: comp; margin: 0; }
   .rh__parents { grid-area: parents; margin: 0; }
   .rh[data-home-state="no-story"] .rh__grid { grid-template-areas: "hero hero" "story story" "comp parents"; }
@@ -256,7 +258,7 @@
   .rh__board-col { background: none; border: 0; border-radius: 0; padding: 0; color: #fff; gap: 10px; }
   .rh__board-head { padding-left: 0; }
   .rh__board-head, .rh .reading-home__rank-name, .rh .reading-home__rank-value { color: inherit; }
-  .rh .reading-home__rank-row { display: flex; align-items: center; gap: 10px; background: var(--r2l-cream); color: var(--r2l-ink); border: 3px solid var(--r2l-ink); border-radius: 16px; padding: 4px 10px; }
+  .rh .reading-home__rank-row { box-sizing: border-box; height: 54px; display: flex; align-items: center; gap: 10px; background: var(--r2l-cream); color: var(--r2l-ink); border: 3px solid var(--r2l-ink); border-radius: 16px; padding: 4px 10px; }
   .rh .reading-home__rank-row:has([data-place="1"]) { background: var(--r2l-gold); }
   .rh .reading-home__rank-row:has([data-place="2"]) { background: var(--r2l-silver); }
   .rh .reading-home__rank-row:has([data-place="3"]) { background: var(--r2l-podium-3); }
@@ -271,7 +273,7 @@
   .rh__comp { height: auto; min-height: 52px; justify-content: center; align-self: start; }
   .rh__comp-av, .rh__chev { display: none; }
   .rh__comp-label { flex: none; text-align: center; }
-  .rh__progress { align-self: center; }
+  .rh__progress { position: static; width: auto; font-size: 15px; margin: -10px 0 -24px; }
   .rh__parents { align-self: start; justify-self: center; }
   .rh__flag-text--wide { display: inline; }
 }
