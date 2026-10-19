@@ -2,7 +2,6 @@
 import { renderMonster } from './monster-avatar';
 
 export type RankRow = { rank: number | null; display_name: string; total: number; is_self: boolean; avatar?: { monster?: any } };
-const MEDALS = ['🥇', '🥈', '🥉'];
 const number = (value: unknown) => new Intl.NumberFormat('vi-VN').format(Math.max(0, Number(value) || 0));
 
 // Returns how many rows were drawn. `emptyText` null = leave the list empty (the caller hides the card).
@@ -14,7 +13,8 @@ export function rankList(target: HTMLElement, rows: RankRow[], unit: string, emp
   }
   for (const row of rows) {
     const item = document.createElement('span'); item.className = 'reading-home__rank-row' + (row.is_self ? ' is-self' : '');
-    const medal = document.createElement('span'); medal.className = 'reading-home__rank-medal'; medal.textContent = MEDALS[(row.rank || 1) - 1] || '#' + row.rank;
+    // Design: a numbered circle, gold / silver / bronze for the podium (colours live in the css, by data-place).
+    const medal = document.createElement('span'); medal.className = 'reading-home__rank-medal'; medal.dataset.place = String(row.rank || ''); medal.textContent = String(row.rank || '');
     const face = document.createElement('span'); face.className = 'reading-home__rank-face';
     if (row.avatar?.monster && Object.keys(row.avatar.monster).length) { const holder = document.createElement('div'); face.append(holder); try { renderMonster(holder, row.avatar.monster, { size: 'small', animate: false, withCosmetics: true, compactCosmetics: true }); } catch { face.textContent = '📖'; } } else face.textContent = '📖';
     const name = document.createElement('span'); name.className = 'reading-home__rank-name'; name.textContent = row.display_name;

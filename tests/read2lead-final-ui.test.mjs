@@ -13,7 +13,7 @@ function element() {
   const events = {}, attrs = {};
   return { events, hidden: false, disabled: false, checked: false, value: '', textContent: '', children: [], classList: { toggle() {} },
     setAttribute(k, v) { attrs[k] = v; }, getAttribute: k => attrs[k] ?? null, addEventListener: (k, f) => { events[k] = f; },
-    append() {}, appendChild(n) { this.children.push(n); setImmediate(() => n.onload && n.onload()); }, replaceChildren() {}, focus() {}, querySelector() { return null; }, firstElementChild: null, getBoundingClientRect: () => ({ height: 0 }) };
+    append() {}, appendChild(n) { this.children.push(n); setImmediate(() => n.onload && n.onload()); }, replaceChildren() {}, focus() {}, querySelector() { return element(); }, closest() { return element(); }, removeAttribute() {}, toggleAttribute() {}, style: {}, dataset: {}, firstElementChild: null, getBoundingClientRect: () => ({ height: 0 }) };
 }
 const settle = async () => { for (let i = 0; i < 12; i++) await new Promise(r => setImmediate(r)); };
 const mem = () => { const m = new Map(); return { getItem: k => m.get(k) ?? null, setItem: (k, v) => m.set(k, v), removeItem: k => m.delete(k) }; };

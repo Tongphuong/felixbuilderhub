@@ -62,8 +62,8 @@ test('child home puts reading before secondary rankings', () => {
 
 test('child home shows a rankings card with both boards, linking to the full leaderboard, right after the read button', () => {
   const source = readFileSync(join(ROOT, 'src/components/Read2LeadChildHome.astro'), 'utf8');
-  const card = source.slice(source.indexOf('id="home-rankings"'));
-  assert.match(card, /^id="home-rankings"[^>]*href="\/read2lead\/leaderboard"/);
+  // R2L-ISLAND: the board is a panel; its "Xem cả bảng" link goes to the full leaderboard.
+  assert.match(source, /<a id="home-board-link"[^>]*href="\/read2lead\/leaderboard"[^>]*>Xem cả bảng</);
   assert.ok(source.indexOf('id="home-open"') < source.indexOf('id="home-rankings"'));
   assert.match(source, /id="home-rank-xp"/); assert.match(source, /id="home-rank-diamonds"/); assert.match(source, /id="home-rank-own"/);
   const script = readFileSync(join(ROOT, 'src/scripts/read2lead-child-home.ts'), 'utf8');

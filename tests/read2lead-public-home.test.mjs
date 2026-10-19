@@ -9,8 +9,9 @@ import * as entryModule from '../src/lib/read2lead/student-entry.mjs';
 const transpile = file => ts.transpileModule(readFileSync(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText;
 function element() {
   const events = {}, el = { events, hidden: false, disabled: false, value: '', textContent: '', className: '', children: [],
-    classList: { toggle() {} }, setAttribute() {}, addEventListener: (k, f) => { events[k] = f; },
-    append(...kids) { this.children.push(...kids); }, replaceChildren() { this.children = []; this.textContent = ''; }, focus() {}, querySelector() { return null; } };
+    classList: { toggle() {}, add() {}, remove() {} }, style: {}, dataset: {}, setAttribute() {}, removeAttribute() {}, toggleAttribute() {}, closest() { return element(); },
+    addEventListener: (k, f) => { events[k] = f; },
+    append(...kids) { this.children.push(...kids); }, replaceChildren() { this.children = []; this.textContent = ''; }, focus() {}, querySelector() { return element(); } };
   return el;
 }
 const settle = async () => { for (let i = 0; i < 10; i++) await new Promise(resolve => setImmediate(resolve)); };
@@ -110,7 +111,7 @@ test('markup: hero copy is the approved text, code box and logged-in card are un
   assert.doesNotMatch(entry.slice(entry.indexOf('id="entry-rankings"'), entry.indexOf('reading-home__codebox')), /<a\b|href=/);
   // Hero comes before the code box; code box anchor is reachable.
   assert.ok(entry.indexOf('entry-steps') < entry.indexOf('id="home-entry-form"'));
-  assert.match(astro, /<a id="home-rankings"[^>]*href="\/read2lead\/leaderboard"/);
+  assert.match(astro, /<a id="home-board-link"[^>]*href="\/read2lead\/leaderboard"/);
   const script = readFileSync('src/scripts/read2lead-child-home.ts', 'utf8');
   assert.match(script, /from '\.\.\/lib\/r2l-ranks'/);
   assert.doesNotMatch(script, /function rankList/);

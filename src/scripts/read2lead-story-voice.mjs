@@ -165,14 +165,49 @@ export async function mountStoryMission() {
   const assignmentBusy=()=>busy||!!capture||!!voicePending||!!pending||view?.session.feedbackPending===true;
   mountLessonHelp({container:root,isBusy:assignmentBusy,beforeLeave:stop});
   const openAnother=createLessonAssignmentAction({code:params.get('code'),packId:params.get('pack_id'),origin:location.origin,isBusy:assignmentBusy,beforeLeave:stop});
-  function finishActions() {
-    const home=node('a','Xong hôm nay','r2l-primary');
+  // Reward screen ("Đảo phiêu lưu"): markup and classes only, same two actions and handlers as before.
+  // Grade F (0 kim cương / 0 XP) still celebrates: the tiles simply show +0. No XP bar: the ladder exposes none.
+  const RW_CONFETTI=[['8%','#FF7A3D','12px','18px','3px',0,10],['24%','#FFC83D','14px','14px','50%',.4,26],['38%','#237A41','10px','18px','3px',.9,6],['64%','#E0362C','12px','12px','3px',.2,16],['79%','#3CC8F0','14px','20px','3px',1.2,30],['90%','#FFC83D','12px','12px','50%',.6,8],['51%','#FF7A3D','10px','16px','3px',1.5,36]];
+  const RW_TICK='<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"></path></svg>';
+  // The tile adds up exactly what the server recorded for this story: the 12 questions plus the picture retell.
+  const rewardDiamonds=s=>(Number(s.awarded?.diamonds)||0)+(s.pictureRetell?.status==='complete'?Number(s.pictureRetell.award?.diamonds)||0:0);
+  function finishActions(info={}) {
+    document.querySelector('.rw')?.remove();
+    const diamonds=Math.max(0,Number(info.diamonds)||0),xp=Math.max(0,Number(info.xp)||0);
+    const rw=node('section','','r2l rw');rw.setAttribute('role','region');rw.setAttribute('aria-labelledby','rw-title');
+    rw.innerHTML=`<div class="rw__confetti" aria-hidden="true">${RW_CONFETTI.map(([l,c,w,h,r,d,t])=>`<span class="r2l-m-fall" style="left:${l};top:${t}px;width:${w};height:${h};background:${c};border-radius:${r};animation-delay:${d}s"></span>`).join('')}</div>
+<div class="rw__grid">
+<div class="rw__hero" data-design="reward.hero"><svg class="r2l-m-burst rw__burst" aria-hidden="true" viewBox="0 0 260 260"><path d="M130 6l18 70 62-38-38 62 70 18-70 18 38 62-62-38-18 70-18-70-62 38 38-62-70-18 70-18-38-62 62 38z" fill="#FFE7A8" stroke="#17324D" stroke-width="3" stroke-linejoin="round"></path></svg><div class="rw__monster r2l-m-dance"><img src="/assets/minny/vector/minny-cheer.svg" alt="" width="190" height="190"></div></div>
+<div class="rw__main">
+<h1 id="rw-title" class="r2l-d r2l-t-1 r2l-m-pop rw__title" data-design="reward.title"><span class="rw__done">Con đã đọc xong</span> <span class="rw__story" lang="en"></span></h1>
+<div class="rw__tiles" data-design="reward.tiles">
+<div class="r2l-card r2l-m-pop rw__tile" style="animation-delay:.5s"><svg aria-hidden="true" width="44" height="44" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z" fill="#3CC8F0" stroke="#17324D" stroke-width="1.6" stroke-linejoin="round"></path><path d="M2 9h20M9 3l3 18 3-18" stroke="#17324D" stroke-width="1.2" fill="none"></path></svg><span class="rw__txt"><span class="rw__num r2l-d rw__diamonds"></span><span class="rw__unit">kim cương</span></span></div>
+<div class="r2l-card r2l-m-pop rw__tile" style="animation-delay:.8s"><svg aria-hidden="true" width="44" height="44" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.5 1.3 6.5L12 17l-5.9 3.3 1.3-6.5L2.5 9.3l6.6-.8z" fill="#FFC83D" stroke="#17324D" stroke-width="1.6" stroke-linejoin="round"></path></svg><span class="rw__txt"><span class="rw__num r2l-d rw__xp"></span><span class="rw__unit">XP</span></span></div>
+</div>
+<div class="r2l-card-f rw__finish" data-design="reward.finish"><span class="rw__ticks">${['','',''].map(()=>`<span class="r2l-node r2l-n-done rw__tick">${RW_TICK}</span>`).join('')}</span><b class="rw__finish-text">Về đích!<span class="rw__wide"> Cả 3 bước đã xong</span></b></div>
+<p class="rw__note" role="status"></p>
+<div class="rw__actions" data-design="reward.actions"></div>
+<div class="rw__more"></div>
+</div></div>`;
+    rw.querySelector('.rw__story').textContent='“'+(info.title||'')+'”';
+    rw.querySelector('.rw__diamonds').textContent='+'+diamonds.toLocaleString('vi-VN');
+    rw.querySelector('.rw__xp').textContent='+'+xp.toLocaleString('vi-VN');
+    if(info.note)rw.querySelector('.rw__note').textContent=info.note;else rw.querySelector('.rw__note').hidden=true;
+    const home=node('a','Xong hôm nay','r2l-btn r2l-btn-sun r2l-m-ring rw__primary');home.setAttribute('data-design','reward.primary');
     home.href='/read2lead/?'+new URLSearchParams({code:params.get('code')||'',done:'1'});home.onclick=stop;
-    const another=button('Đọc thêm truyện',async()=>{
+    const another=node('button','Đọc thêm truyện','r2l-btn r2l-btn-w');another.type='button';
+    another.onclick=async()=>{
       another.disabled=true;
-      try{await openAnother();}catch(error){notice.textContent=error.message;another.disabled=false;}
-    },true);
-    controls.append(home,another);
+      try{await openAnother();}catch(error){rw.querySelector('.rw__note').hidden=false;rw.querySelector('.rw__note').textContent=error.message;notice.textContent=error.message;another.disabled=false;}
+    };
+    rw.querySelector('.rw__actions').append(home,another);
+    document.body.append(rw);
+    // The reward replaces the whole page (design 04): everything else steps aside while it is up.
+    document.documentElement.classList.add('rw-open');const shell=$('lesson-shell');if(shell)shell.inert=true;
+    // The child's own companion dances (design: r2l-m-dance); the cheering Minny stays as the fallback.
+    import('../lib/r2l-child-avatar').then(m=>m.mountChildAvatar(rw.querySelector('.rw__monster'),params.get('code')||undefined)).catch(()=>{});
+    rw.tabIndex=-1;rw.focus({preventScroll:true});
+    return rw;
   }
   window.addEventListener('pagehide', stop);
   document.addEventListener('visibilitychange', () => { if (document.hidden) {stop();if(capture){capture=null;busy=false;render();notice.textContent='Đã dừng micro. Con có thể thử nói lại.';}} });
@@ -381,6 +416,7 @@ export async function mountStoryMission() {
     if(view.policy.interview&&view.policy.providerEnabled)void playback.play();
   }
   function render() {
+    document.querySelector('.rw')?.remove();const lessonShell=$('lesson-shell');if(lessonShell)lessonShell.inert=false;document.documentElement.classList.remove('rw-open');
     releaseReply();
     review.disabled=false;
     if(view.schemaVersion!==STORY_MISSION_VERSION)throw Error('unsupported_contract');
@@ -462,14 +498,14 @@ export async function mountStoryMission() {
         controls.append(node('h3','Con đã hoàn thành câu chuyện!','story-mission-prompt'),
           node('p','✓ 12 câu hỏi · ✓ Kể lại qua tranh','story-mission-status'),
           node('p',savedResult.alreadyAwarded||!freshPictureAward?'200 💎 cho phần kể này đã được cộng trước đó.':'Đã cộng 200 💎 cho phần kể của con.','story-mission-status'));
-        finishActions();
+        const rw=finishActions({title:l.title,diamonds:rewardDiamonds(s),xp:s.awarded?.xp,note:savedResult.alreadyAwarded||!freshPictureAward?'200 💎 cho phần kể này đã được cộng trước đó.':'Đã cộng 200 💎 cho phần kể của con.'});
         const details=node('details','','story-finish-details');details.append(node('summary','Xem lại kết quả'));
         details.append(node('p',`Ý chính: ${savedResult.matched}/${savedResult.total}`));
         const meanings=node('ul','','picture-retell-meanings');
         for(const m of savedResult.meanings)meanings.append(node('li',`${m.met?'✓':'○'} ${m.label}`));
         details.append(meanings,node('p',pronunciationNote(savedResult.pronunciation),'story-mission-note'));
         if(view.policy.providerEnabled)details.append(button('Ghi âm luyện lại · Không cộng thêm thưởng',recordVoice,true));
-        controls.append(details);focusActivity();return;
+        rw.querySelector('.rw__more').append(details);return;
       }
       controls.append(node('h3','Nhìn tranh · Kể lại truyện','story-mission-prompt'),
         node('p',`Con nhìn ${view.policy.pictureRetell.frames.length} tranh theo thứ tự và kể cả câu chuyện bằng tiếng Anh. Bấm vào tranh để xem lớn hơn.`,'story-mission-note'));
@@ -484,7 +520,7 @@ export async function mountStoryMission() {
           controls.append(node('p',pronunciationNote(result.pronunciation),'story-mission-note'));
         }
         controls.append(node('p',done?(result.alreadyAwarded||!freshPictureAward?'200 💎 cho phần kể này đã được cộng trước đó.':'Đã cộng 200 💎 cho phần kể của con.'):'Con có thể ghi âm lại khi sẵn sàng.','story-mission-status'));
-        if(done){controls.append(node('p','✓ 12 câu hỏi · ✓ Kể lại qua tranh','story-mission-status'));finishActions();}
+        if(done){controls.append(node('p','✓ 12 câu hỏi · ✓ Kể lại qua tranh','story-mission-status'));finishActions({title:l.title,diamonds:rewardDiamonds(s),xp:s.awarded?.xp,note:result.alreadyAwarded||!freshPictureAward?'200 💎 cho phần kể này đã được cộng trước đó.':'Đã cộng 200 💎 cho phần kể của con.'});}
       }
       if(view.policy.providerEnabled)controls.append(button(result?.status==='complete'?'Ghi âm luyện lại · Không cộng thêm thưởng':result?'Ghi âm lại':'🎙 Ghi âm kể chuyện',recordVoice,result?.status==='complete'));
       else controls.append(node('p','Phần ghi âm chưa sẵn sàng. Tiến trình của con vẫn được giữ.','story-mission-note'));
@@ -525,7 +561,11 @@ export async function mountStoryMission() {
       controls.append(node('h3',s.complete?'Con đã trả lời đủ 12 câu hỏi!':'Đã lưu phần luyện tập','story-mission-prompt'),
         node('p',s.complete?(s.alreadyAwarded||!freshInterviewAward?'50 💎 cho truyện này đã được cộng trước đó.':`Đã cộng ${s.awarded.diamonds} 💎${testProgress?' vào tiến trình thử nghiệm':''}.`):'Chưa hoàn thành đủ 12 câu hỏi. Tiến trình của con vẫn được giữ.','story-mission-status'),
         button('Luyện nói lại · Không cộng thưởng lần nữa',()=>event({type:'retry_mission'}),true));
-      if(s.complete&&(!view.policy.pictureRetell||s.pictureRetell?.status==='complete'))finishActions();
+      if(s.complete&&(!view.policy.pictureRetell||s.pictureRetell?.status==='complete')){
+        const retry=controls.lastElementChild;
+        const rw=finishActions({title:l.title,diamonds:rewardDiamonds(s),xp:s.awarded?.xp,note:s.alreadyAwarded||!freshInterviewAward?'50 💎 cho truyện này đã được cộng trước đó.':''});
+        if(retry?.tagName==='BUTTON')rw.querySelector('.rw__more').append(retry);
+      }
     } else {
       controls.append(minny,node('h3',s.complete?(testProgress?'Đã hoàn thành nhiệm vụ thử nghiệm':'Đã hoàn thành nhiệm vụ'):'Đã lưu phần luyện tập','story-mission-prompt'),node('p',s.complete?(s.alreadyAwarded?'Phần thưởng cho truyện này đã được ghi trước đó.':testProgress?`Đã ghi ${s.awarded.diamonds} 💎 và ${s.awarded.xp} XP vào tiến trình thử nghiệm.`:`Đã ghi ${s.awarded.diamonds.toLocaleString('vi-VN')} 💎 và ${s.awarded.xp} XP vào tiến trình của con.`):'Chưa đủ bằng chứng hoàn thành nhiệm vụ. Chưa cộng kim cương.','story-mission-status'),
         node('p','Khi nhiệm vụ đủ bằng chứng: B · 400 💎, A · 800 💎, S · 1.000 💎.','story-mission-note'),review,

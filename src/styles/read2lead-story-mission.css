@@ -233,3 +233,57 @@ body :is(.r2l-primary,.r2l-secondary):focus-visible {
 /* The shared lesson header follows the same palette. */
 body .lesson-child-header { background:var(--navy-950);color:var(--gold-light); }
 body .lesson-child-header :is(a,button):focus-visible { outline-color:var(--gold-light); }
+
+/* ---- R2L-ISLAND reward screen (design 04-reward). Built by finishActions() in read2lead-story-voice.mjs. ---- */
+.rw.r2l { position:fixed; inset:0; z-index:90; overflow-x:hidden; overflow-y:auto; background:var(--r2l-sky); color:var(--r2l-ink); }
+.rw:focus { outline:none; }
+.rw *, .rw *::before, .rw *::after { box-sizing:border-box; }
+html.rw-open body > :not(.rw):not(#rank-up-modal):not(script):not(style):not(link) { display:none !important; }
+.rw__confetti { position:absolute; left:0; top:0; width:100%; height:360px; overflow:hidden; pointer-events:none; }
+.rw__confetti > span { position:absolute; border:2px solid var(--r2l-ink); }
+.rw__grid { position:relative; display:flex; flex-direction:column; align-items:center; gap:14px; padding:16px 16px 32px; margin:0 auto; max-width:520px; min-height:100%; }
+.rw__hero { position:relative; width:260px; height:260px; margin-top:18px; display:flex; align-items:center; justify-content:center; flex:none; }
+.rw__burst { position:absolute; left:0; top:0; width:100%; height:100%; }
+.rw__monster { position:relative; width:190px; height:190px; display:flex; align-items:center; justify-content:center; }
+.rw__monster img { width:100%; height:100%; object-fit:contain; }
+.rw__main { position:relative; width:100%; display:flex; flex-direction:column; align-items:stretch; gap:14px; }
+.rw__title { margin:0; text-align:center; color:var(--r2l-ink); }
+.rw__done, .rw__story { display:block; }
+.rw__tiles { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:12px; width:100%; }
+.rw__tile { display:flex; flex-direction:column; align-items:center; gap:2px; padding:14px; }
+.rw__txt { display:flex; flex-direction:column; align-items:center; }
+.rw__num { font-size:40px; line-height:1.05; }
+.rw__unit { font-weight:900; }
+.rw__finish { display:flex; flex-direction:column; align-items:flex-start; gap:8px; padding:12px 14px; width:100%; }
+.rw__ticks { display:flex; gap:4px; }
+.rw__tick { width:26px; height:26px; border-width:2px; }
+.rw__finish { flex-direction:row; align-items:center; gap:8px; }
+.rw__finish-text { margin-left:4px; font-weight:900; }
+.rw__wide { display:none; }
+.rw__note { margin:0; text-align:center; font-weight:800; }
+.rw__actions { display:flex; flex-direction:column; gap:12px; width:100%; margin-top:6px; }
+.rw__actions .r2l-btn { width:100%; min-height:64px; padding:0 16px; white-space:nowrap; font-family:var(--r2l-font-display); font-weight:800; font-size:26px; color:var(--r2l-ink); text-decoration:none; }
+.rw__actions .r2l-btn-sun { background:var(--r2l-sun); }
+.rw__more { display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:4px; }
+.rw__more .r2l-secondary, .rw__more button { background:#fff; color:var(--r2l-ink); border:3px solid var(--r2l-ink); border-radius:18px; min-height:48px; padding:0 18px; font-weight:800; }
+.rw__more details, .rw__more details * { color:var(--r2l-ink); }
+.rw__more button { font-family:var(--r2l-font-display); }
+.rw__more details { width:100%; }
+.rw__more summary { min-height:48px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-weight:800; text-decoration:underline; text-underline-offset:4px; }
+@media (min-width: 1024px) {
+  .rw__grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:center; gap:48px; max-width:1100px; padding:40px; min-height:100%; }
+  .rw__hero { width:100%; height:560px; margin-top:0; }
+  .rw__burst { width:520px; height:520px; left:0; right:0; top:0; bottom:0; margin:auto; }
+  .rw__monster { width:320px; height:320px; }
+  .rw__main { gap:22px; }
+  .rw__title { text-align:left; font-size:52px; }
+  .rw__done, .rw__story { display:inline; }
+  .rw__tiles { gap:16px; }
+  .rw__tile { flex-direction:row; align-items:center; gap:14px; padding:18px; }
+  .rw__txt { align-items:flex-start; }
+  .rw__num { font-size:48px; }
+  .rw__finish { flex-direction:row; justify-content:space-between; }
+  .rw__wide { display:inline; }
+  .rw__actions { flex-direction:row; gap:16px; margin-top:0; }
+  .rw__actions .r2l-btn { flex:1; }
+}

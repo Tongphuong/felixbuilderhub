@@ -2,6 +2,7 @@
 import { defaultMonsterSvg } from '../lib/r2l-hero';
 import { ZALO_URL } from '../config/contact';
 import '../styles/read2lead-child-home.css';
+import '../styles/read2lead-home-island.css';
 // Public Turnstile site key (safe to expose), set as PUBLIC_TURNSTILE_SITE_KEY at build time.
 // NO fallback: without a key the sign-up card is not rendered at all (code box and donation card stay).
 const TURNSTILE_SITE_KEY = String(import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '').trim();
@@ -9,7 +10,6 @@ const TURNSTILE_SITE_KEY = String(import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '
 <main id="main" data-child-home class="reading-home" aria-busy="true">
   <header class="reading-home__header">
     <a href="/read2lead" aria-label="Read2Lead — Trang đọc sách" class="reading-home__brand"><span aria-hidden="true">▤</span> Read2Lead</a>
-    <span id="home-wallet" class="reading-home__wallet" hidden><span aria-hidden="true">◆</span> <span id="home-diamonds">0</span><span class="sr-only"> kim cương</span></span>
   </header>
   <p id="home-speaking-note" class="reading-home__speaking-note" hidden>Minny luyện nói cùng con trong mỗi câu chuyện. Bài đã lưu của con vẫn còn.</p>
   <section id="home-loading" class="reading-home__notice" role="status">Đang mở góc đọc sách của con…</section>
@@ -77,28 +77,114 @@ const TURNSTILE_SITE_KEY = String(import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '
     <button id="home-retry" class="reading-home__primary" type="button" hidden>Thử lại</button>
     <a class="reading-home__help" href={ZALO_URL}>Nhắn Coach Felix để nhận link của con</a>
   </section>
-  <section id="home-ready" class="reading-home__desk" hidden>
-    <div class="reading-home__greeting"><p>GÓC ĐỌC SÁCH CỦA CON</p><h1>Chào <span id="home-name" data-clarity-mask="true">con</span>!</h1></div>
-    <div id="home-pet" class="reading-home__pet" set:html={defaultMonsterSvg()}></div>
-    <section class="reading-home__lesson" aria-labelledby="home-heading">
-      <span class="reading-home__book" aria-hidden="true">📖</span><h2 id="home-heading">Hôm nay mình đọc nhé!</h2>
-      <p id="home-instruction">Một câu chuyện đang chờ con.</p>
-      <button id="home-open" class="reading-home__primary" type="button">Mở truyện <span aria-hidden="true">→</span></button>
-      <p id="home-action-status" role="status" aria-live="polite"></p>
-      <ol id="home-steps" class="reading-home__steps" aria-label="Các bước đọc truyện"><li>1 <span>Đọc</span></li><li>2 <span id="home-step-two">Trả lời Minny</span></li><li>3 <span id="home-step-three">Kể qua tranh</span></li></ol>
-    </section>
-    <a id="home-rankings" class="reading-home__ranks" href="/read2lead/leaderboard" aria-label="Bảng xếp hạng — mở bảng đầy đủ">
-      <span class="reading-home__ranks-head"><strong>🏆 Bảng xếp hạng</strong><span id="home-rank-own" class="reading-home__ranks-own">Mở bảng xem các bạn →</span></span>
-      <span class="reading-home__ranks-cols">
-        <span class="reading-home__ranks-col"><span class="reading-home__ranks-title">⚡ XP</span><span id="home-rank-xp" class="reading-home__ranks-list"></span></span>
-        <span class="reading-home__ranks-col"><span class="reading-home__ranks-title">💎 Kim cương</span><span id="home-rank-diamonds" class="reading-home__ranks-list"></span></span>
-      </span>
-    </a>
-    <p id="home-personal-progress" class="reading-home__progress">Mỗi câu chuyện là một bước nhỏ.</p>
-    <nav class="reading-home__secondary" aria-label="Góc của con">
-      <a id="home-companion" href="/ho-so"><span aria-hidden="true">☺</span> Đổi bạn đồng hành</a>
-    </nav>
-    <a id="home-parent" class="reading-home__parent" href="/ho-so">Dành cho ba mẹ</a>
+
+  <!-- Logged-in kid home: "Đảo phiêu lưu". Contract ids: home-first-visit / home-mid-story / home-empty. -->
+  <section id="home-ready" class="rh r2l" data-home-state="first-visit" hidden>
+    <svg class="rh__scene rh__scene--phone" aria-hidden="true" viewBox="0 0 390 430" preserveAspectRatio="xMidYMin slice">
+      <circle cx="330" cy="96" r="40" fill="#FFD95A"></circle><circle cx="330" cy="96" r="56" fill="#FFD95A" opacity=".25"></circle>
+      <g class="r2l-m-drift"><ellipse cx="70" cy="128" rx="44" ry="16" fill="#fff"></ellipse><ellipse cx="96" cy="116" rx="28" ry="18" fill="#fff"></ellipse></g>
+      <path d="M0 330 C 80 270 170 300 240 285 C 300 272 350 290 390 280 L390 430 L0 430Z" fill="#7BD389"></path>
+      <path d="M0 370 C 90 330 200 360 270 340 C 330 325 370 335 390 330 L390 430 L0 430Z" fill="#4FB868"></path>
+    </svg>
+    <svg class="rh__scene rh__scene--sun" aria-hidden="true" viewBox="0 0 1280 220" preserveAspectRatio="xMaxYMin slice">
+      <circle cx="1150" cy="140" r="56" fill="#FFD95A"></circle><circle cx="1150" cy="140" r="78" fill="#FFD95A" opacity=".25"></circle>
+      <g class="r2l-m-drift"><ellipse cx="420" cy="130" rx="60" ry="20" fill="#fff"></ellipse><ellipse cx="456" cy="114" rx="38" ry="24" fill="#fff"></ellipse></g>
+    </svg>
+    <svg class="rh__scene rh__scene--hills" aria-hidden="true" viewBox="0 0 1280 240" preserveAspectRatio="none">
+      <path d="M0 40 C 200 -20 420 20 640 0 C 860 -20 1060 10 1280 -10 L1280 240 L0 240Z" fill="#7BD389"></path>
+      <path d="M0 100 C 240 60 480 90 720 70 C 960 52 1120 70 1280 60 L1280 240 L0 240Z" fill="#4FB868"></path>
+    </svg>
+
+    <header class="rh__top" data-design="home.topbar">
+      <div class="rh__brand"><span class="rh__brand-mark" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24"><path d="M2 5c3-1 7-1 10 1 3-2 7-2 10-1v14c-3-1-7-1-10 1-3-2-7-2-10-1z" fill="#fff" stroke="#17324D" stroke-width="2" stroke-linejoin="round"></path><path d="M12 6v14" stroke="#17324D" stroke-width="2"></path></svg></span><span class="r2l-d r2l-t-3 rh__brand-name">Read2Lead</span></div>
+      <span id="home-rank-chip" class="r2l-chip rh__rank" hidden><svg aria-hidden="true" width="30" height="34" viewBox="0 0 32 36"><path id="home-rank-shield" d="M16 2l13 5v10c0 9-6 15-13 17C9 32 3 26 3 17V7z" fill="#C9D3DE" stroke="#17324D" stroke-width="2"></path><path d="M16 11l2 4.2 4.6.6-3.4 3.2.9 4.6L16 21.3l-4.1 2.3.9-4.6-3.4-3.2 4.6-.6z" fill="#FFF8E7" stroke="#17324D" stroke-width="1.4"></path></svg><span id="home-rank-text"></span></span>
+      <span id="home-streak" class="r2l-chip rh__streak" hidden><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path d="M12 2c1 4 4 6 4 10a4 4 0 0 1-8 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-2-5 0-9z" fill="#FF7A3D"></path></svg><span id="home-streak-text"></span></span>
+      <span id="home-wallet" class="r2l-chip rh__wallet" hidden><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z" fill="#3CC8F0" stroke="#17324D" stroke-width="1.6" stroke-linejoin="round"></path><path d="M2 9h20M9 3l3 18 3-18" stroke="#17324D" stroke-width="1.2" fill="none"></path></svg><span id="home-diamonds">0</span><span class="rh__wide"> kim cương</span><span class="sr-only rh__narrow-sr"> kim cương</span></span>
+    </header>
+
+    <div class="rh__grid">
+      <div class="rh__colwrap rh__col-a" data-design-col>
+      <section class="rh__hero" aria-labelledby="home-greeting">
+        <div class="rh__greeting" data-design="home.hero">
+          <span class="r2l-lab" id="home-kicker">Góc đọc sách của con</span>
+          <h1 id="home-greeting" class="r2l-d r2l-t-xl r2l-m-pop rh__h1">Chào <span id="home-name" data-clarity-mask="true">con</span>!</h1>
+          <div id="home-bubble" class="r2l-bubble r2l-m-pop rh__bubble rh__bubble--wide" hidden></div>
+        <div class="rh__stage">
+          <div id="home-bubble-phone" class="r2l-bubble r2l-m-pop rh__bubble rh__bubble--phone" hidden></div>
+          <svg class="r2l-m-tw rh__twinkle" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path d="M12 1l2.5 8.5L23 12l-8.5 2.5L12 23l-2.5-8.5L1 12l8.5-2.5z" fill="#FFF3B0"></path></svg>
+          <span id="home-zz" class="r2l-m-zz r2l-d rh__zz" aria-hidden="true" hidden>z</span>
+          <div id="home-pet" class="rh__pet r2l-m-bob" set:html={defaultMonsterSvg()}></div>
+          <div class="rh__shadow" aria-hidden="true"></div>
+        </div>
+        </div>
+      </section>
+      </div>
+
+      <div class="rh__colwrap rh__col-b" data-design-col>
+      <section class="rh__story r2l-card" data-design="home.story" aria-labelledby="home-story-label">
+        <div class="rh__story-head">
+          <span id="home-story-label" class="r2l-d r2l-t-3 rh__story-label">Chuyến phiêu lưu hôm nay</span>
+          <span id="home-new-tag" class="r2l-tag r2l-tag-sun rh__new rh__new--phone">Mới</span>
+        </div>
+        <div class="rh__story-body">
+          <div id="home-cover" class="rh__cover" aria-hidden="true"><svg viewBox="0 0 112 112" width="100%" height="100%"><circle cx="82" cy="30" r="16" fill="#FFD95A"></circle><ellipse cx="34" cy="38" rx="20" ry="8" fill="#fff"></ellipse><path d="M30 56 q6 -6 12 0 q6 -6 12 0" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round"></path><path d="M0 84 C30 66 60 80 112 70 L112 112 L0 112Z" fill="#4FB868"></path><path d="M20 90 l6-18 6 18z" fill="#237A41"></path></svg></div>
+          <div id="home-nostory-tile" class="rh__tile" aria-hidden="true" hidden><svg width="64" height="64" viewBox="0 0 24 24"><path d="M2 5c3-1 7-1 10 1 3-2 7-2 10-1v14c-3-1-7-1-10 1-3-2-7-2-10-1z" fill="#fff" stroke="#17324D" stroke-width="1.6" stroke-linejoin="round"></path><path d="M12 6v14" stroke="#17324D" stroke-width="1.6"></path><path d="M18 2l.8 1.7L20.5 4.5l-1.7.8L18 7l-.8-1.7-1.7-.8 1.7-.8z" fill="#FFC83D" stroke="#17324D" stroke-width="1"></path></svg></div>
+          <div class="rh__story-text">
+            <div id="home-tags" class="rh__tags"><span class="r2l-tag r2l-tag-sun rh__new rh__new--wide">Mới</span><span id="home-level-tag" class="r2l-tag" hidden></span></div>
+            <h2 id="home-heading" class="r2l-d r2l-t-2 rh__title">Hôm nay mình đọc nhé!</h2>
+            <p id="home-instruction" class="r2l-b-l rh__sub">Một câu chuyện đang chờ con.</p>
+          </div>
+        </div>
+        <button id="home-open" data-design="home.primary" class="r2l-btn r2l-btn-sun r2l-btn-xl r2l-btn-w r2l-m-ring rh__primary" type="button"><span id="home-open-label">Mở truyện</span><svg id="home-open-arrow" aria-hidden="true" width="30" height="30" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <a id="home-library" data-design="home.primary" class="r2l-btn r2l-btn-sun r2l-btn-xl r2l-btn-w r2l-m-ring rh__primary" href="/read2lead/library" hidden>Mở thư viện<svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+        <p id="home-action-status" class="rh__status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section id="home-map" class="rh__map r2l-card-f r2l-card-sand" data-design="home.map" aria-labelledby="home-map-title">
+        <span id="home-map-title" class="r2l-d r2l-t-3 rh__map-title">Bản đồ hôm nay</span>
+        <div class="rh__canvas">
+        <ol id="home-steps" class="rh__track" aria-label="Các bước đọc truyện">
+          <li id="home-step-1" class="rh__step rh__step--1" data-state="now">
+            <div class="r2l-node r2l-n-now r2l-m-halo rh__node" style="background:#FFC83D"><svg class="rh__node-icon" aria-hidden="true" width="40" height="40" viewBox="0 0 24 24"><path d="M2 5c3-1 7-1 10 1 3-2 7-2 10-1v14c-3-1-7-1-10 1-3-2-7-2-10-1z" fill="#fff" stroke="#17324D" stroke-width="2" stroke-linejoin="round"></path><path d="M12 6v14" stroke="#17324D" stroke-width="2"></path></svg><svg class="rh__node-tick" aria-hidden="true" width="26" height="26" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"></path></svg></div>
+            <b class="rh__step-name">1 · Đọc</b>
+            <span class="r2l-tag r2l-tag-ink rh__here">Bắt đầu ở đây</span>
+          </li>
+          <li id="home-step-2" class="rh__step rh__step--2" data-state="next">
+            <div class="r2l-node r2l-n-next rh__node"><img class="rh__node-face" src="/assets/minny/vector/minny-face.svg" alt="" width="64" height="64" /><svg class="rh__node-tick" aria-hidden="true" width="26" height="26" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"></path></svg></div>
+            <b class="rh__step-name">2 · <span id="home-step-two">Trả lời Minny</span></b>
+          </li>
+          <li id="home-step-3" class="rh__step rh__step--3" data-state="next">
+            <div class="r2l-node r2l-n-next rh__node"><svg class="rh__node-icon" aria-hidden="true" width="32" height="32" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" stroke="#17324D" stroke-width="2.2" fill="none"></rect><circle cx="9" cy="10" r="2" fill="#17324D"></circle><path d="M4 18l5-5 4 4 3-3 4 4" stroke="#17324D" stroke-width="2.2" fill="none" stroke-linejoin="round"></path></svg><svg class="rh__node-tick" aria-hidden="true" width="26" height="26" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"></path></svg></div>
+            <b class="rh__step-name">3 · <span id="home-step-three">Kể qua tranh</span></b>
+          </li>
+        </ol>
+        <svg class="rh__path rh__path--phone" aria-hidden="true" viewBox="0 0 334 210" preserveAspectRatio="none"><path d="M44 58 C 120 40 160 70 168 104 C 176 140 230 160 290 150" stroke="#C98A1E" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="2 18"></path></svg>
+        <svg class="rh__path rh__path--wide" aria-hidden="true" viewBox="0 0 500 170" preserveAspectRatio="none"><path d="M50 70 C 140 20 190 130 250 90 C 300 56 340 90 378 76 C 410 64 430 80 450 76" stroke="#C98A1E" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="2 18"></path></svg>
+        </div>
+        <div class="rh__flag" id="home-finish">
+          <svg aria-hidden="true" width="34" height="34" viewBox="0 0 24 24"><path d="M4 21V4M4 4h13l-3 4 3 4H4" stroke="#17324D" stroke-width="2.2" fill="#FF7A3D" stroke-linejoin="round"></path></svg>
+          <span class="rh__flag-text rh__flag-text--phone">Về đích: nhận <b>kim cương</b> và <b>XP</b> cho cả 3 bước</span>
+          <span class="rh__flag-text rh__flag-text--wide">Về đích: kim cương + XP</span>
+        </div>
+      </section>
+
+      <p id="home-personal-progress" class="rh__progress">Mỗi câu chuyện là một bước nhỏ.</p>
+      </div>
+
+      <div class="rh__colwrap rh__col-c" data-design-col>
+      <aside class="rh__board r2l-card-f r2l-card-leaf" data-design="home.leaderboard" aria-labelledby="home-board-title">
+        <span id="home-board-title" class="r2l-d r2l-t-3">Bảng xếp hạng</span>
+        <div id="home-rankings" class="rh__board-cols">
+          <span class="rh__board-col"><span class="rh__board-head"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.5 1.3 6.5L12 17l-5.9 3.3 1.3-6.5L2.5 9.3l6.6-.8z" fill="#FFC83D" stroke="#17324D" stroke-width="1.6" stroke-linejoin="round"></path></svg>XP</span><span id="home-rank-xp" class="rh__rows"></span></span>
+          <span class="rh__board-col"><span class="rh__board-head"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z" fill="#3CC8F0" stroke="#17324D" stroke-width="1.6" stroke-linejoin="round"></path></svg>Kim cương</span><span id="home-rank-diamonds" class="rh__rows"></span></span>
+        </div>
+        <p id="home-rank-own" class="rh__own" hidden></p>
+        <p class="rh__board-link"><span>Đọc truyện để lên bảng nhé!</span><span class="rh__dot" aria-hidden="true"> · </span><a id="home-board-link" href="/read2lead/leaderboard">Xem cả bảng</a></p>
+      </aside>
+      </div>
+      <a id="home-companion" class="r2l-btn r2l-btn-sm r2l-btn-w rh__comp" data-design="home.companion" href="/ho-so"><span id="home-comp-avatar" class="rh__comp-av" aria-hidden="true"></span><span class="rh__comp-label">Đổi bạn đồng hành</span><svg class="rh__chev" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round"></path></svg></a>
+      <a id="home-parent" class="r2l-lnk rh__parents" data-design="home.parents" href="/ho-so">Dành cho ba mẹ</a>
+    </div>
   </section>
   <noscript><p>Con bật JavaScript trong trình duyệt để mở truyện, hoặc nhờ ba mẹ giúp nhé.</p></noscript>
 </main>
