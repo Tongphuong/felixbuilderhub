@@ -181,7 +181,7 @@ async function rollbackMint(kv, code, token) {
 export async function onRequestPost(context) {
   const { request, env } = context;
   const kv = env.READ2LEAD_CODES;
-  if (!kv) return json({ ok: false, error: 'kv_missing' }, 500);
+  if (!kv) return json({ ok: false, error: 'kv_missing', message: 'Hệ thống đang bận. Bạn thử lại sau ít phút nhé.' }, 500);
 
   // --- Ships dark until Phương flips config:signup_enabled ---
   let enabled = false;
@@ -202,7 +202,7 @@ export async function onRequestPost(context) {
   try {
     body = await request.json();
   } catch {
-    return json({ ok: false, error: 'invalid_json' }, 400);
+    return json({ ok: false, error: 'invalid_json', message: 'Mình chưa đọc được thông tin bạn gửi. Bạn thử lại nhé.' }, 400);
   }
 
   // --- Turnstile — fail closed: flag on + no secret configured = refuse ---
@@ -217,7 +217,7 @@ export async function onRequestPost(context) {
 
   const turnstileToken = body.turnstile_token || body['cf-turnstile-response'];
   if (!turnstileToken || typeof turnstileToken !== 'string') {
-    return json({ ok: false, error: 'turnstile_required' }, 400);
+    return json({ ok: false, error: 'turnstile_required', message: 'Bạn hãy hoàn thành bước xác minh trước khi đăng ký nhé.' }, 400);
   }
 
   const ip = getClientIp(request);
@@ -244,17 +244,17 @@ export async function onRequestPost(context) {
   const parent_zalo = (body.parent_zalo || '').trim().slice(0, 30);
 
   if (!student_name) {
-    return json({ ok: false, error: 'student_name_required', message: 'student_name is required' }, 400);
+    return json({ ok: false, error: 'student_name_required', message: 'Bạn nhớ nhập tên của con nhé.' }, 400);
   }
   const nameProblem = checkStudentName(student_name);
   if (nameProblem) {
     return json({ ok: false, error: nameProblem.error, message: nameProblem.message }, 400);
   }
   if (!Number.isFinite(student_age) || student_age < 5 || student_age > 14) {
-    return json({ ok: false, error: 'student_age_invalid', message: 'student_age must be 5-14' }, 400);
+    return json({ ok: false, error: 'student_age_invalid', message: 'Tuổi của con cần từ 5 đến 14 nhé.' }, 400);
   }
   if (!child_gender) {
-    return json({ ok: false, error: 'child_gender_required', message: 'child_gender is required' }, 400);
+    return json({ ok: false, error: 'child_gender_required', message: 'Bạn chọn bạn nam hoặc bạn nữ giúp mình nhé.' }, 400);
   }
 
   // --- Abuse fences: RESERVE immediately (write before minting), not just
@@ -322,7 +322,7 @@ export async function onRequestPost(context) {
     // Should be unreachable (the code we just wrote must exist), but never
     // hand back a code with no working link.
     await rollbackMint(kv, code, null);
-    return json({ ok: false, error: 'link_mint_failed' }, 500);
+    return json({ ok: false, error: 'link_mint_failed', message: 'Hệ thống đang bận. Bạn thử lại sau ít phút nhé.' }, 500);
   }
 
   // --- Post-mint recheck (Accepted risk 2, bound (b)): re-read BOTH counters

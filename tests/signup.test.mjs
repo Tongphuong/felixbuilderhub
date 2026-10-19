@@ -602,3 +602,38 @@ test('a decomposed (NFD) Vietnamese name is normalised to NFC and accepted', asy
   assert.equal(res.status, 200);
   assert.equal(body.record.student_profile.student_name, 'Ngọc Anh');
 });
+
+test('BITE: every parent-reachable refusal carries a Vietnamese message (never ASCII-only English)', async () => {
+  const today = new Date().toISOString().slice(0, 10);
+  const cases = [
+    ['signup_disabled', { kv: makeKv() }],
+    ['turnstile_not_configured', { env: { TURNSTILE_SECRET_KEY: '' } }],
+    ['turnstile_required', { body: requestBody({ turnstile_token: undefined }) }],
+    ['turnstile_failed', { fetchImpl: failingFetch() }],
+    ['student_name_required', { body: requestBody({ student_name: '' }) }],
+    ['student_name_invalid', { body: requestBody({ student_name: '!!!' }) }],
+    ['student_name_blocked', { body: requestBody({ student_name: 'Fuck' }) }],
+    ['student_age_invalid', { body: requestBody({ student_age: 4 }) }],
+    ['child_gender_required', { body: requestBody({ child_gender: 'x' }) }],
+    ['global_cap', { kv: makeKv({ 'config:signup_enabled': true, 'config:signup_daily_cap': 1, [`signup-global:${today}`]: 1 }) }],
+  ];
+  for (const [code, opts] of cases) {
+    const { res, body } = await callSignup({ fetchImpl: passingFetch(), ...opts });
+    assert.ok(res.status >= 400, code);
+    assert.equal(body.error, code);
+    assert.equal(typeof body.message, 'string', `${code} has no message`);
+    assert.match(body.message, /[^\x00-\x7F]/, `${code} message is ASCII-only: ${body.message}`);
+  }
+  // per-IP limit (4th request) and invalid JSON / missing KV
+  const kv = makeKv({ 'config:signup_enabled': true });
+  let last;
+  for (let i = 0; i < 4; i += 1) last = await callSignup({ kv, body: requestBody({ student_name: letterName('Ip', i) }), ip: '4.4.4.4', fetchImpl: passingFetch() });
+  assert.equal(last.body.error, 'rate_limited');
+  assert.match(last.body.message, /[^\x00-\x7F]/);
+  const badJson = await signup({ request: new Request('https://x.test/api/signup', { method: 'POST', body: '{nope' }), env: { READ2LEAD_CODES: makeKv({ 'config:signup_enabled': true }), TURNSTILE_SECRET_KEY: 's' } });
+  const bj = await badJson.json();
+  assert.equal(bj.error, 'invalid_json');
+  assert.match(bj.message, /[^\x00-\x7F]/);
+  const noKv = await signup({ request: makeRequest(requestBody()), env: {} });
+  assert.match((await noKv.json()).message, /[^\x00-\x7F]/);
+});
