@@ -17,12 +17,12 @@ function element() {
 const settle = async () => { for (let i = 0; i < 12; i++) await new Promise(r => setImmediate(r)); };
 const mem = () => { const m = new Map(); return { getItem: k => m.get(k) ?? null, setItem: (k, v) => m.set(k, v), removeItem: k => m.delete(k) }; };
 
-function page({ signup, remembered = '' }) {
-  const nodes = new Map(), calls = [], assigned = [], renders = [], resets = [];
+function page({ signup, remembered = '', scriptFails = false }) {
+  const nodes = new Map(), calls = [], assigned = [], renders = [], resets = [], timers = [];
   const get = id => { if (!nodes.has(id)) nodes.set(id, element()); return nodes.get(id); };
   get('signup-card').setAttribute('data-turnstile-sitekey', '1x00000000000000000000AA');
   const location = { search: '', pathname: '/read2lead', origin: 'https://app.test', href: 'https://app.test/read2lead', assign: u => assigned.push(u), replace() {} };
-  const document = { querySelector: s => get(s === '[data-child-home]' ? 'root' : s.replace(/^#/, '')), getElementById: get, createElement: element, head: Object.assign(element(), { appendChild(n) { window.turnstile = turnstile; setImmediate(() => n.onload && n.onload()); } }), querySelectorAll: () => [], addEventListener() {} };
+  const document = { querySelector: s => get(s === '[data-child-home]' ? 'root' : s.replace(/^#/, '')), getElementById: get, createElement: element, head: Object.assign(element(), { appendChild(n) { if (scriptFails) return void setImmediate(() => n.onerror && n.onerror()); window.turnstile = turnstile; setImmediate(() => n.onload && n.onload()); } }), querySelectorAll: () => [], addEventListener() {} };
   const turnstile = { render: (_c, opts) => { renders.push(opts); return 'w1'; }, reset: id => resets.push(id) };
   const window = { location, addEventListener() {}, turnstile: undefined };
   const exportsRanks = {};
@@ -35,7 +35,7 @@ function page({ signup, remembered = '' }) {
     if (String(url).includes('leaderboard')) return Response.json({ ok: true, boards: {} });
     return Response.json({ ok: false }, { status: 404 });
   };
-  const context = { ...base, location, window, sessionStorage: (() => { const m = mem(); if (remembered) m.setItem('r2l_access_code', remembered); return m; })(), localStorage: mem(), exports: {}, URL, URLSearchParams, JSON, matchMedia: () => ({ matches: true }), fetch: fetcher,
+  const context = { ...base, setTimeout: (f, ms) => { timers.push({ f, ms }); return timers.length; }, location, window, sessionStorage: (() => { const m = mem(); if (remembered) m.setItem('r2l_access_code', remembered); return m; })(), localStorage: mem(), exports: {}, URL, URLSearchParams, JSON, matchMedia: () => ({ matches: true }), fetch: fetcher,
     history: { replaceState() {} },
     require: p => { if (p.includes('student-entry')) return entryModule; if (p.includes('r2l-ranks')) return exportsRanks; if (p.includes('r2l-hero')) return { buildHeroCta: () => ({ action: 'lesson' }), statusMeta: () => ({ label: 'x' }) }; if (p.includes('monster-avatar')) return { renderMonster() {} }; if (p.includes('lesson-help')) return { requestLessonAssignment: async () => ({}) }; throw Error(p); } };
   vm.runInNewContext(transpile('src/scripts/read2lead-child-home.ts'), context);
@@ -43,7 +43,7 @@ function page({ signup, remembered = '' }) {
     get('signup-name').value = name; get('signup-age').value = age;
     get('signup-gender-boy').checked = gender === 'boy'; get('signup-gender-girl').checked = gender === 'girl';
   };
-  return { get, calls, assigned, renders, resets, window, turnstile, fill,
+  return { get, calls, assigned, timers, renders, resets, window, turnstile, fill,
     async submit() { await get('signup-form').events.submit({ preventDefault() {} }); await settle(); } };
 }
 const signupCalls = p => p.calls.filter(c => c.url === '/api/signup');
@@ -164,4 +164,45 @@ test('no test-key fallback in src; build without a site key has no sign-up card'
   assert.ok(without.includes('id="home-entry-form"') && without.includes('id="donate-card"'));
   const withKey = build('1x00000000000000000000AA'); // the test key is passed explicitly via env, never shipped
   assert.ok(withKey.includes('id="signup-card"') && withKey.includes('data-turnstile-sitekey="1x00000000000000000000AA"'));
+});
+
+test('success: the button stays disabled and a second submit sends no second POST', async () => {
+  const p = page({ signup: async () => Response.json({ ok: true, link: 'https://app.test/r2l/start?link=abc' }) });
+  await settle(); p.fill(); p.renders[0].callback('t');
+  await p.submit();
+  assert.equal(p.assigned.length, 1);
+  assert.equal(p.get('signup-submit').disabled, true);
+  await p.submit();
+  assert.equal(signupCalls(p).length, 1);
+  assert.equal(p.assigned.length, 1);
+});
+
+test('Turnstile script loads but never draws: after ~10s a kind Vietnamese message appears and the code box stays usable', async () => {
+  const p = page({ signup: async () => Response.json({ ok: true }) });
+  await settle();
+  const timer = p.timers.find(t => t.ms === 10000);
+  assert.ok(timer, 'a 10s render watchdog is set');
+  assert.equal(p.get('signup-message').textContent, '');
+  timer.f();
+  assert.equal(p.get('signup-message').textContent, 'Ô xác minh chưa hiện được. Ba mẹ tải lại trang hoặc nhắn Zalo Felix nhé.');
+  assert.equal(p.get('home-entry').hidden, false);
+  assert.equal(p.get('home-entry-submit').disabled, false);
+});
+
+test('Turnstile that does render (token arrived) is left alone by the watchdog', async () => {
+  const p = page({ signup: async () => Response.json({ ok: true }) });
+  await settle(); p.renders[0].callback('t');
+  p.timers.find(t => t.ms === 10000).f();
+  assert.equal(p.get('signup-message').textContent, '');
+});
+
+test('script fails to load: kind Vietnamese message, no POST, code box usable; a later tap retries the load', async () => {
+  const p = page({ scriptFails: true, signup: async () => Response.json({ ok: true }) });
+  await settle();
+  assert.match(p.get('signup-message').textContent, /Chưa tải được ô xác minh/);
+  assert.equal(p.renders.length, 0);
+  p.fill(); await p.submit();
+  assert.equal(signupCalls(p).length, 0);
+  assert.equal(p.get('home-entry').hidden, false);
+  assert.equal(p.get('home-entry-submit').disabled, false);
 });

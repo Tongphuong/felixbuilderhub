@@ -146,7 +146,7 @@ if (root) {
   // --- Free sign-up card (logged-out only). The card lives inside #home-entry, so it is hidden whenever
   // the child is signed in; Turnstile is only loaded when the logged-out state is actually shown.
   const TURNSTILE_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-  let turnstileToken = '', turnstileWidget: unknown = null, turnstileLoading: Promise<void> | null = null, signupBusy = false;
+  let turnstileToken = '', turnstileWidget: unknown = null, turnstileLoading: Promise<void> | null = null, signupBusy = false, signupNavigating = false;
   const signupMessage = (text: string) => {
     el('signup-message').textContent = text;
   };
@@ -181,6 +181,10 @@ if (root) {
         'expired-callback': () => { turnstileToken = ''; },
         'error-callback': () => { turnstileToken = ''; },
       });
+      // The script can load yet never draw the box (a content filter blocking the iframe fires no error).
+      setTimeout(() => {
+        if (!turnstileToken && !el('signup-turnstile').querySelector('iframe')) signupMessage('Ô xác minh chưa hiện được. Ba mẹ tải lại trang hoặc nhắn Zalo Felix nhé.');
+      }, 10000);
     } catch { signupReady = false; signupMessage('Chưa tải được ô xác minh. Con tải lại trang hoặc nhờ ba mẹ giúp nhé.'); }
   }
   // Server messages are shown only when they are Vietnamese; anything else gets a kind fallback.
@@ -214,14 +218,15 @@ if (root) {
       try { data = await response.json(); } catch { data = {}; }
       if (response.ok && data.ok === true) {
         const target = safeSignupTarget(data.link);
-        if (target) { location.assign(target); return; }
+        // Success: stay disabled and busy while the browser navigates, so a second tap cannot mint a second code.
+        if (target) { signupNavigating = true; location.assign(target); return; }
         signupMessage('Mã đã tạo nhưng mình chưa mở được link. Con thử lại nhé.'); resetTurnstile(); return;
       }
       // 503 signup_disabled and every other refusal: show the message; the code box above stays usable.
       signupMessage(kindSignupMessage(data.message)); resetTurnstile();
     } catch {
       signupMessage('Chưa kết nối được. Con kiểm tra mạng rồi thử lại nhé.'); resetTurnstile();
-    } finally { signupBusy = false; submit.disabled = false; }
+    } finally { if (!signupNavigating) { signupBusy = false; submit.disabled = false; } }
   });
   el('home-retry').addEventListener('click', load);
   window.addEventListener('pageshow', event => {
