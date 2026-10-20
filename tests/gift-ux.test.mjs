@@ -466,12 +466,16 @@ test('the pinned goal card renders through the same per-state branches as a band
   assert.match(goalCardBody, /return renderGiftCard\(item, state, redemption, diamonds, 'goal', blocked\)/);
 
   // renderGiftCard's nearmiss branch (shared by band and goal cards) must
-  // still carry the loud treatment: pulse, fire badge, and both copy lines.
+  // still carry the loud treatment (Đảo phiêu lưu design): the halo pulse, the coral
+  // "Sắp đổi được!" tag, and the "Còn thiếu N kim cương" line; the goal variant adds the
+  // journey caption and the "Đọc truyện kiếm kim cương" action.
   const nearmissBranch = giftUxSource.slice(giftUxSource.indexOf("state === 'nearmiss'"), giftUxSource.indexOf("// state === 'saving'"));
   assert.match(nearmissBranch, /qt-pulse/);
-  assert.match(nearmissBranch, /🔥 Sắp đổi được!/);
-  assert.match(nearmissBranch, /Chỉ còn \$\{escapeHtml\(formatDiamonds\(deficit\)\)\} 💎 nữa thôi! 🔥/);
-  assert.match(nearmissBranch, /Buổi học tới của con là đủ rồi!/);
+  assert.match(nearmissBranch, /qt-tag-coral">Sắp đổi được!/);
+  assert.match(nearmissBranch, /Còn thiếu \$\{escapeHtml\(formatDiamonds\(deficit\)\)\} kim cương/);
+  assert.match(nearmissBranch, /chặng đường · còn/);
+  assert.match(nearmissBranch, /earnAction/);
+  assert.match(nearmissBranch, /\$\{savingAction\}/, 'a near-miss gift can still be set as / changed from the goal');
 });
 
 test('the pinned goal is unconditionally excluded from every catalogue band (one gift, one card)', () => {
@@ -527,11 +531,15 @@ test('gifts.astro cross-links to the monster shop', () => {
   assert.match(giftsPage, /href="\/read2lead\/shop"/);
 });
 
-test('gifts.astro reuses fx-* primitives and bans r2l-kid-* classes / Baloo 2', () => {
-  assert.match(giftsPage, /fx-btn/);
-  assert.match(giftsPage, /fx-field/);
+test('gifts.astro uses the shared r2l-* components, is full-screen (no site chrome) and keeps the monster-shop link', () => {
+  assert.match(giftsPage, /r2l-btn/);
+  assert.match(giftsPage, /r2l-inp/);
+  assert.match(giftsPage, /childHome/, 'a kid page: no site header or footer');
+  assert.doesNotMatch(giftsPage, /<Header|<Footer/);
   assert.doesNotMatch(giftsPage, /r2l-kid-/);
-  assert.doesNotMatch(giftsPage, /Baloo/);
+  assert.doesNotMatch(giftsPage, /Quà thật/, 'Phương 2026-10-19: no user-visible "Quà thật"');
+  assert.match(giftsPage, /Quà từ Coach Felix/);
+  assert.match(giftsPage, /id="gifts-accessory"[^>]*href="\/read2lead\/shop"/);
 });
 
 test('no standalone "cô" (female-teacher classifier) in any kid-facing gift string — the founder, Coach Felix, is male (HANDOFF §0 rule 10)', () => {
@@ -567,13 +575,12 @@ test('no standalone "cô" (female-teacher classifier) in any kid-facing gift str
 
 const quaThatCss = readFileSync('src/styles/qua-that.css', 'utf8');
 
-test('qua-that.css keyframes are gated by prefers-reduced-motion', () => {
-  assert.match(quaThatCss, /@keyframes qt-pulse/);
-  assert.match(quaThatCss, /@keyframes qt-shimmer/);
+test('qua-that.css motion is gated by prefers-reduced-motion', () => {
+  // the near-miss pulse now reuses the shared r2l halo keyframes; only the emoji float is shop-specific
+  assert.match(quaThatCss, /\.qt-pulse \{ animation: r-halo/);
   assert.match(quaThatCss, /@keyframes qt-float/);
   const reduceBlock = quaThatCss.slice(quaThatCss.indexOf('@media (prefers-reduced-motion: reduce)'));
   assert.match(reduceBlock, /\.qt-pulse/);
-  assert.match(reduceBlock, /\.qt-shimmer/);
   assert.match(reduceBlock, /\.qt-float/);
 });
 

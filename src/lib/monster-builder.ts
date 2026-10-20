@@ -1,4 +1,5 @@
 import {
+  COLOR_HEX,
   MONSTER_MANIFEST,
   MONSTER_SLOTS,
   type MonsterConfig,
@@ -82,6 +83,12 @@ function partNameVi(slot: MonsterSlot, partId: string): string {
     orange: 'cam',
     gold: 'vàng kim',
     grey: 'xám',
+    // the five cosmetic tint colours (hats / pets) — without these every crown read just "Mũ vương miện"
+    mint: 'bạc hà',
+    coral: 'san hô',
+    sky: 'xanh da trời',
+    lemon: 'vàng chanh',
+    grape: 'tím nho',
   };
   const color = Object.keys(colorLabels).find((key) => partId.includes(`-${key}`));
   const detailLabels: Record<string, string> = {
@@ -191,9 +198,56 @@ export function mountMonsterBuilder(
   const preview = root.querySelector<HTMLElement>('[data-monster-preview]')!;
   const status = root.querySelector<HTMLElement>('[data-monster-status]')!;
   const save = root.querySelector<HTMLButtonElement>('[data-monster-save]')!;
-  const choice = root.querySelector<HTMLSelectElement>('[data-monster-category]')!;
+  // Category control: the legacy <select>, or (Đảo phiêu lưu design D3) a grid of buttons with the same ten slots.
+  const choice = root.querySelector<HTMLSelectElement>('[data-monster-category]');
+  const slotButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-monster-slot]'));
+  const tiles = root.querySelector<HTMLElement>('[data-monster-tiles]');
   const value = root.querySelector<HTMLElement>('[data-monster-choice]')!;
   const count = root.querySelector<HTMLElement>('[data-monster-count]')!;
+  const unsaved = () => { status.textContent = 'Chưa lưu · Bấm Lưu khi con ưng ý.'; };
+  /* Option tiles: "Không dùng" first (optional slots), then a window of parts that always contains the chosen one,
+     then "+N nữa" for the rest. A tile selects exactly what the ←/→ arrows would reach — same draft, same save. */
+  const renderTiles = () => {
+    if (!tiles) return;
+    const parts = getAvailablePartsForSlot(selectedSlot, state);
+    const optional = parts.length > 0 && parts[0].id === '';
+    const real = optional ? parts.slice(1) : parts;
+    const room = optional ? 4 : 5;
+    const at = real.findIndex(p => p.id === draft[selectedSlot]);
+    const start = Math.min(Math.max(0, at < 0 ? 0 : at - 1), Math.max(0, real.length - room));
+    const shown = real.slice(start, start + room);
+    const make = (part: MonsterPartEntry) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'cp-tile' + (part.id ? '' : ' cp-tile--none'); b.dataset.monsterTile = part.id;
+      b.setAttribute('aria-pressed', String((draft[selectedSlot] || '') === part.id)); b.disabled = busy;
+      const thumb = document.createElement('span'); thumb.className = 'cp-thumb'; thumb.setAttribute('aria-hidden', 'true');
+      if (!part.id) thumb.innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="#17324D" stroke-width="2.4" fill="none"/><path d="M6 18L18 6" stroke="#17324D" stroke-width="2.4"/></svg>';
+      else {
+        const entry = ((MONSTER_MANIFEST as Record<string, Array<{ id: string; file: string; color?: string }>>)[selectedSlot] || []).find(p => p.id === part.id);
+        const file = part.file || entry?.file || '';
+        const url = file.startsWith('/') ? file : `/assets/monsters/raw/${file.split('/').map(encodeURIComponent).join('/')}`;
+        if (selectedSlot === 'hat' || selectedSlot === 'pet') {
+          const tint = document.createElement('i'); tint.style.setProperty('--cosmetic-mask', `url(${url})`);
+          tint.style.setProperty('--cosmetic-color', (COLOR_HEX as Record<string, string>)[entry?.color || 'mint'] || '#6ee7b7'); thumb.append(tint);
+        } else { const img = document.createElement('img'); img.src = url; img.alt = ''; img.loading = 'lazy'; thumb.append(img); }
+      }
+      const name = document.createElement('span'); name.className = 'cp-tile-name'; name.textContent = partNameVi(selectedSlot, part.id);
+      b.append(thumb, name);
+      b.addEventListener('click', () => { if (busy) return; draft[selectedSlot] = part.id; unsaved(); render(); });
+      return b;
+    };
+    const nodes: HTMLElement[] = [];
+    if (optional) nodes.push(make(parts[0]));
+    shown.forEach(p => nodes.push(make(p)));
+    const rest = real.length - shown.length;
+    if (rest > 0) { const more = document.createElement('div'); more.className = 'cp-more'; more.textContent = `+${rest} ${SLOT_LABELS_VI[selectedSlot].toLowerCase()} nữa`; nodes.push(more); }
+    // Tiles are rebuilt on every change: put keyboard focus back on the tile the child just used.
+    const active = document.activeElement as HTMLElement | null;
+    const hadFocus = !!active && tiles.contains(active) && active.dataset.monsterTile !== undefined;
+    const focusedId = hadFocus ? active!.dataset.monsterTile : undefined;
+    tiles.replaceChildren(...nodes);
+    if (hadFocus) (nodes.find(n => n.dataset.monsterTile === focusedId) as HTMLElement | undefined)?.focus({ preventScroll: true });
+  };
   const render = () => {
     // Empty optional detail must not trigger the renderer's whole-monster fallback.
     const config = draft.detail ? draft : { ...draft, detail: partsForSlot(state, 'detail').find(p => p.id)?.id || '' };
@@ -203,19 +257,36 @@ export function mountMonsterBuilder(
     value.textContent = partNameVi(selectedSlot, draft[selectedSlot] || '');
     count.textContent = `${Math.max(0, parts.findIndex(p => p.id === draft[selectedSlot])) + 1} / ${parts.length}`;
     root.querySelectorAll<HTMLButtonElement>('[data-monster-prev], [data-monster-next]').forEach(b => b.disabled = busy || parts.length < 2);
+    for (const b of slotButtons) {
+      const on = b.dataset.monsterSlot === selectedSlot;
+      b.setAttribute('aria-pressed', String(on)); b.classList.toggle('cp-slot--on', on); b.disabled = busy;
+    }
+    renderTiles();
   };
-  choice.addEventListener('change', () => { selectedSlot = choice.value as MonsterSlot; render(); });
+  // role="toolbar" promises arrow keys: Left/Right (and Up/Down) + Home/End move focus between its buttons. Tab order is unchanged.
+  root.querySelectorAll<HTMLElement>('[role="toolbar"]').forEach(bar => bar.addEventListener('keydown', (e: KeyboardEvent) => {
+    const keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
+    if (!keys.includes(e.key) || e.altKey || e.ctrlKey || e.metaKey) return;
+    const btns = Array.from(bar.querySelectorAll<HTMLButtonElement>('button:not(:disabled)'));
+    const at = btns.indexOf(document.activeElement as HTMLButtonElement);
+    if (at < 0 || !btns.length) return;
+    e.preventDefault();
+    const next = e.key === 'Home' ? 0 : e.key === 'End' ? btns.length - 1 : (e.key === 'ArrowLeft' || e.key === 'ArrowUp') ? (at - 1 + btns.length) % btns.length : (at + 1) % btns.length;
+    btns[next].focus();
+  }));
+  choice?.addEventListener('change', () => { selectedSlot = choice.value as MonsterSlot; render(); });
+  for (const b of slotButtons) b.addEventListener('click', () => { if (busy) return; selectedSlot = b.dataset.monsterSlot as MonsterSlot; render(); });
   for (const [selector, direction] of [['[data-monster-prev]', -1], ['[data-monster-next]', 1]] as const) {
     root.querySelector(selector)?.addEventListener('click', () => {
       if (busy) return;
       draft[selectedSlot] = cyclePart(selectedSlot, draft[selectedSlot] || '', direction, state);
-      status.textContent = 'Chưa lưu · Bấm Lưu khi con ưng ý.';
+      unsaved();
       render();
     });
   }
   save.addEventListener('click', async () => {
     if (busy) return;
-    busy = true; save.disabled = true; choice.disabled = true; render(); status.textContent = 'Đang lưu…';
+    busy = true; save.disabled = true; if (choice) choice.disabled = true; render(); status.textContent = 'Đang lưu…';
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 15000);
     try {
@@ -232,7 +303,7 @@ export function mountMonsterBuilder(
         ? 'Mất kết nối. Lựa chọn vẫn ở đây; con thử lưu lại nhé.'
         : error instanceof Error ? error.message : 'Chưa lưu được. Con thử lại nhé.';
     } finally {
-      window.clearTimeout(timeout); busy = false; save.disabled = false; choice.disabled = false; render();
+      window.clearTimeout(timeout); busy = false; save.disabled = false; if (choice) choice.disabled = false; render();
     }
   });
   root.classList.remove('hidden'); render();
@@ -244,6 +315,34 @@ function escapeHtml(value: string) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+/** Đảo phiêu lưu companion screen (design 05): stage + category buttons + option tiles + arrows + save. Same mount, same save. */
+export function monsterBuilderIslandHtml(studentName: string): string {
+  const arrow = (d: string) => `<svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24"><path d="${d}" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`;
+  return `<section class="cp-editor" aria-label="Chọn bạn đồng hành" data-r2l-monster-builder-root>
+    <div class="cp-stage" data-design="companion.stage" data-design-col role="img" aria-label="Bạn đồng hành của ${escapeHtml(studentName)}">
+      <svg class="cp-hills" aria-hidden="true" viewBox="0 0 352 270" preserveAspectRatio="none"><path d="M0 210 C 80 190 270 190 352 210 L352 270 L0 270Z" fill="#7BD389"/><ellipse cx="176" cy="226" rx="90" ry="14" fill="#4FB868"/></svg>
+      <img class="cp-spark cp-spark--a r2l-m-tw" src="/assets/effects/effect-spark-gold-01.webp" alt="" width="60" height="60">
+      <img class="cp-spark cp-spark--b r2l-m-tw" src="/assets/effects/effect-star-gold-05.webp" alt="" width="60" height="60">
+      <div class="cp-monster r2l-m-bob" data-design="companion.avatar"><div data-monster-preview aria-hidden="true"></div></div>
+      <div class="cp-bubble r2l-bubble r2l-m-pop">Đẹp quá!</div>
+    </div>
+    <div class="cp-right" data-design-col>
+      <div class="cp-picker r2l-card-f" data-design="companion.picker">
+        <span class="r2l-d r2l-t-3 cp-q" id="cp-q">Con muốn đổi phần nào?</span>
+        <div class="cp-slots" role="toolbar" aria-labelledby="cp-q">${MONSTER_SLOTS.map(slot => `<button type="button" class="cp-slot" data-monster-slot="${slot}" aria-pressed="false">${SLOT_LABELS_VI[slot]}</button>`).join('')}</div>
+        <div class="cp-tiles" data-monster-tiles role="toolbar" aria-label="Chọn kiểu"></div>
+        <div class="cp-arrows">
+          <button type="button" class="r2l-ibtn" data-monster-prev aria-label="Lựa chọn trước">${arrow('M15 5l-7 7 7 7')}</button>
+          <div class="cp-now" aria-live="polite"><strong class="r2l-d r2l-t-3" data-monster-choice></strong><span class="cp-count"><span data-monster-count></span><span class="cp-free"> · Mọi lựa chọn đều miễn phí.</span></span></div>
+          <button type="button" class="r2l-ibtn" data-monster-next aria-label="Lựa chọn tiếp">${arrow('M9 5l7 7-7 7')}</button>
+        </div>
+      </div>
+      <button type="button" class="r2l-btn r2l-btn-sun r2l-btn-w r2l-m-ring cp-save" data-monster-save data-design="companion.primary">Lưu bạn đồng hành</button>
+    </div>
+    <p class="cp-status" data-monster-status role="status">Chọn phần con thích rồi bấm Lưu nhé.</p>
+  </section>`;
 }
 
 export function monsterBuilderHtml(studentName: string, _shopHref = ''): string {

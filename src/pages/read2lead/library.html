@@ -1,18 +1,30 @@
 <!doctype html>
 <html lang="vi">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="icon" type="image/svg+xml" href="/logo/favicon.svg"><title>Từng câu chuyện · Read2Lead</title><link rel="stylesheet" href="/read2lead/library-assets/library.css"><script type="module" src="/read2lead/library-assets/library.mjs"></script></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="icon" type="image/svg+xml" href="/logo/favicon.svg"><title>Mỗi ngày một câu chuyện · Read2Lead</title><link rel="stylesheet" href="/read2lead/library-assets/library.css"><script type="module" src="/read2lead/library-assets/library.mjs"></script></head>
 <body>
-<header><a href="/read2lead/?code=R2L-ADULT-PRIVATE-QA">← Read2Lead</a><p class="eyebrow">MỖI NGÀY MỘT CÂU CHUYỆN</p><h1>One Story a Day</h1><p>Chọn một câu chuyện để đọc và nghe.</p><p id="library-summary" role="status">Đang mở thư viện…</p></header>
-<main>
+<div class="wrap">
+<a id="library-home" class="back" href="/read2lead/" data-design="lib.back"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path d="M19 12H6M11 6l-6 6 6 6" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Về đọc sách</a>
+<header class="head" data-design="lib.header">
+<div class="head-text"><span class="lab">Thư viện của con<span class="lab-sum"> · <span id="library-summary-lab"></span></span></span><h1 class="d">Mỗi ngày một câu chuyện</h1><span id="library-summary" class="b-m sum" role="status">Đang mở thư viện…</span></div>
+<img src="/assets/minny/vector/minny-face.svg" alt="" width="76" height="76">
+</header>
 <p id="library-status" role="status" aria-live="polite"></p>
-<section id="catalogue" aria-label="Thư viện câu chuyện">
-<div class="chooser"><label>Bộ sách<select id="collection"><option value="all">Tất cả các bộ</option><option value="1">Bộ 1</option><option value="2">Bộ 2</option><option value="3">Bộ 3</option></select></label><label>Quyển sách<select id="book"><option value="all">Tất cả các quyển</option></select></label><label>Tìm câu chuyện<input id="search" type="search" placeholder="Tên hoặc số bài" maxlength="200"></label></div>
-<p id="results-count" role="status"></p><div id="stories-grid" class="stories-grid"></div></section>
+<main id="catalogue" aria-label="Thư viện câu chuyện" class="catalogue">
+<div class="top">
+<div class="find" data-design-col><label class="search" data-design="lib.search"><span class="lab">Tìm truyện theo tên</span><input id="search" class="inp" type="search" placeholder="Ví dụ: Forest" maxlength="200"></label>
+<div id="book-filters" class="filters" data-design="lib.filters" role="toolbar" aria-label="Chọn quyển sách"><button type="button" class="tab" aria-pressed="true">Tất cả các quyển</button></div></div>
+<div id="today" class="card today" data-design="lib.today" data-design-col hidden></div>
+</div>
+<p id="results-count" role="status"></p>
+<h2 id="grid-title" class="d t-3">Chọn truyện khác</h2>
+<div id="stories-grid" class="grid" data-design="lib.grid"></div>
+</main>
 <section id="reader" hidden aria-label="Đọc và nghe câu chuyện">
-<div class="reader-heading"><div><p id="story-location" class="eyebrow"></p><h2 id="story-title" lang="en" tabindex="-1"></h2></div><button id="back-library" class="secondary">Chọn câu chuyện khác</button></div>
+<div class="reader-heading"><div><p id="story-location" class="lab"></p><h2 id="story-title" class="d t-1" lang="en" tabindex="-1"></h2></div><button id="back-library" class="secondary" type="button">Chọn câu chuyện khác</button></div>
 <div class="reader-layout">
-<section class="paper-panel" aria-label="Trang của câu chuyện"><p id="missing-pages" hidden>Bản sách được cung cấp đang thiếu trang của câu chuyện này. Con có thể nghe bài nếu có bản ghi âm, hoặc chọn câu chuyện khác.</p><div id="paper-content"><nav class="page-controls" aria-label="Lật trang trong câu chuyện"><button id="previous-page" aria-label="Trang trước">←</button><span id="page-total"></span><button id="next-page" aria-label="Trang sau">→</button></nav><p id="page-status" role="status"></p><div id="canvas-wrap"><canvas id="pdf-page" aria-label="Trang truyện gốc"></canvas></div></div><button id="retry-story" class="secondary">Mở lại câu chuyện</button></section>
-<aside class="audio-panel"><h3>Nghe câu chuyện này</h3><audio id="story-audio" controls preload="none" aria-label="Bài nghe của câu chuyện"></audio><p id="audio-status" role="status"></p><label id="audio-variants" hidden>Bản ghi của cùng câu chuyện<select id="audio-variant"></select></label><p class="note">Con có thể nghe lại và đọc theo bất cứ lúc nào.</p></aside>
-</div><nav class="story-navigation" aria-label="Chọn câu chuyện liền kề"><button id="previous-story" class="secondary">← Bài trước</button><button id="next-story">Bài tiếp theo →</button></nav></section>
-</main><footer>Read2Lead · Coach Felix<br>One Story a Day — DC Canada Education Publishing. Truyện và bản ghi gốc do Coach Felix cung cấp.</footer>
+<section class="paper-panel" aria-label="Trang của câu chuyện"><p id="missing-pages" hidden>Bản sách được cung cấp đang thiếu trang của câu chuyện này. Con có thể nghe bài nếu có bản ghi âm, hoặc chọn câu chuyện khác.</p><div id="paper-content"><nav class="page-controls" aria-label="Lật trang trong câu chuyện"><button id="previous-page" type="button" aria-label="Trang trước">←</button><span id="page-total"></span><button id="next-page" type="button" aria-label="Trang sau">→</button></nav><p id="page-status" role="status"></p><div id="canvas-wrap"><canvas id="pdf-page" aria-label="Trang truyện gốc"></canvas></div></div><button id="retry-story" class="secondary" type="button">Mở lại câu chuyện</button></section>
+<aside class="audio-panel"><h3>Nghe câu chuyện này</h3><audio id="story-audio" controls preload="none" aria-label="Bài nghe của câu chuyện"></audio><p id="audio-status" role="status"></p><label id="audio-variants" class="sel" hidden>Bản ghi của cùng câu chuyện<select id="audio-variant"></select></label><p class="note">Con có thể nghe lại và đọc theo bất cứ lúc nào.</p></aside>
+</div><nav class="story-navigation" aria-label="Chọn câu chuyện liền kề"><button id="previous-story" class="secondary" type="button">← Bài trước</button><button id="next-story" type="button">Bài tiếp theo →</button></nav></section>
+</div>
+<footer>Read2Lead · Coach Felix<br>One Story a Day — DC Canada Education Publishing. Truyện và bản ghi gốc do Coach Felix cung cấp.</footer>
 </body></html>
