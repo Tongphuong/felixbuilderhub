@@ -45,6 +45,7 @@ export function scanText() {
     for (let n = el; n && n.nodeType === 1 && n !== document.body && n !== de; n = n.parentElement) {
       const cs = getComputedStyle(n);
       const nb = n.getBoundingClientRect();
+      if (cs.display === 'contents') continue; // no box of its own: its overflow clips nothing (a 0x0 rect is not "clipped to zero")
       if (cs.overflowX !== 'visible' || cs.overflowY !== 'visible') {
         if (nb.width <= 0 || nb.height <= 0) return 'clipped to zero size by overflow';
         if (r.right <= nb.left || r.left >= nb.right || r.bottom <= nb.top || r.top >= nb.bottom) return 'outside its overflow-clipping parent';
@@ -554,6 +555,7 @@ export function layoutSanity(args) {
     for (let n = e; n && n !== document.body && n !== document.documentElement; n = n.parentElement) {
       const cs = getComputedStyle(n);
       const nb = n.getBoundingClientRect();
+      if (cs.display === 'contents') continue;
       if ((cs.overflowX !== 'visible' || cs.overflowY !== 'visible') && (nb.width <= 2 || nb.height <= 2)) return true;
       if (cs.clip && cs.clip !== 'auto' && (cs.position === 'absolute' || cs.position === 'fixed') && nb.width <= 2 && nb.height <= 2) { const nums = (cs.clip.match(/-?[\d.]+/g) || []).map(Number); if (nums.length === 4 && (nums[0] >= nums[2] || nums[3] >= nums[1])) return true; }
       if (cs.clipPath && /^inset\(\s*(50|[6-9]\d|100)%/.test(cs.clipPath)) return true;

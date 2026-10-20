@@ -53,6 +53,8 @@ const PAGES = {
   low: html('<div style="height:900px"></div><div data-design="t.low" style="height:60px;width:200px">x</div>'),
   'details-closed': html('<details><summary style="height:48px">Chi tiết</summary><div style="border:2px solid #17324D;width:120px;padding:4px"><button style="width:300px;height:48px;font-family:inherit">Nút tràn</button></div></details>'),
   'details-open': html('<details open><summary style="height:48px">Chi tiết</summary><div style="border:2px solid #17324D;width:120px;padding:4px"><button style="width:300px;height:48px;font-family:inherit">Nút tràn</button></div></details>'),
+  contents: html('<section style="display:contents;overflow:auto"><p style="margin:0">Chữ hiện ra</p></section>'),
+  clipzero: html('<div style="width:0;height:0;overflow:hidden"><p style="margin:0">Chữ bị cắt</p></div>'),
   overlap: html('<div id="ov" style="position:relative;height:0"><p style="position:absolute;top:-150px;left:16px;margin:0">Chồng chữ</p></div>'),
   'ts-script': html('<div data-design="t.ts" style="height:70px;width:300px">x</div><script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async></script>'),
   'ts-iframe': html('<div data-design="t.ts" style="height:70px;width:300px"><iframe style="width:300px;height:65px;border:0"></iframe></div>'),
@@ -92,6 +94,8 @@ const CASES = {
   'never-red-missing-id': { never_red: ['n.nothing'] },
   'fold-unlisted': { order: ['t.a', 't.b', 't.low'], ...at('low') },
   'fold-listed': { order: ['t.a', 't.b', 't.low'], allow_below_fold: ['t.low'], ...at('low') },
+  'text-in-display-contents': { texts: ['Chữ hiện ra'], ...at('contents') },
+  'text-in-zero-clip': { texts: ['Chữ bị cắt'], ...at('clipzero') },
   'overlap-unlisted': at('overlap'),
   'overlap-listed': { overflow_allow: ['#ov'], ...at('overlap') },
   'layout-details-closed': at('details-closed'),
@@ -191,6 +195,10 @@ test('R3 fields: known-good pass, known-bad fail the NAMED check with the specif
     await t.test('layout-sanity skips the body of a CLOSED <details>; BITE: the same overflowing control in an OPEN one still fails', () => {
       assert.equal(c('layout-details-closed', 'layout-sanity').pass, true, c('layout-details-closed', 'layout-sanity').detail);
       assert.match(c('layout-details-open', 'layout-sanity').detail, /escape button/);
+    });
+    await t.test('text inside a display:contents box with overflow set is visible (it has no box to clip); BITE: text in a real zero-size overflow box is still hidden', () => {
+      assert.equal(c('text-in-display-contents', 'texts').pass, true, c('text-in-display-contents', 'texts').detail);
+      assert.match(c('text-in-zero-clip', 'texts').detail, /missing VISIBLE text: "Chữ bị cắt"/);
     });
     await t.test('overflow_allow also covers the text-overlap check; BITE: the same overlap NOT listed still fails', () => {
       assert.match(c('overlap-unlisted', 'layout-sanity').detail, /overlap .*Chồng chữ/);
