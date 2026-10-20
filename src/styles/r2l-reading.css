@@ -615,3 +615,75 @@ body #w1-book-reader-phase .story-mission-progress { min-height: 28px; }
 
 /* a closed <details> shows only its summary, whatever display its children were given */
 body #w1-book-reader-phase details:not([open]) > :not(summary) { display: none !important; }
+
+/* ======================================================================================================
+   Round 3: first-screen fit at 390 (real phone height 844). Reader root is a column so help and credits go last.
+   ====================================================================================================== */
+body #w1-book-reader-phase.r2l-book-reader { display: flex; flex-direction: column; }
+body #w1-book-reader-phase .lesson-support { order: 20; margin: 18px 0 0; }
+body #w1-book-reader-phase #book-reader-summary { order: 25; }
+body #w1-book-reader-phase .r2l-book-attribution { order: 30; }
+body #w1-book-reader-phase #lesson-review-note { order: 0; }
+
+/* top rows: back row, then one line of title + "Trang N / M", then the segments */
+body:has(#w1-book-reader-phase:not(.hidden)) .lesson-child-header, body:has(#error-card:not(.hidden)) .lesson-child-header { padding-top: 12px; padding-bottom: 6px; }
+body:has(#w1-book-reader-phase:not(.hidden)) #main > section { padding-top: 4px; }
+body #w1-book-reader-phase .r2l-book-trail-header { margin: 0 0 10px; gap: 6px 12px; }
+body #w1-book-reader-phase .r2l-book-trail-header__title { font-size: 18px; }
+body #w1-book-reader-phase .r2l-book-workspace { gap: 12px; }
+body #w1-book-reader-phase .r2l-book-panel { gap: 12px; }
+@media (max-width: 767px) {
+  body #w1-book-reader-phase .r2l-book-page__art { height: 230px; }
+  body #w1-book-reader-phase .r2l-book-stepper__step { min-height: 44px; }
+}
+
+/* page star on the FIRST screen: the sentence card is compact, the helper row folds away (still in the DOM), the picture is shorter */
+body #w1-book-reader-phase[data-book-stage='next'] .r2l-book-stepper,
+body #w1-book-reader-phase[data-book-stage='next'] .r2l-book-helpers,
+body #w1-book-reader-phase[data-book-stage='next'] .r2l-book-helper-panel { display: none !important; }
+body #w1-book-reader-phase[data-book-stage='next'] .r2l-book-story-card { padding: 12px 16px; }
+body #w1-book-reader-phase[data-book-stage='next'] .r2l-book-page__text { font-size: 22px; line-height: 1.35; }
+body #w1-book-reader-phase[data-book-stage='next'] .r2l-book-reward { gap: 6px; padding: 12px 16px 14px; }
+body #w1-book-reader-phase[data-book-stage='next'] .r2l-book-reward__star { width: 56px; height: 56px; }
+body #w1-book-reader-phase[data-book-stage='next'] .r2l-book-reward h3 { font-size: 22px; }
+body #w1-book-reader-phase[data-book-stage='next'] .r2l-book-reward .r2l-book-next-cta { margin-top: 4px; }
+@media (max-width: 767px) {
+  body #w1-book-reader-phase[data-book-stage='next'] .r2l-book-page__art { height: 150px; }
+}
+
+/* voice screen: tight stack, mic on the first screen */
+body #w1-book-reader-phase[data-story-mission][data-stage='understand'] #book-reader-stage-stack { gap: 12px; }
+body #w1-book-reader-phase .ft-hero { gap: 6px; }
+body #w1-book-reader-phase .story-mission-cue { margin: 0; font-size: 16px; line-height: 1.25; }
+body #w1-book-reader-phase .story-mission-qcard { padding: 12px 16px 14px; }
+body #w1-book-reader-phase .story-mission-qcard .story-mission-current-question { font-size: 24px; }
+body #w1-book-reader-phase .story-mission-qactions { margin-top: 8px; }
+body #w1-book-reader-phase .story-mission-qactions button { flex: 0 1 auto; width: auto; max-width: 100%; min-height: 48px; padding: 0 16px; font-size: 16px; }
+@media (max-width: 1023px) {
+  body #w1-book-reader-phase[data-stage='understand'] .story-mission-controls { order: 4; }
+  body #w1-book-reader-phase[data-stage='understand'] .story-mission-feedback { order: 5; }
+  body #w1-book-reader-phase[data-stage='understand'] .r2l-book-stage-stack > .story-mission-status { order: 6; }
+}
+/* the "no tap answer" note and the notice come after the mic */
+body #w1-book-reader-phase[data-stage='understand'] .story-mission-controls > .story-mission-note { order: 5; }
+body #w1-book-reader-phase[data-stage='understand'] .story-mission-controls .story-mission-mic { order: 1; }
+
+/* scene: hills along the bottom of the voice, resting and error screens (decoration only, fixed to the bottom, never over text-bearing cards) */
+body:has(#w1-book-reader-phase[data-rest='1']) #main, body:has(#error-card:not(.hidden)) #main {
+  background: fixed no-repeat bottom / 100% 170px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 220' preserveAspectRatio='none'%3E%3Cpath d='M0 70C260 20 520 30 760 50S1120 20 1280 10V220H0z' fill='%237BD389'/%3E%3Cpath d='M0 130C300 90 600 100 860 120S1160 100 1280 90V220H0z' fill='%234FB868'/%3E%3C/svg%3E");
+}
+
+/* in book packs the help box is mounted in #lesson-shell (not in the reader): make the shell a column too so the box can go after the steps */
+body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell { display: flex; flex-direction: column; }
+body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell > .lesson-support { order: 20; margin: 18px 0 0; }
+body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell > #lesson-review-note { order: 0; }
+
+/* flatten the reader into #lesson-shell so the help box and then the credits can be the last things on the page */
+body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell { gap: 0; }
+body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell > * { margin-top: 0 !important; margin-bottom: 0; }
+body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell > #w1-book-reader-phase.r2l-book-reader { display: contents; }
+body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell > #w1-book-reader-phase > *,
+body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell > .lesson-support { margin-top: 0; }
+body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell .lesson-support { order: 20; margin: 18px 0 0 !important; }
+body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell .r2l-book-attribution { order: 30; margin-top: 14px !important; }
+body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell #book-reader-summary { order: 25; margin-top: 14px !important; }
