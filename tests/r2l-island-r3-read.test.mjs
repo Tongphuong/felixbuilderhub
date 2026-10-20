@@ -145,6 +145,23 @@ test('round 4: nothing in r2l-reading.css reaches the rank-up modal (a direct ch
   assert.doesNotMatch(css, /(^|[,}\n])\s*(?!\.still)(button|\.r2l-btn|\.r2l-btn-sun|\.r2l-m-ring)[\s,{:]/m);
 });
 
+test('round 5: latest reply in the monster bubble, full log in a details; no local named `history` (render() calls window.history)', () => {
+  assert.doesNotMatch(voice, /(const|let|var)\s+history\b/);
+  assert.match(voice, /Xem lại các câu đã trả lời/);
+  assert.match(voice, /feedback\.append\(monsterHolder,latest,replyLog\)/);
+  assert.match(voice, /replyLog\.append\(node\('summary'[^)]*\),conversation\)/);
+  assert.match(voice, /setAttribute\('role','log'\)/);
+  assert.match(css, /\.story-mission-latest__great \{ color: var\(--r2l-leaf-deep\)/);
+});
+
+test('round 5: the 380-767px question-screen sizing never reaches the resting screen', () => {
+  const block = css.slice(css.indexOf('/* 390 to 767: the progress'), css.indexOf('/* the label\'s font is Baloo 2'));
+  const sels = [...block.matchAll(/(body[^{}]*?)\s*\{/g)].map(m => m[1]).filter(s => s.includes("[data-stage='understand']"));
+  assert.ok(sels.length >= 6);
+  for (const s of sels) assert.match(s, /:not\(\[data-rest='1'\]\)/, s);
+  assert.match(css.match(/body:has\([^{]*\) #main \{ margin-top: -72px[^}]*}/)[0], /:not\(\[data-rest='1'\]\)/);
+});
+
 test('round 4 R2: voice DOM order is progress, Minny, question, MIC, latest reply, notice; label is Baloo 2', () => {
   assert.match(voice, /panel\.replaceChildren\(progressWrap,hero,qcard,controls,feedback,notice\)/);
   // the mic wrapper really is appended (a `//` comment once swallowed this call on the same line)

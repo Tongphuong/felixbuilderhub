@@ -691,16 +691,16 @@ body #w1-book-reader-phase .story-mission-mic-caption { font-family: var(--r2l-f
 body #w1-book-reader-phase .minny-transcript { max-height: 260px; scroll-padding-block: 8px; }
 /* 390 to 767: the progress (text, 12 dots) rides in the back-pill row, as in the mock, instead of costing its own rows */
 @media (min-width: 380px) and (max-width: 767px) {
-  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] { position: relative; }
-  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] .story-mission-progress {
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand']:not([data-rest='1']) { position: relative; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand']:not([data-rest='1']) .story-mission-progress {
     position: absolute; top: -66px; right: 0; width: 196px; display: grid; gap: 2px; justify-items: end; text-align: right; min-height: 0;
   }
-  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] .story-mission-question-count { font-size: 15px; line-height: 1.2; }
-  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] .story-mission-dots { gap: 3px; flex-wrap: nowrap; justify-content: flex-end; }
-  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] .story-mission-dots i { width: 12px; height: 12px; }
-  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] #book-reader-stage-stack { gap: 10px; }
-  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] .story-mission-chat-title { font-size: 17px; }
-  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] .ft-hero__avatar { width: 160px; height: 160px; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand']:not([data-rest='1']) .story-mission-question-count { font-size: 15px; line-height: 1.2; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand']:not([data-rest='1']) .story-mission-dots { gap: 3px; flex-wrap: nowrap; justify-content: flex-end; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand']:not([data-rest='1']) .story-mission-dots i { width: 12px; height: 12px; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand']:not([data-rest='1']) #book-reader-stage-stack { gap: 10px; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand']:not([data-rest='1']) .story-mission-chat-title { font-size: 17px; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand']:not([data-rest='1']) .ft-hero__avatar { width: 160px; height: 160px; }
 }
 
 /* the label's font is Baloo 2 on the wrapper and the paragraph alike (mock: span.d.t-3) */
@@ -708,9 +708,9 @@ body #w1-book-reader-phase .story-mission-mic { font-family: var(--r2l-font-disp
 
 /* the progress rides in the back-pill row; <main> reaches up into that row so the progress stays INSIDE its card (no escape) */
 @media (min-width: 380px) and (max-width: 767px) {
-  body:has(#w1-book-reader-phase[data-story-mission][data-stage='understand']:not(.hidden)) .lesson-child-header { position: relative; z-index: 3; pointer-events: none; }
-  body:has(#w1-book-reader-phase[data-story-mission][data-stage='understand']:not(.hidden)) .lesson-child-header > * { pointer-events: auto; }
-  body:has(#w1-book-reader-phase[data-story-mission][data-stage='understand']:not(.hidden)) #main { margin-top: -72px; padding-top: 72px; }
+  body:has(#w1-book-reader-phase[data-story-mission][data-stage='understand']:not(.hidden):not([data-rest='1'])) .lesson-child-header { position: relative; z-index: 3; pointer-events: none; }
+  body:has(#w1-book-reader-phase[data-story-mission][data-stage='understand']:not(.hidden):not([data-rest='1'])) .lesson-child-header > * { pointer-events: auto; }
+  body:has(#w1-book-reader-phase[data-story-mission][data-stage='understand']:not(.hidden):not([data-rest='1'])) #main { margin-top: -72px; padding-top: 72px; }
 }
 
 body #w1-book-reader-phase span.story-mission-mic-caption { display: block; }
@@ -735,3 +735,25 @@ body #w1-book-reader-phase span.story-mission-mic-caption { display: block; }
 }
 
 body #w1-book-reader-phase .r2l-book-page__credit { max-width: 46%; }
+
+/* art credit: bottom-left of the picture, wraps instead of clipping, never wider than the picture, never over the page badge or the arrows */
+body #w1-book-reader-phase .r2l-book-page__credit {
+  top: auto; bottom: 12px; left: 12px; right: auto; max-width: calc(100% - 24px); white-space: normal; overflow: visible; text-overflow: clip;
+  line-height: 1.25; padding: 4px 12px; border-radius: 16px; z-index: 2;
+}
+
+/* latest reply in the monster's bubble; the full log (role=log) is one tap below */
+body #w1-book-reader-phase .story-mission-latest {
+  align-self: end; margin: 0; padding: 12px 16px; border: 3px solid var(--r2l-ink); border-radius: 20px; background: #fff; color: var(--r2l-ink);
+  font-family: var(--r2l-font-body); font-weight: 800; font-size: 18px; line-height: 1.35;
+}
+body #w1-book-reader-phase .story-mission-latest[hidden] { display: none; }
+body #w1-book-reader-phase .story-mission-latest__great { color: var(--r2l-leaf-deep); font-weight: 900; }
+body #w1-book-reader-phase .story-mission-history { grid-column: 1 / -1; margin-top: 4px; }
+body #w1-book-reader-phase .story-mission-history > summary {
+  display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 16px; border: 3px solid var(--r2l-ink); border-radius: 18px; background: #fff;
+  color: var(--r2l-ink); font-family: var(--r2l-font-body); font-weight: 800; font-size: 16px; cursor: pointer; list-style: none;
+}
+body #w1-book-reader-phase .story-mission-history > summary::-webkit-details-marker { display: none; }
+body #w1-book-reader-phase .story-mission-history[open] > summary { margin-bottom: 8px; background: var(--r2l-sand); }
+body #w1-book-reader-phase .story-mission-history .minny-transcript { min-height: 0; padding: 0; }

@@ -139,7 +139,11 @@ export async function mountStoryMission() {
   const conversation=node('div','','minny-transcript');conversation.tabIndex=0;conversation.setAttribute('role','log');conversation.setAttribute('aria-label','Trò chuyện về truyện');
   // The feedback row pairs the log with the child's own companion (drawn by the same helper the reward screen uses; display only).
   const monsterHolder=node('span','','story-mission-monster');monsterHolder.setAttribute('aria-hidden','true');
-  const feedback=node('div','','story-mission-feedback');feedback.setAttribute('data-design','voice.feedback');feedback.append(monsterHolder,conversation);
+  const feedback=node('div','','story-mission-feedback');feedback.setAttribute('data-design','voice.feedback');
+  // The latest Minny reply sits in the monster's bubble (design 03); the full log (every turn, role=log) is one tap below, in a details.
+  const latest=node('p','','story-mission-latest');latest.hidden=true;
+  const replyLog=node('details','','story-mission-history');replyLog.append(node('summary','Xem lại các câu đã trả lời'),conversation); // (not named `history`: that would shadow window.history used by render())
+  feedback.append(monsterHolder,latest,replyLog);
   let childStateP,companionDrawn=false;
   const drawCompanion=holder=>{
     childStateP=childStateP||loadAvatarModule().then(async m=>({m,state:await m.loadChildState(params.get('code')||undefined)}));
@@ -177,6 +181,10 @@ export async function mountStoryMission() {
       if(great)conversation.append(node('p','Minny thích câu trả lời của con.','minny-transcript__note'));
     }
     qcard.hidden=view.session.feedbackPending||!view.policy.interview||view.session.stage!=='understand';
+    const turns=[...chatHistory.values()],last=turns[turns.length-1];
+    latest.hidden=!last;latest.replaceChildren();
+    if(last){const g=/^Great job!/i.exec(last.reply);latest.append('Câu '+turns.length+': ');
+      if(g)latest.append(node('b',g[0],'story-mission-latest__great'),' Minny thích câu trả lời của con.');else latest.append(last.reply);}
     conversation.scrollTop=conversation.scrollHeight;
   }
   const setCue=(state,text)=>{root.dataset.voiceState=state;cue.textContent=text;};
