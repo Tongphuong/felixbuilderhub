@@ -103,3 +103,22 @@ test('voice: the face follows root.dataset.voiceState through CSS only (talk whi
   assert.match(css, /\[data-rest='1'\] \.minny-face--sleep \{ display: block; \}/);
   for (const f of ['minny-face.svg', 'minny-face-talk.svg', 'minny-listen.svg', 'minny-face-sleep.svg']) assert.ok(voice.includes(f) || lesson.includes(f), f);
 });
+
+test('follow-up: the story stays available while answering, and sits AFTER the voice block', () => {
+  assert.doesNotMatch(css, /\[data-stage='understand'\] :is\([^)]*\.story-mission-book/);
+  assert.match(css, /data-stage='understand'\] \.story-mission-chat \{ order: 1; \}/);
+  assert.match(css, /data-stage='understand'\] \.story-mission-book \{ order: 2;/);
+});
+
+test("follow-up: the child's own companion comes from the existing helper (no fetch added) in the feedback row and the resting screen", () => {
+  assert.match(voice, /loadAvatarModule\(\)\.then\(async m=>\(\{m,state:await m\.loadChildState\(/);
+  assert.match(voice, /drawCompanion\(monsterHolder\)/);
+  assert.match(voice, /drawCompanion\(monster\)/);
+  const helper = voice.slice(voice.indexOf('const drawCompanion='), voice.indexOf('panel.replaceChildren(progressWrap'));
+  assert.doesNotMatch(helper, /fetch\(/);
+});
+
+test('follow-up: r2lCdPop (mic countdown number) has a still twin for reduced motion and .still', () => {
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\) \{ \.r2l-cd-pop[^}]*animation: none !important/);
+  assert.match(css, /\.still \.r2l-cd-pop[^}]*animation: none !important/);
+});
