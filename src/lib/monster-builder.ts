@@ -263,6 +263,17 @@ export function mountMonsterBuilder(
     }
     renderTiles();
   };
+  // role="toolbar" promises arrow keys: Left/Right (and Up/Down) + Home/End move focus between its buttons. Tab order is unchanged.
+  root.querySelectorAll<HTMLElement>('[role="toolbar"]').forEach(bar => bar.addEventListener('keydown', (e: KeyboardEvent) => {
+    const keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
+    if (!keys.includes(e.key) || e.altKey || e.ctrlKey || e.metaKey) return;
+    const btns = Array.from(bar.querySelectorAll<HTMLButtonElement>('button:not(:disabled)'));
+    const at = btns.indexOf(document.activeElement as HTMLButtonElement);
+    if (at < 0 || !btns.length) return;
+    e.preventDefault();
+    const next = e.key === 'Home' ? 0 : e.key === 'End' ? btns.length - 1 : (e.key === 'ArrowLeft' || e.key === 'ArrowUp') ? (at - 1 + btns.length) % btns.length : (at + 1) % btns.length;
+    btns[next].focus();
+  }));
   choice?.addEventListener('change', () => { selectedSlot = choice.value as MonsterSlot; render(); });
   for (const b of slotButtons) b.addEventListener('click', () => { if (busy) return; selectedSlot = b.dataset.monsterSlot as MonsterSlot; render(); });
   for (const [selector, direction] of [['[data-monster-prev]', -1], ['[data-monster-next]', 1]] as const) {
@@ -320,8 +331,8 @@ export function monsterBuilderIslandHtml(studentName: string): string {
     <div class="cp-right" data-design-col>
       <div class="cp-picker r2l-card-f" data-design="companion.picker">
         <span class="r2l-d r2l-t-3 cp-q" id="cp-q">Con muốn đổi phần nào?</span>
-        <div class="cp-slots" role="group" aria-labelledby="cp-q">${MONSTER_SLOTS.map(slot => `<button type="button" class="cp-slot" data-monster-slot="${slot}" aria-pressed="false">${SLOT_LABELS_VI[slot]}</button>`).join('')}</div>
-        <div class="cp-tiles" data-monster-tiles></div>
+        <div class="cp-slots" role="toolbar" aria-labelledby="cp-q">${MONSTER_SLOTS.map(slot => `<button type="button" class="cp-slot" data-monster-slot="${slot}" aria-pressed="false">${SLOT_LABELS_VI[slot]}</button>`).join('')}</div>
+        <div class="cp-tiles" data-monster-tiles role="toolbar" aria-label="Chọn kiểu"></div>
         <div class="cp-arrows">
           <button type="button" class="r2l-ibtn" data-monster-prev aria-label="Lựa chọn trước">${arrow('M15 5l-7 7 7 7')}</button>
           <div class="cp-now" aria-live="polite"><strong class="r2l-d r2l-t-3" data-monster-choice></strong><span class="cp-count"><span data-monster-count></span><span class="cp-free"> · Mọi lựa chọn đều miễn phí.</span></span></div>

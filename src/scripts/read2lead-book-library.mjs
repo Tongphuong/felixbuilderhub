@@ -28,8 +28,16 @@ function listBooks(){
  const chips=[{text:'Tất cả các quyển',on:activeCollection==='all'&&activeBook==='all',go:()=>{activeCollection='all';activeBook='all';}},
   ...(collections.length<2?catalogue.books.map(b=>({text:`Quyển ${b.month}`,on:b.id===activeBook,go:()=>{activeBook=b.id;}})):collections).map(c=>c.text?c:{text:`Bộ ${c}`,on:String(c)===activeCollection&&activeBook==='all',go:()=>{activeCollection=String(c);activeBook='all';}})];
  if(activeCollection!=='all')chips.push(...catalogue.books.filter(b=>String(b.collection)===activeCollection).map(b=>({text:`Quyển ${b.month}`,on:b.id===activeBook,go:()=>{activeBook=b.id;}})));
- $('book-filters').replaceChildren(...chips.map(o=>{const t=el('button','tab',o.text);t.type='button';t.setAttribute('aria-pressed',String(o.on));t.onclick=()=>{o.go();listBooks();listStories();};return t;}));
+ const bar=$('book-filters'),keep=bar.contains(document.activeElement)?document.activeElement.textContent:null;
+ bar.replaceChildren(...chips.map(o=>{const t=el('button','tab',o.text);t.type='button';t.setAttribute('aria-pressed',String(o.on));t.onclick=()=>{o.go();listBooks();listStories();};return t;}));
+ if(keep!==null)[...bar.children].find(b=>b.textContent===keep)?.focus({preventScroll:true});
 }
+/* role="toolbar": Left/Right (Up/Down) + Home/End move focus between the chips; Tab order unchanged. */
+$('book-filters').addEventListener('keydown',e=>{
+ if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(e.key)||e.altKey||e.ctrlKey||e.metaKey)return;
+ const b=[...$('book-filters').querySelectorAll('button')],at=b.indexOf(document.activeElement);if(at<0)return;e.preventDefault();
+ b[e.key==='Home'?0:e.key==='End'?b.length-1:(e.key==='ArrowLeft'||e.key==='ArrowUp')?(at-1+b.length)%b.length:(at+1)%b.length].focus();
+});
 /* "Truyện hôm nay": one readable story per calendar day, the same all day (stories that have pages; audio preferred). */
 let assignedTitle='';
 /* The child's CURRENT assigned story (progress current_pack, read-only) — "Truyện hôm nay" when it is in the catalogue. */
