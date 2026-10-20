@@ -175,6 +175,31 @@ type PhotoWellOptions = {
   cornerHtml?: string;
 };
 
+/** CSP-safe photo fallback. The live Content-Security-Policy blocks inline `onerror=` / `onload=` attributes, so the photo well
+ * carries `data-qt-photo` instead and ONE listener (this one) does what the attributes did:
+ *   photo fails to load -> the <img> is removed (the emoji underneath stays);  photo decodes -> the well gets `qt-photo-well--has-img`
+ *   (which hides the emoji). `error`/`load` do not bubble, so the listeners are on the capture phase of the document.
+ * Images that already finished (or failed) before the listener was installed are swept once. Safe to call more than once. */
+export function applyPhotoWellState(img: HTMLImageElement): void {
+  if (!img.complete) return;
+  if (img.naturalWidth > 0) img.closest('.qt-photo-well')?.classList.add('qt-photo-well--has-img');
+  else img.remove();
+}
+export function installPhotoWellFallback(doc: Document = document): void {
+  const marker = doc as Document & { __qtPhotoFallback?: boolean };
+  if (marker.__qtPhotoFallback) return;
+  marker.__qtPhotoFallback = true;
+  doc.addEventListener('error', (event) => {
+    const img = event.target as HTMLElement | null;
+    if (img && img.tagName === 'IMG' && img.hasAttribute('data-qt-photo')) img.remove();
+  }, true);
+  doc.addEventListener('load', (event) => {
+    const img = event.target as HTMLElement | null;
+    if (img && img.tagName === 'IMG' && img.hasAttribute('data-qt-photo')) img.closest('.qt-photo-well')?.classList.add('qt-photo-well--has-img');
+  }, true);
+  doc.querySelectorAll<HTMLImageElement>('img[data-qt-photo]').forEach(applyPhotoWellState);
+}
+
 /** GiftPhotoWell (HANDOFF §2). Three-tier fallback: photo -> pasted url -> emoji.
  * Exported for unit tests — see tests/gift-ux.test.mjs. */
 export function renderPhotoWell(opts: PhotoWellOptions): string {
@@ -188,7 +213,7 @@ export function renderPhotoWell(opts: PhotoWellOptions): string {
   if (opts.animateEmoji) emojiClasses.push('qt-float');
 
   const img = opts.imageSrc
-    ? `<img class="qt-photo-well__img" src="${escapeHtml(opts.imageSrc)}" alt="${escapeHtml(opts.name)}" loading="lazy" onerror="this.remove()" onload="this.closest('.qt-photo-well')?.classList.add('qt-photo-well--has-img')" />`
+    ? `<img class="qt-photo-well__img" src="${escapeHtml(opts.imageSrc)}" alt="${escapeHtml(opts.name)}" loading="lazy" data-qt-photo />`
     : '';
 
   return `
@@ -600,6 +625,7 @@ async function setGiftGoalRequest(code: string, giftId: string | null): Promise<
 // ---------------------------------------------------------------------------
 
 export function initGiftsPage(hooks: GiftsPageHooks): void {
+  installPhotoWellFallback();
   let accessCode = '';
   let items: GiftItem[] = [];
   let diamonds = 0;

@@ -102,7 +102,7 @@ test('code entry: an empty code shows the same Vietnamese message and fetches no
 test('markup: hero copy is the approved text, code box and logged-in card are unchanged, one shared renderer', () => {
   const astro = readFileSync('src/components/Read2LeadChildHome.astro', 'utf8');
   const entry = astro.slice(astro.indexOf('id="home-entry"'), astro.indexOf('id="home-error"'));
-  assert.match(entry, /Read2Lead — con đọc truyện và luyện nói cùng Minny/);
+  assert.match(entry, />Con đọc truyện và luyện nói cùng Minny</); // R3: "Read2Lead — " dropped from the H1 (mock 09, founder-approved wording)
   assert.match(entry, /bổ trợ cho việc học tại nhà/);
   assert.match(entry, /<ol id="entry-steps"[\s\S]*Đọc[\s\S]*Trả lời Minny[\s\S]*Kể qua tranh/);
   assert.match(entry, /href="#home-code"[^>]*>Nhập mã/);

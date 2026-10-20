@@ -1,6 +1,28 @@
 # Minny character assets (Read2Lead / MSMW canon)
 
-**Source of truth:** `D:/MSMW/marketing/seedance_minny/references/minny_ref_final.png`
+## R2L-ISLAND release 3 (2026-10-20): Minny is flat vector now
+
+The locked design (`_design/read2lead-dao-phieu-luu/assets/minny/`) draws Minny as flat vector in 6 poses, copied byte-identical into `vector/`
+(`minny-face`, `minny-face-talk`, `minny-face-sleep`, `minny-idle`, `minny-listen`, `minny-cheer`). New UI points at `vector/*.svg`.
+Every PNG below and in `../r2l/minny/` was re-rendered from those SVGs at the SAME file name and pixel size, so pages and the protected
+`lesson.astro` pick up the flat art with no code change:
+
+| File | Pose |
+|---|---|
+| `minny.png`, `minny_full.png`, `minny_idle.png`, `minny_encourage.png` (288x512, opaque) | minny-idle on a sky + hill ground |
+| `minny_listen.png` (288x512) | minny-listen |
+| `minny_celebrate.png` (288x512) | minny-cheer |
+| `minny_bust.png` (400x400, transparent) | minny-idle, upper body |
+| `minny_face.png` (400x400, transparent) | minny-face (without the sky square) |
+| `../r2l/minny/idle.png` | minny-idle |
+| `../r2l/minny/clap.png`, `dance.png` | minny-cheer |
+| `../r2l/minny/smile.png` | minny-face |
+| `../r2l/minny/wink.png` | minny-face-talk |
+| `../r2l/minny/thinking.png` | minny-listen |
+
+The `minny_*.mp4` loops below are the OLD 3D art and were NOT replaced (no flat video exists).
+
+**Older source of truth (3D art, retired):** `D:/MSMW/marketing/seedance_minny/references/minny_ref_final.png`
 
 ## PNG sprites (required)
 

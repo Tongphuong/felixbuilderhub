@@ -126,11 +126,12 @@ test('markup: sign-up card directly under the code box, donation card last, both
   assert.ok(!src.slice(src.indexOf('id="home-ready"')).includes('donate-card'));
   assert.match(src, /Chưa có mã\? Tạo mã miễn phí/);
   assert.ok(!/parent_zalo|type="tel"|type="email"/.test(src));
-  assert.match(src, /Read2Lead miễn phí cho mọi bạn nhỏ\. Nếu ba mẹ thấy hữu ích, có thể ủng hộ để duy trì trang 💛/);
+  assert.match(src, /Read2Lead miễn phí cho mọi bạn nhỏ\. Nếu ba mẹ thấy hữu ích, có thể ủng hộ để duy trì trang\./); // R3: mock 09 wording, no emoji
   assert.match(src, /src="\/donate-qr\.png"[^>]*alt="[^"]+"/);
   assert.ok(existsSync('public/donate-qr.png'));
-  const css = readFileSync('src/styles/read2lead-child-home.css', 'utf8');
-  assert.match(css, /min-width:200px/);
+  // R3: the QR frame moved to the island stylesheet (.ph-qr: 200-220px, crisp pixels)
+  const css = readFileSync('src/styles/read2lead-home-island.css', 'utf8');
+  assert.match(css, /\.ph-qr \{[^}]*width: 220px; height: 220px;[^}]*image-rendering: crisp-edges/);
 });
 
 test('no user-visible "Quà thật" remains in the built site (skipped if dist is absent)', t => {
