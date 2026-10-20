@@ -20,8 +20,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
-import { contractChecks, tapChecks, overflowCheck, motionCheck, addStillClass, removeStillClass, layoutSanity, fontCheck, fontUsage, mockBalooClasses, mockBoxes, builtBoxes, scanText } from './lib/in-page.mjs';
-import { diffPngs, writeComposite, padPng, cornerColor, pngHeight, fitWidth } from './lib/pixels.mjs';
+import { resolveLocate, neverRedCheck, contractChecks, tapChecks, overflowCheck, motionCheck, addStillClass, removeStillClass, layoutSanity, fontCheck, fontUsage, mockBalooClasses, mockBoxes, builtBoxes, scanText } from './lib/in-page.mjs';
+import { diffPngs, writeComposite, padPng, cornerColor, pngHeight, fitWidth, maskPng, maskFraction, MASK_MAX_FRACTION } from './lib/pixels.mjs';
 import { analyseText, textOf, collapse, containsToken } from './lib/text.mjs';
 import { classifyDataBound } from './lib/binding.mjs';
 import { compareRegion, ownPixelFraction, OWN_MIN_FRACTION } from './lib/regions.mjs';
@@ -72,6 +72,8 @@ export function effectiveAnchors(c, w) {
 
 // A contract's width-keyed fields must all describe exactly the widths of the mocks it lists.
 export function validateContract(c) {
+  // Release 3: wording that still waits on the founder. Elon resolves it BEFORE dispatch; a pending contract is never run.
+  if (Object.prototype.hasOwnProperty.call(c, 'pending_founder')) throw new InfraError(`contract ${c.id}: still carries "pending_founder" (wording waiting on Phương); refusing to run an unresolved contract`);
   const set = o => Object.keys(o || {}).sort().join(',');
   const want = set(c.mock);
   if (!want) throw new InfraError(`contract ${c.id}: "mock" lists no widths`);
@@ -104,6 +106,20 @@ export function validateContract(c) {
     const m = /^(?:order|texts)_(\d+)$/.exec(k);
     if (m && !widths.has(m[1])) throw new InfraError(`contract ${c.id}: "${k}" is for a width with no mock`);
   }
+  // Release 3 fields
+  const strList = (v, what) => { if (!Array.isArray(v) || v.some(x => typeof x !== 'string' || !x)) throw new InfraError(`contract ${c.id}: ${what} must be a list of non-empty strings`); };
+  for (const [id, sel] of Object.entries(c.locate || {})) if (typeof sel !== 'string' || !sel.trim()) throw new InfraError(`contract ${c.id}: locate.${id} must be a CSS selector string`);
+  for (const [w, list] of Object.entries(c.locate_cols || {})) { if (!widths.has(w)) throw new InfraError(`contract ${c.id}: "locate_cols.${w}" is for a width with no mock`); strList(list, `locate_cols.${w}`); }
+  if (c.never_red != null) strList(c.never_red, 'never_red');
+  for (const k of Object.keys(c)) {
+    const m = /^sun_also_(\d+)$/.exec(k);
+    if (m) { if (!widths.has(m[1])) throw new InfraError(`contract ${c.id}: "${k}" is for a width with no mock`); strList(c[k], k); }
+  }
+  for (const [w, boxes] of Object.entries(c.mask || {})) {
+    if (!widths.has(w)) throw new InfraError(`contract ${c.id}: "mask.${w}" is for a width with no mock`);
+    if (!Array.isArray(boxes) || boxes.some(b => !Array.isArray(b) || b.length !== 4 || b.some(n => typeof n !== 'number') || b[2] <= 0 || b[3] <= 0)) throw new InfraError(`contract ${c.id}: mask.${w} must be a list of [x, y, w, h] boxes`);
+  }
+  if (c.primary && c.primary.none && (c.primary.id || c.primary.text)) throw new InfraError(`contract ${c.id}: primary.none cannot also name an id or text`);
   for (const f of ['layout']) for (const w of Object.keys(c[f] || {})) if (!widths.has(w)) throw new InfraError(`contract ${c.id}: "${f}.${w}" is for a width with no mock`);
   if (c.primary && c.primary.min_height) for (const w of Object.keys(c.primary.min_height)) if (!widths.has(w)) throw new InfraError(`contract ${c.id}: "primary.min_height.${w}" is for a width with no mock`);
 }
@@ -191,6 +207,11 @@ export async function runFidelity(opts) {
           const badFonts = (await mpage.evaluate(fontCheck)).filter(f => f.status === 'error');
           if (badFonts.length) throw new InfraError('mock fonts failed to load: ' + badFonts.map(f => f.family).join(', '));
           const mockPng0 = await sh(mpage);
+          const maskBudget = ((contract.mask || {})[String(w)] || []);
+          if (maskBudget.length) {
+            const frac = maskFraction(maskBudget, w, pngHeight(mockPng0));
+            if (frac > MASK_MAX_FRACTION) throw new InfraError(`contract ${contract.id} @ ${w}px: mask covers ${(frac * 100).toFixed(1)}% of the capture (max ${MASK_MAX_FRACTION * 100}%); a mask this large would hide the design`);
+          }
           const mockStream = analyseText((await mpage.evaluate(scanText)).items, null).stream; // what THIS width's mock shows
           const eff = effectiveAnchors(contract, w);
           const anchors = Object.keys(eff.anchors).length ? eff.anchors : null;
@@ -259,7 +280,7 @@ export async function runFidelity(opts) {
           // (c) contract checks ------------------------------------------
           const orderIds = contract[`order_${w}`] || contract.order || [];
           const texts = [...(contract.texts || []), ...(contract[`texts_${w}`] || [])];
-          const primary = contract.primary ? { id: contract.primary.id, text: contract.primary.text, minHeight: (contract.primary.min_height || {})[String(w)] ?? null } : null;
+          const primary = contract.primary && !contract.primary.none ? { id: contract.primary.id, text: contract.primary.text, minHeight: (contract.primary.min_height || {})[String(w)] ?? null } : null;
           const colsExpected = contract.layout && contract.layout[String(w)] && contract.layout[String(w)].columns;
           const minSize = contract.min_size || {};
           // ids the MOCK itself shows below the fold of a viewport snapshot (the only ones allowed to be off-screen)
@@ -268,8 +289,22 @@ export async function runFidelity(opts) {
             for (const [id, b] of Object.entries((mockGeo && mockGeo.boxes) || {})) if (b && b.y >= viewport.height) mockBelowFold.push(id);
             for (const r of contract.regions || []) { const mb = r.mock_box && r.mock_box[String(w)]; if (mb && mb[1] >= viewport.height) mockBelowFold.push(r.id); }
           }
-          const cc = await page.evaluate(contractChecks, { order: orderIds, primary, columns: colsExpected ? { expected: colsExpected } : null, minSize, viewportOnly: !full, mockBelowFold });
           const optional = new Set(Object.keys(contract.optional || {}));
+          // Release 3 `locate`: stamp data-design onto the BUILT page's protected-file elements (never the mock). Only ids this width
+          // actually needs can fail the locate check (a step the state does not show is not a failure).
+          const sunAlso = contract[`sun_also_${w}`] || [];
+          const neverRed = contract.never_red || [];
+          if (contract.locate || contract.locate_cols) {
+            const needed = new Set([...orderIds.filter(id => !optional.has(id)), ...Object.keys(minSize), ...Object.keys(anchors || {}), ...neverRed, ...sunAlso,
+              ...(primary ? [primary.id] : []), ...(contract.regions || []).filter(r => r.mock_box && r.mock_box[String(w)]).map(r => r.id)]);
+            const loc = await page.evaluate(resolveLocate, { locate: contract.locate || {}, cols: (contract.locate_cols || {})[String(w)] || [], needed: [...needed] });
+            res.checks.push(check('locate', loc.problems.length === 0, loc.problems.length ? loc.problems.join('; ') : `${Object.keys(contract.locate || {}).length} ids resolved (data-design first, else selector), ${loc.cols} column elements`));
+          }
+          const cc = await page.evaluate(contractChecks, { order: orderIds, primary, noPrimary: !!(contract.primary && contract.primary.none), sunAlso, columns: colsExpected ? { expected: colsExpected } : null, minSize, viewportOnly: !full, mockBelowFold });
+          if (neverRed.length) {
+            const nr = await page.evaluate(neverRedCheck, { ids: neverRed });
+            res.checks.push(check('never-red', nr.length === 0, nr.length ? nr.slice(0, 8).join('; ') + (nr.length > 8 ? ` ... +${nr.length - 8} more` : '') : `no coral #FF7A3D / Minny red #E0362C in text, background or border inside ${neverRed.join(', ')}`));
+          }
           const orderProblems = cc.order.problems.filter(p => {
             const m = /^(missing|present but not visible): (.+)$/.exec(p);
             return !(m && optional.has(m[2]));
@@ -302,8 +337,8 @@ export async function runFidelity(opts) {
           }
           if (cc.primary) {
             const probs = [...cc.primary.problems];
-            if (!textOf(scan.items, primary.id).includes(collapse(primary.text))) probs.push(`primary visible text "${textOf(scan.items, primary.id)}" does not include "${primary.text}"`);
-            res.checks.push(check('primary', probs.length === 0, probs.length ? probs.join('; ') : `"${primary.text}" ${cc.primary.height.toFixed(0)}px, only sun clickable`));
+            if (primary && !textOf(scan.items, primary.id).includes(collapse(primary.text))) probs.push(`primary visible text "${textOf(scan.items, primary.id)}" does not include "${primary.text}"`);
+            res.checks.push(check('primary', probs.length === 0, probs.length ? probs.join('; ') : primary ? `"${primary.text}" ${cc.primary.height.toFixed(0)}px, only sun clickable` : 'primary.none: no sun-filled clickable control'));
           }
           if (cc.columns) res.checks.push(check('columns', cc.columns.actual === cc.columns.expected, `expected ${cc.columns.expected}, found ${cc.columns.actual} [data-design-col]`));
 
@@ -388,8 +423,10 @@ export async function runFidelity(opts) {
           const allowed = Math.max(0.10 * hM, 120);
           if (full) res.checks.push(check('height', hB - hM <= allowed, `built page ${hB}px vs mock ${hM}px (built may exceed the mock by at most ${Math.round(allowed)}px)`));
           const H = Math.max(hM, hB);
-          const mockPng = padPng(mockPng0, H, cornerColor(mockPng0));
-          const builtPng = padPng(builtPng0, H, cornerColor(builtPng0));
+          // mask: third-party boxes (Turnstile) painted the same in BOTH captures, so only the pixel diff ignores them
+          const maskBoxes = (contract.mask || {})[String(w)] || [];
+          const mockPng = maskPng(padPng(mockPng0, H, cornerColor(mockPng0)), maskBoxes);
+          const builtPng = maskPng(padPng(builtPng0, H, cornerColor(builtPng0)), maskBoxes);
           const d = diffPngs(mockPng, builtPng, 0.1);
           const ceiling = contract.diff_ceiling[String(w)];
           res.diff = { fraction: +d.fraction.toFixed(5), pixels: d.count, total: d.total, ceiling, pass: d.fraction <= ceiling, mockHeight: hM, builtHeight: hB };
@@ -439,7 +476,7 @@ export async function runFidelity(opts) {
                 if (o.scrollWidth > o.innerWidth) bad.push(`${vw}px: content ${o.scrollWidth}px wide`);
               }
               if (layoutWidths.has(vw)) {
-                const offenders = await page.evaluate(layoutSanity, { allow: contract.overflow_allow || [], texts: [...(contract.texts || []), ...(contract['texts_' + w] || []), ...(contract.primary ? [contract.primary.text] : [])] });
+                const offenders = await page.evaluate(layoutSanity, { allow: contract.overflow_allow || [], texts: [...(contract.texts || []), ...(contract['texts_' + w] || []), ...(contract.primary && contract.primary.text ? [contract.primary.text] : [])] });
                 if (offenders.length) {
                   res.layout[vw] = offenders;
                   const shotName = `${contract.id}-layout-${vw}.png`;

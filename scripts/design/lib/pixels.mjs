@@ -70,3 +70,21 @@ export function fitWidth(buf, width) {
   PNG.bitblt(src, out, 0, 0, Math.min(width, src.width), src.height, 0, 0);
   return PNG.sync.write(out);
 }
+
+// ---- mask (Release 3): boxes [x, y, w, h] excluded from the pixel diff ONLY (third-party iframes such as Turnstile).
+// The caller paints the same solid colour into BOTH captures, so the boxes cannot differ.
+export const MASK_MAX_FRACTION = 0.05;
+export function maskFraction(boxes, width, height) {
+  const area = (boxes || []).reduce((s, b) => s + b[2] * b[3], 0);
+  return area / (width * height);
+}
+export function maskPng(buf, boxes) {
+  if (!boxes || !boxes.length) return buf;
+  const p = PNG.sync.read(buf);
+  for (const [bx, by, bw, bh] of boxes) {
+    const x0 = Math.max(0, Math.round(bx)), y0 = Math.max(0, Math.round(by));
+    const x1 = Math.min(p.width, Math.round(bx + bw)), y1 = Math.min(p.height, Math.round(by + bh));
+    for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const i = (y * p.width + x) * 4; p.data[i] = 255; p.data[i + 1] = 0; p.data[i + 2] = 255; p.data[i + 3] = 255; }
+  }
+  return PNG.sync.write(p);
+}

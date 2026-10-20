@@ -172,12 +172,12 @@ export function contractChecks(args) {
   }
   out.order = { problems: orderProblems, orderMode: multiCol ? 'dom-order (multi-column)' : 'dom-order + vertical', missing, hidden };
 
-  if (args.primary) {
-    const all = [...document.querySelectorAll(sel(args.primary.id))];
+  if (args.primary || args.noPrimary) {
+    const all = args.primary ? [...document.querySelectorAll(sel(args.primary.id))] : [];
     const vis = all.filter(visible);
     const p = [];
-    if (all.length !== 1) p.push('expected exactly 1 element with data-design="' + args.primary.id + '", found ' + all.length);
-    if (all.length >= 1 && vis.length === 0) p.push('primary is not visible');
+    if (args.primary && all.length !== 1) p.push('expected exactly 1 element with data-design="' + args.primary.id + '", found ' + all.length);
+    if (args.primary && all.length >= 1 && vis.length === 0) p.push('primary is not visible');
     const el = vis[0] || all[0];
     let height = null;
     if (el) {
@@ -237,10 +237,24 @@ export function contractChecks(args) {
       const g = e.closest(GROUP);
       return e.matches(SELECTED) && !!g && groupOk(g);
     };
-    const cand = [...document.querySelectorAll('body *')].filter(e => visible(e) && isSun(e) && clickable(e) && !isSelected(e));
+    const cand0 = [...document.querySelectorAll('body *')].filter(e => visible(e) && isSun(e) && clickable(e) && !isSelected(e));
+    // sun_also (Release 3): extra sun controls allowed at this width. Each listed element MUST be an in-page anchor (a[href^="#"]);
+    // a sun <button> or an off-page link listed there is itself a failure and is NOT let through.
+    const alsoOk = [];
+    for (const id of args.sunAlso || []) {
+      const els = [...document.querySelectorAll(sel(id))].filter(visible);
+      if (!els.length) { p.push('sun_also "' + id + '": no visible element with that data-design'); continue; }
+      for (const e of els) {
+        if (e.matches('a[href^="#"]')) alsoOk.push(e);
+        else p.push('sun_also "' + id + '" is not an in-page anchor (a[href^="#"]): <' + e.tagName.toLowerCase() + (e.getAttribute('href') != null ? ' href="' + e.getAttribute('href') + '"' : '') + '>');
+      }
+    }
+    const cand = cand0.filter(e => !alsoOk.some(a => a === e || a.contains(e) || e.contains(a)));
     const sunControls = cand.filter(e => !cand.some(o => o !== e && o.contains(e)));
     const label = e => '"' + (e.textContent || e.value || e.tagName).replace(/\s+/g, ' ').trim().slice(0, 30) + '"';
-    if (sunControls.length !== 1) p.push('expected exactly 1 sun-filled clickable control, found ' + sunControls.length + (sunControls.length ? ': ' + sunControls.map(label).join(', ') : ''));
+    if (args.noPrimary) {
+      if (sunControls.length) p.push('primary.none: expected NO sun-filled clickable control in this state, found ' + sunControls.length + ': ' + sunControls.map(label).join(', '));
+    } else if (sunControls.length !== 1) p.push('expected exactly 1 sun-filled clickable control, found ' + sunControls.length + (sunControls.length ? ': ' + sunControls.map(label).join(', ') : ''));
     else if (!all.some(a => a === sunControls[0] || a.contains(sunControls[0]) || sunControls[0].contains(a))) p.push('the only sun-filled clickable ' + label(sunControls[0]) + ' is not the primary [data-design="' + args.primary.id + '"]');
     out.primary = { problems: p, height };
   }
@@ -394,6 +408,87 @@ export function builtBoxes(ids) {
     out.boxes[id] = { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height };
   }
   return out;
+}
+
+// ---------------------------------------------------------------------------
+// Release 3 `locate` / `locate_cols`: for elements that cannot carry data-design (lesson.astro is protected).
+//   args = { locate: {id: selector}, cols: [selector], needed: [id] }
+// [data-design="id"] wins when present. Otherwise the selector must match EXACTLY ONE visible element (0 or > 1 FAILS, but only for
+// `needed` ids: a step the state does not show is not a failure). The located element is STAMPED with data-design="id" on the
+// throwaway BUILT page (never the mock), so order, regions, min_size, primary, anchors and never_red all see it unchanged.
+// `cols` selectors: every visible match gets data-design-col (the layout column count reads that attribute).
+export function resolveLocate(args) {
+  function visible(el) {
+    for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
+      const cs = getComputedStyle(n);
+      if (cs.display === 'none' || cs.visibility === 'hidden' || cs.visibility === 'collapse') return false;
+      if (parseFloat(cs.opacity) === 0) return false;
+    }
+    const r = el.getBoundingClientRect();
+    return r.width > 0 && r.height > 0 && r.right > 0 && r.bottom > 0;
+  }
+  const problems = [];
+  const needed = new Set(args.needed || []);
+  for (const [id, selector] of Object.entries(args.locate || {})) {
+    if (document.querySelector('[data-design="' + id.replace(/"/g, '\\"') + '"]')) continue; // data-design first
+    let all;
+    try { all = [...document.querySelectorAll(selector)]; } catch { if (needed.has(id)) problems.push('locate "' + id + '": invalid selector ' + selector); continue; }
+    const vis = all.filter(visible);
+    if (vis.length !== 1) { if (needed.has(id)) problems.push('locate "' + id + '" (' + selector + '): ' + vis.length + ' visible match' + (vis.length === 1 ? '' : 'es') + (all.length !== vis.length ? ' (' + all.length + ' in the DOM)' : '') + ', need exactly 1'); continue; }
+    const el = vis[0];
+    const other = el.getAttribute('data-design');
+    if (other && other !== id) { if (needed.has(id)) problems.push('locate "' + id + '" (' + selector + '): that element already carries data-design="' + other + '"'); continue; }
+    el.setAttribute('data-design', id);
+  }
+  let cols = 0;
+  for (const selector of args.cols || []) {
+    let all = [];
+    try { all = [...document.querySelectorAll(selector)].filter(visible); } catch { problems.push('locate_cols: invalid selector ' + selector); continue; }
+    for (const e of all) { e.setAttribute('data-design-col', ''); cols++; }
+  }
+  return { problems, cols };
+}
+
+// never_red (Release 3): inside each id, no TEXT colour, background or border may be coral #FF7A3D or Minny red #E0362C (computed
+// styles). Images are excluded (<img>/<picture>/<svg>/<video>/<canvas> and what is inside them), so Minny's own ring is fine.
+// A text colour only counts on an element that has its own text (an inherited colour on an empty box is not text).
+export function neverRedCheck(args) {
+  function visible(el) {
+    for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
+      const cs = getComputedStyle(n);
+      if (cs.display === 'none' || cs.visibility === 'hidden' || cs.visibility === 'collapse') return false;
+    }
+    const r = el.getBoundingClientRect();
+    return r.width > 0 && r.height > 0;
+  }
+  const REDS = [['#FF7A3D', [255, 122, 61]], ['#E0362C', [224, 54, 44]]];
+  const rgbs = s => [...String(s).matchAll(/rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,\s/]+([\d.]+%?))?\s*\)/g)].map(m => [+m[1], +m[2], +m[3], m[4] == null ? 1 : (String(m[4]).endsWith('%') ? parseFloat(m[4]) / 100 : +m[4])]);
+  const red = c => { if (c[3] < 0.5) return null; const hit = REDS.find(([, t]) => Math.abs(c[0] - t[0]) <= 3 && Math.abs(c[1] - t[1]) <= 3 && Math.abs(c[2] - t[2]) <= 3); return hit ? hit[0] : null; };
+  const IMG = 'img,picture,svg,video,canvas';
+  const problems = [];
+  const desc = e => e.tagName.toLowerCase() + (typeof e.className === 'string' && e.className.trim() ? '.' + e.className.trim().split(/\s+/)[0] : '') + ((e.textContent || '').trim() ? ' "' + e.textContent.replace(/\s+/g, ' ').trim().slice(0, 24) + '"' : '');
+  for (const id of args.ids) {
+    const roots = [...document.querySelectorAll('[data-design="' + id.replace(/"/g, '\\"') + '"]')].filter(visible);
+    if (!roots.length) { problems.push('never_red "' + id + '": no visible element'); continue; }
+    for (const root of roots) {
+      for (const e of [root, ...root.querySelectorAll('*')]) {
+        if (e.closest(IMG) || !visible(e)) continue;
+        const cs = getComputedStyle(e);
+        const hits = [];
+        const ownText = [...e.childNodes].some(n => n.nodeType === 3 && n.nodeValue.trim());
+        if (ownText) { const h = red(rgbs(cs.color)[0] || [0, 0, 0, 0]); if (h) hits.push('text colour ' + h); }
+        for (const c of rgbs(cs.backgroundColor)) { const h = red(c); if (h) hits.push('background ' + h); }
+        if (/gradient\(/.test(cs.backgroundImage)) for (const c of rgbs(cs.backgroundImage)) { const h = red(c); if (h) { hits.push('background gradient ' + h); break; } }
+        for (const side of ['Top', 'Right', 'Bottom', 'Left']) {
+          if (!(parseFloat(cs['border' + side + 'Width']) > 0) || cs['border' + side + 'Style'] === 'none') continue;
+          const h = red(rgbs(cs['border' + side + 'Color'])[0] || [0, 0, 0, 0]);
+          if (h) { hits.push('border ' + h); break; }
+        }
+        if (hits.length) problems.push('never_red "' + id + '": ' + desc(e) + ' uses ' + hits.join(' + '));
+      }
+    }
+  }
+  return problems;
 }
 
 // State markers for the default driver: visible clickable labels + logged-in evidence.
