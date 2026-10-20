@@ -59,6 +59,9 @@ test('r3Binding: the alternate sample must change what the page is expected to s
   assert.ok(r3Binding(ALT, 'logged-out', SAMPLE).expect.includes('Quyên'));
   assert.ok(r3Binding(SAMPLE, 'logged-out').expect.includes('1.080') && r3Binding(SAMPLE, 'logged-out').expect.includes('Percy'));
   assert.deepEqual(r3Binding(SAMPLE, 'story-mission-pool-rest').expect, []);
+  const sr = r3Binding(ALT, 'story-mission-read', SAMPLE);
+  assert.ok(sr.expect.includes('Red Apples Fall') && sr.expect.includes('One apple drops down, down, down!'), 'the story title and text are bound');
+  assert.ok(sr.absent.includes('The Sky Is Blue!') && sr.absent.includes('The sky is blue. A little bird flies up, up, up!'));
 });
 
 test('fixtures: the alternate sample has every Release-3 key of the mock sample, same list lengths, different values', () => {

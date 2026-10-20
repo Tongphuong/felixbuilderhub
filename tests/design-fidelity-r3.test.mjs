@@ -50,6 +50,9 @@ const PAGES = {
   'red-border': inCard('<div style="height:40px;border:3px solid #FF7A3D">Sai rồi</div>'),
   'red-in-image': inCard('<svg width="60" height="60"><circle cx="30" cy="30" r="28" fill="#E0362C" stroke="#FF7A3D" stroke-width="4"/></svg><p style="margin:0;color:#17324D">Minny</p>'),
   'red-clean': inCard('<p style="margin:0;color:#17324D;border:2px solid #17324D">Gần đúng rồi</p>'),
+  low: html('<div style="height:900px"></div><div data-design="t.low" style="height:60px;width:200px">x</div>'),
+  'details-closed': html('<details><summary style="height:48px">Chi tiết</summary><div style="border:2px solid #17324D;width:120px;padding:4px"><button style="width:300px;height:48px;font-family:inherit">Nút tràn</button></div></details>'),
+  'details-open': html('<details open><summary style="height:48px">Chi tiết</summary><div style="border:2px solid #17324D;width:120px;padding:4px"><button style="width:300px;height:48px;font-family:inherit">Nút tràn</button></div></details>'),
   'ts-script': html('<div data-design="t.ts" style="height:70px;width:300px">x</div><script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async></script>'),
   'ts-iframe': html('<div data-design="t.ts" style="height:70px;width:300px"><iframe style="width:300px;height:65px;border:0"></iframe></div>'),
   'ts-empty': html('<div data-design="t.ts" style="height:70px;width:300px">x</div>'),
@@ -86,6 +89,10 @@ const CASES = {
   'mask-covers-diff': { mask: { 390: [[10, 400, 100, 50]] }, diff_ceiling: { 390: 0 }, ...at('mask-diff') },
   'mask-absent-diff-fails': { diff_ceiling: { 390: 0 }, ...at('mask-diff') },
   'never-red-missing-id': { never_red: ['n.nothing'] },
+  'fold-unlisted': { order: ['t.a', 't.b', 't.low'], ...at('low') },
+  'fold-listed': { order: ['t.a', 't.b', 't.low'], allow_below_fold: ['t.low'], ...at('low') },
+  'layout-details-closed': at('details-closed'),
+  'layout-details-open': at('details-open'),
   'ts-script-ok': { turnstile: 't.ts', ...at('ts-script') },
   'ts-iframe-ok': { turnstile: 't.ts', ...at('ts-iframe') },
   'ts-empty-bad': { turnstile: 't.ts', ...at('ts-empty') },
@@ -174,6 +181,14 @@ test('R3 fields: known-good pass, known-bad fail the NAMED check with the specif
       assert.equal(c('never-red-clean', 'never-red').pass, true, c('never-red-clean', 'never-red').detail);
       assert.match(c('never-red-missing-id', 'never-red').detail, /never_red "n\.nothing": no visible element/);
     });
+    await t.test('allow_below_fold: a listed id may sit below the fold; BITE: the same id unlisted still fails "pushed below the fold"', () => {
+      assert.match(c('fold-unlisted', 'order').detail, /pushed below the fold: t\.low/);
+      assert.equal(c('fold-listed', 'order').pass, true, c('fold-listed', 'order').detail);
+    });
+    await t.test('layout-sanity skips the body of a CLOSED <details>; BITE: the same overflowing control in an OPEN one still fails', () => {
+      assert.equal(c('layout-details-closed', 'layout-sanity').pass, true, c('layout-details-closed', 'layout-sanity').detail);
+      assert.match(c('layout-details-open', 'layout-sanity').detail, /escape button/);
+    });
     await t.test('turnstile: container + script tag (offline) or iframe passes; BITE: a missing container, or one with neither, fails', () => {
       assert.equal(c('ts-script-ok', 'turnstile').pass, true, c('ts-script-ok', 'turnstile').detail);
       assert.equal(c('ts-iframe-ok', 'turnstile').pass, true, c('ts-iframe-ok', 'turnstile').detail);
@@ -212,6 +227,7 @@ test('R3 BITE: a contract still carrying pending_founder is refused (infra error
       return runFidelity({ design: tmp, contracts: path.join(tmp, 'c'), base: 'http://127.0.0.1:1', out: path.join(tmp, 'o'), 'state-driver': GOTO });
     };
     await assert.rejects(run({ pending_founder: 'wording X', if_founder_declines: 'Y' }), e => e instanceof InfraError && /still carries "pending_founder"/.test(e.message));
+    await assert.rejects(run({ allow_below_fold: 'story.primary' }), e => e instanceof InfraError && /allow_below_fold must be a list of non-empty strings/.test(e.message));
     await assert.rejects(run({ sun_also_1280: ['a'] }), e => e instanceof InfraError && /"sun_also_1280" is for a width with no mock/.test(e.message));
     await assert.rejects(run({ mask: { 390: [[1, 2, 3]] } }), e => e instanceof InfraError && /mask\.390 must be a list of \[x, y, w, h\]/.test(e.message));
     await assert.rejects(run({ locate: { 'a.b': '' } }), e => e instanceof InfraError && /locate\.a\.b must be a CSS selector/.test(e.message));

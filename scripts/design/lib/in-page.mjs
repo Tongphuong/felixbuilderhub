@@ -542,6 +542,10 @@ export function layoutSanity(args) {
       const cs = getComputedStyle(n);
       if (cs.display === 'none' || cs.visibility === 'hidden' || cs.visibility === 'collapse') return false;
       if (parseFloat(cs.opacity) === 0) return false;
+      if (cs.contentVisibility === 'hidden') return false;
+      // the body of a CLOSED <details> is measured by layout but never on screen (Release 3: it produced phantom 360px overlaps)
+      const par = n.parentElement;
+      if (par && par.tagName === 'DETAILS' && !par.open && n.tagName !== 'SUMMARY') return false;
     }
     return true;
   };

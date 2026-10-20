@@ -24,6 +24,10 @@
 //     re-render, so the feedback stays on screen.
 //  9. LESSON-DOCUMENT CSP: the rehearsal Worker's CSP carries a STALE script-hash list (from the v90 fixture), which blocks lesson.astro's own big
 //     inline script. The driver adds the sha256 of the served document's inline scripts to that header (production computes it from the build).
+//  8b. Story states: title, story sentences (the mock's page-3 text), the saved turn's `lastVoice.reply` and the question text are VALUES put into the real
+//     session/turn views. understand / pool-rest start from a REAL answered turn with feedback pending; the page's own "Câu hỏi tiếp theo →" button is
+//     clicked, and its `continue_voice` event is answered LOCALLY with the last real view (feedbackPending false), so the server session never advances.
+//     Prompt audio is the rehearsal's real prompt wav; Chrome runs with --autoplay-policy=no-user-gesture-required so it plays to its end (cue "ready").
 //  9b. Book states: the driver waits for the page's own 4 s "Con tiếp tục bài đang làm" resume toast (a side effect of restoring the checkpoint in (2))
 //     to fade, and scrolls the window to 0 before the capture (the reader scrolls itself to the top of the reader; the mocks show the page top).
 // 10. logged-out: no login. The public top-3 boards are replaced with the mock sample (Hoang/Hieuenzo/Percy) in the real response shape. The sign-up
@@ -91,6 +95,7 @@ export function r3Binding(S, state, Base = null) {
     if (state === 'book-last-page-done') both(s => s.book.page_texts[s.book.page_texts.length - 1]);
     if (state === 'book-page-question-correct' || state === 'book-page-question-near-miss') { both(s => s.book.question.text); both(s => s.book.question.options[0]); both(s => s.book.question.options[1]); }
   }
+  if (state === 'story-mission-read') { both(s => s.book.title); both(s => s.book.page_texts[s.book.page - 1]); }
   if (state === 'story-mission-understand') { both(s => s.voice.turn_reply); both(s => s.voice.question_text); }
   if (state === 'lesson-open-error') both(s => s.error_message);
   if (state === 'logged-out') for (const kind of ['xp', 'diamonds']) S.public_top3[kind].forEach((row, i) => { expect.push(row.display_name, vn(row.total)); if (Base) { const o = Base.public_top3[kind][i]; if (o.display_name !== row.display_name) absent.push(o.display_name); if (o.total !== row.total) absent.push(vn(o.total)); } });
@@ -130,8 +135,10 @@ async function prepareStory(base, state) {
     const j = await (await fetch(base + '/api/read2lead-story-turn', { method: 'POST', headers: api(base, code).H, body: fd })).json();
     if (j.view) view = j.view;
   }
-  if (view.session.feedbackPending) await ev({ type: 'continue_voice' });
-  if (!(view.session.stage === 'understand' && view.session.answered >= 1)) throw new Error(`story session for ${code} is not at question 2 (stage ${view.session.stage}, answered ${view.session.answered})`);
+  // The session is left at "one real turn answered, its feedback pending": the page's own client history (the saved-turn row) only exists for a
+  // turn whose feedback it has rendered. "Câu hỏi tiếp theo" is then clicked in the page and its event answered locally (see below), so no run
+  // advances the server session and every run starts from the same state.
+  if (!(view.session.stage === 'understand' && view.session.feedbackPending)) throw new Error(`story session for ${code} is not "one turn answered, feedback pending" (stage ${view.session.stage}, answered ${view.session.answered}, feedbackPending ${view.session.feedbackPending}); restart the rehearsal server for a clean session`);
   return { code, packId, sessionId: view.session.id };
 }
 
@@ -195,15 +202,52 @@ export async function r3Driver(page, contract, base, ctx = {}) {
     const media = await lessonRoutes(page, S);
     await login(STORY_ACCOUNT[state][1].repeat(32));
     const url = `${base}/read2lead/lesson?code=${prep.code}&pack_id=${prep.packId}&mission=story-mission-v1&session=${prep.sessionId}`;
-    if (state === 'story-mission-understand') {
-      const fixVoice = j => { const s = (j.view || j).session; if (s?.lastVoice) s.lastVoice.reply = S.voice.turn_reply; const q = (j.view || j).lesson?.question; if (q) q.prompt = S.voice.question_text; if (j.prompt) j.prompt = S.voice.question_text; return j; };
-      for (const p of ['**/api/read2lead-story-session*', '**/api/read2lead-story-turn*']) await valueRoute(page, p, fixVoice);
-    }
-    if (state === 'story-mission-pool-rest') await page.route('**/api/read2lead-story-turn*', r => r.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ code: 'voice_pool_exhausted', phase: 'budget' }) }));
     void media;
+    // VALUES in the real shapes: the story's title and text (the page-3 sentences of the mock), the saved turn's reply, the question text.
+    const storySentences = sentencesOf(S.book.page_texts[S.book.page - 1]).map((text, i) => ({ id: 's' + (i + 1), text }));
+    let viewSeen = null;
+    const fixView = j => {
+      const v = j.view || j;
+      if (v?.lesson) { v.lesson.title = S.book.title; v.lesson.sentences = storySentences; }
+      const s = v?.session; if (s?.lastVoice) s.lastVoice.reply = S.voice.turn_reply;
+      if (v?.lesson?.question) v.lesson.question.prompt = S.voice.question_text;
+      if (j.prompt) j.prompt = S.voice.question_text;
+      if (v?.session && v?.lesson) viewSeen = structuredClone(v);
+      return j;
+    };
+    const understand = state !== 'story-mission-read';
+    for (const p of ['**/api/read2lead-story-session*', '**/api/read2lead-story-turn*']) await valueRoute(page, p, fixView);
+    if (understand) {
+      // "Câu hỏi tiếp theo" sends a continue_voice event. It is answered locally with the last real view, feedback dismissed (declared in the header),
+      // so the server session is never advanced.
+      await page.route('**/api/read2lead-story-session*', async r => {
+        if (r.request().method() === 'POST' && (r.request().postData() || '').includes('continue_voice') && viewSeen) {
+          const v = structuredClone(viewSeen); v.session.feedbackPending = false;
+          return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(v) });
+        }
+        return r.fallback();
+      });
+    }
+    if (state === 'story-mission-understand') {
+      // The real server refuses a question-2 prompt while the session is "feedback pending" (409 voice_stage_conflict), and we never advance it.
+      // So the prompt call is answered in the real shape {prompt, audio:{audio_b64,content_type}, replayed} with a short real wav (declared).
+      const wavB64 = Buffer.from(wav()).toString('base64');
+      await page.route('**/api/read2lead-story-turn*', r => (r.request().method() === 'POST' && (r.request().postData() || '').includes('"prompt"')
+        ? r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ prompt: S.voice.question_text, audio: { audio_b64: wavB64, content_type: 'audio/wav' }, replayed: false }) }) : r.fallback()));
+    }
+    if (state === 'story-mission-pool-rest') await page.route('**/api/read2lead-story-turn*', r => (r.request().method() === 'POST' && (r.request().postData() || '').includes('"prompt"')
+      ? r.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ code: 'voice_pool_exhausted', phase: 'budget' }) }) : r.fallback()));
     await page.goto(url, { waitUntil: 'networkidle' });
+    if (understand) {
+      await page.getByRole('button', { name: /Câu hỏi tiếp theo/ }).click({ timeout: 25000 }).catch(() => { throw new Error('wrong state: the saved-turn feedback with "Câu hỏi tiếp theo →" never appeared'); });
+    }
     const mark = { 'story-mission-read': '[data-voice-state="read"]', 'story-mission-understand': '[data-voice-state="ready"]', 'story-mission-pool-rest': '[data-voice-state="retry"]' }[state];
     await page.waitForSelector(mark, { timeout: 25000 }).catch(() => { throw new Error(`wrong state: ${mark} never appeared on the story mission page`); });
+    if (state === 'story-mission-understand') {
+      const bad = await page.evaluate(() => (document.body.textContent || '').includes('Chưa phát được câu hỏi') || (document.body.textContent || '').includes('Con bấm Nghe lại câu hỏi, hoặc đọc câu hỏi'));
+      if (bad) throw new Error('wrong state: the question audio failed (prompt error notice is showing); the capture would not be the "audio finished, cue ready" state');
+      await page.waitForFunction(() => { const b = [...document.querySelectorAll('button')].find(x => /Dừng nghe/.test(x.textContent || '')); return !b || b.hidden || b.getBoundingClientRect().width === 0; }, null, { timeout: 8000 }).catch(() => { throw new Error('wrong state: the "Dừng nghe" halt button is still showing (the question audio has not finished)'); });
+    }
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.waitForTimeout(800);
     return ret;

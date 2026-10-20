@@ -111,6 +111,7 @@ export function validateContract(c) {
   for (const [id, sel] of Object.entries(c.locate || {})) if (typeof sel !== 'string' || !sel.trim()) throw new InfraError(`contract ${c.id}: locate.${id} must be a CSS selector string`);
   for (const [w, list] of Object.entries(c.locate_cols || {})) { if (!widths.has(w)) throw new InfraError(`contract ${c.id}: "locate_cols.${w}" is for a width with no mock`); strList(list, `locate_cols.${w}`); }
   if (c.never_red != null) strList(c.never_red, 'never_red');
+  if (c.allow_below_fold != null) strList(c.allow_below_fold, 'allow_below_fold');
   if (c.turnstile != null && (typeof c.turnstile !== 'string' || !c.turnstile)) throw new InfraError(`contract ${c.id}: turnstile must be the data-design id of the widget container`);
   for (const k of Object.keys(c)) {
     const m = /^sun_also_(\d+)$/.exec(k);
@@ -179,7 +180,7 @@ export async function runFidelity(opts) {
   }
   if (typeof driver !== 'function') throw new InfraError('state driver must export a default function');
 
-  const browser = await chromium.launch({ executablePath: findChrome(opts.chrome), args: ['--font-render-hinting=none', '--disable-lcd-text', '--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'] });
+  const browser = await chromium.launch({ executablePath: findChrome(opts.chrome), args: ['--font-render-hinting=none', '--disable-lcd-text', '--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream', '--autoplay-policy=no-user-gesture-required'] });
   const results = [];
   try {
     const tasks = [];
@@ -290,6 +291,8 @@ export async function runFidelity(opts) {
             for (const [id, b] of Object.entries((mockGeo && mockGeo.boxes) || {})) if (b && b.y >= viewport.height) mockBelowFold.push(id);
             for (const r of contract.regions || []) { const mb = r.mock_box && r.mock_box[String(w)]; if (mb && mb[1] >= viewport.height) mockBelowFold.push(r.id); }
           }
+          const allowBelow = contract.allow_below_fold || []; // Release 3: ids that may sit below the fold of a viewport capture (every other id still may not)
+          mockBelowFold.push(...allowBelow);
           const optional = new Set(Object.keys(contract.optional || {}));
           // Release 3 `locate`: stamp data-design onto the BUILT page's protected-file elements (never the mock). Only ids this width
           // actually needs can fail the locate check (a step the state does not show is not a failure).
@@ -397,6 +400,7 @@ export async function runFidelity(opts) {
               const b = bg.boxes[id];
               if (!m) { gp.push(`${id}: anchor text "${anchors[id]}" not found in the MOCK (contract bug)`); continue; }
               if (!b) { if (!optional.has(id)) gp.push(`${id}: no visible built element`); continue; }
+              if (!full && allowBelow.includes(id) && b.y >= viewport.height) continue;
               if (!full && m.y >= viewport.height) continue; // the MOCK has it below the fold of a viewport snapshot
               if (!full && (b.y >= viewport.height || b.y + b.h <= 0)) { gp.push(`${id}: pushed below the fold (built y ${Math.round(b.y)}, viewport ${viewport.height}px) but the mock shows it on screen`); continue; }
               const tol = Math.max(24, 0.04 * mockGeo.docH);
@@ -419,6 +423,7 @@ export async function runFidelity(opts) {
               const mb = r.mock_box[String(w)];
               const b = rb.boxes[r.id];
               if (!b) { res.checks.push(check('region:' + r.id, false, 'no visible built element')); continue; }
+              if (!full && allowBelow.includes(r.id) && b.y >= viewport.height) continue; // allowed below the fold: outside the capture, not compared
               if (!full && (b.y >= viewport.height || b.y + b.h <= 0)) { res.checks.push(check('region:' + r.id, false, `pushed below the fold (built y ${Math.round(b.y)}, viewport ${viewport.height}px): the region is outside the capture`)); continue; }
               const cmp = compareRegion(mockPng0, builtPng0, { x: mb[0], y: mb[1], w: mb[2], h: mb[3] }, b, r.ceiling, r.min_edge_ratio);
               regionJobs.push({ r, b, cmp }); // own pixels are measured AFTER still-twin (see below): hiding and un-hiding re-rasterises the page
