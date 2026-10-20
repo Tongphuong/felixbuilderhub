@@ -241,7 +241,12 @@ export function mountMonsterBuilder(
     shown.forEach(p => nodes.push(make(p)));
     const rest = real.length - shown.length;
     if (rest > 0) { const more = document.createElement('div'); more.className = 'cp-more'; more.textContent = `+${rest} ${SLOT_LABELS_VI[selectedSlot].toLowerCase()} nữa`; nodes.push(more); }
+    // Tiles are rebuilt on every change: put keyboard focus back on the tile the child just used.
+    const active = document.activeElement as HTMLElement | null;
+    const hadFocus = !!active && tiles.contains(active) && active.dataset.monsterTile !== undefined;
+    const focusedId = hadFocus ? active!.dataset.monsterTile : undefined;
     tiles.replaceChildren(...nodes);
+    if (hadFocus) (nodes.find(n => n.dataset.monsterTile === focusedId) as HTMLElement | undefined)?.focus({ preventScroll: true });
   };
   const render = () => {
     // Empty optional detail must not trigger the renderer's whole-monster fallback.

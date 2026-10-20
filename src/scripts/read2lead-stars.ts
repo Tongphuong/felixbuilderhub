@@ -67,6 +67,8 @@ function render() {
   board.leaders.filter(r => !r.rank || r.rank > 3).forEach((row, i) => list.append(rowView(row, i % 2 === 1)));
   const pinned = el('stars-own'); pinned.replaceChildren(); pinned.hidden = !board.own || board.leaders.some(r => r.is_self);
   if (!pinned.hidden && board.own) { const ol = node('ol', 'stars-list'); ol.append(rowView(board.own, false)); pinned.append(node('span', 'r2l-lab lb-pinned', 'Con ở đây'), ol); }
+  // no rows below the podium (<=3 children, or a tie that fills it): hide the empty white card
+  (list.closest('.stars-listcard') as HTMLElement).hidden = list.children.length === 0 && pinned.hidden;
 }
 async function load() {
   el('stars-retry').hidden = true; el('stars-status').hidden = false; el('stars-status').textContent = 'Đang mở bảng xếp hạng…';

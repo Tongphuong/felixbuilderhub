@@ -135,8 +135,10 @@ body:has(.qt-page) { background: var(--r2l-sky); }
 }
 .qt-gridwrap { align-items: start; }
 .qt-accessory { align-self: stretch; }
-.qt-gift-card--goal .r2l-btn-sun { font-size: 22px; padding: 0 12px; text-align: center; line-height: 1.1; }
-@media (min-width: 1000px) { .qt-gift-card--goal .r2l-btn-sun { font-size: 24px; } }
+.qt-gift-card--goal .r2l-btn-sun { text-align: center; }
 .qt-head h1 { margin-top: 4px; }
 @media (max-width: 420px) { .qt-gift-card .r2l-btn-sm { font-size: 15px; padding: 0 4px; } }
 .still .qt-pulse, .still .qt-float { animation: none; }
+
+/* .hidden must always win over the display rules above (wallet + shell showed through on no-code / loading / failed-load) */
+.qt-wallet.hidden, .qt-shell.hidden { display: none !important; }

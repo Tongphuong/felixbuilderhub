@@ -183,7 +183,6 @@ export function renderPhotoWell(opts: PhotoWellOptions): string {
   if (opts.size === 'lg') classes.push('qt-photo-well--lg');
   if (opts.size === 'sm') classes.push('qt-photo-well--sm');
   if (opts.modifier) classes.push(`qt-photo-well--${opts.modifier}`);
-  if (opts.modifier === 'shimmer') classes.push('qt-shimmer');
 
   const emojiClasses = ['qt-photo-well__emoji'];
   if (opts.animateEmoji) emojiClasses.push('qt-float');

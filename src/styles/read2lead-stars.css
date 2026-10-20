@@ -31,6 +31,7 @@
 .lb-step-rank{font-size:26px}.lb-pcol--1 .lb-step-rank{font-size:36px}.lb-pcol--2 .lb-step-rank{font-size:30px}
 .lb-pcol.is-self .stars-name{text-decoration:underline;text-underline-offset:3px}
 /* list */
+.stars-listcard[hidden]{display:none}
 .stars-listcard{padding:8px;border-radius:26px;display:flex;flex-direction:column;gap:4px}
 .stars-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
 .stars-row{display:flex;align-items:center;gap:12px;min-height:60px;padding:0 10px;border-radius:16px;background:transparent}

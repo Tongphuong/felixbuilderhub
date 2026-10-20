@@ -14,6 +14,9 @@ const TILE_ART=[
  '<path d="M10 25 q30 -30 55 0 q-25 30 -55 0z M65 25 l12 -12 v24z" fill="#FF7A3D" stroke="#17324D" stroke-width="3" stroke-linejoin="round"/><circle cx="24" cy="22" r="3" fill="#17324D"/>',
  '<path d="M10 40 q-6 -22 18 -22 q6 -16 26 -10 q22 -4 24 18 q12 4 4 14z" fill="#fff" stroke="#17324D" stroke-width="3" stroke-linejoin="round"/>',
  '<ellipse cx="28" cy="32" rx="18" ry="12" fill="#C9D3DE" stroke="#17324D" stroke-width="3"/><circle cx="16" cy="18" r="6" fill="#C9D3DE" stroke="#17324D" stroke-width="3"/><ellipse cx="64" cy="32" rx="18" ry="12" fill="#E8A06B" stroke="#17324D" stroke-width="3"/><circle cx="76" cy="18" r="6" fill="#E8A06B" stroke="#17324D" stroke-width="3"/>'];
+/* Tile art is CSS only: one stylesheet rule per picture (4 rules), so a card is a plain div with no SVG node of its own (was an inline SVG per card x 1,095). */
+const TILE_CLASS=TILE_ART.map((_,n)=>`pic-${n}`);
+{const st=document.createElement('style');st.textContent=TILE_ART.map((a,n)=>`.story-card .pic.pic-${n}{background-image:url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80">${a}</svg>`)}");background-repeat:no-repeat;background-position:center;background-size:70% 70%}`).join('\n');document.head.append(st);}
 const SCENE_ART='<svg aria-hidden="true" viewBox="0 0 330 150" preserveAspectRatio="xMidYMid slice"><circle cx="260" cy="44" r="24" fill="#FFD95A"/><ellipse cx="80" cy="50" rx="40" ry="14" fill="#fff"/><path d="M150 76 q12 -12 24 0 q12 -12 24 0" stroke="#17324D" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M0 116 C70 94 150 112 230 100 C290 92 320 100 330 98 L330 150 L0 150Z" fill="#4FB868"/></svg>';
 const ARROW='<svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" stroke="#17324D" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;};
@@ -58,7 +61,7 @@ function listStories(){
  const today=$('today').dataset.story,rest=stories.filter(s=>s.id!==today||$('today').hidden);
  $('grid-title').hidden=!rest.length;
  $('stories-grid').replaceChildren(...rest.map(s=>{const i=Number(s.number||0)+catalogue.books.findIndex(b=>b.id===s.bookId);const a=el('a','card-f story-card');a.href='?story='+s.id;a.dataset.story=s.id;
- const pic=el('div','pic');pic.style.background=TILE_COLOURS[i%TILE_COLOURS.length];pic.innerHTML=`<svg aria-hidden="true" viewBox="0 0 120 80" preserveAspectRatio="xMidYMid meet">${TILE_ART[i%TILE_ART.length]}</svg>`;
+ const pic=el('div','pic');pic.style.backgroundColor=TILE_COLOURS[i%TILE_COLOURS.length];pic.classList.add(TILE_CLASS[i%TILE_ART.length]);
  const title=el('strong','',s.title);title.lang='en';
  a.append(pic,title,el('span','where',`${activeCollection==='all'?label(catalogue.books.find(b=>b.id===s.bookId)):'Quyển '+catalogue.books.find(b=>b.id===s.bookId).month} · Bài ${s.number}`),storyTags(s));
  a.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();openStory(s.id);};return a;}));
@@ -103,4 +106,4 @@ audio.onerror=()=>{$('audio-status').textContent='Chưa phát được bài nghe
 window.addEventListener('pagehide',()=>{audio.pause();loading?.destroy().catch(()=>{});});document.addEventListener('visibilitychange',()=>{if(document.hidden)audio.pause();});
 let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>renderPage(),200);});
 try{const response=await fetch('/api/read2lead-library');if(!response.ok)throw Error();catalogue=await response.json();if(!catalogue.stories?.length)throw Error();const summary=`${catalogue.counts.stories.toLocaleString('vi-VN')} câu chuyện · ${catalogue.counts.books} quyển sách`;$('library-summary').textContent=summary;$('library-summary-lab').textContent=summary;assignedTitle=await fetchAssignedTitle();renderToday();listBooks();listStories();const q=new URLSearchParams(location.search);if(q.has('story'))await openStory(q.get('story'));else if(q.has('book')){const book=catalogue.books.find(b=>b.id===q.get('book'));if(book){activeCollection=String(book.collection);activeBook=book.id;listBooks();listStories();}}}
-catch{status.textContent='Chưa mở được thư viện. Con tải lại trang hoặc đăng nhập lại để tiếp tục.';}
+catch{$('library-summary').textContent='';$('library-summary-lab').textContent='';status.textContent='Chưa mở được thư viện. Con tải lại trang hoặc đăng nhập lại để tiếp tục.';}
