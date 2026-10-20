@@ -8,68 +8,95 @@ import '../styles/read2lead-home-island.css';
 const TURNSTILE_SITE_KEY = String(import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '').trim();
 ---
 <main id="main" data-child-home class="reading-home" aria-busy="true">
-  <header class="reading-home__header">
-    <a href="/read2lead" aria-label="Read2Lead — Trang đọc sách" class="reading-home__brand"><span aria-hidden="true">▤</span> Read2Lead</a>
+  <header class="reading-home__header ph-header" data-design="parents.header">
+    <a href="/read2lead" aria-label="Read2Lead — Trang đọc sách" class="reading-home__brand ph-brand"><span class="ph-logo" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="#FFC83D" stroke="#17324D" stroke-width="3"></rect><g transform="translate(10 10) scale(1.1667)"><path d="M2 5c3-1 7-1 10 1 3-2 7-2 10-1v14c-3-1-7-1-10 1-3-2-7-2-10-1z" fill="#fff" stroke="#17324D" stroke-width="2" stroke-linejoin="round"></path><path d="M12 6v14" stroke="#17324D" stroke-width="2"></path></g></svg></span><span class="ph-brand-name">Read2Lead</span></a>
+    <a id="ph-header-code" class="ph-header-code" href="#home-code">Nhập mã</a>
   </header>
   <p id="home-speaking-note" class="reading-home__speaking-note" hidden>Minny luyện nói cùng con trong mỗi câu chuyện. Bài đã lưu của con vẫn còn.</p>
   <section id="home-loading" class="reading-home__notice" role="status">Đang mở góc đọc sách của con…</section>
-  <section id="home-entry" class="reading-home__entry" aria-labelledby="home-entry-hero" hidden>
-    <div class="reading-home__intro">
-      <div class="reading-home__pet reading-home__pet--intro" aria-hidden="true" set:html={defaultMonsterSvg()}></div>
-      <h1 id="home-entry-hero">Read2Lead — con đọc truyện và luyện nói cùng Minny</h1>
-      <p class="reading-home__intro-sub">bổ trợ cho việc học tại nhà</p>
-      <ol id="entry-steps" class="reading-home__steps reading-home__steps--cards" aria-label="Các bước đọc truyện"><li><b>1</b><span>Đọc</span></li><li><b>2</b><span>Trả lời Minny</span></li><li><b>3</b><span>Kể qua tranh</span></li></ol>
-      <a class="reading-home__jump" href="#home-code">Nhập mã <span aria-hidden="true">↓</span></a>
+  <section id="home-entry" class="ph r2l" aria-labelledby="home-entry-hero" hidden>
+    <div class="ph-hero">
+      <div class="ph-sky" data-design="parents.hero" aria-hidden="true"><svg class="ph-hills ph-hills--phone" viewBox="0 0 390 140" preserveAspectRatio="none"><path d="M0 80 C 90 40 200 70 270 50 C 330 35 370 45 390 40 L390 140 L0 140Z" fill="#7BD389"></path></svg><svg class="ph-hills ph-hills--wide" viewBox="0 0 1280 200" preserveAspectRatio="none"><path d="M0 120 C 240 60 520 110 760 80 C 980 55 1140 80 1280 70 L1280 200 L0 200Z" fill="#7BD389"></path></svg></div>
+      <div class="ph-copy">
+        <h1 id="home-entry-hero" class="r2l-d ph-h1">Con đọc truyện và luyện nói cùng Minny</h1>
+        <p class="r2l-b-l ph-lead">Read2Lead là góc đọc truyện tiếng Anh miễn phí, bổ trợ cho việc học tại nhà. Mỗi ngày 3 bước:</p>
+        <ol id="entry-steps" class="ph-steps" data-design="parents.steps" aria-label="Các bước đọc truyện">
+          <li class="ph-step"><span class="r2l-node ph-num" aria-hidden="true">1</span><span class="ph-step-text"><b>Đọc</b><span>Con đọc truyện tranh từng trang.</span></span></li>
+          <li class="ph-step"><span class="r2l-node ph-num" aria-hidden="true">2</span><span class="ph-step-text"><b>Trả lời Minny</b><span>Minny hỏi, con trả lời bằng giọng nói.</span></span></li>
+          <li class="ph-step"><span class="r2l-node ph-num" aria-hidden="true">3</span><span class="ph-step-text"><b>Kể qua tranh</b><span>Con kể lại câu chuyện qua tranh.</span></span></li>
+        </ol>
+        <a class="r2l-btn r2l-btn-sun r2l-btn-w ph-jump" href="#home-code" data-design="parents.jump">Nhập mã <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="ph-side">
+        <div class="ph-minny" data-design="parents.minny"><img src="/assets/minny/vector/minny-face.svg" alt="Minny, robot đỏ" width="96" height="96" /></div>
+        <div id="entry-rankings" class="r2l-card-f ph-top3" data-design="parents.top3" hidden>
+          <span class="ph-top3-head"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24"><path d="M7 3h10v5a5 5 0 0 1-10 0z" fill="#FFC83D" stroke="#17324D" stroke-width="2"></path><path d="M7 5H3v2a4 4 0 0 0 4 4M17 5h4v2a4 4 0 0 1-4 4M12 13v4M8 21h8l-1-4H9z" stroke="#17324D" stroke-width="2" fill="none" stroke-linejoin="round"></path></svg><span class="r2l-d r2l-t-3">Bảng xếp hạng</span></span>
+          <span class="ph-top3-cols">
+            <span id="entry-col-xp" class="ph-top3-col"><span class="r2l-lab">XP</span><span id="entry-rank-xp" class="ph-top3-list"></span></span>
+            <span id="entry-col-diamonds" class="ph-top3-col"><span class="r2l-lab">Kim cương</span><span id="entry-rank-diamonds" class="ph-top3-list"></span></span>
+          </span>
+        </div>
+      </div>
     </div>
-    <div id="entry-rankings" class="reading-home__ranks reading-home__ranks--static" hidden>
-      <span class="reading-home__ranks-head"><strong>🏆 Bảng xếp hạng</strong></span>
-      <span class="reading-home__ranks-cols">
-        <span id="entry-col-xp" class="reading-home__ranks-col"><span class="reading-home__ranks-title">⚡ XP</span><span id="entry-rank-xp" class="reading-home__ranks-list"></span></span>
-        <span id="entry-col-diamonds" class="reading-home__ranks-col"><span class="reading-home__ranks-title">💎 Kim cương</span><span id="entry-rank-diamonds" class="reading-home__ranks-list"></span></span>
-      </span>
-    </div>
-    <div class="reading-home__codebox">
-      <span class="reading-home__book" aria-hidden="true">✦</span>
-      <h2 id="home-entry-title">Góc đọc sách đang chờ con</h2>
-      <p>Nhập mã học sinh để mở truyện của con nhé.</p>
-      <form id="home-entry-form">
-        <label for="home-code">Mã học sinh của con</label>
-        <input id="home-code" name="student-code" type="text" maxlength="100" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="R2L-…" aria-describedby="home-entry-message" data-clarity-mask="true" required />
-        <p id="home-entry-message" role="alert"></p>
-        <button id="home-entry-submit" class="reading-home__primary" type="submit">Mở góc đọc sách <span aria-hidden="true">→</span></button>
-      </form>
-      <p class="reading-home__entry-note">Con cũng có thể mở link riêng Coach Felix đã gửi.</p>
-      <a class="reading-home__help" href={ZALO_URL}>Nhờ ba mẹ nhận mã từ Coach Felix</a>
-    </div>
-    {TURNSTILE_SITE_KEY && <div id="signup-card" class="reading-home__codebox reading-home__signup" data-turnstile-sitekey={TURNSTILE_SITE_KEY}>
-      <span class="reading-home__book" aria-hidden="true">🌟</span>
-      <h2 id="signup-title">Chưa có mã? Tạo mã miễn phí</h2>
-      <p>Con điền vài thông tin nhỏ, Minny sẽ mở góc đọc sách cho con ngay.</p>
-      <form id="signup-form" novalidate>
-        <label for="signup-name">Tên của con</label>
-        <input id="signup-name" name="student-name" type="text" maxlength="20" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Ví dụ: Ngọc Anh" data-clarity-mask="true" aria-describedby="signup-name-note" required />
-        <p id="signup-name-note" class="reading-home__field-note">Tên con sẽ hiện trên bảng xếp hạng công khai.</p>
-        <label for="signup-age">Con mấy tuổi?</label>
-        <select id="signup-age" name="student-age" required>
-          <option value="">Chọn tuổi của con</option>
-          {[5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(age => <option value={age}>{age} tuổi</option>)}
-        </select>
-        <fieldset class="reading-home__gender">
-          <legend>Con là</legend>
-          <label class="reading-home__gender-opt"><input id="signup-gender-boy" type="radio" name="child-gender" value="boy" /><span>Bé trai</span></label>
-          <label class="reading-home__gender-opt"><input id="signup-gender-girl" type="radio" name="child-gender" value="girl" /><span>Bé gái</span></label>
-        </fieldset>
-        <div id="signup-turnstile" class="reading-home__turnstile"></div>
-        <p id="signup-message" role="alert"></p>
-        <button id="signup-submit" class="reading-home__primary" type="submit">Tạo mã miễn phí <span aria-hidden="true">→</span></button>
-      </form>
-    </div>}
-    <div id="donate-card" class="reading-home__codebox reading-home__donate">
-      <h2 id="donate-title">Dành cho ba mẹ</h2>
-      <p>Read2Lead miễn phí cho mọi bạn nhỏ. Nếu ba mẹ thấy hữu ích, có thể ủng hộ để duy trì trang 💛</p>
-      <img class="reading-home__qr" src="/donate-qr.png" width="240" height="240" alt="Mã QR chuyển khoản ủng hộ Read2Lead" loading="lazy" decoding="async" />
-      <p class="reading-home__donate-line"><strong>Chủ tài khoản:</strong> <span id="donate-account-name">TONG MINH PHUONG</span></p>
-      <p class="reading-home__donate-line"><strong>Ngân hàng:</strong> <span id="donate-bank">MB Bank · 0396868675</span></p>
+    <div class="ph-body">
+      <div class="ph-cards">
+        <div data-design="parents.code" data-design-col class="r2l-card ph-code reading-home__codebox">
+          <div class="ph-code-head">
+            <span class="ph-pet r2l-m-bob" aria-hidden="true" set:html={defaultMonsterSvg()}></span>
+            <h2 id="home-entry-title" class="r2l-d ph-h2">Góc đọc sách đang chờ con</h2>
+          </div>
+          <p class="r2l-b-l ph-p">Nhập mã học sinh để mở truyện của con nhé.</p>
+          <form id="home-entry-form" class="ph-form">
+            <label for="home-code" class="r2l-lab">Mã học sinh của con</label>
+            <input id="home-code" class="r2l-inp" name="student-code" type="text" maxlength="100" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="R2L-…" aria-describedby="home-entry-message" data-clarity-mask="true" required />
+            <p id="home-entry-message" class="ph-alert" role="alert"></p>
+            <button id="home-entry-submit" class="r2l-btn r2l-btn-sun r2l-btn-w" type="submit" data-design="parents.primary">Mở góc đọc sách <span aria-hidden="true">→</span></button>
+          </form>
+          <p class="r2l-b-m ph-p">Con cũng có thể mở link riêng Coach Felix đã gửi.</p>
+          <a class="r2l-lnk ph-help" href={ZALO_URL}>Nhờ ba mẹ nhận mã từ Coach Felix</a>
+        </div>
+        {TURNSTILE_SITE_KEY && <div id="signup-card" class="r2l-card-f ph-signup" data-design="parents.signup" data-design-col data-turnstile-sitekey={TURNSTILE_SITE_KEY}>
+          <h2 id="signup-title" class="r2l-d ph-h2">Chưa có mã? Tạo mã miễn phí</h2>
+          <p class="r2l-b-l ph-p">Con điền vài thông tin nhỏ, Minny sẽ mở góc đọc sách cho con ngay.</p>
+          <form id="signup-form" class="ph-form" novalidate>
+            <div class="ph-field">
+              <label for="signup-name" class="r2l-lab">Tên của con</label>
+              <input id="signup-name" class="r2l-inp" name="student-name" type="text" maxlength="20" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Ví dụ: Ngọc Anh" data-clarity-mask="true" aria-describedby="signup-name-note" required />
+              <p id="signup-name-note" class="ph-note">Tên con sẽ hiện trên bảng xếp hạng công khai.</p>
+            </div>
+            <div class="ph-pair">
+              <div class="ph-field">
+                <label for="signup-age" class="r2l-lab">Con mấy tuổi?</label>
+                <select id="signup-age" class="r2l-inp" name="student-age" required>
+                  <option value="">Chọn tuổi của con</option>
+                  {[5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(age => <option value={age}>{age} tuổi</option>)}
+                </select>
+              </div>
+              <fieldset class="ph-gender">
+                <legend class="r2l-lab">Con là</legend>
+                <div class="ph-gender-row">
+                  <label class="ph-gender-opt"><input id="signup-gender-boy" type="radio" name="child-gender" value="boy" /><span>Bé trai</span></label>
+                  <label class="ph-gender-opt"><input id="signup-gender-girl" type="radio" name="child-gender" value="girl" /><span>Bé gái</span></label>
+                </div>
+              </fieldset>
+            </div>
+            <div id="signup-turnstile" class="ph-turnstile" data-design="parents.turnstile"></div>
+            <p id="signup-message" class="ph-alert" role="alert"></p>
+            <button id="signup-submit" class="r2l-btn r2l-btn-leaf r2l-btn-w" type="submit">Tạo mã miễn phí <span aria-hidden="true">→</span></button>
+          </form>
+        </div>}
+      </div>
+      <div id="donate-card" class="ph-donate" data-design="parents.donate">
+        <div class="ph-donate-text">
+          <h2 id="donate-title" class="r2l-d ph-h2">Dành cho ba mẹ</h2>
+          <p class="r2l-b-l ph-p">Read2Lead miễn phí cho mọi bạn nhỏ. Nếu ba mẹ thấy hữu ích, có thể ủng hộ để duy trì trang.</p>
+          <div class="ph-donate-lines">
+            <p class="r2l-b-l ph-donate-line ph-donate-line--a"><strong>Chủ tài khoản:</strong> <span id="donate-account-name">TONG MINH PHUONG</span></p>
+            <p class="r2l-b-l ph-donate-line"><strong>Ngân hàng:</strong> <span id="donate-bank">MB Bank · 0396868675</span></p>
+          </div>
+        </div>
+        <img class="ph-qr" src="/donate-qr.png" width="240" height="240" alt="Mã QR chuyển khoản ủng hộ Read2Lead" loading="lazy" decoding="async" />
+      </div>
     </div>
   </section>
   <section id="home-error" class="reading-home__notice" hidden>

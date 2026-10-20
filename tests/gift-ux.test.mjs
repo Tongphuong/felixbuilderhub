@@ -584,8 +584,9 @@ test('qua-that.css motion is gated by prefers-reduced-motion', () => {
   assert.match(reduceBlock, /\.qt-float/);
 });
 
-test('the photo well falls back from photo to emoji via onerror', () => {
-  assert.match(giftUxSource, /onerror="this\.remove\(\)"/);
+test('the photo well falls back from photo to emoji via a CSP-safe listener (no inline onerror: the live CSP blocks it)', () => {
+  assert.doesNotMatch(giftUxSource, /onerror="/);
+  assert.match(giftUxSource, /doc\.addEventListener\('error'/);
 });
 
 // --- emoji-is-a-fallback regression (production bug: a mostly-transparent
@@ -596,8 +597,8 @@ test('renderPhotoWell emits an onload hook that hides the emoji once a real phot
   const { renderPhotoWell } = await loadGiftUx();
   const withImg = renderPhotoWell({ emoji: '🌟', name: 'Sticker', imageSrc: 'https://cf.shopee.vn/sticker.jpg' });
   assert.match(withImg, /<img /);
-  assert.match(withImg, /onload="this\.closest\('\.qt-photo-well'\)\?\.classList\.add\('qt-photo-well--has-img'\)"/);
-  assert.match(withImg, /onerror="this\.remove\(\)"/);
+  assert.match(withImg, /data-qt-photo/);
+  assert.doesNotMatch(withImg, /onload=|onerror=/);
 
   const withoutImg = renderPhotoWell({ emoji: '🌟', name: 'Sticker' });
   assert.doesNotMatch(withoutImg, /<img/);

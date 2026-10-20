@@ -83,6 +83,8 @@ function partNameVi(slot: MonsterSlot, partId: string): string {
     orange: 'cam',
     gold: 'vàng kim',
     grey: 'xám',
+    brown: 'nâu',
+    light: 'sáng',
     // the five cosmetic tint colours (hats / pets) — without these every crown read just "Mũ vương miện"
     mint: 'bạc hà',
     coral: 'san hô',
@@ -91,18 +93,25 @@ function partNameVi(slot: MonsterSlot, partId: string): string {
     grape: 'tím nho',
   };
   const color = Object.keys(colorLabels).find((key) => partId.includes(`-${key}`));
-  const detailLabels: Record<string, string> = {
-    antenna: 'Râu',
-    horn: 'Sừng',
-    ear: 'Tai',
-    eyebrow: 'Lông mày',
-    nose: 'Mũi',
-    snot: 'Mũi',
-  };
+  // 1 for "a", 2 for "b" ...: the part files end in a variant letter (body-bluea, arm-redc, mouthf, eyebrowb)
+  const variantNo = (id: string) => { const m = id.match(/([a-z])$/); return m ? m[1].charCodeAt(0) - 96 : 0; };
+  // Display names only (never ids or saved data): every part of a slot must read differently in the tile row.
+  // Order matters: the first key found in the id wins, so "ear-round" is tried before "ear".
+  const detailLabels: Array<[string, string]> = [
+    ['snot', 'Mũi sụt sịt'],
+    ['eyebrow', 'Lông mày'],
+    ['ear-round', 'Tai tròn'],
+    ['antenna', 'Râu'],
+    ['horn', 'Sừng'],
+    ['nose', 'Mũi'],
+    ['ear', 'Tai'],
+    ['-eye', 'Mắt phụ'],
+  ];
   if (slot === 'detail') {
-    const kind = Object.keys(detailLabels).find((key) => partId.includes(key));
+    const found = detailLabels.find(([key]) => partId.includes(key));
     const size = partId.includes('-large') ? ' lớn' : partId.includes('-small') ? ' nhỏ' : '';
-    return `${detailLabels[kind || ''] || 'Chi tiết'}${color ? ` ${colorLabels[color]}` : ''}${size}`;
+    const variant = partId.includes('eyebrow') ? ` kiểu ${variantNo(partId)}` : '';
+    return `${found ? found[1] : 'Chi tiết'}${color ? ` ${colorLabels[color]}` : ''}${size}${variant}`;
   }
   if (slot === 'effects') {
     const effectLabels: Record<string, string> = {
@@ -114,11 +123,16 @@ function partNameVi(slot: MonsterSlot, partId: string): string {
       star: 'Ngôi sao',
     };
     const kind = Object.keys(effectLabels).find((key) => partId.includes(`-${key}-`));
-    return `${effectLabels[kind || ''] || 'Hiệu ứng'}${color ? ` ${colorLabels[color]}` : ''}`;
+    const effectNo = partId.match(/-(\d+)$/);
+    return `${effectLabels[kind || ''] || 'Hiệu ứng'}${color ? ` ${colorLabels[color]}` : ''}${effectNo ? ` kiểu ${Number(effectNo[1])}` : ''}`;
   }
   if (slot === 'frame') {
     if (partId === 'frame-rainbow') return 'Khung cầu vồng';
-    return `Khung${color ? ` ${colorLabels[color]}` : ''}`;
+    const shapes: Array<[string, string]> = [['badge', 'huy hiệu'], ['panel', 'bảng'], ['ribbon', 'ruy băng']];
+    const styles: Array<[string, string]> = [['border', 'viền'], ['depth', 'nổi'], ['line', 'kẻ']];
+    const shape = shapes.find(([key]) => partId.includes(`-${key}`));
+    const style = styles.find(([key]) => partId.includes(`-${key}`));
+    return `Khung${shape ? ` ${shape[1]}` : ''}${style ? ` ${style[1]}` : ''}${color ? ` ${colorLabels[color]}` : ''}`;
   }
   const cosmeticColor = Object.keys(colorLabels).find((key) => partId.endsWith(`-${key}`));
   const cosmeticLabels: Record<string, string> = {
@@ -139,13 +153,30 @@ function partNameVi(slot: MonsterSlot, partId: string): string {
   };
   if (slot === 'hat' || slot === 'pet') {
     const kind = partId.replace(/^(hat|pet)-/, '').replace(/-[a-z]+$/, '');
-    const label = cosmeticLabels[kind] || kind.replace(/-/g, ' ');
+    const raw = cosmeticLabels[kind] || kind.replace(/-/g, ' ');
+    const label = raw.startsWith('mũ ') ? raw.slice(3) : raw; // "Mũ" + "mũ len" read "Mũ mũ len"
     return `${SLOT_LABELS_VI[slot]} ${label}${cosmeticColor ? ` ${colorLabels[cosmeticColor]}` : ''}`;
   }
   if (slot === 'wings') {
-    return cosmeticLabels[partId] || `Cánh ${partId.replace(/^wings-/, '').replace(/-/g, ' ')}`;
+    const wing = cosmeticLabels[partId] || `Cánh ${partId.replace(/^wings-/, '').replace(/-/g, ' ')}`;
+    return wing.charAt(0).toUpperCase() + wing.slice(1);
   }
-  return `${SLOT_LABELS_VI[slot]}${color ? ` ${colorLabels[color]}` : ''}`;
+  if (slot === 'eyes') {
+    const eyeKinds: Array<[string, string]> = [
+      ['angry', 'giận dữ'], ['closed-feminine', 'nhắm dịu dàng'], ['closed-happy', 'nhắm cười'], ['cute', 'dễ thương'],
+      ['dead', 'choáng váng'], ['psycho', 'tinh nghịch'], ['human', 'như người'],
+    ];
+    const kind = eyeKinds.find(([key]) => partId.includes(`eye-${key}`));
+    return `${SLOT_LABELS_VI[slot]} ${kind ? kind[1] : 'tròn'}${color ? ` ${colorLabels[color]}` : ''}`;
+  }
+  if (slot === 'mouth') {
+    const closed: Record<string, string> = { fangs: 'răng nanh', happy: 'cười', sad: 'buồn', teeth: 'nhe răng' };
+    const m = partId.match(/mouth-closed-([a-z]+)$/);
+    if (m) return `${SLOT_LABELS_VI[slot]} ${closed[m[1]] || m[1]}`;
+    return `${SLOT_LABELS_VI[slot]}${variantNo(partId) ? ` kiểu ${variantNo(partId)}` : ''}`;
+  }
+  // body / arms: colour + the variant letter of the part file (a = kiểu 1 ...)
+  return `${SLOT_LABELS_VI[slot]}${color ? ` ${colorLabels[color]}` : ''}${variantNo(partId) ? ` · kiểu ${variantNo(partId)}` : ''}`;
 }
 
 function defaultDraft(state: Read2LeadState): MonsterConfig {
@@ -209,6 +240,8 @@ export function mountMonsterBuilder(
      then "+N nữa" for the rest. A tile selects exactly what the ←/→ arrows would reach — same draft, same save. */
   const renderTiles = () => {
     if (!tiles) return;
+    // the toolbar's name says which category the tiles belong to ("Chọn kiểu · Mắt")
+    tiles.setAttribute('aria-label', `Chọn kiểu · ${SLOT_LABELS_VI[selectedSlot]}`);
     const parts = getAvailablePartsForSlot(selectedSlot, state);
     const optional = parts.length > 0 && parts[0].id === '';
     const real = optional ? parts.slice(1) : parts;
