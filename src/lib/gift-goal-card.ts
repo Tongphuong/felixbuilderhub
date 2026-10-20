@@ -32,8 +32,11 @@
 // this widget only needs to be truthful on someone else's screen, not
 // theatrical.
 
-import { deriveGiftCardState, type GiftCardState } from './gift-ux';
+import { deriveGiftCardState, installPhotoWellFallback, type GiftCardState } from './gift-ux';
 import { giftPhotoSrc } from './gift-photo';
+
+// The live CSP blocks inline `onerror=`; the photo carries `data-qt-photo` and gift-ux's capture-phase listener removes a failed one.
+if (typeof document !== 'undefined') installPhotoWellFallback();
 
 /** Structural subset of gift-ux.ts's GiftItem. Any real GiftItem satisfies
  * this shape as-is; `deriveGiftCardState` is deliberately typed to accept
@@ -123,7 +126,7 @@ function renderWell(item: GiftGoalItem, variant: GiftGoalCardVariant, badgeHtml:
     : 'position:relative; aspect-ratio:16/9; overflow:hidden;';
   const emojiSize = variant === 'wide' ? '40px' : '48px';
   const imgHtml = img
-    ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(item.name_vi)}" loading="lazy" onerror="this.remove()" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; padding:10%; box-sizing:border-box;" />`
+    ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(item.name_vi)}" loading="lazy" data-qt-photo style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; padding:10%; box-sizing:border-box;" />`
     : '';
   return `
     <div style="${boxStyle}">

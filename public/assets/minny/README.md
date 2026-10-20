@@ -20,6 +20,8 @@ Every PNG below and in `../r2l/minny/` was re-rendered from those SVGs at the SA
 | `../r2l/minny/wink.png` | minny-face-talk |
 | `../r2l/minny/thinking.png` | minny-listen |
 
+Reproduce all 14 PNGs with `node scripts/minny/render-minny.mjs` (playwright-core + Chrome).
+
 The `minny_*.mp4` loops below are the OLD 3D art and were NOT replaced (no flat video exists).
 
 **Older source of truth (3D art, retired):** `D:/MSMW/marketing/seedance_minny/references/minny_ref_final.png`

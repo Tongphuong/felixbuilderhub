@@ -220,3 +220,23 @@ test('backlog 5: no inline onerror/onload on the gift photo; a capture-phase lis
   const other = mk(false); handlers.error.fn({ target: other.el }); handlers.load.fn({ target: other.el });
   assert.deepEqual(other.log, [], 'unmarked images are left alone');
 });
+
+test('follow-up: gift-goal-card has no inline onerror and uses the shared CSP-safe fallback', () => {
+  const src = read('src/lib/gift-goal-card.ts');
+  assert.doesNotMatch(src, /onerror="|onload="/);
+  assert.match(src, /data-qt-photo/);
+  assert.match(src, /import \{[^}]*installPhotoWellFallback[^}]*\} from '\.\/gift-ux'/);
+  assert.match(src, /typeof document !== 'undefined'\) installPhotoWellFallback\(\)/);
+});
+
+test('follow-up: Turnstile renders the light theme on the cream parents page', () => {
+  const ts = read('src/scripts/read2lead-child-home.ts');
+  assert.match(ts, /sitekey: siteKey, language: 'vi', theme: 'light'/);
+  assert.doesNotMatch(ts, /theme: 'dark'/);
+});
+
+test('follow-up: the Minny render script is in the repo and the README points at it', () => {
+  assert.ok(existsSync('scripts/minny/render-minny.mjs'));
+  assert.match(read('scripts/minny/render-minny.mjs'), /from 'playwright-core'/);
+  assert.match(read('public/assets/minny/README.md'), /scripts\/minny\/render-minny\.mjs/);
+});

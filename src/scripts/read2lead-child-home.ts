@@ -273,7 +273,7 @@ if (root) {
       const t = (window as any).turnstile, siteKey = el('signup-card').getAttribute?.('data-turnstile-sitekey');
       if (!t || !siteKey) throw new Error('turnstile_missing');
       turnstileWidget = t.render(el('signup-turnstile'), {
-        sitekey: siteKey, language: 'vi', theme: 'dark',
+        sitekey: siteKey, language: 'vi', theme: 'light',
         callback: (token: string) => { turnstileToken = token; if (el('signup-message').textContent === WATCHDOG_MESSAGE) signupMessage(''); },
         'expired-callback': () => { turnstileToken = ''; },
         // Turnstile's own failure signals: tell the family right away.
