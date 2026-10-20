@@ -183,6 +183,25 @@ test('round 6: every /assets path the packet-B code references exists under publ
   }
 });
 
+test('R3 fix: the reader root grows with its content in every stage (no fixed height / min-height / overflow clip on the root, no collapsed fr rows on the workspace)', () => {
+  // no rule whose selector IS the root may set a height other than auto / min-height 0 / overflow other than visible
+  for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    const [, sel, decl] = m;
+    for (const one of sel.split(',').map(s => s.trim())) {
+      if (!/#w1-book-reader-phase(\.r2l-book-reader|\[[^\]]*\]|:not\([^)]*\))*\s*$/.test(one)) continue;
+      assert.doesNotMatch(decl, /(^|;|\s)height:(?!\s*auto)[^;]+/, 'root height: ' + one);
+      assert.doesNotMatch(decl, /(^|;|\s)min-height:(?!\s*0\b)[^;]+/, 'root min-height: ' + one);
+      assert.doesNotMatch(decl, /overflow(-y)?:\s*(hidden|auto|scroll|clip)/, 'root overflow: ' + one);
+    }
+  }
+  // the older story-mission rules give the workspace fixed fr rows and a viewport height; they must be neutralised for every interview stage
+  assert.match(css, /\[data-interview='true'\] #book-reader-workspace \{ grid-template-rows: none; grid-auto-rows: auto; height: auto; min-height: 0; overflow: visible; \}/);
+  assert.match(css, /:is\(\.picture-retell-board, \.story-mission-chat, \.story-mission-book\) \{ height: auto; max-height: none; min-height: 0; overflow: visible; \}/);
+  // and the rule being neutralised really is the one in the story-mission css
+  const old = readFileSync('src/styles/read2lead-story-mission.css', 'utf8');
+  assert.match(old, /grid-template-rows:minmax\(0,\.62fr\) minmax\(0,\.38fr\)/);
+});
+
 test('round 4 R2: voice DOM order is progress, Minny, question, MIC, latest reply, notice; label is Baloo 2', () => {
   assert.match(voice, /panel\.replaceChildren\(progressWrap,hero,qcard,controls,feedback,notice\)/);
   // the mic wrapper really is appended (a `//` comment once swallowed this call on the same line)

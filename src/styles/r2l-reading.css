@@ -757,3 +757,14 @@ body #w1-book-reader-phase .story-mission-history > summary {
 body #w1-book-reader-phase .story-mission-history > summary::-webkit-details-marker { display: none; }
 body #w1-book-reader-phase .story-mission-history[open] > summary { margin-bottom: 8px; background: var(--r2l-sand); }
 body #w1-book-reader-phase .story-mission-history .minny-transcript { min-height: 0; padding: 0; }
+
+/* The reader root must GROW with its content in every stage (help box and credits always below it). The older story-mission rules give the interview
+   workspace fixed rows (minmax(0, .62fr) / .38fr) and a viewport height in some stages (picture_retell); with an auto height those rows collapse
+   to 0 and the content spills out of the root. Neutralise them for every interview stage and for the retell pieces. */
+body #w1-book-reader-phase[data-story-mission][data-interview='true'] #book-reader-workspace { grid-template-rows: none; grid-auto-rows: auto; height: auto; min-height: 0; overflow: visible; }
+body #w1-book-reader-phase[data-story-mission][data-interview='true'] :is(.picture-retell-board, .story-mission-chat, .story-mission-book) { height: auto; max-height: none; min-height: 0; overflow: visible; }
+body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='picture_retell'] #book-reader-workspace { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 1024px) {
+  body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='picture_retell'] #book-reader-workspace { grid-template-columns: minmax(0, 1.6fr) minmax(18rem, 1fr); align-items: start; gap: 14px 28px; }
+}
+body #w1-book-reader-phase.r2l-book-reader { height: auto; min-height: 0; overflow: visible; }
