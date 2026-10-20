@@ -53,6 +53,7 @@ const PAGES = {
   low: html('<div style="height:900px"></div><div data-design="t.low" style="height:60px;width:200px">x</div>'),
   'details-closed': html('<details><summary style="height:48px">Chi tiết</summary><div style="border:2px solid #17324D;width:120px;padding:4px"><button style="width:300px;height:48px;font-family:inherit">Nút tràn</button></div></details>'),
   'details-open': html('<details open><summary style="height:48px">Chi tiết</summary><div style="border:2px solid #17324D;width:120px;padding:4px"><button style="width:300px;height:48px;font-family:inherit">Nút tràn</button></div></details>'),
+  overlap: html('<div id="ov" style="position:relative;height:0"><p style="position:absolute;top:-150px;left:16px;margin:0">Chồng chữ</p></div>'),
   'ts-script': html('<div data-design="t.ts" style="height:70px;width:300px">x</div><script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async></script>'),
   'ts-iframe': html('<div data-design="t.ts" style="height:70px;width:300px"><iframe style="width:300px;height:65px;border:0"></iframe></div>'),
   'ts-empty': html('<div data-design="t.ts" style="height:70px;width:300px">x</div>'),
@@ -91,6 +92,8 @@ const CASES = {
   'never-red-missing-id': { never_red: ['n.nothing'] },
   'fold-unlisted': { order: ['t.a', 't.b', 't.low'], ...at('low') },
   'fold-listed': { order: ['t.a', 't.b', 't.low'], allow_below_fold: ['t.low'], ...at('low') },
+  'overlap-unlisted': at('overlap'),
+  'overlap-listed': { overflow_allow: ['#ov'], ...at('overlap') },
   'layout-details-closed': at('details-closed'),
   'layout-details-open': at('details-open'),
   'ts-script-ok': { turnstile: 't.ts', ...at('ts-script') },
@@ -188,6 +191,10 @@ test('R3 fields: known-good pass, known-bad fail the NAMED check with the specif
     await t.test('layout-sanity skips the body of a CLOSED <details>; BITE: the same overflowing control in an OPEN one still fails', () => {
       assert.equal(c('layout-details-closed', 'layout-sanity').pass, true, c('layout-details-closed', 'layout-sanity').detail);
       assert.match(c('layout-details-open', 'layout-sanity').detail, /escape button/);
+    });
+    await t.test('overflow_allow also covers the text-overlap check; BITE: the same overlap NOT listed still fails', () => {
+      assert.match(c('overlap-unlisted', 'layout-sanity').detail, /overlap .*Chồng chữ/);
+      assert.equal(c('overlap-listed', 'layout-sanity').pass, true, c('overlap-listed', 'layout-sanity').detail);
     });
     await t.test('turnstile: container + script tag (offline) or iframe passes; BITE: a missing container, or one with neither, fails', () => {
       assert.equal(c('ts-script-ok', 'turnstile').pass, true, c('ts-script-ok', 'turnstile').detail);

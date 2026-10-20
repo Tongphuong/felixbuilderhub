@@ -561,6 +561,7 @@ export function layoutSanity(args) {
     return false;
   };
   const allowed = e => allow.some(a => { try { return e.matches('[data-design="' + a + '"]') || e.matches(a); } catch { return false; } });
+  const allowedWithin = e => allow.some(a => { try { return !!e.closest('[data-design="' + a + '"]') || !!e.closest(a); } catch { return false; } });
   const out = [];
 
   // text nodes + their line rects
@@ -601,6 +602,7 @@ export function layoutSanity(args) {
   for (let i = 0; i < nodes.length && out.length < 40; i++) for (let j = i + 1; j < nodes.length; j++) {
     const a = nodes[i], b = nodes[j];
     if (a.el === b.el) continue;
+    if (allowedWithin(a.el) || allowedWithin(b.el)) continue; // overflow_allow: text inside a listed element (or the element itself) may overlap
     let hit = null;
     for (const ra of a.glyphs) { for (const rb of b.glyphs) {
       const w = Math.min(ra.right, rb.right) - Math.max(ra.left, rb.left), h = Math.min(ra.bottom, rb.bottom) - Math.max(ra.top, rb.top);
