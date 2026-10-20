@@ -416,10 +416,19 @@ body #w1-book-reader-phase[data-story-mission][data-interview='true'] .story-mis
 body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='read'] .r2l-book-story-card { order: 2; }
 body #w1-book-reader-phase[data-story-mission][data-stage='read'] .r2l-book-stage-stack { padding: 0; background: transparent; border: 0; }
 /* the read stage shows only the story and its one primary; Minny's chat pieces appear from the question stage on */
-body #w1-book-reader-phase[data-story-mission][data-stage='read'] :is(.ft-hero, .minny-transcript, .story-mission-qcard, .story-mission-progress) { display: none !important; }
+body #w1-book-reader-phase[data-story-mission][data-stage='read'] :is(.ft-hero, .minny-transcript, .story-mission-feedback, .story-mission-qcard, .story-mission-progress) { display: none !important; }
 
-/* question stage: Minny, question card, mic, latest reply; the story steps aside as in the design */
-body #w1-book-reader-phase[data-story-mission][data-stage='understand'] :is(.story-mission-book, .r2l-book-trail-header, .r2l-book-stepper, .r2l-book-attribution) { display: none !important; }
+/* question stage: Minny, question card, mic, latest reply first (as in the design). The story (text + picture) is NOT removed:
+   it stays one scroll below, so a child can still look back at it while answering. */
+body #w1-book-reader-phase[data-story-mission][data-stage='understand'] :is(.r2l-book-trail-header, .r2l-book-stepper) { display: none !important; }
+body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='understand'] .story-mission-chat { order: 1; }
+body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='understand'] .story-mission-book { order: 2; display: grid; gap: 14px; margin-top: 24px; }
+body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='understand'] .story-mission-book .r2l-book-story-card { order: 2; }
+@media (min-width: 1024px) {
+  body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='understand'] .story-mission-book { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 14px 28px; align-items: start; }
+  body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='understand'] .story-mission-book .r2l-book-page-shell { order: 1; grid-column: 1; }
+  body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='understand'] .story-mission-book .r2l-book-story-card { grid-column: 2; }
+}
 body #w1-book-reader-phase[data-story-mission][data-stage='understand'] #book-reader-stage-stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; justify-items: stretch; }
 body #w1-book-reader-phase .story-mission-progress { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 14px; }
 body #w1-book-reader-phase .story-mission-question-count { margin: 0; font-family: var(--r2l-font-display); font-weight: 800; font-size: 18px; line-height: 1.2; color: var(--r2l-ink); }
@@ -475,9 +484,14 @@ body #w1-book-reader-phase .story-mission-mic-caption { margin: 0; text-align: c
 body #w1-book-reader-phase .story-mission-mic > .r2l-primary:not(.spk-rec-btn) { width: 100%; }
 
 /* latest reply in a monster bubble; the log still holds every turn (scrolls) */
+body #w1-book-reader-phase .story-mission-feedback { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 8px; align-items: end; }
+body #w1-book-reader-phase .story-mission-feedback:has(.minny-transcript:empty) { display: none; }
+/* the child's own companion is drawn into .story-mission-monster; the flat stand-in shows until it arrives (or if it cannot be drawn) */
+body #w1-book-reader-phase .story-mission-monster, body #w1-book-reader-phase .minny-rest__monster { position: relative; flex: none; width: 84px; height: 84px; background: var(--rd-monster-happy) center / contain no-repeat; overflow: visible; }
+body #w1-book-reader-phase .story-mission-monster.is-real, body #w1-book-reader-phase .minny-rest__monster.is-real { background: none; }
+body #w1-book-reader-phase .story-mission-monster > div, body #w1-book-reader-phase .minny-rest__monster > div { position: absolute; inset: 0; }
 body #w1-book-reader-phase .minny-transcript {
-  display: flex; flex-direction: column; gap: 8px; max-height: 190px; overflow-y: auto; margin: 0; padding: 4px 0 4px 92px; min-height: 84px;
-  background: var(--rd-monster-happy) no-repeat left bottom / 84px 84px; justify-content: flex-end;
+  display: flex; flex-direction: column; gap: 8px; max-height: 190px; overflow-y: auto; margin: 0; padding: 4px 0; min-height: 84px; justify-content: flex-end;
 }
 body #w1-book-reader-phase .minny-transcript:empty { display: none; }
 body #w1-book-reader-phase .minny-transcript__reply { align-self: stretch; margin: 0; padding: 10px 14px; border: 3px solid var(--r2l-ink); border-radius: 20px; background: #fff; color: var(--r2l-ink); font-family: var(--r2l-font-body); font-weight: 800; font-size: 18px; line-height: 1.35; }
@@ -492,24 +506,24 @@ body #w1-book-reader-phase .minny-transcript:focus-visible { outline: 3px solid 
   body #w1-book-reader-phase[data-stage='understand'] .ft-hero { grid-column: 1; grid-row: 2; }
   body #w1-book-reader-phase[data-stage='understand'] .story-mission-qcard { grid-column: 1; grid-row: 3; }
   body #w1-book-reader-phase[data-stage='understand'] .story-mission-controls { grid-column: 2; grid-row: 2; align-self: center; }
-  body #w1-book-reader-phase[data-stage='understand'] .minny-transcript { grid-column: 2; grid-row: 3; }
+  body #w1-book-reader-phase[data-stage='understand'] .story-mission-feedback { grid-column: 2; grid-row: 3; }
   body #w1-book-reader-phase[data-stage='understand'] .r2l-book-stage-stack > .story-mission-status { grid-column: 2; grid-row: 4; }
   body #w1-book-reader-phase .ft-hero__avatar { width: 260px; height: 260px; }
   body #w1-book-reader-phase .story-mission-controls .story-mission-mic .spk-rec-btn { width: 180px; height: 180px; min-height: 180px; }
   body #w1-book-reader-phase .story-mission-mic .spk-rec-btn__icon { width: 90px; height: 90px; }
 }
 @media (max-width: 1023px) {
-  body #w1-book-reader-phase[data-stage='understand'] .minny-transcript { order: 5; }
+  body #w1-book-reader-phase[data-stage='understand'] .story-mission-feedback { order: 5; }
   body #w1-book-reader-phase[data-stage='understand'] .story-mission-controls { order: 4; }
   body #w1-book-reader-phase[data-stage='understand'] .r2l-book-stage-stack > .story-mission-status { order: 3; }
 }
 /* hills behind the voice screen */
 body:has(#w1-book-reader-phase[data-stage='understand']:not([data-rest='1'])) #main {
-  background: no-repeat bottom / 100% 220px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 220' preserveAspectRatio='none'%3E%3Cpath d='M0 70C260 20 520 30 760 50S1120 20 1280 10V220H0z' fill='%237BD389'/%3E%3Cpath d='M0 130C300 90 600 100 860 120S1160 100 1280 90V220H0z' fill='%234FB868'/%3E%3C/svg%3E");
+  background: fixed no-repeat bottom / 100% 220px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 220' preserveAspectRatio='none'%3E%3Cpath d='M0 70C260 20 520 30 760 50S1120 20 1280 10V220H0z' fill='%237BD389'/%3E%3Cpath d='M0 130C300 90 600 100 860 120S1160 100 1280 90V220H0z' fill='%234FB868'/%3E%3C/svg%3E");
 }
 
 /* ---- Minny resting (design S4): pale sky, moon, sleeping Minny, no red, no error tone ---- */
-body #w1-book-reader-phase[data-rest='1'] :is(.story-mission-progress, .story-mission-qcard, .minny-transcript, .story-mission-status, .story-mission-chat-title, .minny-bars, .r2l-book-trail-header, .r2l-book-stepper, .story-mission-book, .r2l-book-attribution) { display: none !important; }
+body #w1-book-reader-phase[data-rest='1'] :is(.story-mission-progress, .story-mission-qcard, .minny-transcript, .story-mission-feedback, .story-mission-status, .story-mission-chat-title, .minny-bars, .r2l-book-trail-header, .r2l-book-stepper, .story-mission-book, .r2l-book-attribution) { display: none !important; }
 body #w1-book-reader-phase[data-rest='1'] .ft-hero__avatar { border-color: var(--r2l-ink); box-shadow: none; background: var(--r2l-sky); width: 180px; height: 180px; }
 body #w1-book-reader-phase[data-rest='1'] .ft-hero::before { content: ''; position: absolute; right: calc(50% - 150px); top: -6px; width: 72px; height: 72px; background: var(--rd-moon) center / contain no-repeat; }
 body #w1-book-reader-phase[data-rest='1'] .ft-hero::after { content: 'zZ'; position: absolute; right: calc(50% - 122px); top: 6px; font-family: var(--r2l-font-display); font-weight: 800; font-size: 26px; color: var(--r2l-ink); animation: r-zz 2.6s ease-out infinite; }
@@ -570,3 +584,13 @@ body:has(#w1-book-reader-phase:not(.hidden)) #mic-prep-banner .r2l-secondary { m
   body #w1-book-reader-phase[data-rest='1'][data-stage='understand'] .ft-hero,
   body #w1-book-reader-phase[data-rest='1'][data-stage='understand'] .story-mission-controls { grid-column: 1; grid-row: auto; align-self: auto; }
 }
+
+/* still twin for the mic-countdown number pop (r2lCdPop, injected by lesson.astro's script at run time, so !important) */
+@media (prefers-reduced-motion: reduce) { .r2l-cd-pop, #r2l-mic-countdown .r2l-cd-num { animation: none !important; transform: none !important; } }
+.still .r2l-cd-pop, .still #r2l-mic-countdown .r2l-cd-num { animation: none !important; transform: none !important; }
+
+/* question stage: the story block flows (never overlaps) below the voice block; older fixed-row workspace rules are neutralised */
+body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='understand'] #book-reader-workspace { grid-template-rows: none; grid-auto-rows: auto; height: auto; overflow: visible; }
+body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='understand'] .story-mission-book,
+body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='understand'] .story-mission-chat { height: auto; max-height: none; min-height: 0; overflow: visible; }
+body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='understand'] .story-mission-book { background: transparent; border: 0; border-radius: 0; }

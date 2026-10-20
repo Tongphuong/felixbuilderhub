@@ -136,8 +136,16 @@ export async function mountStoryMission() {
   const qcard=node('div','','story-mission-qcard');qcard.setAttribute('data-design','voice.question');qcard.setAttribute('aria-live','polite');
   const qActions=node('div','','story-mission-qactions');
   qcard.append(node('p','Minny đang hỏi:','story-mission-qlabel'),prompt,qActions);
-  const conversation=node('div','','minny-transcript');conversation.tabIndex=0;conversation.setAttribute('role','log');conversation.setAttribute('aria-label','Trò chuyện về truyện');conversation.setAttribute('data-design','voice.feedback');
-  panel.replaceChildren(progressWrap,hero,qcard,conversation,notice,controls);
+  const conversation=node('div','','minny-transcript');conversation.tabIndex=0;conversation.setAttribute('role','log');conversation.setAttribute('aria-label','Trò chuyện về truyện');
+  // The feedback row pairs the log with the child's own companion (drawn by the same helper the reward screen uses; display only).
+  const monsterHolder=node('span','','story-mission-monster');monsterHolder.setAttribute('aria-hidden','true');
+  const feedback=node('div','','story-mission-feedback');feedback.setAttribute('data-design','voice.feedback');feedback.append(monsterHolder,conversation);
+  let childStateP,companionDrawn=false;
+  const drawCompanion=holder=>{
+    childStateP=childStateP||loadAvatarModule().then(async m=>({m,state:await m.loadChildState(params.get('code')||undefined)}));
+    childStateP.then(({m,state})=>{if(m.drawChildAvatar(holder,state))holder.classList.add('is-real');}).catch(()=>{});
+  };
+  panel.replaceChildren(progressWrap,hero,qcard,feedback,notice,controls);
   const chatHistory=new Map();let layoutReady=false;
   const pictureBoard=node('section','','picture-retell-board');pictureBoard.hidden=true;
   pictureBoard.setAttribute('aria-label','Tranh kể lại truyện');
@@ -330,7 +338,7 @@ export async function mountStoryMission() {
     const info=node('div','','minny-rest__info');info.setAttribute('data-design','rest.info');info.append(node('span','','minny-rest__mic'),node('p','Phần nói với Minny tạm nghỉ. Đọc sách vẫn mở như bình thường.'));
     const buddy=node('div','','minny-rest__buddy');buddy.setAttribute('data-design','rest.monster');
     const monster=node('span','','minny-rest__monster');monster.setAttribute('aria-hidden','true');
-    buddy.append(monster,node('p','Mình đọc cùng nhau nhé!','minny-rest__bubble'));
+    buddy.append(monster,node('p','Mình đọc cùng nhau nhé!','minny-rest__bubble'));drawCompanion(monster);
     const rest=node('div','','minny-rest');rest.append(card,info,buddy,home);
     return rest;
   }
@@ -483,6 +491,7 @@ export async function mountStoryMission() {
     // One dot per question (done / now / next); purely visual, the text above carries the meaning.
     progressDots.replaceChildren(...Array.from({length:Math.max(0,Number(s.totalQuestions)||0)},(_,i)=>node('i','',i<s.answered?'is-done':i===s.answered?'is-now':'')));
     progressWrap.hidden=progress.hidden;
+    if(interview&&!companionDrawn){companionDrawn=true;drawCompanion(monsterHolder);}
     delete root.dataset.rest;avatar.setAttribute('data-design','voice.minny');qActions.replaceChildren();
     prompt.hidden=!interview||s.stage!=='understand';prompt.textContent=l.question?.prompt||'';
     if(interview)renderConversation();
