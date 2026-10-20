@@ -232,5 +232,36 @@
   },
   "companion": {
     "name": "Bảo"
-  }
+  },
+  "book": {
+    "title": "Red Apples Fall",
+    "page": 3,
+    "page_texts": [
+      "Red apples hang high.",
+      "A soft wind blows.",
+      "One apple drops down, down, down!",
+      "A hungry fox runs up.",
+      "The fox eats the apple.",
+      "Now the tree is quiet."
+    ],
+    "question": { "text": "What falls from the tree?", "options": ["An apple", "A shoe"], "correct_index": 0 },
+    "other_question": { "text": "Who runs up?", "options": ["A fox", "A cow"], "correct_index": 0 }
+  },
+  "voice": {
+    "question_text": "Why does the apple drop?",
+    "turn_reply": "Nice try, keep going!"
+  },
+  "public_top3": {
+    "xp": [
+      { "display_name": "Quyên", "total": 2310 },
+      { "display_name": "Tuấn", "total": 1745 },
+      { "display_name": "Mây", "total": 1200 }
+    ],
+    "diamonds": [
+      { "display_name": "Mây", "total": 52010 },
+      { "display_name": "Quyên", "total": 40222 },
+      { "display_name": "Tuấn", "total": 31777 }
+    ]
+  },
+  "error_message": "Chưa tải được bài của con. Con thử lại sau một chút nhé."
 }

@@ -178,7 +178,7 @@ export async function runFidelity(opts) {
   }
   if (typeof driver !== 'function') throw new InfraError('state driver must export a default function');
 
-  const browser = await chromium.launch({ executablePath: findChrome(opts.chrome), args: ['--font-render-hinting=none', '--disable-lcd-text'] });
+  const browser = await chromium.launch({ executablePath: findChrome(opts.chrome), args: ['--font-render-hinting=none', '--disable-lcd-text', '--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'] });
   const results = [];
   try {
     const tasks = [];
@@ -413,6 +413,7 @@ export async function runFidelity(opts) {
               const mb = r.mock_box[String(w)];
               const b = rb.boxes[r.id];
               if (!b) { res.checks.push(check('region:' + r.id, false, 'no visible built element')); continue; }
+              if (!full && (b.y >= viewport.height || b.y + b.h <= 0)) { res.checks.push(check('region:' + r.id, false, `pushed below the fold (built y ${Math.round(b.y)}, viewport ${viewport.height}px): the region is outside the capture`)); continue; }
               const cmp = compareRegion(mockPng0, builtPng0, { x: mb[0], y: mb[1], w: mb[2], h: mb[3] }, b, r.ceiling, r.min_edge_ratio);
               regionJobs.push({ r, b, cmp }); // own pixels are measured AFTER still-twin (see below): hiding and un-hiding re-rasterises the page
             }

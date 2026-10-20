@@ -8,6 +8,8 @@
 // only data difference left.
 //
 // States (contract built.state): first-visit, mid-story, no-story, reward, rank-up, and (Release 2) companion, leaderboard-xp, library, shop-goal.
+// Release 3 states (book-page-*, book-last-page-done, story-mission-*, lesson-open-error, logged-out) live in ./r2l-r3.mjs; its header
+// lists every fabricated part.
 // The account state is REAL, produced through the rehearsal API (one synthetic child per state, see ACCOUNTS):
 //   first-visit  a real generated pack, never opened          mid-story  a real pack with an opened session + audio_started
 //   reward       a real, completed story mission               rank-up    a real opened lesson; the PRODUCT's own showRankUpModal
@@ -27,6 +29,7 @@ import { randomUUID } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { verifyHomeState } from './default.mjs';
+import { R3_STATES, r3Driver } from './r2l-r3.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const SAMPLE = JSON.parse(fs.readFileSync(path.join(here, '..', 'fixtures', 'mock-sample.json'), 'utf8'));
@@ -271,7 +274,7 @@ const ACCOUNTS = {
   // Release 2: pages that need only a logged-in child with today's story (the pack on THIRD)
   companion: ['THIRD', 'e'], 'leaderboard-xp': ['THIRD', 'e'], library: ['THIRD', 'e'], 'shop-goal': ['THIRD', 'e'], 'no-story': ['PHONE', 'b'], reward: ['DESKTOP', 'c'], 'rank-up': ['FOURTH', 'f'],
 };
-function wav() {
+export function wav() {
   const b = new Uint8Array(32044), v = new DataView(b.buffer);
   const tag = (at, s) => [...s].forEach((c, i) => { b[at + i] = c.charCodeAt(0); });
   tag(0, 'RIFF'); v.setUint32(4, b.length - 8, true); tag(8, 'WAVEfmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
@@ -279,7 +282,7 @@ function wav() {
   for (let i = 44; i < b.length; i += 2) v.setInt16(i, i % 4 ? 1000 : -1000, true);
   return b;
 }
-function api(base, code) {
+export function api(base, code) {
   const H = { Origin: base, 'Sec-Fetch-Site': 'same-origin', 'X-Read2Lead-Code': code };
   const J = async (route, body) => (await fetch(base + route, { method: 'POST', headers: { ...H, 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json();
   const progress = async () => (await fetch(base + '/api/read2lead-progress?code=' + code, { headers: H })).json();
@@ -360,6 +363,7 @@ async function expectVisibleText(page, selector, text, what) {
 export default async function r2lDriver(page, contract, base, ctx = {}) {
   const opts = ctx.opts || {};
   const state = contract.built.state;
+  if (R3_STATES.includes(state)) return r3Driver(page, contract, base, ctx); // Release 3 (drivers/r2l-r3.mjs)
   if (!ACCOUNTS[state]) throw new Error(`r2l driver: unknown state "${state}"`);
   const S = opts.sample ? loadSample(opts.sample) : SAMPLE;
   const Base = opts.sample ? SAMPLE : null;

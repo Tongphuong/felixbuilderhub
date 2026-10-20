@@ -232,5 +232,39 @@
   },
   "companion": {
     "name": "Minh"
-  }
+  },
+  "book": {
+    "_source": "Release 3 reading mocks 02-reading-*.html and S2-reading-last-page-390.html",
+    "title": "The Sky Is Blue!",
+    "page": 3,
+    "page_texts": [
+      "Good morning, little bird!",
+      "Wake up, wake up! The sun is up.",
+      "The sky is blue. A little bird flies up, up, up!",
+      "The bird sees a big green tree.",
+      "The bird sings a happy song.",
+      "The sun goes down. Good night, little bird!"
+    ],
+    "question": { "text": "What colour is the sky?", "options": ["Blue", "Green"], "correct_index": 0 },
+    "other_question": { "text": "Who is in the story?", "options": ["A bird", "A fish"], "correct_index": 0 }
+  },
+  "voice": {
+    "_source": "Release 3 mocks 03-minny-voice-*.html and S4-minny-resting-390.html",
+    "question_text": "Why is the little bird happy?",
+    "turn_reply": "Great job!"
+  },
+  "public_top3": {
+    "_source": "Release 3 mock 09-parents-*.html (the same Hoang / Hieuenzo / Percy boards as the home mock)",
+    "xp": [
+      { "display_name": "Hoang", "total": 1080 },
+      { "display_name": "Hieuenzo", "total": 900 },
+      { "display_name": "Percy", "total": 890 }
+    ],
+    "diamonds": [
+      { "display_name": "Percy", "total": 39444 },
+      { "display_name": "Hoang", "total": 31391 },
+      { "display_name": "Hieuenzo", "total": 29480 }
+    ]
+  },
+  "error_message": "Chưa mở được câu chuyện. Con bấm “Mở lại câu chuyện” để thử lại nhé."
 }
