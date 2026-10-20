@@ -250,7 +250,8 @@ export function contractChecks(args) {
         else p.push('sun_also "' + id + '" is not an in-page anchor (a[href^="#"]): <' + e.tagName.toLowerCase() + (e.getAttribute('href') != null ? ' href="' + e.getAttribute('href') + '"' : '') + '>');
       }
     }
-    const cand = cand0.filter(e => !alsoOk.some(a => a === e || a.contains(e) || e.contains(a)));
+    // only the anchor ITSELF is exempt: a sun control nested inside it (a <button> in the link) or wrapping it is still a second action
+    const cand = cand0.filter(e => !alsoOk.some(a => a === e));
     const sunControls = cand.filter(e => !cand.some(o => o !== e && o.contains(e)));
     const label = e => '"' + (e.textContent || e.value || e.tagName).replace(/\s+/g, ' ').trim().slice(0, 30) + '"';
     if (args.noPrimary) {
@@ -429,6 +430,7 @@ export function resolveLocate(args) {
     return r.width > 0 && r.height > 0 && r.right > 0 && r.bottom > 0;
   }
   const problems = [];
+  const placed = {};
   const needed = new Set(args.needed || []);
   for (const [id, selector] of Object.entries(args.locate || {})) {
     if (document.querySelector('[data-design="' + id.replace(/"/g, '\\"') + '"]')) continue; // data-design first
@@ -437,9 +439,19 @@ export function resolveLocate(args) {
     const vis = all.filter(visible);
     if (vis.length !== 1) { if (needed.has(id)) problems.push('locate "' + id + '" (' + selector + '): ' + vis.length + ' visible match' + (vis.length === 1 ? '' : 'es') + (all.length !== vis.length ? ' (' + all.length + ' in the DOM)' : '') + ', need exactly 1'); continue; }
     const el = vis[0];
+    // a selector that resolves to the whole page matches EVERY check trivially: never a legitimate locate
+    if (el === document.body || el === document.documentElement) { if (needed.has(id)) problems.push('locate "' + id + '" (' + selector + '): resolves to <' + el.tagName.toLowerCase() + '>, the whole page'); continue; }
     const other = el.getAttribute('data-design');
     if (other && other !== id) { if (needed.has(id)) problems.push('locate "' + id + '" (' + selector + '): that element already carries data-design="' + other + '"'); continue; }
     el.setAttribute('data-design', id);
+    placed[id] = el;
+  }
+  // a catch-all wrapper (an ancestor of at least 3 other located elements and half of them) also matches everything inside it
+  const placedIds = Object.keys(placed);
+  for (const id of placedIds) {
+    if (!needed.has(id)) continue;
+    const inside = placedIds.filter(o => o !== id && placed[id].contains(placed[o]));
+    if (inside.length >= 3 && inside.length * 2 >= placedIds.length - 1) problems.push('locate "' + id + '" (' + (args.locate[id]) + '): is an ancestor of ' + inside.length + ' other located elements (' + inside.slice(0, 4).join(', ') + '); a located id must be its own element, not a wrapper');
   }
   let cols = 0;
   for (const selector of args.cols || []) {
@@ -474,18 +486,31 @@ export function neverRedCheck(args) {
     for (const root of roots) {
       for (const e of [root, ...root.querySelectorAll('*')]) {
         if (e.closest(IMG) || !visible(e)) continue;
-        const cs = getComputedStyle(e);
-        const hits = [];
         const ownText = [...e.childNodes].some(n => n.nodeType === 3 && n.nodeValue.trim());
-        if (ownText) { const h = red(rgbs(cs.color)[0] || [0, 0, 0, 0]); if (h) hits.push('text colour ' + h); }
-        for (const c of rgbs(cs.backgroundColor)) { const h = red(c); if (h) hits.push('background ' + h); }
-        if (/gradient\(/.test(cs.backgroundImage)) for (const c of rgbs(cs.backgroundImage)) { const h = red(c); if (h) { hits.push('background gradient ' + h); break; } }
-        for (const side of ['Top', 'Right', 'Bottom', 'Left']) {
-          if (!(parseFloat(cs['border' + side + 'Width']) > 0) || cs['border' + side + 'Style'] === 'none') continue;
-          const h = red(rgbs(cs['border' + side + 'Color'])[0] || [0, 0, 0, 0]);
-          if (h) { hits.push('border ' + h); break; }
+        // the element itself and its ::before / ::after (a coral dot or ring is often drawn there)
+        for (const pseudo of [null, '::before', '::after']) {
+          const cs = pseudo ? getComputedStyle(e, pseudo) : getComputedStyle(e);
+          if (pseudo && (cs.content === 'none' || cs.content === 'normal' || cs.display === 'none')) continue;
+          const where = pseudo || '';
+          const hits = [];
+          const hasText = pseudo ? cs.content.replace(/^["']|["']$/g, '').trim() !== '' : ownText;
+          if (hasText) {
+            const h = red(rgbs(cs.color)[0] || [0, 0, 0, 0]); if (h) hits.push('text colour ' + h);
+            const f = red(rgbs(cs.webkitTextFillColor)[0] || [0, 0, 0, 0]); if (f) hits.push('text fill ' + f);
+            if (cs.textDecorationLine && cs.textDecorationLine !== 'none') { const d = red(rgbs(cs.textDecorationColor)[0] || [0, 0, 0, 0]); if (d) hits.push('text decoration ' + d); }
+            if (cs.textShadow && cs.textShadow !== 'none') for (const c of rgbs(cs.textShadow)) { const s = red(c); if (s) { hits.push('text shadow ' + s); break; } }
+          }
+          for (const c of rgbs(cs.backgroundColor)) { const h = red(c); if (h) hits.push('background ' + h); }
+          if (/gradient\(/.test(cs.backgroundImage)) for (const c of rgbs(cs.backgroundImage)) { const h = red(c); if (h) { hits.push('background gradient ' + h); break; } }
+          for (const side of ['Top', 'Right', 'Bottom', 'Left']) {
+            if (!(parseFloat(cs['border' + side + 'Width']) > 0) || cs['border' + side + 'Style'] === 'none') continue;
+            const h = red(rgbs(cs['border' + side + 'Color'])[0] || [0, 0, 0, 0]);
+            if (h) { hits.push('border ' + h); break; }
+          }
+          if (cs.boxShadow && cs.boxShadow !== 'none') for (const c of rgbs(cs.boxShadow)) { const h = red(c); if (h) { hits.push('box-shadow ' + h); break; } }
+          if (cs.outlineStyle && cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) > 0) { const h = red(rgbs(cs.outlineColor)[0] || [0, 0, 0, 0]); if (h) hits.push('outline ' + h); }
+          if (hits.length) problems.push('never_red "' + id + '": ' + desc(e) + where + ' uses ' + hits.join(' + '));
         }
-        if (hits.length) problems.push('never_red "' + id + '": ' + desc(e) + ' uses ' + hits.join(' + '));
       }
     }
   }

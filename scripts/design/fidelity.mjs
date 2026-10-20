@@ -14,6 +14,11 @@
 //   (e) composite PNG (design | built | diff) + report.json + report.md in --out
 // Exit codes: 0 all pass, 1 some check failed, 2 usage / infrastructure error (a crash is not a verdict).
 //
+// Chrome flags (GLOBAL: one browser serves every contract; a flag cannot be scoped to a context): --use-fake-ui-for-media-stream and
+// --use-fake-device-for-media-stream (a fake microphone, for the R3 read-aloud state) and --autoplay-policy=no-user-gesture-required
+// (so the voice question audio plays to its end in the R3 voice states). They apply to EVERY contract's built page, R1/R2 included, and
+// to nothing that renders the mock.
+//
 // Everything runs with prefers-reduced-motion emulated, so screenshots are deterministic and the
 // "no running animation" check is meaningful.
 import fs from 'node:fs';

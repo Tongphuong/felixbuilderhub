@@ -27,7 +27,9 @@
 //  8b. Story states: title, story sentences (the mock's page-3 text), the saved turn's `lastVoice.reply` and the question text are VALUES put into the real
 //     session/turn views. understand / pool-rest start from a REAL answered turn with feedback pending; the page's own "Câu hỏi tiếp theo →" button is
 //     clicked, and its `continue_voice` event is answered LOCALLY with the last real view (feedbackPending false), so the server session never advances.
-//     Prompt audio is the rehearsal's real prompt wav; Chrome runs with --autoplay-policy=no-user-gesture-required so it plays to its end (cue "ready").
+//     The question-2 prompt call (story-mission-understand) is FABRICATED: it is answered in the real shape {prompt, audio:{audio_b64,content_type}, replayed}
+//     with a locally built 1-second wav (the driver's own wav(), a tone), NOT the rehearsal's prompt audio: the real server refuses a question-2 prompt
+//     while feedback is pending (409). Chrome runs with --autoplay-policy=no-user-gesture-required so it plays to its end (cue "ready").
 //  9b. Book states: the driver waits for the page's own 4 s "Con tiếp tục bài đang làm" resume toast (a side effect of restoring the checkpoint in (2))
 //     to fade, and scrolls the window to 0 before the capture (the reader scrolls itself to the top of the reader; the mocks show the page top).
 // 10. logged-out: no login. The public top-3 boards are replaced with the mock sample (Hoang/Hieuenzo/Percy) in the real response shape. The sign-up
@@ -230,7 +232,7 @@ export async function r3Driver(page, contract, base, ctx = {}) {
     }
     if (state === 'story-mission-understand') {
       // The real server refuses a question-2 prompt while the session is "feedback pending" (409 voice_stage_conflict), and we never advance it.
-      // So the prompt call is answered in the real shape {prompt, audio:{audio_b64,content_type}, replayed} with a short real wav (declared).
+      // So the prompt call is answered in the real shape {prompt, audio:{audio_b64,content_type}, replayed} with a locally built wav (declared in the header, 8b).
       const wavB64 = Buffer.from(wav()).toString('base64');
       await page.route('**/api/read2lead-story-turn*', r => (r.request().method() === 'POST' && (r.request().postData() || '').includes('"prompt"')
         ? r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ prompt: S.voice.question_text, audio: { audio_b64: wavB64, content_type: 'audio/wav' }, replayed: false }) }) : r.fallback()));

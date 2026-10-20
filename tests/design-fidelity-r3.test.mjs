@@ -53,6 +53,14 @@ const PAGES = {
   low: html('<div style="height:900px"></div><div data-design="t.low" style="height:60px;width:200px">x</div>'),
   'details-closed': html('<details><summary style="height:48px">Chi tiết</summary><div style="border:2px solid #17324D;width:120px;padding:4px"><button style="width:300px;height:48px;font-family:inherit">Nút tràn</button></div></details>'),
   'details-open': html('<details open><summary style="height:48px">Chi tiết</summary><div style="border:2px solid #17324D;width:120px;padding:4px"><button style="width:300px;height:48px;font-family:inherit">Nút tràn</button></div></details>'),
+  'sun-nested': html(`<a href="#x" data-design="t.j" style="display:block;background:${SUN};height:60px"><button type="button" style="background:${SUN};height:40px">Con</button></a>`),
+  wrap: html('<main id="w"><div class="x1" style="height:30px">1</div><div class="x2" style="height:30px">2</div><div class="x3" style="height:30px">3</div></main>'),
+  'red-before': inCard('<style>#card .b::before{content:"";display:block;width:12px;height:12px;background:#FF7A3D}</style><div class="b" style="height:30px">x</div>'),
+  'red-after-text': inCard('<style>#card .a::after{content:"!";color:#E0362C}</style><div class="a">x</div>'),
+  'red-shadow': inCard('<div style="height:30px;box-shadow:0 0 0 3px #FF7A3D">x</div>'),
+  'red-outline': inCard('<div style="height:30px;outline:2px solid #E0362C">x</div>'),
+  'red-textfill': inCard('<p style="margin:0;color:#17324D;-webkit-text-fill-color:#FF7A3D">x</p>'),
+  'red-decoration': inCard('<p style="margin:0;color:#17324D;text-decoration:underline;text-decoration-color:#E0362C">x</p>'),
   contents: html('<section style="display:contents;overflow:auto"><p style="margin:0">Chữ hiện ra</p></section>'),
   clipzero: html('<div style="width:0;height:0;overflow:hidden"><p style="margin:0">Chữ bị cắt</p></div>'),
   overlap: html('<div id="ov" style="position:relative;height:0"><p style="position:absolute;top:-150px;left:16px;margin:0">Chồng chữ</p></div>'),
@@ -94,6 +102,9 @@ const CASES = {
   'never-red-missing-id': { never_red: ['n.nothing'] },
   'fold-unlisted': { order: ['t.a', 't.b', 't.low'], ...at('low') },
   'fold-listed': { order: ['t.a', 't.b', 't.low'], allow_below_fold: ['t.low'], ...at('low') },
+  'sun-also-nested-button': { primary: { none: true }, sun_also_390: ['t.j'], ...at('sun-nested') },
+  'locate-body': { locate: { 't.a': 'body', 't.b': '.bb' } },
+  'locate-wrapper': { order: ['t.a', 't.b', 't.c', 't.d'], locate: { 't.a': '#w', 't.b': '.x1', 't.c': '.x2', 't.d': '.x3' }, ...at('wrap') },
   'text-in-display-contents': { texts: ['Chữ hiện ra'], ...at('contents') },
   'text-in-zero-clip': { texts: ['Chữ bị cắt'], ...at('clipzero') },
   'overlap-unlisted': at('overlap'),
@@ -105,7 +116,7 @@ const CASES = {
   'ts-empty-bad': { turnstile: 't.ts', ...at('ts-empty') },
   'ts-missing-container': { turnstile: 't.ts', ...at('ok') },
 };
-for (const k of ['red-text', 'red-bg', 'red-border', 'red-in-image', 'red-clean']) {
+for (const k of ['red-text', 'red-bg', 'red-border', 'red-in-image', 'red-clean', 'red-before', 'red-after-text', 'red-shadow', 'red-outline', 'red-textfill', 'red-decoration']) {
   CASES['never-' + k] = { locate: { 't.a': '#a', 't.b': '.bb', 'n.card': '#card' }, never_red: ['n.card'], ...at(k) };
 }
 
@@ -195,6 +206,15 @@ test('R3 fields: known-good pass, known-bad fail the NAMED check with the specif
     await t.test('layout-sanity skips the body of a CLOSED <details>; BITE: the same overflowing control in an OPEN one still fails', () => {
       assert.equal(c('layout-details-closed', 'layout-sanity').pass, true, c('layout-details-closed', 'layout-sanity').detail);
       assert.match(c('layout-details-open', 'layout-sanity').detail, /escape button/);
+    });
+    await t.test('never_red also reads ::before/::after, box-shadow, outline, text-fill and text-decoration colours (one case each)', () => {
+      const table = { 'red-before': /::before uses background #FF7A3D/, 'red-after-text': /::after uses text colour #E0362C/, 'red-shadow': /uses box-shadow #FF7A3D/, 'red-outline': /uses outline #E0362C/, 'red-textfill': /uses text fill #FF7A3D/, 'red-decoration': /uses text decoration #E0362C/ };
+      for (const [k, re] of Object.entries(table)) assert.match(c('never-' + k, 'never-red').detail, re, k);
+    });
+    await t.test('W1 a sun control NESTED in a sun_also anchor still fails primary.none; W2 locate refuses body and a catch-all wrapper', () => {
+      assert.match(c('sun-also-nested-button', 'primary').detail, /primary\.none: expected NO sun-filled clickable control in this state, found 1: "Con"/);
+      assert.match(c('locate-body', 'locate').detail, /locate "t\.a" \(body\): resolves to <body>, the whole page/);
+      assert.match(c('locate-wrapper', 'locate').detail, /locate "t\.a" \(#w\): is an ancestor of 3 other located elements/);
     });
     await t.test('text inside a display:contents box with overflow set is visible (it has no box to clip); BITE: text in a real zero-size overflow box is still hidden', () => {
       assert.equal(c('text-in-display-contents', 'texts').pass, true, c('text-in-display-contents', 'texts').detail);

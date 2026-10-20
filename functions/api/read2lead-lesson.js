@@ -8,14 +8,14 @@ import { isStoryPack, loadAssignedStory, storyLessonPayload } from '../lib/read2
 export async function onRequestGet(context) {
   const { request, env } = context;
   if (!env.READ2LEAD_CODES) {
-    return json({ ok: false, error: 'config_error', message: 'Felixar chua cau hinh ma hoc sinh.' }, 500);
+    return json({ ok: false, error: 'config_error', message: 'Hệ thống chưa cấu hình mã học sinh.' }, 500);
   }
 
   const url = new URL(request.url);
   const accessCode = (url.searchParams.get('code') || '').trim().toUpperCase();
   const packId = (url.searchParams.get('pack_id') || '').trim();
   if (!accessCode || !packId) {
-    return json({ ok: false, error: 'missing_params', message: 'Thieu ma hoc sinh hoac ma bai.' }, 400);
+    return json({ ok: false, error: 'missing_params', message: 'Thiếu mã học sinh hoặc mã bài.' }, 400);
   }
 
   const clientIp = getClientIp(request);
@@ -27,16 +27,16 @@ export async function onRequestGet(context) {
   const codeData = await env.READ2LEAD_CODES.get(accessCode, { type: 'json' });
   if (!codeData) {
     await recordCodeFailure(env.READ2LEAD_CODES, clientIp);
-    return json({ ok: false, error: 'code_not_found', message: 'Ma hoc sinh khong ton tai.' }, 404);
+    return json({ ok: false, error: 'code_not_found', message: 'Mã học sinh không tồn tại.' }, 404);
   }
 
   const pack = resolveAccessiblePack(codeData, packId);
   if (!pack) {
-    return json({ ok: false, error: 'pack_not_found', message: 'Khong tim thay bai nay trong ma hoc sinh.' }, 404);
+    return json({ ok: false, error: 'pack_not_found', message: 'Không tìm thấy bài này trong mã học sinh.' }, 404);
   }
 
   if (pack.status === 'generation_in_progress') {
-    return json({ ok: false, error: 'generation_in_progress', message: 'Bai van dang duoc tao. Vui long doi them mot chut.' }, 409);
+    return json({ ok: false, error: 'generation_in_progress', message: 'Bài vẫn đang được tạo. Vui lòng đợi thêm một chút.' }, 409);
   }
 
   if (isStoryPack(pack)) {
