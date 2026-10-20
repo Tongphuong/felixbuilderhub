@@ -116,16 +116,41 @@ export async function mountStoryMission() {
   for(const child of $('lesson-shell').children)if(child!==root)child.classList.add('hidden');
   const panel = $('book-reader-stage-stack');
   const notice = node('p', '', 'story-mission-status'); notice.setAttribute('role', 'status');
-  const controls = node('div', '', 'story-mission-controls');
+  const controls = node('div', '', 'story-mission-controls');controls.setAttribute('data-design', 'story.controls');
   const progress=node('p','','story-mission-question-count');
   const cue=node('p','','story-mission-cue ft-hero__eyebrow');cue.setAttribute('role','status');
   const prompt=node('h3','','story-mission-current-question minny-transcript__reply');
   const hero=node('div','','ft-hero'),avatar=node('div','','ft-hero__avatar'),portrait=node('img');
-  portrait.src='/assets/minny/minny_idle.png';portrait.alt='Minny';avatar.append(portrait);
-  const heroBody=node('div','','ft-hero__body');heroBody.append(node('h3','Nói chuyện với Minny','story-mission-chat-title'),cue);
+  // R2L-ISLAND voice screen (design 03): flat Minny in a porthole. The face shown follows root.dataset.voiceState through CSS only.
+  portrait.src='/assets/minny/vector/minny-face.svg';portrait.alt='Minny';portrait.className='minny-face minny-face--idle';
+  const faceOf=(name,file)=>{const i=node('img','','minny-face minny-face--'+name);i.src='/assets/minny/vector/'+file;i.alt='';i.setAttribute('aria-hidden','true');return i;};
+  const bars=node('span','','minny-bars');bars.setAttribute('aria-hidden','true');bars.append(node('i'),node('i'),node('i'));
+  avatar.setAttribute('data-design','voice.minny');
+  avatar.append(portrait,faceOf('talk','minny-face-talk.svg'),faceOf('listen','minny-listen.svg'),faceOf('sleep','minny-face-sleep.svg'),bars);
+  const heroBody=node('div','','ft-hero__body');heroBody.append(node('h3','Bước 2 · Trả lời Minny','story-mission-chat-title'),cue);
   hero.append(avatar,heroBody);
+  const progressWrap=node('div','','story-mission-progress');progressWrap.setAttribute('data-design','voice.progress');
+  const progressDots=node('span','','story-mission-dots');progressDots.setAttribute('aria-hidden','true');
+  progressWrap.append(progress,progressDots);
+  // The current question sits in its own card (it is no longer the last line of the log; the log keeps every past turn).
+  const qcard=node('div','','story-mission-qcard');qcard.setAttribute('data-design','voice.question');qcard.setAttribute('aria-live','polite');
+  const qActions=node('div','','story-mission-qactions');
+  qcard.append(node('p','Minny đang hỏi:','story-mission-qlabel'),prompt,qActions);
   const conversation=node('div','','minny-transcript');conversation.tabIndex=0;conversation.setAttribute('role','log');conversation.setAttribute('aria-label','Trò chuyện về truyện');
-  panel.replaceChildren(progress,hero,conversation,notice,controls);
+  // The feedback row pairs the log with the child's own companion (drawn by the same helper the reward screen uses; display only).
+  const monsterHolder=node('span','','story-mission-monster');monsterHolder.setAttribute('aria-hidden','true');
+  const feedback=node('div','','story-mission-feedback');feedback.setAttribute('data-design','voice.feedback');
+  // The latest Minny reply sits in the monster's bubble (design 03); the full log (every turn, role=log) is one tap below, in a details.
+  const latest=node('p','','story-mission-latest');latest.hidden=true;
+  const replyLog=node('details','','story-mission-history');replyLog.append(node('summary','Xem lại các câu đã trả lời'),conversation); // (not named `history`: that would shadow window.history used by render())
+  feedback.append(monsterHolder,latest,replyLog);
+  let childStateP,companionDrawn=false;
+  const drawCompanion=holder=>{
+    childStateP=childStateP||loadAvatarModule().then(async m=>({m,state:await m.loadChildState(params.get('code')||undefined)}));
+    childStateP.then(({m,state})=>{if(m.drawChildAvatar(holder,state))holder.classList.add('is-real');}).catch(()=>{});
+  };
+  // DOM order = design order: progress, Minny, question, mic (controls), latest reply, notice.
+  panel.replaceChildren(progressWrap,hero,qcard,controls,feedback,notice);
   const chatHistory=new Map();let layoutReady=false;
   const pictureBoard=node('section','','picture-retell-board');pictureBoard.hidden=true;
   pictureBoard.setAttribute('aria-label','Tranh kể lại truyện');
@@ -149,8 +174,17 @@ export async function mountStoryMission() {
 
   function renderConversation(){
     conversation.replaceChildren();
-    for(const turn of chatHistory.values())conversation.append(node('p',turn.question,'minny-transcript__reply'),node('p','Con: '+turn.transcript,'minny-transcript__kid-chip'),node('p','Minny: '+turn.reply,'minny-transcript__reply'));
-    if(!view.session.feedbackPending)conversation.append(prompt);
+    for(const turn of chatHistory.values()){
+      const reply=node('p','','minny-transcript__reply'),great=/^Great job!/i.exec(turn.reply);
+      if(great)reply.append('Minny: ',node('b',great[0],'minny-transcript__great'),turn.reply.slice(great[0].length));else reply.textContent='Minny: '+turn.reply;
+      conversation.append(node('p',turn.question,'minny-transcript__reply'),node('p','Con: '+turn.transcript,'minny-transcript__kid-chip'),reply);
+      if(great)conversation.append(node('p','Minny thích câu trả lời của con.','minny-transcript__note'));
+    }
+    qcard.hidden=view.session.feedbackPending||!view.policy.interview||view.session.stage!=='understand';
+    const turns=[...chatHistory.values()],last=turns[turns.length-1];
+    latest.hidden=!last;latest.replaceChildren();
+    if(last){const g=/^Great job!/i.exec(last.reply);latest.append('Câu '+turns.length+': ');
+      if(g)latest.append(node('b',g[0],'story-mission-latest__great'),' Minny thích câu trả lời của con.');else latest.append(last.reply);}
     conversation.scrollTop=conversation.scrollHeight;
   }
   const setCue=(state,text)=>{root.dataset.voiceState=state;cue.textContent=text;};
@@ -255,7 +289,7 @@ export async function mountStoryMission() {
     if(layoutReady)return;layoutReady=true;
     const book=node('section','','story-mission-book');book.tabIndex=0;book.setAttribute('aria-label','Truyện để đọc cùng Minny');
     const workspace=$('book-reader-workspace');workspace.prepend(pictureBoard,book);
-    book.append(reading.closest('.r2l-book-story-card'),$('book-reader-page-shell'));
+    book.append($('book-reader-page-shell'),reading.closest('.r2l-book-story-card')); // design order: picture, then text
     const chat=panel.closest('.r2l-book-panel');chat.classList.add('story-mission-chat');chat.tabIndex=0;chat.setAttribute('aria-label','Nói chuyện với Minny');
     workspace.before(stepper);
   }
@@ -303,7 +337,19 @@ export async function mountStoryMission() {
   function poolRestControls() {
     const home=node('a','Về đọc sách','r2l-primary');
     home.href=$('lesson-home')?.getAttribute('href')||'/read2lead';home.onclick=stop;
-    return home;
+    // Resting screen (design S4): presentation around the same link. The verbatim VOICE_POOL_REST_VI is split into its sentences.
+    if(typeof root==='undefined'||typeof document==='undefined')return home;
+    root.dataset.rest='1';avatar.setAttribute('data-design','rest.minny');home.setAttribute('data-design','rest.primary');
+    const card=node('div','','minny-rest__card');card.setAttribute('data-design','rest.card');
+    const text=node('p','','minny-rest__text'),parts=(VOICE_POOL_REST_VI.match(/[^.!?]+[.!?]+/g)||[VOICE_POOL_REST_VI]).map(t=>t.trim());
+    parts.forEach((t,i)=>{text.append(parts.length===3&&i===1?node('b',t):document.createTextNode(t));if(i<parts.length-1)text.append(' ');});
+    card.append(node('h3','Minny ngủ một chút nha!','minny-rest__title'),text);
+    const info=node('div','','minny-rest__info');info.setAttribute('data-design','rest.info');info.append(node('span','','minny-rest__mic'),node('p','Phần nói với Minny tạm nghỉ. Đọc sách vẫn mở như bình thường.'));
+    const buddy=node('div','','minny-rest__buddy');buddy.setAttribute('data-design','rest.monster');
+    const monster=node('span','','minny-rest__monster');monster.setAttribute('aria-hidden','true');
+    buddy.append(monster,node('p','Mình đọc cùng nhau nhé!','minny-rest__bubble'));drawCompanion(monster);
+    const rest=node('div','','minny-rest');rest.append(card,info,buddy,home);
+    return rest;
   }
   function microphoneButton(label,action,recording=false){
     const b=button('',action);b.classList.add('spk-rec-btn');if(recording)b.classList.add('is-recording');
@@ -366,7 +412,10 @@ export async function mountStoryMission() {
       };
       if(!await current.start({onSpeechEnd:pictureMode()?()=>{}:finish}))return;
       setCue('recording','Minny đang nghe con…');
-      controls.replaceChildren(node('p',pictureMode()?`Con kể cả câu chuyện theo ${view.policy.pictureRetell.frames.length} tranh. Con có thể dừng để nghĩ; bấm Xong khi kể hết. Tối đa 2 phút.`:'Trả lời câu hỏi ở trên. Nói xong, con bấm nút bên dưới hoặc chờ Minny nhận.','story-mission-note'),pictureMode()?button('✓ Xong · Xem kết quả',finish):microphoneButton('✓ Con nói xong rồi',finish,true),node('p',pictureMode()?'Micro đang ghi âm':'Bấm nút vuông khi con nói xong','story-mission-mic-caption'),button('Huỷ · Chưa gửi',cancel,true));
+      const stopBtn=pictureMode()?button('✓ Xong · Xem kết quả',finish):microphoneButton('✓ Con nói xong rồi',finish,true),stopWrap=node('div','','story-mission-mic');
+      stopBtn.setAttribute('data-design','voice.mic');stopWrap.setAttribute('data-design','voice.primary');
+      stopWrap.append(stopBtn,node('span',pictureMode()?'Micro đang ghi âm':'Bấm nút vuông khi con nói xong','story-mission-mic-caption'));
+      controls.replaceChildren(node('p',pictureMode()?`Con kể cả câu chuyện theo ${view.policy.pictureRetell.frames.length} tranh. Con có thể dừng để nghĩ; bấm Xong khi kể hết. Tối đa 2 phút.`:'Trả lời câu hỏi ở trên. Nói xong, con bấm nút bên dưới hoặc chờ Minny nhận.','story-mission-note'),stopWrap,button('Huỷ · Chưa gửi',cancel,true));
       if(view.policy.interview)focusActivity();
       captureTimer=setTimeout(finish,pictureMode()?120000:60000);
     } catch(error) {if(capture===current){
@@ -428,7 +477,8 @@ export async function mountStoryMission() {
         ready();notice.textContent='Con bấm Nghe lại câu hỏi, hoặc đọc câu hỏi ở trên rồi trả lời nhé.';},
     });
     promptPlayback=playback;
-    controls.append(listen,halt,player);
+    // In the interview the question audio controls live in the question card (design 03); other modes keep them in the controls.
+    if(view.policy.interview&&view.session.stage==='understand')qActions.replaceChildren(listen,halt,player);else controls.append(listen,halt,player);
     if(view.policy.interview&&view.policy.providerEnabled)void playback.play();
   }
   function render() {
@@ -443,10 +493,17 @@ export async function mountStoryMission() {
     root.dataset.interview=String(interview);root.dataset.stage=s.stage;root.dataset.finished='false';
     if(interview)arrangeInterview();
     hero.hidden=!interview||pictureMode();conversation.hidden=!interview||pictureMode();
+    // The interview-only pieces stay out of a tap-answer (non-interview) session: no empty question card, log row or progress line.
+    feedback.hidden=conversation.hidden;qcard.hidden=!interview||s.stage!=='understand'||!!s.feedbackPending;progressWrap.hidden=!interview||s.stage!=='understand';
     pictureBoard.hidden=!pictureMode();if(pictureMode())showPictureBoard(view.policy.pictureRetell);
     if(s.stage==='read')chatHistory.clear();
     progress.hidden=!interview||s.stage!=='understand';
     progress.textContent=`Câu ${Math.min(s.answered+1,s.totalQuestions)} / ${s.totalQuestions} · Hoàn thành để nhận 50 💎`;
+    // One dot per question (done / now / next); purely visual, the text above carries the meaning.
+    progressDots.replaceChildren(...Array.from({length:Math.max(0,Number(s.totalQuestions)||0)},(_,i)=>node('i','',i<s.answered?'is-done':i===s.answered?'is-now':'')));
+    progressWrap.hidden=progress.hidden;
+    if(interview&&!companionDrawn){companionDrawn=true;drawCompanion(monsterHolder);}
+    delete root.dataset.rest;avatar.setAttribute('data-design','voice.minny');qActions.replaceChildren();
     prompt.hidden=!interview||s.stage!=='understand';prompt.textContent=l.question?.prompt||'';
     if(interview)renderConversation();
     setCue(s.stage,s.stage==='read'?'Nghe và đọc cùng câu chuyện.':s.stage==='reward'?(view.policy.pictureRetell&&s.pictureRetell?.status!=='complete'?'Con đã xong phần câu hỏi. Mình kể qua tranh nhé.':'Con đã hoàn thành bài đọc!'):'Chạm micro rồi trả lời nhé.');
@@ -548,7 +605,9 @@ export async function mountStoryMission() {
     if(s.stage==='read') {
       controls.append(node('h3','Đọc xong, con cùng Minny trả lời câu hỏi nhé.','story-mission-prompt'));
       if(l.vocabulary.length) {const d=node('details'),summary=node('summary','Từ khó');d.append(summary,...l.vocabulary.map(v=>node('p',`${v.word} — ${v.meaning}`)));controls.append(d);}
-      controls.append(button(interview?'🎙 Con đã đọc xong · Nói với Minny':'Con đã đọc · Khám phá câu hỏi →',()=>event({type:'read_complete'})));
+      const goToMinny=button(interview?'🎙 Con đã đọc xong · Nói với Minny':'Con đã đọc · Khám phá câu hỏi →',()=>event({type:'read_complete'}));
+      if(interview)goToMinny.setAttribute('data-design','story.primary');
+      controls.append(goToMinny);
       if(interview)controls.append(node('p','Nghe Minny hỏi về truyện, trả lời bằng giọng nói và nhận 50 💎 sau 12 câu.','story-mission-note'));
     } else if(s.stage==='understand') {
       const q=l.question;
@@ -556,7 +615,11 @@ export async function mountStoryMission() {
       if(!interview)controls.append(node('p',`Câu hỏi ${s.answered+1}/${s.totalQuestions}`,'story-mission-note'),node('h3',q.prompt,'story-mission-prompt'));
       notice.textContent=q.retry?'Con xem lại chi tiết trong truyện rồi thử thêm một lần nhé.':s.feedback?.result==='demonstrated'?'Con đã tìm được ý phù hợp với câu hỏi trước.':'';
       controls.append(node('p',interview?(view.policy.providerEnabled?'Con nghe câu hỏi rồi bấm micro để trả lời.':'Minny chưa sẵn sàng. Tiến trình của con vẫn được giữ.'):view.policy.providerEnabled?'Con có thể nói với Minny hoặc chọn câu trả lời.':testProgress?'Con có thể chọn câu trả lời. Phần trò chuyện bằng giọng nói chưa mở trong bản riêng tư này.':'Con có thể chọn câu trả lời. Phần trò chuyện bằng giọng nói chưa sẵn sàng.','story-mission-note'));
-      if(view.policy.providerEnabled)controls.append(microphoneButton('🎙 Bấm để trả lời',recordVoice),node('p','Nhấn để nói','story-mission-mic-caption'));
+      if(view.policy.providerEnabled){
+        const mic=microphoneButton('🎙 Bấm để trả lời',recordVoice),wrap=node('div','','story-mission-mic');
+        mic.setAttribute('data-design','voice.mic');wrap.setAttribute('data-design','voice.primary');
+        wrap.append(mic,node('span','Bấm rồi nói câu trả lời','story-mission-mic-caption')); /* a span (Baloo 2 label, as in the mock), not a paragraph */controls.append(wrap);
+      }
       if(!interview)q.options.forEach((text,i)=>controls.append(button(text,()=>event({type:'answer',taskId:q.id,optionIndex:i}),true)));
       if(!interview)controls.append(review);
       if(!interview)controls.append(button('Để câu này luyện sau',()=>event({type:'skip_question',taskId:q.id}),true));

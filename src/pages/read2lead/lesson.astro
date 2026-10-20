@@ -22,6 +22,7 @@ import { r2lRecorderScriptSrc } from '../../scripts/r2l-recorder-script.mjs';
 import { stripInlineExports } from '../../lib/inline-esm.mjs';
 import '../../styles/r2l-w2-dynamic.css';
 import '../../styles/read2lead-story-mission.css';
+import '../../styles/r2l-reading.css';
 
 const r2lRecorderSrc = r2lRecorderScriptSrc();
 // These helper modules are authored as real ESM but inlined into classic
@@ -52,10 +53,23 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
         <p id="loading-message">Minny đang mở nhiệm vụ cho con...</p>
       </div>
 
-      <div id="error-card" class="hidden rounded-md border border-gold/30 bg-gold/10 p-6 text-cream">
-        <p class="font-semibold text-gold">Chưa mở được bài học</p>
-        <p id="error-message" class="mt-2 text-sm text-cream/80"></p>
-        <button id="error-retry" class="r2l-primary mt-4" type="button">Thử lại</button>
+      <div id="error-card" class="hidden r2l-err">
+        <div class="r2l-err__scene" aria-hidden="true">
+          <span class="r2l-err__cloud r2l-err__cloud--a"></span>
+          <span class="r2l-err__cloud r2l-err__cloud--b"></span>
+          <span class="r2l-err__page r2l-err__page--a"></span>
+          <span class="r2l-err__page r2l-err__page--b"></span>
+          <span class="r2l-err__bubble">Ối!</span>
+          <span class="r2l-err__monster" data-design="error.monster"></span>
+        </div>
+        <div class="r2l-err__card">
+          <h2 class="r2l-err__title">Trang sách bị gió thổi bay mất rồi!</h2>
+          <p class="r2l-err__head">Chưa mở được bài học</p>
+          <p id="error-message"></p>
+          <p class="r2l-err__keep">Bài con đã đọc vẫn được giữ nguyên.</p>
+        </div>
+        <button id="error-retry" class="r2l-primary" type="button">Thử lại</button>
+        <p class="r2l-err__foot">Thử mấy lần vẫn chưa được? Ba mẹ nhắn Coach Felix nhé.</p>
       </div>
 
       <div id="v21-maintenance" hidden>
@@ -82,7 +96,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
         </section>
 
         <section id="w1-book-reader-phase" class="r2l-book-reader hidden" aria-labelledby="book-reader-title" data-book-stage="story">
-          <header id="book-reader-trail-header" class="r2l-book-trail-header">
+          <header id="book-reader-trail-header" class="r2l-book-trail-header" data-design="read.top">
             <div class="r2l-book-trail-header__copy">
               <p class="r2l-book-eyebrow">Hành trình</p>
               <div class="r2l-book-trail-header__title-row">
@@ -100,7 +114,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
           </header>
 
           <div id="book-reader-workspace" class="r2l-book-workspace">
-            <div id="book-reader-page-shell" class="r2l-book-page-shell">
+            <div id="book-reader-page-shell" class="r2l-book-page-shell" data-design="read.picture" data-design-col>
               <figure class="r2l-book-page">
                 <div class="r2l-book-page__art">
                   <img id="book-reader-img" src="" alt="" />
@@ -116,7 +130,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
               </figure>
             </div>
 
-            <div class="r2l-book-panel">
+            <div class="r2l-book-panel" data-design-col>
               <nav id="book-reader-stage-stepper" class="r2l-book-stepper" aria-label="Ba bước của trang">
                 <span class="r2l-book-stepper__step" data-book-step="story"><b>1</b><span>Nghe</span></span>
                 <span class="r2l-book-stepper__arrow" aria-hidden="true">›</span>
@@ -125,7 +139,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
                 <span class="r2l-book-stepper__step" data-book-step="shadow"><b>3</b><span>Đọc trang</span></span>
               </nav>
 
-              <article class="r2l-book-story-card">
+              <article class="r2l-book-story-card" data-design="read.text">
                 <div class="r2l-book-story-card__heading">
                   <p class="r2l-book-eyebrow">Đoạn truyện</p>
                   <span>EN · Mới bắt đầu</span>
@@ -141,13 +155,13 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
               </article>
 
               <div id="book-reader-stage-stack" class="r2l-book-stage-stack">
-                <section id="book-reader-audio-gate" class="r2l-book-gate" data-book-stage-container="story" data-audio-state="idle" aria-labelledby="book-reader-audio-title">
+                <section id="book-reader-audio-gate" class="r2l-book-gate" data-design="read.listen" data-book-stage-container="story" data-audio-state="idle" aria-labelledby="book-reader-audio-title">
                   <div class="r2l-book-audio__copy">
                     <p class="r2l-book-eyebrow">Trạng thái · Nghe</p>
                     <h3 id="book-reader-audio-title">Bấm để Minny đọc trang này</h3>
                     <p id="book-reader-audio-status" role="status" aria-live="polite">Nghe xong, con trả lời câu hỏi rồi đọc lại trang này nhé.</p>
                   </div>
-                  <button id="book-reader-listen-btn" class="r2l-book-audio__button" type="button" aria-label="Nghe Minny đọc trang" aria-pressed="false">
+                  <button id="book-reader-listen-btn" class="r2l-book-audio__button" data-design="read.listen-btn" type="button" aria-label="Nghe Minny đọc trang" aria-pressed="false">
                     <span class="r2l-book-audio__play" aria-hidden="true">▶</span>
                     <span class="r2l-book-audio__pause" aria-hidden="true">Ⅱ</span>
                     <span class="r2l-book-audio__check" aria-hidden="true">✓</span>
@@ -163,8 +177,9 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
                   <button id="book-reader-story-next" class="r2l-book-next-cta hidden" type="button" disabled>Trang tiếp →</button>
                 </section>
 
-                <section id="book-reader-question-stage" class="r2l-book-question-stage hidden" data-book-stage-container="questions" aria-live="polite">
+                <section id="book-reader-question-stage" class="r2l-book-question-stage hidden" data-design="read.question" data-book-stage-container="questions" aria-live="polite">
                   <article class="r2l-book-question-card">
+                    <img class="r2l-book-q-face" src="/assets/minny/vector/minny-face.svg" alt="" aria-hidden="true" width="48" height="48" />
                     <p id="book-reader-question-counter" class="r2l-book-eyebrow"></p>
                     <h3 id="book-reader-question-text"></h3>
                     <div id="book-reader-question-options" class="r2l-book-question-options"></div>
@@ -186,7 +201,7 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
                   </article>
                 </section>
 
-                <section id="book-reader-shadow-stage" class="r2l-book-shadow-stage hidden" data-book-stage-container="shadow" aria-live="polite">
+                <section id="book-reader-shadow-stage" class="r2l-book-shadow-stage hidden" data-design="read.speak" data-book-stage-container="shadow" aria-live="polite">
                   <div class="r2l-book-shadow-stage__heading">
                     <div>
                       <p class="r2l-book-eyebrow">Trạng thái · Đọc trang</p>
@@ -204,14 +219,14 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
                   </aside>
                 </section>
 
-                <section id="book-reader-next-stage" class="r2l-book-reward hidden" data-book-stage-container="next" aria-live="polite">
+                <section id="book-reader-next-stage" class="r2l-book-reward hidden" data-design="read.done" data-book-stage-container="next" aria-live="polite">
                   <div class="r2l-book-reward__sparkles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
                   <span class="r2l-book-reward__star" aria-hidden="true"><i></i><i></i><b></b></span>
                   <p class="r2l-book-eyebrow">Trang hoàn thành</p>
                   <h3>Con được 1 ngôi sao!</h3>
                   <p>Minny: “Con bỏ túi một sao! Sang trang tiếp theo nhé.”</p>
                   <div class="r2l-book-reward__pills"><span>+25 XP</span><span>+5 💎</span></div>
-                  <button id="book-reader-next" class="r2l-book-next-cta" type="button" disabled>Trang tiếp →</button>
+                  <button id="book-reader-next" class="r2l-book-next-cta" data-design="read.next" type="button" disabled>Trang tiếp →</button>
                 </section>
               </div>
 
