@@ -145,7 +145,8 @@ export async function mountStoryMission() {
     childStateP=childStateP||loadAvatarModule().then(async m=>({m,state:await m.loadChildState(params.get('code')||undefined)}));
     childStateP.then(({m,state})=>{if(m.drawChildAvatar(holder,state))holder.classList.add('is-real');}).catch(()=>{});
   };
-  panel.replaceChildren(progressWrap,hero,qcard,feedback,notice,controls);
+  // DOM order = design order: progress, Minny, question, mic (controls), latest reply, notice.
+  panel.replaceChildren(progressWrap,hero,qcard,controls,feedback,notice);
   const chatHistory=new Map();let layoutReady=false;
   const pictureBoard=node('section','','picture-retell-board');pictureBoard.hidden=true;
   pictureBoard.setAttribute('aria-label','Tranh kể lại truyện');
@@ -405,7 +406,7 @@ export async function mountStoryMission() {
       setCue('recording','Minny đang nghe con…');
       const stopBtn=pictureMode()?button('✓ Xong · Xem kết quả',finish):microphoneButton('✓ Con nói xong rồi',finish,true),stopWrap=node('div','','story-mission-mic');
       stopBtn.setAttribute('data-design','voice.mic');stopWrap.setAttribute('data-design','voice.primary');
-      stopWrap.append(stopBtn,node('p',pictureMode()?'Micro đang ghi âm':'Bấm nút vuông khi con nói xong','story-mission-mic-caption'));
+      stopWrap.append(stopBtn,node('span',pictureMode()?'Micro đang ghi âm':'Bấm nút vuông khi con nói xong','story-mission-mic-caption'));
       controls.replaceChildren(node('p',pictureMode()?`Con kể cả câu chuyện theo ${view.policy.pictureRetell.frames.length} tranh. Con có thể dừng để nghĩ; bấm Xong khi kể hết. Tối đa 2 phút.`:'Trả lời câu hỏi ở trên. Nói xong, con bấm nút bên dưới hoặc chờ Minny nhận.','story-mission-note'),stopWrap,button('Huỷ · Chưa gửi',cancel,true));
       if(view.policy.interview)focusActivity();
       captureTimer=setTimeout(finish,pictureMode()?120000:60000);
@@ -484,6 +485,8 @@ export async function mountStoryMission() {
     root.dataset.interview=String(interview);root.dataset.stage=s.stage;root.dataset.finished='false';
     if(interview)arrangeInterview();
     hero.hidden=!interview||pictureMode();conversation.hidden=!interview||pictureMode();
+    // The interview-only pieces stay out of a tap-answer (non-interview) session: no empty question card, log row or progress line.
+    feedback.hidden=conversation.hidden;qcard.hidden=!interview||s.stage!=='understand'||!!s.feedbackPending;progressWrap.hidden=!interview||s.stage!=='understand';
     pictureBoard.hidden=!pictureMode();if(pictureMode())showPictureBoard(view.policy.pictureRetell);
     if(s.stage==='read')chatHistory.clear();
     progress.hidden=!interview||s.stage!=='understand';
@@ -607,7 +610,7 @@ export async function mountStoryMission() {
       if(view.policy.providerEnabled){
         const mic=microphoneButton('🎙 Bấm để trả lời',recordVoice),wrap=node('div','','story-mission-mic');
         mic.setAttribute('data-design','voice.mic');wrap.setAttribute('data-design','voice.primary');
-        wrap.append(mic,node('p','Bấm rồi nói câu trả lời','story-mission-mic-caption'));controls.append(wrap);
+        wrap.append(mic,node('span','Bấm rồi nói câu trả lời','story-mission-mic-caption')); /* a span (Baloo 2 label, as in the mock), not a paragraph */controls.append(wrap);
       }
       if(!interview)q.options.forEach((text,i)=>controls.append(button(text,()=>event({type:'answer',taskId:q.id,optionIndex:i}),true)));
       if(!interview)controls.append(review);

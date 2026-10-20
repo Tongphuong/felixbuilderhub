@@ -10,19 +10,19 @@ body:has(#w1-book-reader-phase:not(.hidden)) #main,
 body:has(#error-card:not(.hidden)) #main { background: transparent; min-height: 0; }
 body:has(#w1-book-reader-phase:not(.hidden)) .lesson-child-header,
 body:has(#error-card:not(.hidden)) .lesson-child-header { background: transparent; color: var(--r2l-ink); max-width: 1280px; padding: 16px 16px 8px; box-sizing: border-box; }
-body:has(#w1-book-reader-phase:not(.hidden)) #main > section,
-body:has(#error-card:not(.hidden)) #main > section { max-width: 1280px; padding: 8px 16px 32px; }
+body:has(#w1-book-reader-phase:not(.hidden)) #main > section.max-w-6xl,
+body:has(#error-card:not(.hidden)) #main > section.max-w-6xl { max-width: 1280px; padding: 8px 16px 32px; }
 @media (min-width: 768px) {
   body:has(#w1-book-reader-phase:not(.hidden)) .lesson-child-header,
   body:has(#error-card:not(.hidden)) .lesson-child-header { padding-inline: 24px; }
-  body:has(#w1-book-reader-phase:not(.hidden)) #main > section,
-  body:has(#error-card:not(.hidden)) #main > section { padding-inline: 24px; }
+  body:has(#w1-book-reader-phase:not(.hidden)) #main > section.max-w-6xl,
+  body:has(#error-card:not(.hidden)) #main > section.max-w-6xl { padding-inline: 24px; }
 }
 @media (min-width: 1024px) {
   body:has(#w1-book-reader-phase:not(.hidden)) .lesson-child-header,
   body:has(#error-card:not(.hidden)) .lesson-child-header { padding: 24px 40px 8px; }
-  body:has(#w1-book-reader-phase:not(.hidden)) #main > section,
-  body:has(#error-card:not(.hidden)) #main > section { padding-inline: 40px; }
+  body:has(#w1-book-reader-phase:not(.hidden)) #main > section.max-w-6xl,
+  body:has(#error-card:not(.hidden)) #main > section.max-w-6xl { padding-inline: 40px; }
 }
 
 /* ---- top row: back pill, wallet chip, sound chip ---- */
@@ -571,7 +571,7 @@ body .lesson-support :is(button, a) { min-height: 48px; font-size: 16px; }
 
 /* ---- second pass: one sun per step, text >= 16px on every kid-facing helper ---- */
 body #w1-book-reader-phase .r2l-book-stepper__step b { font-size: 16px; }
-body:has(#w1-book-reader-phase:not(.hidden)) #main :is(.text-xs, .text-sm) { font-size: 16px; line-height: 1.45; }
+body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell :is(.text-xs, .text-sm) { font-size: 16px; line-height: 1.45; }
 body:has(#w1-book-reader-phase:not(.hidden)) .lesson-support .r2l-primary,
 body:has(#w1-book-reader-phase:not(.hidden)) .lesson-support button {
   background: #fff; color: var(--r2l-ink); border: 3px solid var(--r2l-ink); border-radius: 18px; box-shadow: 0 3px 0 var(--r2l-ink);
@@ -627,7 +627,7 @@ body #w1-book-reader-phase #lesson-review-note { order: 0; }
 
 /* top rows: back row, then one line of title + "Trang N / M", then the segments */
 body:has(#w1-book-reader-phase:not(.hidden)) .lesson-child-header, body:has(#error-card:not(.hidden)) .lesson-child-header { padding-top: 12px; padding-bottom: 6px; }
-body:has(#w1-book-reader-phase:not(.hidden)) #main > section { padding-top: 4px; }
+body:has(#w1-book-reader-phase:not(.hidden)) #main > section.max-w-6xl { padding-top: 4px; }
 body #w1-book-reader-phase .r2l-book-trail-header { margin: 0 0 10px; gap: 6px 12px; }
 body #w1-book-reader-phase .r2l-book-trail-header__title { font-size: 18px; }
 body #w1-book-reader-phase .r2l-book-workspace { gap: 12px; }
@@ -678,12 +678,60 @@ body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell { display: flex; flex
 body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell > .lesson-support { order: 20; margin: 18px 0 0; }
 body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell > #lesson-review-note { order: 0; }
 
-/* flatten the reader into #lesson-shell so the help box and then the credits can be the last things on the page */
+/* The reader root keeps a REAL box (scrollBookReaderToTop calls root.scrollIntoView()). #lesson-shell is a column: the reader, then the help box
+   (mounted by the protected script in the shell for book packs; inside the root for the story reader), credits last inside the root. */
 body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell { gap: 0; }
 body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell > * { margin-top: 0 !important; margin-bottom: 0; }
-body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell > #w1-book-reader-phase.r2l-book-reader { display: contents; }
-body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell > #w1-book-reader-phase > *,
-body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell > .lesson-support { margin-top: 0; }
 body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell .lesson-support { order: 20; margin: 18px 0 0 !important; }
 body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell .r2l-book-attribution { order: 30; margin-top: 14px !important; }
 body:has(#w1-book-reader-phase:not(.hidden)) #lesson-shell #book-reader-summary { order: 25; margin-top: 14px !important; }
+
+/* ---- round 4: voice-question geometry, label font, log clipping ---- */
+body #w1-book-reader-phase .story-mission-mic-caption { font-family: var(--r2l-font-display); font-weight: 800; }
+body #w1-book-reader-phase .minny-transcript { max-height: 260px; scroll-padding-block: 8px; }
+/* 390 to 767: the progress (text, 12 dots) rides in the back-pill row, as in the mock, instead of costing its own rows */
+@media (min-width: 380px) and (max-width: 767px) {
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] { position: relative; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] .story-mission-progress {
+    position: absolute; top: -66px; right: 0; width: 196px; display: grid; gap: 2px; justify-items: end; text-align: right; min-height: 0;
+  }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] .story-mission-question-count { font-size: 15px; line-height: 1.2; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] .story-mission-dots { gap: 3px; flex-wrap: nowrap; justify-content: flex-end; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] .story-mission-dots i { width: 12px; height: 12px; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] #book-reader-stage-stack { gap: 10px; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] .story-mission-chat-title { font-size: 17px; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand'] .ft-hero__avatar { width: 160px; height: 160px; }
+}
+
+/* the label's font is Baloo 2 on the wrapper and the paragraph alike (mock: span.d.t-3) */
+body #w1-book-reader-phase .story-mission-mic { font-family: var(--r2l-font-display); }
+
+/* the progress rides in the back-pill row; <main> reaches up into that row so the progress stays INSIDE its card (no escape) */
+@media (min-width: 380px) and (max-width: 767px) {
+  body:has(#w1-book-reader-phase[data-story-mission][data-stage='understand']:not(.hidden)) .lesson-child-header { position: relative; z-index: 3; pointer-events: none; }
+  body:has(#w1-book-reader-phase[data-story-mission][data-stage='understand']:not(.hidden)) .lesson-child-header > * { pointer-events: auto; }
+  body:has(#w1-book-reader-phase[data-story-mission][data-stage='understand']:not(.hidden)) #main { margin-top: -72px; padding-top: 72px; }
+}
+
+body #w1-book-reader-phase span.story-mission-mic-caption { display: block; }
+
+/* 1024+: the step label and the progress ride in the back-pill row (as in the mock); the porthole starts right under that row */
+@media (min-width: 1024px) {
+  body:has(#w1-book-reader-phase[data-story-mission][data-stage='understand']:not(.hidden):not([data-rest='1'])) .lesson-child-header { position: relative; z-index: 3; pointer-events: none; }
+  body:has(#w1-book-reader-phase[data-story-mission][data-stage='understand']:not(.hidden):not([data-rest='1'])) .lesson-child-header > * { pointer-events: auto; }
+  body:has(#w1-book-reader-phase[data-story-mission][data-stage='understand']:not(.hidden):not([data-rest='1'])) #main { margin-top: -84px; padding-top: 84px; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand']:not([data-rest='1']) { position: relative; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand']:not([data-rest='1']) .ft-hero { position: static; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand']:not([data-rest='1']) .story-mission-progress { position: absolute; top: -70px; right: 0; display: flex; align-items: center; gap: 14px; min-height: 0; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand']:not([data-rest='1']) .story-mission-chat-title { position: absolute; top: -66px; left: 176px; font-size: 22px; }
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand']:not([data-rest='1']) .ft-hero__avatar { margin-top: 0; }
+}
+
+@media (min-width: 1024px) {
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand']:not([data-rest='1']) .story-mission-progress { min-height: 28px; }
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  body #w1-book-reader-phase[data-story-mission][data-stage='understand']:not([data-rest='1']) .story-mission-progress { display: grid; gap: 4px; justify-items: end; text-align: right; top: -72px; }
+}
+
+body #w1-book-reader-phase .r2l-book-page__credit { max-width: 46%; }

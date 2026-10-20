@@ -120,6 +120,48 @@ test("follow-up: the child's own companion comes from the existing helper (no fe
   assert.doesNotMatch(helper, /fetch\(/);
 });
 
+test('round 4 R1: the reader root keeps a real box, so scrollBookReaderToTop (root.scrollIntoView) still lands at the reader top', async () => {
+  // no CSS rule may give the root (or the shell rule that targets it) display: contents
+  for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    const [, sel, body] = m;
+    if (!/display:\s*contents/.test(body)) continue;
+    for (const one of sel.split(',')) assert.doesNotMatch(one.trim(), /#w1-book-reader-phase(\.r2l-book-reader|\[[^\]]*\])*\s*$/, 'root must keep a box: ' + one.trim());
+  }
+  // the real helper, against the structure lesson.astro builds (root = #w1-book-reader-phase, inside #lesson-shell)
+  const { scrollBookReaderToTop, BOOK_READER_SCROLL_ANCHOR_ID } = await import('../src/lib/read2lead-book-flow.mjs');
+  assert.equal(BOOK_READER_SCROLL_ANCHOR_ID, 'w1-book-reader-phase');
+  assert.match(lesson, /<section id="w1-book-reader-phase" class="r2l-book-reader/);
+  const calls = [];
+  const root = { scrollIntoView: o => calls.push(o) };
+  const doc = { querySelector: s => (s === '#w1-book-reader-phase' ? root : null) };
+  assert.equal(scrollBookReaderToTop(doc), root);
+  assert.deepEqual(calls, [{ behavior: 'smooth', block: 'start' }]);
+});
+
+test('round 4: nothing in r2l-reading.css reaches the rank-up modal (a direct child of <main>), the reward overlay or other overlays', () => {
+  // the modal is `main > section#rank-up-modal`: a bare `#main > section` would restyle it (padding, wrapping): it must target the content section only
+  assert.doesNotMatch(css, /#main > section(?!\.max-w-6xl)[\s,{]/);
+  assert.doesNotMatch(css, /#main :is\(\.text-xs/);
+  assert.doesNotMatch(css, /(^|[,}\n])\s*(?!\.still)(button|\.r2l-btn|\.r2l-btn-sun|\.r2l-m-ring)[\s,{:]/m);
+});
+
+test('round 4 R2: voice DOM order is progress, Minny, question, MIC, latest reply, notice; label is Baloo 2', () => {
+  assert.match(voice, /panel\.replaceChildren\(progressWrap,hero,qcard,controls,feedback,notice\)/);
+  // the mic wrapper really is appended (a `//` comment once swallowed this call on the same line)
+  const line = voice.split('\n').find(l => l.includes('controls.append(wrap)'));
+  assert.ok(line && !/\/\/[^\n]*controls\.append\(wrap\)/.test(line));
+  assert.match(voice, /node\('span','Bấm rồi nói câu trả lời','story-mission-mic-caption'\)/);
+  const cap = css.match(/\.story-mission-mic-caption \{[^}]*font-family: var\(--r2l-font-display\)[^}]*}/);
+  assert.ok(cap);
+});
+
+test('round 4 R3: a non-interview (tap-answer) session shows no empty question card, log row or progress line', () => {
+  assert.match(voice, /feedback\.hidden=conversation\.hidden;qcard\.hidden=!interview\|\|s\.stage!=='understand'\|\|!!s\.feedbackPending;progressWrap\.hidden=!interview\|\|s\.stage!=='understand';/);
+  // runs in render() for every session, ahead of the interview-only renderConversation()
+  const render = voice.slice(voice.indexOf('function render()'));
+  assert.ok(render.indexOf('qcard.hidden=!interview') > 0 && render.indexOf('qcard.hidden=!interview') < render.indexOf('renderConversation()'));
+});
+
 test('follow-up: r2lCdPop (mic countdown number) has a still twin for reduced motion and .still', () => {
   assert.match(css, /@media \(prefers-reduced-motion: reduce\) \{ \.r2l-cd-pop[^}]*animation: none !important/);
   assert.match(css, /\.still \.r2l-cd-pop[^}]*animation: none !important/);
