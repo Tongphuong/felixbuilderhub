@@ -162,6 +162,27 @@ test('round 5: the 380-767px question-screen sizing never reaches the resting sc
   assert.match(css.match(/body:has\([^{]*\) #main \{ margin-top: -72px[^}]*}/)[0], /:not\(\[data-rest='1'\]\)/);
 });
 
+test('round 6: every /assets path the packet-B code references exists under public/ (Minny faces must not 404)', async () => {
+  const { existsSync } = await import('node:fs');
+  const missing = paths => paths.filter(p => !existsSync('public' + p));
+  // bite: a deliberately missing path must be reported
+  assert.deepEqual(missing(['/assets/minny/vector/does-not-exist.svg']), ['/assets/minny/vector/does-not-exist.svg']);
+  const refs = new Set();
+  for (const src of [voice, css]) for (const m of src.matchAll(/\/assets\/[A-Za-z0-9_./-]*[A-Za-z0-9_-]\.(?:svg|png|webp|jpg|mp3|mp4)/g)) refs.add(m[0]);
+  // the faces are built as '/assets/minny/vector/' + file name
+  for (const m of voice.matchAll(/faceOf\('[a-z]+','([a-z-]+\.svg)'\)/g)) refs.add('/assets/minny/vector/' + m[1]);
+  assert.ok(refs.has('/assets/minny/vector/minny-face-talk.svg') && refs.has('/assets/minny/vector/minny-listen.svg') && refs.has('/assets/minny/vector/minny-face-sleep.svg'));
+  // presentation markup added to lesson.astro: the question-card face
+  const face = lesson.match(/class="r2l-book-q-face" src="([^"]+)"/);
+  assert.ok(face);
+  refs.add(face[1]);
+  assert.deepEqual(missing([...refs]), []);
+  // byte-identical to the locked design copies
+  for (const f of ['minny-face-talk.svg', 'minny-listen.svg', 'minny-face-sleep.svg', 'minny-face.svg']) {
+    assert.equal(sha(readFileSync('public/assets/minny/vector/' + f)), sha(readFileSync('_design/read2lead-dao-phieu-luu/assets/minny/' + f)), f);
+  }
+});
+
 test('round 4 R2: voice DOM order is progress, Minny, question, MIC, latest reply, notice; label is Baloo 2', () => {
   assert.match(voice, /panel\.replaceChildren\(progressWrap,hero,qcard,controls,feedback,notice\)/);
   // the mic wrapper really is appended (a `//` comment once swallowed this call on the same line)
