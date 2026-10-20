@@ -67,8 +67,8 @@ function page(o = {}) {
     + (o.sunOnclick ? '<div onclick="void 0" style="width:20px;height:48px;background:#FFC83D">o</div>' : '')
     + (o.sunCursor ? '<div style="width:20px;height:48px;background:#FFC83D;cursor:pointer">c</div>' : '')
     + (o.selectedTab ? '<div role="tablist"><a href="#" role="tab" aria-selected="true" style="display:inline-block;height:48px;line-height:48px;width:60px;background:#FFC83D">XP</a><a href="#" role="tab" aria-selected="false" style="display:inline-block;height:48px;line-height:48px;width:60px;background:#fff">Kim</a></div>' : '')
-    + (o.pressedToggle ? '<div role="toolbar"><button type="button" aria-pressed="true" style="height:48px;width:60px;background:#FFC83D;font-family:inherit">Mũ</button></div>' : '')
-    + (o.radioGroup ? '<div role="radiogroup"><button type="button" role="radio" aria-checked="true" style="height:48px;width:60px;background:#FFC83D;font-family:inherit">Mũ</button></div>' : '')
+    + (o.pressedToggle ? '<div role="toolbar"><button type="button" aria-pressed="true" style="height:48px;width:60px;background:#FFC83D;font-family:inherit">Mũ</button><button type="button" style="height:48px;width:60px;background:#fff;font-family:inherit">Nón</button></div>' : '')
+    + (o.radioGroup ? '<div role="radiogroup"><button type="button" role="radio" aria-checked="true" style="height:48px;width:60px;background:#FFC83D;font-family:inherit">Mũ</button><button type="button" role="radio" aria-checked="false" style="height:48px;width:60px;background:#fff;font-family:inherit">Nón</button></div>' : '')
     + (o.checkedInput ? '<label style="display:block;width:60px;height:48px;background:#FFC83D"><input type="checkbox" checked>Mũ</label>' : '')
     // ABUSE: a second sun ACTION wearing a selected-state attribute (Buffet HIGH, 2026-10-20)
     + (o.abuse === 'pressed-button' ? '<button type="button" aria-pressed="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">Mua ngay</button>' : '')
@@ -76,6 +76,11 @@ function page(o = {}) {
     + (o.abuse === 'current-li-descendant' ? '<ul style="margin:0;padding:0;list-style:none"><li aria-current="step"><a href="#" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">Xoá hết</a></li></ul>' : '')
     + (o.abuse === 'submit-pressed' ? '<form><input type="submit" value="Gửi" aria-pressed="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit;border:0"></form>' : '')
     + (o.abuse === 'submit-button-in-group' ? '<form><div role="toolbar"><button type="submit" aria-pressed="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">Gửi</button></div></form>' : '')
+    + (o.abuse === 'toolbar-lone' ? '<div role="toolbar"><button type="button" aria-pressed="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">Mua ngay</button></div>' : '')
+    + (o.abuse === 'toolbar-allsun' ? '<div role="toolbar"><button type="button" aria-pressed="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">Mua ngay</button><button type="button" aria-pressed="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">Xoá hết</button></div>' : '')
+    + (o.abuse === 'toolbar-link' ? '<div role="toolbar"><a href="/buy" aria-current="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">Mua ngay</a></div>' : '')
+    + (o.abuse === 'form-typeless' ? '<form><button aria-pressed="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">Gửi</button></form>' : '')
+    + (o.abuse === 'tablist-two-selected' ? '<div role="tablist"><a href="#" role="tab" aria-selected="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">A</a><a href="#" role="tab" aria-selected="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">B</a><a href="#" role="tab" aria-selected="false" style="display:block;height:48px;background:#fff">C</a></div>' : '')
     + (o.abuse === 'tab-outside-tablist' ? '<a href="#" role="tab" aria-selected="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">Mua</a>' : '')
     + (o.plainButtonFont ? '<button type="button" style="height:48px;width:90px;font-family:' + o.plainButtonFont + '">Nút</button>' : '')
     + (o.unselectedSunTab ? '<div role="tablist"><a href="#" role="tab" aria-selected="false" style="display:inline-block;height:48px;line-height:48px;width:60px;background:#FFC83D">XP</a></div>' : '')
@@ -190,7 +195,7 @@ V['sun-unselected-tab'] = [{ unselectedSunTab: true }, { must: ['primary'], may:
 V['sun-radio-in-group'] = [{ radioGroup: true }, { must: [], may: ['pixel-diff'] }];
 V['sun-checked-input'] = [{ checkedInput: true }, { must: [], may: ['pixel-diff', 'tap>=48px'] }];
 // the exemption is abusable: each of these is a SECOND sun action and must fail the one-sun rule
-for (const a of ['pressed-button', 'current-link', 'current-li-descendant', 'submit-pressed', 'submit-button-in-group', 'tab-outside-tablist']) V['abuse-' + a] = [{ abuse: a }, { must: ['primary'], may: ['pixel-diff'] }];
+for (const a of ['pressed-button', 'current-link', 'current-li-descendant', 'submit-pressed', 'submit-button-in-group', 'tab-outside-tablist', 'toolbar-lone', 'toolbar-allsun', 'toolbar-link', 'form-typeless', 'tablist-two-selected']) V['abuse-' + a] = [{ abuse: a }, { must: ['primary'], may: ['pixel-diff'] }];
 // fonts: classes the design CSS sets in Baloo 2 (and the mock renders so) must be Baloo; any real button must be a design family
 V['wrong-chip-font'] = [{ chipFont: 'Arial' }, { must: ['fonts'], may: ['pixel-diff'] }];
 V['wrong-plain-button-font'] = [{ plainButtonFont: 'Arial' }, { must: ['fonts'], may: ['pixel-diff'] }];
@@ -392,8 +397,8 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
       assert.match(by['two-sun-buttons'].checks.find(c => c.name === 'primary').detail, /found 2/);
       assert.equal(by['sun-selected-tab'].checks.find(c => c.name === 'fonts').pass, true, 'the Nunito tabs are fine');
       assert.match(by['wrong-button-font'].checks.find(c => c.name === 'fonts').detail, /Arial, want Baloo 2/);
-      for (const a of ['pressed-button', 'current-link', 'current-li-descendant', 'submit-pressed', 'submit-button-in-group', 'tab-outside-tablist']) {
-        assert.match(by['abuse-' + a].checks.find(c => c.name === 'primary').detail, /exactly 1 sun-filled clickable control, found 2/, 'abuse ' + a);
+      for (const a of ['pressed-button', 'current-link', 'current-li-descendant', 'submit-pressed', 'submit-button-in-group', 'tab-outside-tablist', 'toolbar-lone', 'toolbar-allsun', 'toolbar-link', 'form-typeless', 'tablist-two-selected']) {
+        assert.match(by['abuse-' + a].checks.find(c => c.name === 'primary').detail, /exactly 1 sun-filled clickable control, found [2-9]/, 'abuse ' + a);
       }
       assert.equal(by['sun-radio-in-group'].checks.find(c => c.name === 'primary').pass, true);
       assert.equal(by['sun-checked-input'].checks.find(c => c.name === 'primary').pass, true);
@@ -759,6 +764,7 @@ test('every data_bound value is bound or declared unbound with a reason (classif
   assert.deepEqual(classifyDataBound({ data_bound: ['Hoang'] }, { expect: ['oan'], absent: [] }).undeclared, ['Hoang'], 'and the reverse: "oan" does not cover "Hoang"');
   assert.deepEqual(classifyDataBound({ data_bound: ['Bộ 1 · Quyển 2 · Bài 4'] }, { expect: [], absent: ['Quyển 2 · Bài 4'] }).bound, ['Bộ 1 · Quyển 2 · Bài 4'], 'a whole run of " · " parts covers the composite');
   assert.deepEqual(classifyDataBound({ data_bound: ['Bộ 1 · Quyển 2 · Bài 4'] }, { expect: [], absent: ['Quyển 2 · Bà'] }).undeclared, ['Bộ 1 · Quyển 2 · Bài 4'], 'a partial part is no cover');
+  assert.deepEqual(classifyDataBound({ data_bound: ['Bộ 1 · Quyển 2 · Bài 4'] }, { expect: [], absent: ['Bộ 1'] }).undeclared, ['Bộ 1 · Quyển 2 · Bài 4'], 'one part of three ("Bộ 1") is under half: no cover');
   assert.deepEqual(classifyDataBound({ data_bound: ['55'] }, { expect: ['5'], absent: [] }).undeclared, ['55'], 'a 1-character expectation does not cover everything');
 });
 

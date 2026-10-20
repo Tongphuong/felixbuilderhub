@@ -399,7 +399,16 @@ def sync_source(repo, out, base_sha_log):
 
 # ---------------------------------------------------------------- main build
 
+def active_bite_hooks():
+    """Names of the test-only env hooks that are set. A real release must never run with one (they disable or weaken guards)."""
+    return [n for n in (UNSAFE_ENV, NO_VERBATIM_ENV) if os.environ.get(n)]
+
+
 def build(a):
+    bite_hooks = active_bite_hooks()
+    if bite_hooks:
+        print("!!! WARNING: TEST BITE HOOKS ACTIVE (%s). This candidate is NOT a release: guards are weakened. Unset them. !!!"
+              % ", ".join(bite_hooks), file=sys.stderr)
     base = Path(a.base).resolve()
     out = Path(a.out).resolve()
     repo = Path(a.repo).resolve()
@@ -608,7 +617,8 @@ def build(a):
                                            "checkedAt": loader["checkedAt"]}}
 
         proof = {
-            "status": "PASS",
+            "status": "PASS" if not bite_hooks else "NOT-A-RELEASE: test bite hooks active",
+            "biteHooksActive": bite_hooks,
             "createdAt": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
             "base": str(base),
             "baseManifestSha256": sha256_file(base / MANIFEST_REL),
@@ -665,6 +675,9 @@ def build(a):
 
 
 def print_next(proof, cfg_path):
+    if proof.get("biteHooksActive"):
+        print("\nNOT A RELEASE: bite hooks active %s. No upload/deploy steps printed." % proof["biteHooksActive"])
+        return
     short = proof["repoCommit"][:8]
     print("\nNOT UPLOADED. NOT DEPLOYED. Next steps (Elon runs these; this tool does not):\n")
     print("  1. Rehearse locally:  node scripts/r2l-release/rehearse.mjs --candidate %s --repo %s" % (Path(proof["wranglerConfig"]).parent, proof["repo"]))

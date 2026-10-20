@@ -218,13 +218,24 @@ export function contractChecks(args) {
     // checked radio/checkbox input, and it is never a submit control or a [data-design$=".primary"] element.
     const SELECTED = '[role=tab][aria-selected=true],[role=option][aria-selected=true],[aria-pressed=true],[aria-current]:not([aria-current=false]),[role=radio][aria-checked=true],[role=menuitemradio][aria-checked=true],[role=checkbox][aria-checked=true],[role=switch][aria-checked=true]';
     const GROUP = '[role=tablist],[role=radiogroup],[role=toolbar],[role=listbox]';
-    const NEVER = 'input[type=submit],button[type=submit],[data-design$=".primary"]';
+    const NEVER = 'input[type=submit],button[type=submit],form button:not([type]),[data-design$=".primary"]';
+    const MEMBER = 'button,a[href],[role=tab],[role=radio],[role=option],[role=checkbox],[role=switch],[role=menuitemradio],input:not([type=hidden])';
+    // A group only vouches for a selected member when it really is a SET of toggles: >= 2 member controls, at least one NOT sun-filled
+    // (an all-sun or one-button "toolbar" is just a wrapper around actions), and, except for a toolbar (which may be multi-pressed),
+    // at most one selected member.
+    const groupOk = g => {
+      const members = [...g.querySelectorAll(MEMBER)].filter(m => !m.parentElement.closest(MEMBER) || m.matches('input'));
+      if (members.length < 2 || !members.some(m => !isSun(m))) return false;
+      if (g.matches('[role=toolbar]')) return true;
+      return members.filter(m => m.matches(SELECTED)).length <= 1;
+    };
     const checkedInput = e => e.tagName === 'INPUT' && (e.type === 'radio' || e.type === 'checkbox') && e.checked;
     const isSelected = e => {
       if (e.matches(NEVER)) return false;
       if (checkedInput(e)) return true;
       if (e.matches('label') && !!e.querySelector('input[type=radio]:checked,input[type=checkbox]:checked')) return true;
-      return e.matches(SELECTED) && !!e.closest(GROUP);
+      const g = e.closest(GROUP);
+      return e.matches(SELECTED) && !!g && groupOk(g);
     };
     const cand = [...document.querySelectorAll('body *')].filter(e => visible(e) && isSun(e) && clickable(e) && !isSelected(e));
     const sunControls = cand.filter(e => !cand.some(o => o !== e && o.contains(e)));

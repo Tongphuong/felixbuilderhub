@@ -7,14 +7,15 @@ import { containsToken } from './text.mjs';
 //   (b) declared in the contract's `unbound` map {"<value>": "<reason>"} with a NON-EMPTY reason.
 // Anything in neither is a failure: an empty set of expectations can never read as a pass.
 // An expectation covers a value when it equals it, equals it minus a leading "[placeholder] " tag ("[Tên quà] Sticker" is bound by
-// "Sticker"), CONTAINS it as a whole token ("Chào Minh!" shows "Minh"), or is a whole run of its " · "-separated parts
+// "Sticker"), CONTAINS it as a whole token ("Chào Minh!" shows "Minh"), or is a whole run of at least half of its " · "-separated parts
 // ("Quyển 2 · Bài 4" is the tail of "Bộ 1 · Quyển 2 · Bài 4"; "48 câu chuyện · 6 quyển sách" of the heading that prefixes it).
 // NOT any other substring: a short expectation that merely sits inside the value ("oan" inside "Hoang") proves nothing about it.
 const parts = v => v.split(' · ');
 const isPartRun = (e, v) => {
   const ps = parts(v);
   if (ps.length < 2) return false;
-  for (let i = 0; i < ps.length; i++) for (let j = i + 1; j <= ps.length; j++) if (ps.slice(i, j).join(' · ') === e) return true;
+  // the run must cover at least half of the value's parts: "Bộ 1" alone does not bind "Bộ 1 · Quyển 2 · Bài 4"
+  for (let i = 0; i < ps.length; i++) for (let j = i + 1; j <= ps.length; j++) if ((j - i) * 2 >= ps.length && ps.slice(i, j).join(' · ') === e) return true;
   return false;
 };
 const cover = (e, v) => e === v || e === v.replace(/^\[[^\]]*\]\s*/, '') || isPartRun(e, v) || (v.length >= 3 && containsToken(e, v));

@@ -234,6 +234,22 @@ class ReleaseCandidateTests(unittest.TestCase):
         for rel, src in zip(LIB_REL, LIB_SRC):
             self.assertNotEqual(sha(self.f.out / rel), sha(self.f.repo / src))
 
+    def test_bite_hook_in_a_run_is_loud_and_never_a_pass(self):
+        # a real release must not pass silently with a test hook set
+        r = self.f.run(extra_env={NO_VERBATIM: "1"})
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        self.assertIn("TEST BITE HOOKS ACTIVE", r.stderr)
+        self.assertNotIn("versions upload", r.stdout)
+        proof = json.loads((self.f.out / "candidate-proof.json").read_text())
+        self.assertEqual(proof["biteHooksActive"], [NO_VERBATIM])
+        self.assertNotEqual(proof["status"], "PASS")
+
+    def test_clean_run_records_no_bite_hooks(self):
+        r = self.f.run()
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        proof = json.loads((self.f.out / "candidate-proof.json").read_text())
+        self.assertEqual((proof["biteHooksActive"], proof["status"]), ([], "PASS"))
+
     def test_library_source_missing_from_repo_fails(self):
         (self.f.repo / LIB_SRC[0]).unlink()
         f = self.f
