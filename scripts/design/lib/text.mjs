@@ -86,6 +86,10 @@ export function containsToken(stream, token) {
     if (ok && isDigit(first) && prev && (prev === '.' || prev === ',') && isDigit(prev2)) ok = false;
     if (ok && (isDigit(last) || isLetter(last)) && next && (isDigit(next) || isLetter(next))) ok = false;
     if (ok && isDigit(last) && next && (next === '.' || next === ',') && isDigit(next2)) ok = false;
+    // a symbol-only token ("★★") must not be the head of a longer run of the same symbol ("★★★"): no word boundary exists there
+    const sym = c => !!c && !isDigit(c) && !isLetter(c) && !/[\s.,;:!?)\]]/.test(c);
+    if (ok && !isDigit(first) && !isLetter(first) && sym(first) && prev === first) ok = false;
+    if (ok && !isDigit(last) && !isLetter(last) && sym(last) && next === last) ok = false;
     if (ok) return true;
     from = i + 1;
   }

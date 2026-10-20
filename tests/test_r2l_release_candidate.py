@@ -18,6 +18,9 @@ from pathlib import Path
 
 TOOL = Path(os.environ.get("R2L_RELEASE_TOOL") or Path(__file__).resolve().parent.parent / "scripts/r2l-release/build_candidate.py")
 UNSAFE = "R2L_RELEASE_UNSAFE_WRITE_THROUGH_FOR_BITE_TEST"
+NO_VERBATIM = "R2L_RELEASE_NO_VERBATIM_FOR_BITE_TEST"
+LIB_REL = ("assets/read2lead/library-assets/library.mjs", "assets/read2lead/library-assets/library.css")
+LIB_SRC = ("src/scripts/read2lead-book-library.mjs", "src/styles/read2lead-book-library.css")
 
 
 def sha(p):
@@ -50,11 +53,14 @@ class Fixture:
         a = self.base / "assets"
         w(a / "read2lead/index.html", PAGE_OLD)
         w(a / "_astro/app.OLD.js", "console.log('old')")
+        # the base's library files are WRONG on purpose (stale/foreign content): a candidate must not inherit them
+        w(self.base / LIB_REL[0], "export const WRONG_R2_LIBRARY_JS=1")
+        w(self.base / LIB_REL[1], ".wrong-r2-library-css{}")
         w(a / "__private/media/pic.bin", b"\x00\x01ILLUSTRATION\x02")
         w(a / "__private/book-parts/p1.json", '{"part":1}')
         manifest = {
             "format": "synthetic-v1", "pages": {"/read2lead": "/read2lead/index.html"},
-            "publicAssets": ["/_astro/app.OLD.js"], "scriptHashes": [],
+            "publicAssets": ["/_astro/app.OLD.js", "/read2lead/library-assets/library.mjs", "/read2lead/library-assets/library.css"], "scriptHashes": [],
             "packages": [{"id": "story-1"}], "existingTestAccount": {"x": 1},
         }
         w(a / "__private/package.json", json.dumps(manifest, separators=(",", ":")))
@@ -78,6 +84,8 @@ class Fixture:
         w(r / "functions/lib/x.mjs", "export const x=1;")
         for d in ("schemas", "scripts", "src"):
             w(r / d / "keep.txt", d)
+        w(r / LIB_SRC[0], "export const library = 'repo source js';\n")
+        w(r / LIB_SRC[1], ".library{color:#17324D}\n")
         if with_voice:
             self._add_voice(w)
         self.git("init", "-q")
@@ -193,6 +201,57 @@ class ReleaseCandidateTests(unittest.TestCase):
         self.assertEqual(proof["protectedFilesVerified"], 2)
         self.assertIn("assets/read2lead/index.html", proof["changedAssets"])
         self.assertIn("cloudflare/read2lead-private-preview/helper.mjs", proof["sourceChanged"])
+
+    def test_library_files_come_from_repo_source_not_base(self):
+        # Buffet R2 HIGH-1: library.mjs/.css are verbatim copies of repo source served from the Worker's assets, not build output.
+        # The base's copies are WRONG here; hard-link a sibling release to them too (as v99-v106 were) and prove nothing leaks either way.
+        sibling = self.f.tmp / "sibling"
+        shutil.copytree(self.f.base, sibling, symlinks=True, copy_function=os.link)
+        for rel in LIB_REL:
+            self.assertTrue(os.path.samefile(sibling / rel, self.f.base / rel))
+        base_before = {rel: ((self.f.base / rel).read_bytes(), os.stat(self.f.base / rel).st_ino) for rel in LIB_REL}
+        sib_before = {rel: (sibling / rel).read_bytes() for rel in LIB_REL}
+        r = self.f.run()
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        proof = json.loads((self.f.out / "candidate-proof.json").read_text())
+        for rel, src in zip(LIB_REL, LIB_SRC):
+            self.assertEqual(sha(self.f.out / rel), sha(self.f.repo / src), rel + " must equal the repo source")
+            self.assertIn(rel, proof["changedAssets"])
+            self.assertFalse(os.path.samefile(self.f.out / rel, self.f.base / rel), "candidate must not share an inode with the base copy")
+            # (b) base AND every release hard-linked to it: content and inode unchanged
+            self.assertEqual((self.f.base / rel).read_bytes(), base_before[rel][0])
+            self.assertEqual(os.stat(self.f.base / rel).st_ino, base_before[rel][1])
+            self.assertEqual((sibling / rel).read_bytes(), sib_before[rel])
+        m = json.loads((self.f.out / "assets/__private/package.json").read_text())
+        for pub in ("/read2lead/library-assets/library.mjs", "/read2lead/library-assets/library.css"):
+            self.assertIn(pub, m["publicAssets"])
+
+    def test_library_bite_without_the_fix_the_candidate_keeps_the_wrong_files(self):
+        # (c) the pre-fix behaviour (no verbatim step): the candidate inherits the base's WRONG files, so the equality
+        # assertion in test_library_files_come_from_repo_source_not_base discriminates.
+        r = self.f.run(extra_env={NO_VERBATIM: "1"})
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        for rel, src in zip(LIB_REL, LIB_SRC):
+            self.assertNotEqual(sha(self.f.out / rel), sha(self.f.repo / src))
+
+    def test_library_source_missing_from_repo_fails(self):
+        (self.f.repo / LIB_SRC[0]).unlink()
+        f = self.f
+        r = subprocess.run([sys.executable, str(TOOL), "--base", str(f.base), "--base-config", str(f.base_config), "--repo", str(f.repo),
+                            "--out", str(f.out), "--build-env", str(f.build_env), "--allow-dirty"], capture_output=True, text=True)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("verbatim asset source missing", r.stderr)
+        self.assertFalse(f.out.exists())
+
+    def test_library_identical_to_base_is_not_reported_changed(self):
+        for rel, src in zip(LIB_REL, LIB_SRC):
+            (self.f.base / rel).write_bytes((self.f.repo / src).read_bytes())
+        r = self.f.run()
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        proof = json.loads((self.f.out / "candidate-proof.json").read_text())
+        for rel in LIB_REL:
+            self.assertNotIn(rel, proof["changedAssets"])
+            self.assertEqual(sha(self.f.out / rel), sha(self.f.base / rel))
 
     def test_good_case_full_verify(self):
         r = subprocess.run(

@@ -60,13 +60,24 @@ function page(o = {}) {
   }[o.footMode] || '<p style="margin:0">Dành cho ba mẹ</p>';
   const foot = o.dropFoot ? '' : `<footer${mk('t.foot')} style="height:60px;padding:16px"${o.footMode === 'alt' ? ' aria-label="Dành cho ba mẹ"' : ''}>${footInner}</footer>`;
   const seq = o.swap ? [top, foot, hero, primary] : [top, hero, primary, foot];
+  const chip = `<span class="chip" style="position:absolute;top:12px;right:8px;padding:0 6px;font-size:14px;line-height:20px${o.chipFont ? ';font-family:' + o.chipFont : ''}">3</span>`;
   const cols = o.cols ? `<div style="display:flex"><div${o.marks === false ? '' : ' data-design-col'} style="flex:1">a</div>${o.cols > 1 ? `<div data-design-col style="flex:1">b</div>` : ''}</div>` : '';
   const extra = (o.sunButton ? '<a href="#" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center">Thêm</a>' : '')
     + (o.sunGradient ? '<a href="#" style="display:block;width:20px;height:48px;background:linear-gradient(#FFC83D,#FFC83D)">g</a>' : '')
     + (o.sunOnclick ? '<div onclick="void 0" style="width:20px;height:48px;background:#FFC83D">o</div>' : '')
     + (o.sunCursor ? '<div style="width:20px;height:48px;background:#FFC83D;cursor:pointer">c</div>' : '')
     + (o.selectedTab ? '<div role="tablist"><a href="#" role="tab" aria-selected="true" style="display:inline-block;height:48px;line-height:48px;width:60px;background:#FFC83D">XP</a><a href="#" role="tab" aria-selected="false" style="display:inline-block;height:48px;line-height:48px;width:60px;background:#fff">Kim</a></div>' : '')
-    + (o.pressedToggle ? '<button type="button" aria-pressed="true" style="height:48px;width:60px;background:#FFC83D;font-family:inherit">Mũ</button>' : '')
+    + (o.pressedToggle ? '<div role="toolbar"><button type="button" aria-pressed="true" style="height:48px;width:60px;background:#FFC83D;font-family:inherit">Mũ</button></div>' : '')
+    + (o.radioGroup ? '<div role="radiogroup"><button type="button" role="radio" aria-checked="true" style="height:48px;width:60px;background:#FFC83D;font-family:inherit">Mũ</button></div>' : '')
+    + (o.checkedInput ? '<label style="display:block;width:60px;height:48px;background:#FFC83D"><input type="checkbox" checked>Mũ</label>' : '')
+    // ABUSE: a second sun ACTION wearing a selected-state attribute (Buffet HIGH, 2026-10-20)
+    + (o.abuse === 'pressed-button' ? '<button type="button" aria-pressed="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">Mua ngay</button>' : '')
+    + (o.abuse === 'current-link' ? '<a href="#" aria-current="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">Xoá hết</a>' : '')
+    + (o.abuse === 'current-li-descendant' ? '<ul style="margin:0;padding:0;list-style:none"><li aria-current="step"><a href="#" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">Xoá hết</a></li></ul>' : '')
+    + (o.abuse === 'submit-pressed' ? '<form><input type="submit" value="Gửi" aria-pressed="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit;border:0"></form>' : '')
+    + (o.abuse === 'submit-button-in-group' ? '<form><div role="toolbar"><button type="submit" aria-pressed="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">Gửi</button></div></form>' : '')
+    + (o.abuse === 'tab-outside-tablist' ? '<a href="#" role="tab" aria-selected="true" style="display:block;height:48px;line-height:48px;background:#FFC83D;text-align:center;width:100%;font-family:inherit">Mua</a>' : '')
+    + (o.plainButtonFont ? '<button type="button" style="height:48px;width:90px;font-family:' + o.plainButtonFont + '">Nút</button>' : '')
     + (o.unselectedSunTab ? '<div role="tablist"><a href="#" role="tab" aria-selected="false" style="display:inline-block;height:48px;line-height:48px;width:60px;background:#FFC83D">XP</a></div>' : '')
     + (o.sunBar ? '<div style="width:20px;height:10px;background:#FFC83D"></div>' : '')
     + (o.wide ? '<div style="width:900px;height:10px;background:red"></div>' : '')
@@ -93,11 +104,11 @@ function page(o = {}) {
   const stillCss = o.stillBad ? '.still main{padding:40px !important}' : '';
   return `<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width">${fontLink}
 <style>body{margin:0;background:#9BDDFF;font:700 18px/1.3 'Nunito',sans-serif;color:#17324D}
-h2,a[role=button]{font-family:'Baloo 2',sans-serif}
+h2,a[role=button],.chip{font-family:'Baloo 2',sans-serif}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:no-preference){.s{animation:spin 1s linear infinite}}${stillCss}</style>
-<body>${seq.join('')}${cols}${extra}</body></html>`;
+<body>${chip}${seq.join('')}${cols}${extra}</body></html>`;
 }
 
 // name -> [factory options, expectation]. Expectation: array = EXACT set of failing checks;
@@ -176,6 +187,14 @@ V['sr-only-clip-is-hidden'] = [{ srOnly: true }, { must: [], may: ['pixel-diff']
 V['sun-selected-tab'] = [{ selectedTab: true }, { must: [], may: ['pixel-diff'] }];            // the active tab is sun in the mocks: not a second action
 V['sun-pressed-toggle'] = [{ pressedToggle: true }, { must: [], may: ['pixel-diff'] }];
 V['sun-unselected-tab'] = [{ unselectedSunTab: true }, { must: ['primary'], may: ['pixel-diff'] }]; // a sun toggle that is NOT selected is a second action
+V['sun-radio-in-group'] = [{ radioGroup: true }, { must: [], may: ['pixel-diff'] }];
+V['sun-checked-input'] = [{ checkedInput: true }, { must: [], may: ['pixel-diff', 'tap>=48px'] }];
+// the exemption is abusable: each of these is a SECOND sun action and must fail the one-sun rule
+for (const a of ['pressed-button', 'current-link', 'current-li-descendant', 'submit-pressed', 'submit-button-in-group', 'tab-outside-tablist']) V['abuse-' + a] = [{ abuse: a }, { must: ['primary'], may: ['pixel-diff'] }];
+// fonts: classes the design CSS sets in Baloo 2 (and the mock renders so) must be Baloo; any real button must be a design family
+V['wrong-chip-font'] = [{ chipFont: 'Arial' }, { must: ['fonts'], may: ['pixel-diff'] }];
+V['wrong-plain-button-font'] = [{ plainButtonFont: 'Arial' }, { must: ['fonts'], may: ['pixel-diff'] }];
+V['nunito-plain-button'] = [{ plainButtonFont: "'Nunito'" }, { must: [], may: ['pixel-diff'] }];
 V['wrong-button-font'] = [{ primaryFont: 'Arial' }, { must: ['fonts'], may: ['pixel-diff'] }];     // primary/secondary buttons must be Baloo 2
 V['no-fonts'] = [{ noFontLink: true }, { must: ['fonts'], may: ['pixel-diff'] }];
 
@@ -373,6 +392,13 @@ test('fixture: harness verdicts on known-good and known-bad pages', async t => {
       assert.match(by['two-sun-buttons'].checks.find(c => c.name === 'primary').detail, /found 2/);
       assert.equal(by['sun-selected-tab'].checks.find(c => c.name === 'fonts').pass, true, 'the Nunito tabs are fine');
       assert.match(by['wrong-button-font'].checks.find(c => c.name === 'fonts').detail, /Arial, want Baloo 2/);
+      for (const a of ['pressed-button', 'current-link', 'current-li-descendant', 'submit-pressed', 'submit-button-in-group', 'tab-outside-tablist']) {
+        assert.match(by['abuse-' + a].checks.find(c => c.name === 'primary').detail, /exactly 1 sun-filled clickable control, found 2/, 'abuse ' + a);
+      }
+      assert.equal(by['sun-radio-in-group'].checks.find(c => c.name === 'primary').pass, true);
+      assert.equal(by['sun-checked-input'].checks.find(c => c.name === 'primary').pass, true);
+      assert.match(by['wrong-chip-font'].checks.find(c => c.name === 'fonts').detail, /span "3" uses Arial, want Baloo 2/);
+      assert.match(by['wrong-plain-button-font'].checks.find(c => c.name === 'fonts').detail, /button "Nút" uses Arial, want Baloo 2 or Nunito/);
     });
     await t.test('still-twin runs BEFORE the region own-pixels hide/unhide (which used to leave the page 4-68px different)', () => {
       const names = by['region-ok'].checks.map(c => c.name);
@@ -729,6 +755,10 @@ test('every data_bound value is bound or declared unbound with a reason (classif
   assert.deepEqual(empty.undeclared, ['Chào Minh!'], 'empty expectations bind nothing');
   assert.deepEqual(classifyDataBound({ data_bound: ['1.080 XP'] }, { expect: ['2.310 XP'], absent: ['1.080 XP'] }).bound, ['1.080 XP']);
   assert.deepEqual(classifyDataBound({ data_bound: ['[Tên quà] Sticker'] }, { expect: [], absent: ['Sticker'] }).bound, ['[Tên quà] Sticker'], 'placeholder prefix of a bound name');
+  assert.deepEqual(classifyDataBound({ data_bound: ['oan'] }, { expect: ['Hoang'], absent: [] }).undeclared, ['oan'], 'a short expectation that merely sits inside the value ("oan" in "Hoang") covers nothing');
+  assert.deepEqual(classifyDataBound({ data_bound: ['Hoang'] }, { expect: ['oan'], absent: [] }).undeclared, ['Hoang'], 'and the reverse: "oan" does not cover "Hoang"');
+  assert.deepEqual(classifyDataBound({ data_bound: ['Bộ 1 · Quyển 2 · Bài 4'] }, { expect: [], absent: ['Quyển 2 · Bài 4'] }).bound, ['Bộ 1 · Quyển 2 · Bài 4'], 'a whole run of " · " parts covers the composite');
+  assert.deepEqual(classifyDataBound({ data_bound: ['Bộ 1 · Quyển 2 · Bài 4'] }, { expect: [], absent: ['Quyển 2 · Bà'] }).undeclared, ['Bộ 1 · Quyển 2 · Bài 4'], 'a partial part is no cover');
   assert.deepEqual(classifyDataBound({ data_bound: ['55'] }, { expect: ['5'], absent: [] }).undeclared, ['55'], 'a 1-character expectation does not cover everything');
 });
 
@@ -773,6 +803,9 @@ test('data-binding token matching: no hits inside longer numbers or words', asyn
   assert.equal(containsToken('Chào Bảo! 187', '187'), true); assert.equal(containsToken('1.187', '187'), false); assert.equal(containsToken('1187', '187'), false);
   assert.equal(containsToken('3 ngày', '3 ngày'), true); assert.equal(containsToken('13 ngày', '3 ngày'), false);
   assert.equal(containsToken('xin chào', ''), true);
+  assert.equal(containsToken('Bạc ★★★', 'Bạc ★★'), false, 'symbol run: ★★ is not the head of ★★★');
+  assert.equal(containsToken('Bạc ★★', 'Bạc ★★'), true); assert.equal(containsToken('Bạc ★★ · 3 ngày', 'Bạc ★★'), true);
+  assert.equal(containsToken('★★★ Bạc', '★★'), false); assert.equal(containsToken('Hạng ★', '★'), true); assert.equal(containsToken('#1 Hoang', '#1'), true);
 });
 
 test('companion: the next-option step accepts the "→" text button AND the icon button named "Lựa chọn tiếp"', async t => {

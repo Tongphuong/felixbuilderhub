@@ -50,6 +50,14 @@ POOL_MAX_MICRO_USD = 15_000_000
 POOL_MAX_TURNS = 32  # the student loader accepts exactly this
 POOL_KEYS = ["scope", "poolId", "approvedVoiceMicroUsd", "maxTurns"]  # canonical order the loader uses
 HEX64 = re.compile(r"^[a-f0-9]{64}$")
+# Files the Worker serves from its OWN asset bundle that are NOT build output: verbatim copies of repo source (no transform).
+# Candidate path (relative to the candidate) -> repo path. build() copies them with REPLACE semantics and proves the sha256.
+VERBATIM_ASSETS = {
+    "assets/read2lead/library-assets/library.mjs": "src/scripts/read2lead-book-library.mjs",
+    "assets/read2lead/library-assets/library.css": "src/styles/read2lead-book-library.css",
+}
+# Test hook: empties VERBATIM_ASSETS (the pre-fix behaviour) so a test can prove its assertions discriminate.
+NO_VERBATIM_ENV = "R2L_RELEASE_NO_VERBATIM_FOR_BITE_TEST"
 # Test hook: makes put() write THROUGH hard links so the guard can be proven to bite.
 UNSAFE_ENV = "R2L_RELEASE_UNSAFE_WRITE_THROUGH_FOR_BITE_TEST"
 
@@ -484,6 +492,26 @@ def build(a):
                 if rel not in manifest["publicAssets"]:
                     manifest["publicAssets"].append(rel)
                     added_public.append(rel)
+
+        # verbatim source assets (library.mjs / library.css): a candidate must NEVER inherit them from the base folder.
+        # The base's copies may be stale, wrong, or (v99-v106) hard-linked across every saved release, so each is replaced
+        # by a brand-new file (put() = write temp + rename) and the result is proved against the repo source.
+        verbatim = {} if os.environ.get(NO_VERBATIM_ENV) else VERBATIM_ASSETS
+        for rel, src_rel in sorted(verbatim.items()):
+            src = repo / src_rel
+            if not src.is_file():
+                raise ReleaseError("verbatim asset source missing from repo: %s (needed for %s)" % (src_rel, rel))
+            data = src.read_bytes()
+            dst = out / rel
+            if not dst.is_file() or dst.read_bytes() != data:
+                if dst.is_file():
+                    base_sha_log[rel] = sha256_file(dst)
+                put(dst, data)
+                changed_assets.append(rel)
+            pub = "/" + rel[len("assets/"):]
+            if pub not in manifest["publicAssets"]:
+                manifest["publicAssets"].append(pub)
+                added_public.append(pub)
         manifest["publicAssets"] = sorted(set(manifest["publicAssets"]))
 
         # CSP script hashes (add-only, exactly as the previous releases did)
@@ -610,6 +638,11 @@ def build(a):
         if assessor_proof:
             proof["studentVoiceAssessor"] = assessor_proof
         put(out / "candidate-proof.json", (json.dumps(proof, indent=2) + "\n").encode())
+
+        # --- post-condition: the verbatim assets in the candidate ARE the repo source, byte for byte, 
+        for rel, src_rel in sorted(verbatim.items()):
+            if sha256_file(out / rel) != sha256_file(repo / src_rel):
+                raise ReleaseError("candidate %s does not equal repo %s (sha256 mismatch)" % (rel, src_rel))
 
         # --- base guard (LAST step: runs after every write this tool makes):
         # nothing in base moved, changed or appeared

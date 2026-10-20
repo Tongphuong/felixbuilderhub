@@ -20,7 +20,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
-import { contractChecks, tapChecks, overflowCheck, motionCheck, addStillClass, removeStillClass, layoutSanity, fontCheck, fontUsage, mockBoxes, builtBoxes, scanText } from './lib/in-page.mjs';
+import { contractChecks, tapChecks, overflowCheck, motionCheck, addStillClass, removeStillClass, layoutSanity, fontCheck, fontUsage, mockBalooClasses, mockBoxes, builtBoxes, scanText } from './lib/in-page.mjs';
 import { diffPngs, writeComposite, padPng, cornerColor, pngHeight, fitWidth } from './lib/pixels.mjs';
 import { analyseText, textOf, collapse, containsToken } from './lib/text.mjs';
 import { classifyDataBound } from './lib/binding.mjs';
@@ -118,6 +118,20 @@ export function loadContracts(dir, only) {
   return picked;
 }
 
+// Classes the DESIGN's own stylesheet sets in Baloo 2 (single-class selectors only), read from <design>/design-system/r2l.css.
+// Falls back to the known set when the folder has no r2l.css (the harness's own synthetic designs).
+export function designBalooClasses(designDir) {
+  const fallback = ['d', 'btn', 'chip', 'bubble', 'back'];
+  let css;
+  try { css = fs.readFileSync(path.join(designDir, 'design-system', 'r2l.css'), 'utf8'); } catch { return fallback; }
+  const found = new Set();
+  for (const m of css.replace(/\/\*[\s\S]*?\*\//g, '').matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    if (!/font-family\s*:[^;}]*Baloo/i.test(m[2])) continue;
+    for (const sel of m[1].split(',')) { const c = sel.trim().match(/^\.([\w-]+)$/); if (c) found.add(c[1]); }
+  }
+  return found.size ? [...found] : fallback;
+}
+
 const check = (name, pass, detail = '') => ({ name, pass: !!pass, detail });
 
 async function settle(page, { network = true } = {}) {
@@ -184,6 +198,7 @@ export async function runFidelity(opts) {
           const mockGeo = anchors ? await mpage.evaluate(mockBoxes, anchors) : null;
           res.exempt = exempt;
           if (mockGeo) res.anchorBoxes = Object.fromEntries(Object.entries(mockGeo.boxes).map(([id, b]) => [id, b && { x: Math.round(b.x), y: Math.round(b.y), w: Math.round(b.w), h: Math.round(b.h) }]));
+          const balooClasses = await mpage.evaluate(mockBalooClasses, designBalooClasses(designDir));
           await mctx.close();
 
           // (b) built -----------------------------------------------------
@@ -319,7 +334,7 @@ export async function runFidelity(opts) {
             else if (fs_.some(f => f.status === 'error')) fontProblems.push(`${fam} failed to load`);
             else if (!fs_.some(f => f.status === 'loaded')) fontProblems.push(`${fam} declared but no face is loaded`);
           }
-          const fu = await page.evaluate(fontUsage);
+          const fu = await page.evaluate(fontUsage, { balooClasses });
           fontProblems.push(...fu.bad.slice(0, 8));
           res.checks.push(check('fonts', fontProblems.length === 0, fontProblems.length ? fontProblems.join('; ') : `Baloo 2 on ${fu.headings} headings + ${fu.buttons} buttons, Nunito on body + ${fu.paras} paragraphs, faces loaded`));
 

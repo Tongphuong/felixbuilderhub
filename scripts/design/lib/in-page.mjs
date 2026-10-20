@@ -213,9 +213,19 @@ export function contractChecks(args) {
       return !!hit && (hit === e || e.contains(hit));
     };
     // The mocks paint SELECTED toggles sun too (the active tab, category, option tile): they show a state, they are not the action.
-    // Exempt only elements that say they are selected; an unselected sun toggle still counts as a second sun action.
+    // The exemption is narrow, because "aria-pressed" on a Mua-ngay button is one attribute away from a hidden second action:
+    // the control must ITSELF carry the selected state (never an ancestor), it must sit in a tab/radio/toolbar/listbox group or be a
+    // checked radio/checkbox input, and it is never a submit control or a [data-design$=".primary"] element.
     const SELECTED = '[role=tab][aria-selected=true],[role=option][aria-selected=true],[aria-pressed=true],[aria-current]:not([aria-current=false]),[role=radio][aria-checked=true],[role=menuitemradio][aria-checked=true],[role=checkbox][aria-checked=true],[role=switch][aria-checked=true]';
-    const isSelected = e => !!e.closest(SELECTED) || (e.matches('label') && !!e.querySelector('input:checked')) || (e.tagName === 'INPUT' && e.checked);
+    const GROUP = '[role=tablist],[role=radiogroup],[role=toolbar],[role=listbox]';
+    const NEVER = 'input[type=submit],button[type=submit],[data-design$=".primary"]';
+    const checkedInput = e => e.tagName === 'INPUT' && (e.type === 'radio' || e.type === 'checkbox') && e.checked;
+    const isSelected = e => {
+      if (e.matches(NEVER)) return false;
+      if (checkedInput(e)) return true;
+      if (e.matches('label') && !!e.querySelector('input[type=radio]:checked,input[type=checkbox]:checked')) return true;
+      return e.matches(SELECTED) && !!e.closest(GROUP);
+    };
     const cand = [...document.querySelectorAll('body *')].filter(e => visible(e) && isSun(e) && clickable(e) && !isSelected(e));
     const sunControls = cand.filter(e => !cand.some(o => o !== e && o.contains(e)));
     const label = e => '"' + (e.textContent || e.value || e.tagName).replace(/\s+/g, ' ').trim().slice(0, 30) + '"';
@@ -292,26 +302,49 @@ export function fontCheck() {
   return [...document.fonts].map(f => ({ family: f.family.replace(/^["']|["']$/g, ''), status: f.status }));
 }
 
-// Built-page font resolution: headings + primary/secondary buttons -> Baloo 2, paragraph/list text -> Nunito.
+// Built-page font resolution: headings + primary/secondary buttons + every class the DESIGN CSS sets in Baloo 2 AND the mock
+// renders in Baloo 2 (.chip, .back, .bubble, .btn, .d ...) -> Baloo 2; paragraph/list text -> Nunito; any real button / role=button /
+// tab in a font that is neither design family (Arial ...) is a failure. Tabs and filter chips that the mock renders in Nunito stay Nunito.
 // (The body element itself is not checked: the mocks set the font on their .r2l root, not on body.)
-export function fontUsage() {
+// args.balooClasses: class names (from mockBalooClasses on the MOCK page). Falls back to the btn classes only.
+export function fontUsage(args) {
+  const balooClasses = (args && args.balooClasses) || ['btn', 'r2l-btn'];
   const first = e => getComputedStyle(e).fontFamily.split(',')[0].trim().replace(/^["']|["']$/g, '');
   const shown = e => { const r = e.getBoundingClientRect(); const cs = getComputedStyle(e); return r.width > 0 && r.height > 0 && cs.display !== 'none' && cs.visibility !== 'hidden'; };
   const bad = [];
+  const desc = e => e.tagName.toLowerCase() + ' "' + (e.textContent || e.value || '').trim().slice(0, 20) + '"';
   const pick = (selector, want) => {
     let n = 0;
     for (const e of document.querySelectorAll(selector)) {
       if (!shown(e) || !(e.textContent || e.value || '').trim()) continue;
       n++;
-      if (first(e).toLowerCase() !== want.toLowerCase()) bad.push(e.tagName.toLowerCase() + ' "' + (e.textContent || e.value || '').trim().slice(0, 20) + '" uses ' + first(e) + ', want ' + want);
+      if (first(e).toLowerCase() !== want.toLowerCase()) bad.push(desc(e) + ' uses ' + first(e) + ', want ' + want);
     }
     return n;
   };
   const headings = pick('h1,h2,h3,h4,h5,h6', 'Baloo 2');
-  // The mocks use Baloo 2 on headings and on the primary/secondary .btn buttons; tabs, chips and text links are Nunito (or Baloo): not checked.
-  const buttons = pick('.btn,.r2l-btn,[data-design$=".primary"],[data-design$=".secondary"]', 'Baloo 2');
+  const classSel = balooClasses.map(c => '.' + CSS.escape(c)).join(',');
+  const buttons = pick('[data-design$=".primary"],[data-design$=".secondary"]' + (classSel ? ',' + classSel : ''), 'Baloo 2');
   const paras = pick('p,li', 'Nunito');
-  return { bad, headings, buttons, paras };
+  // every other real control: a design family (Baloo 2 or Nunito), never a browser default
+  for (const e of document.querySelectorAll('button,a[role=button],[role=tab],input[type=submit],input[type=button]')) {
+    if (!shown(e) || !(e.textContent || e.value || '').trim()) continue;
+    const f = first(e).toLowerCase();
+    if (f !== 'baloo 2' && f !== 'nunito') bad.push(desc(e) + ' uses ' + first(e) + ', want Baloo 2 or Nunito');
+  }
+  return { bad: [...new Set(bad)], headings, buttons, paras };
+}
+
+// Mock page: which of the design CSS's Baloo-2 classes the mock really renders in Baloo 2 on EVERY visible instance
+// (03-minny-voice overrides .bubble to Nunito, so .bubble is not required there).
+export function mockBalooClasses(classes) {
+  const first = e => getComputedStyle(e).fontFamily.split(',')[0].trim().replace(/^["']|["']$/g, '').toLowerCase();
+  const out = [];
+  for (const c of classes) {
+    const els = [...document.querySelectorAll('.' + CSS.escape(c))].filter(e => { const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0 && (e.textContent || e.value || '').trim(); });
+    if (els.length && els.every(e => first(e) === 'baloo 2')) out.push(c);
+  }
+  return out;
 }
 
 // Mock side: for each anchor text, the box of the smallest "card or section" ancestor.
