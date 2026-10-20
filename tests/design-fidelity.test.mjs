@@ -678,7 +678,7 @@ test('Release-2 samples: values come from the mocks, real shapes are kept, alt d
   // shop: goal price/percent/remaining, the nearly-affordable gift, status strings
   const sp = bindingExpectations(alt, 'shop-goal', SAMPLE);
   for (const x of ['62', 'Còn thiếu 4 kim cương', 'Sắp đổi được!', '✓ Đã nhận quà', 'Đang chờ Coach Felix duyệt', 'Đặt làm mục tiêu ★', '92 kim cương']) assert.ok(sp.expect.includes(x), x);
-  for (const x of ['65', 'Còn thiếu 2 kim cương', '57 kim cương']) assert.ok(sp.absent.includes(x), x);
+  for (const x of ['65', 'Còn thiếu 2 kim cương', '57 kim cương', '60 kim cương', 'Còn thiếu 5 kim cương']) assert.ok(sp.absent.includes(x), x); // the last two are the MOCK's own strings (data_bound in the contract)
 });
 
 test('region own-pixels: an element that renders nothing fails even when the backdrop edges look like the mock (rule 28)', async t => {

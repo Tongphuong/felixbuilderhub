@@ -146,6 +146,9 @@ export function bindingExpectations(S, state, Base = null, width = 1280) {
     const mine = strings(S), theirs = Base ? strings(Base) : [];
     for (const x of mine) add(expect, x);
     for (const x of theirs) if (!mine.includes(x)) add(absent, x);
+    // the MOCK's own near-miss gift reads 60 (55/60 = 92%); the base sample uses 57 so the product's 95% rule fires, so those two mock strings
+    // are in no sample's list yet are data_bound in the contract: they must be gone too in the alternate pass
+    if (Base) for (const x of [`${MOCK_NEAR_PRICE} kim cương`, `Còn thiếu ${vn(MOCK_NEAR_PRICE - Base.shop.diamonds)} kim cương`]) if (!mine.includes(x)) add(absent, x);
     const V = shopView(S, w);
     const near = V.priced.find(x => x.id !== S.shop.goal_id && x.price_diamonds > S.shop.diamonds && pct(S.shop.diamonds, x.price_diamonds) >= NEAR_MISS_PERCENT);
     if (near) add(expect, 'Sắp đổi được!');
@@ -160,6 +163,7 @@ export function bindingExpectations(S, state, Base = null, width = 1280) {
 // ---- Release-2 screens: values replaced inside the REAL response shapes -----------------------
 // the product's near-miss rule (deriveGiftCardState, shared and tested): "Sắp đổi được!" appears from 95% of the price
 const NEAR_MISS_PERCENT = 95;
+const MOCK_NEAR_PRICE = 60; // the mock's near-miss gift (shop mock)
 const pct = (have, price) => Math.max(0, Math.min(100, Math.round((have / price) * 100)));
 export const R2_STATES = ['companion', 'leaderboard-xp', 'library', 'shop-goal'];
 
