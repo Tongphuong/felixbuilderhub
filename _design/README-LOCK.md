@@ -40,7 +40,12 @@ Output in `--out`: `<contract>-<width>.png` (design | built | diff, title bar PA
 To get a built site to test: `npm run build`, then serve it with the Worker rehearsal
 (`node scripts/r2l-release/rehearse.mjs --candidate ~/work/r2l-releases/<release> --repo . --serve`),
 which prints a local URL and the synthetic magic link
-`/r2l/start/?t=` + 32 x `b` (pass the 32 b's as `--token`).
+`/r2l/start/?t=` + 32 x `b`. Pass that token as `--token` ONLY with the default driver. **Do NOT pass `--token` with
+`drivers/r2l.mjs`**: that driver picks its own per-state account and login, and a forced token logs every home contract in as the
+same child, so mid-story falsely reports "Mở truyện" instead of "Đọc tiếp".
+Never `cp` onto a file inside a `cp -al` hard-link copy of a release (it writes through the link into every release sharing the inode:
+the 2026-10-19 22:06 incident). `rm` the file first, or build the candidate with `build_candidate.py`, which ships the library
+files with replace semantics.
 
 ### State drivers
 `--state-driver <module>` default-exports `async (page, contract, base, {width, designDir, opts})`
