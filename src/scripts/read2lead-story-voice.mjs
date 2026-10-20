@@ -280,7 +280,7 @@ export async function mountStoryMission() {
     if(layoutReady)return;layoutReady=true;
     const book=node('section','','story-mission-book');book.tabIndex=0;book.setAttribute('aria-label','Truyện để đọc cùng Minny');
     const workspace=$('book-reader-workspace');workspace.prepend(pictureBoard,book);
-    book.append(reading.closest('.r2l-book-story-card'),$('book-reader-page-shell'));
+    book.append($('book-reader-page-shell'),reading.closest('.r2l-book-story-card')); // design order: picture, then text
     const chat=panel.closest('.r2l-book-panel');chat.classList.add('story-mission-chat');chat.tabIndex=0;chat.setAttribute('aria-label','Nói chuyện với Minny');
     workspace.before(stepper);
   }

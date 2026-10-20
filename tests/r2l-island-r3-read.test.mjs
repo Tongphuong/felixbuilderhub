@@ -34,7 +34,9 @@ test('lesson.astro: every id the script reads is still there, in its original pa
 });
 
 test('lesson.astro: contract markers and the two 1280 columns', () => {
-  for (const id of ['read.back', 'read.top', 'read.picture', 'read.text', 'read.listen', 'read.listen-btn', 'read.question', 'read.speak', 'read.done', 'read.next', 'error.monster']) {
+  // #lesson-home is shared by the reading, voice, resting and error contracts, so it carries no data-design (each contract's `locate` finds it)
+  assert.doesNotMatch(lesson, /id="lesson-home"[^>]*data-design/);
+  for (const id of ['read.top', 'read.picture', 'read.text', 'read.listen', 'read.listen-btn', 'read.question', 'read.speak', 'read.done', 'read.next', 'error.monster']) {
     assert.equal((lesson.match(new RegExp(`data-design="${id.replace('.', '\\.')}"`, 'g')) || []).length, 1, id);
   }
   assert.equal((lesson.match(/data-design-col/g) || []).length, 2);

@@ -64,16 +64,20 @@ body #w1-book-reader-phase .r2l-book-page-count { margin: 0; max-width: none; fl
 body #w1-book-reader-phase .r2l-book-trail {
   grid-column: 1 / -1; display: flex; flex-direction: row; gap: 6px; align-items: center; margin: 0; padding: 0; list-style: none; overflow: visible;
 }
-body #w1-book-reader-phase .r2l-book-trail__node { flex: 1 1 0; min-width: 0; width: auto; display: block; position: static; }
+/* The segment is painted by the list item; the (disabled, script-made) button stays for assistive tech but is not a visible control. */
+body #w1-book-reader-phase .r2l-book-trail__node { flex: 1 1 0; min-width: 0; width: auto; display: block; position: relative; height: 14px; }
 body #w1-book-reader-phase .r2l-book-trail__node::before { display: none; }
+body #w1-book-reader-phase .r2l-book-trail__node::after {
+  content: ''; display: block; height: 14px; border: 2px solid var(--r2l-ink); border-radius: 999px; background: var(--r2l-cream); box-sizing: border-box;
+}
 body #w1-book-reader-phase .r2l-book-trail__btn {
-  display: block; width: 100%; height: 14px; min-height: 0; padding: 0; margin: 0; border: 2px solid var(--r2l-ink); border-radius: 999px;
-  background: var(--r2l-cream); box-shadow: none; transform: none; overflow: hidden; font-size: 0; line-height: 0; cursor: default;
+  position: absolute; left: 0; top: 0; width: 1px; height: 1px; min-height: 0; padding: 0; margin: -1px; border: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+  white-space: nowrap; font-size: 0; line-height: 0; background: none; box-shadow: none;
 }
 body #w1-book-reader-phase .r2l-book-trail__btn > * { display: none !important; }
-body #w1-book-reader-phase .r2l-book-trail__node[data-state='completed'] .r2l-book-trail__btn,
-body #w1-book-reader-phase .r2l-book-trail__node[data-state='visited'] .r2l-book-trail__btn { background: var(--r2l-leaf); }
-body #w1-book-reader-phase .r2l-book-trail__node[data-state='active'] .r2l-book-trail__btn { background: var(--r2l-sun); }
+body #w1-book-reader-phase .r2l-book-trail__node[data-state='completed']::after,
+body #w1-book-reader-phase .r2l-book-trail__node[data-state='visited']::after { background: var(--r2l-leaf); }
+body #w1-book-reader-phase .r2l-book-trail__node[data-state='active']::after { background: var(--r2l-sun); }
 body #w1-book-reader-phase .r2l-book-trail__btn:disabled { opacity: 1; }
 
 /* ---- workspace: picture | step column ---- */
@@ -103,7 +107,7 @@ body #w1-book-reader-phase .r2l-book-page__nav {
   width: 48px; height: 48px; min-height: 48px; border-radius: 50%; border: 3px solid var(--r2l-ink); background: #fff; color: var(--r2l-ink);
   font-size: 22px; font-weight: 800; box-shadow: 0 3px 0 var(--r2l-ink); align-items: center; justify-content: center; padding: 0;
 }
-body #w1-book-reader-phase .r2l-book-page__nav:disabled { opacity: .45; }
+body #w1-book-reader-phase .r2l-book-page__nav:disabled { opacity: 1; background: var(--r2l-sky-pale); border-style: dashed; box-shadow: none; }
 body #w1-book-reader-phase .r2l-book-karaoke { display: none; }
 @media (min-width: 768px) { body #w1-book-reader-phase .r2l-book-page__art { height: 380px; } }
 @media (min-width: 1024px) { body #w1-book-reader-phase .r2l-book-page__art { height: clamp(320px, 78vh, 640px); } }
@@ -327,8 +331,8 @@ body #w1-book-reader-phase .r2l-book-attribution summary { min-height: 48px; dis
 body #w1-book-reader-phase #book-reader-attribution-content { color: var(--r2l-ink); font-size: 16px; }
 
 /* ---- One Story a Day: the read stage uses the same reader look ---- */
-body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='read'] .story-mission-book,
-body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='read'] .story-mission-chat { display: contents; }
+body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='read'] .story-mission-book { display: contents; }
+body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='read'] .story-mission-chat { display: block; order: 3; }
 body #w1-book-reader-phase[data-story-mission][data-stage='read'] .r2l-book-page-shell { order: 1; }
 body #w1-book-reader-phase[data-story-mission][data-stage='read'] .r2l-book-panel { order: 3; }
 body #w1-book-reader-phase[data-story-mission] .story-mission-controls { display: grid; gap: 12px; justify-items: stretch; padding: 0; }
@@ -566,7 +570,6 @@ body .lesson-support summary { min-height: 48px; font-size: 16px; font-weight: 8
 body .lesson-support :is(button, a) { min-height: 48px; font-size: 16px; }
 
 /* ---- second pass: one sun per step, text >= 16px on every kid-facing helper ---- */
-body #w1-book-reader-phase .r2l-book-trail__node[data-state='active'] .r2l-book-trail__btn { background: var(--r2l-cream) linear-gradient(var(--r2l-sun), var(--r2l-sun)); } /* a progress mark, not a button to press */
 body #w1-book-reader-phase .r2l-book-stepper__step b { font-size: 16px; }
 body:has(#w1-book-reader-phase:not(.hidden)) #main :is(.text-xs, .text-sm) { font-size: 16px; line-height: 1.45; }
 body:has(#w1-book-reader-phase:not(.hidden)) .lesson-support .r2l-primary,
@@ -594,3 +597,21 @@ body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage
 body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='understand'] .story-mission-book,
 body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='understand'] .story-mission-chat { height: auto; max-height: none; min-height: 0; overflow: visible; }
 body #w1-book-reader-phase[data-story-mission][data-interview='true'][data-stage='understand'] .story-mission-book { background: transparent; border: 0; border-radius: 0; }
+
+/* ---- harness round: closed help stays closed, help box after the voice block, fonts as in the mock ---- */
+body .lesson-support:not([open]) > :not(summary) { display: none !important; }
+body #w1-book-reader-phase[data-story-mission][data-stage='understand'], body #w1-book-reader-phase[data-rest='1'] { display: flex; flex-direction: column; }
+body #w1-book-reader-phase[data-story-mission][data-stage='understand'] .lesson-support, body #w1-book-reader-phase[data-rest='1'] .lesson-support { order: 20; margin: 18px 0 0; }
+body #w1-book-reader-phase[data-story-mission][data-stage='understand'] #book-reader-workspace { order: 1; }
+body #w1-book-reader-phase .story-mission-question-count { font-family: var(--r2l-font-body); font-weight: 800; }
+body #w1-book-reader-phase .story-mission-mic-caption { font-family: var(--r2l-font-body); font-weight: 900; }
+
+/* ---- harness round 2 ---- */
+body #w1-book-reader-phase .r2l-book-attribution a, body #w1-book-reader-phase #book-reader-attribution-content a { display: inline-flex; align-items: center; min-height: 48px; }
+body #w1-book-reader-phase .r2l-book-page__art::before { inset: 0; transform: none; }
+body #w1-book-reader-phase .r2l-book-question-feedback__title { font-family: var(--r2l-font-body); font-weight: 900; font-size: 18px; }
+body #w1-book-reader-phase[data-rest='1'] .story-mission-cue, body #w1-book-reader-phase .minny-rest__bubble { font-family: var(--r2l-font-body); font-weight: 900; }
+body #w1-book-reader-phase .story-mission-progress { min-height: 28px; }
+
+/* a closed <details> shows only its summary, whatever display its children were given */
+body #w1-book-reader-phase details:not([open]) > :not(summary) { display: none !important; }
