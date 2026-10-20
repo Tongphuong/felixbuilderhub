@@ -491,6 +491,20 @@ export function neverRedCheck(args) {
   return problems;
 }
 
+// turnstile (Release 3): the third-party widget is masked out of the pixel diff, so its PRESENCE is asserted here.
+// Pass = [data-design=id] is visible AND (it holds the widget's iframe OR the Turnstile api script tag is in the page, which is what an
+// offline run, with no network to the widget host, can show). A missing container, or a container with neither, FAILS.
+export function turnstileCheck(args) {
+  const el = document.querySelector('[data-design="' + String(args.id).replace(/"/g, '\\"') + '"]');
+  if (!el) return ['turnstile: no element with data-design="' + args.id + '" (the widget container is missing)'];
+  const r = el.getBoundingClientRect();
+  if (!(r.width > 0 && r.height > 0)) return ['turnstile: the container data-design="' + args.id + '" is not visible'];
+  const hasFrame = !!el.querySelector('iframe');
+  const hasScript = !!document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]');
+  if (!hasFrame && !hasScript) return ['turnstile: container "' + args.id + '" holds no iframe and the Turnstile api script tag is not in the page'];
+  return [];
+}
+
 // State markers for the default driver: visible clickable labels + logged-in evidence.
 export function stateProbe() {
   const shown = e => { const r = e.getBoundingClientRect(); const cs = getComputedStyle(e); return r.width > 0 && r.height > 0 && cs.display !== 'none' && cs.visibility !== 'hidden'; };

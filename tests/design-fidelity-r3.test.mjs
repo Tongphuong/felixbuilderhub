@@ -50,6 +50,9 @@ const PAGES = {
   'red-border': inCard('<div style="height:40px;border:3px solid #FF7A3D">Sai rồi</div>'),
   'red-in-image': inCard('<svg width="60" height="60"><circle cx="30" cy="30" r="28" fill="#E0362C" stroke="#FF7A3D" stroke-width="4"/></svg><p style="margin:0;color:#17324D">Minny</p>'),
   'red-clean': inCard('<p style="margin:0;color:#17324D;border:2px solid #17324D">Gần đúng rồi</p>'),
+  'ts-script': html('<div data-design="t.ts" style="height:70px;width:300px">x</div><script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async></script>'),
+  'ts-iframe': html('<div data-design="t.ts" style="height:70px;width:300px"><iframe style="width:300px;height:65px;border:0"></iframe></div>'),
+  'ts-empty': html('<div data-design="t.ts" style="height:70px;width:300px">x</div>'),
 };
 
 const BASE = {
@@ -83,6 +86,10 @@ const CASES = {
   'mask-covers-diff': { mask: { 390: [[10, 400, 100, 50]] }, diff_ceiling: { 390: 0 }, ...at('mask-diff') },
   'mask-absent-diff-fails': { diff_ceiling: { 390: 0 }, ...at('mask-diff') },
   'never-red-missing-id': { never_red: ['n.nothing'] },
+  'ts-script-ok': { turnstile: 't.ts', ...at('ts-script') },
+  'ts-iframe-ok': { turnstile: 't.ts', ...at('ts-iframe') },
+  'ts-empty-bad': { turnstile: 't.ts', ...at('ts-empty') },
+  'ts-missing-container': { turnstile: 't.ts', ...at('ok') },
 };
 for (const k of ['red-text', 'red-bg', 'red-border', 'red-in-image', 'red-clean']) {
   CASES['never-' + k] = { locate: { 't.a': '#a', 't.b': '.bb', 'n.card': '#card' }, never_red: ['n.card'], ...at(k) };
@@ -166,6 +173,12 @@ test('R3 fields: known-good pass, known-bad fail the NAMED check with the specif
       assert.equal(c('never-red-in-image', 'never-red').pass, true, c('never-red-in-image', 'never-red').detail);
       assert.equal(c('never-red-clean', 'never-red').pass, true, c('never-red-clean', 'never-red').detail);
       assert.match(c('never-red-missing-id', 'never-red').detail, /never_red "n\.nothing": no visible element/);
+    });
+    await t.test('turnstile: container + script tag (offline) or iframe passes; BITE: a missing container, or one with neither, fails', () => {
+      assert.equal(c('ts-script-ok', 'turnstile').pass, true, c('ts-script-ok', 'turnstile').detail);
+      assert.equal(c('ts-iframe-ok', 'turnstile').pass, true, c('ts-iframe-ok', 'turnstile').detail);
+      assert.match(c('ts-missing-container', 'turnstile').detail, /no element with data-design="t\.ts" \(the widget container is missing\)/);
+      assert.match(c('ts-empty-bad', 'turnstile').detail, /holds no iframe and the Turnstile api script tag is not in the page/);
     });
     await t.test('founder_wording / unbound / notes are ignored (the good contract runs with them present)', () => {
       assert.equal(c('locate-good', 'order').pass, true);

@@ -20,7 +20,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
-import { resolveLocate, neverRedCheck, contractChecks, tapChecks, overflowCheck, motionCheck, addStillClass, removeStillClass, layoutSanity, fontCheck, fontUsage, mockBalooClasses, mockBoxes, builtBoxes, scanText } from './lib/in-page.mjs';
+import { resolveLocate, neverRedCheck, turnstileCheck, contractChecks, tapChecks, overflowCheck, motionCheck, addStillClass, removeStillClass, layoutSanity, fontCheck, fontUsage, mockBalooClasses, mockBoxes, builtBoxes, scanText } from './lib/in-page.mjs';
 import { diffPngs, writeComposite, padPng, cornerColor, pngHeight, fitWidth, maskPng, maskFraction, MASK_MAX_FRACTION } from './lib/pixels.mjs';
 import { analyseText, textOf, collapse, containsToken } from './lib/text.mjs';
 import { classifyDataBound } from './lib/binding.mjs';
@@ -111,6 +111,7 @@ export function validateContract(c) {
   for (const [id, sel] of Object.entries(c.locate || {})) if (typeof sel !== 'string' || !sel.trim()) throw new InfraError(`contract ${c.id}: locate.${id} must be a CSS selector string`);
   for (const [w, list] of Object.entries(c.locate_cols || {})) { if (!widths.has(w)) throw new InfraError(`contract ${c.id}: "locate_cols.${w}" is for a width with no mock`); strList(list, `locate_cols.${w}`); }
   if (c.never_red != null) strList(c.never_red, 'never_red');
+  if (c.turnstile != null && (typeof c.turnstile !== 'string' || !c.turnstile)) throw new InfraError(`contract ${c.id}: turnstile must be the data-design id of the widget container`);
   for (const k of Object.keys(c)) {
     const m = /^sun_also_(\d+)$/.exec(k);
     if (m) { if (!widths.has(m[1])) throw new InfraError(`contract ${c.id}: "${k}" is for a width with no mock`); strList(c[k], k); }
@@ -301,6 +302,11 @@ export async function runFidelity(opts) {
             res.checks.push(check('locate', loc.problems.length === 0, loc.problems.length ? loc.problems.join('; ') : `${Object.keys(contract.locate || {}).length} ids resolved (data-design first, else selector), ${loc.cols} column elements`));
           }
           const cc = await page.evaluate(contractChecks, { order: orderIds, primary, noPrimary: !!(contract.primary && contract.primary.none), sunAlso, columns: colsExpected ? { expected: colsExpected } : null, minSize, viewportOnly: !full, mockBelowFold });
+          if (contract.turnstile) {
+            await page.waitForTimeout(400); // the page injects the widget script just after the sign-up card shows
+            const ts = await page.evaluate(turnstileCheck, { id: contract.turnstile });
+            res.checks.push(check('turnstile', ts.length === 0, ts.length ? ts.join('; ') : `widget container "${contract.turnstile}" present (iframe or Turnstile script tag)`));
+          }
           if (neverRed.length) {
             const nr = await page.evaluate(neverRedCheck, { ids: neverRed });
             res.checks.push(check('never-red', nr.length === 0, nr.length ? nr.slice(0, 8).join('; ') + (nr.length > 8 ? ` ... +${nr.length - 8} more` : '') : `no coral #FF7A3D / Minny red #E0362C in text, background or border inside ${neverRed.join(', ')}`));
