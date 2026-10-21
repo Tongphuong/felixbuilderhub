@@ -10,16 +10,8 @@ import MicCheckPanel from './MicCheckPanel.astro';
   </div>
   <div class="r2l-minny-hero-wrap">
     <div class="r2l-minny-hero" data-minny-hero="listen_and_speak">
-      <video
-        class="r2l-minny-video hidden"
-        data-minny-video
-        poster="/assets/minny/minny_idle.png"
-        autoplay
-        loop
-        muted
-        playsinline
-        aria-hidden="true"
-      ></video>
+      {/* No <video>: the flat still Minny is the hero. lesson.astro's _r2lSetMinnyMood treats a missing
+          [data-minny-video] as "show the PNG for this mood" (no mp4 request, no play() call). */}
       <img
         class="r2l-minny-fallback"
         data-minny-fallback
