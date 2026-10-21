@@ -220,10 +220,34 @@ export function removeGiftAt(gifts: AdminGift[], index: number): AdminGift[] {
 // §6 — Gift manager rendering
 // ---------------------------------------------------------------------------
 
+/** CSP-safe thumb fallback (mirrors gift-ux.ts installPhotoWellFallback). The live CSP blocks inline `onerror=`/`onload=`, so the
+ * thumb <img> carries `data-ag-thumb-img` and ONE capture-phase listener pair (error/load do not bubble) does what they did:
+ * failed photo -> the <img> is removed (emoji stays); decoded photo -> `.ag-thumb` gets `ag-thumb--has-img`. Already-finished
+ * images are swept once. Safe to call more than once. */
+export function applyAdminThumbState(img: HTMLImageElement): void {
+  if (!img.complete) return;
+  if (img.naturalWidth > 0) img.closest('.ag-thumb')?.classList.add('ag-thumb--has-img');
+  else img.remove();
+}
+export function installAdminThumbFallback(doc: Document = document): void {
+  const marker = doc as Document & { __agThumbFallback?: boolean };
+  if (marker.__agThumbFallback) return;
+  marker.__agThumbFallback = true;
+  doc.addEventListener('error', (event) => {
+    const img = event.target as HTMLElement | null;
+    if (img && img.tagName === 'IMG' && img.hasAttribute('data-ag-thumb-img')) img.remove();
+  }, true);
+  doc.addEventListener('load', (event) => {
+    const img = event.target as HTMLElement | null;
+    if (img && img.tagName === 'IMG' && img.hasAttribute('data-ag-thumb-img')) img.closest('.ag-thumb')?.classList.add('ag-thumb--has-img');
+  }, true);
+  doc.querySelectorAll<HTMLImageElement>('img[data-ag-thumb-img]').forEach(applyAdminThumbState);
+}
+
 export function renderGiftPhotoThumb(gift: Pick<AdminGift, 'id' | 'emoji' | 'image_key' | 'image_url'>, size = 56, extraClass = ''): string {
   const src = adminPhotoSrc(gift);
   const img = src
-    ? `<img src="${escapeHtml(src)}" alt="" loading="lazy" onerror="this.remove()" onload="this.closest('.ag-thumb')?.classList.add('ag-thumb--has-img')" class="ag-thumb__img" data-ag-thumb-img />`
+    ? `<img src="${escapeHtml(src)}" alt="" loading="lazy" class="ag-thumb__img" data-ag-thumb-img />`
     : '';
   return `
     <span class="ag-thumb${extraClass ? ` ${extraClass}` : ''}" style="width:${size}px; height:${size}px;">

@@ -71,7 +71,7 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
 </AdminLayout>
 
 <script>
-  import { initGiftManager, initRedemptionQueue } from '../../lib/admin-gifts';
+  import { initGiftManager, initRedemptionQueue, installAdminThumbFallback } from '../../lib/admin-gifts';
 
   function showError(hostId: string) {
     return (message: string) => {
@@ -82,6 +82,7 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
     };
   }
 
+  installAdminThumbFallback();
   initGiftManager({ onError: showError('gifts-mgr-error') });
   initRedemptionQueue({ onError: showError('gifts-queue-error') });
 </script>
