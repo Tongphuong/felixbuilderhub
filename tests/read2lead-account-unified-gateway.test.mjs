@@ -69,11 +69,11 @@ test('invalid mode and missing rollout pin fail closed',async()=>{
 
 test('student hashed scripts and styles use the same pinned account host as their HTML',async()=>{
   const f=fixture(),headers={cookie:'other=value; __Host-r2l_account=synthetic',[VERIFIED_ADMIN_HEADER]:'forged'};
-  for(const method of ['GET','HEAD'])for(const path of ['/_astro/lesson.SyntheticHash.js','/_astro/classes.SyntheticHash.css?v=abcdef','/story-retell/sky/storyboard-v1.png']){
+  for(const method of ['GET','HEAD'])for(const path of ['/_astro/lesson.SyntheticHash.js','/_astro/classes.SyntheticHash.css?v=abcdef','/story-retell/sky/storyboard-v1.png','/story-retell/sky/storyboard-v1.webp']){
     const response=await f.run(path,{method,headers});assert.equal(response.status,200);assert.equal(f.nextCalls(),0);
     assert.equal(f.calls.at(-1).request.method,method);assert.equal(f.calls.at(-1).request.headers.get(VERIFIED_ADMIN_HEADER),null);
   }
-  assert.equal(f.calls.length,6);assert.deepEqual(f.reads,[]);
+  assert.equal(f.calls.length,8);assert.deepEqual(f.reads,[]);
 });
 
 test('asset routing never extends cookie authority to public pages, private files or mutations',async()=>{

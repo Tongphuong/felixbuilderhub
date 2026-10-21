@@ -336,12 +336,12 @@ test('renderGiftManagerColumnHeaders and the hardcoded gifts.astro header both c
 
 // --- emoji-is-a-fallback on the admin side (§C) --------------------------
 
-test('renderGiftPhotoThumb emits the onload has-img hook when a photo exists, and no <img> at all when there is none', async () => {
+test('renderGiftPhotoThumb emits the data-ag-thumb-img hook (has-img/removal handled CSP-safely by installAdminThumbFallback) when a photo exists, and no <img> at all when there is none', async () => {
   const { renderGiftPhotoThumb } = await loadAdminGifts();
   const withPhoto = renderGiftPhotoThumb({ id: 'sticker', emoji: '🌟', image_key: null, image_url: 'https://cf.shopee.vn/x.jpg' });
   assert.match(withPhoto, /<img /);
-  assert.match(withPhoto, /onload="this\.closest\('\.ag-thumb'\)\?\.classList\.add\('ag-thumb--has-img'\)"/);
-  assert.match(withPhoto, /onerror="this\.remove\(\)"/);
+  assert.match(withPhoto, /data-ag-thumb-img/);
+  assert.doesNotMatch(withPhoto, /\son(error|load)\s*=/);
 
   const withoutPhoto = renderGiftPhotoThumb({ id: 'sticker', emoji: '🌟', image_key: null, image_url: null });
   assert.doesNotMatch(withoutPhoto, /<img/);
