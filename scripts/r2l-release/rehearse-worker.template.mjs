@@ -51,9 +51,10 @@ export default {async fetch(request,env,ctx){
   const b64=btoa(String.fromCharCode(...audio));
   return new Response(`window.R2LMicCheck={sessionPassed:()=>true,mount(root,options){root.hidden=true;options.onPass();}};window.R2LRecorder={getStream:async()=>({getTracks:()=>[{readyState:'live',enabled:true,stop(){}}]}),createRecorder:()=>({engine:'wav',start(){},stop:async()=>new Blob([Uint8Array.from(atob('${b64}'),c=>c.charCodeAt(0))],{type:'audio/wav'})})};`,{headers:{'Content-Type':'text/javascript'}});
  }
- // Same routing as production: gateway paths go to the Worker (candidate bundle), the rest to Pages (repo dist).
- const viaGateway=url.pathname.startsWith('/api/')||/^\/(read2lead|ho-so)(\/|$)/.test(url.pathname);
- const response=(viaGateway?await unifiedAccountGateway({request,env:{...env},data:{},waitUntil:p=>ctx.waitUntil(p)}):null)||await env.PAGES_ASSETS.fetch(request);
+ // Same routing as production (functions/_middleware.js): the gateway sees EVERY request and decides itself
+ // (it returns null for paths it does not own, and serves /_astro and /story-retell assets to a reader cookie);
+ // null falls through to Pages (repo dist).
+ const response=(await unifiedAccountGateway({request,env:{...env},data:{},waitUntil:p=>ctx.waitUntil(p)}))||await env.PAGES_ASSETS.fetch(request);
  const headers=new Headers(response.headers);headers.set('Cache-Control','no-store');headers.set('X-Robots-Tag','noindex');headers.set('X-Synthetic-Rehearsal','release');
  if(response.headers.get('content-type')?.includes('text/html')&&response.status===200){headers.delete('content-length');return new Response((await response.text()).replace('</body>',notice+'</body>'),{status:response.status,headers});}
  return new Response(response.body,{status:response.status,headers});
