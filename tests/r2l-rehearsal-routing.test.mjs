@@ -1,10 +1,7 @@
 // R2L-MAINT-2: the release rehearsal must route EVERY request through the account gateway, as production's
-// functions/_middleware.js does. Gateway-owned static assets (/story-retell/**) are served to a reader cookie
-// only if the gateway sees the request; a path allow-list in the rehearsal Worker hides that (it 404s from Pages).
-//
-// Asset used: /story-retell/sky/storyboard-v1.png. The rehearsal's synthetic fixture (Codex's rehearsal-v90-fixture.mjs,
-// outside this repo) advertises only the PNG in its package manifest, so the candidate's .webp is not servable here
-// (finding reported to Lead); the PNG exercises the identical gateway code path (same regex branch).
+// functions/_middleware.js does, and the synthetic manifest must advertise the candidate's own /story-retell pictures.
+// Gateway-owned static assets (/story-retell/**) are served to a reader cookie only if (1) the gateway sees the
+// request and (2) the host's public-asset manifest lists the file.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -15,7 +12,8 @@ import {fileURLToPath} from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CANDIDATE = path.join(os.homedir(), 'work', 'r2l-releases', 'v110-20261021');
-const ASSET = '/story-retell/sky/storyboard-v1.png';
+const WEBP = '/story-retell/sky/storyboard-v1.webp';
+const PNG = '/story-retell/sky/storyboard-v1.png';
 const NEW_LINE = 'const response=(await unifiedAccountGateway({request,env:{...env},data:{},waitUntil:p=>ctx.waitUntil(p)}))||await env.PAGES_ASSETS.fetch(request);';
 const OLD_LINES = "const viaGateway=url.pathname.startsWith('/api/')||/^\\/(read2lead|ho-so)(\\/|$)/.test(url.pathname);\n" +
   " const response=(viaGateway?await unifiedAccountGateway({request,env:{...env},data:{},waitUntil:p=>ctx.waitUntil(p)}):null)||await env.PAGES_ASSETS.fetch(request);";
@@ -27,8 +25,8 @@ function skipReason() {
 }
 
 // Starts rehearse.mjs --serve (from scriptsDir) and returns {url, stop}.
-async function serve(scriptsDir) {
-  const proc = spawn('node', [path.join(scriptsDir, 'rehearse.mjs'), '--candidate', CANDIDATE, '--repo', root, '--serve'], {stdio: ['ignore', 'pipe', 'inherit']});
+async function serve(scriptsDir, env = {}) {
+  const proc = spawn('node', [path.join(scriptsDir, 'rehearse.mjs'), '--candidate', CANDIDATE, '--repo', root, '--serve'], {stdio: ['ignore', 'pipe', 'inherit'], env: {...process.env, ...env}});
   const info = await new Promise((resolve, reject) => {
     let buf = '';
     proc.stdout.on('data', d => { buf += d; const m = /"url":\s*"([^"]+)"/.exec(buf); if (m && buf.includes('}')) resolve(JSON.parse(buf)); });
@@ -38,31 +36,36 @@ async function serve(scriptsDir) {
   return {url: info.url, stop: () => new Promise(r => { proc.removeAllListeners('exit'); proc.on('exit', r); proc.kill('SIGTERM'); })};
 }
 
-async function probe(url) {
+async function probe(url, asset) {
   // Same way a child gets the cookie: open the home with the code (Set-Cookie __Host-r2l_account).
   const home = await fetch(url + '/read2lead?code=R2L-SYNTHETIC-PHONE');
   assert.equal(home.status, 200);
   const cookie = home.headers.getSetCookie().map(c => c.split(';')[0]).find(c => c.startsWith('__Host-r2l_account='));
   assert.ok(cookie, 'home must issue the account cookie');
-  const withCookie = await fetch(url + ASSET, {headers: {cookie}});
+  const withCookie = await fetch(url + asset, {headers: {cookie}});
   const bytes = withCookie.status === 200 ? (await withCookie.arrayBuffer()).byteLength : 0;
-  const without = await fetch(url + ASSET);
+  const without = await fetch(url + asset);
   return {withStatus: withCookie.status, type: withCookie.headers.get('content-type'), bytes, withoutStatus: without.status};
 }
 
-test('rehearsal serves /story-retell asset to a reader cookie, and not without it (mirrors production routing)', {timeout: 120000}, async t => {
+test('rehearsal serves /story-retell .webp and .png to a reader cookie, and not without it (mirrors production)', {timeout: 120000}, async t => {
   const why = skipReason(); if (why) return t.skip(why);
   const s = await serve(path.join(root, 'scripts', 'r2l-release'));
   try {
-    const r = await probe(s.url);
-    assert.equal(r.withStatus, 200, 'with cookie: gateway must serve the storyboard');
-    assert.equal(r.type, 'image/png');
-    assert.equal(r.bytes, fs.statSync(path.join(CANDIDATE, 'assets', ASSET)).size);
-    assert.equal(r.withoutStatus, 404, 'without cookie: Pages dist has no such file, so 404 like production');
+    const w = await probe(s.url, WEBP);
+    assert.equal(w.withStatus, 200, 'with cookie: gateway must serve the webp storyboard');
+    assert.equal(w.type, 'image/webp');
+    assert.equal(w.bytes, 339848);
+    assert.equal(w.withoutStatus, 404, 'without cookie: Pages dist has no such file, so 404 like production');
+    const p = await probe(s.url, PNG);
+    assert.equal(p.withStatus, 200);
+    assert.equal(p.type, 'image/png');
+    assert.equal(p.bytes, fs.statSync(path.join(CANDIDATE, 'assets', PNG)).size);
+    assert.equal(p.withoutStatus, 404);
   } finally { await s.stop(); }
 });
 
-test('BITE: the old path allow-list routing makes the same assertion fail (404 with cookie)', {timeout: 120000}, async t => {
+test('BITE 1: the old path allow-list routing makes the same assertion fail (404 with cookie)', {timeout: 120000}, async t => {
   const why = skipReason(); if (why) return t.skip(why);
   const src = fs.readFileSync(path.join(root, 'scripts', 'r2l-release', 'rehearse-worker.template.mjs'), 'utf8');
   assert.ok(src.includes(NEW_LINE), 'template must contain the all-requests gateway line (else this bite tests nothing)');
@@ -71,7 +74,16 @@ test('BITE: the old path allow-list routing makes the same assertion fail (404 w
   fs.writeFileSync(path.join(dir, 'rehearse-worker.template.mjs'), src.replace(NEW_LINE, OLD_LINES));
   const s = await serve(dir);
   try {
-    const r = await probe(s.url);
-    assert.equal(r.withStatus, 404, 'old routing must NOT serve the asset to a cookie holder');
+    assert.equal((await probe(s.url, WEBP)).withStatus, 404, 'old routing must NOT serve the asset to a cookie holder');
   } finally { await s.stop(); fs.rmSync(dir, {recursive: true, force: true}); }
+});
+
+test('BITE 2: without the candidate story-asset manifest merge, the .webp is 404 even with the cookie', {timeout: 120000}, async t => {
+  const why = skipReason(); if (why) return t.skip(why);
+  const s = await serve(path.join(root, 'scripts', 'r2l-release'), {R2L_REHEARSAL_NO_CANDIDATE_STORY_ASSETS_FOR_BITE_TEST: '1'});
+  try {
+    const w = await probe(s.url, WEBP);
+    assert.equal(w.withStatus, 404, 'v90 fixture manifest does not list the webp');
+    assert.equal((await probe(s.url, PNG)).withStatus, 200, 'the png (listed by the fixture) still works, so only the merge is under test');
+  } finally { await s.stop(); }
 });

@@ -60,6 +60,18 @@ const template = (await fs.readFile(path.join(here, 'rehearse-worker.template.mj
 const entry = path.join(tmpDir, 'rehearse-worker.mjs');
 await fs.writeFile(entry, template);
 const fixture = await makeFixture();
+// The external synthetic fixture is frozen at the v90 manifest, so its publicAssets lists only the old story pictures.
+// Advertise the CANDIDATE's own /story-retell/ pictures too (public art, not children's content), so the host can serve
+// them the way production does; then re-serialise and re-hash so R2L_PREVIEW_PACKAGE_SHA256 still matches the served manifest.
+// (plan.sha256 derives from account snapshots, not from this manifest.) The env var is a bite-test hook only.
+if (!process.env.R2L_REHEARSAL_NO_CANDIDATE_STORY_ASSETS_FOR_BITE_TEST) {
+  const own = JSON.parse(await fs.readFile(path.join(candAssets, '__private/package.json'), 'utf8'));
+  const manifest = JSON.parse(fixture.text);
+  const extra = (own.publicAssets || []).filter(a => typeof a === 'string' && a.startsWith('/story-retell/'));
+  manifest.publicAssets = [...new Set([...(manifest.publicAssets || []), ...extra])];
+  fixture.text = JSON.stringify(manifest);
+  fixture.packageSha256 = digest(fixture.text);
+}
 const bundle = await build({entryPoints: [entry], bundle: true, write: false, format: 'esm', platform: 'browser', external: ['cloudflare:workers'], logLevel: 'silent'});
 
 const mime = {'.mjs': 'text/javascript', '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.mp3': 'audio/mpeg', '.woff2': 'font/woff2'};
