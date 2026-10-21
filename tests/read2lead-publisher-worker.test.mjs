@@ -13,9 +13,13 @@ import {fixtureAssets,fixturePackage,fixtureNow,seedFixturePackages} from './fix
 async function setup(t){
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'r2l-worker-')),filename=path.join(root,'publisher.sqlite'),assets=fixtureAssets(root),db=openPublisherStore(filename,{create:true});initializePublisherCatalogue(db);const pkg=await fixturePackage(assets);await seedFixturePackages(db,[pkg]);
  const options={assetRoot:root,now:fixtureNow},publish=async p=>applyPublisherCatalogue(db,await planPublisherCatalogue(db,{targets:[{source_id:p.lesson.source.source_id,version:p.lesson.version}],operator:'Synthetic worker test',reason:'Synthetic test only'},options),options);await publish(pkg);
- const bin=path.join(root,'bin'),armed=path.join(root,'armed'),entered=path.join(root,'entered');fs.mkdirSync(bin);fs.writeFileSync(path.join(bin,'ffprobe'),`#!/bin/sh\nif test -e '${armed}'; then\n test -e '${entered}' || printf entered > '${entered}'\n sleep 0.5\nfi\nexec /usr/bin/ffprobe "$@"\n`,{mode:0o700});const oldPath=process.env.PATH;process.env.PATH=bin+path.delimiter+oldPath;
+ // The fake ffprobe holds the worker inside its decode so a test can act "during worker loading". Default: it holds for a FIXED 0.5 s once armed (a clock).
+// A test that must act at a precise point in that window cannot trust a clock under load (a busy machine can delay the main thread by more than 0.5 s,
+// and the worker then finishes first): such a test calls s.gate() before s.arm(), and the stub then holds until s.release() creates the `release` file
+// (an event, not a delay). The hold is capped at 30 s so a test that dies before releasing cannot leave a stub spinning for ever.
+ const bin=path.join(root,'bin'),armed=path.join(root,'armed'),entered=path.join(root,'entered'),gated=path.join(root,'gated'),released=path.join(root,'release');fs.mkdirSync(bin);fs.writeFileSync(path.join(bin,'ffprobe'),`#!/bin/sh\nif test -e '${armed}'; then\n test -e '${entered}' || printf entered > '${entered}'\n if test -e '${gated}'; then\n  n=0\n  while ! test -e '${released}' && test $n -lt 3000; do n=$((n+1)); sleep 0.01; done\n else\n  sleep 0.5\n fi\nfi\nexec /usr/bin/ffprobe "$@"\n`,{mode:0o700});const oldPath=process.env.PATH;process.env.PATH=bin+path.delimiter+oldPath;
  t.after(()=>{process.env.PATH=oldPath;db.close();fs.rmSync(root,{recursive:true,force:true});});
- return{root,filename,assets,db,pkg,publish,arm:()=>fs.writeFileSync(armed,''),entered,options};
+ return{root,filename,assets,db,pkg,publish,arm:()=>fs.writeFileSync(armed,''),gate:()=>fs.writeFileSync(gated,''),release:()=>fs.writeFileSync(released,''),entered,options};
 }
 async function waitEntered(s){const start=Date.now();while(!fs.existsSync(s.entered)){assert.ok(Date.now()-start<5000,'worker decoder did not start');await sleep(5);}return Date.now()-fs.statSync(s.entered).mtimeMs;}
 test('actual HTTP remains responsive while a changed catalogue decodes in its read-only worker',async t=>{
@@ -26,7 +30,9 @@ test('actual HTTP remains responsive while a changed catalogue decodes in its re
  }finally{await qa.close();}
 });
 test('a withdrawal during worker loading cannot publish the stale result',async t=>{
- const s=await setup(t);s.arm();const pending=createPublishedSyntheticRuntime({mode:'synthetic-local',db:s.db,assetRoot:s.root,verification:'worker',now:()=>fixtureNow});const rejected=assert.rejects(pending,/stale_catalogue_snapshot|content_unavailable/);await waitEntered(s);withdrawPublisherVersion(s.db,{source_id:s.pkg.lesson.source.source_id,version:s.pkg.lesson.version,reason:'Synthetic concurrent withdrawal',now:fixtureNow});await rejected;
+ // Gated (event, not a 0.5 s clock): the worker is held inside its decode until the withdrawal has been committed, however slow this machine is.
+ const s=await setup(t);s.gate();s.arm();const pending=createPublishedSyntheticRuntime({mode:'synthetic-local',db:s.db,assetRoot:s.root,verification:'worker',now:()=>fixtureNow});const rejected=assert.rejects(pending,/stale_catalogue_snapshot|content_unavailable/);
+ try{await waitEntered(s);withdrawPublisherVersion(s.db,{source_id:s.pkg.lesson.source.source_id,version:s.pkg.lesson.version,reason:'Synthetic concurrent withdrawal',now:fixtureNow});}finally{s.release();}await rejected;
 });
 test('main-connection uncommitted state cannot be replaced by a worker committed snapshot',async t=>{
  const s=await setup(t),runtime=await createPublishedSyntheticRuntime({mode:'synthetic-local',db:s.db,assetRoot:s.root,verification:'worker',now:()=>fixtureNow});

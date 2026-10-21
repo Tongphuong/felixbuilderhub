@@ -48,7 +48,23 @@ const PAGES = {
   'red-text': inCard('<p style="margin:0;color:#FF7A3D">Sai rồi</p>'),
   'red-bg': inCard('<div style="height:40px;background:#E0362C">Sai rồi</div>'),
   'red-border': inCard('<div style="height:40px;border:3px solid #FF7A3D">Sai rồi</div>'),
-  'red-in-image': inCard('<svg width="60" height="60"><circle cx="30" cy="30" r="28" fill="#E0362C" stroke="#FF7A3D" stroke-width="4"/></svg><p style="margin:0;color:#17324D">Minny</p>'),
+  // a RASTER image (an <img>, here an svg data URI) is excluded: Minny's own ring is an image. An INLINE <svg> is not (R2L-MAINT-1 D5).
+  'red-in-image': inCard('<img alt="" width="60" height="60" src="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2760%27 height=%2760%27%3E%3Ccircle cx=%2730%27 cy=%2730%27 r=%2728%27 fill=%27%23E0362C%27 stroke=%27%23FF7A3D%27 stroke-width=%274%27/%3E%3C/svg%3E"><p style="margin:0;color:#17324D">Minny</p>'),
+  'red-svg-fill': inCard('<svg width="60" height="60"><circle cx="30" cy="30" r="28" fill="#E0362C"/></svg><p style="margin:0;color:#17324D">Minny</p>'),
+  'red-svg-stroke': inCard('<svg width="60" height="60"><circle cx="30" cy="30" r="28" fill="none" stroke="#FF7A3D" stroke-width="4"/></svg><p style="margin:0;color:#17324D">Minny</p>'),
+  'red-svg-stroke-width0': inCard('<svg width="60" height="60"><circle cx="30" cy="30" r="28" fill="none" stroke="#FF7A3D" stroke-width="0"/></svg><p style="margin:0;color:#17324D">Minny</p>'),
+  'red-svg-css': inCard('<style>.k{fill:#FF7A3D}</style><svg width="60" height="60"><rect class="k" width="50" height="50"/></svg><p style="margin:0;color:#17324D">Minny</p>'),
+  'red-svg-gradient': inCard('<svg width="60" height="60"><defs><linearGradient id="g"><stop offset="0" stop-color="#E0362C"/><stop offset="1" stop-color="#ffffff"/></linearGradient></defs><rect width="50" height="50" fill="url(#g)"/></svg><p style="margin:0;color:#17324D">Minny</p>'),
+  'red-svg-oklch': inCard('<svg width="60" height="60"><rect width="50" height="50" style="fill:oklch(0.5962 0.2076 28.5817)"/></svg><p style="margin:0;color:#17324D">Minny</p>'),
+  'red-text-oklch': inCard('<p style="margin:0;color:oklch(0.7258 0.1782 43.189)">Sai rồi</p>'),
+  'red-text-oklab': inCard('<p style="margin:0;color:oklab(0.7258 0.1299 0.122)">Sai rồi</p>'),
+  'red-bg-p3': inCard('<div style="height:40px;background:color(display-p3 0.8092 0.2726 0.2161)">Sai rồi</div>'),
+  'red-border-p3': inCard('<div style="height:40px;border:3px solid color(display-p3 0.9343 0.5078 0.3009)">Sai rồi</div>'),
+  'red-shadow-oklch': inCard('<div style="height:30px;box-shadow:0 0 0 3px oklch(0.5962 0.2076 28.5817)">x</div>'),
+  'red-grad-oklab': inCard('<div style="height:30px;background:linear-gradient(90deg, oklab(0.5962 0.1823 0.0993), #fff)">x</div>'),
+  'red-unreadable': inCard('<p style="margin:0;color:color(rec2020 0.8 0.3 0.2)">Màu lạ</p>'),
+  // safe colours written in the same syntaxes (the sun yellow, and a coral-ish colour that is 16/255 away) must PASS
+  'safe-colours': inCard('<p style="margin:0;color:oklch(0.8594 0.1583 85.7897)">Vàng</p><div style="height:20px;background:color(display-p3 0.9663 0.7927 0.3515)">x</div><svg width="60" height="60"><circle cx="30" cy="30" r="28" fill="oklab(0.8594 0.0116 0.1578)" stroke="#FFC83D" stroke-width="4"/></svg><p style="margin:0;color:#FF8A3D">Gần cam</p>'),
   'red-clean': inCard('<p style="margin:0;color:#17324D;border:2px solid #17324D">Gần đúng rồi</p>'),
   low: html('<div style="height:900px"></div><div data-design="t.low" style="height:60px;width:200px">x</div>'),
   'details-closed': html('<details><summary style="height:48px">Chi tiết</summary><div style="border:2px solid #17324D;width:120px;padding:4px"><button style="width:300px;height:48px;font-family:inherit">Nút tràn</button></div></details>'),
@@ -116,7 +132,8 @@ const CASES = {
   'ts-empty-bad': { turnstile: 't.ts', ...at('ts-empty') },
   'ts-missing-container': { turnstile: 't.ts', ...at('ok') },
 };
-for (const k of ['red-text', 'red-bg', 'red-border', 'red-in-image', 'red-clean', 'red-before', 'red-after-text', 'red-shadow', 'red-outline', 'red-textfill', 'red-decoration']) {
+for (const k of ['red-text', 'red-bg', 'red-border', 'red-in-image', 'red-clean', 'red-before', 'red-after-text', 'red-shadow', 'red-outline', 'red-textfill', 'red-decoration',
+  'red-svg-fill', 'red-svg-stroke', 'red-svg-stroke-width0', 'red-svg-css', 'red-svg-gradient', 'red-svg-oklch', 'red-text-oklch', 'red-text-oklab', 'red-bg-p3', 'red-border-p3', 'red-shadow-oklch', 'red-grad-oklab', 'red-unreadable', 'safe-colours']) {
   CASES['never-' + k] = { locate: { 't.a': '#a', 't.b': '.bb', 'n.card': '#card' }, never_red: ['n.card'], ...at(k) };
 }
 
@@ -191,7 +208,23 @@ test('R3 fields: known-good pass, known-bad fail the NAMED check with the specif
       assert.equal(c('mask-covers-diff', 'pixel-diff').pass, true, c('mask-covers-diff', 'pixel-diff').detail);
       assert.equal(c('mask-absent-diff-fails', 'pixel-diff').pass, false);
     });
-    await t.test('never_red: coral/red text, background or border FAILS; red inside an svg image and clean text pass', () => {
+    await t.test('never_red (R2L-MAINT-1 D5): INLINE svg fill/stroke/stop-color FAIL; oklch/oklab/display-p3 spellings of the brand colours FAIL; safe colours in the same syntaxes pass', () => {
+      assert.match(c('never-red-svg-fill', 'never-red').detail, /never_red "n\.card": circle in an inline svg uses svg fill #E0362C/);
+      assert.match(c('never-red-svg-stroke', 'never-red').detail, /circle in an inline svg uses svg stroke #FF7A3D/);
+      assert.equal(c('never-red-svg-stroke-width0', 'never-red').pass, true, 'a zero-width stroke paints nothing: ' + c('never-red-svg-stroke-width0', 'never-red').detail);
+      assert.match(c('never-red-svg-css', 'never-red').detail, /rect in an inline svg uses svg fill #FF7A3D/);
+      assert.match(c('never-red-svg-gradient', 'never-red').detail, /stop in an inline svg uses svg stop-color #E0362C/);
+      assert.match(c('never-red-svg-oklch', 'never-red').detail, /rect in an inline svg uses svg fill #E0362C/);
+      assert.match(c('never-red-text-oklch', 'never-red').detail, /p "Sai rồi" uses text colour #FF7A3D/);
+      assert.match(c('never-red-text-oklab', 'never-red').detail, /p "Sai rồi" uses text colour #FF7A3D/);
+      assert.match(c('never-red-bg-p3', 'never-red').detail, /uses background #E0362C/);
+      assert.match(c('never-red-border-p3', 'never-red').detail, /uses border #FF7A3D/);
+      assert.match(c('never-red-shadow-oklch', 'never-red').detail, /uses box-shadow #E0362C/);
+      assert.match(c('never-red-grad-oklab', 'never-red').detail, /uses background gradient #E0362C/);
+      assert.match(c('never-red-unreadable', 'never-red').detail, /never_red: cannot read the colour "color\(rec2020 0\.8 0\.3 0\.2\)" \(unsupported colour syntax\); refusing to call it safe/);
+      assert.equal(c('never-safe-colours', 'never-red').pass, true, 'sun yellow in oklch / display-p3 / oklab / hex and a colour 16/255 from coral are SAFE: ' + c('never-safe-colours', 'never-red').detail);
+    });
+    await t.test('never_red: coral/red text, background or border FAILS; red inside a raster <img> and clean text pass', () => {
       assert.match(c('never-red-text', 'never-red').detail, /never_red "n\.card": p "Sai rồi" uses text colour #FF7A3D/);
       assert.match(c('never-red-bg', 'never-red').detail, /uses background #E0362C/);
       assert.match(c('never-red-border', 'never-red').detail, /uses border #FF7A3D/);

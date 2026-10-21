@@ -90,7 +90,10 @@ function page(o = {}) {
     + (o.anim === 'bad' ? '<div style="width:10px;height:10px;background:#000;animation:spin 1s linear infinite"></div>' : '')
     + (o.anim === 'safe' ? '<div class="s" style="width:10px;height:10px;background:#000"></div>' : '')
     + (o.animZero ? '<div style="width:10px;height:10px;background:#000;animation:fade 0s both"></div>' : '')
-    + (o.raf ? '<div id="m" style="width:10px;height:10px;background:#000"></div><script>let x=0;const d=document.getElementById("m");(function f(){x=(x+3)%120;d.style.marginLeft=x+"px";requestAnimationFrame(f)})()</script>' : '')
+    // The mover steps 7px per frame and wraps at 289 (7 and 289 share no factor), so two samples differ unless EXACTLY a multiple of 289 frames
+    // (~4.8 s at 60 Hz) lie between them. It used to step 3px and wrap at 120 = every 40 frames (~667 ms at 60 Hz): when load stretched the harness's
+    // ~370 ms sample gap towards 667 ms the two samples were identical, the check saw "no motion" and this case flaked red. (R2L-MAINT-1 D6.)
+    + (o.raf ? '<div id="m" style="width:10px;height:10px;background:#000"></div><script>let x=0;const d=document.getElementById("m");(function f(){x=(x+7)%289;d.style.marginLeft=x+"px";requestAnimationFrame(f)})()</script>' : '')
     + (o.svgLow ? '<svg width="200" height="40" style="display:block"><rect width="200" height="40" fill="#fff"/><text x="4" y="28" fill="#ddd" font-size="20">Sáng chói</text></svg>' : '')
     + (o.lineOverlap != null ? `<div style="position:relative"><p id="l1" style="margin:0;font:700 24px/24px sans-serif">Gg Ứỹ lọc</p><p id="l2" style="margin:0;font:700 24px/24px sans-serif">Ếg Ứỹ lọc</p></div><script>(function(){const c=document.createElement('canvas').getContext('2d');c.font='700 24px sans-serif';const m=c.measureText('Gg Ứỹ lọc'),n=c.measureText('Ếg Ứỹ lọc');const asc=n.actualBoundingBoxAscent,desc=m.actualBoundingBoxDescent;document.getElementById('l2').style.marginTop=((asc+desc-(${o.lineOverlap}))-24)+'px';})()</script>` : '')
     + (o.ellipsisPrimary ? '' : '')
