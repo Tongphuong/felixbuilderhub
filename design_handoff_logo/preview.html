@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <title>felixbuilderhub — logo preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Manrope:wght@600;700;800&display=swap&subset=vietnamese" rel="stylesheet">
+  <style>
+    :root{
+      --navy-950:#10273a; --navy-900:#17354a; --navy-850:#1d3f58; --navy-800:#244a64;
+      --gold:#c88f38; --gold-light:#f2cc7e;
+      --cream:#f5e6c8; --cream-muted:#d9c7a4; --cream-dim:#aa9673;
+      --border:color-mix(in srgb,var(--cream-dim) 20%,transparent);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; background:var(--navy-950); color:var(--cream);
+      font-family:'Inter',system-ui,sans-serif;
+      line-height:1.6;
+    }
+    .wrap{max-width:1100px; margin:0 auto; padding:64px 32px 96px;}
+    .eyebrow{font-weight:800; text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:var(--gold)}
+    h1{font-family:'Manrope',sans-serif; font-weight:800; font-size:44px; line-height:1.2; margin:12px 0 12px; letter-spacing:-.01em}
+    h2{font-family:'Manrope',sans-serif; font-weight:800; font-size:22px; margin:56px 0 20px; letter-spacing:-.01em}
+    p.lead{color:var(--cream-muted); max-width:640px; margin:0 0 40px}
+    .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px}
+    .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+    .tile{
+      background:var(--navy-900); border:1px solid var(--border); border-radius:14px;
+      overflow:hidden; display:flex; flex-direction:column;
+    }
+    .tile .body{padding:56px 32px; display:flex; align-items:center; justify-content:center; min-height:180px}
+    .tile .body.light{background:var(--cream)}
+    .tile .body.navy850{background:var(--navy-850)}
+    .tile .caption{padding:16px 20px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--cream-muted)}
+    .tile .caption code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; color:var(--cream-dim)}
+    .swatches{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px}
+    .sw{display:flex; align-items:center; gap:10px; background:var(--navy-900); border:1px solid var(--border); border-radius:10px; padding:10px 14px}
+    .sw .chip{width:22px; height:22px; border-radius:6px; box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+    .sw .name{font-size:13px; color:var(--cream)}
+    .sw code{font-size:12px; color:var(--cream-dim); font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    /* header mock */
+    .browser{background:var(--navy-950); border:1px solid var(--border); border-radius:14px; overflow:hidden}
+    .browser .chrome{height:14px; background:var(--navy-850); display:flex; align-items:center; gap:6px; padding:0 12px}
+    .browser .dot{width:8px; height:8px; border-radius:50%}
+    .browser .header{padding:20px 32px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border)}
+    .browser .nav{display:flex; gap:28px; font-size:14px; color:var(--cream-muted); align-items:center}
+    .browser .cta{background:var(--gold); color:var(--navy-950); padding:8px 16px; border-radius:8px; font-weight:700; font-size:14px}
+    .browser .hero{padding:56px 32px}
+    .browser .hero h3{font-family:'Manrope',sans-serif; font-weight:800; font-size:34px; line-height:1.25; margin:12px 0 0; max-width:520px; letter-spacing:-.01em}
+    /* favicon strip */
+    .fav-strip{display:flex; align-items:flex-end; gap:20px; padding:32px; background:var(--navy-900); border:1px solid var(--border); border-radius:14px}
+    .fav-strip figure{margin:0; display:flex; flex-direction:column; align-items:center; gap:10px; font-size:12px; color:var(--cream-dim)}
+    .fav-strip img{display:block}
+    /* avatar */
+    .avatar{width:72px; height:72px; border-radius:50%; background:linear-gradient(135deg,var(--navy-850),var(--navy-950)); display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 40%,transparent)}
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">Nhận diện thương hiệu · v2</div>
+  <h1>felixbuilderhub — bộ logo chính thức</h1>
+  <p class="lead">Hướng 1a — Sparkle wordmark. Sao vàng 4 cánh + wordmark Manrope, chữ "builder" đổi màu vàng để tạo nhịp. Xem đầy đủ specs trong <a href="README.md" style="color:var(--gold)">README.md</a>.</p>
+
+  <!-- Primary lockup -->
+  <h2>Primary lockup</h2>
+  <div class="grid">
+    <div class="tile">
+      <div class="body"><img src="assets/logo-lockup-dark.svg" width="320" height="auto" alt=""></div>
+      <div class="caption"><span>On navy · header default</span><code>logo-lockup-dark.svg</code></div>
+    </div>
+    <div class="tile">
+      <div class="body light"><img src="assets/logo-lockup-light.svg" width="320" height="auto" alt=""></div>
+      <div class="caption"><span>On cream · print, light emails</span><code>logo-lockup-light.svg</code></div>
+    </div>
+  </div>
+
+  <!-- Mark alone -->
+  <h2>Mark alone</h2>
+  <div class="grid-3">
+    <div class="tile">
+      <div class="body navy850"><img src="assets/logo-mark.svg" width="96" height="96" alt=""></div>
+      <div class="caption"><span>Gold on navy</span><code>logo-mark.svg</code></div>
+    </div>
+    <div class="tile">
+      <div class="body light"><img src="assets/logo-mark-navy.svg" width="96" height="96" alt=""></div>
+      <div class="caption"><span>Navy on cream</span><code>logo-mark-navy.svg</code></div>
+    </div>
+    <div class="tile">
+      <div class="body navy850">
+        <div class="avatar"><img src="assets/logo-mark.svg" width="42" height="42" alt=""></div>
+      </div>
+      <div class="caption"><span>As avatar (gold ring)</span><code>Zalo · Facebook</code></div>
+    </div>
+  </div>
+
+  <!-- Favicon set -->
+  <h2>Favicon &amp; app icons</h2>
+  <div class="fav-strip">
+    <figure><img src="assets/favicon.svg" width="16" height="16" alt=""><figcaption>16 px</figcaption></figure>
+    <figure><img src="assets/favicon.svg" width="32" height="32" alt=""><figcaption>32 px</figcaption></figure>
+    <figure><img src="assets/favicon.svg" width="64" height="64" alt=""><figcaption>64 px</figcaption></figure>
+    <figure><img src="assets/apple-touch-icon.svg" width="120" height="120" alt=""><figcaption>Apple touch · 120 px preview</figcaption></figure>
+    <figure><img src="assets/apple-touch-icon.svg" width="180" height="180" alt=""><figcaption>Apple touch · 180 px full</figcaption></figure>
+  </div>
+
+  <!-- Header mock -->
+  <h2>In situ — site header</h2>
+  <div class="browser">
+    <div class="chrome"><span class="dot" style="background:#f87171"></span><span class="dot" style="background:#f2cc7e"></span><span class="dot" style="background:#6fcf97"></span></div>
+    <div class="header">
+      <img src="assets/logo-lockup-dark.svg" height="40" alt="felixbuilderhub">
+      <div class="nav">
+        <span>Coaching</span><span>Read2Lead</span><span>MSMW</span>
+        <span class="cta">Đặt lịch →</span>
+      </div>
+    </div>
+    <div class="hero">
+      <div class="eyebrow">Coaching kỹ năng nói</div>
+      <h3>Giúp con dám mở miệng, nói trước đám đông — thật sự tự tin.</h3>
+    </div>
+  </div>
+
+  <!-- Tokens -->
+  <h2>Design tokens used</h2>
+  <div class="swatches">
+    <div class="sw"><span class="chip" style="background:#10273a"></span><span class="name">Navy 950</span><code>#10273a</code></div>
+    <div class="sw"><span class="chip" style="background:#c88f38"></span><span class="name">Gold</span><code>#c88f38</code></div>
+    <div class="sw"><span class="chip" style="background:#f2cc7e"></span><span class="name">Gold light</span><code>#f2cc7e</code></div>
+    <div class="sw"><span class="chip" style="background:#f5e6c8"></span><span class="name">Cream</span><code>#f5e6c8</code></div>
+  </div>
+  <p style="color:var(--cream-muted); font-size:14px; margin-top:16px">Font: <strong>Manrope 800</strong> · letter-spacing <code style="color:var(--cream-dim);font-family:ui-monospace,Menlo,monospace">-0.03em</code> · lowercase.</p>
+
+</div>
+</body>
+</html>

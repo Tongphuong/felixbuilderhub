@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/felix-coaching-design-system-05c19970-0964-4c70-bbd7-1dc2f8d82ac9/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/felix-coaching-design-system-05c19970-0964-4c70-bbd7-1dc2f8d82ac9/tokens/colors.css">
+<link rel="stylesheet" href="_ds/felix-coaching-design-system-05c19970-0964-4c70-bbd7-1dc2f8d82ac9/tokens/backgrounds.css">
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Inter',system-ui,sans-serif;}
+</style>
+</helmet>
+
+<div class="star-field" style="min-height:100vh;width:100%;color:var(--cream);display:flex;flex-direction:column;align-items:center;padding:24px 16px 48px;">
+
+  <p style="font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:0;">Xem thử · Responsive</p>
+  <h1 style="font-family:'Manrope',sans-serif;font-weight:800;font-size:24px;margin:8px 0 4px;text-align:center;">Trang chủ Read2Lead trên mọi màn hình</h1>
+  <p style="margin:0 0 20px;font-size:14px;color:var(--cream-muted);text-align:center;">Chọn một thiết bị để xem bố cục tự sắp xếp lại.</p>
+
+  <!-- device switcher -->
+  <div style="display:inline-flex;gap:6px;padding:6px;border-radius:9999px;background:color-mix(in srgb,var(--navy-950) 70%,transparent);border:1px solid var(--border-default);margin-bottom:26px;">
+    <button type="button" onClick="{{ pickPhone }}" style="{{ phoneBtn }}">📱 Điện thoại · 390</button>
+    <button type="button" onClick="{{ pickTablet }}" style="{{ tabletBtn }}">📲 Máy tính bảng · 768</button>
+    <button type="button" onClick="{{ pickLaptop }}" style="{{ laptopBtn }}">💻 Laptop · 1280</button>
+  </div>
+
+  <!-- device frame -->
+  <div style="width:{{ frameW }}px;height:{{ frameH }}px;transition:width .35s ease,height .35s ease;">
+    <div style="width:{{ devW }}px;height:{{ devH }}px;transform:scale({{ scale }});transform-origin:top left;border-radius:22px;overflow:hidden;border:{{ bezel }}px solid #0a1a28;box-shadow:0 30px 70px -24px rgba(0,0,0,.75), 0 0 0 1px var(--border-strong);background:var(--navy-950);">
+      <iframe src="Read2Lead%20Home%20Hub.dc.html" title="Read2Lead Home Hub" style="width:{{ devW }}px;height:{{ devH }}px;border:0;display:block;"></iframe>
+    </div>
+  </div>
+
+  <p style="margin:22px 0 0;font-size:12px;color:var(--cream-dim);text-align:center;max-width:520px;line-height:1.6;">Đây là cùng một file <strong style="color:var(--cream-muted);">Read2Lead Home Hub.dc.html</strong> — không có bản riêng cho từng máy. Cùng một lúc: điện thoại xếp 1 cột, laptop tách 2 cột (thế giới của con bên trái · các nút bên phải).</p>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:900}}">
+const DEVICES = {
+  phone:  { w: 390,  h: 810 },
+  tablet: { w: 768,  h: 1024 },
+  laptop: { w: 1280, h: 820 },
+};
+
+class Component extends DCLogic {
+  state = { device: 'phone', avail: 1000 };
+
+  componentDidMount() {
+    this._measure = () => {
+      const el = document.querySelector('.star-field');
+      const w = el ? el.clientWidth - 40 : window.innerWidth - 40;
+      this.setState({ avail: Math.max(280, w) });
+    };
+    this._measure();
+    window.addEventListener('resize', this._measure);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this._measure); }
+
+  renderVals() {
+    const d = DEVICES[this.state.device];
+    const maxH = Math.max(360, (typeof window !== 'undefined' ? window.innerHeight : 800) - 320);
+    const scale = Math.min(1, this.state.avail / d.w, maxH / d.h);
+    const btn = (active) =>
+      `cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;padding:9px 15px;border-radius:9999px;border:1px solid ${active ? 'var(--gold)' : 'transparent'};background:${active ? 'var(--accent-soft)' : 'transparent'};color:${active ? 'var(--gold-light)' : 'var(--cream-muted)'};white-space:nowrap;transition:all .2s ease;`;
+    return {
+      devW: d.w, devH: d.h,
+      scale: Number(scale.toFixed(4)),
+      frameW: Math.round(d.w * scale),
+      frameH: Math.round(d.h * scale),
+      bezel: this.state.device === 'phone' ? 8 : 10,
+      phoneBtn: btn(this.state.device === 'phone'),
+      tabletBtn: btn(this.state.device === 'tablet'),
+      laptopBtn: btn(this.state.device === 'laptop'),
+      pickPhone: () => this.setState({ device: 'phone' }),
+      pickTablet: () => this.setState({ device: 'tablet' }),
+      pickLaptop: () => this.setState({ device: 'laptop' }),
+    };
+  }
+}
+</script>
+</body>
+</html>
