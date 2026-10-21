@@ -21,6 +21,8 @@ UNSAFE = "R2L_RELEASE_UNSAFE_WRITE_THROUGH_FOR_BITE_TEST"
 NO_VERBATIM = "R2L_RELEASE_NO_VERBATIM_FOR_BITE_TEST"
 LIB_REL = ("assets/read2lead/library-assets/library.mjs", "assets/read2lead/library-assets/library.css")
 LIB_SRC = ("src/scripts/read2lead-book-library.mjs", "src/styles/read2lead-book-library.css")
+SB_REL = "assets/story-retell/sky/storyboard-v1.webp"
+SB_SRC = "worker-assets/story-retell/sky/storyboard-v1.webp"
 
 
 def sha(p):
@@ -56,6 +58,7 @@ class Fixture:
         # the base's library files are WRONG on purpose (stale/foreign content): a candidate must not inherit them
         w(self.base / LIB_REL[0], "export const WRONG_R2_LIBRARY_JS=1")
         w(self.base / LIB_REL[1], ".wrong-r2-library-css{}")
+        w(self.base / SB_REL, b"RIFF-OLD-HEAVY-STORYBOARD-" + b"\x00" * 64)  # the base's heavy storyboard: a candidate must not inherit it
         w(a / "__private/media/pic.bin", b"\x00\x01ILLUSTRATION\x02")
         w(a / "__private/book-parts/p1.json", '{"part":1}')
         manifest = {
@@ -86,6 +89,7 @@ class Fixture:
             w(r / d / "keep.txt", d)
         w(r / LIB_SRC[0], "export const library = 'repo source js';\n")
         w(r / LIB_SRC[1], ".library{color:#17324D}\n")
+        w(r / SB_SRC, b"RIFF-NEW-LIGHT-STORYBOARD-" + b"\x01" * 32)
         if with_voice:
             self._add_voice(w)
         self.git("init", "-q")
@@ -225,6 +229,31 @@ class ReleaseCandidateTests(unittest.TestCase):
         m = json.loads((self.f.out / "assets/__private/package.json").read_text())
         for pub in ("/read2lead/library-assets/library.mjs", "/read2lead/library-assets/library.css"):
             self.assertIn(pub, m["publicAssets"])
+
+    def test_storyboard_comes_from_repo_source_not_base(self):
+        # R2L-MAINT-1 D1: the light storyboard is a verbatim repo file; the base's heavy copy (hard-linked across releases) is never touched.
+        sibling = self.f.tmp / "sibling"
+        shutil.copytree(self.f.base, sibling, symlinks=True, copy_function=os.link)
+        self.assertTrue(os.path.samefile(sibling / SB_REL, self.f.base / SB_REL))
+        base_bytes, base_ino = (self.f.base / SB_REL).read_bytes(), os.stat(self.f.base / SB_REL).st_ino
+        r = self.f.run()
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        self.assertEqual((self.f.out / SB_REL).read_bytes(), (self.f.repo / SB_SRC).read_bytes())
+        self.assertNotEqual((self.f.out / SB_REL).read_bytes(), base_bytes)
+        self.assertFalse(os.path.samefile(self.f.out / SB_REL, self.f.base / SB_REL))
+        self.assertEqual((self.f.base / SB_REL).read_bytes(), base_bytes)
+        self.assertEqual(os.stat(self.f.base / SB_REL).st_ino, base_ino)
+        self.assertEqual((sibling / SB_REL).read_bytes(), base_bytes)
+        proof = json.loads((self.f.out / "candidate-proof.json").read_text())
+        self.assertIn(SB_REL, proof["changedAssets"])
+        m = json.loads((self.f.out / "assets/__private/package.json").read_text())
+        self.assertIn("/story-retell/sky/storyboard-v1.webp", m["publicAssets"])
+
+    def test_storyboard_bite_without_the_fix_the_candidate_keeps_the_base_file(self):
+        r = self.f.run(extra_env={NO_VERBATIM: "1"})
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        self.assertEqual((self.f.out / SB_REL).read_bytes(), (self.f.base / SB_REL).read_bytes())
+        self.assertNotEqual((self.f.out / SB_REL).read_bytes(), (self.f.repo / SB_SRC).read_bytes())
 
     def test_library_bite_without_the_fix_the_candidate_keeps_the_wrong_files(self):
         # (c) the pre-fix behaviour (no verbatim step): the candidate inherits the base's WRONG files, so the equality

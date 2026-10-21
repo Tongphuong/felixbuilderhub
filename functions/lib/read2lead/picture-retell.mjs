@@ -33,7 +33,7 @@ export function pictureRetellFor(lesson) {
     prompt:'Retell The Sky Is Blue! in your own words using the five pictures. Include the main events and why the uncle is happy. Do not add story facts.',
     criteria:facts.map(([id,meaning])=>({id,meaning})),
     labels:facts.map(([,,label])=>label),frames:skyFrames.map(f=>({...f})),sheetWidth:1672,sheetHeight:941,
-    picture:'/story-retell/sky/storyboard-v1.png',maxSeconds:PICTURE_RETELL_SECONDS};
+    picture:'/story-retell/sky/storyboard-v1.webp',maxSeconds:PICTURE_RETELL_SECONDS};
 }
 
 export function pictureRetellResult(task,judgment,pronunciation=null) {

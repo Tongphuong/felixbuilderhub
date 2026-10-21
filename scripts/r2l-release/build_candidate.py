@@ -55,6 +55,7 @@ HEX64 = re.compile(r"^[a-f0-9]{64}$")
 VERBATIM_ASSETS = {
     "assets/read2lead/library-assets/library.mjs": "src/scripts/read2lead-book-library.mjs",
     "assets/read2lead/library-assets/library.css": "src/styles/read2lead-book-library.css",
+    "assets/story-retell/sky/storyboard-v1.webp": "worker-assets/story-retell/sky/storyboard-v1.webp",
 }
 # Test hook: empties VERBATIM_ASSETS (the pre-fix behaviour) so a test can prove its assertions discriminate.
 NO_VERBATIM_ENV = "R2L_RELEASE_NO_VERBATIM_FOR_BITE_TEST"
