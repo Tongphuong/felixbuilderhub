@@ -20,3 +20,8 @@ public/assets/monsters/_qa-*.png
 # Python bytecode (tests write these under scripts/__pycache__; never commit)
 __pycache__/
 *.pyc
+
+# Local-only outputs (2026-10-21 cleanup): npm test proof folders, agent worktrees, browser-tool logs
+.r2l-*-proofs/
+.claude/worktrees/
+.playwright-mcp/

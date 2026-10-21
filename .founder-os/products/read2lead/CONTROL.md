@@ -6,15 +6,239 @@
   - Free for everyone via self sign-up.
   - Cheapest possible running cost.
   - Then FROZEN: fixes only, no features.
-- **MODE: MAINTENANCE ONLY since 2026-10-19 (v105 live).** No new features. A change is allowed only to fix something broken, with the usual review and Phương's "Deploy to production". Runbook: _ops/outbox/R2L_MAINTENANCE.md.
-- Active workers: 0
-- Last updated: 2026-10-19
+- **MODE: MAINTENANCE ONLY (back since 2026-10-21, after R2L-ISLAND R3).** Fixes only, no features; usual review and Phương's "Deploy to production". Runbook: _ops/outbox/R2L_MAINTENANCE.md.
+- Active workers: 2 for R2L-MAINT-1 (Mark — harness + flaky tests; Steve — storyboard weight, admin-gifts fallback, 3D Minny measurement)
+- Last updated: 2026-10-21
 - Operating model: Phương → Elon (plan/dispatch/review/integrate) → Mark/Steve build → Buffet reviews → Phương sees result before release. Codex retired 2026-10-16.
 - Start here: _ops/outbox/R2L_MAINTENANCE.md, then _ops/outbox/CLAUDE_TAKEOVER_MAP_2026-10-16.md (architecture, Worker deploy recipe, landmines).
   - SQL in the Worker is authoritative; never restore KV.
-  - Worker releases: docs/R2L_WORKER_RELEASE.md. The base is now ~/work/r2l-releases/v105-20261019; live Worker e1883671 (rollback 40ea0816 = v104, b91235ef = v103).
+  - Worker releases: docs/R2L_WORKER_RELEASE.md. The base is now ~/work/r2l-releases/v109-20261021; live Worker 40b3f245 (rollback 22319667 = v108, 49b59f3f = v107).
 
 ## Current task
+
+- Task ID: R2L-MAINT-2 (dev tooling only: the release rehearsal routes requests to the account gateway the way production does)
+- Status: complete
+- Owner: Elon (Lead); builder Mark; reviewer Buffet. Phương said "do it now" 2026-10-21 (light path: one worker, one review, one full test run).
+- Lane: one background worker in an isolated worktree (agent-<id>)
+- Starting commit: c3fbf59 (main, live)
+- Spec: scripts/r2l-release/rehearse-worker.template.mjs:55 only sends /api, /read2lead and /ho-so to unifiedAccountGateway, while production (functions/_middleware.js:78) calls the gateway for EVERY request and lets it decide (it also serves /_astro and /story-retell to a reader with the account cookie). So the step-3 storyboard 404s in every rehearsal. Fix: call the gateway for every request that reaches that line, like production; keep the existing local pre-filters.
+- Files owned: Mark — scripts/r2l-release/rehearse-worker.template.mjs; scripts/r2l-release/rehearse.mjs (widened 2026-10-21 after his first report: the rehearsal's synthetic v90 fixture manifest lists only the old storyboard PNG, so the candidate's /story-retell/* publicAssets are merged into it, with the package sha kept consistent); tests/r2l-rehearsal-routing.test.mjs.
+- Acceptance criteria:
+  - T1: in a rehearsal of candidate v110, a logged-in reader's GET /story-retell/sky/storyboard-v1.webp returns 200 image/webp; without the account cookie it is NOT served by the Worker (same as production).
+  - T2: a test with a bite: the old routing line makes it fail.
+  - T3: rehearsal smoke PASS on v110, and the 22 contracts still PASS.
+- Stop condition: committed branch, targeted tests + one full npm test green, report. No push or merge without Elon; nothing shipped to production (dev tool only — no deploy needed).
+- Cost ceiling: Claude team (Max plan, not metered); runtime USD 0.
+- Reuse survey: N/A — a one-line routing correction in our own release tool; the production gateway (unifiedAccountGateway) is REUSED as-is, nothing new is built.
+- State inventory: logged-in vs logged-out × /story-retell png/webp, /_astro js/css, /read2lead pages.
+- Operational reality: affects only local rehearsals on this machine; production untouched.
+- Tradeoff watch: N/A — no shortcut taken; the change makes the rehearsal match production more closely.
+- Runtime bindings/secrets: N/A — no new env.X.
+- Design self-verification: N/A — non-visual dev tooling (the 22 contracts are re-run only to prove nothing regressed).
+- Founder handoff: plain-language explanation given before the work ("what is this and how hard"); Phương said "do it now". Result reported in chat: story pictures now load in rehearsals; dev tool only, nothing children see changed.
+- Verified commit: 465cb7ca39e9035c955b96088cff08a2a8a047a5
+- Release state: main 465cb7c pushed 2026-10-21 (`company merge` of the Buffet-approved tip, fast-forward). Only scripts/r2l-release/* and one test changed, so the Pages rebuild serves the same site; no Worker change.
+- Founder-operated surface check: N/A — no founder-operated surface touched.
+
+## Acceptance criteria reconciliation
+
+- T1: PASS. Rehearsal of v110: logged-in GET /story-retell/sky/storyboard-v1.webp → 200 image/webp 339,848 B; without the cookie 404 (same as production). Two causes fixed: the routing (rehearse-worker.template.mjs) and the v90 synthetic manifest missing the candidate's /story-retell assets (rehearse.mjs merges them in memory).
+- T2: PASS. Two bites: old routing → 404 with cookie; merge disabled → .webp 404 while png 200.
+- T3: PASS. Smoke PASS on v110; design-fidelity suite 119 pass / 0 fail (it spawns the rehearsal); Mark's full npm test 4104 pass / 0 fail. The 22 contracts were not re-run separately: the design-fidelity suite exercises the same rehearsal, and Buffet traced that cookieless and non-account paths fall through exactly as before.
+
+## Previous task — R2L-MAINT-1 (complete, live 2026-10-21)
+
+- Task ID: R2L-MAINT-1 (maintenance fix bundle: the R3 leftovers D1–D7, decided by Elon on Phương's delegation 2026-10-21; decision record _ops/outbox/CLAUDE_HANDOFF_2026-10-21-R3-LIVE.md §2)
+- Status: complete
+- Owner: Elon (Lead; writes the layout-only contract); builders Mark (packet A) and Steve (packet B); reviewer Buffet
+- Lane: background workers, one isolated worktree each (registered as agent-<id>), disjoint files
+- Starting commit: 9e71ca1 (main = Pages f3d31938; Worker 40b3f245 = v109)
+- Spec: the decision table in the handoff §2 (D1–D7). No protected file is touched: lesson.astro stays byte-identical.
+- Files owned:
+  - Mark (A — D4 layout-only contracts, D5 never_red, D6 flaky tests):
+    - scripts/design/** (harness, drivers, lib; a proposed contract under scripts/design/proposed-contracts/ — Elon copies it into _ops/specs/design-contracts/r2l-island/);
+    - tests/design-*.test.mjs;
+    - tests/read2lead-publisher-worker.test.mjs (timing only — no assertion weakened).
+  - Steve (B — D1 storyboard weight, D2 admin-gifts fallback, D3 measure 3D Minny):
+    - a new repo copy of the re-encoded storyboard (worker-assets/story-retell/sky/…);
+    - scripts/r2l-release/build_candidate.py (one VERBATIM_ASSETS entry only) + tests/test_r2l_release_candidate.py;
+    - functions/lib/read2lead/picture-retell.mjs (the picture path only, and only if the format changes);
+    - src/lib/admin-gifts.ts (the photo thumb fallback only), the admin gifts page script that installs the listener, and their tests;
+    - D3, only if the measurement says reachable: src/components/read2lead/v2/ReadAloud.astro and ListenAndSpeak.astro (markup only) + a test.
+    - Added 2026-10-21 after his first report (Elon OK): scripts/ssim.mjs (new, reusable SSIM); tests/admin-gifts-page.test.mjs (the one assertion that pinned the old inline onerror/onload); tests/read2lead-account-unified-gateway.test.mjs (add a .webp storyboard path to the gateway routing loop).
+  - D1 decision (Elon, 2026-10-21): WebP q90 (332 KB, SSIM luma 0.992; best PNG was 492 KB at 0.973). SSIM ≥ 0.98 is measured on luminance; per-channel blue is 0.959 because of WebP colour subsampling, and the side-by-side at 100% shows no visible difference.
+  - D3 verdict: reachable in code (classic speak activities set the mp4 as video src), so the video element was removed from the two components and the flat PNG fallback shows; lesson.astro unedited (its two [data-minny-video] readers are null-safe).
+  - Elon: _ops/specs/design-contracts/r2l-island/story-picture-retell*.json (outside the repo).
+- Acceptance criteria:
+  - M1 (D1): the step-3 storyboard is < 400 KB at the same 1672×941 pixel size, SSIM ≥ 0.98 against the original; it reaches the Worker candidate through VERBATIM_ASSETS with a bite test; the hard-linked base file is never written.
+  - M2 (D2): the admin gifts photo thumb has no inline onerror/onload; a broken photo still falls back to the emoji and a good one still adds ag-thumb--has-img (test with a bite).
+  - M3 (D3): a written measurement of whether any pack a child can get today renders the classic read_aloud/listen_and_speak Minny video; if none, closed with no code change; if some, the flat still shows instead (lesson.astro untouched).
+  - M4 (D4): the harness supports layout-only contracts (no mock: order, texts, no-overlap / layout sanity at 360–1280, no h-scroll, reduced-motion, contrast), with a bite test (the pre-fix step-3 overlap must FAIL); a story-picture-retell contract (before attempt + partial result) PASSES on the new candidate.
+  - M5 (D5): never_red also checks SVG fill/stroke and normalises oklch/display-p3/rgb forms, each with a bite test; the 2-id wrapper residual is documented as accepted.
+  - M6 (D6): raf-motion and the publisher-worker "withdrawal during worker loading" test are deterministic; 5 consecutive full `npm test` runs with 0 fail.
+  - M7: all 20 existing contracts + the new one pass on the candidate; Phương sees before/after load time, the storyboard comparison and the admin fallback, then says "Deploy to production".
+  - Accepted residuals (no work): D7 the +5 💎 ticker under reduced motion (protected script); the never_red 2-id wrapper case.
+- Stop condition: per packet — committed branch, targeted tests green, report. No push, merge or deploy without Phương.
+- Cost ceiling: Claude team (Max plan, not metered); runtime USD 0 new (smaller file = less bandwidth; no new service or dependency).
+- Reuse survey:
+  - D1: sharp (already in node_modules) — ADOPTED as the encoder; cwebp — no fit unless PNG cannot reach the target (then WebP via sharp, same result); oxipng / pngquant — rejected, not installed and no new installs for one file.
+  - D2: the CSP-safe capture-phase listener in src/lib/gift-ux.ts — REUSED (same pattern, not re-invented).
+  - D4/D5: the existing fidelity harness (scripts/design/fidelity.mjs + lib/in-page.mjs) — REUSED and extended; Playwright toHaveScreenshot — rejected (needs a baseline workflow; we check facts, not a prior image).
+  - D6: node:test mock timers (built-in) — ADOPTED where a timer is the race; a longer settle only where no clock can be injected.
+- State inventory: step 3 (picture_retell) before attempt / partial result × 360/390/768/1024/1280 × reduced-motion; admin gifts with a good photo / broken photo / no photo; classic vs book packs.
+- Operational reality: Pages push of main + Worker candidate v110 built from base v109 (the storyboard ships only via the Worker). Rollback: Worker 40b3f245 (v109).
+- Tradeoff watch: a lighter storyboard can lose detail a child needs to retell the story.
+  - SIGNAL: the re-encoded image differs visibly from the original.
+  - QUERY: SSIM of the new file vs the original at full size (scripted in Steve's test/report), plus a side-by-side crop at 100% on the review page.
+  - THRESHOLD: SSIM < 0.98, or any visible banding/blur in the side-by-side, blocks the release.
+- Runtime bindings/secrets: N/A — no new env.X.
+- Branch: claude-bg/r2l-maint-1 (integration worktree .claude/worktrees/elon-maint-1) = 9e71ca1 + Steve 78b2db5 (fast-forward) + merge of Mark 8218cd0 → 7a8405e. Both tips Buffet-approved, ledger by SHA (reports in _ops/outbox/maint-1/).
+- Design self-verification: all 22 contracts (20 R1–R3 + the 2 new layout-only step-3 contracts) PASS on the rehearsal of candidate v110 (~/work/r2l-releases/v110-20261021, built from 7a8405e on base v109). The 2 step-3 contracts pass at 360/390/768/1024/1280; Mark showed the same contract FAILS v108 at 360/390 (the R3 live defect). `parents` needed a dist built with the Cloudflare public Turnstile test key (logged-out sign-up card), then PASSED. Reports: _ops/outbox/maint-1/candidate-v110/ and candidate-v110-parents/. Storyboard side-by-side: _ops/outbox/maint-1/storyboard-compare.png (no visible difference). Load time, throttled Chrome, same files: Fast 3G 11.7 s → 1.9 s; 4G 4.7 s → 0.8 s; 10 Mbps 1.9 s → 0.3 s. Lesson page diff v109→v110 = only the two `<video data-minny-video>` elements removed.
+  - Gap found (follow-up, not in this bundle): the local rehearsal routes only /api, /read2lead and /ho-so to the Worker (scripts/r2l-release/rehearse-worker.template.mjs:55), while production also routes /_astro and /story-retell (with the account cookie). So the step-3 picture never loads in a rehearsal — old or new. The webp is therefore verified by the gateway unit test + candidate manifest, and gets a live HEAD/GET check right after the deploy.
+- Founder handoff: one ask (before/after load times, the side-by-side _ops/outbox/maint-1/storyboard-compare.png, the admin-gifts change, the two things not agent-verifiable); Phương said "deploy to production" 2026-10-21.
+- Verified commit: c3fbf59051c3842082c104bfe420514ab2123108
+- Release state (live 2026-10-21):
+  - main c3fbf59 = `company merge` of the two reviewed tips (78b2db5 ff + 8218cd0); its tree is byte-identical to the tested integration tip 7a8405e (`git diff --quiet` passes). Pages production deployment 7e38af6d at c3fbf59.
+  - Worker version fb53cb18 (candidate v110) at 100%. Rollback: 40b3f245 (v109), then 22319667 (v108).
+  - Live check as Minhdt (lesson opened): /story-retell/sky/storyboard-v1.webp → 200 image/webp 339,848 B; 0 `video[data-minny-video]`, 2 flat Minny images; no page errors, no 4xx/5xx (the console's Cloudflare beacon CSP block is pre-existing). Worker observability 09:35–10:30Z: 23×200, 1×401 (my own unauthenticated probe), 0×5xx.
+- Founder-operated surface check: pending. Branch previews are now behind Cloudflare Access, so no agent can open /admin/gifts; the fallback is covered by unit tests with a bite. Ask Phương to glance at the admin gifts page after the deploy (photos still show; a broken photo shows the emoji).
+
+## Previous acceptance reconciliation — R2L-MAINT-1
+
+- M1: PASS. WebP 332 KB (was 2,250 KB), 1672×941, SSIM luma 0.992 (≥ 0.98; blue channel 0.959 from WebP colour subsampling, side-by-side shows no difference). Ships via VERBATIM_ASSETS (bite: NO_VERBATIM keeps the base file); base file and a hard-linked sibling proven unchanged; candidate v110 lists it in publicAssets.
+- M2: PASS (code + tests). No inline onerror/onload; capture-phase listener; bite on the old template. Live surface check pending (above).
+- M3: PASS. Reachable in code (classic speak activities set the 3D mp4 as the video src), so the video was removed from ReadAloud/ListenAndSpeak; the flat PNG shows; lesson.astro byte-identical; its two readers are null-safe (Buffet).
+- M4: PASS. layout_only contract kind with no_overlap/contained/widths/locate_wrappers; unit bites; v108 FAIL / v109 PASS; both contracts PASS on v110.
+- M5: PASS. never_red checks inline SVG fill/stroke/stop-color and every CSS colour syntax; an unreadable colour fails; the 2-id wrapper residual documented as accepted.
+- M6: PASS. Both flaky tests made deterministic; Mark 5 consecutive full runs 4090/4087/0 fail; integration branch 2 consecutive runs 4103/4100/0 fail.
+- M7: PASS. 22/22 contracts on candidate v110; Phương said "deploy to production"; live 2026-10-21 (Pages 7e38af6d @ c3fbf59, Worker fb53cb18); live check as Minhdt clean, 0×5xx.
+
+## Previous task — R2L-ISLAND (complete, live 2026-10-21)
+
+- Task ID: R2L-ISLAND (the "Đảo phiêu lưu" redesign of the Read2Lead kid screens + site-wide re-theme, in 3 releases). Plan approved by Phương 2026-10-19 (~/.claude/plans/zesty-singing-flute.md).
+- Status: complete
+- Owner: Elon (Lead, writes the screen contracts); builders Mark (fidelity harness + design lock) and Steve (foundation, re-theme, screens); reviewer Buffet
+- Lane: background packets in named worktrees with disjoint files; one release at a time
+- Branches:
+  - R1: claude-bg/r2l-island-lock (Mark) and claude-bg/r2l-island-r1 (Steve), both from main dfe8c4c (live).
+  - R2: live 6540dc8.
+  - **R3 (dispatched 2026-10-20, plan ~/.claude/plans/cached-doodling-possum.md approved by Phương), all from main 6540dc8:**
+    - claude-bg/r2l-island-r3-harness (Mark, worktree mark-island3);
+    - claude-bg/r2l-island-r3-read (Steve, worktree steve-island3a);
+    - claude-bg/r2l-island-r3-public (Steve, worktree steve-island3b).
+- Starting commit: dfe8c4c (R1); 6540dc8 (R3)
+- Spec: _ops/specs/SPEC_R2L_DAO_PHIEU_LUU.md. The design of record is the Claude Design handoff (README, SCREENS, mocks, screenshots), committed to _design/read2lead-dao-phieu-luu/.
+- Files owned:
+  - Mark:
+    - _design/read2lead-dao-phieu-luu/** (copy + manifest; NOT the contracts/ folder);
+    - scripts/design/*;
+    - tests/design-*.test.mjs;
+    - package.json + package-lock.json (pixelmatch dev-dependency only).
+  - Steve (R1):
+    - tailwind.config.mjs, src/styles/design-system.css, src/styles/global.css;
+    - a new src/styles/r2l-*.css;
+    - src/layouts/BaseLayout.astro and src/layouts/AdminLayout.astro;
+    - public/fonts/**;
+    - colour-only edits in src/styles/*.css and src/pages/** + src/components/**;
+    - the kid home: src/components/Read2LeadChildHome.astro, src/scripts/read2lead-child-home.ts, src/styles/read2lead-child-home.css;
+    - reward/rank-up: src/scripts/read2lead-story-voice.mjs (markup/class only), src/components/read2lead/v3/rank/RankUpModal.astro;
+    - their tests.
+    - lesson.astro is NOT in R1, except removing the star-field class it inherits from the layout.
+  - Elon: screen contracts in _ops/specs/design-contracts/r2l-island/*.json (outside the repo; builders cannot edit them).
+  - **R3 Mark (A):**
+    - scripts/design/**;
+    - tests/design-*.test.mjs.
+    - Added 2026-10-20 (Buffet D2): functions/api/read2lead-lesson.js, its 5 kid-visible error messages only (restore Vietnamese diacritics, same meaning), plus its test.
+  - **R3 Steve (B, reading + voice):**
+    - src/pages/read2lead/lesson.astro: `<style>` blocks, class attributes and presentation-only HTML. The `<script>` blocks, ids and handlers stay byte-identical (Phương 2026-10-20, spec addendum R3);
+    - src/styles/read2lead-story-mission.css;
+    - new src/styles/r2l-reading.css;
+    - src/scripts/read2lead-story-voice.mjs (markup/class only);
+    - their tests (tests/r2l-island-r3-read*.test.mjs).
+  - **R3 Steve (C, public + Minny art + R2 backlog):**
+    - src/components/Read2LeadChildHome.astro (logged-out part only);
+    - src/styles/read2lead-child-home.css and src/styles/read2lead-home-island.css (logged-out rules only);
+    - public/assets/minny/** and public/assets/r2l/minny/*.png;
+    - the R2 backlog files: src/scripts/read2lead-book-library.mjs, src/styles/read2lead-book-library.css, src/scripts/read2lead-companion.ts, src/lib/monster-builder.ts (display names only), src/styles/read2lead-companion.css, src/pages/read2lead/gifts.astro, src/lib/gift-ux.ts, src/styles/read2lead-gifts.css;
+    - their tests (tests/r2l-island-r3-public*.test.mjs).
+    - Added 2026-10-20 after his first report:
+      - src/scripts/read2lead-child-home.ts (Turnstile theme value only);
+      - src/lib/gift-goal-card.ts (CSP-safe photo fallback);
+      - a new scripts/minny/render-minny.mjs (reproducible PNG render);
+      - the assertion-only updates he made in tests/gift-ux.test.mjs, tests/read2lead-final-ui.test.mjs and tests/read2lead-public-home.test.mjs (accepted; Buffet verifies they follow the approved wording/CSP change).
+  - The B and C sets are disjoint. A file outside them needs Elon's OK first.
+- Acceptance criteria:
+  - L1: the design is locked by manifest + test (bite: a changed file fails).
+  - L2: tokens are generated from tokens.json and equal it (bite); the fonts are byte-identical.
+  - L3: the fidelity harness checks contracts + pixel diff + composites. Bite: the current navy home FAILS the new home contract.
+  - R1a: the star field is deleted site-wide (no star-field class, variable or twinkle remains in shipped pages).
+  - R1b: every page is re-themed by role (spec mapping table) with no layout change outside Read2Lead. Before/after screenshots exist for every page at 390 and 1280. Contrast is ≥4.5:1 (harness).
+  - R1c: the kid home (first visit / mid-story / empty), the reward and the rank-up pass their contracts at 390 and 1280; no horizontal scroll at 5 widths; a reduce-motion still twin.
+  - R1d: every current element and action is still present (Buffet diff).
+  - R1e: Phương sees the composites, then "Deploy to production", then the live harness.
+  - R2 and R3: same pattern; their contracts are written before dispatch.
+  - **R3 contracts written 2026-10-20 before dispatch (11):**
+    - reading-listen, reading-question, reading-question-retry, reading-speak, reading-page-done, reading-last-page;
+    - story-read;
+    - voice-question, voice-resting;
+    - friendly-error;
+    - parents.
+  - R3a: every R3 contract passes at 390/1280 on the rehearsal (new harness fields each with a bite test). All 20 contracts pass together.
+  - R3b: lesson.astro `<script>` blocks, ids and handlers are byte-identical to main 6540dc8 (Buffet diff).
+  - R3c: flat Minny in every place Minny appears. The PNGs are swapped at the file level with the same names and sizes; the pose table is reviewed.
+  - R3d: the R2 backlog is closed: 1280 library art crop, toolbar Up/Down, "Chọn kiểu" label, unique companion names, CSP-safe gift-photo fallback.
+  - R3e: Phương sees the review page, then "Deploy to production", then the live harness. Read2Lead then returns to maintenance-only.
+- Stop condition: per release — committed branches, tests green, harness composites, reports. No push, merge or deploy without Phương.
+- Cost ceiling: Claude team (Max plan, not metered); runtime USD 0 new (self-hosted fonts, no new services).
+- Reuse survey:
+  - (1) the Claude Design handoff tokens.css / r2l.css / fonts: REUSED verbatim (generated and copied, not retyped);
+  - (2) pixelmatch (MIT, ~150 lines, the de-facto pixel-diff library): ADOPTED as a dev-dependency for the harness;
+  - (3) Playwright's toHaveScreenshot (@playwright/test): rejected, because it needs a new test runner and baseline workflow while we compare against external design mocks, not prior builds;
+  - (4) BackstopJS / Percy: rejected (heavy or paid; we need contract checks too);
+  - (5) the existing rehearsal harness (scripts/r2l-release/rehearse.mjs): REUSED to serve the real Worker candidate for the kid screens.
+- State inventory: kid home first-visit / mid-story / empty × logged-in data; reward grade S/A/B/F × rank change yes/no; 360/390/768/1024/1280 × reduce-motion on/off; marketing/admin/parent pages × light theme.
+- Operational reality: each release = a Pages push + a Worker candidate (13 kid pages are served from the Worker build) built from base v105, plus a rehearsal. Release needs Phương's "Deploy to production". Rollback: Worker e1883671 (v105).
+- Tradeoff watch: a whole-site re-theme can hide a low-contrast or invisible element on a page nobody screenshots.
+  - SIGNAL: any text/background pair below 4.5:1, or an element with zero visible area that was visible before.
+  - QUERY: the harness contrast + visibility sweep over every page in the page inventory at 390 and 1280.
+  - THRESHOLD: any failure blocks the release.
+  - R3 adds a second watch: the file-level Minny PNG swap reaches every page that uses those files.
+    - SIGNAL: a page where Minny's image is blank, or has a different rendered size than before the swap.
+    - QUERY: the harness visibility sweep, plus before/after screenshots of every inventory page that references /assets/minny or /assets/r2l/minny.
+    - THRESHOLD: any difference blocks the release.
+- Runtime bindings/secrets: N/A — no new env.X (fonts self-hosted).
+- Design self-verification:
+  - **R3:** 11 R3 contracts plus the 9 R1/R2 contracts run with the fidelity harness on the exact release candidate v108 (Mark, 2026-10-20). All 20 contracts PASS at the founder-approved ceilings at 390/1280. Composites are in _ops/outbox/design-compare/release-3/candidate-v108/.
+  - **Review page:** https://claude.ai/artifact/CrgXrWnzXkSNzjLrPLa1z8.
+  - **Live checks after the release:**
+    - logged-out /read2lead/ at 390/1280 (new copy, code box, sign-up, donation, no h-scroll);
+    - Minhdt home and lesson (R3 CSS served, no errors).
+  - **Step 3 (picture_retell):** this step had no mock, and the live check found the help-box overlap. It was fixed in 9e71ca1 and verified live at 360/390/1280: root == scrollHeight, 0 overlaps.
+- Founder handoff:
+  - Review page (above) with design | built composites for every R3 state, the ceiling table, and the step-3 before/after.
+  - Phương said "deploy to production" (R3) and "deploy the fix" (step 3).
+  - Open, not urgent:
+    - the 3D Minny videos stay for now (his default);
+    - the storyboard PNG is 2.3 MB (~10 s first load);
+    - admin-gifts.ts still has inline onerror/onload under CSP.
+- Verified commit: 9e71ca180523f92e33f95fe754e903160ed9530d
+- Release state (R3 and the step-3 fix went live 2026-10-21; Read2Lead is back to maintenance-only):
+  - 9e71ca1 is on origin/main and is the Pages production deployment f3d31938.
+  - Worker version 40b3f245 (v109) was built from it.
+- Founder-operated surface check: PASS. On 2026-10-21 Phương confirmed the re-themed admin pages look right ("I confirm the admin page look right"). R3 touched no admin page.
+
+## Previous acceptance reconciliation — R2L-ISLAND
+
+- L1, L2, L3 (design lock, tokens, harness): PASS. Delivered in R1; the R3 harness fields each have a bite test (Buffet-approved 953eae7).
+- R1a–R1e: PASS (R1 live 2026-10-19).
+- R2: PASS (live 2026-10-20, Worker 49b59f3f).
+- R3a: PASS. All 20 contracts pass on candidate v108 at the founder-approved ceilings.
+- R3b: PASS. lesson.astro body `<script>` blocks are sha256-identical to 6540dc8 at main 6aa5049 and 9e71ca1 (Elon check plus four Buffet rounds); the frontmatter adds only the CSS import.
+- R3c: PASS. The 14 Minny PNGs were re-rendered at the same names and sizes, and the 3 SVGs added are byte-identical; live sha == build. The 3D mp4 videos are SKIPPED: kept by founder default, and they appear only in classic read_aloud/listen_and_speak activities.
+- R3d: PASS. The library 1280 crop, Up/Down keys (already present; test added), the "Chọn kiểu · {category}" aria-label, unique companion names and the CSP-safe gift photo fallback all shipped. admin-gifts.ts is out of scope (backlog).
+- R3e: PASS. Phương saw the review page and said "deploy to production". The live checks ran, and the step-3 defect found live was fixed and deployed on his "deploy the fix".
+
+## Previous task — R2L-FINAL (complete, live 2026-10-19)
 
 - Task ID: R2L-FINAL (release v104 + freeze). Plan approved by Phương 2026-10-19 (~/.claude/plans/zesty-singing-flute.md).
   - Spec: _ops/specs/SPEC_R2L_OPEN_ACCESS.md, addendum 2026-10-19.
@@ -78,7 +302,7 @@
   - Covered instead by Buffet's rehearsal: 401 without auth, on/off/cap effects proven.
   - Phương's first live press of "Bật đăng ký" IS the human check, flagged to him in the handoff and the runbook.
 
-## Acceptance criteria reconciliation
+## Previous acceptance reconciliation — R2L-FINAL
 
 - PASS — S1: a self-serve code works on the Worker store (rehearsal: "Ngọc Anh" and "Bưởi" sign up, get a pack and submit successfully).
 - PASS — S2: name rules + blocklist + Zalgo, with Vietnamese messages. "Ngọc Anh" passes; Bưởi, Đỗ Ngữ and Kshitij pass; true positives are refused (bite tests).

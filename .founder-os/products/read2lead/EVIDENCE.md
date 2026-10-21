@@ -1,3 +1,13 @@
+# Current evidence routing — 2026-09-17
+
+Read _ops/specs/read2lead-self-learn/{P0_BASELINE.md,P0_VERIFY.md,P0_CONTROLS.md}
+and STATUS for source/controls, measured offline results and current task.
+The pinned application baseline is not green; recorded race and compatibility
+findings are not repaired. Historical next-actions below are NOT renewed
+deployment or live-data authorization. No new user research or discovery was run.
+
+## Historical evidence — preserved
+
 # Evidence — Read2Lead
 
 - Decision: product

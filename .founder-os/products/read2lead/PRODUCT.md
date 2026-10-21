@@ -1,3 +1,15 @@
+# Current product direction — Phuong, 2026-09-17
+
+Read _ops/outbox/READ2LEAD_START_HERE.md, then STATUS and DECISIONS.
+The authoritative contract is _ops/specs/SPEC_R2L_SELF_LEARN_V1.md:
+free, nonprofit, parent-supported self-learning; combine Read2Lead and SpeakUp;
+preserve L0–L5 and ranking; open all monsters/customisation; XP is progress,
+diamonds may be saved and optionally redeemed for gifts. These are requirements,
+not implemented or deployed claims. Consent, gifts, assessment and release
+decisions remain recorded prerequisites. Codex is sole delivery agent.
+
+## Historical product brief — preserved, superseded where direction differs
+
 # Product — Read2Lead
 
 - Product: Read2Lead
