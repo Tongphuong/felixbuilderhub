@@ -1,0 +1,52 @@
+{
+ "id": "story-picture-retell-before",
+ "release": "maint-1",
+ "layout_only": true,
+ "layout_only_note": "Step 3 'Kể qua tranh' of the One Story a Day mission has NO design mock. This contract checks layout facts only (no pixel comparison): order, texts, no overlap, no overflow, no horizontal scroll, reduced motion, contrast. Added after the R3 defect where the reader root had a fixed height and the result spilled under the help box and the credits.",
+ "built": {
+  "path": "/read2lead/lesson",
+  "state": "picture-retell-before",
+  "driver": "logged-in L1 child (R2L-SYNTHETIC-DESKTOP) with a completed mission, on the picture_retell stage before any attempt: board of 5 pictures + the record button. Stage is a VALUE in the real session view (see drivers/r2l-r3.mjs)."
+ },
+ "widths": [360, 390, 768, 1024, 1280],
+ "locate": {
+  "retell.back": "#lesson-home",
+  "retell.root": "#w1-book-reader-phase",
+  "retell.stepper": "#book-reader-stage-stepper",
+  "retell.board": ".picture-retell-board",
+  "retell.chat": "#w1-book-reader-phase .story-mission-chat",
+  "retell.support": "#w1-book-reader-phase > .lesson-support",
+  "retell.credits": "#w1-book-reader-phase > .r2l-book-attribution"
+ },
+ "order": [
+  "retell.back",
+  "retell.stepper",
+  "retell.board",
+  "retell.chat",
+  "retell.credits"
+ ],
+ "order_note": "DOM order, not visual order: the help box (.lesson-support) is the FIRST child of the reader root in the DOM and is placed last by CSS, so it is checked by no_overlap and texts, not by order.",
+ "texts": [
+  "Về đọc sách",
+  "1. Đọc",
+  "2. Nói với Minny",
+  "3. Kể qua tranh",
+  "Nhìn tranh · Kể lại truyện",
+  "Con nhìn 5 tranh theo thứ tự và kể cả câu chuyện bằng tiếng Anh. Bấm vào tranh để xem lớn hơn.",
+  "Ghi âm kể chuyện",
+  "Kể bằng lời của con · Tối đa 2 phút",
+  "Truyện này hơi khó",
+  "Thông tin tác giả và bản quyền"
+ ],
+ "no_overlap": [
+  ["retell.board", "retell.chat", "retell.support", "retell.credits"],
+  ["retell.stepper", "retell.board", "retell.chat"]
+ ],
+ "locate_wrappers": ["retell.root"],
+ "locate_wrappers_note": "the reader root is a container by design: its `contained` check (content must fit the box) is what catches a fixed-height root",
+ "contained": [
+  "retell.root",
+  "retell.board",
+  "retell.chat"
+ ]
+}

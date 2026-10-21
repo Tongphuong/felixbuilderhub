@@ -25,7 +25,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
-import { resolveLocate, neverRedCheck, turnstileCheck, contractChecks, tapChecks, overflowCheck, motionCheck, addStillClass, removeStillClass, layoutSanity, fontCheck, fontUsage, mockBalooClasses, mockBoxes, builtBoxes, scanText } from './lib/in-page.mjs';
+import { resolveLocate, neverRedCheck, layoutOnlyChecks, turnstileCheck, contractChecks, tapChecks, overflowCheck, motionCheck, addStillClass, removeStillClass, layoutSanity, fontCheck, fontUsage, mockBalooClasses, mockBoxes, builtBoxes, scanText } from './lib/in-page.mjs';
+import { parseCssColor } from './lib/color.mjs';
 import { diffPngs, writeComposite, padPng, cornerColor, pngHeight, fitWidth, maskPng, maskFraction, MASK_MAX_FRACTION } from './lib/pixels.mjs';
 import { analyseText, textOf, collapse, containsToken } from './lib/text.mjs';
 import { classifyDataBound } from './lib/binding.mjs';
@@ -75,13 +76,51 @@ export function effectiveAnchors(c, w) {
   return { anchors: merge(c.anchors, c[`anchors_${w}`]), exempt: merge(c.anchors_exempt, c[`anchors_exempt_${w}`]) };
 }
 
+// R2L-MAINT-1: a LAYOUT-ONLY contract is for a screen that has no design mock. It is checked at every width in `widths` (default below) for
+// order, texts, no_overlap, contained, horizontal scroll, reduced motion and contrast, and it has no pixel comparison at all.
+export const LAYOUT_ONLY_WIDTHS = [360, 390, 768, 1024, 1280];
+export const LAYOUT_ONLY_HEIGHT = 800;
+// Fields that only mean something against a mock. A layout-only contract carrying one is refused (infra error): silently ignoring a field is how a
+// check goes dead without anyone noticing.
+const MOCK_ONLY_FIELDS = ['mock', 'reference', 'diff_ceiling', 'regions', 'anchors', 'anchors_exempt', 'mask', 'primary', 'layout', 'locate_cols', 'min_size', 'data_bound', 'turnstile', 'never_red', 'allow_below_fold', 'capture', 'overflow_allow'];
+export function contractWidths(c) { return c.layout_only ? (c.widths || LAYOUT_ONLY_WIDTHS).map(String) : Object.keys(c.mock || {}); }
+
+function validateLayoutOnly(c) {
+  const bad = Object.keys(c).filter(k => MOCK_ONLY_FIELDS.includes(k) || /^(?:anchors(?:_exempt)?|sun_also)_\d+$/.test(k));
+  if (bad.length) throw new InfraError(`contract ${c.id}: a layout_only contract has no mock, so it may not carry ${bad.map(k => `"${k}"`).join(', ')} (no pixel comparison exists for it)`);
+  if (c.widths != null && (!Array.isArray(c.widths) || !c.widths.length || c.widths.some(n => !Number.isInteger(n) || n < 200 || n > 4000))) throw new InfraError(`contract ${c.id}: widths must be a non-empty list of integer pixel widths`);
+  const widths = new Set(contractWidths(c));
+  for (const k of Object.keys(c)) {
+    const m = /^(?:order|texts)_(\d+)$/.exec(k);
+    if (m && !widths.has(m[1])) throw new InfraError(`contract ${c.id}: "${k}" is for a width not in "widths"`);
+  }
+  for (const w of Object.keys(c.viewport || {})) if (!widths.has(w) || !(c.viewport[w] > 0)) throw new InfraError(`contract ${c.id}: viewport.${w} must be a positive height for a width listed in "widths"`);
+  const strList = (v, what) => { if (!Array.isArray(v) || v.some(x => typeof x !== 'string' || !x)) throw new InfraError(`contract ${c.id}: ${what} must be a list of non-empty strings`); };
+  if (c.no_overlap != null) {
+    if (!Array.isArray(c.no_overlap)) throw new InfraError(`contract ${c.id}: no_overlap must be a list of id groups, e.g. [["a", "b"]]`);
+    for (const g of c.no_overlap) { strList(g, 'every no_overlap group'); if (g.length < 2) throw new InfraError(`contract ${c.id}: every no_overlap group needs at least 2 ids`); }
+  }
+  if (c.contained != null) strList(c.contained, 'contained');
+  if (c.locate_wrappers != null) {
+    strList(c.locate_wrappers, 'locate_wrappers');
+    for (const id of c.locate_wrappers) if (!c.locate || !c.locate[id]) throw new InfraError(`contract ${c.id}: locate_wrappers lists "${id}", which is not a key of "locate"`);
+    if (c.locate_wrappers.some(id => (c.order || []).includes(id))) throw new InfraError(`contract ${c.id}: a locate_wrappers id may not also be in "order" (a container is trivially "before" everything inside it)`);
+  }
+  for (const [id, sel] of Object.entries(c.locate || {})) if (typeof sel !== 'string' || !sel.trim()) throw new InfraError(`contract ${c.id}: locate.${id} must be a CSS selector string`);
+  if (!c.built || typeof c.built !== 'object' || !c.built.state) throw new InfraError(`contract ${c.id}: a layout_only contract needs built.state (the state the driver reaches)`);
+  if (!(c.order || []).length && !(c.no_overlap || []).length && !(c.contained || []).length) throw new InfraError(`contract ${c.id}: a layout_only contract with no order, no_overlap and no contained checks nothing`);
+}
+
 // A contract's width-keyed fields must all describe exactly the widths of the mocks it lists.
 export function validateContract(c) {
   // Release 3: wording that still waits on the founder. Elon resolves it BEFORE dispatch; a pending contract is never run.
   if (Object.prototype.hasOwnProperty.call(c, 'pending_founder')) throw new InfraError(`contract ${c.id}: still carries "pending_founder" (wording waiting on Phương); refusing to run an unresolved contract`);
+  if (c.layout_only != null && c.layout_only !== true) throw new InfraError(`contract ${c.id}: layout_only must be true (or absent)`);
+  if (c.layout_only) return validateLayoutOnly(c);
+  for (const f of ['no_overlap', 'contained', 'widths', 'locate_wrappers']) if (c[f] != null) throw new InfraError(`contract ${c.id}: "${f}" is only checked for "layout_only": true contracts; on a normal contract it would be silently ignored`);
   const set = o => Object.keys(o || {}).sort().join(',');
   const want = set(c.mock);
-  if (!want) throw new InfraError(`contract ${c.id}: "mock" lists no widths`);
+  if (!want) throw new InfraError(`contract ${c.id}: a normal contract needs a "mock" listing at least one width (a screen with no mock must say "layout_only": true)`);
   for (const f of ['viewport', 'diff_ceiling', 'reference']) {
     if (f === 'reference' && !c.reference) continue;
     if (set(c[f]) !== want) throw new InfraError(`contract ${c.id}: "${f}" widths [${set(c[f])}] != mock widths [${want}]`);
@@ -166,6 +205,68 @@ async function settle(page, { network = true } = {}) {
 
 const shot = async (page, animations = 'disabled', full = true) => fitWidth(await page.screenshot({ fullPage: full, animations, caret: 'hide' }), page.viewportSize().width);
 
+// page.evaluate() serialises ONE function; this ships `fn` plus the helper functions it takes as extra arguments, as source. Playwright runs the
+// expression over CDP (not page-side eval), so a page CSP without 'unsafe-eval' does not block it.
+const evalWith = (page, fn, arg, ...helpers) => page.evaluate(`(${fn})(${JSON.stringify(arg)}${helpers.map(h => ', (' + h + ')').join('')})`);
+
+// R2L-MAINT-1: one layout-only contract at one width (no mock, no pixel diff). Checks, in this order: state-driver, locate, order, texts,
+// no-overlap, contained, no-h-scroll, reduced-motion, contrast>=4.5. The driver is called exactly like a normal contract's.
+async function runLayoutOnly({ browser, driver, contract, w, res, base, designDir, opts, out }) {
+  const viewport = { width: w, height: (contract.viewport || {})[String(w)] ?? LAYOUT_ONLY_HEIGHT };
+  const bctx = await browser.newContext({ viewport, reducedMotion: 'reduce', deviceScaleFactor: 1 });
+  try {
+    const page = await bctx.newPage();
+    try {
+      await driver(page, contract, base, { width: w, designDir, opts });
+      await settle(page);
+    } catch (e) {
+      res.checks.push(check('state-driver', false, `could not reach state "${contract.built && contract.built.state}": ${e.message}`));
+      return;
+    }
+    res.checks.push(check('state-driver', true, `reached "${contract.built.state}" at ${page.url()}`));
+    const orderIds = contract[`order_${w}`] || contract.order || [];
+    const texts = [...(contract.texts || []), ...(contract[`texts_${w}`] || [])];
+    const groups = contract.no_overlap || [], contained = contract.contained || [];
+    const optionalIds = Object.keys(contract.optional || {});
+    const optional = new Set(optionalIds);
+    if (contract.locate) {
+      const needed = new Set([...orderIds.filter(id => !optional.has(id)), ...groups.flat().filter(id => !optional.has(id)), ...contained.filter(id => !optional.has(id))]);
+      const loc = await page.evaluate(resolveLocate, { locate: contract.locate, cols: [], needed: [...needed], wrappers: contract.locate_wrappers || [] });
+      res.checks.push(check('locate', loc.problems.length === 0, loc.problems.length ? loc.problems.join('; ') : `${Object.keys(contract.locate).length} ids resolved (data-design first, else selector)`));
+    }
+    const cc = await page.evaluate(contractChecks, { order: orderIds, primary: null, noPrimary: false, sunAlso: [], columns: null, minSize: {}, viewportOnly: false, mockBelowFold: [] });
+    const orderProblems = cc.order.problems.filter(p => { const m = /^(missing|present but not visible): (.+)$/.exec(p); return !(m && optional.has(m[2])); });
+    res.checks.push(check('order', orderProblems.length === 0, orderProblems.length ? orderProblems.join('; ') : `${orderIds.length} ids in order (${cc.order.orderMode}), all >= 40x24`));
+    const png = await shot(page, 'disabled', true);
+    const scan = await page.evaluate(scanText);
+    const an = analyseText(scan.items, png);
+    const missing = texts.filter(t => !an.stream.includes(collapse(t)));
+    res.checks.push(check('texts', missing.length === 0, missing.length ? 'missing VISIBLE text: ' + missing.map(t => `"${t}"`).join(', ') : `${texts.length} strings present in visible text nodes`));
+    const lo = await page.evaluate(layoutOnlyChecks, { groups, contained, optional: optionalIds });
+    res.checks.push(check('no-overlap', lo.problems.filter(p => p.startsWith('no_overlap')).length === 0, lo.problems.filter(p => p.startsWith('no_overlap')).join('; ') || `${groups.length} group(s), ${lo.checked} box pairs/boxes checked, no shared area`));
+    res.checks.push(check('contained', lo.problems.filter(p => p.startsWith('contained')).length === 0, lo.problems.filter(p => p.startsWith('contained')).join('; ') || `${contained.length} box(es) hold their content`));
+    const o = await page.evaluate(overflowCheck);
+    res.checks.push(check(`no-h-scroll@${w}`, o.scrollWidth <= o.innerWidth, o.scrollWidth > o.innerWidth ? `content ${o.scrollWidth}px wide in a ${o.innerWidth}px viewport` : 'ok'));
+    const mo = await page.evaluate(motionCheck, { allow: contract.reduced_motion_allow || [] });
+    const moProblems = [];
+    if (mo.running.length) moProblems.push('still running: ' + mo.running.slice(0, 8).join(', '));
+    if (mo.named.length) moProblems.push('animation-name still set under reduced motion: ' + [...new Set(mo.named)].slice(0, 8).join(', '));
+    res.checks.push(check('reduced-motion', moProblems.length === 0, moProblems.length ? moProblems.join('; ') : 'no running animations with prefers-reduced-motion: reduce'));
+    const c = an.contrast;
+    const indetBad = c.indeterminate > 3 || (c.measured > 0 && c.indeterminate / c.measured > 0.10);
+    const cDetail = [];
+    if (c.fails.length) cDetail.push(c.fails.slice(0, 12).map(f => `"${f.text}" ${f.ratio}:1 (${f.tag})`).join('; ') + (c.fails.length > 12 ? ` ... +${c.fails.length - 12} more` : ''));
+    if (indetBad) cDetail.push(`${c.indeterminate} of ${c.measured} text items could not be measured even by pixel sampling (limit: 3 and 10%)`);
+    res.checks.push(check('contrast>=4.5', !c.fails.length && !indetBad, cDetail.length ? cDetail.join('; ') : `${c.measured} text items ok (${c.sampled} via pixel sampling, ${c.indeterminate} unmeasurable)`));
+    const ok = res.checks.every(x => x.pass);
+    if (!(ok && opts.composites === 'fail')) {
+      const name = `${contract.id}-${w}.png`;
+      fs.writeFileSync(path.join(out, name), png);
+      res.composite = name;
+    }
+  } finally { await bctx.close(); }
+}
+
 export async function runFidelity(opts) {
   const { design, contracts: contractsDir, base: baseRaw, out } = opts;
   for (const [k, v] of Object.entries({ design, contracts: contractsDir, base: baseRaw, out })) if (!v) throw new InfraError(`--${k} is required`);
@@ -190,7 +291,7 @@ export async function runFidelity(opts) {
   try {
     const tasks = [];
     for (const contract of contracts) {
-      const widths = Object.keys(contract.mock).map(Number).sort((a, b) => a - b);
+      const widths = contractWidths(contract).map(Number).sort((a, b) => a - b);
       widths.forEach((w, i) => {
         const res = { contract: contract.id, width: w, checks: [], diff: null, composite: null, warnings: [] };
         results.push(res);
@@ -198,6 +299,13 @@ export async function runFidelity(opts) {
       });
     }
     const runTask = async ({ contract, w, res, first }) => {
+      if (contract.layout_only) {
+        try { await runLayoutOnly({ browser, driver, contract, w, res, base, designDir, opts, out }); } catch (e) {
+          if (e instanceof InfraError) throw e;
+          res.checks.push(check('harness-error', false, e.stack || e.message));
+        }
+        return;
+      }
       // contract "capture":"viewport": single-screen snapshots/overlays compare the viewport only.
       const full = contract.capture !== 'viewport';
       const sh = (pg, anim = 'disabled') => shot(pg, anim, full);
@@ -316,7 +424,7 @@ export async function runFidelity(opts) {
             res.checks.push(check('turnstile', ts.length === 0, ts.length ? ts.join('; ') : `widget container "${contract.turnstile}" present (iframe or Turnstile script tag)`));
           }
           if (neverRed.length) {
-            const nr = await page.evaluate(neverRedCheck, { ids: neverRed });
+            const nr = await evalWith(page, neverRedCheck, { ids: neverRed }, parseCssColor);
             res.checks.push(check('never-red', nr.length === 0, nr.length ? nr.slice(0, 8).join('; ') + (nr.length > 8 ? ` ... +${nr.length - 8} more` : '') : `no coral #FF7A3D / Minny red #E0362C in text, background or border inside ${neverRed.join(', ')}`));
           }
           const orderProblems = cc.order.problems.filter(p => {

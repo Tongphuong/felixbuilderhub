@@ -448,8 +448,9 @@ export function resolveLocate(args) {
   }
   // a catch-all wrapper (an ancestor of at least 3 other located elements and half of them) also matches everything inside it
   const placedIds = Object.keys(placed);
+  const wrappers = new Set(args.wrappers || []); // layout_only `locate_wrappers`: ids declared to be a container ON PURPOSE (their `contained` check IS the box)
   for (const id of placedIds) {
-    if (!needed.has(id)) continue;
+    if (!needed.has(id) || wrappers.has(id)) continue;
     const inside = placedIds.filter(o => o !== id && placed[id].contains(placed[o]));
     if (inside.length >= 3 && inside.length * 2 >= placedIds.length - 1) problems.push('locate "' + id + '" (' + (args.locate[id]) + '): is an ancestor of ' + inside.length + ' other located elements (' + inside.slice(0, 4).join(', ') + '); a located id must be its own element, not a wrapper');
   }
@@ -463,29 +464,67 @@ export function resolveLocate(args) {
 }
 
 // never_red (Release 3): inside each id, no TEXT colour, background or border may be coral #FF7A3D or Minny red #E0362C (computed
-// styles). Images are excluded (<img>/<picture>/<svg>/<video>/<canvas> and what is inside them), so Minny's own ring is fine.
+// styles). Raster images are excluded (<img>/<picture>/<video>/<canvas>), so Minny's own ring is fine.
 // A text colour only counts on an element that has its own text (an inherited colour on an empty box is not text).
-export function neverRedCheck(args) {
-  function visible(el) {
+// R2L-MAINT-1 D5: INLINE <svg> is no longer excluded: the computed `fill`, `stroke` and `stop-color` of every shape inside it are checked too.
+// Every colour is first normalised to sRGB by `parseCssColor` (lib/color.mjs: rgb(), hex, hsl, hwb, lab, lch, oklab, oklch, color(srgb | display-p3 | ...)),
+// then matched against the two brand colours with a tolerance of +-3 per channel (out of 255). A colour string that cannot be read is a FAILURE,
+// not a pass ("cannot read colour ..."): a verifier that cannot read what it checks must not say "safe".
+// Accepted residual (one line): a wrapper id that only encloses 2 located ids passes the locate wrapper test, so never_red on it can cover fewer elements than intended.
+// Not covered: <use>/<symbol> shadow trees, CSS variables inside SVG <style> (the computed value IS checked), and colours painted by filters or blend modes.
+// parseCssColor is passed in as the 2nd argument (fidelity.mjs ships its source next to this function), because page.evaluate serialises ONE function.
+export function neverRedCheck(args, parseCssColor) {
+  if (typeof parseCssColor !== 'function') throw new Error('neverRedCheck needs parseCssColor (lib/color.mjs) as its second argument');
+  function visible(el, box = true) {
     for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
       const cs = getComputedStyle(n);
       if (cs.display === 'none' || cs.visibility === 'hidden' || cs.visibility === 'collapse') return false;
     }
+    if (!box) return true;
     const r = el.getBoundingClientRect();
     return r.width > 0 && r.height > 0;
   }
   const REDS = [['#FF7A3D', [255, 122, 61]], ['#E0362C', [224, 54, 44]]];
-  const rgbs = s => [...String(s).matchAll(/rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,\s/]+([\d.]+%?))?\s*\)/g)].map(m => [+m[1], +m[2], +m[3], m[4] == null ? 1 : (String(m[4]).endsWith('%') ? parseFloat(m[4]) / 100 : +m[4])]);
-  const red = c => { if (c[3] < 0.5) return null; const hit = REDS.find(([, t]) => Math.abs(c[0] - t[0]) <= 3 && Math.abs(c[1] - t[1]) <= 3 && Math.abs(c[2] - t[2]) <= 3); return hit ? hit[0] : null; };
-  const IMG = 'img,picture,svg,video,canvas';
+  const TOL = 3; // per channel, out of 255
+  const unreadable = new Set();
+  // every colour inside one computed value (a single colour, a shadow list, a gradient): null entries = unreadable, reported once at the end
+  const COLOUR_FN = /(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\((?:[^()]|\([^()]*\))*\)|#[0-9a-fA-F]{3,8}\b/g;
+  const colours = str => {
+    // a paint-server reference (fill="url(#g)") is not a colour: the gradient's own <stop>s are checked as svg parts
+    str = String(str == null ? '' : str).replace(/url\((?:[^()]|\([^()]*\))*\)/g, '').trim();
+    if (!str || /^(none|transparent|normal|context-fill|context-stroke)$/.test(str)) return [];
+    if (!/[(#]/.test(str)) { const c = parseCssColor(str); if (c) return [c]; unreadable.add(str); return []; }
+    const found = str.match(COLOUR_FN) || [];
+    if (!found.length) { unreadable.add(str); return []; }
+    const parsed = [];
+    for (const f of found) { const c = parseCssColor(f); if (c) parsed.push(c); else unreadable.add(f); }
+    return parsed;
+  };
+  const red = c => { if (!c || c[3] < 0.5) return null; const hit = REDS.find(([, t]) => Math.abs(c[0] - t[0]) <= TOL && Math.abs(c[1] - t[1]) <= TOL && Math.abs(c[2] - t[2]) <= TOL); return hit ? hit[0] : null; };
+  const firstRed = str => { for (const c of colours(str)) { const h = red(c); if (h) return h; } return null; };
+  const IMG = 'img,picture,video,canvas';
+  const isSvgPart = e => typeof SVGElement !== 'undefined' && e instanceof SVGElement && e.localName !== 'svg';
   const problems = [];
   const desc = e => e.tagName.toLowerCase() + (typeof e.className === 'string' && e.className.trim() ? '.' + e.className.trim().split(/\s+/)[0] : '') + ((e.textContent || '').trim() ? ' "' + e.textContent.replace(/\s+/g, ' ').trim().slice(0, 24) + '"' : '');
   for (const id of args.ids) {
-    const roots = [...document.querySelectorAll('[data-design="' + id.replace(/"/g, '\\"') + '"]')].filter(visible);
+    const roots = [...document.querySelectorAll('[data-design="' + id.replace(/"/g, '\\"') + '"]')].filter(el => visible(el));
     if (!roots.length) { problems.push('never_red "' + id + '": no visible element'); continue; }
     for (const root of roots) {
       for (const e of [root, ...root.querySelectorAll('*')]) {
-        if (e.closest(IMG) || !visible(e)) continue;
+        if (e.closest(IMG)) continue;
+        // an SVG shape has no box of its own to measure (a horizontal <path> is 0px tall): it is visible when its <svg> is
+        if (isSvgPart(e)) {
+          const svg = e.ownerSVGElement;
+          // (<stop>s live in <defs>, whose computed display is "none": a gradient is visible when the <svg> that carries it is)
+          if (!svg || !visible(svg) || (e.localName !== 'stop' && !visible(e, false))) continue;
+          const cs = getComputedStyle(e), hits = [];
+          const f = firstRed(cs.fill); if (f && parseFloat(cs.fillOpacity) !== 0) hits.push('svg fill ' + f);
+          { const s = firstRed(cs.stroke); if (s && parseFloat(cs.strokeOpacity) !== 0 && parseFloat(cs.strokeWidth) !== 0) hits.push('svg stroke ' + s); }
+          if (e.localName === 'stop') { const st = firstRed(cs.stopColor); if (st) hits.push('svg stop-color ' + st); }
+          if (hits.length) problems.push('never_red "' + id + '": ' + e.tagName.toLowerCase() + ' in an inline svg uses ' + hits.join(' + '));
+          continue;
+        }
+        if (!visible(e)) continue;
         const ownText = [...e.childNodes].some(n => n.nodeType === 3 && n.nodeValue.trim());
         // the element itself and its ::before / ::after (a coral dot or ring is often drawn there)
         for (const pseudo of [null, '::before', '::after']) {
@@ -495,26 +534,77 @@ export function neverRedCheck(args) {
           const hits = [];
           const hasText = pseudo ? cs.content.replace(/^["']|["']$/g, '').trim() !== '' : ownText;
           if (hasText) {
-            const h = red(rgbs(cs.color)[0] || [0, 0, 0, 0]); if (h) hits.push('text colour ' + h);
-            const f = red(rgbs(cs.webkitTextFillColor)[0] || [0, 0, 0, 0]); if (f) hits.push('text fill ' + f);
-            if (cs.textDecorationLine && cs.textDecorationLine !== 'none') { const d = red(rgbs(cs.textDecorationColor)[0] || [0, 0, 0, 0]); if (d) hits.push('text decoration ' + d); }
-            if (cs.textShadow && cs.textShadow !== 'none') for (const c of rgbs(cs.textShadow)) { const s = red(c); if (s) { hits.push('text shadow ' + s); break; } }
+            const h = firstRed(cs.color); if (h) hits.push('text colour ' + h);
+            const f = firstRed(cs.webkitTextFillColor); if (f) hits.push('text fill ' + f);
+            if (cs.textDecorationLine && cs.textDecorationLine !== 'none') { const d = firstRed(cs.textDecorationColor); if (d) hits.push('text decoration ' + d); }
+            if (cs.textShadow && cs.textShadow !== 'none') { const s = firstRed(cs.textShadow); if (s) hits.push('text shadow ' + s); }
           }
-          for (const c of rgbs(cs.backgroundColor)) { const h = red(c); if (h) hits.push('background ' + h); }
-          if (/gradient\(/.test(cs.backgroundImage)) for (const c of rgbs(cs.backgroundImage)) { const h = red(c); if (h) { hits.push('background gradient ' + h); break; } }
+          { const h = firstRed(cs.backgroundColor); if (h) hits.push('background ' + h); }
+          if (/gradient\(/.test(cs.backgroundImage)) { const h = firstRed(cs.backgroundImage); if (h) hits.push('background gradient ' + h); }
           for (const side of ['Top', 'Right', 'Bottom', 'Left']) {
             if (!(parseFloat(cs['border' + side + 'Width']) > 0) || cs['border' + side + 'Style'] === 'none') continue;
-            const h = red(rgbs(cs['border' + side + 'Color'])[0] || [0, 0, 0, 0]);
+            const h = firstRed(cs['border' + side + 'Color']);
             if (h) { hits.push('border ' + h); break; }
           }
-          if (cs.boxShadow && cs.boxShadow !== 'none') for (const c of rgbs(cs.boxShadow)) { const h = red(c); if (h) { hits.push('box-shadow ' + h); break; } }
-          if (cs.outlineStyle && cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) > 0) { const h = red(rgbs(cs.outlineColor)[0] || [0, 0, 0, 0]); if (h) hits.push('outline ' + h); }
+          if (cs.boxShadow && cs.boxShadow !== 'none') { const h = firstRed(cs.boxShadow); if (h) hits.push('box-shadow ' + h); }
+          if (cs.outlineStyle && cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) > 0) { const h = firstRed(cs.outlineColor); if (h) hits.push('outline ' + h); }
           if (hits.length) problems.push('never_red "' + id + '": ' + desc(e) + where + ' uses ' + hits.join(' + '));
         }
       }
     }
   }
+  for (const u of unreadable) problems.push('never_red: cannot read the colour "' + u.slice(0, 60) + '" (unsupported colour syntax); refusing to call it safe');
   return problems;
+}
+
+// no_overlap / contained (R2L-MAINT-1 D4, layout-only contracts). Ids are [data-design] values (a `locate` selector has stamped them already).
+//   args = { groups: string[][], contained: string[], optional: string[] }
+//   groups: every pair inside one group must not share a visible area of 1px^2 or more (boxes are the elements' own bounding boxes).
+//   contained: the element's content must fit its box: scrollHeight <= clientHeight + 1. This is what catches a fixed-height box whose
+//   content spills out of it; the spilled content is NOT part of the box's own bounding box, so list the spilled child in a group as well.
+//   An id with no visible element is a failure unless it is listed in `optional`.
+// Returns { problems: string[], checked: number }.
+export function layoutOnlyChecks(args) {
+  function visible(el) {
+    for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
+      const cs = getComputedStyle(n);
+      if (cs.display === 'none' || cs.visibility === 'hidden' || cs.visibility === 'collapse') return false;
+      if (parseFloat(cs.opacity) === 0) return false;
+    }
+    const r = el.getBoundingClientRect();
+    return r.width > 0 && r.height > 0;
+  }
+  const optional = new Set(args.optional || []);
+  const els = id => [...document.querySelectorAll('[data-design="' + id.replace(/"/g, '\\"') + '"]')].filter(visible);
+  const box = e => { const r = e.getBoundingClientRect(); return { l: r.left + scrollX, t: r.top + scrollY, r: r.right + scrollX, b: r.bottom + scrollY }; };
+  const px = n => Math.round(n);
+  const problems = [];
+  let checked = 0;
+  const missing = new Set();
+  for (const group of args.groups || []) {
+    for (let i = 0; i < group.length; i++) {
+      for (let j = i + 1; j < group.length; j++) {
+        const A = els(group[i]), B = els(group[j]);
+        for (const [id, list] of [[group[i], A], [group[j], B]]) if (!list.length && !optional.has(id) && !missing.has(id)) { missing.add(id); problems.push('no_overlap "' + id + '": no visible element'); }
+        for (const a of A) for (const b of B) {
+          checked++;
+          if (a === b) continue;
+          const x = box(a), y = box(b);
+          const w = Math.min(x.r, y.r) - Math.max(x.l, y.l), h = Math.min(x.b, y.b) - Math.max(x.t, y.t);
+          if (w > 0 && h > 0 && w * h >= 1) problems.push('no_overlap: "' + group[i] + '" (y ' + px(x.t) + '-' + px(x.b) + ') overlaps "' + group[j] + '" (y ' + px(y.t) + '-' + px(y.b) + ') by ' + px(w) + 'x' + px(h) + 'px');
+        }
+      }
+    }
+  }
+  for (const id of args.contained || []) {
+    const list = els(id);
+    if (!list.length) { if (!optional.has(id)) problems.push('contained "' + id + '": no visible element'); continue; }
+    for (const e of list) {
+      checked++;
+      if (e.scrollHeight > e.clientHeight + 1) problems.push('contained "' + id + '": content is ' + e.scrollHeight + 'px tall in a ' + e.clientHeight + 'px box (overflows by ' + (e.scrollHeight - e.clientHeight) + 'px)');
+    }
+  }
+  return { problems, checked };
 }
 
 // turnstile (Release 3): the third-party widget is masked out of the pixel diff, so its PRESENCE is asserted here.

@@ -339,6 +339,12 @@ async function prepare(base, state) {
   return { code, packId, sessionId: view.session.id };
 }
 const prepared = new Map();
+// One preparation per (server, state), shared by every driver that needs that account (r2l-r3.mjs reuses 'reward' for the picture-retell states).
+export const preparedAccount = (base, prepState) => {
+  const key = base + '|' + prepState;
+  if (!prepared.has(key)) prepared.set(key, prepare(base, prepState));
+  return prepared.get(key);
+};
 const lessonUrl = p => `/read2lead/lesson?code=${p.code}&pack_id=${p.packId}&mission=story-mission-v1&session=${p.sessionId}`;
 
 // text present in a VISIBLE text node anywhere on the page (ancestors' textContent would also count hidden descendants)
@@ -373,9 +379,7 @@ export default async function r2lDriver(page, contract, base, ctx = {}) {
   const loginUrl = opts.loginUrl || `${base}/r2l/start/?t=${encodeURIComponent(opts.token || letter.repeat(32))}`;
   // rank-up shares mid-story's account and preparation, so concurrent contracts never prepare one account twice
   const prepState = state === 'rank-up' ? 'mid-story' : R2_STATES.includes(state) ? 'first-visit' : state;
-  const key = base + '|' + prepState;
-  if (!prepared.has(key)) prepared.set(key, prepare(base, prepState));
-  const prep = await prepared.get(key);
+  const prep = await preparedAccount(base, prepState);
   const binding = bindingExpectations(S, state, Base, ctx.width || 1280);
 
   if (state === 'first-visit' || state === 'mid-story' || state === 'no-story') {

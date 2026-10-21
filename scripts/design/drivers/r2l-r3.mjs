@@ -35,10 +35,30 @@
 // 10. logged-out: no login. The public top-3 boards are replaced with the mock sample (Hoang/Hieuenzo/Percy) in the real response shape. The sign-up
 //     card needs a build with Cloudflare's PUBLIC Turnstile TEST site key 1x00000000000000000000AA (PUBLIC_TURNSTILE_SITE_KEY); never the real key.
 import crypto from 'node:crypto';
-import { SAMPLE, loadSample, ALT_SAMPLE_PATH, installRoutes, ensurePack, sampleBoards, sampleSession, replaceStrings, api, wav } from './r2l.mjs';
+import { SAMPLE, loadSample, ALT_SAMPLE_PATH, installRoutes, ensurePack, sampleBoards, sampleSession, replaceStrings, api, wav, preparedAccount } from './r2l.mjs';
+
+// Maintenance packet R2L-MAINT-1 (layout-only contracts, no mock): the picture-retell step ("Kể qua tranh") of the One Story a Day mission.
+//  picture-retell-before   stage picture_retell, no attempt yet ("🎙 Ghi âm kể chuyện")
+//  picture-retell-partial  stage picture_retell, after an attempt that met 3 of 5 ideas ("Con đã nhớ được một phần câu chuyện" + the meaning rows)
+// REAL: the child (R2L-SYNTHETIC-DESKTOP), the story pack, and a completed 12-question mission through the rehearsal API (the R2 'reward' preparation,
+// shared with drivers/r2l.mjs), the page's own scripts and DOM, `view.policy.pictureRetell` (real Sky Is Blue! frames).
+// FABRICATED (declared): the session STAGE ('picture_retell') and the session's `pictureRetell` result are VALUES put into the real session view
+// (GET/POST story-session, POST story-turn). The rehearsal's grading stub always answers "every idea met", so a partial result cannot come from it,
+// and the account is shared with the 'reward' state, so the server session is never advanced here. The result has the real shape built by
+// functions/lib/read2lead/picture-retell.mjs#pictureRetellResult ({status, matched, total, meanings:[{label, met}], pronunciation, speech}).
+export const RETELL_STATES = ['picture-retell-before', 'picture-retell-partial'];
+export const RETELL_LABELS = ['Bức ảnh chú gửi', 'Bầu trời xanh và mây trắng', 'Niềm vui của chú', 'Điều bạn nhỏ thắc mắc', 'Bầu trời xám và xe cộ trong thành phố']; // facts[] labels of picture-retell.mjs
+export function retellView(view, state) {
+  const v = structuredClone(view);
+  if (!v || !v.session) return view;
+  v.session.stage = 'picture_retell';
+  if (state === 'picture-retell-before') delete v.session.pictureRetell;
+  else v.session.pictureRetell = { status: 'needs_practice', matched: 3, total: RETELL_LABELS.length, meanings: RETELL_LABELS.map((label, i) => ({ label, met: i < 3 })), pronunciation: null, speech: 'understood' };
+  return v;
+}
 
 export const R3_STATES = ['book-page-listen', 'book-page-question-correct', 'book-page-question-near-miss', 'book-page-read-aloud', 'book-page-done', 'book-last-page-done',
-  'story-mission-read', 'story-mission-understand', 'story-mission-pool-rest', 'lesson-open-error', 'logged-out'];
+  'story-mission-read', 'story-mission-understand', 'story-mission-pool-rest', 'lesson-open-error', 'logged-out', ...RETELL_STATES];
 const BOOK_STATES = R3_STATES.filter(s => s.startsWith('book-'));
 const BOOK_ACCOUNT = ['R2L-SYNTHETIC-L0', 'd'];
 const STORY_ACCOUNT = { 'story-mission-read': ['R2L-SYNTHETIC-FOURTH', 'f'], 'story-mission-understand': ['R2L-SYNTHETIC-PHONE', 'b'], 'story-mission-pool-rest': ['R2L-SYNTHETIC-PHONE', 'b'], 'lesson-open-error': ['R2L-SYNTHETIC-THIRD', 'e'] };
@@ -184,6 +204,21 @@ export async function r3Driver(page, contract, base, ctx = {}) {
     await page.goto(base + contract.built.path, { waitUntil: 'networkidle' });
     await page.waitForSelector('#home-ready:not([hidden])', { timeout: 3000, state: 'attached' }).then(() => { throw new Error('wrong state: the page shows the logged-in kid home (a session is present)'); }, () => {});
     if (!(await page.locator('#signup-card').count())) throw new Error('wrong state: the sign-up card (#signup-card) is not rendered. Build the rehearsal pages with PUBLIC_TURNSTILE_SITE_KEY=1x00000000000000000000AA (Cloudflare PUBLIC test key)');
+    await page.waitForTimeout(800);
+    return ret;
+  }
+
+  if (RETELL_STATES.includes(state)) {
+    const prep = await preparedAccount(base, 'reward'); // DESKTOP: a full mission completed through the rehearsal API (shared with the R2 reward state)
+    await lessonRoutes(page, S);
+    await login('c'.repeat(32));
+    const swap = j => { if (j?.view?.session) j.view = retellView(j.view, state); else if (j?.session) return retellView(j, state); return j; };
+    for (const p of ['**/api/read2lead-story-session*', '**/api/read2lead-story-turn*']) await valueRoute(page, p, swap);
+    await page.goto(`${base}/read2lead/lesson?code=${prep.code}&pack_id=${prep.packId}&mission=story-mission-v1&session=${prep.sessionId}`, { waitUntil: 'networkidle' });
+    await page.waitForSelector('.picture-retell-board:not([hidden])', { timeout: 20000 }).catch(() => { throw new Error('wrong state: the picture-retell board (.picture-retell-board) never appeared'); });
+    if (state === 'picture-retell-before') await waitText(page, 'button', 'Ghi âm kể chuyện', 'the record button of the retell step');
+    else await waitText(page, 'h3', 'Con đã nhớ được một phần câu chuyện', 'the partial retell result');
+    await page.evaluate(() => window.scrollTo(0, 0));
     await page.waitForTimeout(800);
     return ret;
   }
